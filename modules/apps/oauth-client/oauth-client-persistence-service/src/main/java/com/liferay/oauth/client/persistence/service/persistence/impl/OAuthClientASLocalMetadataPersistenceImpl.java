@@ -37,6 +37,9 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -100,6 +103,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<OAuthClientASLocalMetadata>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the o auth client as local metadatas where uuid = &#63;.
@@ -172,108 +177,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<OAuthClientASLocalMetadata> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-						list) {
-
-					if (!uuid.equals(oAuthClientASLocalMetadata.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -509,58 +415,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -634,12 +490,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"oAuthClientASLocalMetadata.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(oAuthClientASLocalMetadata.uuid IS NULL OR oAuthClientASLocalMetadata.uuid = '')";
-
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
 		"oAuthClientASLocalMetadata.uuid_ = ?";
 
@@ -649,6 +499,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<OAuthClientASLocalMetadata>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the o auth client as local metadatas where uuid = &#63; and companyId = &#63;.
@@ -729,117 +581,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<OAuthClientASLocalMetadata> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-						list) {
-
-					if (!uuid.equals(oAuthClientASLocalMetadata.getUuid()) ||
-						(companyId !=
-							oAuthClientASLocalMetadata.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1093,62 +837,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1227,12 +917,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"oAuthClientASLocalMetadata.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(oAuthClientASLocalMetadata.uuid IS NULL OR oAuthClientASLocalMetadata.uuid = '') AND ";
-
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
 		"oAuthClientASLocalMetadata.uuid_ = ? AND ";
 
@@ -1245,6 +929,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<OAuthClientASLocalMetadata>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63;.
@@ -1318,99 +1004,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<OAuthClientASLocalMetadata> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-						list) {
-
-					if (companyId !=
-							oAuthClientASLocalMetadata.getCompanyId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1636,45 +1232,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1741,6 +1300,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<OAuthClientASLocalMetadata>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the o auth client as local metadatas where userId = &#63;.
@@ -1813,95 +1374,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<OAuthClientASLocalMetadata> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-						list) {
-
-					if (userId != oAuthClientASLocalMetadata.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -2125,45 +1600,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -2228,6 +1666,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		"oAuthClientASLocalMetadata.userId = ?";
 
 	private FinderPath _finderPathFetchByC_I;
+	private UniquePersistenceFinder<OAuthClientASLocalMetadata>
+		_uniquePersistenceFinderByC_I;
 
 	/**
 	 * Returns the o auth client as local metadata where companyId = &#63; and issuer = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
@@ -2293,99 +1733,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	public OAuthClientASLocalMetadata fetchByC_I(
 		long companyId, String issuer, boolean useFinderCache) {
 
-		issuer = Objects.toString(issuer, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, issuer};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_I, finderArgs, this);
-		}
-
-		if (result instanceof OAuthClientASLocalMetadata) {
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-				(OAuthClientASLocalMetadata)result;
-
-			if ((companyId != oAuthClientASLocalMetadata.getCompanyId()) ||
-				!Objects.equals(
-					issuer, oAuthClientASLocalMetadata.getIssuer())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_I_COMPANYID_2);
-
-			boolean bindIssuer = false;
-
-			if (issuer.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_I_ISSUER_3);
-			}
-			else {
-				bindIssuer = true;
-
-				sb.append(_FINDER_COLUMN_C_I_ISSUER_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindIssuer) {
-					queryPos.add(issuer);
-				}
-
-				List<OAuthClientASLocalMetadata> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_I, finderArgs, list);
-					}
-				}
-				else {
-					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-						list.get(0);
-
-					result = oAuthClientASLocalMetadata;
-
-					cacheResult(oAuthClientASLocalMetadata);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuthClientASLocalMetadata)result;
-		}
+		return _uniquePersistenceFinderByC_I.fetch(
+			finderCache, new Object[] {companyId, issuer}, useFinderCache);
 	}
 
 	/**
@@ -2414,28 +1763,15 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByC_I(long companyId, String issuer) {
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_I(
-			companyId, issuer);
-
-		if (oAuthClientASLocalMetadata == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_I.count(
+			finderCache, new Object[] {companyId, issuer});
 	}
-
-	private static final String _FINDER_COLUMN_C_I_COMPANYID_2 =
-		"oAuthClientASLocalMetadata.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_I_ISSUER_2 =
-		"oAuthClientASLocalMetadata.issuer = ?";
-
-	private static final String _FINDER_COLUMN_C_I_ISSUER_3 =
-		"(oAuthClientASLocalMetadata.issuer IS NULL OR oAuthClientASLocalMetadata.issuer = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
 	private FinderPath _finderPathCountByC_L;
+	private CollectionPersistenceFinder<OAuthClientASLocalMetadata>
+		_collectionPersistenceFinderByC_L;
 
 	/**
 	 * Returns all the o auth client as local metadatas where companyId = &#63; and localWellKnownEnabled = &#63;.
@@ -2518,106 +1854,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_L;
-				finderArgs = new Object[] {companyId, localWellKnownEnabled};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_L;
-			finderArgs = new Object[] {
-				companyId, localWellKnownEnabled, start, end, orderByComparator
-			};
-		}
-
-		List<OAuthClientASLocalMetadata> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuthClientASLocalMetadata>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-						list) {
-
-					if ((companyId !=
-							oAuthClientASLocalMetadata.getCompanyId()) ||
-						(localWellKnownEnabled !=
-							oAuthClientASLocalMetadata.
-								isLocalWellKnownEnabled())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(localWellKnownEnabled);
-
-				list = (List<OAuthClientASLocalMetadata>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_L.find(
+			finderCache, new Object[] {companyId, localWellKnownEnabled}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2863,49 +2102,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByC_L(long companyId, boolean localWellKnownEnabled) {
-		FinderPath finderPath = _finderPathCountByC_L;
-
-		Object[] finderArgs = new Object[] {companyId, localWellKnownEnabled};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_L_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_L_LOCALWELLKNOWNENABLED_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(localWellKnownEnabled);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_L.count(
+			finderCache, new Object[] {companyId, localWellKnownEnabled});
 	}
 
 	/**
@@ -2978,6 +2176,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		"oAuthClientASLocalMetadata.localWellKnownEnabled = ?";
 
 	private FinderPath _finderPathFetchByC_LWKURI;
+	private UniquePersistenceFinder<OAuthClientASLocalMetadata>
+		_uniquePersistenceFinderByC_LWKURI;
 
 	/**
 	 * Returns the o auth client as local metadata where companyId = &#63; and localWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
@@ -3044,100 +2244,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	public OAuthClientASLocalMetadata fetchByC_LWKURI(
 		long companyId, String localWellKnownURI, boolean useFinderCache) {
 
-		localWellKnownURI = Objects.toString(localWellKnownURI, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, localWellKnownURI};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_LWKURI, finderArgs, this);
-		}
-
-		if (result instanceof OAuthClientASLocalMetadata) {
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-				(OAuthClientASLocalMetadata)result;
-
-			if ((companyId != oAuthClientASLocalMetadata.getCompanyId()) ||
-				!Objects.equals(
-					localWellKnownURI,
-					oAuthClientASLocalMetadata.getLocalWellKnownURI())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_LWKURI_COMPANYID_2);
-
-			boolean bindLocalWellKnownURI = false;
-
-			if (localWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_LWKURI_LOCALWELLKNOWNURI_3);
-			}
-			else {
-				bindLocalWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_C_LWKURI_LOCALWELLKNOWNURI_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindLocalWellKnownURI) {
-					queryPos.add(localWellKnownURI);
-				}
-
-				List<OAuthClientASLocalMetadata> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_LWKURI, finderArgs, list);
-					}
-				}
-				else {
-					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-						list.get(0);
-
-					result = oAuthClientASLocalMetadata;
-
-					cacheResult(oAuthClientASLocalMetadata);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuthClientASLocalMetadata)result;
-		}
+		return _uniquePersistenceFinderByC_LWKURI.fetch(
+			finderCache, new Object[] {companyId, localWellKnownURI},
+			useFinderCache);
 	}
 
 	/**
@@ -3167,26 +2276,13 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByC_LWKURI(long companyId, String localWellKnownURI) {
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_LWKURI(
-			companyId, localWellKnownURI);
-
-		if (oAuthClientASLocalMetadata == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_LWKURI.count(
+			finderCache, new Object[] {companyId, localWellKnownURI});
 	}
 
-	private static final String _FINDER_COLUMN_C_LWKURI_COMPANYID_2 =
-		"oAuthClientASLocalMetadata.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_LWKURI_LOCALWELLKNOWNURI_2 =
-		"oAuthClientASLocalMetadata.localWellKnownURI = ?";
-
-	private static final String _FINDER_COLUMN_C_LWKURI_LOCALWELLKNOWNURI_3 =
-		"(oAuthClientASLocalMetadata.localWellKnownURI IS NULL OR oAuthClientASLocalMetadata.localWellKnownURI = '')";
-
 	private FinderPath _finderPathFetchByC_O;
+	private UniquePersistenceFinder<OAuthClientASLocalMetadata>
+		_uniquePersistenceFinderByC_O;
 
 	/**
 	 * Returns the o auth client as local metadata where companyId = &#63; and oAuthASLocalWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
@@ -3254,101 +2350,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		long companyId, String oAuthASLocalWellKnownURI,
 		boolean useFinderCache) {
 
-		oAuthASLocalWellKnownURI = Objects.toString(
-			oAuthASLocalWellKnownURI, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, oAuthASLocalWellKnownURI};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_O, finderArgs, this);
-		}
-
-		if (result instanceof OAuthClientASLocalMetadata) {
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-				(OAuthClientASLocalMetadata)result;
-
-			if ((companyId != oAuthClientASLocalMetadata.getCompanyId()) ||
-				!Objects.equals(
-					oAuthASLocalWellKnownURI,
-					oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_O_COMPANYID_2);
-
-			boolean bindOAuthASLocalWellKnownURI = false;
-
-			if (oAuthASLocalWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_3);
-			}
-			else {
-				bindOAuthASLocalWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindOAuthASLocalWellKnownURI) {
-					queryPos.add(oAuthASLocalWellKnownURI);
-				}
-
-				List<OAuthClientASLocalMetadata> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_O, finderArgs, list);
-					}
-				}
-				else {
-					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-						list.get(0);
-
-					result = oAuthClientASLocalMetadata;
-
-					cacheResult(oAuthClientASLocalMetadata);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuthClientASLocalMetadata)result;
-		}
+		return _uniquePersistenceFinderByC_O.fetch(
+			finderCache, new Object[] {companyId, oAuthASLocalWellKnownURI},
+			useFinderCache);
 	}
 
 	/**
@@ -3378,26 +2382,13 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByC_O(long companyId, String oAuthASLocalWellKnownURI) {
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByC_O(
-			companyId, oAuthASLocalWellKnownURI);
-
-		if (oAuthClientASLocalMetadata == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_O.count(
+			finderCache, new Object[] {companyId, oAuthASLocalWellKnownURI});
 	}
 
-	private static final String _FINDER_COLUMN_C_O_COMPANYID_2 =
-		"oAuthClientASLocalMetadata.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_2 =
-		"oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI = ?";
-
-	private static final String _FINDER_COLUMN_C_O_OAUTHASLOCALWELLKNOWNURI_3 =
-		"(oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI IS NULL OR oAuthClientASLocalMetadata.oAuthASLocalWellKnownURI = '')";
-
 	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<OAuthClientASLocalMetadata>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the o auth client as local metadata where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOAuthClientASLocalMetadataException</code> if it could not be found.
@@ -3464,100 +2455,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	public OAuthClientASLocalMetadata fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {externalReferenceCode, companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByERC_C, finderArgs, this);
-		}
-
-		if (result instanceof OAuthClientASLocalMetadata) {
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-				(OAuthClientASLocalMetadata)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					oAuthClientASLocalMetadata.getExternalReferenceCode()) ||
-				(companyId != oAuthClientASLocalMetadata.getCompanyId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				List<OAuthClientASLocalMetadata> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByERC_C, finderArgs, list);
-					}
-				}
-				else {
-					OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-						list.get(0);
-
-					result = oAuthClientASLocalMetadata;
-
-					cacheResult(oAuthClientASLocalMetadata);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (OAuthClientASLocalMetadata)result;
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -3587,24 +2487,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (oAuthClientASLocalMetadata == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C.count(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
-		"oAuthClientASLocalMetadata.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
-		"(oAuthClientASLocalMetadata.externalReferenceCode IS NULL OR oAuthClientASLocalMetadata.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
-		"oAuthClientASLocalMetadata.companyId = ?";
 
 	public OAuthClientASLocalMetadataPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -4378,6 +3263,17 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "uuid", FinderColumn.Type.STRING,
+				"=", true, true, OAuthClientASLocalMetadata::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -4397,6 +3293,24 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"oAuthClientASLocalMetadata.", "uuid",
+					FinderColumn.Type.STRING, "=", true, false,
+					OAuthClientASLocalMetadata::getUuid),
+				new FinderColumn<>(
+					"oAuthClientASLocalMetadata.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					OAuthClientASLocalMetadata::getCompanyId));
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -4415,6 +3329,20 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
+				_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"oAuthClientASLocalMetadata.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					OAuthClientASLocalMetadata::getCompanyId));
+
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -4432,10 +3360,36 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId,
+				_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+				OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"oAuthClientASLocalMetadata.", "userId",
+					FinderColumn.Type.LONG, "=", true, true,
+					OAuthClientASLocalMetadata::getUserId));
+
 		_finderPathFetchByC_I = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_I",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "issuer"}, true);
+
+		_uniquePersistenceFinderByC_I = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_I,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				OAuthClientASLocalMetadata::getCompanyId),
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "issuer",
+				FinderColumn.Type.STRING, "=", true, true,
+				OAuthClientASLocalMetadata::getIssuer));
 
 		_finderPathWithPaginationFindByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
@@ -4456,20 +3410,72 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"companyId", "localWellKnownEnabled"}, false);
 
+		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_L,
+			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			_SQL_COUNT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			OAuthClientASLocalMetadataModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				OAuthClientASLocalMetadata::getCompanyId),
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "localWellKnownEnabled",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				OAuthClientASLocalMetadata::isLocalWellKnownEnabled));
+
 		_finderPathFetchByC_LWKURI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_LWKURI",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "localWellKnownURI"}, true);
+
+		_uniquePersistenceFinderByC_LWKURI = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_LWKURI,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				OAuthClientASLocalMetadata::getCompanyId),
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "localWellKnownURI",
+				FinderColumn.Type.STRING, "=", true, true,
+				OAuthClientASLocalMetadata::getLocalWellKnownURI));
 
 		_finderPathFetchByC_O = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "oAuthASLocalWellKnownURI"}, true);
 
+		_uniquePersistenceFinderByC_O = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_O,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				OAuthClientASLocalMetadata::getCompanyId),
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "oAuthASLocalWellKnownURI",
+				FinderColumn.Type.STRING, "=", true, true,
+				OAuthClientASLocalMetadata::getOAuthASLocalWellKnownURI));
+
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C,
+			_SQL_SELECT_OAUTHCLIENTASLOCALMETADATA_WHERE,
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				OAuthClientASLocalMetadata::getExternalReferenceCode),
+			new FinderColumn<>(
+				"oAuthClientASLocalMetadata.", "companyId",
+				FinderColumn.Type.LONG, "=", true, true,
+				OAuthClientASLocalMetadata::getCompanyId));
 
 		OAuthClientASLocalMetadataUtil.setPersistence(this);
 	}
@@ -4574,4 +3580,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1185112012
+// LIFERAY-SERVICE-BUILDER-HASH:911328465

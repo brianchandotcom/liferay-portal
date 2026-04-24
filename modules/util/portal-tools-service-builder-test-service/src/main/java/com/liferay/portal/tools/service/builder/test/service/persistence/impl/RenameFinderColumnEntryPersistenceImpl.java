@@ -10,18 +10,18 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchRenameFinderColumnEntryException;
 import com.liferay.portal.tools.service.builder.test.model.RenameFinderColumnEntry;
@@ -35,10 +35,8 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -73,6 +71,8 @@ public class RenameFinderColumnEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByColumnToRename;
+	private UniquePersistenceFinder<RenameFinderColumnEntry>
+		_uniquePersistenceFinderByColumnToRename;
 
 	/**
 	 * Returns the rename finder column entry where columnToRename = &#63; or throws a <code>NoSuchRenameFinderColumnEntryException</code> if it could not be found.
@@ -132,110 +132,8 @@ public class RenameFinderColumnEntryPersistenceImpl
 	public RenameFinderColumnEntry fetchByColumnToRename(
 		String columnToRename, boolean useFinderCache) {
 
-		columnToRename = Objects.toString(columnToRename, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {columnToRename};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByColumnToRename, finderArgs, this);
-		}
-
-		if (result instanceof RenameFinderColumnEntry) {
-			RenameFinderColumnEntry renameFinderColumnEntry =
-				(RenameFinderColumnEntry)result;
-
-			if (!Objects.equals(
-					columnToRename,
-					renameFinderColumnEntry.getColumnToRename())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_RENAMEFINDERCOLUMNENTRY_WHERE);
-
-			boolean bindColumnToRename = false;
-
-			if (columnToRename.isEmpty()) {
-				sb.append(_FINDER_COLUMN_COLUMNTORENAME_COLUMNTORENAME_3);
-			}
-			else {
-				bindColumnToRename = true;
-
-				sb.append(_FINDER_COLUMN_COLUMNTORENAME_COLUMNTORENAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindColumnToRename) {
-					queryPos.add(columnToRename);
-				}
-
-				List<RenameFinderColumnEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByColumnToRename, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {columnToRename};
-							}
-
-							_log.warn(
-								"RenameFinderColumnEntryPersistenceImpl.fetchByColumnToRename(String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					RenameFinderColumnEntry renameFinderColumnEntry = list.get(
-						0);
-
-					result = renameFinderColumnEntry;
-
-					cacheResult(renameFinderColumnEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (RenameFinderColumnEntry)result;
-		}
+		return _uniquePersistenceFinderByColumnToRename.fetch(
+			finderCache, new Object[] {columnToRename}, useFinderCache);
 	}
 
 	/**
@@ -262,21 +160,9 @@ public class RenameFinderColumnEntryPersistenceImpl
 	 */
 	@Override
 	public int countByColumnToRename(String columnToRename) {
-		RenameFinderColumnEntry renameFinderColumnEntry = fetchByColumnToRename(
-			columnToRename);
-
-		if (renameFinderColumnEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByColumnToRename.count(
+			finderCache, new Object[] {columnToRename});
 	}
-
-	private static final String _FINDER_COLUMN_COLUMNTORENAME_COLUMNTORENAME_2 =
-		"renameFinderColumnEntry.columnToRename = ?";
-
-	private static final String _FINDER_COLUMN_COLUMNTORENAME_COLUMNTORENAME_3 =
-		"(renameFinderColumnEntry.columnToRename IS NULL OR renameFinderColumnEntry.columnToRename = '')";
 
 	public RenameFinderColumnEntryPersistenceImpl() {
 		setModelClass(RenameFinderColumnEntry.class);
@@ -847,6 +733,15 @@ public class RenameFinderColumnEntryPersistenceImpl
 			new String[] {String.class.getName()},
 			new String[] {"columnToRename"}, true);
 
+		_uniquePersistenceFinderByColumnToRename =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchByColumnToRename,
+				_SQL_SELECT_RENAMEFINDERCOLUMNENTRY_WHERE,
+				new FinderColumn<>(
+					"renameFinderColumnEntry.", "columnToRename",
+					FinderColumn.Type.STRING, "=", true, true,
+					RenameFinderColumnEntry::getColumnToRename));
+
 		RenameFinderColumnEntryUtil.setPersistence(this);
 	}
 
@@ -871,9 +766,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	private static final String _SQL_COUNT_RENAMEFINDERCOLUMNENTRY =
 		"SELECT COUNT(renameFinderColumnEntry) FROM RenameFinderColumnEntry renameFinderColumnEntry";
 
-	private static final String _SQL_COUNT_RENAMEFINDERCOLUMNENTRY_WHERE =
-		"SELECT COUNT(renameFinderColumnEntry) FROM RenameFinderColumnEntry renameFinderColumnEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"renameFinderColumnEntry.";
 
@@ -892,4 +784,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1586263685
+// LIFERAY-SERVICE-BUILDER-HASH:580376919

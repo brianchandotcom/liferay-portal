@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -30,6 +29,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,7 +39,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuItemExternalReferenceCodeException;
@@ -108,6 +109,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63;.
@@ -184,106 +187,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid;
-					finderArgs = new Object[] {uuid};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid;
-				finderArgs = new Object[] {uuid, start, end, orderByComparator};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (!uuid.equals(siteNavigationMenuItem.getUuid())) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid.find(
+				finderCache, new Object[] {uuid}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -368,69 +274,14 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid;
-
-			Object[] finderArgs = new Object[] {uuid};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid.count(
+				finderCache, new Object[] {uuid});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"siteNavigationMenuItem.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(siteNavigationMenuItem.uuid IS NULL OR siteNavigationMenuItem.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<SiteNavigationMenuItem>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -498,98 +349,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {uuid, groupId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByUUID_G, finderArgs, this);
-			}
-
-			if (result instanceof SiteNavigationMenuItem) {
-				SiteNavigationMenuItem siteNavigationMenuItem =
-					(SiteNavigationMenuItem)result;
-
-				if (!Objects.equals(uuid, siteNavigationMenuItem.getUuid()) ||
-					(groupId != siteNavigationMenuItem.getGroupId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					List<SiteNavigationMenuItem> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByUUID_G, finderArgs, list);
-						}
-					}
-					else {
-						SiteNavigationMenuItem siteNavigationMenuItem =
-							list.get(0);
-
-						result = siteNavigationMenuItem;
-
-						cacheResult(siteNavigationMenuItem);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SiteNavigationMenuItem)result;
-			}
+			return _uniquePersistenceFinderByUUID_G.fetch(
+				finderCache, new Object[] {uuid, groupId}, useFinderCache);
 		}
 	}
 
@@ -619,28 +380,15 @@ public class SiteNavigationMenuItemPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUUID_G(
-			uuid, groupId);
-
-		if (siteNavigationMenuItem == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"siteNavigationMenuItem.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(siteNavigationMenuItem.uuid IS NULL OR siteNavigationMenuItem.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"siteNavigationMenuItem.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -725,115 +473,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid_C;
-					finderArgs = new Object[] {uuid, companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid_C;
-				finderArgs = new Object[] {
-					uuid, companyId, start, end, orderByComparator
-				};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (!uuid.equals(siteNavigationMenuItem.getUuid()) ||
-							(companyId !=
-								siteNavigationMenuItem.getCompanyId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid_C.find(
+				finderCache, new Object[] {uuid, companyId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -927,78 +569,16 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid_C;
-
-			Object[] finderArgs = new Object[] {uuid, companyId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid_C.count(
+				finderCache, new Object[] {uuid, companyId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"siteNavigationMenuItem.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(siteNavigationMenuItem.uuid IS NULL OR siteNavigationMenuItem.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"siteNavigationMenuItem.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the site navigation menu items where companyId = &#63;.
@@ -1076,97 +656,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByCompanyId;
-					finderArgs = new Object[] {companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByCompanyId;
-				finderArgs = new Object[] {
-					companyId, start, end, orderByComparator
-				};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (companyId !=
-								siteNavigationMenuItem.getCompanyId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByCompanyId.find(
+				finderCache, new Object[] {companyId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1252,55 +744,16 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = _finderPathCountByCompanyId;
-
-			Object[] finderArgs = new Object[] {companyId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByCompanyId.count(
+				finderCache, new Object[] {companyId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"siteNavigationMenuItem.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindBySiteNavigationMenuId;
 	private FinderPath _finderPathWithoutPaginationFindBySiteNavigationMenuId;
 	private FinderPath _finderPathCountBySiteNavigationMenuId;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderBySiteNavigationMenuId;
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
@@ -1382,101 +835,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindBySiteNavigationMenuId;
-					finderArgs = new Object[] {siteNavigationMenuId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath =
-					_finderPathWithPaginationFindBySiteNavigationMenuId;
-				finderArgs = new Object[] {
-					siteNavigationMenuId, start, end, orderByComparator
-				};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (siteNavigationMenuId !=
-								siteNavigationMenuItem.
-									getSiteNavigationMenuId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_SITENAVIGATIONMENUID_SITENAVIGATIONMENUID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderBySiteNavigationMenuId.find(
+				finderCache, new Object[] {siteNavigationMenuId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1564,59 +925,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = _finderPathCountBySiteNavigationMenuId;
-
-			Object[] finderArgs = new Object[] {siteNavigationMenuId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_SITENAVIGATIONMENUID_SITENAVIGATIONMENUID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderBySiteNavigationMenuId.count(
+				finderCache, new Object[] {siteNavigationMenuId});
 		}
 	}
-
-	private static final String
-		_FINDER_COLUMN_SITENAVIGATIONMENUID_SITENAVIGATIONMENUID_2 =
-			"siteNavigationMenuItem.siteNavigationMenuId = ?";
 
 	private FinderPath
 		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
 	private FinderPath _finderPathCountByParentSiteNavigationMenuItemId;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
 
 	/**
 	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -1700,102 +1020,10 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
-					finderArgs = new Object[] {parentSiteNavigationMenuItemId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath =
-					_finderPathWithPaginationFindByParentSiteNavigationMenuItemId;
-				finderArgs = new Object[] {
-					parentSiteNavigationMenuItemId, start, end,
-					orderByComparator
-				};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (parentSiteNavigationMenuItemId !=
-								siteNavigationMenuItem.
-									getParentSiteNavigationMenuItemId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_PARENTSITENAVIGATIONMENUITEMID_PARENTSITENAVIGATIONMENUITEMID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(parentSiteNavigationMenuItemId);
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByParentSiteNavigationMenuItemId.
+				find(
+					finderCache, new Object[] {parentSiteNavigationMenuItemId},
+					start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1888,58 +1116,17 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath =
-				_finderPathCountByParentSiteNavigationMenuItemId;
-
-			Object[] finderArgs = new Object[] {parentSiteNavigationMenuItemId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_PARENTSITENAVIGATIONMENUITEMID_PARENTSITENAVIGATIONMENUITEMID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(parentSiteNavigationMenuItemId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByParentSiteNavigationMenuItemId.
+				count(
+					finderCache, new Object[] {parentSiteNavigationMenuItemId});
 		}
 	}
-
-	private static final String
-		_FINDER_COLUMN_PARENTSITENAVIGATIONMENUITEMID_PARENTSITENAVIGATIONMENUITEMID_2 =
-			"siteNavigationMenuItem.parentSiteNavigationMenuItemId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByType;
 	private FinderPath _finderPathWithoutPaginationFindByType;
 	private FinderPath _finderPathCountByType;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByType;
 
 	/**
 	 * Returns all the site navigation menu items where type = &#63;.
@@ -2016,106 +1203,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			type = Objects.toString(type, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByType;
-					finderArgs = new Object[] {type};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByType;
-				finderArgs = new Object[] {type, start, end, orderByComparator};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if (!type.equals(siteNavigationMenuItem.getType())) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindType = false;
-
-				if (type.isEmpty()) {
-					sb.append(_FINDER_COLUMN_TYPE_TYPE_3);
-				}
-				else {
-					bindType = true;
-
-					sb.append(_FINDER_COLUMN_TYPE_TYPE_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindType) {
-						queryPos.add(type);
-					}
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByType.find(
+				finderCache, new Object[] {type}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -2200,71 +1290,16 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			type = Objects.toString(type, "");
-
-			FinderPath finderPath = _finderPathCountByType;
-
-			Object[] finderArgs = new Object[] {type};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindType = false;
-
-				if (type.isEmpty()) {
-					sb.append(_FINDER_COLUMN_TYPE_TYPE_3);
-				}
-				else {
-					bindType = true;
-
-					sb.append(_FINDER_COLUMN_TYPE_TYPE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindType) {
-						queryPos.add(type);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByType.count(
+				finderCache, new Object[] {type});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_TYPE_TYPE_2 =
-		"siteNavigationMenuItem.type = ?";
-
-	private static final String _FINDER_COLUMN_TYPE_TYPE_3 =
-		"(siteNavigationMenuItem.type IS NULL OR siteNavigationMenuItem.type = '')";
 
 	private FinderPath _finderPathWithPaginationFindByS_P;
 	private FinderPath _finderPathWithoutPaginationFindByS_P;
 	private FinderPath _finderPathCountByS_P;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByS_P;
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
@@ -2356,108 +1391,12 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByS_P;
-					finderArgs = new Object[] {
-						siteNavigationMenuId, parentSiteNavigationMenuItemId
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByS_P;
-				finderArgs = new Object[] {
-					siteNavigationMenuId, parentSiteNavigationMenuItemId, start,
-					end, orderByComparator
-				};
-			}
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if ((siteNavigationMenuId !=
-								siteNavigationMenuItem.
-									getSiteNavigationMenuId()) ||
-							(parentSiteNavigationMenuItemId !=
-								siteNavigationMenuItem.
-									getParentSiteNavigationMenuItemId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_P_SITENAVIGATIONMENUID_2);
-
-				sb.append(_FINDER_COLUMN_S_P_PARENTSITENAVIGATIONMENUITEMID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					queryPos.add(parentSiteNavigationMenuItemId);
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByS_P.find(
+				finderCache,
+				new Object[] {
+					siteNavigationMenuId, parentSiteNavigationMenuItemId
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2557,64 +1496,18 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			FinderPath finderPath = _finderPathCountByS_P;
-
-			Object[] finderArgs = new Object[] {
-				siteNavigationMenuId, parentSiteNavigationMenuItemId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_P_SITENAVIGATIONMENUID_2);
-
-				sb.append(_FINDER_COLUMN_S_P_PARENTSITENAVIGATIONMENUITEMID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					queryPos.add(parentSiteNavigationMenuItemId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByS_P.count(
+				finderCache,
+				new Object[] {
+					siteNavigationMenuId, parentSiteNavigationMenuItemId
+				});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_S_P_SITENAVIGATIONMENUID_2 =
-		"siteNavigationMenuItem.siteNavigationMenuId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_S_P_PARENTSITENAVIGATIONMENUITEMID_2 =
-			"siteNavigationMenuItem.parentSiteNavigationMenuItemId = ?";
-
 	private FinderPath _finderPathWithPaginationFindByS_LikeN;
 	private FinderPath _finderPathWithPaginationCountByS_LikeN;
+	private CollectionPersistenceFinder<SiteNavigationMenuItem>
+		_collectionPersistenceFinderByS_LikeN;
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
@@ -2700,108 +1593,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByS_LikeN;
-			finderArgs = new Object[] {
-				siteNavigationMenuId, name, start, end, orderByComparator
-			};
-
-			List<SiteNavigationMenuItem> list = null;
-
-			if (useFinderCache) {
-				list = (List<SiteNavigationMenuItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SiteNavigationMenuItem siteNavigationMenuItem : list) {
-						if ((siteNavigationMenuId !=
-								siteNavigationMenuItem.
-									getSiteNavigationMenuId()) ||
-							!StringUtil.wildcardMatches(
-								siteNavigationMenuItem.getName(), name, '_',
-								'%', '\\', true)) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_S_LIKEN_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_S_LIKEN_NAME_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					list = (List<SiteNavigationMenuItem>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByS_LikeN.find(
+				finderCache, new Object[] {siteNavigationMenuId, name}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2895,76 +1689,14 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			name = Objects.toString(name, "");
-
-			FinderPath finderPath = _finderPathWithPaginationCountByS_LikeN;
-
-			Object[] finderArgs = new Object[] {siteNavigationMenuId, name};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_S_LIKEN_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_S_LIKEN_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(siteNavigationMenuId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByS_LikeN.count(
+				finderCache, new Object[] {siteNavigationMenuId, name});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_S_LIKEN_SITENAVIGATIONMENUID_2 =
-		"siteNavigationMenuItem.siteNavigationMenuId = ? AND ";
-
-	private static final String _FINDER_COLUMN_S_LIKEN_NAME_2 =
-		"siteNavigationMenuItem.name LIKE ?";
-
-	private static final String _FINDER_COLUMN_S_LIKEN_NAME_3 =
-		"(siteNavigationMenuItem.name IS NULL OR siteNavigationMenuItem.name LIKE '')";
-
 	private FinderPath _finderPathFetchByERC_G;
+	private UniquePersistenceFinder<SiteNavigationMenuItem>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -3035,100 +1767,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SiteNavigationMenuItem.class)) {
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {externalReferenceCode, groupId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByERC_G, finderArgs, this);
-			}
-
-			if (result instanceof SiteNavigationMenuItem) {
-				SiteNavigationMenuItem siteNavigationMenuItem =
-					(SiteNavigationMenuItem)result;
-
-				if (!Objects.equals(
-						externalReferenceCode,
-						siteNavigationMenuItem.getExternalReferenceCode()) ||
-					(groupId != siteNavigationMenuItem.getGroupId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(groupId);
-
-					List<SiteNavigationMenuItem> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByERC_G, finderArgs, list);
-						}
-					}
-					else {
-						SiteNavigationMenuItem siteNavigationMenuItem =
-							list.get(0);
-
-						result = siteNavigationMenuItem;
-
-						cacheResult(siteNavigationMenuItem);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SiteNavigationMenuItem)result;
-			}
+			return _uniquePersistenceFinderByERC_G.fetch(
+				finderCache, new Object[] {externalReferenceCode, groupId},
+				useFinderCache);
 		}
 	}
 
@@ -3159,24 +1800,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 	 */
 	@Override
 	public int countByERC_G(String externalReferenceCode, long groupId) {
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (siteNavigationMenuItem == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_G.count(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
-		"siteNavigationMenuItem.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
-		"(siteNavigationMenuItem.externalReferenceCode IS NULL OR siteNavigationMenuItem.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
-		"siteNavigationMenuItem.groupId = ?";
 
 	public SiteNavigationMenuItemPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -4185,10 +2811,31 @@ public class SiteNavigationMenuItemPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
+				"=", true, true, SiteNavigationMenuItem::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G,
+			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
+				"=", true, false, SiteNavigationMenuItem::getUuid),
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "groupId", FinderColumn.Type.LONG,
+				"=", true, true, SiteNavigationMenuItem::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -4209,6 +2856,23 @@ public class SiteNavigationMenuItemPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
+					"=", true, false, SiteNavigationMenuItem::getUuid),
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					SiteNavigationMenuItem::getCompanyId));
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -4226,6 +2890,20 @@ public class SiteNavigationMenuItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
+				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					SiteNavigationMenuItem::getCompanyId));
 
 		_finderPathWithPaginationFindBySiteNavigationMenuId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -4245,6 +2923,20 @@ public class SiteNavigationMenuItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBySiteNavigationMenuId", new String[] {Long.class.getName()},
 			new String[] {"siteNavigationMenuId"}, false);
+
+		_collectionPersistenceFinderBySiteNavigationMenuId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindBySiteNavigationMenuId,
+				_finderPathWithoutPaginationFindBySiteNavigationMenuId,
+				_finderPathCountBySiteNavigationMenuId,
+				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "siteNavigationMenuId",
+					FinderColumn.Type.LONG, "=", true, true,
+					SiteNavigationMenuItem::getSiteNavigationMenuId));
 
 		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId =
 			new FinderPath(
@@ -4269,6 +2961,21 @@ public class SiteNavigationMenuItemPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"parentSiteNavigationMenuItemId"}, false);
 
+		_collectionPersistenceFinderByParentSiteNavigationMenuItemId =
+			new CollectionPersistenceFinder<>(
+				this,
+				_finderPathWithPaginationFindByParentSiteNavigationMenuItemId,
+				_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId,
+				_finderPathCountByParentSiteNavigationMenuItemId,
+				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "parentSiteNavigationMenuItemId",
+					FinderColumn.Type.LONG, "=", true, true,
+					SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
+
 		_finderPathWithPaginationFindByType = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
 			new String[] {
@@ -4286,6 +2993,17 @@ public class SiteNavigationMenuItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
 			new String[] {String.class.getName()}, new String[] {"type_"},
 			false);
+
+		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByType,
+			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "type", FinderColumn.Type.STRING,
+				"=", true, true, SiteNavigationMenuItem::getType));
 
 		_finderPathWithPaginationFindByS_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_P",
@@ -4315,6 +3033,22 @@ public class SiteNavigationMenuItemPersistenceImpl
 			},
 			false);
 
+		_collectionPersistenceFinderByS_P = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByS_P,
+			_finderPathWithoutPaginationFindByS_P, _finderPathCountByS_P,
+			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "siteNavigationMenuId",
+				FinderColumn.Type.LONG, "=", true, false,
+				SiteNavigationMenuItem::getSiteNavigationMenuId),
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "parentSiteNavigationMenuItemId",
+				FinderColumn.Type.LONG, "=", true, true,
+				SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
+
 		_finderPathWithPaginationFindByS_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
 			new String[] {
@@ -4329,10 +3063,37 @@ public class SiteNavigationMenuItemPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"siteNavigationMenuId", "name"}, false);
 
+		_collectionPersistenceFinderByS_LikeN =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByS_LikeN, null,
+				_finderPathWithPaginationCountByS_LikeN,
+				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
+				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "siteNavigationMenuId",
+					FinderColumn.Type.LONG, "=", true, false,
+					SiteNavigationMenuItem::getSiteNavigationMenuId),
+				new FinderColumn<>(
+					"siteNavigationMenuItem.", "name", FinderColumn.Type.STRING,
+					"LIKE", true, true, SiteNavigationMenuItem::getName));
+
 		_finderPathFetchByERC_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_G,
+			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				SiteNavigationMenuItem::getExternalReferenceCode),
+			new FinderColumn<>(
+				"siteNavigationMenuItem.", "groupId", FinderColumn.Type.LONG,
+				"=", true, true, SiteNavigationMenuItem::getGroupId));
 
 		SiteNavigationMenuItemUtil.setPersistence(this);
 	}
@@ -4412,4 +3173,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2010344109
+// LIFERAY-SERVICE-BUILDER-HASH:496891475

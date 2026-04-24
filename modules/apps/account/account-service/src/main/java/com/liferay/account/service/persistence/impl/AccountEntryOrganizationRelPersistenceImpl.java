@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -27,6 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -83,6 +85,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
 	private FinderPath _finderPathCountByAccountEntryId;
+	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
+		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
 	 * Returns all the account entry organization rels where accountEntryId = &#63;.
@@ -159,99 +163,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		OrderByComparator<AccountEntryOrganizationRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByAccountEntryId;
-				finderArgs = new Object[] {accountEntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByAccountEntryId;
-			finderArgs = new Object[] {
-				accountEntryId, start, end, orderByComparator
-			};
-		}
-
-		List<AccountEntryOrganizationRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-						list) {
-
-					if (accountEntryId !=
-							accountEntryOrganizationRel.getAccountEntryId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountEntryId);
-
-				list = (List<AccountEntryOrganizationRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByAccountEntryId.find(
+			finderCache, new Object[] {accountEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -333,53 +247,15 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public int countByAccountEntryId(long accountEntryId) {
-		FinderPath finderPath = _finderPathCountByAccountEntryId;
-
-		Object[] finderArgs = new Object[] {accountEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByAccountEntryId.count(
+			finderCache, new Object[] {accountEntryId});
 	}
-
-	private static final String _FINDER_COLUMN_ACCOUNTENTRYID_ACCOUNTENTRYID_2 =
-		"accountEntryOrganizationRel.accountEntryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByOrganizationId;
 	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
 	private FinderPath _finderPathCountByOrganizationId;
+	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
+		_collectionPersistenceFinderByOrganizationId;
 
 	/**
 	 * Returns all the account entry organization rels where organizationId = &#63;.
@@ -456,99 +332,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		OrderByComparator<AccountEntryOrganizationRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByOrganizationId;
-				finderArgs = new Object[] {organizationId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByOrganizationId;
-			finderArgs = new Object[] {
-				organizationId, start, end, orderByComparator
-			};
-		}
-
-		List<AccountEntryOrganizationRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<AccountEntryOrganizationRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-						list) {
-
-					if (organizationId !=
-							accountEntryOrganizationRel.getOrganizationId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(organizationId);
-
-				list = (List<AccountEntryOrganizationRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByOrganizationId.find(
+			finderCache, new Object[] {organizationId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -630,51 +416,13 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public int countByOrganizationId(long organizationId) {
-		FinderPath finderPath = _finderPathCountByOrganizationId;
-
-		Object[] finderArgs = new Object[] {organizationId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(organizationId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByOrganizationId.count(
+			finderCache, new Object[] {organizationId});
 	}
 
-	private static final String _FINDER_COLUMN_ORGANIZATIONID_ORGANIZATIONID_2 =
-		"accountEntryOrganizationRel.organizationId = ?";
-
 	private FinderPath _finderPathFetchByA_O;
+	private UniquePersistenceFinder<AccountEntryOrganizationRel>
+		_uniquePersistenceFinderByA_O;
 
 	/**
 	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or throws a <code>NoSuchEntryOrganizationRelException</code> if it could not be found.
@@ -741,87 +489,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	public AccountEntryOrganizationRel fetchByA_O(
 		long accountEntryId, long organizationId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {accountEntryId, organizationId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByA_O, finderArgs, this);
-		}
-
-		if (result instanceof AccountEntryOrganizationRel) {
-			AccountEntryOrganizationRel accountEntryOrganizationRel =
-				(AccountEntryOrganizationRel)result;
-
-			if ((accountEntryId !=
-					accountEntryOrganizationRel.getAccountEntryId()) ||
-				(organizationId !=
-					accountEntryOrganizationRel.getOrganizationId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_O_ACCOUNTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_A_O_ORGANIZATIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(accountEntryId);
-
-				queryPos.add(organizationId);
-
-				List<AccountEntryOrganizationRel> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByA_O, finderArgs, list);
-					}
-				}
-				else {
-					AccountEntryOrganizationRel accountEntryOrganizationRel =
-						list.get(0);
-
-					result = accountEntryOrganizationRel;
-
-					cacheResult(accountEntryOrganizationRel);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AccountEntryOrganizationRel)result;
-		}
+		return _uniquePersistenceFinderByA_O.fetch(
+			finderCache, new Object[] {accountEntryId, organizationId},
+			useFinderCache);
 	}
 
 	/**
@@ -851,21 +521,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public int countByA_O(long accountEntryId, long organizationId) {
-		AccountEntryOrganizationRel accountEntryOrganizationRel = fetchByA_O(
-			accountEntryId, organizationId);
-
-		if (accountEntryOrganizationRel == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByA_O.count(
+			finderCache, new Object[] {accountEntryId, organizationId});
 	}
-
-	private static final String _FINDER_COLUMN_A_O_ACCOUNTENTRYID_2 =
-		"accountEntryOrganizationRel.accountEntryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_A_O_ORGANIZATIONID_2 =
-		"accountEntryOrganizationRel.organizationId = ?";
 
 	public AccountEntryOrganizationRelPersistenceImpl() {
 		setModelClass(AccountEntryOrganizationRel.class);
@@ -1474,6 +1132,20 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, false);
 
+		_collectionPersistenceFinderByAccountEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByAccountEntryId,
+				_finderPathWithoutPaginationFindByAccountEntryId,
+				_finderPathCountByAccountEntryId,
+				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
+				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
+				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"accountEntryOrganizationRel.", "accountEntryId",
+					FinderColumn.Type.LONG, "=", true, true,
+					AccountEntryOrganizationRel::getAccountEntryId));
+
 		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
 			new String[] {
@@ -1492,10 +1164,36 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"organizationId"}, false);
 
+		_collectionPersistenceFinderByOrganizationId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByOrganizationId,
+				_finderPathWithoutPaginationFindByOrganizationId,
+				_finderPathCountByOrganizationId,
+				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
+				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
+				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"accountEntryOrganizationRel.", "organizationId",
+					FinderColumn.Type.LONG, "=", true, true,
+					AccountEntryOrganizationRel::getOrganizationId));
+
 		_finderPathFetchByA_O = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"accountEntryId", "organizationId"}, true);
+
+		_uniquePersistenceFinderByA_O = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByA_O,
+			_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
+			new FinderColumn<>(
+				"accountEntryOrganizationRel.", "accountEntryId",
+				FinderColumn.Type.LONG, "=", true, false,
+				AccountEntryOrganizationRel::getAccountEntryId),
+			new FinderColumn<>(
+				"accountEntryOrganizationRel.", "organizationId",
+				FinderColumn.Type.LONG, "=", true, true,
+				AccountEntryOrganizationRel::getOrganizationId));
 
 		AccountEntryOrganizationRelUtil.setPersistence(this);
 	}
@@ -1570,4 +1268,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1243963643
+// LIFERAY-SERVICE-BUILDER-HASH:-1790927294

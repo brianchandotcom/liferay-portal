@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -87,6 +88,8 @@ public class ChangesetCollectionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<ChangesetCollection>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63;.
@@ -160,93 +163,9 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
-
-		List<ChangesetCollection> list = null;
-
-		if (useFinderCache) {
-			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ChangesetCollection changesetCollection : list) {
-					if (groupId != changesetCollection.getGroupId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -327,53 +246,15 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
-
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"changesetCollection.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<ChangesetCollection>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the changeset collections where companyId = &#63;.
@@ -447,95 +328,9 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<ChangesetCollection> list = null;
-
-		if (useFinderCache) {
-			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ChangesetCollection changesetCollection : list) {
-					if (companyId != changesetCollection.getCompanyId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -616,53 +411,15 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"changesetCollection.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
 	private FinderPath _finderPathCountByG_U;
+	private CollectionPersistenceFinder<ChangesetCollection>
+		_collectionPersistenceFinderByG_U;
 
 	/**
 	 * Returns all the changeset collections where groupId = &#63; and userId = &#63;.
@@ -740,101 +497,9 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U;
-				finderArgs = new Object[] {groupId, userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_U;
-			finderArgs = new Object[] {
-				groupId, userId, start, end, orderByComparator
-			};
-		}
-
-		List<ChangesetCollection> list = null;
-
-		if (useFinderCache) {
-			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ChangesetCollection changesetCollection : list) {
-					if ((groupId != changesetCollection.getGroupId()) ||
-						(userId != changesetCollection.getUserId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_U.find(
+			finderCache, new Object[] {groupId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -923,58 +588,13 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_U;
-
-		Object[] finderArgs = new Object[] {groupId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_U.count(
+			finderCache, new Object[] {groupId, userId});
 	}
 
-	private static final String _FINDER_COLUMN_G_U_GROUPID_2 =
-		"changesetCollection.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_U_USERID_2 =
-		"changesetCollection.userId = ?";
-
 	private FinderPath _finderPathFetchByG_N;
+	private UniquePersistenceFinder<ChangesetCollection>
+		_uniquePersistenceFinderByG_N;
 
 	/**
 	 * Returns the changeset collection where groupId = &#63; and name = &#63; or throws a <code>NoSuchCollectionException</code> if it could not be found.
@@ -1037,97 +657,8 @@ public class ChangesetCollectionPersistenceImpl
 	public ChangesetCollection fetchByG_N(
 		long groupId, String name, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_N, finderArgs, this);
-		}
-
-		if (result instanceof ChangesetCollection) {
-			ChangesetCollection changesetCollection =
-				(ChangesetCollection)result;
-
-			if ((groupId != changesetCollection.getGroupId()) ||
-				!Objects.equals(name, changesetCollection.getName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_N_GROUPID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_G_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				List<ChangesetCollection> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_N, finderArgs, list);
-					}
-				}
-				else {
-					ChangesetCollection changesetCollection = list.get(0);
-
-					result = changesetCollection;
-
-					cacheResult(changesetCollection);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ChangesetCollection)result;
-		}
+		return _uniquePersistenceFinderByG_N.fetch(
+			finderCache, new Object[] {groupId, name}, useFinderCache);
 	}
 
 	/**
@@ -1155,27 +686,15 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByG_N(long groupId, String name) {
-		ChangesetCollection changesetCollection = fetchByG_N(groupId, name);
-
-		if (changesetCollection == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_N.count(
+			finderCache, new Object[] {groupId, name});
 	}
-
-	private static final String _FINDER_COLUMN_G_N_GROUPID_2 =
-		"changesetCollection.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_N_NAME_2 =
-		"changesetCollection.name = ?";
-
-	private static final String _FINDER_COLUMN_G_N_NAME_3 =
-		"(changesetCollection.name IS NULL OR changesetCollection.name = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_N;
 	private FinderPath _finderPathWithoutPaginationFindByC_N;
 	private FinderPath _finderPathCountByC_N;
+	private CollectionPersistenceFinder<ChangesetCollection>
+		_collectionPersistenceFinderByC_N;
 
 	/**
 	 * Returns all the changeset collections where companyId = &#63; and name = &#63;.
@@ -1253,114 +772,9 @@ public class ChangesetCollectionPersistenceImpl
 		OrderByComparator<ChangesetCollection> orderByComparator,
 		boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_N;
-				finderArgs = new Object[] {companyId, name};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_N;
-			finderArgs = new Object[] {
-				companyId, name, start, end, orderByComparator
-			};
-		}
-
-		List<ChangesetCollection> list = null;
-
-		if (useFinderCache) {
-			list = (List<ChangesetCollection>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ChangesetCollection changesetCollection : list) {
-					if ((companyId != changesetCollection.getCompanyId()) ||
-						!name.equals(changesetCollection.getName())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ChangesetCollectionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				list = (List<ChangesetCollection>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1449,72 +863,9 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = _finderPathCountByC_N;
-
-		Object[] finderArgs = new Object[] {companyId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CHANGESETCOLLECTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_N.count(
+			finderCache, new Object[] {companyId, name});
 	}
-
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
-		"changesetCollection.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
-		"changesetCollection.name = ?";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
-		"(changesetCollection.name IS NULL OR changesetCollection.name = '')";
 
 	public ChangesetCollectionPersistenceImpl() {
 		setModelClass(ChangesetCollection.class);
@@ -2110,6 +1461,19 @@ public class ChangesetCollectionPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId,
+				_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
+				_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
+				ChangesetCollectionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"changesetCollection.", "groupId", FinderColumn.Type.LONG,
+					"=", true, true, ChangesetCollection::getGroupId));
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2127,6 +1491,19 @@ public class ChangesetCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
+				_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
+				_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
+				ChangesetCollectionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"changesetCollection.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, ChangesetCollection::getCompanyId));
 
 		_finderPathWithPaginationFindByG_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
@@ -2147,10 +1524,32 @@ public class ChangesetCollectionPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, false);
 
+		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_U,
+			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
+			_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
+			ChangesetCollectionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"changesetCollection.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, ChangesetCollection::getGroupId),
+			new FinderColumn<>(
+				"changesetCollection.", "userId", FinderColumn.Type.LONG, "=",
+				true, true, ChangesetCollection::getUserId));
+
 		_finderPathFetchByG_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, true);
+
+		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_N, _SQL_SELECT_CHANGESETCOLLECTION_WHERE,
+			new FinderColumn<>(
+				"changesetCollection.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, ChangesetCollection::getGroupId),
+			new FinderColumn<>(
+				"changesetCollection.", "name", FinderColumn.Type.STRING, "=",
+				true, true, ChangesetCollection::getName));
 
 		_finderPathWithPaginationFindByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N",
@@ -2170,6 +1569,19 @@ public class ChangesetCollectionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
+
+		_collectionPersistenceFinderByC_N = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_N,
+			_finderPathWithoutPaginationFindByC_N, _finderPathCountByC_N,
+			_SQL_SELECT_CHANGESETCOLLECTION_WHERE,
+			_SQL_COUNT_CHANGESETCOLLECTION_WHERE,
+			ChangesetCollectionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"changesetCollection.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, ChangesetCollection::getCompanyId),
+			new FinderColumn<>(
+				"changesetCollection.", "name", FinderColumn.Type.STRING, "=",
+				true, true, ChangesetCollection::getName));
 
 		ChangesetCollectionUtil.setPersistence(this);
 	}
@@ -2242,4 +1654,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1705087852
+// LIFERAY-SERVICE-BUILDER-HASH:-70109011

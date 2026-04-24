@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -27,18 +26,18 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -83,6 +82,8 @@ public class FaroProjectUsagePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByF_U;
+	private UniquePersistenceFinder<FaroProjectUsage>
+		_uniquePersistenceFinderByF_U;
 
 	/**
 	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or throws a <code>NoSuchFaroProjectUsageException</code> if it could not be found.
@@ -146,100 +147,9 @@ public class FaroProjectUsagePersistenceImpl
 	public FaroProjectUsage fetchByF_U(
 		long faroProjectId, long usageTime, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {faroProjectId, usageTime};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByF_U, finderArgs, this);
-		}
-
-		if (result instanceof FaroProjectUsage) {
-			FaroProjectUsage faroProjectUsage = (FaroProjectUsage)result;
-
-			if ((faroProjectId != faroProjectUsage.getFaroProjectId()) ||
-				(usageTime != faroProjectUsage.getUsageTime())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_FAROPROJECTUSAGE_WHERE);
-
-			sb.append(_FINDER_COLUMN_F_U_FAROPROJECTID_2);
-
-			sb.append(_FINDER_COLUMN_F_U_USAGETIME_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(faroProjectId);
-
-				queryPos.add(usageTime);
-
-				List<FaroProjectUsage> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByF_U, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									faroProjectId, usageTime
-								};
-							}
-
-							_log.warn(
-								"FaroProjectUsagePersistenceImpl.fetchByF_U(long, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					FaroProjectUsage faroProjectUsage = list.get(0);
-
-					result = faroProjectUsage;
-
-					cacheResult(faroProjectUsage);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (FaroProjectUsage)result;
-		}
+		return _uniquePersistenceFinderByF_U.fetch(
+			finderCache, new Object[] {faroProjectId, usageTime},
+			useFinderCache);
 	}
 
 	/**
@@ -267,21 +177,9 @@ public class FaroProjectUsagePersistenceImpl
 	 */
 	@Override
 	public int countByF_U(long faroProjectId, long usageTime) {
-		FaroProjectUsage faroProjectUsage = fetchByF_U(
-			faroProjectId, usageTime);
-
-		if (faroProjectUsage == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByF_U.count(
+			finderCache, new Object[] {faroProjectId, usageTime});
 	}
-
-	private static final String _FINDER_COLUMN_F_U_FAROPROJECTID_2 =
-		"faroProjectUsage.faroProjectId = ? AND ";
-
-	private static final String _FINDER_COLUMN_F_U_USAGETIME_2 =
-		"faroProjectUsage.usageTime = ?";
 
 	public FaroProjectUsagePersistenceImpl() {
 		setModelClass(FaroProjectUsage.class);
@@ -832,6 +730,15 @@ public class FaroProjectUsagePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"faroProjectId", "usageTime"}, true);
 
+		_uniquePersistenceFinderByF_U = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByF_U, _SQL_SELECT_FAROPROJECTUSAGE_WHERE,
+			new FinderColumn<>(
+				"faroProjectUsage.", "faroProjectId", FinderColumn.Type.LONG,
+				"=", true, false, FaroProjectUsage::getFaroProjectId),
+			new FinderColumn<>(
+				"faroProjectUsage.", "usageTime", FinderColumn.Type.LONG, "=",
+				true, true, FaroProjectUsage::getUsageTime));
+
 		FaroProjectUsageUtil.setPersistence(this);
 	}
 
@@ -883,9 +790,6 @@ public class FaroProjectUsagePersistenceImpl
 	private static final String _SQL_COUNT_FAROPROJECTUSAGE =
 		"SELECT COUNT(faroProjectUsage) FROM FaroProjectUsage faroProjectUsage";
 
-	private static final String _SQL_COUNT_FAROPROJECTUSAGE_WHERE =
-		"SELECT COUNT(faroProjectUsage) FROM FaroProjectUsage faroProjectUsage WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroProjectUsage.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -903,4 +807,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542262760
+// LIFERAY-SERVICE-BUILDER-HASH:-1256421154

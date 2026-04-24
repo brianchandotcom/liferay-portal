@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,13 +44,10 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -93,6 +92,8 @@ public class CommerceWishListPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the commerce wish lists where uuid = &#63;.
@@ -163,106 +164,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if (!uuid.equals(commerceWishList.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -339,67 +243,13 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"commerceWishList.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(commerceWishList.uuid IS NULL OR commerceWishList.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<CommerceWishList>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce wish list where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchWishListException</code> if it could not be found.
@@ -462,96 +312,8 @@ public class CommerceWishListPersistenceImpl
 	public CommerceWishList fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		if (result instanceof CommerceWishList) {
-			CommerceWishList commerceWishList = (CommerceWishList)result;
-
-			if (!Objects.equals(uuid, commerceWishList.getUuid()) ||
-				(groupId != commerceWishList.getGroupId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				List<CommerceWishList> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
-				}
-				else {
-					CommerceWishList commerceWishList = list.get(0);
-
-					result = commerceWishList;
-
-					cacheResult(commerceWishList);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceWishList)result;
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -579,27 +341,15 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CommerceWishList commerceWishList = fetchByUUID_G(uuid, groupId);
-
-		if (commerceWishList == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"commerceWishList.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(commerceWishList.uuid IS NULL OR commerceWishList.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"commerceWishList.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the commerce wish lists where uuid = &#63; and companyId = &#63;.
@@ -678,114 +428,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if (!uuid.equals(commerceWishList.getUuid()) ||
-						(companyId != commerceWishList.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -874,76 +519,15 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"commerceWishList.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(commerceWishList.uuid IS NULL OR commerceWishList.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"commerceWishList.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63;.
@@ -1017,93 +601,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if (groupId != commerceWishList.getGroupId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1182,53 +682,15 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
-
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"commerceWishList.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the commerce wish lists where userId = &#63;.
@@ -1301,93 +763,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if (userId != commerceWishList.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1466,53 +844,15 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
-
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"commerceWishList.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_U;
 	private FinderPath _finderPathCountByG_U;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByG_U;
 
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63; and userId = &#63;.
@@ -1590,101 +930,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U;
-				finderArgs = new Object[] {groupId, userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_U;
-			finderArgs = new Object[] {
-				groupId, userId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if ((groupId != commerceWishList.getGroupId()) ||
-						(userId != commerceWishList.getUserId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_U.find(
+			finderCache, new Object[] {groupId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1773,59 +1021,14 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByG_U(long groupId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_U;
-
-		Object[] finderArgs = new Object[] {groupId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_U.count(
+			finderCache, new Object[] {groupId, userId});
 	}
-
-	private static final String _FINDER_COLUMN_G_U_GROUPID_2 =
-		"commerceWishList.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_U_USERID_2 =
-		"commerceWishList.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByU_LtC;
 	private FinderPath _finderPathWithPaginationCountByU_LtC;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByU_LtC;
 
 	/**
 	 * Returns all the commerce wish lists where userId = &#63; and createDate &lt; &#63;.
@@ -1904,103 +1107,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByU_LtC;
-		finderArgs = new Object[] {
-			userId, _getTime(createDate), start, end, orderByComparator
-		};
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if ((userId != commerceWishList.getUserId()) ||
-						(createDate.getTime() <= commerceWishList.getCreateDate(
-						).getTime())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_LTC_USERID_2);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_U_LTC_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_U_LTC_CREATEDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByU_LtC.find(
+			finderCache, new Object[] {userId, createDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2089,74 +1198,15 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public int countByU_LtC(long userId, Date createDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByU_LtC;
-
-		Object[] finderArgs = new Object[] {userId, _getTime(createDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_LTC_USERID_2);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_U_LTC_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_U_LTC_CREATEDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByU_LtC.count(
+			finderCache, new Object[] {userId, createDate});
 	}
-
-	private static final String _FINDER_COLUMN_U_LTC_USERID_2 =
-		"commerceWishList.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_LTC_CREATEDATE_1 =
-		"commerceWishList.createDate IS NULL";
-
-	private static final String _FINDER_COLUMN_U_LTC_CREATEDATE_2 =
-		"commerceWishList.createDate < ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_U_D;
 	private FinderPath _finderPathWithoutPaginationFindByG_U_D;
 	private FinderPath _finderPathCountByG_U_D;
+	private CollectionPersistenceFinder<CommerceWishList>
+		_collectionPersistenceFinderByG_U_D;
 
 	/**
 	 * Returns all the commerce wish lists where groupId = &#63; and userId = &#63; and defaultWishList = &#63;.
@@ -2244,107 +1294,9 @@ public class CommerceWishListPersistenceImpl
 		OrderByComparator<CommerceWishList> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_U_D;
-				finderArgs = new Object[] {groupId, userId, defaultWishList};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_U_D;
-			finderArgs = new Object[] {
-				groupId, userId, defaultWishList, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceWishList> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceWishList>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceWishList commerceWishList : list) {
-					if ((groupId != commerceWishList.getGroupId()) ||
-						(userId != commerceWishList.getUserId()) ||
-						(defaultWishList !=
-							commerceWishList.isDefaultWishList())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_D_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_D_USERID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_D_DEFAULTWISHLIST_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceWishListModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				queryPos.add(defaultWishList);
-
-				list = (List<CommerceWishList>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_U_D.find(
+			finderCache, new Object[] {groupId, userId, defaultWishList}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2444,63 +1396,9 @@ public class CommerceWishListPersistenceImpl
 	public int countByG_U_D(
 		long groupId, long userId, boolean defaultWishList) {
 
-		FinderPath finderPath = _finderPathCountByG_U_D;
-
-		Object[] finderArgs = new Object[] {groupId, userId, defaultWishList};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEWISHLIST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_U_D_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_D_USERID_2);
-
-			sb.append(_FINDER_COLUMN_G_U_D_DEFAULTWISHLIST_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(userId);
-
-				queryPos.add(defaultWishList);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_U_D.count(
+			finderCache, new Object[] {groupId, userId, defaultWishList});
 	}
-
-	private static final String _FINDER_COLUMN_G_U_D_GROUPID_2 =
-		"commerceWishList.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_U_D_USERID_2 =
-		"commerceWishList.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_U_D_DEFAULTWISHLIST_2 =
-		"commerceWishList.defaultWishList = ?";
 
 	public CommerceWishListPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3109,10 +2007,29 @@ public class CommerceWishListPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
+			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+			CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
+				true, true, CommerceWishList::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+			new FinderColumn<>(
+				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
+				true, false, CommerceWishList::getUuid),
+			new FinderColumn<>(
+				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
+				true, true, CommerceWishList::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -3133,6 +2050,20 @@ public class CommerceWishListPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+				CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
+					true, false, CommerceWishList::getUuid),
+				new FinderColumn<>(
+					"commerceWishList.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, CommerceWishList::getCompanyId));
+
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -3151,6 +2082,17 @@ public class CommerceWishListPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+				CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, CommerceWishList::getGroupId));
+
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -3167,6 +2109,17 @@ public class CommerceWishListPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
+
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
+				_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+				CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
+					true, true, CommerceWishList::getUserId));
 
 		_finderPathWithPaginationFindByG_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U",
@@ -3187,6 +2140,19 @@ public class CommerceWishListPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "userId"}, false);
 
+		_collectionPersistenceFinderByG_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_U,
+			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
+			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
+			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+			CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceWishList::getGroupId),
+			new FinderColumn<>(
+				"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
+				true, true, CommerceWishList::getUserId));
+
 		_finderPathWithPaginationFindByU_LtC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_LtC",
 			new String[] {
@@ -3200,6 +2166,19 @@ public class CommerceWishListPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_LtC",
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"userId", "createDate"}, false);
+
+		_collectionPersistenceFinderByU_LtC = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByU_LtC, null,
+			_finderPathWithPaginationCountByU_LtC,
+			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
+			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+			CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceWishList::getUserId),
+			new FinderColumn<>(
+				"commerceWishList.", "createDate", FinderColumn.Type.DATE, "<",
+				true, true, CommerceWishList::getCreateDate));
 
 		_finderPathWithPaginationFindByG_U_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_U_D",
@@ -3225,6 +2204,23 @@ public class CommerceWishListPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "userId", "defaultWishList"}, false);
+
+		_collectionPersistenceFinderByG_U_D = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_U_D,
+			_finderPathWithoutPaginationFindByG_U_D, _finderPathCountByG_U_D,
+			_SQL_SELECT_COMMERCEWISHLIST_WHERE,
+			_SQL_COUNT_COMMERCEWISHLIST_WHERE,
+			CommerceWishListModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceWishList.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceWishList::getGroupId),
+			new FinderColumn<>(
+				"commerceWishList.", "userId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceWishList::getUserId),
+			new FinderColumn<>(
+				"commerceWishList.", "defaultWishList",
+				FinderColumn.Type.BOOLEAN, "=", true, true,
+				CommerceWishList::isDefaultWishList));
 
 		CommerceWishListUtil.setPersistence(this);
 	}
@@ -3268,14 +2264,6 @@ public class CommerceWishListPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_COMMERCEWISHLIST =
 		"SELECT commerceWishList FROM CommerceWishList commerceWishList";
 
@@ -3308,4 +2296,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1897718712
+// LIFERAY-SERVICE-BUILDER-HASH:-1733543978

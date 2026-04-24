@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -33,6 +32,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -55,7 +57,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -100,6 +101,8 @@ public class DEDataListViewPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<DEDataListView>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the de data list views where uuid = &#63;.
@@ -174,106 +177,9 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid;
-					finderArgs = new Object[] {uuid};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid;
-				finderArgs = new Object[] {uuid, start, end, orderByComparator};
-			}
-
-			List<DEDataListView> list = null;
-
-			if (useFinderCache) {
-				list = (List<DEDataListView>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DEDataListView deDataListView : list) {
-						if (!uuid.equals(deDataListView.getUuid())) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DEDATALISTVIEW_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DEDataListViewModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					list = (List<DEDataListView>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid.find(
+				finderCache, new Object[] {uuid}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -355,69 +261,14 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid;
-
-			Object[] finderArgs = new Object[] {uuid};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DEDATALISTVIEW_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid.count(
+				finderCache, new Object[] {uuid});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"deDataListView.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(deDataListView.uuid IS NULL OR deDataListView.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<DEDataListView>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the de data list view where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataListViewException</code> if it could not be found.
@@ -484,96 +335,8 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {uuid, groupId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByUUID_G, finderArgs, this);
-			}
-
-			if (result instanceof DEDataListView) {
-				DEDataListView deDataListView = (DEDataListView)result;
-
-				if (!Objects.equals(uuid, deDataListView.getUuid()) ||
-					(groupId != deDataListView.getGroupId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_DEDATALISTVIEW_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					List<DEDataListView> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByUUID_G, finderArgs, list);
-						}
-					}
-					else {
-						DEDataListView deDataListView = list.get(0);
-
-						result = deDataListView;
-
-						cacheResult(deDataListView);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (DEDataListView)result;
-			}
+			return _uniquePersistenceFinderByUUID_G.fetch(
+				finderCache, new Object[] {uuid, groupId}, useFinderCache);
 		}
 	}
 
@@ -602,27 +365,15 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		DEDataListView deDataListView = fetchByUUID_G(uuid, groupId);
-
-		if (deDataListView == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"deDataListView.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(deDataListView.uuid IS NULL OR deDataListView.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"deDataListView.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<DEDataListView>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the de data list views where uuid = &#63; and companyId = &#63;.
@@ -705,114 +456,9 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid_C;
-					finderArgs = new Object[] {uuid, companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid_C;
-				finderArgs = new Object[] {
-					uuid, companyId, start, end, orderByComparator
-				};
-			}
-
-			List<DEDataListView> list = null;
-
-			if (useFinderCache) {
-				list = (List<DEDataListView>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DEDataListView deDataListView : list) {
-						if (!uuid.equals(deDataListView.getUuid()) ||
-							(companyId != deDataListView.getCompanyId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_DEDATALISTVIEW_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DEDataListViewModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					list = (List<DEDataListView>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid_C.find(
+				finderCache, new Object[] {uuid, companyId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -906,78 +552,16 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid_C;
-
-			Object[] finderArgs = new Object[] {uuid, companyId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DEDATALISTVIEW_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid_C.count(
+				finderCache, new Object[] {uuid, companyId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"deDataListView.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(deDataListView.uuid IS NULL OR deDataListView.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"deDataListView.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
 	private FinderPath _finderPathCountByDDMStructureId;
+	private CollectionPersistenceFinder<DEDataListView>
+		_collectionPersistenceFinderByDDMStructureId;
 
 	/**
 	 * Returns all the de data list views where ddmStructureId = &#63;.
@@ -1056,98 +640,9 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByDDMStructureId;
-					finderArgs = new Object[] {ddmStructureId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByDDMStructureId;
-				finderArgs = new Object[] {
-					ddmStructureId, start, end, orderByComparator
-				};
-			}
-
-			List<DEDataListView> list = null;
-
-			if (useFinderCache) {
-				list = (List<DEDataListView>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DEDataListView deDataListView : list) {
-						if (ddmStructureId !=
-								deDataListView.getDdmStructureId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DEDATALISTVIEW_WHERE);
-
-				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DEDataListViewModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(ddmStructureId);
-
-					list = (List<DEDataListView>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByDDMStructureId.find(
+				finderCache, new Object[] {ddmStructureId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1234,55 +729,16 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			FinderPath finderPath = _finderPathCountByDDMStructureId;
-
-			Object[] finderArgs = new Object[] {ddmStructureId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DEDATALISTVIEW_WHERE);
-
-				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(ddmStructureId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByDDMStructureId.count(
+				finderCache, new Object[] {ddmStructureId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2 =
-		"deDataListView.ddmStructureId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_DDMSI;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_DDMSI;
 	private FinderPath _finderPathCountByG_C_DDMSI;
+	private CollectionPersistenceFinder<DEDataListView>
+		_collectionPersistenceFinderByG_C_DDMSI;
 
 	/**
 	 * Returns all the de data list views where groupId = &#63; and companyId = &#63; and ddmStructureId = &#63;.
@@ -1374,110 +830,9 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_C_DDMSI;
-					finderArgs = new Object[] {
-						groupId, companyId, ddmStructureId
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_C_DDMSI;
-				finderArgs = new Object[] {
-					groupId, companyId, ddmStructureId, start, end,
-					orderByComparator
-				};
-			}
-
-			List<DEDataListView> list = null;
-
-			if (useFinderCache) {
-				list = (List<DEDataListView>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DEDataListView deDataListView : list) {
-						if ((groupId != deDataListView.getGroupId()) ||
-							(companyId != deDataListView.getCompanyId()) ||
-							(ddmStructureId !=
-								deDataListView.getDdmStructureId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_DEDATALISTVIEW_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_DDMSTRUCTUREID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DEDataListViewModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(companyId);
-
-					queryPos.add(ddmStructureId);
-
-					list = (List<DEDataListView>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_C_DDMSI.find(
+				finderCache, new Object[] {groupId, companyId, ddmStructureId},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1582,67 +937,10 @@ public class DEDataListViewPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DEDataListView.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_C_DDMSI;
-
-			Object[] finderArgs = new Object[] {
-				groupId, companyId, ddmStructureId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_DEDATALISTVIEW_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_DDMSI_DDMSTRUCTUREID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(companyId);
-
-					queryPos.add(ddmStructureId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_C_DDMSI.count(
+				finderCache, new Object[] {groupId, companyId, ddmStructureId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_G_C_DDMSI_GROUPID_2 =
-		"deDataListView.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_DDMSI_COMPANYID_2 =
-		"deDataListView.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_DDMSI_DDMSTRUCTUREID_2 =
-		"deDataListView.ddmStructureId = ?";
 
 	public DEDataListViewPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2521,10 +1819,28 @@ public class DEDataListViewPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_DEDATALISTVIEW_WHERE, _SQL_COUNT_DEDATALISTVIEW_WHERE,
+			DEDataListViewModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
+				true, DEDataListView::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+			new FinderColumn<>(
+				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
+				false, DEDataListView::getUuid),
+			new FinderColumn<>(
+				"deDataListView.", "groupId", FinderColumn.Type.LONG, "=", true,
+				true, DEDataListView::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -2545,6 +1861,20 @@ public class DEDataListViewPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+				_SQL_COUNT_DEDATALISTVIEW_WHERE,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"deDataListView.", "uuid", FinderColumn.Type.STRING, "=",
+					true, false, DEDataListView::getUuid),
+				new FinderColumn<>(
+					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, DEDataListView::getCompanyId));
+
 		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
 			new String[] {
@@ -2562,6 +1892,18 @@ public class DEDataListViewPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
 			new String[] {Long.class.getName()},
 			new String[] {"ddmStructureId"}, false);
+
+		_collectionPersistenceFinderByDDMStructureId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByDDMStructureId,
+				_finderPathWithoutPaginationFindByDDMStructureId,
+				_finderPathCountByDDMStructureId,
+				_SQL_SELECT_DEDATALISTVIEW_WHERE,
+				_SQL_COUNT_DEDATALISTVIEW_WHERE,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
+					"=", true, true, DEDataListView::getDdmStructureId));
 
 		_finderPathWithPaginationFindByG_C_DDMSI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_DDMSI",
@@ -2585,6 +1927,23 @@ public class DEDataListViewPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"groupId", "companyId", "ddmStructureId"}, false);
+
+		_collectionPersistenceFinderByG_C_DDMSI =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_C_DDMSI,
+				_finderPathWithoutPaginationFindByG_C_DDMSI,
+				_finderPathCountByG_C_DDMSI, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+				_SQL_COUNT_DEDATALISTVIEW_WHERE,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"deDataListView.", "groupId", FinderColumn.Type.LONG, "=",
+					true, false, DEDataListView::getGroupId),
+				new FinderColumn<>(
+					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
+					true, false, DEDataListView::getCompanyId),
+				new FinderColumn<>(
+					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
+					"=", true, true, DEDataListView::getDdmStructureId));
 
 		DEDataListViewUtil.setPersistence(this);
 	}
@@ -2663,4 +2022,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1354251444
+// LIFERAY-SERVICE-BUILDER-HASH:940528753

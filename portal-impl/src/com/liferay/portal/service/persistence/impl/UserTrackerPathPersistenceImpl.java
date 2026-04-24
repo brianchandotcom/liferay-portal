@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserTrackerPathException;
@@ -24,6 +23,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathPersistence;
 import com.liferay.portal.kernel.service.persistence.UserTrackerPathUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -76,6 +77,8 @@ public class UserTrackerPathPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUserTrackerId;
 	private FinderPath _finderPathWithoutPaginationFindByUserTrackerId;
 	private FinderPath _finderPathCountByUserTrackerId;
+	private CollectionPersistenceFinder<UserTrackerPath>
+		_collectionPersistenceFinderByUserTrackerId;
 
 	/**
 	 * Returns all the user tracker paths where userTrackerId = &#63;.
@@ -150,95 +153,9 @@ public class UserTrackerPathPersistenceImpl
 		OrderByComparator<UserTrackerPath> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserTrackerId;
-				finderArgs = new Object[] {userTrackerId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserTrackerId;
-			finderArgs = new Object[] {
-				userTrackerId, start, end, orderByComparator
-			};
-		}
-
-		List<UserTrackerPath> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserTrackerPath>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (UserTrackerPath userTrackerPath : list) {
-					if (userTrackerId != userTrackerPath.getUserTrackerId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_USERTRACKERPATH_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERTRACKERID_USERTRACKERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(UserTrackerPathModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userTrackerId);
-
-				list = (List<UserTrackerPath>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserTrackerId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userTrackerId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -320,50 +237,9 @@ public class UserTrackerPathPersistenceImpl
 	 */
 	@Override
 	public int countByUserTrackerId(long userTrackerId) {
-		FinderPath finderPath = _finderPathCountByUserTrackerId;
-
-		Object[] finderArgs = new Object[] {userTrackerId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_USERTRACKERPATH_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERTRACKERID_USERTRACKERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userTrackerId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserTrackerId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userTrackerId});
 	}
-
-	private static final String _FINDER_COLUMN_USERTRACKERID_USERTRACKERID_2 =
-		"userTrackerPath.userTrackerId = ?";
 
 	public UserTrackerPathPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -916,6 +792,18 @@ public class UserTrackerPathPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userTrackerId"},
 			false);
 
+		_collectionPersistenceFinderByUserTrackerId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserTrackerId,
+				_finderPathWithoutPaginationFindByUserTrackerId,
+				_finderPathCountByUserTrackerId,
+				_SQL_SELECT_USERTRACKERPATH_WHERE,
+				_SQL_COUNT_USERTRACKERPATH_WHERE,
+				UserTrackerPathModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"userTrackerPath.", "userTrackerId", FinderColumn.Type.LONG,
+					"=", true, true, UserTrackerPath::getUserTrackerId));
+
 		UserTrackerPathUtil.setPersistence(this);
 	}
 
@@ -957,4 +845,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:140424711
+// LIFERAY-SERVICE-BUILDER-HASH:-740804371

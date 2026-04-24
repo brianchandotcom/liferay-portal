@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchRememberMeTokenException;
@@ -26,6 +25,8 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RememberMeTokenPersistence;
 import com.liferay.portal.kernel.service.persistence.RememberMeTokenUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,8 +38,6 @@ import com.liferay.portal.model.impl.RememberMeTokenModelImpl;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
-
-import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -79,6 +78,8 @@ public class RememberMeTokenPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<RememberMeToken>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the remember me tokens where userId = &#63;.
@@ -149,93 +150,9 @@ public class RememberMeTokenPersistenceImpl
 		OrderByComparator<RememberMeToken> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<RememberMeToken> list = null;
-
-		if (useFinderCache) {
-			list = (List<RememberMeToken>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (RememberMeToken rememberMeToken : list) {
-					if (userId != rememberMeToken.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_REMEMBERMETOKEN_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(RememberMeTokenModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<RememberMeToken>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -314,53 +231,14 @@ public class RememberMeTokenPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_REMEMBERMETOKEN_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
-
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"rememberMeToken.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByLteExpirationDate;
 	private FinderPath _finderPathWithPaginationCountByLteExpirationDate;
+	private CollectionPersistenceFinder<RememberMeToken>
+		_collectionPersistenceFinderByLteExpirationDate;
 
 	/**
 	 * Returns all the remember me tokens where expirationDate &le; &#63;.
@@ -435,99 +313,9 @@ public class RememberMeTokenPersistenceImpl
 		OrderByComparator<RememberMeToken> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByLteExpirationDate;
-		finderArgs = new Object[] {
-			_getTime(expirationDate), start, end, orderByComparator
-		};
-
-		List<RememberMeToken> list = null;
-
-		if (useFinderCache) {
-			list = (List<RememberMeToken>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (RememberMeToken rememberMeToken : list) {
-					if (expirationDate.getTime() <
-							rememberMeToken.getExpirationDate(
-							).getTime()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_REMEMBERMETOKEN_WHERE);
-
-			boolean bindExpirationDate = false;
-
-			if (expirationDate == null) {
-				sb.append(_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_1);
-			}
-			else {
-				bindExpirationDate = true;
-
-				sb.append(_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(RememberMeTokenModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExpirationDate) {
-					queryPos.add(new Timestamp(expirationDate.getTime()));
-				}
-
-				list = (List<RememberMeToken>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLteExpirationDate.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -609,67 +397,9 @@ public class RememberMeTokenPersistenceImpl
 	 */
 	@Override
 	public int countByLteExpirationDate(Date expirationDate) {
-		FinderPath finderPath =
-			_finderPathWithPaginationCountByLteExpirationDate;
-
-		Object[] finderArgs = new Object[] {_getTime(expirationDate)};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_REMEMBERMETOKEN_WHERE);
-
-			boolean bindExpirationDate = false;
-
-			if (expirationDate == null) {
-				sb.append(_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_1);
-			}
-			else {
-				bindExpirationDate = true;
-
-				sb.append(_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExpirationDate) {
-					queryPos.add(new Timestamp(expirationDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLteExpirationDate.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate});
 	}
-
-	private static final String
-		_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_1 =
-			"rememberMeToken.expirationDate IS NULL";
-
-	private static final String
-		_FINDER_COLUMN_LTEEXPIRATIONDATE_EXPIRATIONDATE_2 =
-			"rememberMeToken.expirationDate <= ?";
 
 	public RememberMeTokenPersistenceImpl() {
 		setModelClass(RememberMeToken.class);
@@ -1225,6 +955,17 @@ public class RememberMeTokenPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId, _SQL_SELECT_REMEMBERMETOKEN_WHERE,
+				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
+				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"rememberMeToken.", "userId", FinderColumn.Type.LONG, "=",
+					true, true, RememberMeToken::getUserId));
+
 		_finderPathWithPaginationFindByLteExpirationDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLteExpirationDate",
 			new String[] {
@@ -1238,6 +979,18 @@ public class RememberMeTokenPersistenceImpl
 			new String[] {Date.class.getName()},
 			new String[] {"expirationDate"}, false);
 
+		_collectionPersistenceFinderByLteExpirationDate =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLteExpirationDate, null,
+				_finderPathWithPaginationCountByLteExpirationDate,
+				_SQL_SELECT_REMEMBERMETOKEN_WHERE,
+				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
+				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"rememberMeToken.", "expirationDate",
+					FinderColumn.Type.DATE, "<=", true, true,
+					RememberMeToken::getExpirationDate));
+
 		RememberMeTokenUtil.setPersistence(this);
 	}
 
@@ -1245,14 +998,6 @@ public class RememberMeTokenPersistenceImpl
 		RememberMeTokenUtil.setPersistence(null);
 
 		EntityCacheUtil.removeCache(RememberMeTokenImpl.class.getName());
-	}
-
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
 	}
 
 	private static final String _SQL_SELECT_REMEMBERMETOKEN =
@@ -1284,4 +1029,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1144915232
+// LIFERAY-SERVICE-BUILDER-HASH:-1806728915

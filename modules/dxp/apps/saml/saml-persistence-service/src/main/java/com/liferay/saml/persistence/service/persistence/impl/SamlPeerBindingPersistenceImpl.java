@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -21,6 +20,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -87,6 +87,8 @@ public class SamlPeerBindingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_D_SNIV;
 	private FinderPath _finderPathWithoutPaginationFindByC_D_SNIV;
 	private FinderPath _finderPathCountByC_D_SNIV;
+	private CollectionPersistenceFinder<SamlPeerBinding>
+		_collectionPersistenceFinderByC_D_SNIV;
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
@@ -175,121 +177,9 @@ public class SamlPeerBindingPersistenceImpl
 		int end, OrderByComparator<SamlPeerBinding> orderByComparator,
 		boolean useFinderCache) {
 
-		samlNameIdValue = Objects.toString(samlNameIdValue, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_D_SNIV;
-				finderArgs = new Object[] {companyId, deleted, samlNameIdValue};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_D_SNIV;
-			finderArgs = new Object[] {
-				companyId, deleted, samlNameIdValue, start, end,
-				orderByComparator
-			};
-		}
-
-		List<SamlPeerBinding> list = null;
-
-		if (useFinderCache) {
-			list = (List<SamlPeerBinding>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SamlPeerBinding samlPeerBinding : list) {
-					if ((companyId != samlPeerBinding.getCompanyId()) ||
-						(deleted != samlPeerBinding.isDeleted()) ||
-						!samlNameIdValue.equals(
-							samlPeerBinding.getSamlNameIdValue())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_D_SNIV_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_D_SNIV_DELETED_2);
-
-			boolean bindSamlNameIdValue = false;
-
-			if (samlNameIdValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3);
-			}
-			else {
-				bindSamlNameIdValue = true;
-
-				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SamlPeerBindingModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(deleted);
-
-				if (bindSamlNameIdValue) {
-					queryPos.add(samlNameIdValue);
-				}
-
-				list = (List<SamlPeerBinding>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_D_SNIV.find(
+			finderCache, new Object[] {companyId, deleted, samlNameIdValue},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -389,85 +279,15 @@ public class SamlPeerBindingPersistenceImpl
 	public int countByC_D_SNIV(
 		long companyId, boolean deleted, String samlNameIdValue) {
 
-		samlNameIdValue = Objects.toString(samlNameIdValue, "");
-
-		FinderPath finderPath = _finderPathCountByC_D_SNIV;
-
-		Object[] finderArgs = new Object[] {
-			companyId, deleted, samlNameIdValue
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_SAMLPEERBINDING_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_D_SNIV_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_D_SNIV_DELETED_2);
-
-			boolean bindSamlNameIdValue = false;
-
-			if (samlNameIdValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3);
-			}
-			else {
-				bindSamlNameIdValue = true;
-
-				sb.append(_FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(deleted);
-
-				if (bindSamlNameIdValue) {
-					queryPos.add(samlNameIdValue);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_D_SNIV.count(
+			finderCache, new Object[] {companyId, deleted, samlNameIdValue});
 	}
-
-	private static final String _FINDER_COLUMN_C_D_SNIV_COMPANYID_2 =
-		"samlPeerBinding.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_D_SNIV_DELETED_2 =
-		"samlPeerBinding.deleted = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_2 =
-		"samlPeerBinding.samlNameIdValue = ?";
-
-	private static final String _FINDER_COLUMN_C_D_SNIV_SAMLNAMEIDVALUE_3 =
-		"(samlPeerBinding.samlNameIdValue IS NULL OR samlPeerBinding.samlNameIdValue = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_U_SPEI_D;
 	private FinderPath _finderPathWithoutPaginationFindByC_U_SPEI_D;
 	private FinderPath _finderPathCountByC_U_SPEI_D;
+	private CollectionPersistenceFinder<SamlPeerBinding>
+		_collectionPersistenceFinderByC_U_SPEI_D;
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
@@ -562,128 +382,10 @@ public class SamlPeerBindingPersistenceImpl
 		OrderByComparator<SamlPeerBinding> orderByComparator,
 		boolean useFinderCache) {
 
-		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_U_SPEI_D;
-				finderArgs = new Object[] {
-					companyId, userId, samlPeerEntityId, deleted
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_U_SPEI_D;
-			finderArgs = new Object[] {
-				companyId, userId, samlPeerEntityId, deleted, start, end,
-				orderByComparator
-			};
-		}
-
-		List<SamlPeerBinding> list = null;
-
-		if (useFinderCache) {
-			list = (List<SamlPeerBinding>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SamlPeerBinding samlPeerBinding : list) {
-					if ((companyId != samlPeerBinding.getCompanyId()) ||
-						(userId != samlPeerBinding.getUserId()) ||
-						!samlPeerEntityId.equals(
-							samlPeerBinding.getSamlPeerEntityId()) ||
-						(deleted != samlPeerBinding.isDeleted())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_USERID_2);
-
-			boolean bindSamlPeerEntityId = false;
-
-			if (samlPeerEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_3);
-			}
-			else {
-				bindSamlPeerEntityId = true;
-
-				sb.append(_FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_DELETED_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SamlPeerBindingModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				if (bindSamlPeerEntityId) {
-					queryPos.add(samlPeerEntityId);
-				}
-
-				queryPos.add(deleted);
-
-				list = (List<SamlPeerBinding>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_U_SPEI_D.find(
+			finderCache,
+			new Object[] {companyId, userId, samlPeerEntityId, deleted}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -792,88 +494,10 @@ public class SamlPeerBindingPersistenceImpl
 	public int countByC_U_SPEI_D(
 		long companyId, long userId, String samlPeerEntityId, boolean deleted) {
 
-		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
-
-		FinderPath finderPath = _finderPathCountByC_U_SPEI_D;
-
-		Object[] finderArgs = new Object[] {
-			companyId, userId, samlPeerEntityId, deleted
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_SAMLPEERBINDING_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_USERID_2);
-
-			boolean bindSamlPeerEntityId = false;
-
-			if (samlPeerEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_3);
-			}
-			else {
-				bindSamlPeerEntityId = true;
-
-				sb.append(_FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_U_SPEI_D_DELETED_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				if (bindSamlPeerEntityId) {
-					queryPos.add(samlPeerEntityId);
-				}
-
-				queryPos.add(deleted);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_U_SPEI_D.count(
+			finderCache,
+			new Object[] {companyId, userId, samlPeerEntityId, deleted});
 	}
-
-	private static final String _FINDER_COLUMN_C_U_SPEI_D_COMPANYID_2 =
-		"samlPeerBinding.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_SPEI_D_USERID_2 =
-		"samlPeerBinding.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_2 =
-		"samlPeerBinding.samlPeerEntityId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_SPEI_D_SAMLPEERENTITYID_3 =
-		"(samlPeerBinding.samlPeerEntityId IS NULL OR samlPeerBinding.samlPeerEntityId = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_U_SPEI_D_DELETED_2 =
-		"samlPeerBinding.deleted = ?";
 
 	public SamlPeerBindingPersistenceImpl() {
 		setModelClass(SamlPeerBinding.class);
@@ -1437,6 +1061,24 @@ public class SamlPeerBindingPersistenceImpl
 			},
 			new String[] {"companyId", "deleted", "samlNameIdValue"}, false);
 
+		_collectionPersistenceFinderByC_D_SNIV =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_D_SNIV,
+				_finderPathWithoutPaginationFindByC_D_SNIV,
+				_finderPathCountByC_D_SNIV, _SQL_SELECT_SAMLPEERBINDING_WHERE,
+				_SQL_COUNT_SAMLPEERBINDING_WHERE,
+				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
+					"=", true, false, SamlPeerBinding::getCompanyId),
+				new FinderColumn<>(
+					"samlPeerBinding.", "deleted", FinderColumn.Type.BOOLEAN,
+					"=", true, false, SamlPeerBinding::isDeleted),
+				new FinderColumn<>(
+					"samlPeerBinding.", "samlNameIdValue",
+					FinderColumn.Type.STRING, "=", true, true,
+					SamlPeerBinding::getSamlNameIdValue));
+
 		_finderPathWithPaginationFindByC_U_SPEI_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U_SPEI_D",
 			new String[] {
@@ -1465,6 +1107,27 @@ public class SamlPeerBindingPersistenceImpl
 			},
 			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
 			false);
+
+		_collectionPersistenceFinderByC_U_SPEI_D =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_U_SPEI_D,
+				_finderPathWithoutPaginationFindByC_U_SPEI_D,
+				_finderPathCountByC_U_SPEI_D, _SQL_SELECT_SAMLPEERBINDING_WHERE,
+				_SQL_COUNT_SAMLPEERBINDING_WHERE,
+				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
+					"=", true, false, SamlPeerBinding::getCompanyId),
+				new FinderColumn<>(
+					"samlPeerBinding.", "userId", FinderColumn.Type.LONG, "=",
+					true, false, SamlPeerBinding::getUserId),
+				new FinderColumn<>(
+					"samlPeerBinding.", "samlPeerEntityId",
+					FinderColumn.Type.STRING, "=", true, false,
+					SamlPeerBinding::getSamlPeerEntityId),
+				new FinderColumn<>(
+					"samlPeerBinding.", "deleted", FinderColumn.Type.BOOLEAN,
+					"=", true, true, SamlPeerBinding::isDeleted));
 
 		SamlPeerBindingUtil.setPersistence(this);
 	}
@@ -1537,4 +1200,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-11716609
+// LIFERAY-SERVICE-BUILDER-HASH:1994829248

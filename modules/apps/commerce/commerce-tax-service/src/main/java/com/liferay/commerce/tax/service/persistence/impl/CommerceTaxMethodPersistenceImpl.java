@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,7 +46,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -89,6 +90,8 @@ public class CommerceTaxMethodPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<CommerceTaxMethod>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the commerce tax methods where groupId = &#63;.
@@ -162,93 +165,9 @@ public class CommerceTaxMethodPersistenceImpl
 		OrderByComparator<CommerceTaxMethod> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
-
-		List<CommerceTaxMethod> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceTaxMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceTaxMethod commerceTaxMethod : list) {
-					if (groupId != commerceTaxMethod.getGroupId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCETAXMETHOD_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceTaxMethodModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				list = (List<CommerceTaxMethod>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -328,51 +247,13 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
-
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCETAXMETHOD_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"commerceTaxMethod.groupId = ?";
-
 	private FinderPath _finderPathFetchByG_E;
+	private UniquePersistenceFinder<CommerceTaxMethod>
+		_uniquePersistenceFinderByG_E;
 
 	/**
 	 * Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or throws a <code>NoSuchTaxMethodException</code> if it could not be found.
@@ -435,96 +316,8 @@ public class CommerceTaxMethodPersistenceImpl
 	public CommerceTaxMethod fetchByG_E(
 		long groupId, String engineKey, boolean useFinderCache) {
 
-		engineKey = Objects.toString(engineKey, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, engineKey};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_E, finderArgs, this);
-		}
-
-		if (result instanceof CommerceTaxMethod) {
-			CommerceTaxMethod commerceTaxMethod = (CommerceTaxMethod)result;
-
-			if ((groupId != commerceTaxMethod.getGroupId()) ||
-				!Objects.equals(engineKey, commerceTaxMethod.getEngineKey())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_COMMERCETAXMETHOD_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
-
-			boolean bindEngineKey = false;
-
-			if (engineKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_ENGINEKEY_3);
-			}
-			else {
-				bindEngineKey = true;
-
-				sb.append(_FINDER_COLUMN_G_E_ENGINEKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindEngineKey) {
-					queryPos.add(engineKey);
-				}
-
-				List<CommerceTaxMethod> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_E, finderArgs, list);
-					}
-				}
-				else {
-					CommerceTaxMethod commerceTaxMethod = list.get(0);
-
-					result = commerceTaxMethod;
-
-					cacheResult(commerceTaxMethod);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceTaxMethod)result;
-		}
+		return _uniquePersistenceFinderByG_E.fetch(
+			finderCache, new Object[] {groupId, engineKey}, useFinderCache);
 	}
 
 	/**
@@ -552,27 +345,15 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Override
 	public int countByG_E(long groupId, String engineKey) {
-		CommerceTaxMethod commerceTaxMethod = fetchByG_E(groupId, engineKey);
-
-		if (commerceTaxMethod == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_E.count(
+			finderCache, new Object[] {groupId, engineKey});
 	}
-
-	private static final String _FINDER_COLUMN_G_E_GROUPID_2 =
-		"commerceTaxMethod.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_E_ENGINEKEY_2 =
-		"commerceTaxMethod.engineKey = ?";
-
-	private static final String _FINDER_COLUMN_G_E_ENGINEKEY_3 =
-		"(commerceTaxMethod.engineKey IS NULL OR commerceTaxMethod.engineKey = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
 	private FinderPath _finderPathCountByG_A;
+	private CollectionPersistenceFinder<CommerceTaxMethod>
+		_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns all the commerce tax methods where groupId = &#63; and active = &#63;.
@@ -650,101 +431,9 @@ public class CommerceTaxMethodPersistenceImpl
 		OrderByComparator<CommerceTaxMethod> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_A;
-				finderArgs = new Object[] {groupId, active};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_A;
-			finderArgs = new Object[] {
-				groupId, active, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceTaxMethod> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceTaxMethod>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceTaxMethod commerceTaxMethod : list) {
-					if ((groupId != commerceTaxMethod.getGroupId()) ||
-						(active != commerceTaxMethod.isActive())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCETAXMETHOD_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceTaxMethodModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(active);
-
-				list = (List<CommerceTaxMethod>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_A.find(
+			finderCache, new Object[] {groupId, active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -833,56 +522,9 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Override
 	public int countByG_A(long groupId, boolean active) {
-		FinderPath finderPath = _finderPathCountByG_A;
-
-		Object[] finderArgs = new Object[] {groupId, active};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCETAXMETHOD_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(active);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_A.count(
+			finderCache, new Object[] {groupId, active});
 	}
-
-	private static final String _FINDER_COLUMN_G_A_GROUPID_2 =
-		"commerceTaxMethod.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 =
-		"commerceTaxMethod.active = ?";
 
 	public CommerceTaxMethodPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1486,10 +1128,31 @@ public class CommerceTaxMethodPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
+				_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
+				CommerceTaxMethodModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG,
+					"=", true, true, CommerceTaxMethod::getGroupId));
+
 		_finderPathFetchByG_E = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "engineKey"}, true);
+
+		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_E, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
+			new FinderColumn<>(
+				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceTaxMethod::getGroupId),
+			new FinderColumn<>(
+				"commerceTaxMethod.", "engineKey", FinderColumn.Type.STRING,
+				"=", true, true, CommerceTaxMethod::getEngineKey));
 
 		_finderPathWithPaginationFindByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
@@ -1509,6 +1172,19 @@ public class CommerceTaxMethodPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
+
+		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_A,
+			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+			_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
+			_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
+			CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
+				true, false, CommerceTaxMethod::getGroupId),
+			new FinderColumn<>(
+				"commerceTaxMethod.", "active", FinderColumn.Type.BOOLEAN, "=",
+				true, true, CommerceTaxMethod::isActive));
 
 		CommerceTaxMethodUtil.setPersistence(this);
 	}
@@ -1584,4 +1260,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1224624000
+// LIFERAY-SERVICE-BUILDER-HASH:1967086998

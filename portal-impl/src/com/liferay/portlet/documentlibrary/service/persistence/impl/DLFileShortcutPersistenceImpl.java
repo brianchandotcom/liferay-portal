@@ -38,6 +38,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -100,6 +103,8 @@ public class DLFileShortcutPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the document library file shortcuts where uuid = &#63;.
@@ -174,106 +179,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid;
-					finderArgs = new Object[] {uuid};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid;
-				finderArgs = new Object[] {uuid, start, end, orderByComparator};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if (!uuid.equals(dlFileShortcut.getUuid())) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -355,69 +263,14 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid;
-
-			Object[] finderArgs = new Object[] {uuid};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_UUID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"dlFileShortcut.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<DLFileShortcut>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the document library file shortcut where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchFileShortcutException</code> if it could not be found.
@@ -484,96 +337,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {uuid, groupId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByUUID_G, finderArgs, this);
-			}
-
-			if (result instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut = (DLFileShortcut)result;
-
-				if (!Objects.equals(uuid, dlFileShortcut.getUuid()) ||
-					(groupId != dlFileShortcut.getGroupId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(groupId);
-
-					List<DLFileShortcut> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByUUID_G, finderArgs, list);
-						}
-					}
-					else {
-						DLFileShortcut dlFileShortcut = list.get(0);
-
-						result = dlFileShortcut;
-
-						cacheResult(dlFileShortcut);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (DLFileShortcut)result;
-			}
+			return _uniquePersistenceFinderByUUID_G.fetch(
+				FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId},
+				useFinderCache);
 		}
 	}
 
@@ -602,27 +368,15 @@ public class DLFileShortcutPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		DLFileShortcut dlFileShortcut = fetchByUUID_G(uuid, groupId);
-
-		if (dlFileShortcut == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"dlFileShortcut.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"dlFileShortcut.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the document library file shortcuts where uuid = &#63; and companyId = &#63;.
@@ -705,114 +459,10 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByUuid_C;
-					finderArgs = new Object[] {uuid, companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByUuid_C;
-				finderArgs = new Object[] {
-					uuid, companyId, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if (!uuid.equals(dlFileShortcut.getUuid()) ||
-							(companyId != dlFileShortcut.getCompanyId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByUuid_C.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {uuid, companyId}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -906,78 +556,17 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			uuid = Objects.toString(uuid, "");
-
-			FinderPath finderPath = _finderPathCountByUuid_C;
-
-			Object[] finderArgs = new Object[] {uuid, companyId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				boolean bindUuid = false;
-
-				if (uuid.isEmpty()) {
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-				}
-				else {
-					bindUuid = true;
-
-					sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-				}
-
-				sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindUuid) {
-						queryPos.add(uuid);
-					}
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByUuid_C.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {uuid, companyId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"dlFileShortcut.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(dlFileShortcut.uuid IS NULL OR dlFileShortcut.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"dlFileShortcut.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63;.
@@ -1055,95 +644,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByGroupId;
-					finderArgs = new Object[] {groupId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByGroupId;
-				finderArgs = new Object[] {
-					groupId, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if (groupId != dlFileShortcut.getGroupId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1369,46 +872,8 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByGroupId;
-
-			Object[] finderArgs = new Object[] {groupId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 		}
 	}
 
@@ -1475,6 +940,8 @@ public class DLFileShortcutPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the document library file shortcuts where companyId = &#63;.
@@ -1552,95 +1019,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByCompanyId;
-					finderArgs = new Object[] {companyId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByCompanyId;
-				finderArgs = new Object[] {
-					companyId, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if (companyId != dlFileShortcut.getCompanyId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByCompanyId.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1724,55 +1105,16 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByCompanyId;
-
-			Object[] finderArgs = new Object[] {companyId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByCompanyId.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"dlFileShortcut.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByToFileEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByToFileEntryId;
 	private FinderPath _finderPathCountByToFileEntryId;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByToFileEntryId;
 
 	/**
 	 * Returns all the document library file shortcuts where toFileEntryId = &#63;.
@@ -1851,98 +1193,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByToFileEntryId;
-					finderArgs = new Object[] {toFileEntryId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByToFileEntryId;
-				finderArgs = new Object[] {
-					toFileEntryId, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if (toFileEntryId !=
-								dlFileShortcut.getToFileEntryId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_TOFILEENTRYID_TOFILEENTRYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(toFileEntryId);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByToFileEntryId.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {toFileEntryId},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2029,55 +1282,16 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByToFileEntryId;
-
-			Object[] finderArgs = new Object[] {toFileEntryId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_TOFILEENTRYID_TOFILEENTRYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(toFileEntryId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByToFileEntryId.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {toFileEntryId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_TOFILEENTRYID_TOFILEENTRYID_2 =
-		"dlFileShortcut.toFileEntryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_F;
 	private FinderPath _finderPathWithoutPaginationFindByG_F;
 	private FinderPath _finderPathCountByG_F;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByG_F;
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63;.
@@ -2160,101 +1374,10 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_F;
-					finderArgs = new Object[] {groupId, folderId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_F;
-				finderArgs = new Object[] {
-					groupId, folderId, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if ((groupId != dlFileShortcut.getGroupId()) ||
-							(folderId != dlFileShortcut.getFolderId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_FOLDERID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_F.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -2497,50 +1620,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_F;
-
-			Object[] finderArgs = new Object[] {groupId, folderId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_FOLDERID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_F.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId});
 		}
 	}
 
@@ -2614,6 +1696,8 @@ public class DLFileShortcutPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_NotS;
 	private FinderPath _finderPathWithPaginationCountByC_NotS;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByC_NotS;
 
 	/**
 	 * Returns all the document library file shortcuts where companyId = &#63; and status &ne; &#63;.
@@ -2696,91 +1780,10 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByC_NotS;
-			finderArgs = new Object[] {
-				companyId, status, start, end, orderByComparator
-			};
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if ((companyId != dlFileShortcut.getCompanyId()) ||
-							(status == dlFileShortcut.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_NOTS_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_NOTS_STATUS_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(status);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_NotS.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, status}, start, end, orderByComparator,
+				useFinderCache);
 		}
 	}
 
@@ -2874,62 +1877,17 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathWithPaginationCountByC_NotS;
-
-			Object[] finderArgs = new Object[] {companyId, status};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_NOTS_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_NOTS_STATUS_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_NotS.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, status});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_C_NOTS_COMPANYID_2 =
-		"dlFileShortcut.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_NOTS_STATUS_2 =
-		"dlFileShortcut.status != ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_F_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_F_A;
 	private FinderPath _finderPathCountByG_F_A;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByG_F_A;
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63;.
@@ -3019,106 +1977,10 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_F_A;
-					finderArgs = new Object[] {groupId, folderId, active};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_F_A;
-				finderArgs = new Object[] {
-					groupId, folderId, active, start, end, orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if ((groupId != dlFileShortcut.getGroupId()) ||
-							(folderId != dlFileShortcut.getFolderId()) ||
-							(active != dlFileShortcut.isActive())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_FOLDERID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_ACTIVE_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					queryPos.add(active);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_F_A.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId, active}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3379,54 +2241,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_F_A;
-
-			Object[] finderArgs = new Object[] {groupId, folderId, active};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_FOLDERID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_ACTIVE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					queryPos.add(active);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_F_A.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId, active});
 		}
 	}
 
@@ -3504,15 +2321,14 @@ public class DLFileShortcutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_F_A_FOLDERID_2 =
 		"dlFileShortcut.folderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_F_A_ACTIVE_2 =
-		"dlFileShortcut.active = ?";
-
 	private static final String _FINDER_COLUMN_G_F_A_ACTIVE_2_SQL =
 		"dlFileShortcut.active_ = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_F_A_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_F_A_S;
 	private FinderPath _finderPathCountByG_F_A_S;
+	private CollectionPersistenceFinder<DLFileShortcut>
+		_collectionPersistenceFinderByG_F_A_S;
 
 	/**
 	 * Returns all the document library file shortcuts where groupId = &#63; and folderId = &#63; and active = &#63; and status = &#63;.
@@ -3609,114 +2425,10 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_F_A_S;
-					finderArgs = new Object[] {
-						groupId, folderId, active, status
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_F_A_S;
-				finderArgs = new Object[] {
-					groupId, folderId, active, status, start, end,
-					orderByComparator
-				};
-			}
-
-			List<DLFileShortcut> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileShortcut>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DLFileShortcut dlFileShortcut : list) {
-						if ((groupId != dlFileShortcut.getGroupId()) ||
-							(folderId != dlFileShortcut.getFolderId()) ||
-							(active != dlFileShortcut.isActive()) ||
-							(status != dlFileShortcut.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						6 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(6);
-				}
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_FOLDERID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_STATUS_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DLFileShortcutModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					queryPos.add(active);
-
-					queryPos.add(status);
-
-					list = (List<DLFileShortcut>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_F_A_S.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId, active, status}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3998,60 +2710,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_F_A_S;
-
-			Object[] finderArgs = new Object[] {
-				groupId, folderId, active, status
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_DLFILESHORTCUT_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_FOLDERID_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_ACTIVE_2);
-
-				sb.append(_FINDER_COLUMN_G_F_A_S_STATUS_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(folderId);
-
-					queryPos.add(active);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_F_A_S.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {groupId, folderId, active, status});
 		}
 	}
 
@@ -4136,9 +2797,6 @@ public class DLFileShortcutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_F_A_S_FOLDERID_2 =
 		"dlFileShortcut.folderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_F_A_S_ACTIVE_2 =
-		"dlFileShortcut.active = ? AND ";
-
 	private static final String _FINDER_COLUMN_G_F_A_S_ACTIVE_2_SQL =
 		"dlFileShortcut.active_ = ? AND ";
 
@@ -4146,6 +2804,8 @@ public class DLFileShortcutPersistenceImpl
 		"dlFileShortcut.status = ?";
 
 	private FinderPath _finderPathFetchByERC_G;
+	private UniquePersistenceFinder<DLFileShortcut>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the document library file shortcut where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchFileShortcutException</code> if it could not be found.
@@ -4216,98 +2876,9 @@ public class DLFileShortcutPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					DLFileShortcut.class)) {
 
-			externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {externalReferenceCode, groupId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByERC_G, finderArgs, this);
-			}
-
-			if (result instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut = (DLFileShortcut)result;
-
-				if (!Objects.equals(
-						externalReferenceCode,
-						dlFileShortcut.getExternalReferenceCode()) ||
-					(groupId != dlFileShortcut.getGroupId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_DLFILESHORTCUT_WHERE);
-
-				boolean bindExternalReferenceCode = false;
-
-				if (externalReferenceCode.isEmpty()) {
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
-				}
-				else {
-					bindExternalReferenceCode = true;
-
-					sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
-				}
-
-				sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindExternalReferenceCode) {
-						queryPos.add(externalReferenceCode);
-					}
-
-					queryPos.add(groupId);
-
-					List<DLFileShortcut> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByERC_G, finderArgs, list);
-						}
-					}
-					else {
-						DLFileShortcut dlFileShortcut = list.get(0);
-
-						result = dlFileShortcut;
-
-						cacheResult(dlFileShortcut);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (DLFileShortcut)result;
-			}
+			return _uniquePersistenceFinderByERC_G.fetch(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {externalReferenceCode, groupId}, useFinderCache);
 		}
 	}
 
@@ -4338,24 +2909,10 @@ public class DLFileShortcutPersistenceImpl
 	 */
 	@Override
 	public int countByERC_G(String externalReferenceCode, long groupId) {
-		DLFileShortcut dlFileShortcut = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (dlFileShortcut == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_G.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
-		"dlFileShortcut.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
-		"(dlFileShortcut.externalReferenceCode IS NULL OR dlFileShortcut.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
-		"dlFileShortcut.groupId = ?";
 
 	public DLFileShortcutPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -5323,10 +3880,28 @@ public class DLFileShortcutPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
+				true, DLFileShortcut::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+			new FinderColumn<>(
+				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
+				false, DLFileShortcut::getUuid),
+			new FinderColumn<>(
+				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
+				true, DLFileShortcut::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -5347,6 +3922,20 @@ public class DLFileShortcutPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=",
+					true, false, DLFileShortcut::getUuid),
+				new FinderColumn<>(
+					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, DLFileShortcut::getCompanyId));
+
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -5364,6 +3953,17 @@ public class DLFileShortcutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, DLFileShortcut::getGroupId));
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
@@ -5383,6 +3983,17 @@ public class DLFileShortcutPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, DLFileShortcut::getCompanyId));
+
 		_finderPathWithPaginationFindByToFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToFileEntryId",
 			new String[] {
@@ -5400,6 +4011,18 @@ public class DLFileShortcutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToFileEntryId",
 			new String[] {Long.class.getName()}, new String[] {"toFileEntryId"},
 			false);
+
+		_collectionPersistenceFinderByToFileEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByToFileEntryId,
+				_finderPathWithoutPaginationFindByToFileEntryId,
+				_finderPathCountByToFileEntryId,
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "toFileEntryId", FinderColumn.Type.LONG,
+					"=", true, true, DLFileShortcut::getToFileEntryId));
 
 		_finderPathWithPaginationFindByG_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F",
@@ -5420,6 +4043,18 @@ public class DLFileShortcutPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "folderId"}, false);
 
+		_collectionPersistenceFinderByG_F = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_F,
+			_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
+			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
+				false, DLFileShortcut::getGroupId),
+			new FinderColumn<>(
+				"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
+				true, true, DLFileShortcut::getFolderId));
+
 		_finderPathWithPaginationFindByC_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_NotS",
 			new String[] {
@@ -5433,6 +4068,20 @@ public class DLFileShortcutPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotS",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
+
+		_collectionPersistenceFinderByC_NotS =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_NotS, null,
+				_finderPathWithPaginationCountByC_NotS,
+				_SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
+					true, false, DLFileShortcut::getCompanyId),
+				new FinderColumn<>(
+					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER,
+					"!=", true, true, DLFileShortcut::getStatus));
 
 		_finderPathWithPaginationFindByG_F_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A",
@@ -5458,6 +4107,21 @@ public class DLFileShortcutPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "folderId", "active_"}, false);
+
+		_collectionPersistenceFinderByG_F_A = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_F_A,
+			_finderPathWithoutPaginationFindByG_F_A, _finderPathCountByG_F_A,
+			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
+				false, DLFileShortcut::getGroupId),
+			new FinderColumn<>(
+				"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
+				true, false, DLFileShortcut::getFolderId),
+			new FinderColumn<>(
+				"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
+				true, true, DLFileShortcut::isActive));
 
 		_finderPathWithPaginationFindByG_F_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_F_A_S",
@@ -5485,10 +4149,40 @@ public class DLFileShortcutPersistenceImpl
 			},
 			new String[] {"groupId", "folderId", "active_", "status"}, false);
 
+		_collectionPersistenceFinderByG_F_A_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_F_A_S,
+				_finderPathWithoutPaginationFindByG_F_A_S,
+				_finderPathCountByG_F_A_S, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+				_SQL_COUNT_DLFILESHORTCUT_WHERE,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=",
+					true, false, DLFileShortcut::getGroupId),
+				new FinderColumn<>(
+					"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
+					true, false, DLFileShortcut::getFolderId),
+				new FinderColumn<>(
+					"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
+					true, false, DLFileShortcut::isActive),
+				new FinderColumn<>(
+					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER, "=",
+					true, true, DLFileShortcut::getStatus));
+
 		_finderPathFetchByERC_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, true);
+
+		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+			new FinderColumn<>(
+				"dlFileShortcut.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				DLFileShortcut::getExternalReferenceCode),
+			new FinderColumn<>(
+				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
+				true, DLFileShortcut::getGroupId));
 
 		DLFileShortcutUtil.setPersistence(this);
 	}
@@ -5554,4 +4248,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:749169016
+// LIFERAY-SERVICE-BUILDER-HASH:-841679484

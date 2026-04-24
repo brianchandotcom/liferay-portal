@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -94,6 +96,8 @@ public class ExpandoColumnPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByTableId;
 	private FinderPath _finderPathWithoutPaginationFindByTableId;
 	private FinderPath _finderPathCountByTableId;
+	private CollectionPersistenceFinder<ExpandoColumn>
+		_collectionPersistenceFinderByTableId;
 
 	/**
 	 * Returns all the expando columns where tableId = &#63;.
@@ -169,95 +173,9 @@ public class ExpandoColumnPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					ExpandoColumn.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByTableId;
-					finderArgs = new Object[] {tableId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByTableId;
-				finderArgs = new Object[] {
-					tableId, start, end, orderByComparator
-				};
-			}
-
-			List<ExpandoColumn> list = null;
-
-			if (useFinderCache) {
-				list = (List<ExpandoColumn>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (ExpandoColumn expandoColumn : list) {
-						if (tableId != expandoColumn.getTableId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_EXPANDOCOLUMN_WHERE);
-
-				sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(tableId);
-
-					list = (List<ExpandoColumn>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByTableId.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {tableId}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -482,46 +400,8 @@ public class ExpandoColumnPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					ExpandoColumn.class)) {
 
-			FinderPath finderPath = _finderPathCountByTableId;
-
-			Object[] finderArgs = new Object[] {tableId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_EXPANDOCOLUMN_WHERE);
-
-				sb.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(tableId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByTableId.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 		}
 	}
 
@@ -2194,6 +2074,17 @@ public class ExpandoColumnPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"tableId"},
 			false);
 
+		_collectionPersistenceFinderByTableId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByTableId,
+				_finderPathWithoutPaginationFindByTableId,
+				_finderPathCountByTableId, _SQL_SELECT_EXPANDOCOLUMN_WHERE,
+				_SQL_COUNT_EXPANDOCOLUMN_WHERE,
+				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
+					true, true, ExpandoColumn::getTableId));
+
 		_finderPathWithPaginationFindByT_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_N",
 			new String[] {
@@ -2287,4 +2178,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1185468141
+// LIFERAY-SERVICE-BUILDER-HASH:-424160067

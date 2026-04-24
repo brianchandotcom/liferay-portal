@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
@@ -23,6 +22,8 @@ import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,7 +38,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -71,6 +71,7 @@ public class ClassNamePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByValue;
+	private UniquePersistenceFinder<ClassName> _uniquePersistenceFinderByValue;
 
 	/**
 	 * Returns the class name where value = &#63; or throws a <code>NoSuchClassNameException</code> if it could not be found.
@@ -123,90 +124,9 @@ public class ClassNamePersistenceImpl
 	 */
 	@Override
 	public ClassName fetchByValue(String value, boolean useFinderCache) {
-		value = Objects.toString(value, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {value};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByValue, finderArgs, this);
-		}
-
-		if (result instanceof ClassName) {
-			ClassName className = (ClassName)result;
-
-			if (!Objects.equals(value, className.getValue())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_CLASSNAME_WHERE);
-
-			boolean bindValue = false;
-
-			if (value.isEmpty()) {
-				sb.append(_FINDER_COLUMN_VALUE_VALUE_3);
-			}
-			else {
-				bindValue = true;
-
-				sb.append(_FINDER_COLUMN_VALUE_VALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindValue) {
-					queryPos.add(value);
-				}
-
-				List<ClassName> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByValue, finderArgs, list);
-					}
-				}
-				else {
-					ClassName className = list.get(0);
-
-					result = className;
-
-					cacheResult(className);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ClassName)result;
-		}
+		return _uniquePersistenceFinderByValue.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {value},
+			useFinderCache);
 	}
 
 	/**
@@ -232,20 +152,9 @@ public class ClassNamePersistenceImpl
 	 */
 	@Override
 	public int countByValue(String value) {
-		ClassName className = fetchByValue(value);
-
-		if (className == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByValue.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {value});
 	}
-
-	private static final String _FINDER_COLUMN_VALUE_VALUE_2 =
-		"className.value = ?";
-
-	private static final String _FINDER_COLUMN_VALUE_VALUE_3 =
-		"(className.value IS NULL OR className.value = '')";
 
 	public ClassNamePersistenceImpl() {
 		setModelClass(ClassName.class);
@@ -774,6 +683,12 @@ public class ClassNamePersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"value"},
 			true);
 
+		_uniquePersistenceFinderByValue = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByValue, _SQL_SELECT_CLASSNAME_WHERE,
+			new FinderColumn<>(
+				"className.", "value", FinderColumn.Type.STRING, "=", true,
+				true, ClassName::getValue));
+
 		ClassNameUtil.setPersistence(this);
 	}
 
@@ -792,9 +707,6 @@ public class ClassNamePersistenceImpl
 	private static final String _SQL_COUNT_CLASSNAME =
 		"SELECT COUNT(className) FROM ClassName className";
 
-	private static final String _SQL_COUNT_CLASSNAME_WHERE =
-		"SELECT COUNT(className) FROM ClassName className WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "className.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -812,4 +724,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1152174268
+// LIFERAY-SERVICE-BUILDER-HASH:-639336439

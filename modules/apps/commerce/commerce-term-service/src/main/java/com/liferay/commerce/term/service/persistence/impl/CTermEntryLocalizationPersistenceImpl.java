@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -32,6 +31,9 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -45,7 +47,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -90,6 +91,8 @@ public class CTermEntryLocalizationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
 	private FinderPath _finderPathCountByCommerceTermEntryId;
+	private CollectionPersistenceFinder<CTermEntryLocalization>
+		_collectionPersistenceFinderByCommerceTermEntryId;
 
 	/**
 	 * Returns all the c term entry localizations where commerceTermEntryId = &#63;.
@@ -166,98 +169,9 @@ public class CTermEntryLocalizationPersistenceImpl
 		OrderByComparator<CTermEntryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceTermEntryId;
-				finderArgs = new Object[] {commerceTermEntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCommerceTermEntryId;
-			finderArgs = new Object[] {
-				commerceTermEntryId, start, end, orderByComparator
-			};
-		}
-
-		List<CTermEntryLocalization> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTermEntryLocalization>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTermEntryLocalization cTermEntryLocalization : list) {
-					if (commerceTermEntryId !=
-							cTermEntryLocalization.getCommerceTermEntryId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCETERMENTRYID_COMMERCETERMENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTermEntryLocalizationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceTermEntryId);
-
-				list = (List<CTermEntryLocalization>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceTermEntryId.find(
+			finderCache, new Object[] {commerceTermEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -340,52 +254,13 @@ public class CTermEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceTermEntryId(long commerceTermEntryId) {
-		FinderPath finderPath = _finderPathCountByCommerceTermEntryId;
-
-		Object[] finderArgs = new Object[] {commerceTermEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCETERMENTRYID_COMMERCETERMENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceTermEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceTermEntryId.count(
+			finderCache, new Object[] {commerceTermEntryId});
 	}
 
-	private static final String
-		_FINDER_COLUMN_COMMERCETERMENTRYID_COMMERCETERMENTRYID_2 =
-			"cTermEntryLocalization.commerceTermEntryId = ?";
-
 	private FinderPath _finderPathFetchByCommerceTermEntryId_LanguageId;
+	private UniquePersistenceFinder<CTermEntryLocalization>
+		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId;
 
 	/**
 	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or throws a <code>NoSuchCTermEntryLocalizationException</code> if it could not be found.
@@ -454,104 +329,9 @@ public class CTermEntryLocalizationPersistenceImpl
 	public CTermEntryLocalization fetchByCommerceTermEntryId_LanguageId(
 		long commerceTermEntryId, String languageId, boolean useFinderCache) {
 
-		languageId = Objects.toString(languageId, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {commerceTermEntryId, languageId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCommerceTermEntryId_LanguageId, finderArgs,
-				this);
-		}
-
-		if (result instanceof CTermEntryLocalization) {
-			CTermEntryLocalization cTermEntryLocalization =
-				(CTermEntryLocalization)result;
-
-			if ((commerceTermEntryId !=
-					cTermEntryLocalization.getCommerceTermEntryId()) ||
-				!Objects.equals(
-					languageId, cTermEntryLocalization.getLanguageId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_COMMERCETERMENTRYID_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				sb.append(
-					_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceTermEntryId);
-
-				if (bindLanguageId) {
-					queryPos.add(languageId);
-				}
-
-				List<CTermEntryLocalization> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCommerceTermEntryId_LanguageId,
-							finderArgs, list);
-					}
-				}
-				else {
-					CTermEntryLocalization cTermEntryLocalization = list.get(0);
-
-					result = cTermEntryLocalization;
-
-					cacheResult(cTermEntryLocalization);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CTermEntryLocalization)result;
-		}
+		return _uniquePersistenceFinderByCommerceTermEntryId_LanguageId.fetch(
+			finderCache, new Object[] {commerceTermEntryId, languageId},
+			useFinderCache);
 	}
 
 	/**
@@ -584,28 +364,9 @@ public class CTermEntryLocalizationPersistenceImpl
 	public int countByCommerceTermEntryId_LanguageId(
 		long commerceTermEntryId, String languageId) {
 
-		CTermEntryLocalization cTermEntryLocalization =
-			fetchByCommerceTermEntryId_LanguageId(
-				commerceTermEntryId, languageId);
-
-		if (cTermEntryLocalization == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByCommerceTermEntryId_LanguageId.count(
+			finderCache, new Object[] {commerceTermEntryId, languageId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_COMMERCETERMENTRYID_2 =
-			"cTermEntryLocalization.commerceTermEntryId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_2 =
-			"cTermEntryLocalization.languageId = ?";
-
-	private static final String
-		_FINDER_COLUMN_COMMERCETERMENTRYID_LANGUAGEID_LANGUAGEID_3 =
-			"(cTermEntryLocalization.languageId IS NULL OR cTermEntryLocalization.languageId = '')";
 
 	public CTermEntryLocalizationPersistenceImpl() {
 		setModelClass(CTermEntryLocalization.class);
@@ -1230,10 +991,37 @@ public class CTermEntryLocalizationPersistenceImpl
 			"countByCommerceTermEntryId", new String[] {Long.class.getName()},
 			new String[] {"commerceTermEntryId"}, false);
 
+		_collectionPersistenceFinderByCommerceTermEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCommerceTermEntryId,
+				_finderPathWithoutPaginationFindByCommerceTermEntryId,
+				_finderPathCountByCommerceTermEntryId,
+				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE,
+				_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE,
+				CTermEntryLocalizationModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cTermEntryLocalization.", "commerceTermEntryId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CTermEntryLocalization::getCommerceTermEntryId));
+
 		_finderPathFetchByCommerceTermEntryId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceTermEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"commerceTermEntryId", "languageId"}, true);
+
+		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchByCommerceTermEntryId_LanguageId,
+				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE,
+				new FinderColumn<>(
+					"cTermEntryLocalization.", "commerceTermEntryId",
+					FinderColumn.Type.LONG, "=", true, false,
+					CTermEntryLocalization::getCommerceTermEntryId),
+				new FinderColumn<>(
+					"cTermEntryLocalization.", "languageId",
+					FinderColumn.Type.STRING, "=", true, true,
+					CTermEntryLocalization::getLanguageId));
 
 		CTermEntryLocalizationUtil.setPersistence(this);
 	}
@@ -1307,4 +1095,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1227256571
+// LIFERAY-SERVICE-BUILDER-HASH:-1423903269

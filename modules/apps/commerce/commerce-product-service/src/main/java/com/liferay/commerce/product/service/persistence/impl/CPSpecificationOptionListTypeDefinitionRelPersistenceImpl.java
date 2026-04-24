@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -31,6 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -97,6 +99,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	private FinderPath
 		_finderPathWithoutPaginationFindByCPSpecificationOptionId;
 	private FinderPath _finderPathCountByCPSpecificationOptionId;
+	private CollectionPersistenceFinder
+		<CPSpecificationOptionListTypeDefinitionRel>
+			_collectionPersistenceFinderByCPSpecificationOptionId;
 
 	/**
 	 * Returns all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
@@ -184,108 +189,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPSpecificationOptionListTypeDefinitionRel.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByCPSpecificationOptionId;
-					finderArgs = new Object[] {CPSpecificationOptionId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath =
-					_finderPathWithPaginationFindByCPSpecificationOptionId;
-				finderArgs = new Object[] {
-					CPSpecificationOptionId, start, end, orderByComparator
-				};
-			}
-
-			List<CPSpecificationOptionListTypeDefinitionRel> list = null;
-
-			if (useFinderCache) {
-				list =
-					(List<CPSpecificationOptionListTypeDefinitionRel>)
-						finderCache.getResult(finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (CPSpecificationOptionListTypeDefinitionRel
-							cpSpecificationOptionListTypeDefinitionRel : list) {
-
-						if (CPSpecificationOptionId !=
-								cpSpecificationOptionListTypeDefinitionRel.
-									getCPSpecificationOptionId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(
-					_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_CPSPECIFICATIONOPTIONID_CPSPECIFICATIONOPTIONID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(
-						CPSpecificationOptionListTypeDefinitionRelModelImpl.
-							ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPSpecificationOptionId);
-
-					list =
-						(List<CPSpecificationOptionListTypeDefinitionRel>)
-							QueryUtil.list(query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByCPSpecificationOptionId.find(
+				finderCache, new Object[] {CPSpecificationOptionId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -381,58 +287,17 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPSpecificationOptionListTypeDefinitionRel.class)) {
 
-			FinderPath finderPath = _finderPathCountByCPSpecificationOptionId;
-
-			Object[] finderArgs = new Object[] {CPSpecificationOptionId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(
-					_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_CPSPECIFICATIONOPTIONID_CPSPECIFICATIONOPTIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPSpecificationOptionId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByCPSpecificationOptionId.count(
+				finderCache, new Object[] {CPSpecificationOptionId});
 		}
 	}
-
-	private static final String
-		_FINDER_COLUMN_CPSPECIFICATIONOPTIONID_CPSPECIFICATIONOPTIONID_2 =
-			"cpSpecificationOptionListTypeDefinitionRel.CPSpecificationOptionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathCountByListTypeDefinitionId;
+	private CollectionPersistenceFinder
+		<CPSpecificationOptionListTypeDefinitionRel>
+			_collectionPersistenceFinderByListTypeDefinitionId;
 
 	/**
 	 * Returns all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
@@ -519,108 +384,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPSpecificationOptionListTypeDefinitionRel.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByListTypeDefinitionId;
-					finderArgs = new Object[] {listTypeDefinitionId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath =
-					_finderPathWithPaginationFindByListTypeDefinitionId;
-				finderArgs = new Object[] {
-					listTypeDefinitionId, start, end, orderByComparator
-				};
-			}
-
-			List<CPSpecificationOptionListTypeDefinitionRel> list = null;
-
-			if (useFinderCache) {
-				list =
-					(List<CPSpecificationOptionListTypeDefinitionRel>)
-						finderCache.getResult(finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (CPSpecificationOptionListTypeDefinitionRel
-							cpSpecificationOptionListTypeDefinitionRel : list) {
-
-						if (listTypeDefinitionId !=
-								cpSpecificationOptionListTypeDefinitionRel.
-									getListTypeDefinitionId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(
-					_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(
-						CPSpecificationOptionListTypeDefinitionRelModelImpl.
-							ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(listTypeDefinitionId);
-
-					list =
-						(List<CPSpecificationOptionListTypeDefinitionRel>)
-							QueryUtil.list(query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByListTypeDefinitionId.find(
+				finderCache, new Object[] {listTypeDefinitionId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -716,56 +482,14 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPSpecificationOptionListTypeDefinitionRel.class)) {
 
-			FinderPath finderPath = _finderPathCountByListTypeDefinitionId;
-
-			Object[] finderArgs = new Object[] {listTypeDefinitionId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(
-					_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE);
-
-				sb.append(
-					_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(listTypeDefinitionId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByListTypeDefinitionId.count(
+				finderCache, new Object[] {listTypeDefinitionId});
 		}
 	}
 
-	private static final String
-		_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2 =
-			"cpSpecificationOptionListTypeDefinitionRel.listTypeDefinitionId = ?";
-
 	private FinderPath _finderPathFetchByC_L;
+	private UniquePersistenceFinder<CPSpecificationOptionListTypeDefinitionRel>
+		_uniquePersistenceFinderByC_L;
 
 	/**
 	 * Returns the cp specification option list type definition rel where CPSpecificationOptionId = &#63; and listTypeDefinitionId = &#63; or throws a <code>NoSuchCPSpecificationOptionListTypeDefinitionRelException</code> if it could not be found.
@@ -839,95 +563,10 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPSpecificationOptionListTypeDefinitionRel.class)) {
 
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					CPSpecificationOptionId, listTypeDefinitionId
-				};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByC_L, finderArgs, this);
-			}
-
-			if (result instanceof CPSpecificationOptionListTypeDefinitionRel) {
-				CPSpecificationOptionListTypeDefinitionRel
-					cpSpecificationOptionListTypeDefinitionRel =
-						(CPSpecificationOptionListTypeDefinitionRel)result;
-
-				if ((CPSpecificationOptionId !=
-						cpSpecificationOptionListTypeDefinitionRel.
-							getCPSpecificationOptionId()) ||
-					(listTypeDefinitionId !=
-						cpSpecificationOptionListTypeDefinitionRel.
-							getListTypeDefinitionId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(
-					_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_L_CPSPECIFICATIONOPTIONID_2);
-
-				sb.append(_FINDER_COLUMN_C_L_LISTTYPEDEFINITIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPSpecificationOptionId);
-
-					queryPos.add(listTypeDefinitionId);
-
-					List<CPSpecificationOptionListTypeDefinitionRel> list =
-						query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByC_L, finderArgs, list);
-						}
-					}
-					else {
-						CPSpecificationOptionListTypeDefinitionRel
-							cpSpecificationOptionListTypeDefinitionRel =
-								list.get(0);
-
-						result = cpSpecificationOptionListTypeDefinitionRel;
-
-						cacheResult(cpSpecificationOptionListTypeDefinitionRel);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CPSpecificationOptionListTypeDefinitionRel)result;
-			}
+			return _uniquePersistenceFinderByC_L.fetch(
+				finderCache,
+				new Object[] {CPSpecificationOptionId, listTypeDefinitionId},
+				useFinderCache);
 		}
 	}
 
@@ -961,22 +600,10 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	public int countByC_L(
 		long CPSpecificationOptionId, long listTypeDefinitionId) {
 
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel = fetchByC_L(
-				CPSpecificationOptionId, listTypeDefinitionId);
-
-		if (cpSpecificationOptionListTypeDefinitionRel == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_L.count(
+			finderCache,
+			new Object[] {CPSpecificationOptionId, listTypeDefinitionId});
 	}
-
-	private static final String _FINDER_COLUMN_C_L_CPSPECIFICATIONOPTIONID_2 =
-		"cpSpecificationOptionListTypeDefinitionRel.CPSpecificationOptionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_L_LISTTYPEDEFINITIONID_2 =
-		"cpSpecificationOptionListTypeDefinitionRel.listTypeDefinitionId = ?";
 
 	public CPSpecificationOptionListTypeDefinitionRelPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1937,6 +1564,23 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPSpecificationOptionId"}, false);
 
+		_collectionPersistenceFinderByCPSpecificationOptionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCPSpecificationOptionId,
+				_finderPathWithoutPaginationFindByCPSpecificationOptionId,
+				_finderPathCountByCPSpecificationOptionId,
+				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+				CPSpecificationOptionListTypeDefinitionRelModelImpl.
+					ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cpSpecificationOptionListTypeDefinitionRel.",
+					"CPSpecificationOptionId", FinderColumn.Type.LONG, "=",
+					true, true,
+					CPSpecificationOptionListTypeDefinitionRel::
+						getCPSpecificationOptionId));
+
 		_finderPathWithPaginationFindByListTypeDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByListTypeDefinitionId",
@@ -1956,11 +1600,43 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"listTypeDefinitionId"}, false);
 
+		_collectionPersistenceFinderByListTypeDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByListTypeDefinitionId,
+				_finderPathWithoutPaginationFindByListTypeDefinitionId,
+				_finderPathCountByListTypeDefinitionId,
+				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+				CPSpecificationOptionListTypeDefinitionRelModelImpl.
+					ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cpSpecificationOptionListTypeDefinitionRel.",
+					"listTypeDefinitionId", FinderColumn.Type.LONG, "=", true,
+					true,
+					CPSpecificationOptionListTypeDefinitionRel::
+						getListTypeDefinitionId));
+
 		_finderPathFetchByC_L = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"},
 			true);
+
+		_uniquePersistenceFinderByC_L = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_L,
+			_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+			new FinderColumn<>(
+				"cpSpecificationOptionListTypeDefinitionRel.",
+				"CPSpecificationOptionId", FinderColumn.Type.LONG, "=", true,
+				false,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getCPSpecificationOptionId),
+			new FinderColumn<>(
+				"cpSpecificationOptionListTypeDefinitionRel.",
+				"listTypeDefinitionId", FinderColumn.Type.LONG, "=", true, true,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getListTypeDefinitionId));
 
 		CPSpecificationOptionListTypeDefinitionRelUtil.setPersistence(this);
 	}
@@ -2045,4 +1721,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:86614143
+// LIFERAY-SERVICE-BUILDER-HASH:-820284180

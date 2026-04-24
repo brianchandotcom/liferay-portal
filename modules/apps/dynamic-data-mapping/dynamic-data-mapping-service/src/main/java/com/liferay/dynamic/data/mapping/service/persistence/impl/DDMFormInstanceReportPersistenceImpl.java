@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -33,13 +32,14 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -96,6 +96,8 @@ public class DDMFormInstanceReportPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByFormInstanceId;
+	private UniquePersistenceFinder<DDMFormInstanceReport>
+		_uniquePersistenceFinderByFormInstanceId;
 
 	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or throws a <code>NoSuchFormInstanceReportException</code> if it could not be found.
@@ -157,97 +159,8 @@ public class DDMFormInstanceReportPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMFormInstanceReport.class)) {
 
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {formInstanceId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByFormInstanceId, finderArgs, this);
-			}
-
-			if (result instanceof DDMFormInstanceReport) {
-				DDMFormInstanceReport ddmFormInstanceReport =
-					(DDMFormInstanceReport)result;
-
-				if (formInstanceId !=
-						ddmFormInstanceReport.getFormInstanceId()) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_SELECT_DDMFORMINSTANCEREPORT_WHERE);
-
-				sb.append(_FINDER_COLUMN_FORMINSTANCEID_FORMINSTANCEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(formInstanceId);
-
-					List<DDMFormInstanceReport> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByFormInstanceId, finderArgs,
-								list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {formInstanceId};
-								}
-
-								_log.warn(
-									"DDMFormInstanceReportPersistenceImpl.fetchByFormInstanceId(long, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						DDMFormInstanceReport ddmFormInstanceReport = list.get(
-							0);
-
-						result = ddmFormInstanceReport;
-
-						cacheResult(ddmFormInstanceReport);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (DDMFormInstanceReport)result;
-			}
+			return _uniquePersistenceFinderByFormInstanceId.fetch(
+				finderCache, new Object[] {formInstanceId}, useFinderCache);
 		}
 	}
 
@@ -275,18 +188,9 @@ public class DDMFormInstanceReportPersistenceImpl
 	 */
 	@Override
 	public int countByFormInstanceId(long formInstanceId) {
-		DDMFormInstanceReport ddmFormInstanceReport = fetchByFormInstanceId(
-			formInstanceId);
-
-		if (ddmFormInstanceReport == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByFormInstanceId.count(
+			finderCache, new Object[] {formInstanceId});
 	}
-
-	private static final String _FINDER_COLUMN_FORMINSTANCEID_FORMINSTANCEID_2 =
-		"ddmFormInstanceReport.formInstanceId = ?";
 
 	public DDMFormInstanceReportPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1159,6 +1063,15 @@ public class DDMFormInstanceReportPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"formInstanceId"}, true);
 
+		_uniquePersistenceFinderByFormInstanceId =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchByFormInstanceId,
+				_SQL_SELECT_DDMFORMINSTANCEREPORT_WHERE,
+				new FinderColumn<>(
+					"ddmFormInstanceReport.", "formInstanceId",
+					FinderColumn.Type.LONG, "=", true, true,
+					DDMFormInstanceReport::getFormInstanceId));
+
 		DDMFormInstanceReportUtil.setPersistence(this);
 	}
 
@@ -1213,9 +1126,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	private static final String _SQL_COUNT_DDMFORMINSTANCEREPORT =
 		"SELECT COUNT(ddmFormInstanceReport) FROM DDMFormInstanceReport ddmFormInstanceReport";
 
-	private static final String _SQL_COUNT_DDMFORMINSTANCEREPORT_WHERE =
-		"SELECT COUNT(ddmFormInstanceReport) FROM DDMFormInstanceReport ddmFormInstanceReport WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmFormInstanceReport.";
 
@@ -1237,4 +1147,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1547691722
+// LIFERAY-SERVICE-BUILDER-HASH:-1483864710

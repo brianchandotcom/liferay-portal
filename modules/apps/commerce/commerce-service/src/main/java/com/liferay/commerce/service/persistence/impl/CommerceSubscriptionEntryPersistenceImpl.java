@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,7 +48,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -91,6 +92,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the commerce subscription entries where uuid = &#63;.
@@ -163,108 +166,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if (!uuid.equals(commerceSubscriptionEntry.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -344,67 +248,13 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"commerceSubscriptionEntry.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(commerceSubscriptionEntry.uuid IS NULL OR commerceSubscriptionEntry.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<CommerceSubscriptionEntry>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce subscription entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -468,98 +318,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public CommerceSubscriptionEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		if (result instanceof CommerceSubscriptionEntry) {
-			CommerceSubscriptionEntry commerceSubscriptionEntry =
-				(CommerceSubscriptionEntry)result;
-
-			if (!Objects.equals(uuid, commerceSubscriptionEntry.getUuid()) ||
-				(groupId != commerceSubscriptionEntry.getGroupId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				List<CommerceSubscriptionEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
-				}
-				else {
-					CommerceSubscriptionEntry commerceSubscriptionEntry =
-						list.get(0);
-
-					result = commerceSubscriptionEntry;
-
-					cacheResult(commerceSubscriptionEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceSubscriptionEntry)result;
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -588,28 +348,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (commerceSubscriptionEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"commerceSubscriptionEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(commerceSubscriptionEntry.uuid IS NULL OR commerceSubscriptionEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"commerceSubscriptionEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the commerce subscription entries where uuid = &#63; and companyId = &#63;.
@@ -690,117 +437,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if (!uuid.equals(commerceSubscriptionEntry.getUuid()) ||
-						(companyId !=
-							commerceSubscriptionEntry.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -889,76 +528,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"commerceSubscriptionEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(commerceSubscriptionEntry.uuid IS NULL OR commerceSubscriptionEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"commerceSubscriptionEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the commerce subscription entries where groupId = &#63;.
@@ -1032,95 +610,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if (groupId != commerceSubscriptionEntry.getGroupId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1201,53 +693,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
-
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"commerceSubscriptionEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the commerce subscription entries where companyId = &#63;.
@@ -1321,97 +775,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if (companyId != commerceSubscriptionEntry.getCompanyId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1492,51 +858,13 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"commerceSubscriptionEntry.companyId = ?";
-
 	private FinderPath _finderPathFetchByCommerceOrderItemId;
+	private UniquePersistenceFinder<CommerceSubscriptionEntry>
+		_uniquePersistenceFinderByCommerceOrderItemId;
 
 	/**
 	 * Returns the commerce subscription entry where commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -1597,82 +925,8 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public CommerceSubscriptionEntry fetchByCommerceOrderItemId(
 		long commerceOrderItemId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {commerceOrderItemId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCommerceOrderItemId, finderArgs, this);
-		}
-
-		if (result instanceof CommerceSubscriptionEntry) {
-			CommerceSubscriptionEntry commerceSubscriptionEntry =
-				(CommerceSubscriptionEntry)result;
-
-			if (commerceOrderItemId !=
-					commerceSubscriptionEntry.getCommerceOrderItemId()) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCEORDERITEMID_COMMERCEORDERITEMID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceOrderItemId);
-
-				List<CommerceSubscriptionEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCommerceOrderItemId, finderArgs,
-							list);
-					}
-				}
-				else {
-					CommerceSubscriptionEntry commerceSubscriptionEntry =
-						list.get(0);
-
-					result = commerceSubscriptionEntry;
-
-					cacheResult(commerceSubscriptionEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceSubscriptionEntry)result;
-		}
+		return _uniquePersistenceFinderByCommerceOrderItemId.fetch(
+			finderCache, new Object[] {commerceOrderItemId}, useFinderCache);
 	}
 
 	/**
@@ -1700,23 +954,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceOrderItemId(long commerceOrderItemId) {
-		CommerceSubscriptionEntry commerceSubscriptionEntry =
-			fetchByCommerceOrderItemId(commerceOrderItemId);
-
-		if (commerceSubscriptionEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByCommerceOrderItemId.count(
+			finderCache, new Object[] {commerceOrderItemId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCEORDERITEMID_COMMERCEORDERITEMID_2 =
-			"commerceSubscriptionEntry.commerceOrderItemId = ?";
 
 	private FinderPath _finderPathWithPaginationFindBySubscriptionStatus;
 	private FinderPath _finderPathWithoutPaginationFindBySubscriptionStatus;
 	private FinderPath _finderPathCountBySubscriptionStatus;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderBySubscriptionStatus;
 
 	/**
 	 * Returns all the commerce subscription entries where subscriptionStatus = &#63;.
@@ -1793,100 +1039,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindBySubscriptionStatus;
-				finderArgs = new Object[] {subscriptionStatus};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindBySubscriptionStatus;
-			finderArgs = new Object[] {
-				subscriptionStatus, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if (subscriptionStatus !=
-							commerceSubscriptionEntry.getSubscriptionStatus()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_SUBSCRIPTIONSTATUS_SUBSCRIPTIONSTATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(subscriptionStatus);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderBySubscriptionStatus.find(
+			finderCache, new Object[] {subscriptionStatus}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1969,54 +1124,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countBySubscriptionStatus(int subscriptionStatus) {
-		FinderPath finderPath = _finderPathCountBySubscriptionStatus;
-
-		Object[] finderArgs = new Object[] {subscriptionStatus};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_SUBSCRIPTIONSTATUS_SUBSCRIPTIONSTATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(subscriptionStatus);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderBySubscriptionStatus.count(
+			finderCache, new Object[] {subscriptionStatus});
 	}
-
-	private static final String
-		_FINDER_COLUMN_SUBSCRIPTIONSTATUS_SUBSCRIPTIONSTATUS_2 =
-			"commerceSubscriptionEntry.subscriptionStatus = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
 	private FinderPath _finderPathCountByC_U;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByC_U;
 
 	/**
 	 * Returns all the commerce subscription entries where companyId = &#63; and userId = &#63;.
@@ -2097,104 +1213,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_U;
-				finderArgs = new Object[] {companyId, userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_U;
-			finderArgs = new Object[] {
-				companyId, userId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if ((companyId !=
-							commerceSubscriptionEntry.getCompanyId()) ||
-						(userId != commerceSubscriptionEntry.getUserId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_U.find(
+			finderCache, new Object[] {companyId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2283,60 +1304,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_U(long companyId, long userId) {
-		FinderPath finderPath = _finderPathCountByC_U;
-
-		Object[] finderArgs = new Object[] {companyId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_U_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_U.count(
+			finderCache, new Object[] {companyId, userId});
 	}
-
-	private static final String _FINDER_COLUMN_C_U_COMPANYID_2 =
-		"commerceSubscriptionEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_U_USERID_2 =
-		"commerceSubscriptionEntry.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_U;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_U;
 	private FinderPath _finderPathCountByG_C_U;
+	private CollectionPersistenceFinder<CommerceSubscriptionEntry>
+		_collectionPersistenceFinderByG_C_U;
 
 	/**
 	 * Returns all the commerce subscription entries where groupId = &#63; and companyId = &#63; and userId = &#63;.
@@ -2422,109 +1398,9 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		OrderByComparator<CommerceSubscriptionEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_C_U;
-				finderArgs = new Object[] {groupId, companyId, userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_C_U;
-			finderArgs = new Object[] {
-				groupId, companyId, userId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceSubscriptionEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceSubscriptionEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-						list) {
-
-					if ((groupId != commerceSubscriptionEntry.getGroupId()) ||
-						(companyId !=
-							commerceSubscriptionEntry.getCompanyId()) ||
-						(userId != commerceSubscriptionEntry.getUserId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_U_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_U_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				list = (List<CommerceSubscriptionEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_C_U.find(
+			finderCache, new Object[] {groupId, companyId, userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2620,65 +1496,13 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_U(long groupId, long companyId, long userId) {
-		FinderPath finderPath = _finderPathCountByG_C_U;
-
-		Object[] finderArgs = new Object[] {groupId, companyId, userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_U_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_U_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(companyId);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_C_U.count(
+			finderCache, new Object[] {groupId, companyId, userId});
 	}
 
-	private static final String _FINDER_COLUMN_G_C_U_GROUPID_2 =
-		"commerceSubscriptionEntry.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_U_COMPANYID_2 =
-		"commerceSubscriptionEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_U_USERID_2 =
-		"commerceSubscriptionEntry.userId = ?";
-
 	private FinderPath _finderPathFetchByC_C_C;
+	private UniquePersistenceFinder<CommerceSubscriptionEntry>
+		_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the commerce subscription entry where CPInstanceUuid = &#63; and CProductId = &#63; and commerceOrderItemId = &#63; or throws a <code>NoSuchSubscriptionEntryException</code> if it could not be found.
@@ -2753,108 +1577,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		String CPInstanceUuid, long CProductId, long commerceOrderItemId,
 		boolean useFinderCache) {
 
-		CPInstanceUuid = Objects.toString(CPInstanceUuid, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				CPInstanceUuid, CProductId, commerceOrderItemId
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
-		}
-
-		if (result instanceof CommerceSubscriptionEntry) {
-			CommerceSubscriptionEntry commerceSubscriptionEntry =
-				(CommerceSubscriptionEntry)result;
-
-			if (!Objects.equals(
-					CPInstanceUuid,
-					commerceSubscriptionEntry.getCPInstanceUuid()) ||
-				(CProductId != commerceSubscriptionEntry.getCProductId()) ||
-				(commerceOrderItemId !=
-					commerceSubscriptionEntry.getCommerceOrderItemId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE);
-
-			boolean bindCPInstanceUuid = false;
-
-			if (CPInstanceUuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_C_C_CPINSTANCEUUID_3);
-			}
-			else {
-				bindCPInstanceUuid = true;
-
-				sb.append(_FINDER_COLUMN_C_C_C_CPINSTANCEUUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_C_CPRODUCTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMMERCEORDERITEMID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCPInstanceUuid) {
-					queryPos.add(CPInstanceUuid);
-				}
-
-				queryPos.add(CProductId);
-
-				queryPos.add(commerceOrderItemId);
-
-				List<CommerceSubscriptionEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C_C, finderArgs, list);
-					}
-				}
-				else {
-					CommerceSubscriptionEntry commerceSubscriptionEntry =
-						list.get(0);
-
-					result = commerceSubscriptionEntry;
-
-					cacheResult(commerceSubscriptionEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceSubscriptionEntry)result;
-		}
+		return _uniquePersistenceFinderByC_C_C.fetch(
+			finderCache,
+			new Object[] {CPInstanceUuid, CProductId, commerceOrderItemId},
+			useFinderCache);
 	}
 
 	/**
@@ -2888,27 +1614,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	public int countByC_C_C(
 		String CPInstanceUuid, long CProductId, long commerceOrderItemId) {
 
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByC_C_C(
-			CPInstanceUuid, CProductId, commerceOrderItemId);
-
-		if (commerceSubscriptionEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_C_C.count(
+			finderCache,
+			new Object[] {CPInstanceUuid, CProductId, commerceOrderItemId});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_C_CPINSTANCEUUID_2 =
-		"commerceSubscriptionEntry.CPInstanceUuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CPINSTANCEUUID_3 =
-		"(commerceSubscriptionEntry.CPInstanceUuid IS NULL OR commerceSubscriptionEntry.CPInstanceUuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CPRODUCTID_2 =
-		"commerceSubscriptionEntry.CProductId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_COMMERCEORDERITEMID_2 =
-		"commerceSubscriptionEntry.commerceOrderItemId = ?";
 
 	public CommerceSubscriptionEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3584,10 +2293,31 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
+				"=", true, true, CommerceSubscriptionEntry::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
+				"=", true, false, CommerceSubscriptionEntry::getUuid),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "groupId", FinderColumn.Type.LONG,
+				"=", true, true, CommerceSubscriptionEntry::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -3608,6 +2338,24 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "uuid",
+					FinderColumn.Type.STRING, "=", true, false,
+					CommerceSubscriptionEntry::getUuid),
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceSubscriptionEntry::getCompanyId));
+
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -3625,6 +2373,20 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "groupId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceSubscriptionEntry::getGroupId));
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
@@ -3644,10 +2406,33 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceSubscriptionEntry::getCompanyId));
+
 		_finderPathFetchByCommerceOrderItemId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceOrderItemId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceOrderItemId"}, true);
+
+		_uniquePersistenceFinderByCommerceOrderItemId =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchByCommerceOrderItemId,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "commerceOrderItemId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceSubscriptionEntry::getCommerceOrderItemId));
 
 		_finderPathWithPaginationFindBySubscriptionStatus = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySubscriptionStatus",
@@ -3667,6 +2452,20 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			"countBySubscriptionStatus", new String[] {Integer.class.getName()},
 			new String[] {"subscriptionStatus"}, false);
 
+		_collectionPersistenceFinderBySubscriptionStatus =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindBySubscriptionStatus,
+				_finderPathWithoutPaginationFindBySubscriptionStatus,
+				_finderPathCountBySubscriptionStatus,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceSubscriptionEntry.", "subscriptionStatus",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CommerceSubscriptionEntry::getSubscriptionStatus));
+
 		_finderPathWithPaginationFindByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
 			new String[] {
@@ -3685,6 +2484,21 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "userId"}, false);
+
+		_collectionPersistenceFinderByC_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_U,
+			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceSubscriptionEntry::getCompanyId),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "userId", FinderColumn.Type.LONG,
+				"=", true, true, CommerceSubscriptionEntry::getUserId));
 
 		_finderPathWithPaginationFindByG_C_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_U",
@@ -3709,6 +2523,24 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "userId"}, false);
 
+		_collectionPersistenceFinderByG_C_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_C_U,
+			_finderPathWithoutPaginationFindByG_C_U, _finderPathCountByG_C_U,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "groupId", FinderColumn.Type.LONG,
+				"=", true, false, CommerceSubscriptionEntry::getGroupId),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceSubscriptionEntry::getCompanyId),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "userId", FinderColumn.Type.LONG,
+				"=", true, true, CommerceSubscriptionEntry::getUserId));
+
 		_finderPathFetchByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
@@ -3719,6 +2551,22 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				"CPInstanceUuid", "CProductId", "commerceOrderItemId"
 			},
 			true);
+
+		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C_C,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "CPInstanceUuid",
+				FinderColumn.Type.STRING, "=", true, false,
+				CommerceSubscriptionEntry::getCPInstanceUuid),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "CProductId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceSubscriptionEntry::getCProductId),
+			new FinderColumn<>(
+				"commerceSubscriptionEntry.", "commerceOrderItemId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceSubscriptionEntry::getCommerceOrderItemId));
 
 		CommerceSubscriptionEntryUtil.setPersistence(this);
 	}
@@ -3795,4 +2643,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:882841333
+// LIFERAY-SERVICE-BUILDER-HASH:-2079143861

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -90,6 +91,8 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId;
 	private FinderPath _finderPathCountByCommerceShippingFixedOptionId;
+	private CollectionPersistenceFinder<CommerceShippingFixedOptionRel>
+		_collectionPersistenceFinderByCommerceShippingFixedOptionId;
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
@@ -173,104 +176,9 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
 			boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId;
-				finderArgs = new Object[] {commerceShippingFixedOptionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByCommerceShippingFixedOptionId;
-			finderArgs = new Object[] {
-				commerceShippingFixedOptionId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceShippingFixedOptionRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceShippingFixedOptionRel
-						commerceShippingFixedOptionRel : list) {
-
-					if (commerceShippingFixedOptionId !=
-							commerceShippingFixedOptionRel.
-								getCommerceShippingFixedOptionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGFIXEDOPTIONID_COMMERCESHIPPINGFIXEDOPTIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingFixedOptionId);
-
-				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceShippingFixedOptionId.find(
+			finderCache, new Object[] {commerceShippingFixedOptionId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -362,56 +270,16 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	public int countByCommerceShippingFixedOptionId(
 		long commerceShippingFixedOptionId) {
 
-		FinderPath finderPath = _finderPathCountByCommerceShippingFixedOptionId;
-
-		Object[] finderArgs = new Object[] {commerceShippingFixedOptionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGFIXEDOPTIONID_COMMERCESHIPPINGFIXEDOPTIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingFixedOptionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceShippingFixedOptionId.
+			count(finderCache, new Object[] {commerceShippingFixedOptionId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCESHIPPINGFIXEDOPTIONID_COMMERCESHIPPINGFIXEDOPTIONID_2 =
-			"commerceShippingFixedOptionRel.commerceShippingFixedOptionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
 	private FinderPath _finderPathCountByCommerceShippingMethodId;
+	private CollectionPersistenceFinder<CommerceShippingFixedOptionRel>
+		_collectionPersistenceFinderByCommerceShippingMethodId;
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
@@ -490,104 +358,9 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceShippingMethodId;
-				finderArgs = new Object[] {commerceShippingMethodId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByCommerceShippingMethodId;
-			finderArgs = new Object[] {
-				commerceShippingMethodId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceShippingFixedOptionRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceShippingFixedOptionRel
-						commerceShippingFixedOptionRel : list) {
-
-					if (commerceShippingMethodId !=
-							commerceShippingFixedOptionRel.
-								getCommerceShippingMethodId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingMethodId);
-
-				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceShippingMethodId.find(
+			finderCache, new Object[] {commerceShippingMethodId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -673,55 +446,15 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceShippingMethodId(long commerceShippingMethodId) {
-		FinderPath finderPath = _finderPathCountByCommerceShippingMethodId;
-
-		Object[] finderArgs = new Object[] {commerceShippingMethodId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingMethodId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceShippingMethodId.count(
+			finderCache, new Object[] {commerceShippingMethodId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2 =
-			"commerceShippingFixedOptionRel.commerceShippingMethodId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
+	private CollectionPersistenceFinder<CommerceShippingFixedOptionRel>
+		_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
@@ -809,111 +542,12 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {
-					commerceShippingFixedOptionId, commerceShippingMethodId
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				commerceShippingFixedOptionId, commerceShippingMethodId, start,
-				end, orderByComparator
-			};
-		}
-
-		List<CommerceShippingFixedOptionRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceShippingFixedOptionRel
-						commerceShippingFixedOptionRel : list) {
-
-					if ((commerceShippingFixedOptionId !=
-							commerceShippingFixedOptionRel.
-								getCommerceShippingFixedOptionId()) ||
-						(commerceShippingMethodId !=
-							commerceShippingFixedOptionRel.
-								getCommerceShippingMethodId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingFixedOptionId);
-
-				queryPos.add(commerceShippingMethodId);
-
-				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache,
+			new Object[] {
+				commerceShippingFixedOptionId, commerceShippingMethodId
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1009,59 +643,12 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	public int countByC_C(
 		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
 
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {
-			commerceShippingFixedOptionId, commerceShippingMethodId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingFixedOptionId);
-
-				queryPos.add(commerceShippingMethodId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache,
+			new Object[] {
+				commerceShippingFixedOptionId, commerceShippingMethodId
+			});
 	}
-
-	private static final String
-		_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2 =
-			"commerceShippingFixedOptionRel.commerceShippingFixedOptionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2 =
-		"commerceShippingFixedOptionRel.commerceShippingMethodId = ?";
 
 	public CommerceShippingFixedOptionRelPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1692,6 +1279,23 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingFixedOptionId"}, false);
 
+		_collectionPersistenceFinderByCommerceShippingFixedOptionId =
+			new CollectionPersistenceFinder<>(
+				this,
+				_finderPathWithPaginationFindByCommerceShippingFixedOptionId,
+				_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId,
+				_finderPathCountByCommerceShippingFixedOptionId,
+				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+				CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceShippingFixedOptionRel.",
+					"commerceShippingFixedOptionId", FinderColumn.Type.LONG,
+					"=", true, true,
+					CommerceShippingFixedOptionRel::
+						getCommerceShippingFixedOptionId));
+
 		_finderPathWithPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1714,6 +1318,22 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			"countByCommerceShippingMethodId",
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingMethodId"}, false);
+
+		_collectionPersistenceFinderByCommerceShippingMethodId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCommerceShippingMethodId,
+				_finderPathWithoutPaginationFindByCommerceShippingMethodId,
+				_finderPathCountByCommerceShippingMethodId,
+				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+				CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceShippingFixedOptionRel.",
+					"commerceShippingMethodId", FinderColumn.Type.LONG, "=",
+					true, true,
+					CommerceShippingFixedOptionRel::
+						getCommerceShippingMethodId));
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -1742,6 +1362,24 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				"commerceShippingFixedOptionId", "commerceShippingMethodId"
 			},
 			false);
+
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+			_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
+			CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceShippingFixedOptionRel.",
+				"commerceShippingFixedOptionId", FinderColumn.Type.LONG, "=",
+				true, false,
+				CommerceShippingFixedOptionRel::
+					getCommerceShippingFixedOptionId),
+			new FinderColumn<>(
+				"commerceShippingFixedOptionRel.", "commerceShippingMethodId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceShippingFixedOptionRel::getCommerceShippingMethodId));
 
 		CommerceShippingFixedOptionRelUtil.setPersistence(this);
 	}
@@ -1821,4 +1459,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1435259740
+// LIFERAY-SERVICE-BUILDER-HASH:-139047354

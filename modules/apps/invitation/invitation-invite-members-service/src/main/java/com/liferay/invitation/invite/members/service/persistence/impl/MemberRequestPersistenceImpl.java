@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,24 +28,24 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -89,6 +88,8 @@ public class MemberRequestPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByKey;
+	private UniquePersistenceFinder<MemberRequest>
+		_uniquePersistenceFinderByKey;
 
 	/**
 	 * Returns the member request where key = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -143,105 +144,8 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public MemberRequest fetchByKey(String key, boolean useFinderCache) {
-		key = Objects.toString(key, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {key};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByKey, finderArgs, this);
-		}
-
-		if (result instanceof MemberRequest) {
-			MemberRequest memberRequest = (MemberRequest)result;
-
-			if (!Objects.equals(key, memberRequest.getKey())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_MEMBERREQUEST_WHERE);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_KEY_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_KEY_KEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				List<MemberRequest> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByKey, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {key};
-							}
-
-							_log.warn(
-								"MemberRequestPersistenceImpl.fetchByKey(String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					MemberRequest memberRequest = list.get(0);
-
-					result = memberRequest;
-
-					cacheResult(memberRequest);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (MemberRequest)result;
-		}
+		return _uniquePersistenceFinderByKey.fetch(
+			finderCache, new Object[] {key}, useFinderCache);
 	}
 
 	/**
@@ -267,24 +171,15 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByKey(String key) {
-		MemberRequest memberRequest = fetchByKey(key);
-
-		if (memberRequest == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByKey.count(
+			finderCache, new Object[] {key});
 	}
-
-	private static final String _FINDER_COLUMN_KEY_KEY_2 =
-		"memberRequest.key = ?";
-
-	private static final String _FINDER_COLUMN_KEY_KEY_3 =
-		"(memberRequest.key IS NULL OR memberRequest.key = '')";
 
 	private FinderPath _finderPathWithPaginationFindByReceiverUserId;
 	private FinderPath _finderPathWithoutPaginationFindByReceiverUserId;
 	private FinderPath _finderPathCountByReceiverUserId;
+	private CollectionPersistenceFinder<MemberRequest>
+		_collectionPersistenceFinderByReceiverUserId;
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63;.
@@ -359,95 +254,9 @@ public class MemberRequestPersistenceImpl
 		OrderByComparator<MemberRequest> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByReceiverUserId;
-				finderArgs = new Object[] {receiverUserId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByReceiverUserId;
-			finderArgs = new Object[] {
-				receiverUserId, start, end, orderByComparator
-			};
-		}
-
-		List<MemberRequest> list = null;
-
-		if (useFinderCache) {
-			list = (List<MemberRequest>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MemberRequest memberRequest : list) {
-					if (receiverUserId != memberRequest.getReceiverUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(MemberRequestModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(receiverUserId);
-
-				list = (List<MemberRequest>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByReceiverUserId.find(
+			finderCache, new Object[] {receiverUserId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -529,53 +338,15 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByReceiverUserId(long receiverUserId) {
-		FinderPath finderPath = _finderPathCountByReceiverUserId;
-
-		Object[] finderArgs = new Object[] {receiverUserId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(receiverUserId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByReceiverUserId.count(
+			finderCache, new Object[] {receiverUserId});
 	}
-
-	private static final String _FINDER_COLUMN_RECEIVERUSERID_RECEIVERUSERID_2 =
-		"memberRequest.receiverUserId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByR_S;
 	private FinderPath _finderPathWithoutPaginationFindByR_S;
 	private FinderPath _finderPathCountByR_S;
+	private CollectionPersistenceFinder<MemberRequest>
+		_collectionPersistenceFinderByR_S;
 
 	/**
 	 * Returns all the member requests where receiverUserId = &#63; and status = &#63;.
@@ -654,101 +425,9 @@ public class MemberRequestPersistenceImpl
 		OrderByComparator<MemberRequest> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByR_S;
-				finderArgs = new Object[] {receiverUserId, status};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByR_S;
-			finderArgs = new Object[] {
-				receiverUserId, status, start, end, orderByComparator
-			};
-		}
-
-		List<MemberRequest> list = null;
-
-		if (useFinderCache) {
-			list = (List<MemberRequest>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MemberRequest memberRequest : list) {
-					if ((receiverUserId != memberRequest.getReceiverUserId()) ||
-						(status != memberRequest.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_R_S_RECEIVERUSERID_2);
-
-			sb.append(_FINDER_COLUMN_R_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(MemberRequestModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(receiverUserId);
-
-				queryPos.add(status);
-
-				list = (List<MemberRequest>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByR_S.find(
+			finderCache, new Object[] {receiverUserId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -837,58 +516,13 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByR_S(long receiverUserId, int status) {
-		FinderPath finderPath = _finderPathCountByR_S;
-
-		Object[] finderArgs = new Object[] {receiverUserId, status};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_R_S_RECEIVERUSERID_2);
-
-			sb.append(_FINDER_COLUMN_R_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(receiverUserId);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByR_S.count(
+			finderCache, new Object[] {receiverUserId, status});
 	}
 
-	private static final String _FINDER_COLUMN_R_S_RECEIVERUSERID_2 =
-		"memberRequest.receiverUserId = ? AND ";
-
-	private static final String _FINDER_COLUMN_R_S_STATUS_2 =
-		"memberRequest.status = ?";
-
 	private FinderPath _finderPathFetchByG_R_S;
+	private UniquePersistenceFinder<MemberRequest>
+		_uniquePersistenceFinderByG_R_S;
 
 	/**
 	 * Returns the member request where groupId = &#63; and receiverUserId = &#63; and status = &#63; or throws a <code>NoSuchMemberRequestException</code> if it could not be found.
@@ -961,105 +595,9 @@ public class MemberRequestPersistenceImpl
 	public MemberRequest fetchByG_R_S(
 		long groupId, long receiverUserId, int status, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, receiverUserId, status};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_R_S, finderArgs, this);
-		}
-
-		if (result instanceof MemberRequest) {
-			MemberRequest memberRequest = (MemberRequest)result;
-
-			if ((groupId != memberRequest.getGroupId()) ||
-				(receiverUserId != memberRequest.getReceiverUserId()) ||
-				(status != memberRequest.getStatus())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_MEMBERREQUEST_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_R_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_R_S_RECEIVERUSERID_2);
-
-			sb.append(_FINDER_COLUMN_G_R_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(receiverUserId);
-
-				queryPos.add(status);
-
-				List<MemberRequest> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_R_S, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, receiverUserId, status
-								};
-							}
-
-							_log.warn(
-								"MemberRequestPersistenceImpl.fetchByG_R_S(long, long, int, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					MemberRequest memberRequest = list.get(0);
-
-					result = memberRequest;
-
-					cacheResult(memberRequest);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (MemberRequest)result;
-		}
+		return _uniquePersistenceFinderByG_R_S.fetch(
+			finderCache, new Object[] {groupId, receiverUserId, status},
+			useFinderCache);
 	}
 
 	/**
@@ -1091,24 +629,9 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public int countByG_R_S(long groupId, long receiverUserId, int status) {
-		MemberRequest memberRequest = fetchByG_R_S(
-			groupId, receiverUserId, status);
-
-		if (memberRequest == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_R_S.count(
+			finderCache, new Object[] {groupId, receiverUserId, status});
 	}
-
-	private static final String _FINDER_COLUMN_G_R_S_GROUPID_2 =
-		"memberRequest.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_R_S_RECEIVERUSERID_2 =
-		"memberRequest.receiverUserId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_R_S_STATUS_2 =
-		"memberRequest.status = ?";
 
 	public MemberRequestPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1698,6 +1221,12 @@ public class MemberRequestPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
 			new String[] {String.class.getName()}, new String[] {"key_"}, true);
 
+		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByKey, _SQL_SELECT_MEMBERREQUEST_WHERE,
+			new FinderColumn<>(
+				"memberRequest.", "key", FinderColumn.Type.STRING, "=", true,
+				true, MemberRequest::getKey));
+
 		_finderPathWithPaginationFindByReceiverUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReceiverUserId",
 			new String[] {
@@ -1715,6 +1244,17 @@ public class MemberRequestPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByReceiverUserId",
 			new String[] {Long.class.getName()},
 			new String[] {"receiverUserId"}, false);
+
+		_collectionPersistenceFinderByReceiverUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByReceiverUserId,
+				_finderPathWithoutPaginationFindByReceiverUserId,
+				_finderPathCountByReceiverUserId,
+				_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
+				MemberRequestModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"memberRequest.", "receiverUserId", FinderColumn.Type.LONG,
+					"=", true, true, MemberRequest::getReceiverUserId));
 
 		_finderPathWithPaginationFindByR_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
@@ -1735,6 +1275,18 @@ public class MemberRequestPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"receiverUserId", "status"}, false);
 
+		_collectionPersistenceFinderByR_S = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByR_S,
+			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
+			_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
+			MemberRequestModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"memberRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
+				true, false, MemberRequest::getReceiverUserId),
+			new FinderColumn<>(
+				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
+				true, true, MemberRequest::getStatus));
+
 		_finderPathFetchByG_R_S = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
 			new String[] {
@@ -1742,6 +1294,18 @@ public class MemberRequestPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "receiverUserId", "status"}, true);
+
+		_uniquePersistenceFinderByG_R_S = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_R_S, _SQL_SELECT_MEMBERREQUEST_WHERE,
+			new FinderColumn<>(
+				"memberRequest.", "groupId", FinderColumn.Type.LONG, "=", true,
+				false, MemberRequest::getGroupId),
+			new FinderColumn<>(
+				"memberRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
+				true, false, MemberRequest::getReceiverUserId),
+			new FinderColumn<>(
+				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
+				true, true, MemberRequest::getStatus));
 
 		MemberRequestUtil.setPersistence(this);
 	}
@@ -1817,4 +1381,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-691483106
+// LIFERAY-SERVICE-BUILDER-HASH:931475569

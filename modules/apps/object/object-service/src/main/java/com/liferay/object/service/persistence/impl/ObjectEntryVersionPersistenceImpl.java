@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,13 +44,10 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -93,6 +92,8 @@ public class ObjectEntryVersionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the object entry versions where uuid = &#63;.
@@ -165,106 +166,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if (!uuid.equals(objectEntryVersion.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -343,69 +247,15 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"objectEntryVersion.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(objectEntryVersion.uuid IS NULL OR objectEntryVersion.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the object entry versions where uuid = &#63; and companyId = &#63;.
@@ -484,114 +334,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if (!uuid.equals(objectEntryVersion.getUuid()) ||
-						(companyId != objectEntryVersion.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -680,76 +425,15 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"objectEntryVersion.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(objectEntryVersion.uuid IS NULL OR objectEntryVersion.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"objectEntryVersion.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathCountByObjectDefinitionId;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
 	 * Returns all the object entry versions where objectDefinitionId = &#63;.
@@ -826,98 +510,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByObjectDefinitionId;
-				finderArgs = new Object[] {objectDefinitionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByObjectDefinitionId;
-			finderArgs = new Object[] {
-				objectDefinitionId, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if (objectDefinitionId !=
-							objectEntryVersion.getObjectDefinitionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByObjectDefinitionId.find(
+			finderCache, new Object[] {objectDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -999,54 +594,15 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByObjectDefinitionId(long objectDefinitionId) {
-		FinderPath finderPath = _finderPathCountByObjectDefinitionId;
-
-		Object[] finderArgs = new Object[] {objectDefinitionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByObjectDefinitionId.count(
+			finderCache, new Object[] {objectDefinitionId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2 =
-			"objectEntryVersion.objectDefinitionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByObjectEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectEntryId;
 	private FinderPath _finderPathCountByObjectEntryId;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByObjectEntryId;
 
 	/**
 	 * Returns all the object entry versions where objectEntryId = &#63;.
@@ -1121,97 +677,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByObjectEntryId;
-				finderArgs = new Object[] {objectEntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByObjectEntryId;
-			finderArgs = new Object[] {
-				objectEntryId, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if (objectEntryId !=
-							objectEntryVersion.getObjectEntryId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectEntryId);
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByObjectEntryId.find(
+			finderCache, new Object[] {objectEntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1293,53 +761,15 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByObjectEntryId(long objectEntryId) {
-		FinderPath finderPath = _finderPathCountByObjectEntryId;
-
-		Object[] finderArgs = new Object[] {objectEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByObjectEntryId.count(
+			finderCache, new Object[] {objectEntryId});
 	}
-
-	private static final String _FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2 =
-		"objectEntryVersion.objectEntryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_CD;
 	private FinderPath _finderPathWithoutPaginationFindByC_CD;
 	private FinderPath _finderPathCountByC_CD;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByC_CD;
 
 	/**
 	 * Returns all the object entry versions where companyId = &#63; and createDate = &#63;.
@@ -1420,113 +850,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_CD;
-				finderArgs = new Object[] {companyId, _getTime(createDate)};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_CD;
-			finderArgs = new Object[] {
-				companyId, _getTime(createDate), start, end, orderByComparator
-			};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if ((companyId != objectEntryVersion.getCompanyId()) ||
-						!Objects.equals(
-							createDate, objectEntryVersion.getCreateDate())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CD_COMPANYID_2);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_CD.find(
+			finderCache, new Object[] {companyId, createDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1615,72 +941,13 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByC_CD(long companyId, Date createDate) {
-		FinderPath finderPath = _finderPathCountByC_CD;
-
-		Object[] finderArgs = new Object[] {companyId, _getTime(createDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CD_COMPANYID_2);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_C_CD_CREATEDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_CD.count(
+			finderCache, new Object[] {companyId, createDate});
 	}
 
-	private static final String _FINDER_COLUMN_C_CD_COMPANYID_2 =
-		"objectEntryVersion.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_1 =
-		"objectEntryVersion.createDate IS NULL";
-
-	private static final String _FINDER_COLUMN_C_CD_CREATEDATE_2 =
-		"objectEntryVersion.createDate = ?";
-
 	private FinderPath _finderPathFetchByOEI_V;
+	private UniquePersistenceFinder<ObjectEntryVersion>
+		_uniquePersistenceFinderByOEI_V;
 
 	/**
 	 * Returns the object entry version where objectEntryId = &#63; and version = &#63; or throws a <code>NoSuchObjectEntryVersionException</code> if it could not be found.
@@ -1744,83 +1011,8 @@ public class ObjectEntryVersionPersistenceImpl
 	public ObjectEntryVersion fetchByOEI_V(
 		long objectEntryId, int version, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {objectEntryId, version};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByOEI_V, finderArgs, this);
-		}
-
-		if (result instanceof ObjectEntryVersion) {
-			ObjectEntryVersion objectEntryVersion = (ObjectEntryVersion)result;
-
-			if ((objectEntryId != objectEntryVersion.getObjectEntryId()) ||
-				(version != objectEntryVersion.getVersion())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OEI_V_OBJECTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_OEI_V_VERSION_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectEntryId);
-
-				queryPos.add(version);
-
-				List<ObjectEntryVersion> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByOEI_V, finderArgs, list);
-					}
-				}
-				else {
-					ObjectEntryVersion objectEntryVersion = list.get(0);
-
-					result = objectEntryVersion;
-
-					cacheResult(objectEntryVersion);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ObjectEntryVersion)result;
-		}
+		return _uniquePersistenceFinderByOEI_V.fetch(
+			finderCache, new Object[] {objectEntryId, version}, useFinderCache);
 	}
 
 	/**
@@ -1849,25 +1041,15 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByOEI_V(long objectEntryId, int version) {
-		ObjectEntryVersion objectEntryVersion = fetchByOEI_V(
-			objectEntryId, version);
-
-		if (objectEntryVersion == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByOEI_V.count(
+			finderCache, new Object[] {objectEntryId, version});
 	}
-
-	private static final String _FINDER_COLUMN_OEI_V_OBJECTENTRYID_2 =
-		"objectEntryVersion.objectEntryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_OEI_V_VERSION_2 =
-		"objectEntryVersion.version = ?";
 
 	private FinderPath _finderPathWithPaginationFindByOEI_S;
 	private FinderPath _finderPathWithoutPaginationFindByOEI_S;
 	private FinderPath _finderPathCountByOEI_S;
+	private CollectionPersistenceFinder<ObjectEntryVersion>
+		_collectionPersistenceFinderByOEI_S;
 
 	/**
 	 * Returns all the object entry versions where objectEntryId = &#63; and status = &#63;.
@@ -1948,102 +1130,9 @@ public class ObjectEntryVersionPersistenceImpl
 		OrderByComparator<ObjectEntryVersion> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByOEI_S;
-				finderArgs = new Object[] {objectEntryId, status};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByOEI_S;
-			finderArgs = new Object[] {
-				objectEntryId, status, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectEntryVersion objectEntryVersion : list) {
-					if ((objectEntryId !=
-							objectEntryVersion.getObjectEntryId()) ||
-						(status != objectEntryVersion.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OEI_S_OBJECTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_OEI_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectEntryId);
-
-				queryPos.add(status);
-
-				list = (List<ObjectEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByOEI_S.find(
+			finderCache, new Object[] {objectEntryId, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2132,56 +1221,9 @@ public class ObjectEntryVersionPersistenceImpl
 	 */
 	@Override
 	public int countByOEI_S(long objectEntryId, int status) {
-		FinderPath finderPath = _finderPathCountByOEI_S;
-
-		Object[] finderArgs = new Object[] {objectEntryId, status};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
-
-			sb.append(_FINDER_COLUMN_OEI_S_OBJECTENTRYID_2);
-
-			sb.append(_FINDER_COLUMN_OEI_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectEntryId);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByOEI_S.count(
+			finderCache, new Object[] {objectEntryId, status});
 	}
-
-	private static final String _FINDER_COLUMN_OEI_S_OBJECTENTRYID_2 =
-		"objectEntryVersion.objectEntryId = ? AND ";
-
-	private static final String _FINDER_COLUMN_OEI_S_STATUS_2 =
-		"objectEntryVersion.status = ?";
 
 	public ObjectEntryVersionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2799,6 +1841,16 @@ public class ObjectEntryVersionPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+			_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+			ObjectEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
+				true, true, ObjectEntryVersion::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -2818,6 +1870,21 @@ public class ObjectEntryVersionPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+				_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+				ObjectEntryVersionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"objectEntryVersion.", "uuid", FinderColumn.Type.STRING,
+					"=", true, false, ObjectEntryVersion::getUuid),
+				new FinderColumn<>(
+					"objectEntryVersion.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, ObjectEntryVersion::getCompanyId));
+
 		_finderPathWithPaginationFindByObjectDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId",
 			new String[] {
@@ -2836,6 +1903,20 @@ public class ObjectEntryVersionPersistenceImpl
 			"countByObjectDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"objectDefinitionId"}, false);
 
+		_collectionPersistenceFinderByObjectDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByObjectDefinitionId,
+				_finderPathWithoutPaginationFindByObjectDefinitionId,
+				_finderPathCountByObjectDefinitionId,
+				_SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+				_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+				ObjectEntryVersionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"objectEntryVersion.", "objectDefinitionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					ObjectEntryVersion::getObjectDefinitionId));
+
 		_finderPathWithPaginationFindByObjectEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectEntryId",
 			new String[] {
@@ -2853,6 +1934,20 @@ public class ObjectEntryVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectEntryId",
 			new String[] {Long.class.getName()}, new String[] {"objectEntryId"},
 			false);
+
+		_collectionPersistenceFinderByObjectEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByObjectEntryId,
+				_finderPathWithoutPaginationFindByObjectEntryId,
+				_finderPathCountByObjectEntryId,
+				_SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+				_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+				ObjectEntryVersionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"objectEntryVersion.", "objectEntryId",
+					FinderColumn.Type.LONG, "=", true, true,
+					ObjectEntryVersion::getObjectEntryId));
 
 		_finderPathWithPaginationFindByC_CD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CD",
@@ -2873,10 +1968,32 @@ public class ObjectEntryVersionPersistenceImpl
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "createDate"}, false);
 
+		_collectionPersistenceFinderByC_CD = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_CD,
+			_finderPathWithoutPaginationFindByC_CD, _finderPathCountByC_CD,
+			_SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+			_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+			ObjectEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectEntryVersion.", "companyId", FinderColumn.Type.LONG, "=",
+				true, false, ObjectEntryVersion::getCompanyId),
+			new FinderColumn<>(
+				"objectEntryVersion.", "createDate", FinderColumn.Type.DATE,
+				"=", true, true, ObjectEntryVersion::getCreateDate));
+
 		_finderPathFetchByOEI_V = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByOEI_V",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"objectEntryId", "version"}, true);
+
+		_uniquePersistenceFinderByOEI_V = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByOEI_V, _SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+			new FinderColumn<>(
+				"objectEntryVersion.", "objectEntryId", FinderColumn.Type.LONG,
+				"=", true, false, ObjectEntryVersion::getObjectEntryId),
+			new FinderColumn<>(
+				"objectEntryVersion.", "version", FinderColumn.Type.INTEGER,
+				"=", true, true, ObjectEntryVersion::getVersion));
 
 		_finderPathWithPaginationFindByOEI_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOEI_S",
@@ -2896,6 +2013,19 @@ public class ObjectEntryVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOEI_S",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"objectEntryId", "status"}, false);
+
+		_collectionPersistenceFinderByOEI_S = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByOEI_S,
+			_finderPathWithoutPaginationFindByOEI_S, _finderPathCountByOEI_S,
+			_SQL_SELECT_OBJECTENTRYVERSION_WHERE,
+			_SQL_COUNT_OBJECTENTRYVERSION_WHERE,
+			ObjectEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectEntryVersion.", "objectEntryId", FinderColumn.Type.LONG,
+				"=", true, false, ObjectEntryVersion::getObjectEntryId),
+			new FinderColumn<>(
+				"objectEntryVersion.", "status", FinderColumn.Type.INTEGER, "=",
+				true, true, ObjectEntryVersion::getStatus));
 
 		ObjectEntryVersionUtil.setPersistence(this);
 	}
@@ -2939,14 +2069,6 @@ public class ObjectEntryVersionPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_OBJECTENTRYVERSION =
 		"SELECT objectEntryVersion FROM ObjectEntryVersion objectEntryVersion";
 
@@ -2979,4 +2101,4 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-679191688
+// LIFERAY-SERVICE-BUILDER-HASH:-1100811515

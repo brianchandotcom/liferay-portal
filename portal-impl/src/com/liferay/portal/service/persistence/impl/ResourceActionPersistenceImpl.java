@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
@@ -23,6 +22,9 @@ import com.liferay.portal.kernel.model.ResourceActionTable;
 import com.liferay.portal.kernel.service.persistence.ResourceActionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourceActionUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -74,6 +75,8 @@ public class ResourceActionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
 	private FinderPath _finderPathCountByName;
+	private CollectionPersistenceFinder<ResourceAction>
+		_collectionPersistenceFinderByName;
 
 	/**
 	 * Returns all the resource actions where name = &#63;.
@@ -144,106 +147,9 @@ public class ResourceActionPersistenceImpl
 		OrderByComparator<ResourceAction> orderByComparator,
 		boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByName;
-				finderArgs = new Object[] {name};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByName;
-			finderArgs = new Object[] {name, start, end, orderByComparator};
-		}
-
-		List<ResourceAction> list = null;
-
-		if (useFinderCache) {
-			list = (List<ResourceAction>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ResourceAction resourceAction : list) {
-					if (!name.equals(resourceAction.getName())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_RESOURCEACTION_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ResourceActionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				list = (List<ResourceAction>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByName.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -320,68 +226,13 @@ public class ResourceActionPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = _finderPathCountByName;
-
-		Object[] finderArgs = new Object[] {name};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_RESOURCEACTION_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByName.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
-	private static final String _FINDER_COLUMN_NAME_NAME_2 =
-		"resourceAction.name = ?";
-
-	private static final String _FINDER_COLUMN_NAME_NAME_3 =
-		"(resourceAction.name IS NULL OR resourceAction.name = '')";
-
 	private FinderPath _finderPathFetchByN_A;
+	private UniquePersistenceFinder<ResourceAction>
+		_uniquePersistenceFinderByN_A;
 
 	/**
 	 * Returns the resource action where name = &#63; and actionId = &#63; or throws a <code>NoSuchResourceActionException</code> if it could not be found.
@@ -444,108 +295,9 @@ public class ResourceActionPersistenceImpl
 	public ResourceAction fetchByN_A(
 		String name, String actionId, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-		actionId = Objects.toString(actionId, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {name, actionId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByN_A, finderArgs, this);
-		}
-
-		if (result instanceof ResourceAction) {
-			ResourceAction resourceAction = (ResourceAction)result;
-
-			if (!Objects.equals(name, resourceAction.getName()) ||
-				!Objects.equals(actionId, resourceAction.getActionId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_RESOURCEACTION_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_A_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_N_A_NAME_2);
-			}
-
-			boolean bindActionId = false;
-
-			if (actionId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_N_A_ACTIONID_3);
-			}
-			else {
-				bindActionId = true;
-
-				sb.append(_FINDER_COLUMN_N_A_ACTIONID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				if (bindActionId) {
-					queryPos.add(actionId);
-				}
-
-				List<ResourceAction> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByN_A, finderArgs, list);
-					}
-				}
-				else {
-					ResourceAction resourceAction = list.get(0);
-
-					result = resourceAction;
-
-					cacheResult(resourceAction);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ResourceAction)result;
-		}
+		return _uniquePersistenceFinderByN_A.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {name, actionId},
+			useFinderCache);
 	}
 
 	/**
@@ -573,26 +325,9 @@ public class ResourceActionPersistenceImpl
 	 */
 	@Override
 	public int countByN_A(String name, String actionId) {
-		ResourceAction resourceAction = fetchByN_A(name, actionId);
-
-		if (resourceAction == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByN_A.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {name, actionId});
 	}
-
-	private static final String _FINDER_COLUMN_N_A_NAME_2 =
-		"resourceAction.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_N_A_NAME_3 =
-		"(resourceAction.name IS NULL OR resourceAction.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_N_A_ACTIONID_2 =
-		"resourceAction.actionId = ?";
-
-	private static final String _FINDER_COLUMN_N_A_ACTIONID_3 =
-		"(resourceAction.actionId IS NULL OR resourceAction.actionId = '')";
 
 	public ResourceActionPersistenceImpl() {
 		setModelClass(ResourceAction.class);
@@ -1148,10 +883,28 @@ public class ResourceActionPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
 
+		_collectionPersistenceFinderByName = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByName,
+			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
+			_SQL_SELECT_RESOURCEACTION_WHERE, _SQL_COUNT_RESOURCEACTION_WHERE,
+			ResourceActionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
+				true, ResourceAction::getName));
+
 		_finderPathFetchByN_A = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"name", "actionId"}, true);
+
+		_uniquePersistenceFinderByN_A = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByN_A, _SQL_SELECT_RESOURCEACTION_WHERE,
+			new FinderColumn<>(
+				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
+				false, ResourceAction::getName),
+			new FinderColumn<>(
+				"resourceAction.", "actionId", FinderColumn.Type.STRING, "=",
+				true, true, ResourceAction::getActionId));
 
 		ResourceActionUtil.setPersistence(this);
 	}
@@ -1191,4 +944,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1033488077
+// LIFERAY-SERVICE-BUILDER-HASH:866004706

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -21,12 +20,13 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchIbSloMessageException;
 import com.liferay.saml.persistence.model.SamlIbSloMessage;
 import com.liferay.saml.persistence.model.SamlIbSloMessageTable;
@@ -40,11 +40,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -87,6 +85,8 @@ public class SamlIbSloMessagePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchBySamlIdpSessionIndex;
+	private UniquePersistenceFinder<SamlIbSloMessage>
+		_uniquePersistenceFinderBySamlIdpSessionIndex;
 
 	/**
 	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or throws a <code>NoSuchIbSloMessageException</code> if it could not be found.
@@ -147,111 +147,8 @@ public class SamlIbSloMessagePersistenceImpl
 	public SamlIbSloMessage fetchBySamlIdpSessionIndex(
 		String samlIdpSessionIndex, boolean useFinderCache) {
 
-		samlIdpSessionIndex = Objects.toString(samlIdpSessionIndex, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {samlIdpSessionIndex};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchBySamlIdpSessionIndex, finderArgs, this);
-		}
-
-		if (result instanceof SamlIbSloMessage) {
-			SamlIbSloMessage samlIbSloMessage = (SamlIbSloMessage)result;
-
-			if (!Objects.equals(
-					samlIdpSessionIndex,
-					samlIbSloMessage.getSamlIdpSessionIndex())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_SAMLIBSLOMESSAGE_WHERE);
-
-			boolean bindSamlIdpSessionIndex = false;
-
-			if (samlIdpSessionIndex.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_SAMLIDPSESSIONINDEX_SAMLIDPSESSIONINDEX_3);
-			}
-			else {
-				bindSamlIdpSessionIndex = true;
-
-				sb.append(
-					_FINDER_COLUMN_SAMLIDPSESSIONINDEX_SAMLIDPSESSIONINDEX_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindSamlIdpSessionIndex) {
-					queryPos.add(samlIdpSessionIndex);
-				}
-
-				List<SamlIbSloMessage> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchBySamlIdpSessionIndex, finderArgs,
-							list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {samlIdpSessionIndex};
-							}
-
-							_log.warn(
-								"SamlIbSloMessagePersistenceImpl.fetchBySamlIdpSessionIndex(String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					SamlIbSloMessage samlIbSloMessage = list.get(0);
-
-					result = samlIbSloMessage;
-
-					cacheResult(samlIbSloMessage);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SamlIbSloMessage)result;
-		}
+		return _uniquePersistenceFinderBySamlIdpSessionIndex.fetch(
+			finderCache, new Object[] {samlIdpSessionIndex}, useFinderCache);
 	}
 
 	/**
@@ -279,23 +176,9 @@ public class SamlIbSloMessagePersistenceImpl
 	 */
 	@Override
 	public int countBySamlIdpSessionIndex(String samlIdpSessionIndex) {
-		SamlIbSloMessage samlIbSloMessage = fetchBySamlIdpSessionIndex(
-			samlIdpSessionIndex);
-
-		if (samlIbSloMessage == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderBySamlIdpSessionIndex.count(
+			finderCache, new Object[] {samlIdpSessionIndex});
 	}
-
-	private static final String
-		_FINDER_COLUMN_SAMLIDPSESSIONINDEX_SAMLIDPSESSIONINDEX_2 =
-			"samlIbSloMessage.samlIdpSessionIndex = ?";
-
-	private static final String
-		_FINDER_COLUMN_SAMLIDPSESSIONINDEX_SAMLIDPSESSIONINDEX_3 =
-			"(samlIbSloMessage.samlIdpSessionIndex IS NULL OR samlIbSloMessage.samlIdpSessionIndex = '')";
 
 	public SamlIbSloMessagePersistenceImpl() {
 		setModelClass(SamlIbSloMessage.class);
@@ -858,6 +741,15 @@ public class SamlIbSloMessagePersistenceImpl
 			new String[] {String.class.getName()},
 			new String[] {"samlIdpSessionIndex"}, true);
 
+		_uniquePersistenceFinderBySamlIdpSessionIndex =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchBySamlIdpSessionIndex,
+				_SQL_SELECT_SAMLIBSLOMESSAGE_WHERE,
+				new FinderColumn<>(
+					"samlIbSloMessage.", "samlIdpSessionIndex",
+					FinderColumn.Type.STRING, "=", true, true,
+					SamlIbSloMessage::getSamlIdpSessionIndex));
+
 		SamlIbSloMessageUtil.setPersistence(this);
 	}
 
@@ -909,9 +801,6 @@ public class SamlIbSloMessagePersistenceImpl
 	private static final String _SQL_COUNT_SAMLIBSLOMESSAGE =
 		"SELECT COUNT(samlIbSloMessage) FROM SamlIbSloMessage samlIbSloMessage";
 
-	private static final String _SQL_COUNT_SAMLIBSLOMESSAGE_WHERE =
-		"SELECT COUNT(samlIbSloMessage) FROM SamlIbSloMessage samlIbSloMessage WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlIbSloMessage.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -929,4 +818,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1799577862
+// LIFERAY-SERVICE-BUILDER-HASH:1085603241

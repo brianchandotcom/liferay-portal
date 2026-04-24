@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -27,6 +26,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -81,6 +82,8 @@ public class DLStorageQuotaPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByCompanyId;
+	private UniquePersistenceFinder<DLStorageQuota>
+		_uniquePersistenceFinderByCompanyId;
 
 	/**
 	 * Returns the dl storage quota where companyId = &#63; or throws a <code>NoSuchStorageQuotaException</code> if it could not be found.
@@ -137,77 +140,8 @@ public class DLStorageQuotaPersistenceImpl
 	public DLStorageQuota fetchByCompanyId(
 		long companyId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByCompanyId, finderArgs, this);
-		}
-
-		if (result instanceof DLStorageQuota) {
-			DLStorageQuota dlStorageQuota = (DLStorageQuota)result;
-
-			if (companyId != dlStorageQuota.getCompanyId()) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_DLSTORAGEQUOTA_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				List<DLStorageQuota> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByCompanyId, finderArgs, list);
-					}
-				}
-				else {
-					DLStorageQuota dlStorageQuota = list.get(0);
-
-					result = dlStorageQuota;
-
-					cacheResult(dlStorageQuota);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (DLStorageQuota)result;
-		}
+		return _uniquePersistenceFinderByCompanyId.fetch(
+			finderCache, new Object[] {companyId}, useFinderCache);
 	}
 
 	/**
@@ -233,17 +167,9 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		DLStorageQuota dlStorageQuota = fetchByCompanyId(companyId);
-
-		if (dlStorageQuota == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"dlStorageQuota.companyId = ?";
 
 	public DLStorageQuotaPersistenceImpl() {
 		setModelClass(DLStorageQuota.class);
@@ -783,6 +709,12 @@ public class DLStorageQuotaPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			true);
 
+		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByCompanyId, _SQL_SELECT_DLSTORAGEQUOTA_WHERE,
+			new FinderColumn<>(
+				"dlStorageQuota.", "companyId", FinderColumn.Type.LONG, "=",
+				true, true, DLStorageQuota::getCompanyId));
+
 		DLStorageQuotaUtil.setPersistence(this);
 	}
 
@@ -834,9 +766,6 @@ public class DLStorageQuotaPersistenceImpl
 	private static final String _SQL_COUNT_DLSTORAGEQUOTA =
 		"SELECT COUNT(dlStorageQuota) FROM DLStorageQuota dlStorageQuota";
 
-	private static final String _SQL_COUNT_DLSTORAGEQUOTA_WHERE =
-		"SELECT COUNT(dlStorageQuota) FROM DLStorageQuota dlStorageQuota WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlStorageQuota.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -854,4 +783,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1832007726
+// LIFERAY-SERVICE-BUILDER-HASH:-1463746262

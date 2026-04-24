@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -87,6 +88,8 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	private FinderPath
 		_finderPathWithoutPaginationFindByBatchEngineImportTaskId;
 	private FinderPath _finderPathCountByBatchEngineImportTaskId;
+	private CollectionPersistenceFinder<BatchEngineImportTaskError>
+		_collectionPersistenceFinderByBatchEngineImportTaskId;
 
 	/**
 	 * Returns all the batch engine import task errors where batchEngineImportTaskId = &#63;.
@@ -165,102 +168,9 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 		OrderByComparator<BatchEngineImportTaskError> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByBatchEngineImportTaskId;
-				finderArgs = new Object[] {batchEngineImportTaskId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByBatchEngineImportTaskId;
-			finderArgs = new Object[] {
-				batchEngineImportTaskId, start, end, orderByComparator
-			};
-		}
-
-		List<BatchEngineImportTaskError> list = null;
-
-		if (useFinderCache) {
-			list = (List<BatchEngineImportTaskError>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (BatchEngineImportTaskError batchEngineImportTaskError :
-						list) {
-
-					if (batchEngineImportTaskId !=
-							batchEngineImportTaskError.
-								getBatchEngineImportTaskId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_BATCHENGINEIMPORTTASKERROR_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_BATCHENGINEIMPORTTASKID_BATCHENGINEIMPORTTASKID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(BatchEngineImportTaskErrorModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchEngineImportTaskId);
-
-				list = (List<BatchEngineImportTaskError>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByBatchEngineImportTaskId.find(
+			finderCache, new Object[] {batchEngineImportTaskId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -343,51 +253,9 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	 */
 	@Override
 	public int countByBatchEngineImportTaskId(long batchEngineImportTaskId) {
-		FinderPath finderPath = _finderPathCountByBatchEngineImportTaskId;
-
-		Object[] finderArgs = new Object[] {batchEngineImportTaskId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_BATCHENGINEIMPORTTASKERROR_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_BATCHENGINEIMPORTTASKID_BATCHENGINEIMPORTTASKID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchEngineImportTaskId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByBatchEngineImportTaskId.count(
+			finderCache, new Object[] {batchEngineImportTaskId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_BATCHENGINEIMPORTTASKID_BATCHENGINEIMPORTTASKID_2 =
-			"batchEngineImportTaskError.batchEngineImportTaskId = ?";
 
 	public BatchEngineImportTaskErrorPersistenceImpl() {
 		setModelClass(BatchEngineImportTaskError.class);
@@ -997,6 +865,20 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"batchEngineImportTaskId"}, false);
 
+		_collectionPersistenceFinderByBatchEngineImportTaskId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByBatchEngineImportTaskId,
+				_finderPathWithoutPaginationFindByBatchEngineImportTaskId,
+				_finderPathCountByBatchEngineImportTaskId,
+				_SQL_SELECT_BATCHENGINEIMPORTTASKERROR_WHERE,
+				_SQL_COUNT_BATCHENGINEIMPORTTASKERROR_WHERE,
+				BatchEngineImportTaskErrorModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"batchEngineImportTaskError.", "batchEngineImportTaskId",
+					FinderColumn.Type.LONG, "=", true, true,
+					BatchEngineImportTaskError::getBatchEngineImportTaskId));
+
 		BatchEngineImportTaskErrorUtil.setPersistence(this);
 	}
 
@@ -1069,4 +951,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-961338414
+// LIFERAY-SERVICE-BUILDER-HASH:-1758331924

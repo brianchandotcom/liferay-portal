@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -86,6 +88,8 @@ public class CommerceAddressRestrictionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCountryId;
 	private FinderPath _finderPathWithoutPaginationFindByCountryId;
 	private FinderPath _finderPathCountByCountryId;
+	private CollectionPersistenceFinder<CommerceAddressRestriction>
+		_collectionPersistenceFinderByCountryId;
 
 	/**
 	 * Returns all the commerce address restrictions where countryId = &#63;.
@@ -159,99 +163,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 		OrderByComparator<CommerceAddressRestriction> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCountryId;
-				finderArgs = new Object[] {countryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCountryId;
-			finderArgs = new Object[] {
-				countryId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceAddressRestriction> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceAddressRestriction>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceAddressRestriction commerceAddressRestriction :
-						list) {
-
-					if (countryId !=
-							commerceAddressRestriction.getCountryId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COUNTRYID_COUNTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(countryId);
-
-				list = (List<CommerceAddressRestriction>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCountryId.find(
+			finderCache, new Object[] {countryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -332,53 +246,15 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Override
 	public int countByCountryId(long countryId) {
-		FinderPath finderPath = _finderPathCountByCountryId;
-
-		Object[] finderArgs = new Object[] {countryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_COUNTRYID_COUNTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(countryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCountryId.count(
+			finderCache, new Object[] {countryId});
 	}
-
-	private static final String _FINDER_COLUMN_COUNTRYID_COUNTRYID_2 =
-		"commerceAddressRestriction.countryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
+	private CollectionPersistenceFinder<CommerceAddressRestriction>
+		_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
@@ -459,104 +335,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 		OrderByComparator<CommerceAddressRestriction> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, classPK};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				classNameId, classPK, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceAddressRestriction> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceAddressRestriction>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceAddressRestriction commerceAddressRestriction :
-						list) {
-
-					if ((classNameId !=
-							commerceAddressRestriction.getClassNameId()) ||
-						(classPK != commerceAddressRestriction.getClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				list = (List<CommerceAddressRestriction>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -645,58 +426,13 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {classNameId, classPK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"commerceAddressRestriction.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"commerceAddressRestriction.classPK = ?";
-
 	private FinderPath _finderPathFetchByC_C_C;
+	private UniquePersistenceFinder<CommerceAddressRestriction>
+		_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the commerce address restriction where classNameId = &#63; and classPK = &#63; and countryId = &#63; or throws a <code>NoSuchAddressRestrictionException</code> if it could not be found.
@@ -770,90 +506,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 		long classNameId, long classPK, long countryId,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK, countryId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
-		}
-
-		if (result instanceof CommerceAddressRestriction) {
-			CommerceAddressRestriction commerceAddressRestriction =
-				(CommerceAddressRestriction)result;
-
-			if ((classNameId != commerceAddressRestriction.getClassNameId()) ||
-				(classPK != commerceAddressRestriction.getClassPK()) ||
-				(countryId != commerceAddressRestriction.getCountryId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COUNTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(countryId);
-
-				List<CommerceAddressRestriction> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C_C, finderArgs, list);
-					}
-				}
-				else {
-					CommerceAddressRestriction commerceAddressRestriction =
-						list.get(0);
-
-					result = commerceAddressRestriction;
-
-					cacheResult(commerceAddressRestriction);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceAddressRestriction)result;
-		}
+		return _uniquePersistenceFinderByC_C_C.fetch(
+			finderCache, new Object[] {classNameId, classPK, countryId},
+			useFinderCache);
 	}
 
 	/**
@@ -885,24 +540,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long classNameId, long classPK, long countryId) {
-		CommerceAddressRestriction commerceAddressRestriction = fetchByC_C_C(
-			classNameId, classPK, countryId);
-
-		if (commerceAddressRestriction == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_C_C.count(
+			finderCache, new Object[] {classNameId, classPK, countryId});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
-		"commerceAddressRestriction.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 =
-		"commerceAddressRestriction.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_COUNTRYID_2 =
-		"commerceAddressRestriction.countryId = ?";
 
 	public CommerceAddressRestrictionPersistenceImpl() {
 		setModelClass(CommerceAddressRestriction.class);
@@ -1533,6 +1173,20 @@ public class CommerceAddressRestrictionPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"countryId"},
 			false);
 
+		_collectionPersistenceFinderByCountryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCountryId,
+				_finderPathWithoutPaginationFindByCountryId,
+				_finderPathCountByCountryId,
+				_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
+				_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
+				CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceAddressRestriction.", "countryId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceAddressRestriction::getCountryId));
+
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -1552,12 +1206,44 @@ public class CommerceAddressRestrictionPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
+			_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
+			CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceAddressRestriction.", "classNameId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceAddressRestriction::getClassNameId),
+			new FinderColumn<>(
+				"commerceAddressRestriction.", "classPK",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceAddressRestriction::getClassPK));
+
 		_finderPathFetchByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "countryId"}, true);
+
+		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C_C,
+			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
+			new FinderColumn<>(
+				"commerceAddressRestriction.", "classNameId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceAddressRestriction::getClassNameId),
+			new FinderColumn<>(
+				"commerceAddressRestriction.", "classPK",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceAddressRestriction::getClassPK),
+			new FinderColumn<>(
+				"commerceAddressRestriction.", "countryId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceAddressRestriction::getCountryId));
 
 		CommerceAddressRestrictionUtil.setPersistence(this);
 	}
@@ -1631,4 +1317,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:314464850
+// LIFERAY-SERVICE-BUILDER-HASH:1370899212

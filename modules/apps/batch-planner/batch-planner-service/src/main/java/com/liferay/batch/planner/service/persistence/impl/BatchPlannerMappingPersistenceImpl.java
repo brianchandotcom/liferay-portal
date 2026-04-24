@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -42,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -87,6 +88,8 @@ public class BatchPlannerMappingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByBatchPlannerPlanId;
 	private FinderPath _finderPathWithoutPaginationFindByBatchPlannerPlanId;
 	private FinderPath _finderPathCountByBatchPlannerPlanId;
+	private CollectionPersistenceFinder<BatchPlannerMapping>
+		_collectionPersistenceFinderByBatchPlannerPlanId;
 
 	/**
 	 * Returns all the batch planner mappings where batchPlannerPlanId = &#63;.
@@ -163,98 +166,9 @@ public class BatchPlannerMappingPersistenceImpl
 		OrderByComparator<BatchPlannerMapping> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByBatchPlannerPlanId;
-				finderArgs = new Object[] {batchPlannerPlanId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByBatchPlannerPlanId;
-			finderArgs = new Object[] {
-				batchPlannerPlanId, start, end, orderByComparator
-			};
-		}
-
-		List<BatchPlannerMapping> list = null;
-
-		if (useFinderCache) {
-			list = (List<BatchPlannerMapping>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (BatchPlannerMapping batchPlannerMapping : list) {
-					if (batchPlannerPlanId !=
-							batchPlannerMapping.getBatchPlannerPlanId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_BATCHPLANNERMAPPING_WHERE);
-
-			sb.append(_FINDER_COLUMN_BATCHPLANNERPLANID_BATCHPLANNERPLANID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(BatchPlannerMappingModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
-
-				list = (List<BatchPlannerMapping>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByBatchPlannerPlanId.find(
+			finderCache, new Object[] {batchPlannerPlanId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -337,52 +251,13 @@ public class BatchPlannerMappingPersistenceImpl
 	 */
 	@Override
 	public int countByBatchPlannerPlanId(long batchPlannerPlanId) {
-		FinderPath finderPath = _finderPathCountByBatchPlannerPlanId;
-
-		Object[] finderArgs = new Object[] {batchPlannerPlanId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_BATCHPLANNERMAPPING_WHERE);
-
-			sb.append(_FINDER_COLUMN_BATCHPLANNERPLANID_BATCHPLANNERPLANID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByBatchPlannerPlanId.count(
+			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
-	private static final String
-		_FINDER_COLUMN_BATCHPLANNERPLANID_BATCHPLANNERPLANID_2 =
-			"batchPlannerMapping.batchPlannerPlanId = ?";
-
 	private FinderPath _finderPathFetchByBPPI_EFN_IFN;
+	private UniquePersistenceFinder<BatchPlannerMapping>
+		_uniquePersistenceFinderByBPPI_EFN_IFN;
 
 	/**
 	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and externalFieldName = &#63; and internalFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.
@@ -459,121 +334,12 @@ public class BatchPlannerMappingPersistenceImpl
 		long batchPlannerPlanId, String externalFieldName,
 		String internalFieldName, boolean useFinderCache) {
 
-		externalFieldName = Objects.toString(externalFieldName, "");
-		internalFieldName = Objects.toString(internalFieldName, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _uniquePersistenceFinderByBPPI_EFN_IFN.fetch(
+			finderCache,
+			new Object[] {
 				batchPlannerPlanId, externalFieldName, internalFieldName
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByBPPI_EFN_IFN, finderArgs, this);
-		}
-
-		if (result instanceof BatchPlannerMapping) {
-			BatchPlannerMapping batchPlannerMapping =
-				(BatchPlannerMapping)result;
-
-			if ((batchPlannerPlanId !=
-					batchPlannerMapping.getBatchPlannerPlanId()) ||
-				!Objects.equals(
-					externalFieldName,
-					batchPlannerMapping.getExternalFieldName()) ||
-				!Objects.equals(
-					internalFieldName,
-					batchPlannerMapping.getInternalFieldName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_BATCHPLANNERMAPPING_WHERE);
-
-			sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_BATCHPLANNERPLANID_2);
-
-			boolean bindExternalFieldName = false;
-
-			if (externalFieldName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_3);
-			}
-			else {
-				bindExternalFieldName = true;
-
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_2);
-			}
-
-			boolean bindInternalFieldName = false;
-
-			if (internalFieldName.isEmpty()) {
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_3);
-			}
-			else {
-				bindInternalFieldName = true;
-
-				sb.append(_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(batchPlannerPlanId);
-
-				if (bindExternalFieldName) {
-					queryPos.add(externalFieldName);
-				}
-
-				if (bindInternalFieldName) {
-					queryPos.add(internalFieldName);
-				}
-
-				List<BatchPlannerMapping> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByBPPI_EFN_IFN, finderArgs, list);
-					}
-				}
-				else {
-					BatchPlannerMapping batchPlannerMapping = list.get(0);
-
-					result = batchPlannerMapping;
-
-					cacheResult(batchPlannerMapping);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (BatchPlannerMapping)result;
-		}
+			},
+			useFinderCache);
 	}
 
 	/**
@@ -609,35 +375,12 @@ public class BatchPlannerMappingPersistenceImpl
 		long batchPlannerPlanId, String externalFieldName,
 		String internalFieldName) {
 
-		BatchPlannerMapping batchPlannerMapping = fetchByBPPI_EFN_IFN(
-			batchPlannerPlanId, externalFieldName, internalFieldName);
-
-		if (batchPlannerMapping == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByBPPI_EFN_IFN.count(
+			finderCache,
+			new Object[] {
+				batchPlannerPlanId, externalFieldName, internalFieldName
+			});
 	}
-
-	private static final String
-		_FINDER_COLUMN_BPPI_EFN_IFN_BATCHPLANNERPLANID_2 =
-			"batchPlannerMapping.batchPlannerPlanId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_2 =
-			"batchPlannerMapping.externalFieldName = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_EFN_IFN_EXTERNALFIELDNAME_3 =
-			"(batchPlannerMapping.externalFieldName IS NULL OR batchPlannerMapping.externalFieldName = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_2 =
-			"batchPlannerMapping.internalFieldName = ?";
-
-	private static final String
-		_FINDER_COLUMN_BPPI_EFN_IFN_INTERNALFIELDNAME_3 =
-			"(batchPlannerMapping.internalFieldName IS NULL OR batchPlannerMapping.internalFieldName = '')";
 
 	public BatchPlannerMappingPersistenceImpl() {
 		setModelClass(BatchPlannerMapping.class);
@@ -1236,6 +979,20 @@ public class BatchPlannerMappingPersistenceImpl
 			"countByBatchPlannerPlanId", new String[] {Long.class.getName()},
 			new String[] {"batchPlannerPlanId"}, false);
 
+		_collectionPersistenceFinderByBatchPlannerPlanId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByBatchPlannerPlanId,
+				_finderPathWithoutPaginationFindByBatchPlannerPlanId,
+				_finderPathCountByBatchPlannerPlanId,
+				_SQL_SELECT_BATCHPLANNERMAPPING_WHERE,
+				_SQL_COUNT_BATCHPLANNERMAPPING_WHERE,
+				BatchPlannerMappingModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"batchPlannerMapping.", "batchPlannerPlanId",
+					FinderColumn.Type.LONG, "=", true, true,
+					BatchPlannerMapping::getBatchPlannerPlanId));
+
 		_finderPathFetchByBPPI_EFN_IFN = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_EFN_IFN",
 			new String[] {
@@ -1246,6 +1003,22 @@ public class BatchPlannerMappingPersistenceImpl
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
 			true);
+
+		_uniquePersistenceFinderByBPPI_EFN_IFN = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByBPPI_EFN_IFN,
+			_SQL_SELECT_BATCHPLANNERMAPPING_WHERE,
+			new FinderColumn<>(
+				"batchPlannerMapping.", "batchPlannerPlanId",
+				FinderColumn.Type.LONG, "=", true, false,
+				BatchPlannerMapping::getBatchPlannerPlanId),
+			new FinderColumn<>(
+				"batchPlannerMapping.", "externalFieldName",
+				FinderColumn.Type.STRING, "=", true, false,
+				BatchPlannerMapping::getExternalFieldName),
+			new FinderColumn<>(
+				"batchPlannerMapping.", "internalFieldName",
+				FinderColumn.Type.STRING, "=", true, true,
+				BatchPlannerMapping::getInternalFieldName));
 
 		BatchPlannerMappingUtil.setPersistence(this);
 	}
@@ -1318,4 +1091,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1327100803
+// LIFERAY-SERVICE-BUILDER-HASH:676724789

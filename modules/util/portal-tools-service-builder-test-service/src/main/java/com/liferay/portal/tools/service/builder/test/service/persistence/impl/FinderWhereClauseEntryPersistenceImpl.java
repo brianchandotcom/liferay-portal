@@ -991,4 +991,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1793073920
+// LIFERAY-SERVICE-BUILDER-HASH:1152132282

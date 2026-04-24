@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -86,6 +87,8 @@ public class CommerceOrderPaymentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
 	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
 	private FinderPath _finderPathCountByCommerceOrderId;
+	private CollectionPersistenceFinder<CommerceOrderPayment>
+		_collectionPersistenceFinderByCommerceOrderId;
 
 	/**
 	 * Returns all the commerce order payments where commerceOrderId = &#63;.
@@ -162,97 +165,9 @@ public class CommerceOrderPaymentPersistenceImpl
 		OrderByComparator<CommerceOrderPayment> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCommerceOrderId;
-				finderArgs = new Object[] {commerceOrderId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCommerceOrderId;
-			finderArgs = new Object[] {
-				commerceOrderId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceOrderPayment> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceOrderPayment>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceOrderPayment commerceOrderPayment : list) {
-					if (commerceOrderId !=
-							commerceOrderPayment.getCommerceOrderId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEORDERPAYMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceOrderPaymentModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceOrderId);
-
-				list = (List<CommerceOrderPayment>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceOrderId.find(
+			finderCache, new Object[] {commerceOrderId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -334,50 +249,9 @@ public class CommerceOrderPaymentPersistenceImpl
 	 */
 	@Override
 	public int countByCommerceOrderId(long commerceOrderId) {
-		FinderPath finderPath = _finderPathCountByCommerceOrderId;
-
-		Object[] finderArgs = new Object[] {commerceOrderId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEORDERPAYMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceOrderId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceOrderId.count(
+			finderCache, new Object[] {commerceOrderId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2 =
-			"commerceOrderPayment.commerceOrderId = ?";
 
 	public CommerceOrderPaymentPersistenceImpl() {
 		setModelClass(CommerceOrderPayment.class);
@@ -959,6 +833,20 @@ public class CommerceOrderPaymentPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"commerceOrderId"}, false);
 
+		_collectionPersistenceFinderByCommerceOrderId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCommerceOrderId,
+				_finderPathWithoutPaginationFindByCommerceOrderId,
+				_finderPathCountByCommerceOrderId,
+				_SQL_SELECT_COMMERCEORDERPAYMENT_WHERE,
+				_SQL_COUNT_COMMERCEORDERPAYMENT_WHERE,
+				CommerceOrderPaymentModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceOrderPayment.", "commerceOrderId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceOrderPayment::getCommerceOrderId));
+
 		CommerceOrderPaymentUtil.setPersistence(this);
 	}
 
@@ -1031,4 +919,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1953606953
+// LIFERAY-SERVICE-BUILDER-HASH:1550125503

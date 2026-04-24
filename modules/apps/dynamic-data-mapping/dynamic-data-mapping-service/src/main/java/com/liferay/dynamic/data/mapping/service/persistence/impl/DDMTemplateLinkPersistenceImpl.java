@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -31,6 +30,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -93,6 +95,8 @@ public class DDMTemplateLinkPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByTemplateId;
 	private FinderPath _finderPathCountByTemplateId;
+	private CollectionPersistenceFinder<DDMTemplateLink>
+		_collectionPersistenceFinderByTemplateId;
 
 	/**
 	 * Returns all the ddm template links where templateId = &#63;.
@@ -171,95 +175,9 @@ public class DDMTemplateLinkPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMTemplateLink.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByTemplateId;
-					finderArgs = new Object[] {templateId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByTemplateId;
-				finderArgs = new Object[] {
-					templateId, start, end, orderByComparator
-				};
-			}
-
-			List<DDMTemplateLink> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDMTemplateLink>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDMTemplateLink ddmTemplateLink : list) {
-						if (templateId != ddmTemplateLink.getTemplateId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DDMTEMPLATELINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_TEMPLATEID_TEMPLATEID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(DDMTemplateLinkModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(templateId);
-
-					list = (List<DDMTemplateLink>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByTemplateId.find(
+				finderCache, new Object[] {templateId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -344,53 +262,14 @@ public class DDMTemplateLinkPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMTemplateLink.class)) {
 
-			FinderPath finderPath = _finderPathCountByTemplateId;
-
-			Object[] finderArgs = new Object[] {templateId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DDMTEMPLATELINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_TEMPLATEID_TEMPLATEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(templateId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByTemplateId.count(
+				finderCache, new Object[] {templateId});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_TEMPLATEID_TEMPLATEID_2 =
-		"ddmTemplateLink.templateId = ?";
-
 	private FinderPath _finderPathFetchByC_C;
+	private UniquePersistenceFinder<DDMTemplateLink>
+		_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchTemplateLinkException</code> if it could not be found.
@@ -457,83 +336,9 @@ public class DDMTemplateLinkPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMTemplateLink.class)) {
 
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {classNameId, classPK};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByC_C, finderArgs, this);
-			}
-
-			if (result instanceof DDMTemplateLink) {
-				DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)result;
-
-				if ((classNameId != ddmTemplateLink.getClassNameId()) ||
-					(classPK != ddmTemplateLink.getClassPK())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_DDMTEMPLATELINK_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					List<DDMTemplateLink> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByC_C, finderArgs, list);
-						}
-					}
-					else {
-						DDMTemplateLink ddmTemplateLink = list.get(0);
-
-						result = ddmTemplateLink;
-
-						cacheResult(ddmTemplateLink);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (DDMTemplateLink)result;
-			}
+			return _uniquePersistenceFinderByC_C.fetch(
+				finderCache, new Object[] {classNameId, classPK},
+				useFinderCache);
 		}
 	}
 
@@ -562,20 +367,9 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		DDMTemplateLink ddmTemplateLink = fetchByC_C(classNameId, classPK);
-
-		if (ddmTemplateLink == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"ddmTemplateLink.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"ddmTemplateLink.classPK = ?";
 
 	public DDMTemplateLinkPersistenceImpl() {
 		setModelClass(DDMTemplateLink.class);
@@ -1402,10 +1196,30 @@ public class DDMTemplateLinkPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"templateId"},
 			false);
 
+		_collectionPersistenceFinderByTemplateId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByTemplateId,
+				_finderPathWithoutPaginationFindByTemplateId,
+				_finderPathCountByTemplateId, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
+				_SQL_COUNT_DDMTEMPLATELINK_WHERE,
+				DDMTemplateLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ddmTemplateLink.", "templateId", FinderColumn.Type.LONG,
+					"=", true, true, DDMTemplateLink::getTemplateId));
+
 		_finderPathFetchByC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
+
+		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
+			new FinderColumn<>(
+				"ddmTemplateLink.", "classNameId", FinderColumn.Type.LONG, "=",
+				true, false, DDMTemplateLink::getClassNameId),
+			new FinderColumn<>(
+				"ddmTemplateLink.", "classPK", FinderColumn.Type.LONG, "=",
+				true, true, DDMTemplateLink::getClassPK));
 
 		DDMTemplateLinkUtil.setPersistence(this);
 	}
@@ -1481,4 +1295,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1489270196
+// LIFERAY-SERVICE-BUILDER-HASH:914486427

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -25,6 +24,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -52,7 +54,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -97,6 +98,8 @@ public class KaleoNodeSettingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByKaleoNodeId;
 	private FinderPath _finderPathWithoutPaginationFindByKaleoNodeId;
 	private FinderPath _finderPathCountByKaleoNodeId;
+	private CollectionPersistenceFinder<KaleoNodeSetting>
+		_collectionPersistenceFinderByKaleoNodeId;
 
 	/**
 	 * Returns all the kaleo node settings where kaleoNodeId = &#63;.
@@ -175,95 +178,9 @@ public class KaleoNodeSettingPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					KaleoNodeSetting.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByKaleoNodeId;
-					finderArgs = new Object[] {kaleoNodeId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByKaleoNodeId;
-				finderArgs = new Object[] {
-					kaleoNodeId, start, end, orderByComparator
-				};
-			}
-
-			List<KaleoNodeSetting> list = null;
-
-			if (useFinderCache) {
-				list = (List<KaleoNodeSetting>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (KaleoNodeSetting kaleoNodeSetting : list) {
-						if (kaleoNodeId != kaleoNodeSetting.getKaleoNodeId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_KALEONODESETTING_WHERE);
-
-				sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(KaleoNodeSettingModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(kaleoNodeId);
-
-					list = (List<KaleoNodeSetting>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByKaleoNodeId.find(
+				finderCache, new Object[] {kaleoNodeId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -349,53 +266,14 @@ public class KaleoNodeSettingPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					KaleoNodeSetting.class)) {
 
-			FinderPath finderPath = _finderPathCountByKaleoNodeId;
-
-			Object[] finderArgs = new Object[] {kaleoNodeId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_KALEONODESETTING_WHERE);
-
-				sb.append(_FINDER_COLUMN_KALEONODEID_KALEONODEID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(kaleoNodeId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByKaleoNodeId.count(
+				finderCache, new Object[] {kaleoNodeId});
 		}
 	}
 
-	private static final String _FINDER_COLUMN_KALEONODEID_KALEONODEID_2 =
-		"kaleoNodeSetting.kaleoNodeId = ?";
-
 	private FinderPath _finderPathFetchByKNI_N;
+	private UniquePersistenceFinder<KaleoNodeSetting>
+		_uniquePersistenceFinderByKNI_N;
 
 	/**
 	 * Returns the kaleo node setting where kaleoNodeId = &#63; and name = &#63; or throws a <code>NoSuchNodeSettingException</code> if it could not be found.
@@ -462,96 +340,8 @@ public class KaleoNodeSettingPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					KaleoNodeSetting.class)) {
 
-			name = Objects.toString(name, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {kaleoNodeId, name};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByKNI_N, finderArgs, this);
-			}
-
-			if (result instanceof KaleoNodeSetting) {
-				KaleoNodeSetting kaleoNodeSetting = (KaleoNodeSetting)result;
-
-				if ((kaleoNodeId != kaleoNodeSetting.getKaleoNodeId()) ||
-					!Objects.equals(name, kaleoNodeSetting.getName())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_KALEONODESETTING_WHERE);
-
-				sb.append(_FINDER_COLUMN_KNI_N_KALEONODEID_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_KNI_N_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_KNI_N_NAME_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(kaleoNodeId);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					List<KaleoNodeSetting> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByKNI_N, finderArgs, list);
-						}
-					}
-					else {
-						KaleoNodeSetting kaleoNodeSetting = list.get(0);
-
-						result = kaleoNodeSetting;
-
-						cacheResult(kaleoNodeSetting);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (KaleoNodeSetting)result;
-			}
+			return _uniquePersistenceFinderByKNI_N.fetch(
+				finderCache, new Object[] {kaleoNodeId, name}, useFinderCache);
 		}
 	}
 
@@ -580,23 +370,9 @@ public class KaleoNodeSettingPersistenceImpl
 	 */
 	@Override
 	public int countByKNI_N(long kaleoNodeId, String name) {
-		KaleoNodeSetting kaleoNodeSetting = fetchByKNI_N(kaleoNodeId, name);
-
-		if (kaleoNodeSetting == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByKNI_N.count(
+			finderCache, new Object[] {kaleoNodeId, name});
 	}
-
-	private static final String _FINDER_COLUMN_KNI_N_KALEONODEID_2 =
-		"kaleoNodeSetting.kaleoNodeId = ? AND ";
-
-	private static final String _FINDER_COLUMN_KNI_N_NAME_2 =
-		"kaleoNodeSetting.name = ?";
-
-	private static final String _FINDER_COLUMN_KNI_N_NAME_3 =
-		"(kaleoNodeSetting.name IS NULL OR kaleoNodeSetting.name = '')";
 
 	public KaleoNodeSettingPersistenceImpl() {
 		setModelClass(KaleoNodeSetting.class);
@@ -1456,10 +1232,31 @@ public class KaleoNodeSettingPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
 			false);
 
+		_collectionPersistenceFinderByKaleoNodeId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByKaleoNodeId,
+				_finderPathWithoutPaginationFindByKaleoNodeId,
+				_finderPathCountByKaleoNodeId,
+				_SQL_SELECT_KALEONODESETTING_WHERE,
+				_SQL_COUNT_KALEONODESETTING_WHERE,
+				KaleoNodeSettingModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG,
+					"=", true, true, KaleoNodeSetting::getKaleoNodeId));
+
 		_finderPathFetchByKNI_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoNodeId", "name"}, true);
+
+		_uniquePersistenceFinderByKNI_N = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByKNI_N, _SQL_SELECT_KALEONODESETTING_WHERE,
+			new FinderColumn<>(
+				"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG, "=",
+				true, false, KaleoNodeSetting::getKaleoNodeId),
+			new FinderColumn<>(
+				"kaleoNodeSetting.", "name", FinderColumn.Type.STRING, "=",
+				true, true, KaleoNodeSetting::getName));
 
 		KaleoNodeSettingUtil.setPersistence(this);
 	}
@@ -1535,4 +1332,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1785253128
+// LIFERAY-SERVICE-BUILDER-HASH:-383031158

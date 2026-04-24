@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,7 +48,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -91,6 +92,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the cp definition grouped entries where uuid = &#63;.
@@ -163,106 +166,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CPDefinitionGroupedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CPDefinitionGroupedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : list) {
-					if (!uuid.equals(cpDefinitionGroupedEntry.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CPDefinitionGroupedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -342,67 +248,13 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"cpDefinitionGroupedEntry.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(cpDefinitionGroupedEntry.uuid IS NULL OR cpDefinitionGroupedEntry.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp definition grouped entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionGroupedEntryException</code> if it could not be found.
@@ -466,98 +318,8 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	public CPDefinitionGroupedEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		if (result instanceof CPDefinitionGroupedEntry) {
-			CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-				(CPDefinitionGroupedEntry)result;
-
-			if (!Objects.equals(uuid, cpDefinitionGroupedEntry.getUuid()) ||
-				(groupId != cpDefinitionGroupedEntry.getGroupId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				List<CPDefinitionGroupedEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
-				}
-				else {
-					CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-						list.get(0);
-
-					result = cpDefinitionGroupedEntry;
-
-					cacheResult(cpDefinitionGroupedEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CPDefinitionGroupedEntry)result;
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -586,28 +348,15 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (cpDefinitionGroupedEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"cpDefinitionGroupedEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(cpDefinitionGroupedEntry.uuid IS NULL OR cpDefinitionGroupedEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"cpDefinitionGroupedEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the cp definition grouped entries where uuid = &#63; and companyId = &#63;.
@@ -688,115 +437,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CPDefinitionGroupedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CPDefinitionGroupedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : list) {
-					if (!uuid.equals(cpDefinitionGroupedEntry.getUuid()) ||
-						(companyId !=
-							cpDefinitionGroupedEntry.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CPDefinitionGroupedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -885,76 +528,15 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"cpDefinitionGroupedEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(cpDefinitionGroupedEntry.uuid IS NULL OR cpDefinitionGroupedEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"cpDefinitionGroupedEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathCountByCPDefinitionId;
+	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
+		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns all the cp definition grouped entries where CPDefinitionId = &#63;.
@@ -1031,97 +613,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCPDefinitionId;
-				finderArgs = new Object[] {CPDefinitionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCPDefinitionId;
-			finderArgs = new Object[] {
-				CPDefinitionId, start, end, orderByComparator
-			};
-		}
-
-		List<CPDefinitionGroupedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CPDefinitionGroupedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : list) {
-					if (CPDefinitionId !=
-							cpDefinitionGroupedEntry.getCPDefinitionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				list = (List<CPDefinitionGroupedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCPDefinitionId.find(
+			finderCache, new Object[] {CPDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1203,53 +697,15 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCPDefinitionId(long CPDefinitionId) {
-		FinderPath finderPath = _finderPathCountByCPDefinitionId;
-
-		Object[] finderArgs = new Object[] {CPDefinitionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCPDefinitionId.count(
+			finderCache, new Object[] {CPDefinitionId});
 	}
-
-	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 =
-		"cpDefinitionGroupedEntry.CPDefinitionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByEntryCProductId;
 	private FinderPath _finderPathWithoutPaginationFindByEntryCProductId;
 	private FinderPath _finderPathCountByEntryCProductId;
+	private CollectionPersistenceFinder<CPDefinitionGroupedEntry>
+		_collectionPersistenceFinderByEntryCProductId;
 
 	/**
 	 * Returns all the cp definition grouped entries where entryCProductId = &#63;.
@@ -1326,97 +782,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		OrderByComparator<CPDefinitionGroupedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByEntryCProductId;
-				finderArgs = new Object[] {entryCProductId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByEntryCProductId;
-			finderArgs = new Object[] {
-				entryCProductId, start, end, orderByComparator
-			};
-		}
-
-		List<CPDefinitionGroupedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CPDefinitionGroupedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry : list) {
-					if (entryCProductId !=
-							cpDefinitionGroupedEntry.getEntryCProductId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_ENTRYCPRODUCTID_ENTRYCPRODUCTID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(entryCProductId);
-
-				list = (List<CPDefinitionGroupedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByEntryCProductId.find(
+			finderCache, new Object[] {entryCProductId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1498,52 +866,13 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByEntryCProductId(long entryCProductId) {
-		FinderPath finderPath = _finderPathCountByEntryCProductId;
-
-		Object[] finderArgs = new Object[] {entryCProductId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_ENTRYCPRODUCTID_ENTRYCPRODUCTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(entryCProductId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByEntryCProductId.count(
+			finderCache, new Object[] {entryCProductId});
 	}
 
-	private static final String
-		_FINDER_COLUMN_ENTRYCPRODUCTID_ENTRYCPRODUCTID_2 =
-			"cpDefinitionGroupedEntry.entryCProductId = ?";
-
 	private FinderPath _finderPathFetchByC_E;
+	private UniquePersistenceFinder<CPDefinitionGroupedEntry>
+		_uniquePersistenceFinderByC_E;
 
 	/**
 	 * Returns the cp definition grouped entry where CPDefinitionId = &#63; and entryCProductId = &#63; or throws a <code>NoSuchCPDefinitionGroupedEntryException</code> if it could not be found.
@@ -1610,87 +939,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	public CPDefinitionGroupedEntry fetchByC_E(
 		long CPDefinitionId, long entryCProductId, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {CPDefinitionId, entryCProductId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_E, finderArgs, this);
-		}
-
-		if (result instanceof CPDefinitionGroupedEntry) {
-			CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-				(CPDefinitionGroupedEntry)result;
-
-			if ((CPDefinitionId !=
-					cpDefinitionGroupedEntry.getCPDefinitionId()) ||
-				(entryCProductId !=
-					cpDefinitionGroupedEntry.getEntryCProductId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_E_CPDEFINITIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_E_ENTRYCPRODUCTID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(CPDefinitionId);
-
-				queryPos.add(entryCProductId);
-
-				List<CPDefinitionGroupedEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_E, finderArgs, list);
-					}
-				}
-				else {
-					CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-						list.get(0);
-
-					result = cpDefinitionGroupedEntry;
-
-					cacheResult(cpDefinitionGroupedEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CPDefinitionGroupedEntry)result;
-		}
+		return _uniquePersistenceFinderByC_E.fetch(
+			finderCache, new Object[] {CPDefinitionId, entryCProductId},
+			useFinderCache);
 	}
 
 	/**
@@ -1720,21 +971,9 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_E(long CPDefinitionId, long entryCProductId) {
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByC_E(
-			CPDefinitionId, entryCProductId);
-
-		if (cpDefinitionGroupedEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_E.count(
+			finderCache, new Object[] {CPDefinitionId, entryCProductId});
 	}
-
-	private static final String _FINDER_COLUMN_C_E_CPDEFINITIONID_2 =
-		"cpDefinitionGroupedEntry.CPDefinitionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_E_ENTRYCPRODUCTID_2 =
-		"cpDefinitionGroupedEntry.entryCProductId = ?";
 
 	public CPDefinitionGroupedEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2388,10 +1627,31 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+			_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
+			CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"cpDefinitionGroupedEntry.", "uuid", FinderColumn.Type.STRING,
+				"=", true, true, CPDefinitionGroupedEntry::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G,
+			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+			new FinderColumn<>(
+				"cpDefinitionGroupedEntry.", "uuid", FinderColumn.Type.STRING,
+				"=", true, false, CPDefinitionGroupedEntry::getUuid),
+			new FinderColumn<>(
+				"cpDefinitionGroupedEntry.", "groupId", FinderColumn.Type.LONG,
+				"=", true, true, CPDefinitionGroupedEntry::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -2412,6 +1672,24 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cpDefinitionGroupedEntry.", "uuid",
+					FinderColumn.Type.STRING, "=", true, false,
+					CPDefinitionGroupedEntry::getUuid),
+				new FinderColumn<>(
+					"cpDefinitionGroupedEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CPDefinitionGroupedEntry::getCompanyId));
+
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -2429,6 +1707,20 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPDefinitionId",
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
+
+		_collectionPersistenceFinderByCPDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCPDefinitionId,
+				_finderPathWithoutPaginationFindByCPDefinitionId,
+				_finderPathCountByCPDefinitionId,
+				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cpDefinitionGroupedEntry.", "CPDefinitionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CPDefinitionGroupedEntry::getCPDefinitionId));
 
 		_finderPathWithPaginationFindByEntryCProductId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryCProductId",
@@ -2448,10 +1740,36 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"entryCProductId"}, false);
 
+		_collectionPersistenceFinderByEntryCProductId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByEntryCProductId,
+				_finderPathWithoutPaginationFindByEntryCProductId,
+				_finderPathCountByEntryCProductId,
+				_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				_SQL_COUNT_CPDEFINITIONGROUPEDENTRY_WHERE,
+				CPDefinitionGroupedEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"cpDefinitionGroupedEntry.", "entryCProductId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CPDefinitionGroupedEntry::getEntryCProductId));
+
 		_finderPathFetchByC_E = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionId", "entryCProductId"}, true);
+
+		_uniquePersistenceFinderByC_E = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_E,
+			_SQL_SELECT_CPDEFINITIONGROUPEDENTRY_WHERE,
+			new FinderColumn<>(
+				"cpDefinitionGroupedEntry.", "CPDefinitionId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CPDefinitionGroupedEntry::getCPDefinitionId),
+			new FinderColumn<>(
+				"cpDefinitionGroupedEntry.", "entryCProductId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CPDefinitionGroupedEntry::getEntryCProductId));
 
 		CPDefinitionGroupedEntryUtil.setPersistence(this);
 	}
@@ -2528,4 +1846,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:29212979
+// LIFERAY-SERVICE-BUILDER-HASH:-1842096763

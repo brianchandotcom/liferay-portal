@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.DuplicateWebsiteExternalReferenceCodeException;
@@ -32,6 +31,9 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.WebsitePersistence;
 import com.liferay.portal.kernel.service.persistence.WebsiteUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -88,6 +90,8 @@ public class WebsitePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the websites where uuid = &#63;.
@@ -157,106 +161,9 @@ public class WebsitePersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if (!uuid.equals(website.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -332,69 +239,15 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "website.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(website.uuid IS NULL OR website.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the websites where uuid = &#63; and companyId = &#63;.
@@ -472,114 +325,9 @@ public class WebsitePersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if (!uuid.equals(website.getUuid()) ||
-						(companyId != website.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -668,77 +416,15 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"website.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(website.uuid IS NULL OR website.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"website.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the websites where companyId = &#63;.
@@ -809,95 +495,9 @@ public class WebsitePersistenceImpl
 		long companyId, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if (companyId != website.getCompanyId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -975,54 +575,15 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"website.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the websites where userId = &#63;.
@@ -1092,93 +653,9 @@ public class WebsitePersistenceImpl
 		long userId, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if (userId != website.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1255,54 +732,15 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
-
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"website.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns all the websites where companyId = &#63; and classNameId = &#63;.
@@ -1380,101 +818,10 @@ public class WebsitePersistenceImpl
 		long companyId, long classNameId, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {companyId, classNameId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				companyId, classNameId, start, end, orderByComparator
-			};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if ((companyId != website.getCompanyId()) ||
-						(classNameId != website.getClassNameId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1563,61 +910,16 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {companyId, classNameId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 =
-		"website.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"website.classNameId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
 	private FinderPath _finderPathCountByC_C_C;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByC_C_C;
 
 	/**
 	 * Returns all the websites where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -1703,106 +1005,10 @@ public class WebsitePersistenceImpl
 		long companyId, long classNameId, long classPK, int start, int end,
 		OrderByComparator<Website> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_C;
-				finderArgs = new Object[] {companyId, classNameId, classPK};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C_C;
-			finderArgs = new Object[] {
-				companyId, classNameId, classPK, start, end, orderByComparator
-			};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if ((companyId != website.getCompanyId()) ||
-						(classNameId != website.getClassNameId()) ||
-						(classPK != website.getClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1898,68 +1104,16 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long companyId, long classNameId, long classPK) {
-		FinderPath finderPath = _finderPathCountByC_C_C;
-
-		Object[] finderArgs = new Object[] {companyId, classNameId, classPK};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_C_COMPANYID_2 =
-		"website.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
-		"website.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 =
-		"website.classPK = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C_C_P;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_P;
 	private FinderPath _finderPathCountByC_C_C_P;
+	private CollectionPersistenceFinder<Website>
+		_collectionPersistenceFinderByC_C_C_P;
 
 	/**
 	 * Returns all the websites where companyId = &#63; and classNameId = &#63; and classPK = &#63; and primary = &#63;.
@@ -2052,114 +1206,10 @@ public class WebsitePersistenceImpl
 		int start, int end, OrderByComparator<Website> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_C_P;
-				finderArgs = new Object[] {
-					companyId, classNameId, classPK, primary
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C_C_P;
-			finderArgs = new Object[] {
-				companyId, classNameId, classPK, primary, start, end,
-				orderByComparator
-			};
-		}
-
-		List<Website> list = null;
-
-		if (useFinderCache) {
-			list = (List<Website>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (Website website : list) {
-					if ((companyId != website.getCompanyId()) ||
-						(classNameId != website.getClassNameId()) ||
-						(classPK != website.getClassPK()) ||
-						(primary != website.isPrimary())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(WebsiteModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(primary);
-
-				list = (List<Website>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_C_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2266,75 +1316,13 @@ public class WebsitePersistenceImpl
 	public int countByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary) {
 
-		FinderPath finderPath = _finderPathCountByC_C_C_P;
-
-		Object[] finderArgs = new Object[] {
-			companyId, classNameId, classPK, primary
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_WEBSITE_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_P_PRIMARY_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(primary);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_C_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary});
 	}
 
-	private static final String _FINDER_COLUMN_C_C_C_P_COMPANYID_2 =
-		"website.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_P_CLASSNAMEID_2 =
-		"website.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 =
-		"website.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 =
-		"website.primary = ?";
-
 	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<Website> _uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the website where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchWebsiteException</code> if it could not be found.
@@ -2397,98 +1385,9 @@ public class WebsitePersistenceImpl
 	public Website fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {externalReferenceCode, companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByERC_C, finderArgs, this);
-		}
-
-		if (result instanceof Website) {
-			Website website = (Website)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					website.getExternalReferenceCode()) ||
-				(companyId != website.getCompanyId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_WEBSITE_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				List<Website> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByERC_C, finderArgs, list);
-					}
-				}
-				else {
-					Website website = list.get(0);
-
-					result = website;
-
-					cacheResult(website);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Website)result;
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId}, useFinderCache);
 	}
 
 	/**
@@ -2516,23 +1415,10 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		Website website = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (website == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
-		"website.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
-		"(website.externalReferenceCode IS NULL OR website.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
-		"website.companyId = ?";
 
 	public WebsitePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3185,6 +2071,15 @@ public class WebsitePersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"website.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				Website::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3204,6 +2099,20 @@ public class WebsitePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_WEBSITE_WHERE,
+				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"website.", "uuid", FinderColumn.Type.STRING, "=", true,
+					false, Website::getUuid),
+				new FinderColumn<>(
+					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Website::getCompanyId));
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -3222,6 +2131,17 @@ public class WebsitePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_WEBSITE_WHERE,
+				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Website::getCompanyId));
+
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -3238,6 +2158,17 @@ public class WebsitePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
+
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId, _SQL_SELECT_WEBSITE_WHERE,
+				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"website.", "userId", FinderColumn.Type.LONG, "=", true,
+					true, Website::getUserId));
 
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -3257,6 +2188,18 @@ public class WebsitePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "classNameId"}, false);
+
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+				false, Website::getCompanyId),
+			new FinderColumn<>(
+				"website.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				true, Website::getClassNameId));
 
 		_finderPathWithPaginationFindByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
@@ -3280,6 +2223,21 @@ public class WebsitePersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "classNameId", "classPK"}, false);
+
+		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C_C,
+			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+				false, Website::getCompanyId),
+			new FinderColumn<>(
+				"website.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				false, Website::getClassNameId),
+			new FinderColumn<>(
+				"website.", "classPK", FinderColumn.Type.LONG, "=", true, true,
+				Website::getClassPK));
 
 		_finderPathWithPaginationFindByC_C_C_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_P",
@@ -3310,10 +2268,39 @@ public class WebsitePersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "primary_"},
 			false);
 
+		_collectionPersistenceFinderByC_C_C_P =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_C_C_P,
+				_finderPathWithoutPaginationFindByC_C_C_P,
+				_finderPathCountByC_C_C_P, _SQL_SELECT_WEBSITE_WHERE,
+				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+					false, Website::getCompanyId),
+				new FinderColumn<>(
+					"website.", "classNameId", FinderColumn.Type.LONG, "=",
+					true, false, Website::getClassNameId),
+				new FinderColumn<>(
+					"website.", "classPK", FinderColumn.Type.LONG, "=", true,
+					false, Website::getClassPK),
+				new FinderColumn<>(
+					"website.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
+					true, Website::isPrimary));
+
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C, _SQL_SELECT_WEBSITE_WHERE,
+			new FinderColumn<>(
+				"website.", "externalReferenceCode", FinderColumn.Type.STRING,
+				"=", true, false, Website::getExternalReferenceCode),
+			new FinderColumn<>(
+				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
+				true, Website::getCompanyId));
 
 		WebsiteUtil.setPersistence(this);
 	}
@@ -3356,4 +2343,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-653552720
+// LIFERAY-SERVICE-BUILDER-HASH:-598266924

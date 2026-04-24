@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.kernel.service.persistence.PortalPreferenceValueUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -40,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -642,6 +644,8 @@ public class PortalPreferenceValuePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByP_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_N;
 	private FinderPath _finderPathCountByP_N;
+	private CollectionPersistenceFinder<PortalPreferenceValue>
+		_collectionPersistenceFinderByP_N;
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
@@ -724,116 +728,9 @@ public class PortalPreferenceValuePersistenceImpl
 		OrderByComparator<PortalPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		namespace = Objects.toString(namespace, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByP_N;
-				finderArgs = new Object[] {portalPreferencesId, namespace};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByP_N;
-			finderArgs = new Object[] {
-				portalPreferencesId, namespace, start, end, orderByComparator
-			};
-		}
-
-		List<PortalPreferenceValue> list = null;
-
-		if (useFinderCache) {
-			list = (List<PortalPreferenceValue>)dummyFinderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PortalPreferenceValue portalPreferenceValue : list) {
-					if ((portalPreferencesId !=
-							portalPreferenceValue.getPortalPreferencesId()) ||
-						!namespace.equals(
-							portalPreferenceValue.getNamespace())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_N_PORTALPREFERENCESID_2);
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_N_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_N_NAMESPACE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(PortalPreferenceValueModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				list = (List<PortalPreferenceValue>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					dummyFinderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByP_N.find(
+			dummyFinderCache, new Object[] {portalPreferencesId, namespace},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -922,77 +819,15 @@ public class PortalPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public int countByP_N(long portalPreferencesId, String namespace) {
-		namespace = Objects.toString(namespace, "");
-
-		FinderPath finderPath = _finderPathCountByP_N;
-
-		Object[] finderArgs = new Object[] {portalPreferencesId, namespace};
-
-		Long count = (Long)dummyFinderCache.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_N_PORTALPREFERENCESID_2);
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_N_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_N_NAMESPACE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				dummyFinderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByP_N.count(
+			dummyFinderCache, new Object[] {portalPreferencesId, namespace});
 	}
-
-	private static final String _FINDER_COLUMN_P_N_PORTALPREFERENCESID_2 =
-		"portalPreferenceValue.portalPreferencesId = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_N_NAMESPACE_2 =
-		"portalPreferenceValue.namespace = ?";
-
-	private static final String _FINDER_COLUMN_P_N_NAMESPACE_3 =
-		"(portalPreferenceValue.namespace IS NULL OR portalPreferenceValue.namespace = '')";
 
 	private FinderPath _finderPathWithPaginationFindByP_K_N;
 	private FinderPath _finderPathWithoutPaginationFindByP_K_N;
 	private FinderPath _finderPathCountByP_K_N;
+	private CollectionPersistenceFinder<PortalPreferenceValue>
+		_collectionPersistenceFinderByP_K_N;
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
@@ -1081,134 +916,10 @@ public class PortalPreferenceValuePersistenceImpl
 		int end, OrderByComparator<PortalPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		key = Objects.toString(key, "");
-		namespace = Objects.toString(namespace, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByP_K_N;
-				finderArgs = new Object[] {portalPreferencesId, key, namespace};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByP_K_N;
-			finderArgs = new Object[] {
-				portalPreferencesId, key, namespace, start, end,
-				orderByComparator
-			};
-		}
-
-		List<PortalPreferenceValue> list = null;
-
-		if (useFinderCache) {
-			list = (List<PortalPreferenceValue>)dummyFinderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PortalPreferenceValue portalPreferenceValue : list) {
-					if ((portalPreferencesId !=
-							portalPreferenceValue.getPortalPreferencesId()) ||
-						!key.equals(portalPreferenceValue.getKey()) ||
-						!namespace.equals(
-							portalPreferenceValue.getNamespace())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_K_N_PORTALPREFERENCESID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_KEY_2);
-			}
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_NAMESPACE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(PortalPreferenceValueModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				list = (List<PortalPreferenceValue>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					dummyFinderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByP_K_N.find(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1308,99 +1019,14 @@ public class PortalPreferenceValuePersistenceImpl
 	public int countByP_K_N(
 		long portalPreferencesId, String key, String namespace) {
 
-		key = Objects.toString(key, "");
-		namespace = Objects.toString(namespace, "");
-
-		FinderPath finderPath = _finderPathCountByP_K_N;
-
-		Object[] finderArgs = new Object[] {
-			portalPreferencesId, key, namespace
-		};
-
-		Long count = (Long)dummyFinderCache.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_K_N_PORTALPREFERENCESID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_KEY_2);
-			}
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_NAMESPACE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				dummyFinderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByP_K_N.count(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace});
 	}
 
-	private static final String _FINDER_COLUMN_P_K_N_PORTALPREFERENCESID_2 =
-		"portalPreferenceValue.portalPreferencesId = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_KEY_2 =
-		"portalPreferenceValue.key = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_KEY_3 =
-		"(portalPreferenceValue.key IS NULL OR portalPreferenceValue.key = '') AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_NAMESPACE_2 =
-		"portalPreferenceValue.namespace = ?";
-
-	private static final String _FINDER_COLUMN_P_K_N_NAMESPACE_3 =
-		"(portalPreferenceValue.namespace IS NULL OR portalPreferenceValue.namespace = '')";
-
 	private FinderPath _finderPathFetchByP_I_K_N;
+	private UniquePersistenceFinder<PortalPreferenceValue>
+		_uniquePersistenceFinderByP_I_K_N;
 
 	/**
 	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or throws a <code>NoSuchPreferenceValueException</code> if it could not be found.
@@ -1480,123 +1106,10 @@ public class PortalPreferenceValuePersistenceImpl
 		long portalPreferencesId, int index, String key, String namespace,
 		boolean useFinderCache) {
 
-		key = Objects.toString(key, "");
-		namespace = Objects.toString(namespace, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				portalPreferencesId, index, key, namespace
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = dummyFinderCache.getResult(
-				_finderPathFetchByP_I_K_N, finderArgs, this);
-		}
-
-		if (result instanceof PortalPreferenceValue) {
-			PortalPreferenceValue portalPreferenceValue =
-				(PortalPreferenceValue)result;
-
-			if ((portalPreferencesId !=
-					portalPreferenceValue.getPortalPreferencesId()) ||
-				(index != portalPreferenceValue.getIndex()) ||
-				!Objects.equals(key, portalPreferenceValue.getKey()) ||
-				!Objects.equals(
-					namespace, portalPreferenceValue.getNamespace())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_I_K_N_PORTALPREFERENCESID_2);
-
-			sb.append(_FINDER_COLUMN_P_I_K_N_INDEX_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_I_K_N_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_P_I_K_N_KEY_2);
-			}
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_I_K_N_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_I_K_N_NAMESPACE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				queryPos.add(index);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				List<PortalPreferenceValue> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						dummyFinderCache.putResult(
-							_finderPathFetchByP_I_K_N, finderArgs, list);
-					}
-				}
-				else {
-					PortalPreferenceValue portalPreferenceValue = list.get(0);
-
-					result = portalPreferenceValue;
-
-					cacheResult(portalPreferenceValue);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (PortalPreferenceValue)result;
-		}
+		return _uniquePersistenceFinderByP_I_K_N.fetch(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, index, key, namespace},
+			useFinderCache);
 	}
 
 	/**
@@ -1632,37 +1145,16 @@ public class PortalPreferenceValuePersistenceImpl
 	public int countByP_I_K_N(
 		long portalPreferencesId, int index, String key, String namespace) {
 
-		PortalPreferenceValue portalPreferenceValue = fetchByP_I_K_N(
-			portalPreferencesId, index, key, namespace);
-
-		if (portalPreferenceValue == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByP_I_K_N.count(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, index, key, namespace});
 	}
-
-	private static final String _FINDER_COLUMN_P_I_K_N_PORTALPREFERENCESID_2 =
-		"portalPreferenceValue.portalPreferencesId = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_I_K_N_INDEX_2 =
-		"portalPreferenceValue.index = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_I_K_N_KEY_2 =
-		"portalPreferenceValue.key = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_I_K_N_KEY_3 =
-		"(portalPreferenceValue.key IS NULL OR portalPreferenceValue.key = '') AND ";
-
-	private static final String _FINDER_COLUMN_P_I_K_N_NAMESPACE_2 =
-		"portalPreferenceValue.namespace = ?";
-
-	private static final String _FINDER_COLUMN_P_I_K_N_NAMESPACE_3 =
-		"(portalPreferenceValue.namespace IS NULL OR portalPreferenceValue.namespace = '')";
 
 	private FinderPath _finderPathWithPaginationFindByP_K_N_SV;
 	private FinderPath _finderPathWithoutPaginationFindByP_K_N_SV;
 	private FinderPath _finderPathCountByP_K_N_SV;
+	private CollectionPersistenceFinder<PortalPreferenceValue>
+		_collectionPersistenceFinderByP_K_N_SV;
 
 	/**
 	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
@@ -1758,154 +1250,10 @@ public class PortalPreferenceValuePersistenceImpl
 		OrderByComparator<PortalPreferenceValue> orderByComparator,
 		boolean useFinderCache) {
 
-		key = Objects.toString(key, "");
-		namespace = Objects.toString(namespace, "");
-		smallValue = Objects.toString(smallValue, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByP_K_N_SV;
-				finderArgs = new Object[] {
-					portalPreferencesId, key, namespace, smallValue
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByP_K_N_SV;
-			finderArgs = new Object[] {
-				portalPreferencesId, key, namespace, smallValue, start, end,
-				orderByComparator
-			};
-		}
-
-		List<PortalPreferenceValue> list = null;
-
-		if (useFinderCache) {
-			list = (List<PortalPreferenceValue>)dummyFinderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PortalPreferenceValue portalPreferenceValue : list) {
-					if ((portalPreferencesId !=
-							portalPreferenceValue.getPortalPreferencesId()) ||
-						!key.equals(portalPreferenceValue.getKey()) ||
-						!namespace.equals(
-							portalPreferenceValue.getNamespace()) ||
-						!smallValue.equals(
-							portalPreferenceValue.getSmallValue())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_K_N_SV_PORTALPREFERENCESID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_KEY_2);
-			}
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_NAMESPACE_2);
-			}
-
-			boolean bindSmallValue = false;
-
-			if (smallValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_SMALLVALUE_3);
-			}
-			else {
-				bindSmallValue = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_SMALLVALUE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(PortalPreferenceValueModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				if (bindSmallValue) {
-					queryPos.add(smallValue);
-				}
-
-				list = (List<PortalPreferenceValue>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					dummyFinderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByP_K_N_SV.find(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace, smallValue},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2017,119 +1365,10 @@ public class PortalPreferenceValuePersistenceImpl
 		long portalPreferencesId, String key, String namespace,
 		String smallValue) {
 
-		key = Objects.toString(key, "");
-		namespace = Objects.toString(namespace, "");
-		smallValue = Objects.toString(smallValue, "");
-
-		FinderPath finderPath = _finderPathCountByP_K_N_SV;
-
-		Object[] finderArgs = new Object[] {
-			portalPreferencesId, key, namespace, smallValue
-		};
-
-		Long count = (Long)dummyFinderCache.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE);
-
-			sb.append(_FINDER_COLUMN_P_K_N_SV_PORTALPREFERENCESID_2);
-
-			boolean bindKey = false;
-
-			if (key.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_KEY_3);
-			}
-			else {
-				bindKey = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_KEY_2);
-			}
-
-			boolean bindNamespace = false;
-
-			if (namespace.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_NAMESPACE_3);
-			}
-			else {
-				bindNamespace = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_NAMESPACE_2);
-			}
-
-			boolean bindSmallValue = false;
-
-			if (smallValue.isEmpty()) {
-				sb.append(_FINDER_COLUMN_P_K_N_SV_SMALLVALUE_3);
-			}
-			else {
-				bindSmallValue = true;
-
-				sb.append(_FINDER_COLUMN_P_K_N_SV_SMALLVALUE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(portalPreferencesId);
-
-				if (bindKey) {
-					queryPos.add(key);
-				}
-
-				if (bindNamespace) {
-					queryPos.add(namespace);
-				}
-
-				if (bindSmallValue) {
-					queryPos.add(smallValue);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				dummyFinderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByP_K_N_SV.count(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace, smallValue});
 	}
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_PORTALPREFERENCESID_2 =
-		"portalPreferenceValue.portalPreferencesId = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_KEY_2 =
-		"portalPreferenceValue.key = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_KEY_3 =
-		"(portalPreferenceValue.key IS NULL OR portalPreferenceValue.key = '') AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_NAMESPACE_2 =
-		"portalPreferenceValue.namespace = ? AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_NAMESPACE_3 =
-		"(portalPreferenceValue.namespace IS NULL OR portalPreferenceValue.namespace = '') AND ";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_SMALLVALUE_2 =
-		"portalPreferenceValue.smallValue = ?";
-
-	private static final String _FINDER_COLUMN_P_K_N_SV_SMALLVALUE_3 =
-		"(portalPreferenceValue.smallValue IS NULL OR portalPreferenceValue.smallValue = '')";
 
 	public PortalPreferenceValuePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2753,6 +1992,21 @@ public class PortalPreferenceValuePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"portalPreferencesId", "namespace"}, false);
 
+		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByP_N,
+			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
+			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
+			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
+			PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"portalPreferenceValue.", "portalPreferencesId",
+				FinderColumn.Type.LONG, "=", true, false,
+				PortalPreferenceValue::getPortalPreferencesId),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
+				"=", true, true, PortalPreferenceValue::getNamespace));
+
 		_finderPathWithPaginationFindByP_K_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
 			new String[] {
@@ -2778,6 +2032,24 @@ public class PortalPreferenceValuePersistenceImpl
 			},
 			new String[] {"portalPreferencesId", "key_", "namespace"}, false);
 
+		_collectionPersistenceFinderByP_K_N = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByP_K_N,
+			_finderPathWithoutPaginationFindByP_K_N, _finderPathCountByP_K_N,
+			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
+			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
+			PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"portalPreferenceValue.", "portalPreferencesId",
+				FinderColumn.Type.LONG, "=", true, false,
+				PortalPreferenceValue::getPortalPreferencesId),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
+				true, false, PortalPreferenceValue::getKey),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
+				"=", true, true, PortalPreferenceValue::getNamespace));
+
 		_finderPathFetchByP_I_K_N = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
 			new String[] {
@@ -2786,6 +2058,23 @@ public class PortalPreferenceValuePersistenceImpl
 			},
 			new String[] {"portalPreferencesId", "index_", "key_", "namespace"},
 			true);
+
+		_uniquePersistenceFinderByP_I_K_N = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByP_I_K_N,
+			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
+			new FinderColumn<>(
+				"portalPreferenceValue.", "portalPreferencesId",
+				FinderColumn.Type.LONG, "=", true, false,
+				PortalPreferenceValue::getPortalPreferencesId),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "index", FinderColumn.Type.INTEGER,
+				"=", true, false, PortalPreferenceValue::getIndex),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
+				true, false, PortalPreferenceValue::getKey),
+			new FinderColumn<>(
+				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
+				"=", true, true, PortalPreferenceValue::getNamespace));
 
 		_finderPathWithPaginationFindByP_K_N_SV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
@@ -2821,6 +2110,31 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferencesId", "key_", "namespace", "smallValue"
 			},
 			false);
+
+		_collectionPersistenceFinderByP_K_N_SV =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByP_K_N_SV,
+				_finderPathWithoutPaginationFindByP_K_N_SV,
+				_finderPathCountByP_K_N_SV,
+				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
+				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
+				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"portalPreferenceValue.", "portalPreferencesId",
+					FinderColumn.Type.LONG, "=", true, false,
+					PortalPreferenceValue::getPortalPreferencesId),
+				new FinderColumn<>(
+					"portalPreferenceValue.", "key", FinderColumn.Type.STRING,
+					"=", true, false, PortalPreferenceValue::getKey),
+				new FinderColumn<>(
+					"portalPreferenceValue.", "namespace",
+					FinderColumn.Type.STRING, "=", true, false,
+					PortalPreferenceValue::getNamespace),
+				new FinderColumn<>(
+					"portalPreferenceValue.", "smallValue",
+					FinderColumn.Type.STRING, "=", true, true,
+					PortalPreferenceValue::getSmallValue));
 
 		PortalPreferenceValueUtil.setPersistence(this);
 	}
@@ -2864,4 +2178,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:455394452
+// LIFERAY-SERVICE-BUILDER-HASH:-1218373584

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -33,6 +32,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -96,6 +97,8 @@ public class CSDiagramPinPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByCPDefinitionId;
 	private FinderPath _finderPathCountByCPDefinitionId;
+	private CollectionPersistenceFinder<CSDiagramPin>
+		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns all the cs diagram pins where CPDefinitionId = &#63;.
@@ -174,98 +177,9 @@ public class CSDiagramPinPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CSDiagramPin.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByCPDefinitionId;
-					finderArgs = new Object[] {CPDefinitionId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByCPDefinitionId;
-				finderArgs = new Object[] {
-					CPDefinitionId, start, end, orderByComparator
-				};
-			}
-
-			List<CSDiagramPin> list = null;
-
-			if (useFinderCache) {
-				list = (List<CSDiagramPin>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (CSDiagramPin csDiagramPin : list) {
-						if (CPDefinitionId !=
-								csDiagramPin.getCPDefinitionId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_CSDIAGRAMPIN_WHERE);
-
-				sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(CSDiagramPinModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPDefinitionId);
-
-					list = (List<CSDiagramPin>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByCPDefinitionId.find(
+				finderCache, new Object[] {CPDefinitionId}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -352,51 +266,10 @@ public class CSDiagramPinPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CSDiagramPin.class)) {
 
-			FinderPath finderPath = _finderPathCountByCPDefinitionId;
-
-			Object[] finderArgs = new Object[] {CPDefinitionId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_CSDIAGRAMPIN_WHERE);
-
-				sb.append(_FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CPDefinitionId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByCPDefinitionId.count(
+				finderCache, new Object[] {CPDefinitionId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_CPDEFINITIONID_CPDEFINITIONID_2 =
-		"csDiagramPin.CPDefinitionId = ?";
 
 	public CSDiagramPinPersistenceImpl() {
 		setModelClass(CSDiagramPin.class);
@@ -1215,6 +1088,17 @@ public class CSDiagramPinPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"CPDefinitionId"}, false);
 
+		_collectionPersistenceFinderByCPDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCPDefinitionId,
+				_finderPathWithoutPaginationFindByCPDefinitionId,
+				_finderPathCountByCPDefinitionId,
+				_SQL_SELECT_CSDIAGRAMPIN_WHERE, _SQL_COUNT_CSDIAGRAMPIN_WHERE,
+				CSDiagramPinModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"csDiagramPin.", "CPDefinitionId", FinderColumn.Type.LONG,
+					"=", true, true, CSDiagramPin::getCPDefinitionId));
+
 		CSDiagramPinUtil.setPersistence(this);
 	}
 
@@ -1289,4 +1173,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1192755046
+// LIFERAY-SERVICE-BUILDER-HASH:631377740

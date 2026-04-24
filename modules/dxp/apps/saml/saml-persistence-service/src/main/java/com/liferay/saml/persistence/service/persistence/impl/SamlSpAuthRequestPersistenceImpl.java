@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -21,12 +20,14 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpAuthRequestException;
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpAuthRequestTable;
@@ -40,13 +41,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -90,6 +87,8 @@ public class SamlSpAuthRequestPersistenceImpl
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
 	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
+	private CollectionPersistenceFinder<SamlSpAuthRequest>
+		_collectionPersistenceFinderByLtCreateDate;
 
 	/**
 	 * Returns all the saml sp auth requests where createDate &lt; &#63;.
@@ -164,98 +163,9 @@ public class SamlSpAuthRequestPersistenceImpl
 		OrderByComparator<SamlSpAuthRequest> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByLtCreateDate;
-		finderArgs = new Object[] {
-			_getTime(createDate), start, end, orderByComparator
-		};
-
-		List<SamlSpAuthRequest> list = null;
-
-		if (useFinderCache) {
-			list = (List<SamlSpAuthRequest>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SamlSpAuthRequest samlSpAuthRequest : list) {
-					if (createDate.getTime() <= samlSpAuthRequest.getCreateDate(
-						).getTime()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SamlSpAuthRequestModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				list = (List<SamlSpAuthRequest>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLtCreateDate.find(
+			finderCache, new Object[] {createDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,65 +246,13 @@ public class SamlSpAuthRequestPersistenceImpl
 	 */
 	@Override
 	public int countByLtCreateDate(Date createDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtCreateDate;
-
-		Object[] finderArgs = new Object[] {_getTime(createDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SAMLSPAUTHREQUEST_WHERE);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLtCreateDate.count(
+			finderCache, new Object[] {createDate});
 	}
 
-	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1 =
-		"samlSpAuthRequest.createDate IS NULL";
-
-	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2 =
-		"samlSpAuthRequest.createDate < ?";
-
 	private FinderPath _finderPathFetchBySIEI_SSARK;
+	private UniquePersistenceFinder<SamlSpAuthRequest>
+		_uniquePersistenceFinderBySIEI_SSARK;
 
 	/**
 	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or throws a <code>NoSuchSpAuthRequestException</code> if it could not be found.
@@ -462,128 +320,9 @@ public class SamlSpAuthRequestPersistenceImpl
 		String samlIdpEntityId, String samlSpAuthRequestKey,
 		boolean useFinderCache) {
 
-		samlIdpEntityId = Objects.toString(samlIdpEntityId, "");
-		samlSpAuthRequestKey = Objects.toString(samlSpAuthRequestKey, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {samlIdpEntityId, samlSpAuthRequestKey};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchBySIEI_SSARK, finderArgs, this);
-		}
-
-		if (result instanceof SamlSpAuthRequest) {
-			SamlSpAuthRequest samlSpAuthRequest = (SamlSpAuthRequest)result;
-
-			if (!Objects.equals(
-					samlIdpEntityId, samlSpAuthRequest.getSamlIdpEntityId()) ||
-				!Objects.equals(
-					samlSpAuthRequestKey,
-					samlSpAuthRequest.getSamlSpAuthRequestKey())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE);
-
-			boolean bindSamlIdpEntityId = false;
-
-			if (samlIdpEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_3);
-			}
-			else {
-				bindSamlIdpEntityId = true;
-
-				sb.append(_FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_2);
-			}
-
-			boolean bindSamlSpAuthRequestKey = false;
-
-			if (samlSpAuthRequestKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_3);
-			}
-			else {
-				bindSamlSpAuthRequestKey = true;
-
-				sb.append(_FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindSamlIdpEntityId) {
-					queryPos.add(samlIdpEntityId);
-				}
-
-				if (bindSamlSpAuthRequestKey) {
-					queryPos.add(samlSpAuthRequestKey);
-				}
-
-				List<SamlSpAuthRequest> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchBySIEI_SSARK, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									samlIdpEntityId, samlSpAuthRequestKey
-								};
-							}
-
-							_log.warn(
-								"SamlSpAuthRequestPersistenceImpl.fetchBySIEI_SSARK(String, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					SamlSpAuthRequest samlSpAuthRequest = list.get(0);
-
-					result = samlSpAuthRequest;
-
-					cacheResult(samlSpAuthRequest);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SamlSpAuthRequest)result;
-		}
+		return _uniquePersistenceFinderBySIEI_SSARK.fetch(
+			finderCache, new Object[] {samlIdpEntityId, samlSpAuthRequestKey},
+			useFinderCache);
 	}
 
 	/**
@@ -615,29 +354,9 @@ public class SamlSpAuthRequestPersistenceImpl
 	public int countBySIEI_SSARK(
 		String samlIdpEntityId, String samlSpAuthRequestKey) {
 
-		SamlSpAuthRequest samlSpAuthRequest = fetchBySIEI_SSARK(
-			samlIdpEntityId, samlSpAuthRequestKey);
-
-		if (samlSpAuthRequest == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderBySIEI_SSARK.count(
+			finderCache, new Object[] {samlIdpEntityId, samlSpAuthRequestKey});
 	}
-
-	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_2 =
-		"samlSpAuthRequest.samlIdpEntityId = ? AND ";
-
-	private static final String _FINDER_COLUMN_SIEI_SSARK_SAMLIDPENTITYID_3 =
-		"(samlSpAuthRequest.samlIdpEntityId IS NULL OR samlSpAuthRequest.samlIdpEntityId = '') AND ";
-
-	private static final String
-		_FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_2 =
-			"samlSpAuthRequest.samlSpAuthRequestKey = ?";
-
-	private static final String
-		_FINDER_COLUMN_SIEI_SSARK_SAMLSPAUTHREQUESTKEY_3 =
-			"(samlSpAuthRequest.samlSpAuthRequestKey IS NULL OR samlSpAuthRequest.samlSpAuthRequestKey = '')";
 
 	public SamlSpAuthRequestPersistenceImpl() {
 		setModelClass(SamlSpAuthRequest.class);
@@ -1216,10 +935,34 @@ public class SamlSpAuthRequestPersistenceImpl
 			new String[] {Date.class.getName()}, new String[] {"createDate"},
 			false);
 
+		_collectionPersistenceFinderByLtCreateDate =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLtCreateDate, null,
+				_finderPathWithPaginationCountByLtCreateDate,
+				_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE,
+				_SQL_COUNT_SAMLSPAUTHREQUEST_WHERE,
+				SamlSpAuthRequestModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"samlSpAuthRequest.", "createDate", FinderColumn.Type.DATE,
+					"<", true, true, SamlSpAuthRequest::getCreateDate));
+
 		_finderPathFetchBySIEI_SSARK = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SSARK",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, true);
+
+		_uniquePersistenceFinderBySIEI_SSARK = new UniquePersistenceFinder<>(
+			this, _finderPathFetchBySIEI_SSARK,
+			_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE,
+			new FinderColumn<>(
+				"samlSpAuthRequest.", "samlIdpEntityId",
+				FinderColumn.Type.STRING, "=", true, false,
+				SamlSpAuthRequest::getSamlIdpEntityId),
+			new FinderColumn<>(
+				"samlSpAuthRequest.", "samlSpAuthRequestKey",
+				FinderColumn.Type.STRING, "=", true, true,
+				SamlSpAuthRequest::getSamlSpAuthRequestKey));
 
 		SamlSpAuthRequestUtil.setPersistence(this);
 	}
@@ -1263,14 +1006,6 @@ public class SamlSpAuthRequestPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_SAMLSPAUTHREQUEST =
 		"SELECT samlSpAuthRequest FROM SamlSpAuthRequest samlSpAuthRequest";
 
@@ -1300,4 +1035,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2145182862
+// LIFERAY-SERVICE-BUILDER-HASH:-1606982095

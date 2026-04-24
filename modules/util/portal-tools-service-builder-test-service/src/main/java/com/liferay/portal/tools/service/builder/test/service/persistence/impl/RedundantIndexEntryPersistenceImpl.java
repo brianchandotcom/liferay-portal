@@ -10,13 +10,14 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -37,7 +38,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -72,6 +72,8 @@ public class RedundantIndexEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByC_N;
+	private UniquePersistenceFinder<RedundantIndexEntry>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchRedundantIndexEntryException</code> if it could not be found.
@@ -134,97 +136,8 @@ public class RedundantIndexEntryPersistenceImpl
 	public RedundantIndexEntry fetchByC_N(
 		long companyId, String name, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_N, finderArgs, this);
-		}
-
-		if (result instanceof RedundantIndexEntry) {
-			RedundantIndexEntry redundantIndexEntry =
-				(RedundantIndexEntry)result;
-
-			if ((companyId != redundantIndexEntry.getCompanyId()) ||
-				!Objects.equals(name, redundantIndexEntry.getName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_REDUNDANTINDEXENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				List<RedundantIndexEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_N, finderArgs, list);
-					}
-				}
-				else {
-					RedundantIndexEntry redundantIndexEntry = list.get(0);
-
-					result = redundantIndexEntry;
-
-					cacheResult(redundantIndexEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (RedundantIndexEntry)result;
-		}
+		return _uniquePersistenceFinderByC_N.fetch(
+			finderCache, new Object[] {companyId, name}, useFinderCache);
 	}
 
 	/**
@@ -252,23 +165,9 @@ public class RedundantIndexEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
-		RedundantIndexEntry redundantIndexEntry = fetchByC_N(companyId, name);
-
-		if (redundantIndexEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_N.count(
+			finderCache, new Object[] {companyId, name});
 	}
-
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
-		"redundantIndexEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
-		"redundantIndexEntry.name = ?";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
-		"(redundantIndexEntry.name IS NULL OR redundantIndexEntry.name = '')";
 
 	public RedundantIndexEntryPersistenceImpl() {
 		setModelClass(RedundantIndexEntry.class);
@@ -826,6 +725,15 @@ public class RedundantIndexEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, true);
 
+		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_N, _SQL_SELECT_REDUNDANTINDEXENTRY_WHERE,
+			new FinderColumn<>(
+				"redundantIndexEntry.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, RedundantIndexEntry::getCompanyId),
+			new FinderColumn<>(
+				"redundantIndexEntry.", "name", FinderColumn.Type.STRING, "=",
+				true, true, RedundantIndexEntry::getName));
+
 		RedundantIndexEntryUtil.setPersistence(this);
 	}
 
@@ -850,9 +758,6 @@ public class RedundantIndexEntryPersistenceImpl
 	private static final String _SQL_COUNT_REDUNDANTINDEXENTRY =
 		"SELECT COUNT(redundantIndexEntry) FROM RedundantIndexEntry redundantIndexEntry";
 
-	private static final String _SQL_COUNT_REDUNDANTINDEXENTRY_WHERE =
-		"SELECT COUNT(redundantIndexEntry) FROM RedundantIndexEntry redundantIndexEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "redundantIndexEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -870,4 +775,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1335106800
+// LIFERAY-SERVICE-BUILDER-HASH:1995090561

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -27,6 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -85,6 +87,8 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
 	private FinderPath _finderPathCountByNotificationTemplateId;
+	private CollectionPersistenceFinder<NotificationTemplateAttachment>
+		_collectionPersistenceFinderByNotificationTemplateId;
 
 	/**
 	 * Returns all the notification template attachments where notificationTemplateId = &#63;.
@@ -162,103 +166,9 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		OrderByComparator<NotificationTemplateAttachment> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByNotificationTemplateId;
-				finderArgs = new Object[] {notificationTemplateId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByNotificationTemplateId;
-			finderArgs = new Object[] {
-				notificationTemplateId, start, end, orderByComparator
-			};
-		}
-
-		List<NotificationTemplateAttachment> list = null;
-
-		if (useFinderCache) {
-			list = (List<NotificationTemplateAttachment>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (NotificationTemplateAttachment
-						notificationTemplateAttachment : list) {
-
-					if (notificationTemplateId !=
-							notificationTemplateAttachment.
-								getNotificationTemplateId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					NotificationTemplateAttachmentModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(notificationTemplateId);
-
-				list = (List<NotificationTemplateAttachment>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByNotificationTemplateId.find(
+			finderCache, new Object[] {notificationTemplateId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -342,53 +252,13 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Override
 	public int countByNotificationTemplateId(long notificationTemplateId) {
-		FinderPath finderPath = _finderPathCountByNotificationTemplateId;
-
-		Object[] finderArgs = new Object[] {notificationTemplateId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(notificationTemplateId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByNotificationTemplateId.count(
+			finderCache, new Object[] {notificationTemplateId});
 	}
 
-	private static final String
-		_FINDER_COLUMN_NOTIFICATIONTEMPLATEID_NOTIFICATIONTEMPLATEID_2 =
-			"notificationTemplateAttachment.notificationTemplateId = ?";
-
 	private FinderPath _finderPathFetchByNTI_OFI;
+	private UniquePersistenceFinder<NotificationTemplateAttachment>
+		_uniquePersistenceFinderByNTI_OFI;
 
 	/**
 	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or throws a <code>NoSuchNotificationTemplateAttachmentException</code> if it could not be found.
@@ -457,88 +327,9 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		long notificationTemplateId, long objectFieldId,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {notificationTemplateId, objectFieldId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByNTI_OFI, finderArgs, this);
-		}
-
-		if (result instanceof NotificationTemplateAttachment) {
-			NotificationTemplateAttachment notificationTemplateAttachment =
-				(NotificationTemplateAttachment)result;
-
-			if ((notificationTemplateId !=
-					notificationTemplateAttachment.
-						getNotificationTemplateId()) ||
-				(objectFieldId !=
-					notificationTemplateAttachment.getObjectFieldId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_NTI_OFI_NOTIFICATIONTEMPLATEID_2);
-
-			sb.append(_FINDER_COLUMN_NTI_OFI_OBJECTFIELDID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(notificationTemplateId);
-
-				queryPos.add(objectFieldId);
-
-				List<NotificationTemplateAttachment> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByNTI_OFI, finderArgs, list);
-					}
-				}
-				else {
-					NotificationTemplateAttachment
-						notificationTemplateAttachment = list.get(0);
-
-					result = notificationTemplateAttachment;
-
-					cacheResult(notificationTemplateAttachment);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (NotificationTemplateAttachment)result;
-		}
+		return _uniquePersistenceFinderByNTI_OFI.fetch(
+			finderCache, new Object[] {notificationTemplateId, objectFieldId},
+			useFinderCache);
 	}
 
 	/**
@@ -568,22 +359,9 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Override
 	public int countByNTI_OFI(long notificationTemplateId, long objectFieldId) {
-		NotificationTemplateAttachment notificationTemplateAttachment =
-			fetchByNTI_OFI(notificationTemplateId, objectFieldId);
-
-		if (notificationTemplateAttachment == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByNTI_OFI.count(
+			finderCache, new Object[] {notificationTemplateId, objectFieldId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_NTI_OFI_NOTIFICATIONTEMPLATEID_2 =
-			"notificationTemplateAttachment.notificationTemplateId = ? AND ";
-
-	private static final String _FINDER_COLUMN_NTI_OFI_OBJECTFIELDID_2 =
-		"notificationTemplateAttachment.objectFieldId = ?";
 
 	public NotificationTemplateAttachmentPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1214,10 +992,36 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"notificationTemplateId"}, false);
 
+		_collectionPersistenceFinderByNotificationTemplateId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByNotificationTemplateId,
+				_finderPathWithoutPaginationFindByNotificationTemplateId,
+				_finderPathCountByNotificationTemplateId,
+				_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
+				_SQL_COUNT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
+				NotificationTemplateAttachmentModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"notificationTemplateAttachment.", "notificationTemplateId",
+					FinderColumn.Type.LONG, "=", true, true,
+					NotificationTemplateAttachment::getNotificationTemplateId));
+
 		_finderPathFetchByNTI_OFI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"notificationTemplateId", "objectFieldId"}, true);
+
+		_uniquePersistenceFinderByNTI_OFI = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByNTI_OFI,
+			_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
+			new FinderColumn<>(
+				"notificationTemplateAttachment.", "notificationTemplateId",
+				FinderColumn.Type.LONG, "=", true, false,
+				NotificationTemplateAttachment::getNotificationTemplateId),
+			new FinderColumn<>(
+				"notificationTemplateAttachment.", "objectFieldId",
+				FinderColumn.Type.LONG, "=", true, true,
+				NotificationTemplateAttachment::getObjectFieldId));
 
 		NotificationTemplateAttachmentUtil.setPersistence(this);
 	}
@@ -1297,4 +1101,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-44449938
+// LIFERAY-SERVICE-BUILDER-HASH:-1250545951

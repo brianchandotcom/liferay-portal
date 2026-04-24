@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
@@ -24,6 +23,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryPersistence;
 import com.liferay.portal.kernel.service.persistence.UserNotificationDeliveryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -38,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -75,6 +76,8 @@ public class UserNotificationDeliveryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<UserNotificationDelivery>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the user notification deliveries where userId = &#63;.
@@ -147,93 +150,9 @@ public class UserNotificationDeliveryPersistenceImpl
 		OrderByComparator<UserNotificationDelivery> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<UserNotificationDelivery> list = null;
-
-		if (useFinderCache) {
-			list = (List<UserNotificationDelivery>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (UserNotificationDelivery userNotificationDelivery : list) {
-					if (userId != userNotificationDelivery.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(UserNotificationDeliveryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<UserNotificationDelivery>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -314,52 +233,13 @@ public class UserNotificationDeliveryPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"userNotificationDelivery.userId = ?";
-
 	private FinderPath _finderPathFetchByU_P_C_N_D;
+	private UniquePersistenceFinder<UserNotificationDelivery>
+		_uniquePersistenceFinderByU_P_C_N_D;
 
 	/**
 	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a <code>NoSuchUserNotificationDeliveryException</code> if it could not be found.
@@ -449,117 +329,12 @@ public class UserNotificationDeliveryPersistenceImpl
 		long userId, String portletId, long classNameId, int notificationType,
 		int deliveryType, boolean useFinderCache) {
 
-		portletId = Objects.toString(portletId, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _uniquePersistenceFinderByU_P_C_N_D.fetch(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
 				userId, portletId, classNameId, notificationType, deliveryType
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByU_P_C_N_D, finderArgs, this);
-		}
-
-		if (result instanceof UserNotificationDelivery) {
-			UserNotificationDelivery userNotificationDelivery =
-				(UserNotificationDelivery)result;
-
-			if ((userId != userNotificationDelivery.getUserId()) ||
-				!Objects.equals(
-					portletId, userNotificationDelivery.getPortletId()) ||
-				(classNameId != userNotificationDelivery.getClassNameId()) ||
-				(notificationType !=
-					userNotificationDelivery.getNotificationType()) ||
-				(deliveryType != userNotificationDelivery.getDeliveryType())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_USERID_2);
-
-			boolean bindPortletId = false;
-
-			if (portletId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
-			}
-			else {
-				bindPortletId = true;
-
-				sb.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2);
-
-			sb.append(_FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindPortletId) {
-					queryPos.add(portletId);
-				}
-
-				queryPos.add(classNameId);
-
-				queryPos.add(notificationType);
-
-				queryPos.add(deliveryType);
-
-				List<UserNotificationDelivery> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByU_P_C_N_D, finderArgs, list);
-					}
-				}
-				else {
-					UserNotificationDelivery userNotificationDelivery =
-						list.get(0);
-
-					result = userNotificationDelivery;
-
-					cacheResult(userNotificationDelivery);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (UserNotificationDelivery)result;
-		}
+			},
+			useFinderCache);
 	}
 
 	/**
@@ -599,33 +374,12 @@ public class UserNotificationDeliveryPersistenceImpl
 		long userId, String portletId, long classNameId, int notificationType,
 		int deliveryType) {
 
-		UserNotificationDelivery userNotificationDelivery = fetchByU_P_C_N_D(
-			userId, portletId, classNameId, notificationType, deliveryType);
-
-		if (userNotificationDelivery == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByU_P_C_N_D.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				userId, portletId, classNameId, notificationType, deliveryType
+			});
 	}
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_USERID_2 =
-		"userNotificationDelivery.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_PORTLETID_2 =
-		"userNotificationDelivery.portletId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_PORTLETID_3 =
-		"(userNotificationDelivery.portletId IS NULL OR userNotificationDelivery.portletId = '') AND ";
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2 =
-		"userNotificationDelivery.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2 =
-		"userNotificationDelivery.notificationType = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2 =
-		"userNotificationDelivery.deliveryType = ?";
 
 	public UserNotificationDeliveryPersistenceImpl() {
 		setModelClass(UserNotificationDelivery.class);
@@ -1222,6 +976,20 @@ public class UserNotificationDeliveryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
 
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId,
+				_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
+				_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE,
+				UserNotificationDeliveryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"userNotificationDelivery.", "userId",
+					FinderColumn.Type.LONG, "=", true, true,
+					UserNotificationDelivery::getUserId));
+
 		_finderPathFetchByU_P_C_N_D = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
 			new String[] {
@@ -1234,6 +1002,29 @@ public class UserNotificationDeliveryPersistenceImpl
 				"deliveryType"
 			},
 			true);
+
+		_uniquePersistenceFinderByU_P_C_N_D = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByU_P_C_N_D,
+			_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
+			new FinderColumn<>(
+				"userNotificationDelivery.", "userId", FinderColumn.Type.LONG,
+				"=", true, false, UserNotificationDelivery::getUserId),
+			new FinderColumn<>(
+				"userNotificationDelivery.", "portletId",
+				FinderColumn.Type.STRING, "=", true, false,
+				UserNotificationDelivery::getPortletId),
+			new FinderColumn<>(
+				"userNotificationDelivery.", "classNameId",
+				FinderColumn.Type.LONG, "=", true, false,
+				UserNotificationDelivery::getClassNameId),
+			new FinderColumn<>(
+				"userNotificationDelivery.", "notificationType",
+				FinderColumn.Type.INTEGER, "=", true, false,
+				UserNotificationDelivery::getNotificationType),
+			new FinderColumn<>(
+				"userNotificationDelivery.", "deliveryType",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				UserNotificationDelivery::getDeliveryType));
 
 		UserNotificationDeliveryUtil.setPersistence(this);
 	}
@@ -1275,4 +1066,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-834487124
+// LIFERAY-SERVICE-BUILDER-HASH:-1998096385

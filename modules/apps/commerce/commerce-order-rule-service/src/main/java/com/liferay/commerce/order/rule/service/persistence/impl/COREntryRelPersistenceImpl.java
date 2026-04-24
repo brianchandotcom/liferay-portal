@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -85,6 +87,8 @@ public class COREntryRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCOREntryId;
 	private FinderPath _finderPathWithoutPaginationFindByCOREntryId;
 	private FinderPath _finderPathCountByCOREntryId;
+	private CollectionPersistenceFinder<COREntryRel>
+		_collectionPersistenceFinderByCOREntryId;
 
 	/**
 	 * Returns all the cor entry rels where COREntryId = &#63;.
@@ -159,95 +163,9 @@ public class COREntryRelPersistenceImpl
 		OrderByComparator<COREntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCOREntryId;
-				finderArgs = new Object[] {COREntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCOREntryId;
-			finderArgs = new Object[] {
-				COREntryId, start, end, orderByComparator
-			};
-		}
-
-		List<COREntryRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<COREntryRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (COREntryRel corEntryRel : list) {
-					if (COREntryId != corEntryRel.getCOREntryId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CORENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_CORENTRYID_CORENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(COREntryRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(COREntryId);
-
-				list = (List<COREntryRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCOREntryId.find(
+			finderCache, new Object[] {COREntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -326,53 +244,15 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByCOREntryId(long COREntryId) {
-		FinderPath finderPath = _finderPathCountByCOREntryId;
-
-		Object[] finderArgs = new Object[] {COREntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CORENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_CORENTRYID_CORENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(COREntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCOREntryId.count(
+			finderCache, new Object[] {COREntryId});
 	}
-
-	private static final String _FINDER_COLUMN_CORENTRYID_CORENTRYID_2 =
-		"corEntryRel.COREntryId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
+	private CollectionPersistenceFinder<COREntryRel>
+		_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
@@ -452,101 +332,9 @@ public class COREntryRelPersistenceImpl
 		OrderByComparator<COREntryRel> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C;
-				finderArgs = new Object[] {classNameId, COREntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C;
-			finderArgs = new Object[] {
-				classNameId, COREntryId, start, end, orderByComparator
-			};
-		}
-
-		List<COREntryRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<COREntryRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (COREntryRel corEntryRel : list) {
-					if ((classNameId != corEntryRel.getClassNameId()) ||
-						(COREntryId != corEntryRel.getCOREntryId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CORENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CORENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(COREntryRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(COREntryId);
-
-				list = (List<COREntryRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, COREntryId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -635,58 +423,13 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long COREntryId) {
-		FinderPath finderPath = _finderPathCountByC_C;
-
-		Object[] finderArgs = new Object[] {classNameId, COREntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CORENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CORENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(COREntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, COREntryId});
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"corEntryRel.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CORENTRYID_2 =
-		"corEntryRel.COREntryId = ?";
-
 	private FinderPath _finderPathFetchByC_C_C;
+	private UniquePersistenceFinder<COREntryRel>
+		_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or throws a <code>NoSuchCOREntryRelException</code> if it could not be found.
@@ -760,88 +503,9 @@ public class COREntryRelPersistenceImpl
 		long classNameId, long classPK, long COREntryId,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK, COREntryId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C_C, finderArgs, this);
-		}
-
-		if (result instanceof COREntryRel) {
-			COREntryRel corEntryRel = (COREntryRel)result;
-
-			if ((classNameId != corEntryRel.getClassNameId()) ||
-				(classPK != corEntryRel.getClassPK()) ||
-				(COREntryId != corEntryRel.getCOREntryId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_CORENTRYREL_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_C_C_CORENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				queryPos.add(COREntryId);
-
-				List<COREntryRel> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C_C, finderArgs, list);
-					}
-				}
-				else {
-					COREntryRel corEntryRel = list.get(0);
-
-					result = corEntryRel;
-
-					cacheResult(corEntryRel);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (COREntryRel)result;
-		}
+		return _uniquePersistenceFinderByC_C_C.fetch(
+			finderCache, new Object[] {classNameId, classPK, COREntryId},
+			useFinderCache);
 	}
 
 	/**
@@ -872,24 +536,9 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long classNameId, long classPK, long COREntryId) {
-		COREntryRel corEntryRel = fetchByC_C_C(
-			classNameId, classPK, COREntryId);
-
-		if (corEntryRel == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_C_C.count(
+			finderCache, new Object[] {classNameId, classPK, COREntryId});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSNAMEID_2 =
-		"corEntryRel.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CLASSPK_2 =
-		"corEntryRel.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_C_CORENTRYID_2 =
-		"corEntryRel.COREntryId = ?";
 
 	public COREntryRelPersistenceImpl() {
 		setModelClass(COREntryRel.class);
@@ -1470,6 +1119,17 @@ public class COREntryRelPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"COREntryId"},
 			false);
 
+		_collectionPersistenceFinderByCOREntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCOREntryId,
+				_finderPathWithoutPaginationFindByCOREntryId,
+				_finderPathCountByCOREntryId, _SQL_SELECT_CORENTRYREL_WHERE,
+				_SQL_COUNT_CORENTRYREL_WHERE,
+				COREntryRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=",
+					true, true, COREntryRel::getCOREntryId));
+
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -1489,12 +1149,36 @@ public class COREntryRelPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "COREntryId"}, false);
 
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
+			COREntryRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
+				true, false, COREntryRel::getClassNameId),
+			new FinderColumn<>(
+				"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=", true,
+				true, COREntryRel::getCOREntryId));
+
 		_finderPathFetchByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "COREntryId"}, true);
+
+		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C_C, _SQL_SELECT_CORENTRYREL_WHERE,
+			new FinderColumn<>(
+				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
+				true, false, COREntryRel::getClassNameId),
+			new FinderColumn<>(
+				"corEntryRel.", "classPK", FinderColumn.Type.LONG, "=", true,
+				false, COREntryRel::getClassPK),
+			new FinderColumn<>(
+				"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=", true,
+				true, COREntryRel::getCOREntryId));
 
 		COREntryRelUtil.setPersistence(this);
 	}
@@ -1567,4 +1251,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:313695771
+// LIFERAY-SERVICE-BUILDER-HASH:-332626923

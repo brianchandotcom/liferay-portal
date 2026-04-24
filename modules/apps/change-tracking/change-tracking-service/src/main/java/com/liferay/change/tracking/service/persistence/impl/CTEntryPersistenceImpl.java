@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -99,6 +102,8 @@ public class CTEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CTEntry>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the ct entries where uuid = &#63;.
@@ -168,106 +173,9 @@ public class CTEntryPersistenceImpl
 		String uuid, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if (!uuid.equals(ctEntry.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CTEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -343,68 +251,15 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CTENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ctEntry.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(ctEntry.uuid IS NULL OR ctEntry.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CTEntry>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the ct entries where uuid = &#63; and companyId = &#63;.
@@ -482,114 +337,9 @@ public class CTEntryPersistenceImpl
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if (!uuid.equals(ctEntry.getUuid()) ||
-						(companyId != ctEntry.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CTEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -678,76 +428,15 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CTENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"ctEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(ctEntry.uuid IS NULL OR ctEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"ctEntry.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUserId;
 	private FinderPath _finderPathWithoutPaginationFindByUserId;
 	private FinderPath _finderPathCountByUserId;
+	private CollectionPersistenceFinder<CTEntry>
+		_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns all the ct entries where userId = &#63;.
@@ -817,93 +506,9 @@ public class CTEntryPersistenceImpl
 		long userId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUserId;
-				finderArgs = new Object[] {userId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUserId;
-			finderArgs = new Object[] {userId, start, end, orderByComparator};
-		}
-
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if (userId != ctEntry.getUserId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				list = (List<CTEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -980,53 +585,15 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		FinderPath finderPath = _finderPathCountByUserId;
-
-		Object[] finderArgs = new Object[] {userId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
-
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"ctEntry.userId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
 	private FinderPath _finderPathCountByCtCollectionId;
+	private CollectionPersistenceFinder<CTEntry>
+		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63;.
@@ -1100,95 +667,9 @@ public class CTEntryPersistenceImpl
 		long ctCollectionId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCtCollectionId;
-			finderArgs = new Object[] {
-				ctCollectionId, start, end, orderByComparator
-			};
-		}
-
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if (ctCollectionId != ctEntry.getCtCollectionId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				list = (List<CTEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCtCollectionId.find(
+			finderCache, new Object[] {ctCollectionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1268,53 +749,15 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCtCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCtCollectionId;
-
-		Object[] finderArgs = new Object[] {ctCollectionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCtCollectionId.count(
+			finderCache, new Object[] {ctCollectionId});
 	}
-
-	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
-		"ctEntry.ctCollectionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_MCNI;
 	private FinderPath _finderPathWithoutPaginationFindByC_MCNI;
 	private FinderPath _finderPathCountByC_MCNI;
+	private CollectionPersistenceFinder<CTEntry>
+		_collectionPersistenceFinderByC_MCNI;
 
 	/**
 	 * Returns all the ct entries where ctCollectionId = &#63; and modelClassNameId = &#63;.
@@ -1396,101 +839,9 @@ public class CTEntryPersistenceImpl
 		long ctCollectionId, long modelClassNameId, int start, int end,
 		OrderByComparator<CTEntry> orderByComparator, boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MCNI;
-				finderArgs = new Object[] {ctCollectionId, modelClassNameId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_MCNI;
-			finderArgs = new Object[] {
-				ctCollectionId, modelClassNameId, start, end, orderByComparator
-			};
-		}
-
-		List<CTEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTEntry ctEntry : list) {
-					if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-						(modelClassNameId != ctEntry.getModelClassNameId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_MODELCLASSNAMEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				list = (List<CTEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_MCNI.find(
+			finderCache, new Object[] {ctCollectionId, modelClassNameId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1579,58 +930,13 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_MCNI(long ctCollectionId, long modelClassNameId) {
-		FinderPath finderPath = _finderPathCountByC_MCNI;
-
-		Object[] finderArgs = new Object[] {ctCollectionId, modelClassNameId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_MODELCLASSNAMEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_MCNI.count(
+			finderCache, new Object[] {ctCollectionId, modelClassNameId});
 	}
 
-	private static final String _FINDER_COLUMN_C_MCNI_CTCOLLECTIONID_2 =
-		"ctEntry.ctCollectionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_MCNI_MODELCLASSNAMEID_2 =
-		"ctEntry.modelClassNameId = ?";
-
 	private FinderPath _finderPathFetchByC_MCNI_MCPK;
+	private UniquePersistenceFinder<CTEntry>
+		_uniquePersistenceFinderByC_MCNI_MCPK;
 
 	/**
 	 * Returns the ct entry where ctCollectionId = &#63; and modelClassNameId = &#63; and modelClassPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1705,90 +1011,10 @@ public class CTEntryPersistenceImpl
 		long ctCollectionId, long modelClassNameId, long modelClassPK,
 		boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				ctCollectionId, modelClassNameId, modelClassPK
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_MCNI_MCPK, finderArgs, this);
-		}
-
-		if (result instanceof CTEntry) {
-			CTEntry ctEntry = (CTEntry)result;
-
-			if ((ctCollectionId != ctEntry.getCtCollectionId()) ||
-				(modelClassNameId != ctEntry.getModelClassNameId()) ||
-				(modelClassPK != ctEntry.getModelClassPK())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				queryPos.add(modelClassPK);
-
-				List<CTEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_MCNI_MCPK, finderArgs, list);
-					}
-				}
-				else {
-					CTEntry ctEntry = list.get(0);
-
-					result = ctEntry;
-
-					cacheResult(ctEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CTEntry)result;
-		}
+		return _uniquePersistenceFinderByC_MCNI_MCPK.fetch(
+			finderCache,
+			new Object[] {ctCollectionId, modelClassNameId, modelClassPK},
+			useFinderCache);
 	}
 
 	/**
@@ -1822,24 +1048,10 @@ public class CTEntryPersistenceImpl
 	public int countByC_MCNI_MCPK(
 		long ctCollectionId, long modelClassNameId, long modelClassPK) {
 
-		CTEntry ctEntry = fetchByC_MCNI_MCPK(
-			ctCollectionId, modelClassNameId, modelClassPK);
-
-		if (ctEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_MCNI_MCPK.count(
+			finderCache,
+			new Object[] {ctCollectionId, modelClassNameId, modelClassPK});
 	}
-
-	private static final String _FINDER_COLUMN_C_MCNI_MCPK_CTCOLLECTIONID_2 =
-		"ctEntry.ctCollectionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSNAMEID_2 =
-		"ctEntry.modelClassNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_MCNI_MCPK_MODELCLASSPK_2 =
-		"ctEntry.modelClassPK = ?";
 
 	private FinderPath _finderPathWithPaginationFindByNotC_MCNI_MCPK;
 	private FinderPath _finderPathWithPaginationCountByNotC_MCNI_MCPK;
@@ -2483,6 +1695,7 @@ public class CTEntryPersistenceImpl
 		"ctEntry.modelClassPK IN (";
 
 	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<CTEntry> _uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the ct entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -2545,98 +1758,9 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {externalReferenceCode, companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByERC_C, finderArgs, this);
-		}
-
-		if (result instanceof CTEntry) {
-			CTEntry ctEntry = (CTEntry)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					ctEntry.getExternalReferenceCode()) ||
-				(companyId != ctEntry.getCompanyId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_CTENTRY_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				List<CTEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByERC_C, finderArgs, list);
-					}
-				}
-				else {
-					CTEntry ctEntry = list.get(0);
-
-					result = ctEntry;
-
-					cacheResult(ctEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CTEntry)result;
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -2664,23 +1788,9 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		CTEntry ctEntry = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (ctEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C.count(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
-		"ctEntry.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
-		"(ctEntry.externalReferenceCode IS NULL OR ctEntry.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
-		"ctEntry.companyId = ?";
 
 	public CTEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3346,6 +2456,15 @@ public class CTEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
+			CTEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				CTEntry::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3365,6 +2484,20 @@ public class CTEntryPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_CTENTRY_WHERE,
+				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
+					false, CTEntry::getUuid),
+				new FinderColumn<>(
+					"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, CTEntry::getCompanyId));
+
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -3381,6 +2514,17 @@ public class CTEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"},
 			false);
+
+		_collectionPersistenceFinderByUserId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId, _SQL_SELECT_CTENTRY_WHERE,
+				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ctEntry.", "userId", FinderColumn.Type.LONG, "=", true,
+					true, CTEntry::getUserId));
 
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
@@ -3399,6 +2543,17 @@ public class CTEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
+
+		_collectionPersistenceFinderByCtCollectionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCtCollectionId,
+				_finderPathWithoutPaginationFindByCtCollectionId,
+				_finderPathCountByCtCollectionId, _SQL_SELECT_CTENTRY_WHERE,
+				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
+					true, true, CTEntry::getCtCollectionId));
 
 		_finderPathWithPaginationFindByC_MCNI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI",
@@ -3419,6 +2574,20 @@ public class CTEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"ctCollectionId", "modelClassNameId"}, false);
 
+		_collectionPersistenceFinderByC_MCNI =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_MCNI,
+				_finderPathWithoutPaginationFindByC_MCNI,
+				_finderPathCountByC_MCNI, _SQL_SELECT_CTENTRY_WHERE,
+				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
+					true, false, CTEntry::getCtCollectionId),
+				new FinderColumn<>(
+					"ctEntry.", "modelClassNameId", FinderColumn.Type.LONG, "=",
+					true, true, CTEntry::getModelClassNameId));
+
 		_finderPathFetchByC_MCNI_MCPK = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_MCNI_MCPK",
 			new String[] {
@@ -3426,6 +2595,18 @@ public class CTEntryPersistenceImpl
 			},
 			new String[] {"ctCollectionId", "modelClassNameId", "modelClassPK"},
 			true);
+
+		_uniquePersistenceFinderByC_MCNI_MCPK = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_MCNI_MCPK, _SQL_SELECT_CTENTRY_WHERE,
+			new FinderColumn<>(
+				"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=", true,
+				false, CTEntry::getCtCollectionId),
+			new FinderColumn<>(
+				"ctEntry.", "modelClassNameId", FinderColumn.Type.LONG, "=",
+				true, false, CTEntry::getModelClassNameId),
+			new FinderColumn<>(
+				"ctEntry.", "modelClassPK", FinderColumn.Type.LONG, "=", true,
+				true, CTEntry::getModelClassPK));
 
 		_finderPathWithPaginationFindByNotC_MCNI_MCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotC_MCNI_MCPK",
@@ -3449,6 +2630,15 @@ public class CTEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CTENTRY_WHERE,
+			new FinderColumn<>(
+				"ctEntry.", "externalReferenceCode", FinderColumn.Type.STRING,
+				"=", true, false, CTEntry::getExternalReferenceCode),
+			new FinderColumn<>(
+				"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
+				true, CTEntry::getCompanyId));
 
 		CTEntryUtil.setPersistence(this);
 	}
@@ -3524,4 +2714,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:635623181
+// LIFERAY-SERVICE-BUILDER-HASH:-325288169

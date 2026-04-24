@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -44,7 +46,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -89,6 +90,8 @@ public class ExportImportReportEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_E;
 	private FinderPath _finderPathWithoutPaginationFindByC_E;
 	private FinderPath _finderPathCountByC_E;
+	private CollectionPersistenceFinder<ExportImportReportEntry>
+		_collectionPersistenceFinderByC_E;
 
 	/**
 	 * Returns all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
@@ -172,106 +175,9 @@ public class ExportImportReportEntryPersistenceImpl
 		OrderByComparator<ExportImportReportEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_E;
-				finderArgs = new Object[] {
-					companyId, exportImportConfigurationId
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_E;
-			finderArgs = new Object[] {
-				companyId, exportImportConfigurationId, start, end,
-				orderByComparator
-			};
-		}
-
-		List<ExportImportReportEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<ExportImportReportEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ExportImportReportEntry exportImportReportEntry : list) {
-					if ((companyId != exportImportReportEntry.getCompanyId()) ||
-						(exportImportConfigurationId !=
-							exportImportReportEntry.
-								getExportImportConfigurationId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_E_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_E_EXPORTIMPORTCONFIGURATIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ExportImportReportEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(exportImportConfigurationId);
-
-				list = (List<ExportImportReportEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_E.find(
+			finderCache, new Object[] {companyId, exportImportConfigurationId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -360,61 +266,13 @@ public class ExportImportReportEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_E(long companyId, long exportImportConfigurationId) {
-		FinderPath finderPath = _finderPathCountByC_E;
-
-		Object[] finderArgs = new Object[] {
-			companyId, exportImportConfigurationId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_EXPORTIMPORTREPORTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_E_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_E_EXPORTIMPORTCONFIGURATIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(exportImportConfigurationId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_E.count(
+			finderCache, new Object[] {companyId, exportImportConfigurationId});
 	}
 
-	private static final String _FINDER_COLUMN_C_E_COMPANYID_2 =
-		"exportImportReportEntry.companyId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_C_E_EXPORTIMPORTCONFIGURATIONID_2 =
-			"exportImportReportEntry.exportImportConfigurationId = ?";
-
 	private FinderPath _finderPathFetchByG_C_C_C_E_T;
+	private UniquePersistenceFinder<ExportImportReportEntry>
+		_uniquePersistenceFinderByG_C_C_C_E_T;
 
 	/**
 	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or throws a <code>NoSuchExportImportReportEntryException</code> if it could not be found.
@@ -512,127 +370,13 @@ public class ExportImportReportEntryPersistenceImpl
 		long classNameId, long exportImportConfigurationId, int type,
 		boolean useFinderCache) {
 
-		classExternalReferenceCode = Objects.toString(
-			classExternalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _uniquePersistenceFinderByG_C_C_C_E_T.fetch(
+			finderCache,
+			new Object[] {
 				groupId, companyId, classExternalReferenceCode, classNameId,
 				exportImportConfigurationId, type
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByG_C_C_C_E_T, finderArgs, this);
-		}
-
-		if (result instanceof ExportImportReportEntry) {
-			ExportImportReportEntry exportImportReportEntry =
-				(ExportImportReportEntry)result;
-
-			if ((groupId != exportImportReportEntry.getGroupId()) ||
-				(companyId != exportImportReportEntry.getCompanyId()) ||
-				!Objects.equals(
-					classExternalReferenceCode,
-					exportImportReportEntry.getClassExternalReferenceCode()) ||
-				(classNameId != exportImportReportEntry.getClassNameId()) ||
-				(exportImportConfigurationId !=
-					exportImportReportEntry.getExportImportConfigurationId()) ||
-				(type != exportImportReportEntry.getType())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_E_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_E_T_COMPANYID_2);
-
-			boolean bindClassExternalReferenceCode = false;
-
-			if (classExternalReferenceCode.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_G_C_C_C_E_T_CLASSEXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindClassExternalReferenceCode = true;
-
-				sb.append(
-					_FINDER_COLUMN_G_C_C_C_E_T_CLASSEXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_E_T_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_E_T_EXPORTIMPORTCONFIGURATIONID_2);
-
-			sb.append(_FINDER_COLUMN_G_C_C_C_E_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(companyId);
-
-				if (bindClassExternalReferenceCode) {
-					queryPos.add(classExternalReferenceCode);
-				}
-
-				queryPos.add(classNameId);
-
-				queryPos.add(exportImportConfigurationId);
-
-				queryPos.add(type);
-
-				List<ExportImportReportEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_C_C_C_E_T, finderArgs, list);
-					}
-				}
-				else {
-					ExportImportReportEntry exportImportReportEntry = list.get(
-						0);
-
-					result = exportImportReportEntry;
-
-					cacheResult(exportImportReportEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ExportImportReportEntry)result;
-		}
+			},
+			useFinderCache);
 	}
 
 	/**
@@ -675,40 +419,13 @@ public class ExportImportReportEntryPersistenceImpl
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId, int type) {
 
-		ExportImportReportEntry exportImportReportEntry = fetchByG_C_C_C_E_T(
-			groupId, companyId, classExternalReferenceCode, classNameId,
-			exportImportConfigurationId, type);
-
-		if (exportImportReportEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_C_C_C_E_T.count(
+			finderCache,
+			new Object[] {
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, type
+			});
 	}
-
-	private static final String _FINDER_COLUMN_G_C_C_C_E_T_GROUPID_2 =
-		"exportImportReportEntry.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_C_E_T_COMPANYID_2 =
-		"exportImportReportEntry.companyId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_C_C_C_E_T_CLASSEXTERNALREFERENCECODE_2 =
-			"exportImportReportEntry.classExternalReferenceCode = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_C_C_C_E_T_CLASSEXTERNALREFERENCECODE_3 =
-			"(exportImportReportEntry.classExternalReferenceCode IS NULL OR exportImportReportEntry.classExternalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_C_E_T_CLASSNAMEID_2 =
-		"exportImportReportEntry.classNameId = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_G_C_C_C_E_T_EXPORTIMPORTCONFIGURATIONID_2 =
-			"exportImportReportEntry.exportImportConfigurationId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_C_E_T_TYPE_2 =
-		"exportImportReportEntry.type = ?";
 
 	public ExportImportReportEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1344,6 +1061,21 @@ public class ExportImportReportEntryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "exportImportConfigurationId"}, false);
 
+		_collectionPersistenceFinderByC_E = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_E,
+			_finderPathWithoutPaginationFindByC_E, _finderPathCountByC_E,
+			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE,
+			_SQL_COUNT_EXPORTIMPORTREPORTENTRY_WHERE,
+			ExportImportReportEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"exportImportReportEntry.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, ExportImportReportEntry::getCompanyId),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "exportImportConfigurationId",
+				FinderColumn.Type.LONG, "=", true, true,
+				ExportImportReportEntry::getExportImportConfigurationId));
+
 		_finderPathFetchByG_C_C_C_E_T = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
 			new String[] {
@@ -1356,6 +1088,31 @@ public class ExportImportReportEntryPersistenceImpl
 				"classNameId", "exportImportConfigurationId", "type_"
 			},
 			true);
+
+		_uniquePersistenceFinderByG_C_C_C_E_T = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_C_C_C_E_T,
+			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE,
+			new FinderColumn<>(
+				"exportImportReportEntry.", "groupId", FinderColumn.Type.LONG,
+				"=", true, false, ExportImportReportEntry::getGroupId),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, ExportImportReportEntry::getCompanyId),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "classExternalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				ExportImportReportEntry::getClassExternalReferenceCode),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "classNameId",
+				FinderColumn.Type.LONG, "=", true, false,
+				ExportImportReportEntry::getClassNameId),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "exportImportConfigurationId",
+				FinderColumn.Type.LONG, "=", true, false,
+				ExportImportReportEntry::getExportImportConfigurationId),
+			new FinderColumn<>(
+				"exportImportReportEntry.", "type", FinderColumn.Type.INTEGER,
+				"=", true, true, ExportImportReportEntry::getType));
 
 		ExportImportReportEntryUtil.setPersistence(this);
 	}
@@ -1432,4 +1189,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1107683078
+// LIFERAY-SERVICE-BUILDER-HASH:1303997155

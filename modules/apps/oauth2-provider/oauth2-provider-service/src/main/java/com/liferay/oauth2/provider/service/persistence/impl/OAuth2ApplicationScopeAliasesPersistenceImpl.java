@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -88,6 +89,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where companyId = &#63;.
@@ -161,99 +164,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<OAuth2ApplicationScopeAliases> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuth2ApplicationScopeAliases>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuth2ApplicationScopeAliases
-						oAuth2ApplicationScopeAliases : list) {
-
-					if (companyId !=
-							oAuth2ApplicationScopeAliases.getCompanyId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<OAuth2ApplicationScopeAliases>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -334,53 +247,15 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 =
-		"oAuth2ApplicationScopeAliases.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByOAuth2ApplicationId;
 	private FinderPath _finderPathWithoutPaginationFindByOAuth2ApplicationId;
 	private FinderPath _finderPathCountByOAuth2ApplicationId;
+	private CollectionPersistenceFinder<OAuth2ApplicationScopeAliases>
+		_collectionPersistenceFinderByOAuth2ApplicationId;
 
 	/**
 	 * Returns all the o auth2 application scope aliaseses where oAuth2ApplicationId = &#63;.
@@ -457,101 +332,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByOAuth2ApplicationId;
-				finderArgs = new Object[] {oAuth2ApplicationId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByOAuth2ApplicationId;
-			finderArgs = new Object[] {
-				oAuth2ApplicationId, start, end, orderByComparator
-			};
-		}
-
-		List<OAuth2ApplicationScopeAliases> list = null;
-
-		if (useFinderCache) {
-			list = (List<OAuth2ApplicationScopeAliases>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (OAuth2ApplicationScopeAliases
-						oAuth2ApplicationScopeAliases : list) {
-
-					if (oAuth2ApplicationId !=
-							oAuth2ApplicationScopeAliases.
-								getOAuth2ApplicationId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
-
-			sb.append(_FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(oAuth2ApplicationId);
-
-				list = (List<OAuth2ApplicationScopeAliases>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByOAuth2ApplicationId.find(
+			finderCache, new Object[] {oAuth2ApplicationId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -634,50 +417,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Override
 	public int countByOAuth2ApplicationId(long oAuth2ApplicationId) {
-		FinderPath finderPath = _finderPathCountByOAuth2ApplicationId;
-
-		Object[] finderArgs = new Object[] {oAuth2ApplicationId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE);
-
-			sb.append(_FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(oAuth2ApplicationId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByOAuth2ApplicationId.count(
+			finderCache, new Object[] {oAuth2ApplicationId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_OAUTH2APPLICATIONID_OAUTH2APPLICATIONID_2 =
-			"oAuth2ApplicationScopeAliases.oAuth2ApplicationId = ?";
 
 	public OAuth2ApplicationScopeAliasesPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1294,6 +1036,20 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
+				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
+				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
+				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"oAuth2ApplicationScopeAliases.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					OAuth2ApplicationScopeAliases::getCompanyId));
+
 		_finderPathWithPaginationFindByOAuth2ApplicationId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOAuth2ApplicationId",
 			new String[] {
@@ -1311,6 +1067,20 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByOAuth2ApplicationId", new String[] {Long.class.getName()},
 			new String[] {"oAuth2ApplicationId"}, false);
+
+		_collectionPersistenceFinderByOAuth2ApplicationId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByOAuth2ApplicationId,
+				_finderPathWithoutPaginationFindByOAuth2ApplicationId,
+				_finderPathCountByOAuth2ApplicationId,
+				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
+				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
+				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"oAuth2ApplicationScopeAliases.", "oAuth2ApplicationId",
+					FinderColumn.Type.LONG, "=", true, true,
+					OAuth2ApplicationScopeAliases::getOAuth2ApplicationId));
 
 		OAuth2ApplicationScopeAliasesUtil.setPersistence(this);
 	}
@@ -1389,4 +1159,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2096271230
+// LIFERAY-SERVICE-BUILDER-HASH:69274460

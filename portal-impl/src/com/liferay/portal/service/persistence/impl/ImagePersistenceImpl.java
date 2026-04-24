@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
@@ -30,6 +29,8 @@ import com.liferay.portal.kernel.service.persistence.ImagePersistence;
 import com.liferay.portal.kernel.service.persistence.ImageUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -86,6 +87,8 @@ public class ImagePersistenceImpl
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByLtSize;
 	private FinderPath _finderPathWithPaginationCountByLtSize;
+	private CollectionPersistenceFinder<Image>
+		_collectionPersistenceFinderByLtSize;
 
 	/**
 	 * Returns all the images where size &lt; &#63;.
@@ -159,83 +162,9 @@ public class ImagePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Image.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByLtSize;
-			finderArgs = new Object[] {size, start, end, orderByComparator};
-
-			List<Image> list = null;
-
-			if (useFinderCache) {
-				list = (List<Image>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Image image : list) {
-						if (size <= image.getSize()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_IMAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_LTSIZE_SIZE_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(ImageModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(size);
-
-					list = (List<Image>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByLtSize.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {size}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -317,50 +246,10 @@ public class ImagePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Image.class)) {
 
-			FinderPath finderPath = _finderPathWithPaginationCountByLtSize;
-
-			Object[] finderArgs = new Object[] {size};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_IMAGE_WHERE);
-
-				sb.append(_FINDER_COLUMN_LTSIZE_SIZE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(size);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByLtSize.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {size});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2 = "image.size < ?";
 
 	public ImagePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1152,6 +1041,16 @@ public class ImagePersistenceImpl
 			new String[] {Integer.class.getName()}, new String[] {"size_"},
 			false);
 
+		_collectionPersistenceFinderByLtSize =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLtSize, null,
+				_finderPathWithPaginationCountByLtSize, _SQL_SELECT_IMAGE_WHERE,
+				_SQL_COUNT_IMAGE_WHERE, ImageModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"image.", "size", FinderColumn.Type.INTEGER, "<", true,
+					true, Image::getSize));
+
 		ImageUtil.setPersistence(this);
 	}
 
@@ -1193,4 +1092,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:916479105
+// LIFERAY-SERVICE-BUILDER-HASH:-1233879260

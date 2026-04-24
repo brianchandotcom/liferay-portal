@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -35,6 +34,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,8 +50,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
-
-import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -100,6 +100,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where uuid = &#63;.
@@ -173,112 +175,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (!uuid.equals(
-							commerceInventoryReplenishmentItem.getUuid())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -362,69 +261,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"commerceInventoryReplenishmentItem.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(commerceInventoryReplenishmentItem.uuid IS NULL OR commerceInventoryReplenishmentItem.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
@@ -506,121 +351,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (!uuid.equals(
-							commerceInventoryReplenishmentItem.getUuid()) ||
-						(companyId !=
-							commerceInventoryReplenishmentItem.
-								getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -712,78 +445,17 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"commerceInventoryReplenishmentItem.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(commerceInventoryReplenishmentItem.uuid IS NULL OR commerceInventoryReplenishmentItem.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"commerceInventoryReplenishmentItem.companyId = ?";
 
 	private FinderPath
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
 	private FinderPath _finderPathCountByCommerceInventoryWarehouseId;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
@@ -867,105 +539,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator,
 			boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId;
-				finderArgs = new Object[] {commerceInventoryWarehouseId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByCommerceInventoryWarehouseId;
-			finderArgs = new Object[] {
-				commerceInventoryWarehouseId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (commerceInventoryWarehouseId !=
-							commerceInventoryReplenishmentItem.
-								getCommerceInventoryWarehouseId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCEINVENTORYWAREHOUSEID_COMMERCEINVENTORYWAREHOUSEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceInventoryWarehouseId);
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceInventoryWarehouseId.find(
+			finderCache, new Object[] {commerceInventoryWarehouseId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1058,55 +634,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public int countByCommerceInventoryWarehouseId(
 		long commerceInventoryWarehouseId) {
 
-		FinderPath finderPath = _finderPathCountByCommerceInventoryWarehouseId;
-
-		Object[] finderArgs = new Object[] {commerceInventoryWarehouseId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCEINVENTORYWAREHOUSEID_COMMERCEINVENTORYWAREHOUSEID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceInventoryWarehouseId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceInventoryWarehouseId.count(
+			finderCache, new Object[] {commerceInventoryWarehouseId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCEINVENTORYWAREHOUSEID_COMMERCEINVENTORYWAREHOUSEID_2 =
-			"commerceInventoryReplenishmentItem.commerceInventoryWarehouseId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByAvailabilityDate;
 	private FinderPath _finderPathWithoutPaginationFindByAvailabilityDate;
 	private FinderPath _finderPathCountByAvailabilityDate;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByAvailabilityDate;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where availabilityDate = &#63;.
@@ -1184,114 +720,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByAvailabilityDate;
-				finderArgs = new Object[] {_getTime(availabilityDate)};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByAvailabilityDate;
-			finderArgs = new Object[] {
-				_getTime(availabilityDate), start, end, orderByComparator
-			};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (!Objects.equals(
-							availabilityDate,
-							commerceInventoryReplenishmentItem.
-								getAvailabilityDate())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindAvailabilityDate = false;
-
-			if (availabilityDate == null) {
-				sb.append(_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_1);
-			}
-			else {
-				bindAvailabilityDate = true;
-
-				sb.append(_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAvailabilityDate) {
-					queryPos.add(new Timestamp(availabilityDate.getTime()));
-				}
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByAvailabilityDate.find(
+			finderCache, new Object[] {availabilityDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1376,69 +807,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Override
 	public int countByAvailabilityDate(Date availabilityDate) {
-		FinderPath finderPath = _finderPathCountByAvailabilityDate;
-
-		Object[] finderArgs = new Object[] {_getTime(availabilityDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindAvailabilityDate = false;
-
-			if (availabilityDate == null) {
-				sb.append(_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_1);
-			}
-			else {
-				bindAvailabilityDate = true;
-
-				sb.append(_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAvailabilityDate) {
-					queryPos.add(new Timestamp(availabilityDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByAvailabilityDate.count(
+			finderCache, new Object[] {availabilityDate});
 	}
-
-	private static final String
-		_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_1 =
-			"commerceInventoryReplenishmentItem.availabilityDate IS NULL";
-
-	private static final String
-		_FINDER_COLUMN_AVAILABILITYDATE_AVAILABILITYDATE_2 =
-			"commerceInventoryReplenishmentItem.availabilityDate = ?";
 
 	private FinderPath _finderPathWithPaginationFindBySku;
 	private FinderPath _finderPathWithoutPaginationFindBySku;
 	private FinderPath _finderPathCountBySku;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderBySku;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where sku = &#63;.
@@ -1512,112 +889,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		sku = Objects.toString(sku, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindBySku;
-				finderArgs = new Object[] {sku};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindBySku;
-			finderArgs = new Object[] {sku, start, end, orderByComparator};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (!sku.equals(
-							commerceInventoryReplenishmentItem.getSku())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SKU_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_SKU_SKU_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderBySku.find(
+			finderCache, new Object[] {sku}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -1701,69 +975,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Override
 	public int countBySku(String sku) {
-		sku = Objects.toString(sku, "");
-
-		FinderPath finderPath = _finderPathCountBySku;
-
-		Object[] finderArgs = new Object[] {sku};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SKU_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_SKU_SKU_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderBySku.count(
+			finderCache, new Object[] {sku});
 	}
-
-	private static final String _FINDER_COLUMN_SKU_SKU_2 =
-		"commerceInventoryReplenishmentItem.sku = ?";
-
-	private static final String _FINDER_COLUMN_SKU_SKU_3 =
-		"(commerceInventoryReplenishmentItem.sku IS NULL OR commerceInventoryReplenishmentItem.sku = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_S_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_S_U;
 	private FinderPath _finderPathCountByC_S_U;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByC_S_U;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -1852,140 +1072,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S_U;
-				finderArgs = new Object[] {companyId, sku, unitOfMeasureKey};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_S_U;
-			finderArgs = new Object[] {
-				companyId, sku, unitOfMeasureKey, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if ((companyId !=
-							commerceInventoryReplenishmentItem.
-								getCompanyId()) ||
-						!sku.equals(
-							commerceInventoryReplenishmentItem.getSku()) ||
-						!unitOfMeasureKey.equals(
-							commerceInventoryReplenishmentItem.
-								getUnitOfMeasureKey())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_U_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_S_U.find(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2089,98 +1178,15 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public int countByC_S_U(
 		long companyId, String sku, String unitOfMeasureKey) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = _finderPathCountByC_S_U;
-
-		Object[] finderArgs = new Object[] {companyId, sku, unitOfMeasureKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_U_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_S_U.count(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
-
-	private static final String _FINDER_COLUMN_C_S_U_COMPANYID_2 =
-		"commerceInventoryReplenishmentItem.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_SKU_2 =
-		"commerceInventoryReplenishmentItem.sku = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_SKU_3 =
-		"(commerceInventoryReplenishmentItem.sku IS NULL OR commerceInventoryReplenishmentItem.sku = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2 =
-		"commerceInventoryReplenishmentItem.unitOfMeasureKey = ?";
-
-	private static final String _FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3 =
-		"(commerceInventoryReplenishmentItem.unitOfMeasureKey IS NULL OR commerceInventoryReplenishmentItem.unitOfMeasureKey = '')";
 
 	private FinderPath _finderPathWithPaginationFindByAD_S_U;
 	private FinderPath _finderPathWithoutPaginationFindByAD_S_U;
 	private FinderPath _finderPathCountByAD_S_U;
+	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
+		_collectionPersistenceFinderByAD_S_U;
 
 	/**
 	 * Returns all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -2272,155 +1278,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		OrderByComparator<CommerceInventoryReplenishmentItem> orderByComparator,
 		boolean useFinderCache) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByAD_S_U;
-				finderArgs = new Object[] {
-					_getTime(availabilityDate), sku, unitOfMeasureKey
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByAD_S_U;
-			finderArgs = new Object[] {
-				_getTime(availabilityDate), sku, unitOfMeasureKey, start, end,
-				orderByComparator
-			};
-		}
-
-		List<CommerceInventoryReplenishmentItem> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceInventoryReplenishmentItem>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem : list) {
-
-					if (!Objects.equals(
-							availabilityDate,
-							commerceInventoryReplenishmentItem.
-								getAvailabilityDate()) ||
-						!sku.equals(
-							commerceInventoryReplenishmentItem.getSku()) ||
-						!unitOfMeasureKey.equals(
-							commerceInventoryReplenishmentItem.
-								getUnitOfMeasureKey())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindAvailabilityDate = false;
-
-			if (availabilityDate == null) {
-				sb.append(_FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_1);
-			}
-			else {
-				bindAvailabilityDate = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_2);
-			}
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AD_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAvailabilityDate) {
-					queryPos.add(new Timestamp(availabilityDate.getTime()));
-				}
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				list = (List<CommerceInventoryReplenishmentItem>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByAD_S_U.find(
+			finderCache, new Object[] {availabilityDate, sku, unitOfMeasureKey},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2524,112 +1384,14 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public int countByAD_S_U(
 		Date availabilityDate, String sku, String unitOfMeasureKey) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = _finderPathCountByAD_S_U;
-
-		Object[] finderArgs = new Object[] {
-			_getTime(availabilityDate), sku, unitOfMeasureKey
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindAvailabilityDate = false;
-
-			if (availabilityDate == null) {
-				sb.append(_FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_1);
-			}
-			else {
-				bindAvailabilityDate = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_2);
-			}
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AD_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindAvailabilityDate) {
-					queryPos.add(new Timestamp(availabilityDate.getTime()));
-				}
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByAD_S_U.count(
+			finderCache,
+			new Object[] {availabilityDate, sku, unitOfMeasureKey});
 	}
 
-	private static final String _FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_1 =
-		"commerceInventoryReplenishmentItem.availabilityDate IS NULL AND ";
-
-	private static final String _FINDER_COLUMN_AD_S_U_AVAILABILITYDATE_2 =
-		"commerceInventoryReplenishmentItem.availabilityDate = ? AND ";
-
-	private static final String _FINDER_COLUMN_AD_S_U_SKU_2 =
-		"commerceInventoryReplenishmentItem.sku = ? AND ";
-
-	private static final String _FINDER_COLUMN_AD_S_U_SKU_3 =
-		"(commerceInventoryReplenishmentItem.sku IS NULL OR commerceInventoryReplenishmentItem.sku = '') AND ";
-
-	private static final String _FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_2 =
-		"commerceInventoryReplenishmentItem.unitOfMeasureKey = ?";
-
-	private static final String _FINDER_COLUMN_AD_S_U_UNITOFMEASUREKEY_3 =
-		"(commerceInventoryReplenishmentItem.unitOfMeasureKey IS NULL OR commerceInventoryReplenishmentItem.unitOfMeasureKey = '')";
-
 	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<CommerceInventoryReplenishmentItem>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce inventory replenishment item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchInventoryReplenishmentItemException</code> if it could not be found.
@@ -2696,103 +1458,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public CommerceInventoryReplenishmentItem fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {externalReferenceCode, companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByERC_C, finderArgs, this);
-		}
-
-		if (result instanceof CommerceInventoryReplenishmentItem) {
-			CommerceInventoryReplenishmentItem
-				commerceInventoryReplenishmentItem =
-					(CommerceInventoryReplenishmentItem)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					commerceInventoryReplenishmentItem.
-						getExternalReferenceCode()) ||
-				(companyId !=
-					commerceInventoryReplenishmentItem.getCompanyId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				List<CommerceInventoryReplenishmentItem> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByERC_C, finderArgs, list);
-					}
-				}
-				else {
-					CommerceInventoryReplenishmentItem
-						commerceInventoryReplenishmentItem = list.get(0);
-
-					result = commerceInventoryReplenishmentItem;
-
-					cacheResult(commerceInventoryReplenishmentItem);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceInventoryReplenishmentItem)result;
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -2822,24 +1490,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByERC_C(externalReferenceCode, companyId);
-
-		if (commerceInventoryReplenishmentItem == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C.count(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
-		"commerceInventoryReplenishmentItem.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
-		"(commerceInventoryReplenishmentItem.externalReferenceCode IS NULL OR commerceInventoryReplenishmentItem.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
-		"commerceInventoryReplenishmentItem.companyId = ?";
 
 	public CommerceInventoryReplenishmentItemPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3599,6 +2252,18 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "uuid",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceInventoryReplenishmentItem::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3617,6 +2282,24 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "uuid",
+					FinderColumn.Type.STRING, "=", true, false,
+					CommerceInventoryReplenishmentItem::getUuid),
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceInventoryReplenishmentItem::getCompanyId));
 
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
 			new FinderPath(
@@ -3641,6 +2324,23 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"commerceInventoryWarehouseId"}, false);
 
+		_collectionPersistenceFinderByCommerceInventoryWarehouseId =
+			new CollectionPersistenceFinder<>(
+				this,
+				_finderPathWithPaginationFindByCommerceInventoryWarehouseId,
+				_finderPathWithoutPaginationFindByCommerceInventoryWarehouseId,
+				_finderPathCountByCommerceInventoryWarehouseId,
+				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.",
+					"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
+					true, true,
+					CommerceInventoryReplenishmentItem::
+						getCommerceInventoryWarehouseId));
+
 		_finderPathWithPaginationFindByAvailabilityDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAvailabilityDate",
 			new String[] {
@@ -3659,6 +2359,20 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			"countByAvailabilityDate", new String[] {Date.class.getName()},
 			new String[] {"availabilityDate"}, false);
 
+		_collectionPersistenceFinderByAvailabilityDate =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByAvailabilityDate,
+				_finderPathWithoutPaginationFindByAvailabilityDate,
+				_finderPathCountByAvailabilityDate,
+				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "availabilityDate",
+					FinderColumn.Type.DATE, "=", true, true,
+					CommerceInventoryReplenishmentItem::getAvailabilityDate));
+
 		_finderPathWithPaginationFindBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySku",
 			new String[] {
@@ -3674,6 +2388,18 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		_finderPathCountBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
 			new String[] {String.class.getName()}, new String[] {"sku"}, false);
+
+		_collectionPersistenceFinderBySku = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindBySku,
+			_finderPathWithoutPaginationFindBySku, _finderPathCountBySku,
+			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "sku",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceInventoryReplenishmentItem::getSku));
 
 		_finderPathWithPaginationFindByC_S_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
@@ -3699,6 +2425,26 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "sku", "unitOfMeasureKey"}, false);
+
+		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_S_U,
+			_finderPathWithoutPaginationFindByC_S_U, _finderPathCountByC_S_U,
+			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "companyId",
+				FinderColumn.Type.LONG, "=", true, false,
+				CommerceInventoryReplenishmentItem::getCompanyId),
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "sku",
+				FinderColumn.Type.STRING, "=", true, false,
+				CommerceInventoryReplenishmentItem::getSku),
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "unitOfMeasureKey",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceInventoryReplenishmentItem::getUnitOfMeasureKey));
 
 		_finderPathWithPaginationFindByAD_S_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAD_S_U",
@@ -3726,10 +2472,44 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new String[] {"availabilityDate", "sku", "unitOfMeasureKey"},
 			false);
 
+		_collectionPersistenceFinderByAD_S_U =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByAD_S_U,
+				_finderPathWithoutPaginationFindByAD_S_U,
+				_finderPathCountByAD_S_U,
+				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "availabilityDate",
+					FinderColumn.Type.DATE, "=", true, false,
+					CommerceInventoryReplenishmentItem::getAvailabilityDate),
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "sku",
+					FinderColumn.Type.STRING, "=", true, false,
+					CommerceInventoryReplenishmentItem::getSku),
+				new FinderColumn<>(
+					"commerceInventoryReplenishmentItem.", "unitOfMeasureKey",
+					FinderColumn.Type.STRING, "=", true, true,
+					CommerceInventoryReplenishmentItem::getUnitOfMeasureKey));
+
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C,
+			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				CommerceInventoryReplenishmentItem::getExternalReferenceCode),
+			new FinderColumn<>(
+				"commerceInventoryReplenishmentItem.", "companyId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceInventoryReplenishmentItem::getCompanyId));
 
 		CommerceInventoryReplenishmentItemUtil.setPersistence(this);
 	}
@@ -3774,14 +2554,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM =
 		"SELECT commerceInventoryReplenishmentItem FROM CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem";
 
@@ -3817,4 +2589,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-485682535
+// LIFERAY-SERVICE-BUILDER-HASH:1214472816

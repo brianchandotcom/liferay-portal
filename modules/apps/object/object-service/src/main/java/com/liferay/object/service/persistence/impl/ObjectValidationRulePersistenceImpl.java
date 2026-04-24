@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -34,6 +33,9 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -97,6 +99,8 @@ public class ObjectValidationRulePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the object validation rules where uuid = &#63;.
@@ -169,106 +173,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if (!uuid.equals(objectValidationRule.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -348,69 +255,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"objectValidationRule.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(objectValidationRule.uuid IS NULL OR objectValidationRule.uuid = '')";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the object validation rules where uuid = &#63; and companyId = &#63;.
@@ -491,114 +344,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if (!uuid.equals(objectValidationRule.getUuid()) ||
-						(companyId != objectValidationRule.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -687,76 +435,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"objectValidationRule.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(objectValidationRule.uuid IS NULL OR objectValidationRule.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"objectValidationRule.companyId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId;
 	private FinderPath _finderPathCountByObjectDefinitionId;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63;.
@@ -833,98 +520,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByObjectDefinitionId;
-				finderArgs = new Object[] {objectDefinitionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByObjectDefinitionId;
-			finderArgs = new Object[] {
-				objectDefinitionId, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if (objectDefinitionId !=
-							objectValidationRule.getObjectDefinitionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByObjectDefinitionId.find(
+			finderCache, new Object[] {objectDefinitionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1007,54 +605,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByObjectDefinitionId(long objectDefinitionId) {
-		FinderPath finderPath = _finderPathCountByObjectDefinitionId;
-
-		Object[] finderArgs = new Object[] {objectDefinitionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByObjectDefinitionId.count(
+			finderCache, new Object[] {objectDefinitionId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_OBJECTDEFINITIONID_OBJECTDEFINITIONID_2 =
-			"objectValidationRule.objectDefinitionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByODI_A;
 	private FinderPath _finderPathWithoutPaginationFindByODI_A;
 	private FinderPath _finderPathCountByODI_A;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByODI_A;
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63; and active = &#63;.
@@ -1136,102 +695,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByODI_A;
-				finderArgs = new Object[] {objectDefinitionId, active};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByODI_A;
-			finderArgs = new Object[] {
-				objectDefinitionId, active, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if ((objectDefinitionId !=
-							objectValidationRule.getObjectDefinitionId()) ||
-						(active != objectValidationRule.isActive())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_A_OBJECTDEFINITIONID_2);
-
-			sb.append(_FINDER_COLUMN_ODI_A_ACTIVE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				queryPos.add(active);
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByODI_A.find(
+			finderCache, new Object[] {objectDefinitionId, active}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1320,60 +786,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByODI_A(long objectDefinitionId, boolean active) {
-		FinderPath finderPath = _finderPathCountByODI_A;
-
-		Object[] finderArgs = new Object[] {objectDefinitionId, active};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_A_OBJECTDEFINITIONID_2);
-
-			sb.append(_FINDER_COLUMN_ODI_A_ACTIVE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				queryPos.add(active);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByODI_A.count(
+			finderCache, new Object[] {objectDefinitionId, active});
 	}
-
-	private static final String _FINDER_COLUMN_ODI_A_OBJECTDEFINITIONID_2 =
-		"objectValidationRule.objectDefinitionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_ODI_A_ACTIVE_2 =
-		"objectValidationRule.active = ?";
 
 	private FinderPath _finderPathWithPaginationFindByODI_E;
 	private FinderPath _finderPathWithoutPaginationFindByODI_E;
 	private FinderPath _finderPathCountByODI_E;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByODI_E;
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63; and engine = &#63;.
@@ -1455,115 +876,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		engine = Objects.toString(engine, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByODI_E;
-				finderArgs = new Object[] {objectDefinitionId, engine};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByODI_E;
-			finderArgs = new Object[] {
-				objectDefinitionId, engine, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if ((objectDefinitionId !=
-							objectValidationRule.getObjectDefinitionId()) ||
-						!engine.equals(objectValidationRule.getEngine())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_E_OBJECTDEFINITIONID_2);
-
-			boolean bindEngine = false;
-
-			if (engine.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ODI_E_ENGINE_3);
-			}
-			else {
-				bindEngine = true;
-
-				sb.append(_FINDER_COLUMN_ODI_E_ENGINE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				if (bindEngine) {
-					queryPos.add(engine);
-				}
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByODI_E.find(
+			finderCache, new Object[] {objectDefinitionId, engine}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1652,76 +967,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByODI_E(long objectDefinitionId, String engine) {
-		engine = Objects.toString(engine, "");
-
-		FinderPath finderPath = _finderPathCountByODI_E;
-
-		Object[] finderArgs = new Object[] {objectDefinitionId, engine};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_E_OBJECTDEFINITIONID_2);
-
-			boolean bindEngine = false;
-
-			if (engine.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ODI_E_ENGINE_3);
-			}
-			else {
-				bindEngine = true;
-
-				sb.append(_FINDER_COLUMN_ODI_E_ENGINE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				if (bindEngine) {
-					queryPos.add(engine);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByODI_E.count(
+			finderCache, new Object[] {objectDefinitionId, engine});
 	}
-
-	private static final String _FINDER_COLUMN_ODI_E_OBJECTDEFINITIONID_2 =
-		"objectValidationRule.objectDefinitionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_ODI_E_ENGINE_2 =
-		"objectValidationRule.engine = ?";
-
-	private static final String _FINDER_COLUMN_ODI_E_ENGINE_3 =
-		"(objectValidationRule.engine IS NULL OR objectValidationRule.engine = '')";
 
 	private FinderPath _finderPathWithPaginationFindByODI_O;
 	private FinderPath _finderPathWithoutPaginationFindByODI_O;
 	private FinderPath _finderPathCountByODI_O;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByODI_O;
 
 	/**
 	 * Returns all the object validation rules where objectDefinitionId = &#63; and outputType = &#63;.
@@ -1804,116 +1058,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		outputType = Objects.toString(outputType, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByODI_O;
-				finderArgs = new Object[] {objectDefinitionId, outputType};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByODI_O;
-			finderArgs = new Object[] {
-				objectDefinitionId, outputType, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if ((objectDefinitionId !=
-							objectValidationRule.getObjectDefinitionId()) ||
-						!outputType.equals(
-							objectValidationRule.getOutputType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_O_OBJECTDEFINITIONID_2);
-
-			boolean bindOutputType = false;
-
-			if (outputType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ODI_O_OUTPUTTYPE_3);
-			}
-			else {
-				bindOutputType = true;
-
-				sb.append(_FINDER_COLUMN_ODI_O_OUTPUTTYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				if (bindOutputType) {
-					queryPos.add(outputType);
-				}
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByODI_O.find(
+			finderCache, new Object[] {objectDefinitionId, outputType}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2002,76 +1149,15 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByODI_O(long objectDefinitionId, String outputType) {
-		outputType = Objects.toString(outputType, "");
-
-		FinderPath finderPath = _finderPathCountByODI_O;
-
-		Object[] finderArgs = new Object[] {objectDefinitionId, outputType};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_ODI_O_OBJECTDEFINITIONID_2);
-
-			boolean bindOutputType = false;
-
-			if (outputType.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ODI_O_OUTPUTTYPE_3);
-			}
-			else {
-				bindOutputType = true;
-
-				sb.append(_FINDER_COLUMN_ODI_O_OUTPUTTYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(objectDefinitionId);
-
-				if (bindOutputType) {
-					queryPos.add(outputType);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByODI_O.count(
+			finderCache, new Object[] {objectDefinitionId, outputType});
 	}
-
-	private static final String _FINDER_COLUMN_ODI_O_OBJECTDEFINITIONID_2 =
-		"objectValidationRule.objectDefinitionId = ? AND ";
-
-	private static final String _FINDER_COLUMN_ODI_O_OUTPUTTYPE_2 =
-		"objectValidationRule.outputType = ?";
-
-	private static final String _FINDER_COLUMN_ODI_O_OUTPUTTYPE_3 =
-		"(objectValidationRule.outputType IS NULL OR objectValidationRule.outputType = '')";
 
 	private FinderPath _finderPathWithPaginationFindByA_E;
 	private FinderPath _finderPathWithoutPaginationFindByA_E;
 	private FinderPath _finderPathCountByA_E;
+	private CollectionPersistenceFinder<ObjectValidationRule>
+		_collectionPersistenceFinderByA_E;
 
 	/**
 	 * Returns all the object validation rules where active = &#63; and engine = &#63;.
@@ -2149,114 +1235,9 @@ public class ObjectValidationRulePersistenceImpl
 		OrderByComparator<ObjectValidationRule> orderByComparator,
 		boolean useFinderCache) {
 
-		engine = Objects.toString(engine, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByA_E;
-				finderArgs = new Object[] {active, engine};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByA_E;
-			finderArgs = new Object[] {
-				active, engine, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectValidationRule> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectValidationRule>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectValidationRule objectValidationRule : list) {
-					if ((active != objectValidationRule.isActive()) ||
-						!engine.equals(objectValidationRule.getEngine())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_E_ACTIVE_2);
-
-			boolean bindEngine = false;
-
-			if (engine.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A_E_ENGINE_3);
-			}
-			else {
-				bindEngine = true;
-
-				sb.append(_FINDER_COLUMN_A_E_ENGINE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(ObjectValidationRuleModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(active);
-
-				if (bindEngine) {
-					queryPos.add(engine);
-				}
-
-				list = (List<ObjectValidationRule>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByA_E.find(
+			finderCache, new Object[] {active, engine}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2345,74 +1326,13 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public int countByA_E(boolean active, String engine) {
-		engine = Objects.toString(engine, "");
-
-		FinderPath finderPath = _finderPathCountByA_E;
-
-		Object[] finderArgs = new Object[] {active, engine};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE);
-
-			sb.append(_FINDER_COLUMN_A_E_ACTIVE_2);
-
-			boolean bindEngine = false;
-
-			if (engine.isEmpty()) {
-				sb.append(_FINDER_COLUMN_A_E_ENGINE_3);
-			}
-			else {
-				bindEngine = true;
-
-				sb.append(_FINDER_COLUMN_A_E_ENGINE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(active);
-
-				if (bindEngine) {
-					queryPos.add(engine);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByA_E.count(
+			finderCache, new Object[] {active, engine});
 	}
 
-	private static final String _FINDER_COLUMN_A_E_ACTIVE_2 =
-		"objectValidationRule.active = ? AND ";
-
-	private static final String _FINDER_COLUMN_A_E_ENGINE_2 =
-		"objectValidationRule.engine = ?";
-
-	private static final String _FINDER_COLUMN_A_E_ENGINE_3 =
-		"(objectValidationRule.engine IS NULL OR objectValidationRule.engine = '')";
-
 	private FinderPath _finderPathFetchByERC_C_ODI;
+	private UniquePersistenceFinder<ObjectValidationRule>
+		_uniquePersistenceFinderByERC_C_ODI;
 
 	/**
 	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectValidationRuleException</code> if it could not be found.
@@ -2488,107 +1408,10 @@ public class ObjectValidationRulePersistenceImpl
 		String externalReferenceCode, long companyId, long objectDefinitionId,
 		boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				externalReferenceCode, companyId, objectDefinitionId
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByERC_C_ODI, finderArgs, this);
-		}
-
-		if (result instanceof ObjectValidationRule) {
-			ObjectValidationRule objectValidationRule =
-				(ObjectValidationRule)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					objectValidationRule.getExternalReferenceCode()) ||
-				(companyId != objectValidationRule.getCompanyId()) ||
-				(objectDefinitionId !=
-					objectValidationRule.getObjectDefinitionId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_ODI_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				queryPos.add(objectDefinitionId);
-
-				List<ObjectValidationRule> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByERC_C_ODI, finderArgs, list);
-					}
-				}
-				else {
-					ObjectValidationRule objectValidationRule = list.get(0);
-
-					result = objectValidationRule;
-
-					cacheResult(objectValidationRule);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (ObjectValidationRule)result;
-		}
+		return _uniquePersistenceFinderByERC_C_ODI.fetch(
+			finderCache,
+			new Object[] {externalReferenceCode, companyId, objectDefinitionId},
+			useFinderCache);
 	}
 
 	/**
@@ -2623,29 +1446,12 @@ public class ObjectValidationRulePersistenceImpl
 	public int countByERC_C_ODI(
 		String externalReferenceCode, long companyId, long objectDefinitionId) {
 
-		ObjectValidationRule objectValidationRule = fetchByERC_C_ODI(
-			externalReferenceCode, companyId, objectDefinitionId);
-
-		if (objectValidationRule == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C_ODI.count(
+			finderCache,
+			new Object[] {
+				externalReferenceCode, companyId, objectDefinitionId
+			});
 	}
-
-	private static final String
-		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_2 =
-			"objectValidationRule.externalReferenceCode = ? AND ";
-
-	private static final String
-		_FINDER_COLUMN_ERC_C_ODI_EXTERNALREFERENCECODE_3 =
-			"(objectValidationRule.externalReferenceCode IS NULL OR objectValidationRule.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_ODI_COMPANYID_2 =
-		"objectValidationRule.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_ODI_OBJECTDEFINITIONID_2 =
-		"objectValidationRule.objectDefinitionId = ?";
 
 	public ObjectValidationRulePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -3314,6 +2120,16 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectValidationRule.", "uuid", FinderColumn.Type.STRING, "=",
+				true, true, ObjectValidationRule::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3333,6 +2149,23 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"objectValidationRule.", "uuid", FinderColumn.Type.STRING,
+					"=", true, false, ObjectValidationRule::getUuid),
+				new FinderColumn<>(
+					"objectValidationRule.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					ObjectValidationRule::getCompanyId));
+
 		_finderPathWithPaginationFindByObjectDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId",
 			new String[] {
@@ -3350,6 +2183,20 @@ public class ObjectValidationRulePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByObjectDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"objectDefinitionId"}, false);
+
+		_collectionPersistenceFinderByObjectDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByObjectDefinitionId,
+				_finderPathWithoutPaginationFindByObjectDefinitionId,
+				_finderPathCountByObjectDefinitionId,
+				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"objectValidationRule.", "objectDefinitionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					ObjectValidationRule::getObjectDefinitionId));
 
 		_finderPathWithPaginationFindByODI_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_A",
@@ -3370,6 +2217,20 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"objectDefinitionId", "active_"}, false);
 
+		_collectionPersistenceFinderByODI_A = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByODI_A,
+			_finderPathWithoutPaginationFindByODI_A, _finderPathCountByODI_A,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectValidationRule.", "objectDefinitionId",
+				FinderColumn.Type.LONG, "=", true, false,
+				ObjectValidationRule::getObjectDefinitionId),
+			new FinderColumn<>(
+				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
+				"=", true, true, ObjectValidationRule::isActive));
+
 		_finderPathWithPaginationFindByODI_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_E",
 			new String[] {
@@ -3388,6 +2249,20 @@ public class ObjectValidationRulePersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "engine"}, false);
+
+		_collectionPersistenceFinderByODI_E = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByODI_E,
+			_finderPathWithoutPaginationFindByODI_E, _finderPathCountByODI_E,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectValidationRule.", "objectDefinitionId",
+				FinderColumn.Type.LONG, "=", true, false,
+				ObjectValidationRule::getObjectDefinitionId),
+			new FinderColumn<>(
+				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
+				"=", true, true, ObjectValidationRule::getEngine));
 
 		_finderPathWithPaginationFindByODI_O = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI_O",
@@ -3408,6 +2283,20 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "outputType"}, false);
 
+		_collectionPersistenceFinderByODI_O = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByODI_O,
+			_finderPathWithoutPaginationFindByODI_O, _finderPathCountByODI_O,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectValidationRule.", "objectDefinitionId",
+				FinderColumn.Type.LONG, "=", true, false,
+				ObjectValidationRule::getObjectDefinitionId),
+			new FinderColumn<>(
+				"objectValidationRule.", "outputType", FinderColumn.Type.STRING,
+				"=", true, true, ObjectValidationRule::getOutputType));
+
 		_finderPathWithPaginationFindByA_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_E",
 			new String[] {
@@ -3427,6 +2316,19 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {Boolean.class.getName(), String.class.getName()},
 			new String[] {"active_", "engine"}, false);
 
+		_collectionPersistenceFinderByA_E = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByA_E,
+			_finderPathWithoutPaginationFindByA_E, _finderPathCountByA_E,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
+			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
+				"=", true, false, ObjectValidationRule::isActive),
+			new FinderColumn<>(
+				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
+				"=", true, true, ObjectValidationRule::getEngine));
+
 		_finderPathFetchByERC_C_ODI = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
 			new String[] {
@@ -3437,6 +2339,21 @@ public class ObjectValidationRulePersistenceImpl
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
 			true);
+
+		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C_ODI,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			new FinderColumn<>(
+				"objectValidationRule.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				ObjectValidationRule::getExternalReferenceCode),
+			new FinderColumn<>(
+				"objectValidationRule.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, ObjectValidationRule::getCompanyId),
+			new FinderColumn<>(
+				"objectValidationRule.", "objectDefinitionId",
+				FinderColumn.Type.LONG, "=", true, true,
+				ObjectValidationRule::getObjectDefinitionId));
 
 		ObjectValidationRuleUtil.setPersistence(this);
 	}
@@ -3513,4 +2430,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1224290959
+// LIFERAY-SERVICE-BUILDER-HASH:713414851

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -84,6 +85,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByUserId;
+	private UniquePersistenceFinder<MFAEmailOTPEntry>
+		_uniquePersistenceFinderByUserId;
 
 	/**
 	 * Returns the mfa email otp entry where userId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -138,77 +141,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 	 */
 	@Override
 	public MFAEmailOTPEntry fetchByUserId(long userId, boolean useFinderCache) {
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {userId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUserId, finderArgs, this);
-		}
-
-		if (result instanceof MFAEmailOTPEntry) {
-			MFAEmailOTPEntry mfaEmailOTPEntry = (MFAEmailOTPEntry)result;
-
-			if (userId != mfaEmailOTPEntry.getUserId()) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_MFAEMAILOTPENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_USERID_USERID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				List<MFAEmailOTPEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUserId, finderArgs, list);
-					}
-				}
-				else {
-					MFAEmailOTPEntry mfaEmailOTPEntry = list.get(0);
-
-					result = mfaEmailOTPEntry;
-
-					cacheResult(mfaEmailOTPEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (MFAEmailOTPEntry)result;
-		}
+		return _uniquePersistenceFinderByUserId.fetch(
+			finderCache, new Object[] {userId}, useFinderCache);
 	}
 
 	/**
@@ -234,17 +168,9 @@ public class MFAEmailOTPEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUserId(long userId) {
-		MFAEmailOTPEntry mfaEmailOTPEntry = fetchByUserId(userId);
-
-		if (mfaEmailOTPEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUserId.count(
+			finderCache, new Object[] {userId});
 	}
-
-	private static final String _FINDER_COLUMN_USERID_USERID_2 =
-		"mfaEmailOTPEntry.userId = ?";
 
 	public MFAEmailOTPEntryPersistenceImpl() {
 		setModelClass(MFAEmailOTPEntry.class);
@@ -812,6 +738,12 @@ public class MFAEmailOTPEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
 			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
 
+		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUserId, _SQL_SELECT_MFAEMAILOTPENTRY_WHERE,
+			new FinderColumn<>(
+				"mfaEmailOTPEntry.", "userId", FinderColumn.Type.LONG, "=",
+				true, true, MFAEmailOTPEntry::getUserId));
+
 		MFAEmailOTPEntryUtil.setPersistence(this);
 	}
 
@@ -863,9 +795,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 	private static final String _SQL_COUNT_MFAEMAILOTPENTRY =
 		"SELECT COUNT(mfaEmailOTPEntry) FROM MFAEmailOTPEntry mfaEmailOTPEntry";
 
-	private static final String _SQL_COUNT_MFAEMAILOTPENTRY_WHERE =
-		"SELECT COUNT(mfaEmailOTPEntry) FROM MFAEmailOTPEntry mfaEmailOTPEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mfaEmailOTPEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -883,4 +812,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1637740968
+// LIFERAY-SERVICE-BUILDER-HASH:986925438

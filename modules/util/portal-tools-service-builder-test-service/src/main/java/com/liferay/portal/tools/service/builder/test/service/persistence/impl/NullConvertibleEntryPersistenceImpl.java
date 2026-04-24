@@ -10,12 +10,13 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -35,7 +36,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -70,6 +70,8 @@ public class NullConvertibleEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByName;
+	private UniquePersistenceFinder<NullConvertibleEntry>
+		_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the null convertible entry where name = &#63; or throws a <code>NoSuchNullConvertibleEntryException</code> if it could not be found.
@@ -126,91 +128,8 @@ public class NullConvertibleEntryPersistenceImpl
 	public NullConvertibleEntry fetchByName(
 		String name, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = dummyFinderCache.getResult(
-				_finderPathFetchByName, finderArgs, this);
-		}
-
-		if (result instanceof NullConvertibleEntry) {
-			NullConvertibleEntry nullConvertibleEntry =
-				(NullConvertibleEntry)result;
-
-			if (!Objects.equals(name, nullConvertibleEntry.getName())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_NULLCONVERTIBLEENTRY_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				List<NullConvertibleEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						dummyFinderCache.putResult(
-							_finderPathFetchByName, finderArgs, list);
-					}
-				}
-				else {
-					NullConvertibleEntry nullConvertibleEntry = list.get(0);
-
-					result = nullConvertibleEntry;
-
-					cacheResult(nullConvertibleEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (NullConvertibleEntry)result;
-		}
+		return _uniquePersistenceFinderByName.fetch(
+			dummyFinderCache, new Object[] {name}, useFinderCache);
 	}
 
 	/**
@@ -236,20 +155,9 @@ public class NullConvertibleEntryPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		NullConvertibleEntry nullConvertibleEntry = fetchByName(name);
-
-		if (nullConvertibleEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByName.count(
+			dummyFinderCache, new Object[] {name});
 	}
-
-	private static final String _FINDER_COLUMN_NAME_NAME_2 =
-		"nullConvertibleEntry.name = ?";
-
-	private static final String _FINDER_COLUMN_NAME_NAME_3 =
-		"(nullConvertibleEntry.name IS NULL OR nullConvertibleEntry.name = '')";
 
 	public NullConvertibleEntryPersistenceImpl() {
 		setModelClass(NullConvertibleEntry.class);
@@ -805,6 +713,13 @@ public class NullConvertibleEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, true);
 
+		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByName,
+			_SQL_SELECT_NULLCONVERTIBLEENTRY_WHERE,
+			new FinderColumn<>(
+				"nullConvertibleEntry.", "name", FinderColumn.Type.STRING, "=",
+				true, true, NullConvertibleEntry::getName));
+
 		NullConvertibleEntryUtil.setPersistence(this);
 	}
 
@@ -822,9 +737,6 @@ public class NullConvertibleEntryPersistenceImpl
 
 	private static final String _SQL_COUNT_NULLCONVERTIBLEENTRY =
 		"SELECT COUNT(nullConvertibleEntry) FROM NullConvertibleEntry nullConvertibleEntry";
-
-	private static final String _SQL_COUNT_NULLCONVERTIBLEENTRY_WHERE =
-		"SELECT COUNT(nullConvertibleEntry) FROM NullConvertibleEntry nullConvertibleEntry WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"nullConvertibleEntry.";
@@ -844,4 +756,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:765127453
+// LIFERAY-SERVICE-BUILDER-HASH:-1958118480

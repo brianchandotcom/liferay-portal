@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,7 +48,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -91,6 +92,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the commerce virtual order item file entries where uuid = &#63;.
@@ -164,112 +167,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<CommerceVirtualOrderItemFileEntry> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceVirtualOrderItemFileEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceVirtualOrderItemFileEntry
-						commerceVirtualOrderItemFileEntry : list) {
-
-					if (!uuid.equals(
-							commerceVirtualOrderItemFileEntry.getUuid())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<CommerceVirtualOrderItemFileEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -353,67 +253,13 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"commerceVirtualOrderItemFileEntry.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(commerceVirtualOrderItemFileEntry.uuid IS NULL OR commerceVirtualOrderItemFileEntry.uuid = '')";
-
 	private FinderPath _finderPathFetchByUUID_G;
+	private UniquePersistenceFinder<CommerceVirtualOrderItemFileEntry>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce virtual order item file entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchVirtualOrderItemFileEntryException</code> if it could not be found.
@@ -480,100 +326,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	public CommerceVirtualOrderItemFileEntry fetchByUUID_G(
 		String uuid, long groupId, boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {uuid, groupId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByUUID_G, finderArgs, this);
-		}
-
-		if (result instanceof CommerceVirtualOrderItemFileEntry) {
-			CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry =
-					(CommerceVirtualOrderItemFileEntry)result;
-
-			if (!Objects.equals(
-					uuid, commerceVirtualOrderItemFileEntry.getUuid()) ||
-				(groupId != commerceVirtualOrderItemFileEntry.getGroupId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(groupId);
-
-				List<CommerceVirtualOrderItemFileEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByUUID_G, finderArgs, list);
-					}
-				}
-				else {
-					CommerceVirtualOrderItemFileEntry
-						commerceVirtualOrderItemFileEntry = list.get(0);
-
-					result = commerceVirtualOrderItemFileEntry;
-
-					cacheResult(commerceVirtualOrderItemFileEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CommerceVirtualOrderItemFileEntry)result;
-		}
+		return _uniquePersistenceFinderByUUID_G.fetch(
+			finderCache, new Object[] {uuid, groupId}, useFinderCache);
 	}
 
 	/**
@@ -603,28 +357,15 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
-			fetchByUUID_G(uuid, groupId);
-
-		if (commerceVirtualOrderItemFileEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByUUID_G.count(
+			finderCache, new Object[] {uuid, groupId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
-		"commerceVirtualOrderItemFileEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
-		"(commerceVirtualOrderItemFileEntry.uuid IS NULL OR commerceVirtualOrderItemFileEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
-		"commerceVirtualOrderItemFileEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
@@ -706,120 +447,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceVirtualOrderItemFileEntry> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceVirtualOrderItemFileEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceVirtualOrderItemFileEntry
-						commerceVirtualOrderItemFileEntry : list) {
-
-					if (!uuid.equals(
-							commerceVirtualOrderItemFileEntry.getUuid()) ||
-						(companyId !=
-							commerceVirtualOrderItemFileEntry.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<CommerceVirtualOrderItemFileEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -911,78 +541,17 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"commerceVirtualOrderItemFileEntry.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(commerceVirtualOrderItemFileEntry.uuid IS NULL OR commerceVirtualOrderItemFileEntry.uuid = '') AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
-		"commerceVirtualOrderItemFileEntry.companyId = ?";
 
 	private FinderPath
 		_finderPathWithPaginationFindByCommerceVirtualOrderItemId;
 	private FinderPath
 		_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId;
 	private FinderPath _finderPathCountByCommerceVirtualOrderItemId;
+	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
+		_collectionPersistenceFinderByCommerceVirtualOrderItemId;
 
 	/**
 	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
@@ -1066,105 +635,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				orderByComparator,
 			boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId;
-				finderArgs = new Object[] {commerceVirtualOrderItemId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByCommerceVirtualOrderItemId;
-			finderArgs = new Object[] {
-				commerceVirtualOrderItemId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceVirtualOrderItemFileEntry> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceVirtualOrderItemFileEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceVirtualOrderItemFileEntry
-						commerceVirtualOrderItemFileEntry : list) {
-
-					if (commerceVirtualOrderItemId !=
-							commerceVirtualOrderItemFileEntry.
-								getCommerceVirtualOrderItemId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCEVIRTUALORDERITEMID_COMMERCEVIRTUALORDERITEMID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceVirtualOrderItemId);
-
-				list = (List<CommerceVirtualOrderItemFileEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCommerceVirtualOrderItemId.find(
+			finderCache, new Object[] {commerceVirtualOrderItemId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1257,55 +730,15 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	public int countByCommerceVirtualOrderItemId(
 		long commerceVirtualOrderItemId) {
 
-		FinderPath finderPath = _finderPathCountByCommerceVirtualOrderItemId;
-
-		Object[] finderArgs = new Object[] {commerceVirtualOrderItemId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCEVIRTUALORDERITEMID_COMMERCEVIRTUALORDERITEMID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceVirtualOrderItemId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCommerceVirtualOrderItemId.count(
+			finderCache, new Object[] {commerceVirtualOrderItemId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCEVIRTUALORDERITEMID_COMMERCEVIRTUALORDERITEMID_2 =
-			"commerceVirtualOrderItemFileEntry.commerceVirtualOrderItemId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_F;
 	private FinderPath _finderPathWithoutPaginationFindByC_F;
 	private FinderPath _finderPathCountByC_F;
+	private CollectionPersistenceFinder<CommerceVirtualOrderItemFileEntry>
+		_collectionPersistenceFinderByC_F;
 
 	/**
 	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
@@ -1390,112 +823,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_F;
-				finderArgs = new Object[] {
-					commerceVirtualOrderItemId, fileEntryId
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_F;
-			finderArgs = new Object[] {
-				commerceVirtualOrderItemId, fileEntryId, start, end,
-				orderByComparator
-			};
-		}
-
-		List<CommerceVirtualOrderItemFileEntry> list = null;
-
-		if (useFinderCache) {
-			list =
-				(List<CommerceVirtualOrderItemFileEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceVirtualOrderItemFileEntry
-						commerceVirtualOrderItemFileEntry : list) {
-
-					if ((commerceVirtualOrderItemId !=
-							commerceVirtualOrderItemFileEntry.
-								getCommerceVirtualOrderItemId()) ||
-						(fileEntryId !=
-							commerceVirtualOrderItemFileEntry.
-								getFileEntryId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_F_COMMERCEVIRTUALORDERITEMID_2);
-
-			sb.append(_FINDER_COLUMN_C_F_FILEENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceVirtualOrderItemId);
-
-				queryPos.add(fileEntryId);
-
-				list = (List<CommerceVirtualOrderItemFileEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_F.find(
+			finderCache, new Object[] {commerceVirtualOrderItemId, fileEntryId},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1588,59 +918,10 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_F(long commerceVirtualOrderItemId, long fileEntryId) {
-		FinderPath finderPath = _finderPathCountByC_F;
-
-		Object[] finderArgs = new Object[] {
-			commerceVirtualOrderItemId, fileEntryId
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_F_COMMERCEVIRTUALORDERITEMID_2);
-
-			sb.append(_FINDER_COLUMN_C_F_FILEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceVirtualOrderItemId);
-
-				queryPos.add(fileEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_F.count(
+			finderCache,
+			new Object[] {commerceVirtualOrderItemId, fileEntryId});
 	}
-
-	private static final String
-		_FINDER_COLUMN_C_F_COMMERCEVIRTUALORDERITEMID_2 =
-			"commerceVirtualOrderItemFileEntry.commerceVirtualOrderItemId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_F_FILEENTRYID_2 =
-		"commerceVirtualOrderItemFileEntry.fileEntryId = ?";
 
 	public CommerceVirtualOrderItemFileEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2314,10 +1595,34 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceVirtualOrderItemFileEntry.", "uuid",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceVirtualOrderItemFileEntry::getUuid));
+
 		_finderPathFetchByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, true);
+
+		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByUUID_G,
+			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+			new FinderColumn<>(
+				"commerceVirtualOrderItemFileEntry.", "uuid",
+				FinderColumn.Type.STRING, "=", true, false,
+				CommerceVirtualOrderItemFileEntry::getUuid),
+			new FinderColumn<>(
+				"commerceVirtualOrderItemFileEntry.", "groupId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceVirtualOrderItemFileEntry::getGroupId));
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -2337,6 +1642,24 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
+				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceVirtualOrderItemFileEntry.", "uuid",
+					FinderColumn.Type.STRING, "=", true, false,
+					CommerceVirtualOrderItemFileEntry::getUuid),
+				new FinderColumn<>(
+					"commerceVirtualOrderItemFileEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceVirtualOrderItemFileEntry::getCompanyId));
 
 		_finderPathWithPaginationFindByCommerceVirtualOrderItemId =
 			new FinderPath(
@@ -2361,6 +1684,22 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"commerceVirtualOrderItemId"}, false);
 
+		_collectionPersistenceFinderByCommerceVirtualOrderItemId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCommerceVirtualOrderItemId,
+				_finderPathWithoutPaginationFindByCommerceVirtualOrderItemId,
+				_finderPathCountByCommerceVirtualOrderItemId,
+				_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+				_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+				CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceVirtualOrderItemFileEntry.",
+					"commerceVirtualOrderItemId", FinderColumn.Type.LONG, "=",
+					true, true,
+					CommerceVirtualOrderItemFileEntry::
+						getCommerceVirtualOrderItemId));
+
 		_finderPathWithPaginationFindByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
 			new String[] {
@@ -2379,6 +1718,24 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceVirtualOrderItemId", "fileEntryId"}, false);
+
+		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_F,
+			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
+			_SQL_SELECT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+			_SQL_COUNT_COMMERCEVIRTUALORDERITEMFILEENTRY_WHERE,
+			CommerceVirtualOrderItemFileEntryModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceVirtualOrderItemFileEntry.",
+				"commerceVirtualOrderItemId", FinderColumn.Type.LONG, "=", true,
+				false,
+				CommerceVirtualOrderItemFileEntry::
+					getCommerceVirtualOrderItemId),
+			new FinderColumn<>(
+				"commerceVirtualOrderItemFileEntry.", "fileEntryId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceVirtualOrderItemFileEntry::getFileEntryId));
 
 		CommerceVirtualOrderItemFileEntryUtil.setPersistence(this);
 	}
@@ -2458,4 +1815,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1847269719
+// LIFERAY-SERVICE-BUILDER-HASH:-60834819

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -88,6 +90,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
 	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
 	private FinderPath _finderPathCountByCtCollectionId;
+	private CollectionPersistenceFinder<CTAutoResolutionInfo>
+		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
@@ -164,97 +168,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCtCollectionId;
-				finderArgs = new Object[] {ctCollectionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCtCollectionId;
-			finderArgs = new Object[] {
-				ctCollectionId, start, end, orderByComparator
-			};
-		}
-
-		List<CTAutoResolutionInfo> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
-					if (ctCollectionId !=
-							ctAutoResolutionInfo.getCtCollectionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				list = (List<CTAutoResolutionInfo>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCtCollectionId.find(
+			finderCache, new Object[] {ctCollectionId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -336,49 +252,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 */
 	@Override
 	public int countByCtCollectionId(long ctCollectionId) {
-		FinderPath finderPath = _finderPathCountByCtCollectionId;
-
-		Object[] finderArgs = new Object[] {ctCollectionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCtCollectionId.count(
+			finderCache, new Object[] {ctCollectionId});
 	}
-
-	private static final String _FINDER_COLUMN_CTCOLLECTIONID_CTCOLLECTIONID_2 =
-		"ctAutoResolutionInfo.ctCollectionId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_MCNI_SMCPK;
 	private FinderPath _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
@@ -1622,6 +1498,20 @@ public class CTAutoResolutionInfoPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"ctCollectionId"}, false);
 
+		_collectionPersistenceFinderByCtCollectionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCtCollectionId,
+				_finderPathWithoutPaginationFindByCtCollectionId,
+				_finderPathCountByCtCollectionId,
+				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
+				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
+				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"ctAutoResolutionInfo.", "ctCollectionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CTAutoResolutionInfo::getCtCollectionId));
+
 		_finderPathWithPaginationFindByC_MCNI_SMCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI_SMCPK",
 			new String[] {
@@ -1736,4 +1626,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1469446170
+// LIFERAY-SERVICE-BUILDER-HASH:-44927655

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -28,21 +27,20 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +88,8 @@ public class AkismetEntryPersistenceImpl
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByLtModifiedDate;
 	private FinderPath _finderPathWithPaginationCountByLtModifiedDate;
+	private CollectionPersistenceFinder<AkismetEntry>
+		_collectionPersistenceFinderByLtModifiedDate;
 
 	/**
 	 * Returns all the akismet entries where modifiedDate &lt; &#63;.
@@ -164,98 +164,9 @@ public class AkismetEntryPersistenceImpl
 		OrderByComparator<AkismetEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByLtModifiedDate;
-		finderArgs = new Object[] {
-			_getTime(modifiedDate), start, end, orderByComparator
-		};
-
-		List<AkismetEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<AkismetEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AkismetEntry akismetEntry : list) {
-					if (modifiedDate.getTime() <= akismetEntry.getModifiedDate(
-						).getTime()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_AKISMETENTRY_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(AkismetEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				list = (List<AkismetEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLtModifiedDate.find(
+			finderCache, new Object[] {modifiedDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -335,65 +246,12 @@ public class AkismetEntryPersistenceImpl
 	 */
 	@Override
 	public int countByLtModifiedDate(Date modifiedDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtModifiedDate;
-
-		Object[] finderArgs = new Object[] {_getTime(modifiedDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_AKISMETENTRY_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLtModifiedDate.count(
+			finderCache, new Object[] {modifiedDate});
 	}
 
-	private static final String _FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_1 =
-		"akismetEntry.modifiedDate IS NULL";
-
-	private static final String _FINDER_COLUMN_LTMODIFIEDDATE_MODIFIEDDATE_2 =
-		"akismetEntry.modifiedDate < ?";
-
 	private FinderPath _finderPathFetchByC_C;
+	private UniquePersistenceFinder<AkismetEntry> _uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchAkismetEntryException</code> if it could not be found.
@@ -456,100 +314,8 @@ public class AkismetEntryPersistenceImpl
 	public AkismetEntry fetchByC_C(
 		long classNameId, long classPK, boolean useFinderCache) {
 
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {classNameId, classPK};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_C, finderArgs, this);
-		}
-
-		if (result instanceof AkismetEntry) {
-			AkismetEntry akismetEntry = (AkismetEntry)result;
-
-			if ((classNameId != akismetEntry.getClassNameId()) ||
-				(classPK != akismetEntry.getClassPK())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_AKISMETENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(classNameId);
-
-				queryPos.add(classPK);
-
-				List<AkismetEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_C, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									classNameId, classPK
-								};
-							}
-
-							_log.warn(
-								"AkismetEntryPersistenceImpl.fetchByC_C(long, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					AkismetEntry akismetEntry = list.get(0);
-
-					result = akismetEntry;
-
-					cacheResult(akismetEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (AkismetEntry)result;
-		}
+		return _uniquePersistenceFinderByC_C.fetch(
+			finderCache, new Object[] {classNameId, classPK}, useFinderCache);
 	}
 
 	/**
@@ -577,20 +343,9 @@ public class AkismetEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_C(long classNameId, long classPK) {
-		AkismetEntry akismetEntry = fetchByC_C(classNameId, classPK);
-
-		if (akismetEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_C.count(
+			finderCache, new Object[] {classNameId, classPK});
 	}
-
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"akismetEntry.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"akismetEntry.classPK = ?";
 
 	public AkismetEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1165,10 +920,29 @@ public class AkismetEntryPersistenceImpl
 			new String[] {Date.class.getName()}, new String[] {"modifiedDate"},
 			false);
 
+		_collectionPersistenceFinderByLtModifiedDate =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLtModifiedDate, null,
+				_finderPathWithPaginationCountByLtModifiedDate,
+				_SQL_SELECT_AKISMETENTRY_WHERE, _SQL_COUNT_AKISMETENTRY_WHERE,
+				AkismetEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"akismetEntry.", "modifiedDate", FinderColumn.Type.DATE,
+					"<", true, true, AkismetEntry::getModifiedDate));
+
 		_finderPathFetchByC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
+
+		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C, _SQL_SELECT_AKISMETENTRY_WHERE,
+			new FinderColumn<>(
+				"akismetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
+				true, false, AkismetEntry::getClassNameId),
+			new FinderColumn<>(
+				"akismetEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
+				true, AkismetEntry::getClassPK));
 
 		AkismetEntryUtil.setPersistence(this);
 	}
@@ -1212,14 +986,6 @@ public class AkismetEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_AKISMETENTRY =
 		"SELECT akismetEntry FROM AkismetEntry akismetEntry";
 
@@ -1252,4 +1018,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1305752148
+// LIFERAY-SERVICE-BUILDER-HASH:1121495847

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +28,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -40,13 +41,10 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.sql.Timestamp;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -90,6 +88,8 @@ public class CommerceInventoryAuditPersistenceImpl
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
 	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
+	private CollectionPersistenceFinder<CommerceInventoryAudit>
+		_collectionPersistenceFinderByLtCreateDate;
 
 	/**
 	 * Returns all the commerce inventory audits where createDate &lt; &#63;.
@@ -164,99 +164,9 @@ public class CommerceInventoryAuditPersistenceImpl
 		OrderByComparator<CommerceInventoryAudit> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByLtCreateDate;
-		finderArgs = new Object[] {
-			_getTime(createDate), start, end, orderByComparator
-		};
-
-		List<CommerceInventoryAudit> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceInventoryAudit>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryAudit commerceInventoryAudit : list) {
-					if (createDate.getTime() <=
-							commerceInventoryAudit.getCreateDate(
-							).getTime()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceInventoryAuditModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				list = (List<CommerceInventoryAudit>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLtCreateDate.find(
+			finderCache, new Object[] {createDate}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -337,67 +247,15 @@ public class CommerceInventoryAuditPersistenceImpl
 	 */
 	@Override
 	public int countByLtCreateDate(Date createDate) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtCreateDate;
-
-		Object[] finderArgs = new Object[] {_getTime(createDate)};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE);
-
-			boolean bindCreateDate = false;
-
-			if (createDate == null) {
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1);
-			}
-			else {
-				bindCreateDate = true;
-
-				sb.append(_FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindCreateDate) {
-					queryPos.add(new Timestamp(createDate.getTime()));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLtCreateDate.count(
+			finderCache, new Object[] {createDate});
 	}
-
-	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_1 =
-		"commerceInventoryAudit.createDate IS NULL";
-
-	private static final String _FINDER_COLUMN_LTCREATEDATE_CREATEDATE_2 =
-		"commerceInventoryAudit.createDate < ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_S_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_S_U;
 	private FinderPath _finderPathCountByC_S_U;
+	private CollectionPersistenceFinder<CommerceInventoryAudit>
+		_collectionPersistenceFinderByC_S_U;
 
 	/**
 	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -485,132 +343,9 @@ public class CommerceInventoryAuditPersistenceImpl
 		OrderByComparator<CommerceInventoryAudit> orderByComparator,
 		boolean useFinderCache) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_S_U;
-				finderArgs = new Object[] {companyId, sku, unitOfMeasureKey};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_S_U;
-			finderArgs = new Object[] {
-				companyId, sku, unitOfMeasureKey, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceInventoryAudit> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceInventoryAudit>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceInventoryAudit commerceInventoryAudit : list) {
-					if ((companyId != commerceInventoryAudit.getCompanyId()) ||
-						!sku.equals(commerceInventoryAudit.getSku()) ||
-						!unitOfMeasureKey.equals(
-							commerceInventoryAudit.getUnitOfMeasureKey())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_U_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(CommerceInventoryAuditModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				list = (List<CommerceInventoryAudit>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_S_U.find(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -710,94 +445,9 @@ public class CommerceInventoryAuditPersistenceImpl
 	public int countByC_S_U(
 		long companyId, String sku, String unitOfMeasureKey) {
 
-		sku = Objects.toString(sku, "");
-		unitOfMeasureKey = Objects.toString(unitOfMeasureKey, "");
-
-		FinderPath finderPath = _finderPathCountByC_S_U;
-
-		Object[] finderArgs = new Object[] {companyId, sku, unitOfMeasureKey};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_S_U_COMPANYID_2);
-
-			boolean bindSku = false;
-
-			if (sku.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_3);
-			}
-			else {
-				bindSku = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_SKU_2);
-			}
-
-			boolean bindUnitOfMeasureKey = false;
-
-			if (unitOfMeasureKey.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3);
-			}
-			else {
-				bindUnitOfMeasureKey = true;
-
-				sb.append(_FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindSku) {
-					queryPos.add(sku);
-				}
-
-				if (bindUnitOfMeasureKey) {
-					queryPos.add(unitOfMeasureKey);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_S_U.count(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
-
-	private static final String _FINDER_COLUMN_C_S_U_COMPANYID_2 =
-		"commerceInventoryAudit.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_SKU_2 =
-		"commerceInventoryAudit.sku = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_SKU_3 =
-		"(commerceInventoryAudit.sku IS NULL OR commerceInventoryAudit.sku = '') AND ";
-
-	private static final String _FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_2 =
-		"commerceInventoryAudit.unitOfMeasureKey = ?";
-
-	private static final String _FINDER_COLUMN_C_S_U_UNITOFMEASUREKEY_3 =
-		"(commerceInventoryAudit.unitOfMeasureKey IS NULL OR commerceInventoryAudit.unitOfMeasureKey = '')";
 
 	public CommerceInventoryAuditPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1394,6 +1044,19 @@ public class CommerceInventoryAuditPersistenceImpl
 			new String[] {Date.class.getName()}, new String[] {"createDate"},
 			false);
 
+		_collectionPersistenceFinderByLtCreateDate =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLtCreateDate, null,
+				_finderPathWithPaginationCountByLtCreateDate,
+				_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
+				_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
+				CommerceInventoryAuditModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"commerceInventoryAudit.", "createDate",
+					FinderColumn.Type.DATE, "<", true, true,
+					CommerceInventoryAudit::getCreateDate));
+
 		_finderPathWithPaginationFindByC_S_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_U",
 			new String[] {
@@ -1418,6 +1081,24 @@ public class CommerceInventoryAuditPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "sku", "unitOfMeasureKey"}, false);
+
+		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_S_U,
+			_finderPathWithoutPaginationFindByC_S_U, _finderPathCountByC_S_U,
+			_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
+			_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
+			CommerceInventoryAuditModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"commerceInventoryAudit.", "companyId", FinderColumn.Type.LONG,
+				"=", true, false, CommerceInventoryAudit::getCompanyId),
+			new FinderColumn<>(
+				"commerceInventoryAudit.", "sku", FinderColumn.Type.STRING, "=",
+				true, false, CommerceInventoryAudit::getSku),
+			new FinderColumn<>(
+				"commerceInventoryAudit.", "unitOfMeasureKey",
+				FinderColumn.Type.STRING, "=", true, true,
+				CommerceInventoryAudit::getUnitOfMeasureKey));
 
 		CommerceInventoryAuditUtil.setPersistence(this);
 	}
@@ -1461,14 +1142,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
-	private static Long _getTime(Date date) {
-		if (date == null) {
-			return null;
-		}
-
-		return date.getTime();
-	}
-
 	private static final String _SQL_SELECT_COMMERCEINVENTORYAUDIT =
 		"SELECT commerceInventoryAudit FROM CommerceInventoryAudit commerceInventoryAudit";
 
@@ -1502,4 +1175,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-572787172
+// LIFERAY-SERVICE-BUILDER-HASH:1253078740

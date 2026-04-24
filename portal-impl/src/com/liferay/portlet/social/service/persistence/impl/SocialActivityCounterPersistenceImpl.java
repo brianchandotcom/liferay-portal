@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -49,7 +52,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -86,6 +88,8 @@ public class SocialActivityCounterPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<SocialActivityCounter>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the social activity counters where groupId = &#63;.
@@ -163,95 +167,9 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByGroupId;
-					finderArgs = new Object[] {groupId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByGroupId;
-				finderArgs = new Object[] {
-					groupId, start, end, orderByComparator
-				};
-			}
-
-			List<SocialActivityCounter> list = null;
-
-			if (useFinderCache) {
-				list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SocialActivityCounter socialActivityCounter : list) {
-						if (groupId != socialActivityCounter.getGroupId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<SocialActivityCounter>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -337,55 +255,16 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			FinderPath finderPath = _finderPathCountByGroupId;
-
-			Object[] finderArgs = new Object[] {groupId};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"socialActivityCounter.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C;
 	private FinderPath _finderPathWithoutPaginationFindByC_C;
 	private FinderPath _finderPathCountByC_C;
+	private CollectionPersistenceFinder<SocialActivityCounter>
+		_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
@@ -470,102 +349,10 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_C;
-					finderArgs = new Object[] {classNameId, classPK};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_C;
-				finderArgs = new Object[] {
-					classNameId, classPK, start, end, orderByComparator
-				};
-			}
-
-			List<SocialActivityCounter> list = null;
-
-			if (useFinderCache) {
-				list = (List<SocialActivityCounter>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SocialActivityCounter socialActivityCounter : list) {
-						if ((classNameId !=
-								socialActivityCounter.getClassNameId()) ||
-							(classPK != socialActivityCounter.getClassPK())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(SocialActivityCounterModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					list = (List<SocialActivityCounter>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_C.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {classNameId, classPK}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -659,58 +446,11 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			FinderPath finderPath = _finderPathCountByC_C;
-
-			Object[] finderArgs = new Object[] {classNameId, classPK};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_C.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {classNameId, classPK});
 		}
 	}
-
-	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
-		"socialActivityCounter.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 =
-		"socialActivityCounter.classPK = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_C_C_O;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_C_O;
@@ -1102,6 +842,8 @@ public class SocialActivityCounterPersistenceImpl
 		"socialActivityCounter.ownerType = ? AND socialActivityCounter.endPeriod = -1";
 
 	private FinderPath _finderPathFetchByG_C_C_N_O_S;
+	private UniquePersistenceFinder<SocialActivityCounter>
+		_uniquePersistenceFinderByG_C_C_N_O_S;
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
@@ -1200,121 +942,12 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			name = Objects.toString(name, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
+			return _uniquePersistenceFinderByG_C_C_N_O_S.fetch(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {
 					groupId, classNameId, classPK, name, ownerType, startPeriod
-				};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByG_C_C_N_O_S, finderArgs, this);
-			}
-
-			if (result instanceof SocialActivityCounter) {
-				SocialActivityCounter socialActivityCounter =
-					(SocialActivityCounter)result;
-
-				if ((groupId != socialActivityCounter.getGroupId()) ||
-					(classNameId != socialActivityCounter.getClassNameId()) ||
-					(classPK != socialActivityCounter.getClassPK()) ||
-					!Objects.equals(name, socialActivityCounter.getName()) ||
-					(ownerType != socialActivityCounter.getOwnerType()) ||
-					(startPeriod != socialActivityCounter.getStartPeriod())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(8);
-
-				sb.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					queryPos.add(ownerType);
-
-					queryPos.add(startPeriod);
-
-					List<SocialActivityCounter> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByG_C_C_N_O_S, finderArgs,
-								list);
-						}
-					}
-					else {
-						SocialActivityCounter socialActivityCounter = list.get(
-							0);
-
-						result = socialActivityCounter;
-
-						cacheResult(socialActivityCounter);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SocialActivityCounter)result;
-			}
+				},
+				useFinderCache);
 		}
 	}
 
@@ -1357,38 +990,16 @@ public class SocialActivityCounterPersistenceImpl
 		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int startPeriod) {
 
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_S(
-			groupId, classNameId, classPK, name, ownerType, startPeriod);
-
-		if (socialActivityCounter == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_C_C_N_O_S.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, classNameId, classPK, name, ownerType, startPeriod
+			});
 	}
 
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_GROUPID_2 =
-		"socialActivityCounter.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSNAMEID_2 =
-		"socialActivityCounter.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_CLASSPK_2 =
-		"socialActivityCounter.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_2 =
-		"socialActivityCounter.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_NAME_3 =
-		"(socialActivityCounter.name IS NULL OR socialActivityCounter.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_OWNERTYPE_2 =
-		"socialActivityCounter.ownerType = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_S_STARTPERIOD_2 =
-		"socialActivityCounter.startPeriod = ?";
-
 	private FinderPath _finderPathFetchByG_C_C_N_O_E;
+	private UniquePersistenceFinder<SocialActivityCounter>
+		_uniquePersistenceFinderByG_C_C_N_O_E;
 
 	/**
 	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or throws a <code>NoSuchActivityCounterException</code> if it could not be found.
@@ -1487,121 +1098,12 @@ public class SocialActivityCounterPersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					SocialActivityCounter.class)) {
 
-			name = Objects.toString(name, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
+			return _uniquePersistenceFinderByG_C_C_N_O_E.fetch(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {
 					groupId, classNameId, classPK, name, ownerType, endPeriod
-				};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByG_C_C_N_O_E, finderArgs, this);
-			}
-
-			if (result instanceof SocialActivityCounter) {
-				SocialActivityCounter socialActivityCounter =
-					(SocialActivityCounter)result;
-
-				if ((groupId != socialActivityCounter.getGroupId()) ||
-					(classNameId != socialActivityCounter.getClassNameId()) ||
-					(classPK != socialActivityCounter.getClassPK()) ||
-					!Objects.equals(name, socialActivityCounter.getName()) ||
-					(ownerType != socialActivityCounter.getOwnerType()) ||
-					(endPeriod != socialActivityCounter.getEndPeriod())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(8);
-
-				sb.append(_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2);
-
-				boolean bindName = false;
-
-				if (name.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
-				}
-				else {
-					bindName = true;
-
-					sb.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_2);
-				}
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2);
-
-				sb.append(_FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					if (bindName) {
-						queryPos.add(name);
-					}
-
-					queryPos.add(ownerType);
-
-					queryPos.add(endPeriod);
-
-					List<SocialActivityCounter> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByG_C_C_N_O_E, finderArgs,
-								list);
-						}
-					}
-					else {
-						SocialActivityCounter socialActivityCounter = list.get(
-							0);
-
-						result = socialActivityCounter;
-
-						cacheResult(socialActivityCounter);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (SocialActivityCounter)result;
-			}
+				},
+				useFinderCache);
 		}
 	}
 
@@ -1644,36 +1146,12 @@ public class SocialActivityCounterPersistenceImpl
 		long groupId, long classNameId, long classPK, String name,
 		int ownerType, int endPeriod) {
 
-		SocialActivityCounter socialActivityCounter = fetchByG_C_C_N_O_E(
-			groupId, classNameId, classPK, name, ownerType, endPeriod);
-
-		if (socialActivityCounter == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByG_C_C_N_O_E.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				groupId, classNameId, classPK, name, ownerType, endPeriod
+			});
 	}
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_GROUPID_2 =
-		"socialActivityCounter.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSNAMEID_2 =
-		"socialActivityCounter.classNameId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_CLASSPK_2 =
-		"socialActivityCounter.classPK = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_2 =
-		"socialActivityCounter.name = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_NAME_3 =
-		"(socialActivityCounter.name IS NULL OR socialActivityCounter.name = '') AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2 =
-		"socialActivityCounter.ownerType = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2 =
-		"socialActivityCounter.endPeriod = ?";
 
 	public SocialActivityCounterPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2587,6 +2065,19 @@ public class SocialActivityCounterPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId,
+				_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
+				_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE,
+				SocialActivityCounterModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
+					"=", true, true, SocialActivityCounter::getGroupId));
+
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -2605,6 +2096,20 @@ public class SocialActivityCounterPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
+
+		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
+			_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE,
+			SocialActivityCounterModelImpl.ORDER_BY_JPQL,
+			_ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"socialActivityCounter.", "classNameId", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getClassNameId),
+			new FinderColumn<>(
+				"socialActivityCounter.", "classPK", FinderColumn.Type.LONG,
+				"=", true, true, SocialActivityCounter::getClassPK));
 
 		_finderPathWithPaginationFindByG_C_C_O = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_O",
@@ -2648,6 +2153,30 @@ public class SocialActivityCounterPersistenceImpl
 			},
 			true);
 
+		_uniquePersistenceFinderByG_C_C_N_O_S = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_C_C_N_O_S,
+			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
+			new FinderColumn<>(
+				"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getGroupId),
+			new FinderColumn<>(
+				"socialActivityCounter.", "classNameId", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getClassNameId),
+			new FinderColumn<>(
+				"socialActivityCounter.", "classPK", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getClassPK),
+			new FinderColumn<>(
+				"socialActivityCounter.", "name", FinderColumn.Type.STRING, "=",
+				true, false, SocialActivityCounter::getName),
+			new FinderColumn<>(
+				"socialActivityCounter.", "ownerType",
+				FinderColumn.Type.INTEGER, "=", true, false,
+				SocialActivityCounter::getOwnerType),
+			new FinderColumn<>(
+				"socialActivityCounter.", "startPeriod",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				SocialActivityCounter::getStartPeriod));
+
 		_finderPathFetchByG_C_C_N_O_E = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_E",
 			new String[] {
@@ -2660,6 +2189,30 @@ public class SocialActivityCounterPersistenceImpl
 				"endPeriod"
 			},
 			true);
+
+		_uniquePersistenceFinderByG_C_C_N_O_E = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByG_C_C_N_O_E,
+			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
+			new FinderColumn<>(
+				"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getGroupId),
+			new FinderColumn<>(
+				"socialActivityCounter.", "classNameId", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getClassNameId),
+			new FinderColumn<>(
+				"socialActivityCounter.", "classPK", FinderColumn.Type.LONG,
+				"=", true, false, SocialActivityCounter::getClassPK),
+			new FinderColumn<>(
+				"socialActivityCounter.", "name", FinderColumn.Type.STRING, "=",
+				true, false, SocialActivityCounter::getName),
+			new FinderColumn<>(
+				"socialActivityCounter.", "ownerType",
+				FinderColumn.Type.INTEGER, "=", true, false,
+				SocialActivityCounter::getOwnerType),
+			new FinderColumn<>(
+				"socialActivityCounter.", "endPeriod",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				SocialActivityCounter::getEndPeriod));
 
 		SocialActivityCounterUtil.setPersistence(this);
 	}
@@ -2703,4 +2256,4 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1417001264
+// LIFERAY-SERVICE-BUILDER-HASH:-1288258544

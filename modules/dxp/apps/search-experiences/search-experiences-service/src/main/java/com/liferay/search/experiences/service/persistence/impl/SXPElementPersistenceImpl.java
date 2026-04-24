@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -99,6 +102,8 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63;.
@@ -169,106 +174,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid;
-				finderArgs = new Object[] {uuid};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid;
-			finderArgs = new Object[] {uuid, start, end, orderByComparator};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if (!uuid.equals(sxpElement.getUuid())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid.find(
+			finderCache, new Object[] {uuid}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -492,58 +400,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid;
-
-		Object[] finderArgs = new Object[] {uuid};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_UUID_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid.count(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -615,12 +473,6 @@ public class SXPElementPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_2 =
-		"sxpElement.uuid = ?";
-
-	private static final String _FINDER_COLUMN_UUID_UUID_3 =
-		"(sxpElement.uuid IS NULL OR sxpElement.uuid = '')";
-
 	private static final String _FINDER_COLUMN_UUID_UUID_2_SQL =
 		"sxpElement.uuid_ = ?";
 
@@ -630,6 +482,8 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByUuid_C;
 	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
 	private FinderPath _finderPathCountByUuid_C;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns all the sxp elements where uuid = &#63; and companyId = &#63;.
@@ -708,114 +562,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByUuid_C;
-				finderArgs = new Object[] {uuid, companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByUuid_C;
-			finderArgs = new Object[] {
-				uuid, companyId, start, end, orderByComparator
-			};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if (!uuid.equals(sxpElement.getUuid()) ||
-						(companyId != sxpElement.getCompanyId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByUuid_C.find(
+			finderCache, new Object[] {uuid, companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1061,62 +810,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		uuid = Objects.toString(uuid, "");
-
-		FinderPath finderPath = _finderPathCountByUuid_C;
-
-		Object[] finderArgs = new Object[] {uuid, companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid.isEmpty()) {
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
-			}
-
-			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindUuid) {
-					queryPos.add(uuid);
-				}
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByUuid_C.count(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1193,12 +888,6 @@ public class SXPElementPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
-		"sxpElement.uuid = ? AND ";
-
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
-		"(sxpElement.uuid IS NULL OR sxpElement.uuid = '') AND ";
-
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2_SQL =
 		"sxpElement.uuid_ = ? AND ";
 
@@ -1211,6 +900,8 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63;.
@@ -1284,95 +975,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCompanyId;
-				finderArgs = new Object[] {companyId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCompanyId;
-			finderArgs = new Object[] {
-				companyId, start, end, orderByComparator
-			};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if (companyId != sxpElement.getCompanyId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCompanyId.find(
+			finderCache, new Object[] {companyId}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1588,45 +1193,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = _finderPathCountByCompanyId;
-
-		Object[] finderArgs = new Object[] {companyId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCompanyId.count(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1691,6 +1259,8 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_R;
 	private FinderPath _finderPathWithoutPaginationFindByC_R;
 	private FinderPath _finderPathCountByC_R;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByC_R;
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and readOnly = &#63;.
@@ -1769,101 +1339,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_R;
-				finderArgs = new Object[] {companyId, readOnly};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_R;
-			finderArgs = new Object[] {
-				companyId, readOnly, start, end, orderByComparator
-			};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if ((companyId != sxpElement.getCompanyId()) ||
-						(readOnly != sxpElement.isReadOnly())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_R_READONLY_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(readOnly);
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_R.find(
+			finderCache, new Object[] {companyId, readOnly}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2097,49 +1575,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByC_R(long companyId, boolean readOnly) {
-		FinderPath finderPath = _finderPathCountByC_R;
-
-		Object[] finderArgs = new Object[] {companyId, readOnly};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_R_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_R_READONLY_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(readOnly);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_R.count(
+			finderCache, new Object[] {companyId, readOnly});
 	}
 
 	/**
@@ -2212,6 +1649,8 @@ public class SXPElementPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
 	private FinderPath _finderPathCountByC_T;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63;.
@@ -2289,101 +1728,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_T;
-				finderArgs = new Object[] {companyId, type};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_T;
-			finderArgs = new Object[] {
-				companyId, type, start, end, orderByComparator
-			};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if ((companyId != sxpElement.getCompanyId()) ||
-						(type != sxpElement.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_T.find(
+			finderCache, new Object[] {companyId, type}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2616,49 +1963,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByC_T(long companyId, int type) {
-		FinderPath finderPath = _finderPathCountByC_T;
-
-		Object[] finderArgs = new Object[] {companyId, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_T.count(
+			finderCache, new Object[] {companyId, type});
 	}
 
 	/**
@@ -2725,15 +2031,14 @@ public class SXPElementPersistenceImpl
 	private static final String _FINDER_COLUMN_C_T_COMPANYID_2 =
 		"sxpElement.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_T_TYPE_2 =
-		"sxpElement.type = ?";
-
 	private static final String _FINDER_COLUMN_C_T_TYPE_2_SQL =
 		"sxpElement.type_ = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_T_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_T_S;
 	private FinderPath _finderPathCountByC_T_S;
+	private CollectionPersistenceFinder<SXPElement>
+		_collectionPersistenceFinderByC_T_S;
 
 	/**
 	 * Returns all the sxp elements where companyId = &#63; and type = &#63; and status = &#63;.
@@ -2817,106 +2122,9 @@ public class SXPElementPersistenceImpl
 		OrderByComparator<SXPElement> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_T_S;
-				finderArgs = new Object[] {companyId, type, status};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_T_S;
-			finderArgs = new Object[] {
-				companyId, type, status, start, end, orderByComparator
-			};
-		}
-
-		List<SXPElement> list = null;
-
-		if (useFinderCache) {
-			list = (List<SXPElement>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (SXPElement sxpElement : list) {
-					if ((companyId != sxpElement.getCompanyId()) ||
-						(type != sxpElement.getType()) ||
-						(status != sxpElement.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_S_TYPE_2);
-
-			sb.append(_FINDER_COLUMN_C_T_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(SXPElementModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				queryPos.add(status);
-
-				list = (List<SXPElement>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_T_S.find(
+			finderCache, new Object[] {companyId, type, status}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3167,53 +2375,8 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByC_T_S(long companyId, int type, int status) {
-		FinderPath finderPath = _finderPathCountByC_T_S;
-
-		Object[] finderArgs = new Object[] {companyId, type, status};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_SXPELEMENT_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_T_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_T_S_TYPE_2);
-
-			sb.append(_FINDER_COLUMN_C_T_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(type);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_T_S.count(
+			finderCache, new Object[] {companyId, type, status});
 	}
 
 	/**
@@ -3285,9 +2448,6 @@ public class SXPElementPersistenceImpl
 	private static final String _FINDER_COLUMN_C_T_S_COMPANYID_2 =
 		"sxpElement.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_T_S_TYPE_2 =
-		"sxpElement.type = ? AND ";
-
 	private static final String _FINDER_COLUMN_C_T_S_TYPE_2_SQL =
 		"sxpElement.type_ = ? AND ";
 
@@ -3295,6 +2455,7 @@ public class SXPElementPersistenceImpl
 		"sxpElement.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
+	private UniquePersistenceFinder<SXPElement> _uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the sxp element where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchSXPElementException</code> if it could not be found.
@@ -3359,98 +2520,9 @@ public class SXPElementPersistenceImpl
 	public SXPElement fetchByERC_C(
 		String externalReferenceCode, long companyId, boolean useFinderCache) {
 
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {externalReferenceCode, companyId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByERC_C, finderArgs, this);
-		}
-
-		if (result instanceof SXPElement) {
-			SXPElement sxpElement = (SXPElement)result;
-
-			if (!Objects.equals(
-					externalReferenceCode,
-					sxpElement.getExternalReferenceCode()) ||
-				(companyId != sxpElement.getCompanyId())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_SXPELEMENT_WHERE);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				queryPos.add(companyId);
-
-				List<SXPElement> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByERC_C, finderArgs, list);
-					}
-				}
-				else {
-					SXPElement sxpElement = list.get(0);
-
-					result = sxpElement;
-
-					cacheResult(sxpElement);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SXPElement)result;
-		}
+		return _uniquePersistenceFinderByERC_C.fetch(
+			finderCache, new Object[] {externalReferenceCode, companyId},
+			useFinderCache);
 	}
 
 	/**
@@ -3479,23 +2551,9 @@ public class SXPElementPersistenceImpl
 	 */
 	@Override
 	public int countByERC_C(String externalReferenceCode, long companyId) {
-		SXPElement sxpElement = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (sxpElement == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByERC_C.count(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
-		"sxpElement.externalReferenceCode = ? AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
-		"(sxpElement.externalReferenceCode IS NULL OR sxpElement.externalReferenceCode = '') AND ";
-
-	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
-		"sxpElement.companyId = ?";
 
 	public SXPElementPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -4183,6 +3241,15 @@ public class SXPElementPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"uuid_"},
 			false);
 
+		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
+				true, SXPElement::getUuid));
+
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -4202,6 +3269,20 @@ public class SXPElementPersistenceImpl
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
 
+		_collectionPersistenceFinderByUuid_C =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_SXPELEMENT_WHERE,
+				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
+					false, SXPElement::getUuid),
+				new FinderColumn<>(
+					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, SXPElement::getCompanyId));
+
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -4219,6 +3300,17 @@ public class SXPElementPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
+
+		_collectionPersistenceFinderByCompanyId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_SXPELEMENT_WHERE,
+				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, SXPElement::getCompanyId));
 
 		_finderPathWithPaginationFindByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
@@ -4239,6 +3331,18 @@ public class SXPElementPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"companyId", "readOnly"}, false);
 
+		_collectionPersistenceFinderByC_R = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_R,
+			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
+			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
+				false, SXPElement::getCompanyId),
+			new FinderColumn<>(
+				"sxpElement.", "readOnly", FinderColumn.Type.BOOLEAN, "=", true,
+				true, SXPElement::isReadOnly));
+
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {
@@ -4257,6 +3361,18 @@ public class SXPElementPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "type_"}, false);
+
+		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_T,
+			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
+				false, SXPElement::getCompanyId),
+			new FinderColumn<>(
+				"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
+				true, SXPElement::getType));
 
 		_finderPathWithPaginationFindByC_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T_S",
@@ -4283,10 +3399,35 @@ public class SXPElementPersistenceImpl
 			},
 			new String[] {"companyId", "type_", "status"}, false);
 
+		_collectionPersistenceFinderByC_T_S = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_T_S,
+			_finderPathWithoutPaginationFindByC_T_S, _finderPathCountByC_T_S,
+			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			new FinderColumn<>(
+				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
+				false, SXPElement::getCompanyId),
+			new FinderColumn<>(
+				"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
+				false, SXPElement::getType),
+			new FinderColumn<>(
+				"sxpElement.", "status", FinderColumn.Type.INTEGER, "=", true,
+				true, SXPElement::getStatus));
+
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPELEMENT_WHERE,
+			new FinderColumn<>(
+				"sxpElement.", "externalReferenceCode",
+				FinderColumn.Type.STRING, "=", true, false,
+				SXPElement::getExternalReferenceCode),
+			new FinderColumn<>(
+				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
+				true, SXPElement::getCompanyId));
 
 		SXPElementUtil.setPersistence(this);
 	}
@@ -4385,4 +3526,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:945675211
+// LIFERAY-SERVICE-BUILDER-HASH:2026991808

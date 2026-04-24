@@ -12,6 +12,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   env:
+                    GH_REPO: ${{github.repository}}
                     GH_TOKEN: ${{github.token}}
                     PR_NUMBER: ${{github.event.pull_request.number}}
                     REGISTRY: ghcr.io/${{github.repository_owner}}/charts-pr/${{github.event.pull_request.number}}
@@ -34,10 +35,14 @@ jobs:
                     GCP_INFRA_VERSION="$(_chart_version gcp-infrastructure)-pr-${PR_NUMBER}-g${SHORT_SHA}"
                     GCP_INFRA_PROVIDER_VERSION="$(_chart_version gcp-infrastructure-provider)-pr-${PR_NUMBER}-g${SHORT_SHA}"
 
-                    cat > /tmp/pr-comment.md << EOF
-                    ## GCP Helm Charts Published
+                    AWS_VERSION="$(_chart_version aws)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    AWS_INFRA_VERSION="$(_chart_version aws-infrastructure)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    AWS_INFRA_PROVIDER_VERSION="$(_chart_version aws-infrastructure-provider)-pr-${PR_NUMBER}-g${SHORT_SHA}"
 
-                    Charts for this PR are available at \`${REGISTRY}\`. To test on a cluster, set your ArgoCD namespace and run:
+                    cat > /tmp/pr-comment.md << EOF
+                    ## Helm Charts Published
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on a cluster, run:
 
                     \`\`\`bash
                     ARGOCD_NS=\$(kubectl get pods -A -l app.kubernetes.io/name=argocd-server -o jsonpath='{.items[0].metadata.namespace}')
@@ -46,7 +51,7 @@ jobs:
                     kubectl patch appproject liferay-application -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
                     kubectl patch appproject liferay-infrastructure -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
 
-                    # Update ApplicationSets and Application to use PR charts
+                    # GCP — update ApplicationSets and Application to use PR charts
                     kubectl patch applicationset liferay-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
                       {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_VERSION}"},
@@ -61,6 +66,23 @@ jobs:
                       {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
                       {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${GCP_INFRA_PROVIDER_VERSION}"},
                       {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-gcp-infrastructure-provider"}
+                    ]'
+
+                    # AWS — update ApplicationSets and Application to use PR charts
+                    kubectl patch applicationset liferay-aws-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_VERSION}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-aws"}
+                    ]'
+                    kubectl patch applicationset liferay-aws-infrastructure-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_INFRA_VERSION}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-aws-infrastructure"}
+                    ]'
+                    kubectl patch application liferay-aws-infrastructure-provider -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${AWS_INFRA_PROVIDER_VERSION}"},
+                      {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-aws-infrastructure-provider"}
                     ]'
                     \`\`\`
                     EOF

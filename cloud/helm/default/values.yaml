@@ -318,7 +318,12 @@ readinessProbe:
     periodSeconds: 10
     timeoutSeconds: 5
 replicaCount: 1
-resources: {}
+resources:
+    limits:
+        memory: 6Gi
+    requests:
+        cpu: 1
+        memory: 4Gi
 schedulingGates: []
 securityContext:
     allowPrivilegeEscalation: false

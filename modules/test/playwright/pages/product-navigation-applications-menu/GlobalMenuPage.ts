@@ -106,6 +106,7 @@ export class GlobalMenuPage {
 	private readonly homePage: HomePage;
 	readonly page: Page;
 	readonly sitesList: Locator;
+	readonly viewAllLink: Locator;
 
 	constructor(page: Page) {
 		this.categoriesList = page
@@ -119,6 +120,10 @@ export class GlobalMenuPage {
 		this.sitesList = page
 			.getByRole('menu')
 			.and(page.locator('.global-menu .sites-list'));
+		this.viewAllLink = page.getByRole('menuitem', {
+			exact: true,
+			name: 'View All Sites',
+		});
 	}
 
 	async goTo(categoryName: Categories) {

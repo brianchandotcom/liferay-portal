@@ -285,7 +285,7 @@ definition {
 
 	@description = "This test covers LPS-131774. It ensures that a depot category can be viewed through details info on a connected site."
 	@priority = 4
-	test CategoryCanBeViewedFromInfoPanel {
+	test CategoryCanBeViewedFromInfoPanelAndCannotBeAddedFromConnectedSite {
 		var categoryId = JSONCategory.addCategory(
 			groupName = "Test Depot Name",
 			site = "false",

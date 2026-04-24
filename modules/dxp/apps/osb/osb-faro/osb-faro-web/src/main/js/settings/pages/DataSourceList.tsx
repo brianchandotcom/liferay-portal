@@ -21,20 +21,11 @@ import {
 	PROVIDER_TYPE
 } from 'shared/util/pagination';
 import {DataSource} from 'shared/util/records';
-import {
-	DataSourceStates,
-	DataSourceStatuses,
-	DataSourceTypes,
-	Sizes
-} from 'shared/util/constants';
+import {DataSourceStates, DataSourceTypes, Sizes} from 'shared/util/constants';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {fromJS} from 'immutable';
 import {get} from 'lodash';
-import {
-	getDataSourceDisplayObject,
-	validAnalyticsConfig,
-	validContactsConfig
-} from 'shared/util/data-sources';
+import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -46,23 +37,6 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 interface ICellProps {
 	data: {[key: string]: any};
 }
-
-const AnalyticsDataCell: React.FC<ICellProps> = ({data}) => (
-	<td className='text-center'>
-		{validAnalyticsConfig(new DataSource(fromJS(data))) && (
-			<ClayIcon className='icon-root' symbol='check' />
-		)}
-	</td>
-);
-
-const IndividualsDataCell: React.FC<ICellProps> = ({data}) => (
-	<td className='text-center'>
-		{validContactsConfig(new DataSource(fromJS(data))) &&
-			data.status === DataSourceStatuses.Active && (
-				<ClayIcon className='icon-root' symbol='check' />
-			)}
-	</td>
-);
 
 interface IDataSourceNameProps {
 	data: {[key: string]: any};
@@ -384,16 +358,6 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 						{
 							cellRenderer: StatusRenderer,
 							label: Liferay.Language.get('status'),
-							sortable: false
-						},
-						{
-							cellRenderer: IndividualsDataCell,
-							label: Liferay.Language.get('individuals-data'),
-							sortable: false
-						},
-						{
-							cellRenderer: AnalyticsDataCell,
-							label: Liferay.Language.get('analytics-data'),
 							sortable: false
 						},
 						{

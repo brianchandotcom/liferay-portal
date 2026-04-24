@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.SortedArrayList;
 
 import java.util.Comparator;
@@ -30,7 +29,7 @@ public class BooleanFilter extends BaseFilter {
 	}
 
 	public Filter add(Filter filter, BooleanClauseOccur booleanClauseOccur) {
-		BooleanClause<Filter> booleanClause = new BooleanClauseImpl<>(
+		BooleanClause<Filter> booleanClause = new BooleanClause<>(
 			filter, booleanClauseOccur);
 
 		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {

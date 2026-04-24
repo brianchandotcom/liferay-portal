@@ -21,14 +21,14 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	public BooleanClause<Query> create(
 		Query query, BooleanClauseOccur booleanClauseOccur) {
 
-		return new BooleanClauseImpl<>(query, booleanClauseOccur);
+		return new BooleanClause<>(query, booleanClauseOccur);
 	}
 
 	@Override
 	public BooleanClause<Query> create(
 		String field, String value, BooleanClauseOccur booleanClauseOccur) {
 
-		return new BooleanClauseImpl<>(
+		return new BooleanClause<>(
 			new TermQueryImpl(field, value), booleanClauseOccur);
 	}
 
@@ -36,14 +36,14 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 	public BooleanClause<Filter> createFilter(
 		Filter filter, BooleanClauseOccur booleanClauseOccur) {
 
-		return new BooleanClauseImpl<>(filter, booleanClauseOccur);
+		return new BooleanClause<>(filter, booleanClauseOccur);
 	}
 
 	@Override
 	public BooleanClause<Filter> createFilter(
 		String field, String value, BooleanClauseOccur booleanClauseOccur) {
 
-		return new BooleanClauseImpl<Filter>(
+		return new BooleanClause<>(
 			new TermFilter(field, value), booleanClauseOccur);
 	}
 

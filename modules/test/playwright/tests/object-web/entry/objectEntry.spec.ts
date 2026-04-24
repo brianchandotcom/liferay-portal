@@ -4290,6 +4290,50 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test(
+		'duplicated entry is not submitted when refreshing page',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.fillObjectEntry({
+				objectFieldBusinessType: 'Text',
+				objectFieldLabel: objectFields[0].label['en_US'],
+				objectFieldValue: 'test',
+			});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			await page.reload();
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await expect(
+				page.locator('td').getByText('test', {exact: true})
+			).toHaveCount(1);
+		}
+	);
+
 	test('error message is displayed in the language of the site context', async ({
 		apiHelpers,
 		page,

@@ -12,12 +12,12 @@ import {useWizard} from '../NewImport';
 
 export default function FileSelectionStep() {
 	const [progress, setProgress] = useState<number>();
-	const {isCompanyGroup} = useWizard();
+	const {groupId} = useWizard();
 
 	const handleUpload = (file: File, signal?: AbortSignal) =>
 		getValidateLarFileEndpoint({
 			file,
-			isCompanyGroup,
+			groupId,
 			onProgress: setProgress,
 			signal,
 		});

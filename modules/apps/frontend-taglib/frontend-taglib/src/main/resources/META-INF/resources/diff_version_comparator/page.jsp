@@ -8,6 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:html-top>
+	<aui:link hashedFile="<%= true %>" href="frontend-taglib/css/diff_html.css" rel="stylesheet" type="text/css" />
 	<aui:link hashedFile="<%= true %>" href="frontend-taglib/css/diff_version_comparator.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 

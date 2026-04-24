@@ -519,6 +519,12 @@ public class SegmentsExperienceLocalServiceUtil {
 			start, end, orderByComparator);
 	}
 
+	public static List<SegmentsExperience> getSegmentsExperiences(
+		long[] groupIds, boolean active) {
+
+		return getService().getSegmentsExperiences(groupIds, active);
+	}
+
 	/**
 	 * Returns all the segments experiences matching the UUID and company.
 	 *
@@ -637,4 +643,4 @@ public class SegmentsExperienceLocalServiceUtil {
 			SegmentsExperienceLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:747892691
+// LIFERAY-SERVICE-BUILDER-HASH:1690534605

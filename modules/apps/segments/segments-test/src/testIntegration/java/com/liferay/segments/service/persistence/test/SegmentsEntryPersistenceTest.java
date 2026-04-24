@@ -339,6 +339,27 @@ public class SegmentsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_A_SRC() throws Exception {
+		_persistence.countByG_A_SRC(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");
+
+		_persistence.countByG_A_SRC(0L, RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByG_A_SRC(
+			0L, RandomTestUtil.randomBoolean(), (String)null);
+	}
+
+	@Test
+	public void testCountByG_A_SRCArrayable() throws Exception {
+		_persistence.countByG_A_SRC(
+			new long[] {RandomTestUtil.nextLong(), 0L},
+			RandomTestUtil.randomBoolean(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
+	}
+
+	@Test
 	public void testCountByERC_G() throws Exception {
 		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 
@@ -752,4 +773,4 @@ public class SegmentsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2069716228
+// LIFERAY-SERVICE-BUILDER-HASH:-1065797480

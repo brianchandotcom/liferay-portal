@@ -748,15 +748,21 @@ public class CloudBucketUtil {
 				gcpApplicationCredentialFilePath);
 
 			if (gcpApplicationCredentialFile.exists()) {
-				String credentialFilename = gcpApplicationCredentialFile.getName();
+				String credentialFileName =
+					gcpApplicationCredentialFile.getName();
 
-				String configurationName = credentialFilename.substring(
-					0, credentialFilename.lastIndexOf('.'));
+				String configurationName = credentialFileName.substring(
+					0, credentialFileName.lastIndexOf('.'));
 
-				return StringBundler.concat(
-					"(gcloud config configurations activate ", configurationName,
-					" --quiet || gcloud auth login --cred-file=",
-					gcpApplicationCredentialFilePath, " --quiet)");
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("(gcloud config configurations activate ");
+				sb.append(configurationName);
+				sb.append(" --quiet || gcloud auth login --cred-file=");
+				sb.append(gcpApplicationCredentialFilePath);
+				sb.append(" --quiet)");
+
+				return sb.toString();
 			}
 		}
 

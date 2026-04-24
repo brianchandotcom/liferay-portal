@@ -4,7 +4,11 @@
  */
 
 import {useEffect, useState} from 'react';
-import {JSM_OBJECT_TYPES, LIST_TYPES} from '~/features/project/utils/constants';
+import {
+	JSM_OBJECT_TYPES,
+	JSM_SCHEMAS,
+	LIST_TYPES,
+} from '~/features/project/utils/constants';
 import {getListTypeEntriesLegacy} from '~/services/liferay/api';
 import {getJSMObjects} from '~/services/liferay/rest/jira/Jira';
 import sortLiferayVersions from '~/utils/sortLiferayVersions';
@@ -28,6 +32,7 @@ export default function useGetLiferayVersions(): {
 			try {
 				if (isJiraBackend) {
 					const response = await getJSMObjects(
+						JSM_SCHEMAS.businessEvents,
 						JSM_OBJECT_TYPES.productVersion
 					);
 

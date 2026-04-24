@@ -11,3 +11,7 @@ export const JSM_FIELDS = {
 export const JSM_OBJECT_TYPES = {
 	productVersion: 'Product Version',
 };
+
+export const JSM_SCHEMAS = {
+	businessEvents: 'Business Events',
+};

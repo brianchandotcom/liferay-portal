@@ -22,7 +22,7 @@ public class CacheConfiguration {
 	public CacheManager cacheManager() {
 		CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager(
 			"accountUsage", "affectedVersions", "externalLinks", "issue",
-			"issues", "jsmObjects", "productPurchases");
+			"issues", "jsmFieldOptions", "jsmObjects", "productPurchases");
 
 		caffeineCacheManager.setCaffeine(
 			Caffeine.newBuilder(

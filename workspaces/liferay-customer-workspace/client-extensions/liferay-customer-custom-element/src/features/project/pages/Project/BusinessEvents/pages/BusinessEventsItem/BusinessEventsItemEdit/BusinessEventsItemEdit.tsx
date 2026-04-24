@@ -89,14 +89,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const [hasImpactingEvents, setHasImpactingEvents] = useState(() => {
-		return originalBusinessEvent.associatedTickets &&
-			originalBusinessEvent.associatedTickets !== '[]'
-			? 'yes'
-			: 'no';
+		return originalBusinessEvent.associatedTickets ? 'yes' : 'no';
 	});
 
 	const isDescriptionRequired = useMemo(
-		() => businessEvent.eventType?.key === 'otherEvent',
+		() => businessEvent.eventType?.key === 'Other Event',
 		[businessEvent.eventType]
 	);
 
@@ -106,7 +103,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const isNewLiferayVersionRequired = useMemo(
-		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		() => ['Migration', 'Upgrade'].includes(businessEvent.eventType?.key!),
 		[businessEvent.eventType]
 	);
 
@@ -204,35 +201,35 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			? {
 					associatedTickets: businessEvent.associatedTickets,
 					currentLiferayVersion:
-						businessEvent.currentLiferayVersion?.name,
+						businessEvent.currentLiferayVersion?.key,
 					description: businessEvent.description,
-					eventStatus:
-						new Date(businessEvent.plannedEventDate!) >= now
-							? {key: 'open'}
-							: {key: originalBusinessEvent.eventStatus?.key},
+					eventStatus: {key: originalBusinessEvent.eventStatus?.key},
 					eventType: businessEvent.eventType,
 					lastComment: reason,
 					name: businessEvent?.name,
-					newLiferayVersion: businessEvent.newLiferayVersion?.name,
-					plannedEventDate: businessEvent.plannedEventDate,
+					newLiferayVersion: businessEvent.newLiferayVersion?.key,
+					plannedEventDate: getFormattedEventDateTime(
+						businessEvent.plannedEventDate,
+						businessEvent.plannedEventTime
+					),
 					r_accountEntryToBusinessEvents_accountEntryId:
 						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-					timeZone: businessEvent.timeZone?.name,
+					timeZone: businessEvent.timeZone?.key,
 				}
 			: {
 					associatedTickets: businessEvent.associatedTickets,
 					currentLiferayVersion:
 						businessEvent.currentLiferayVersion?.key,
 					description: businessEvent.description,
-					eventStatus:
-						new Date(businessEvent.plannedEventDate!) >= now
-							? {key: 'open'}
-							: {key: originalBusinessEvent.eventStatus?.key},
+					eventStatus: {key: originalBusinessEvent.eventStatus?.key},
 					eventType: businessEvent.eventType,
 					lastComment: reason,
 					name: businessEvent?.name,
 					newLiferayVersion: businessEvent.newLiferayVersion?.key,
-					plannedEventDate: businessEvent.plannedEventDate,
+					plannedEventDate: getFormattedEventDateTime(
+						businessEvent.plannedEventDate,
+						businessEvent.plannedEventTime
+					),
 					r_accountEntryToBusinessEvents_accountEntryId:
 						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
 					timeZone: businessEvent.timeZone?.key,
@@ -288,34 +285,15 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		loadingUTCTimeZonesList;
 
 	useEffect(() => {
-		if (hasImpactingEvents === 'yes') {
-			const selectedTickets = selectedTicketOptions.map(
-				(ticket) => `"${ticket.ticketId}"`
-			);
-
-			setFieldValue(
-				'businessEvent.associatedTickets',
-				`[${selectedTickets.length ? selectedTickets.join(', ') : ''}]`
-			);
-		}
-		else {
-			setFieldValue('businessEvent.associatedTickets', '[]');
-		}
-	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
-
-	useEffect(() => {
 		setFieldValue(
-			'businessEvent.plannedEventDate',
-			getFormattedEventDateTime(
-				businessEvent.plannedEventDate,
-				businessEvent.plannedEventTime
-			)
+			'businessEvent.associatedTickets',
+			hasImpactingEvents === 'yes'
+				? selectedTicketOptions
+						.map((ticket) => ticket.ticketId)
+						.join(',')
+				: ''
 		);
-	}, [
-		businessEvent.plannedEventDate,
-		businessEvent.plannedEventTime,
-		setFieldValue,
-	]);
+	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
 
 	useEffect(() => {
 		if (!isDescriptionRequired) {

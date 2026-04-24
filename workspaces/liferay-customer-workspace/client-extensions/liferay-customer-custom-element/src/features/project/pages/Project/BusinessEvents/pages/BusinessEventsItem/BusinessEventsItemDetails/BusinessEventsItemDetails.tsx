@@ -44,9 +44,7 @@ const BusinessEventsItemDetails = () => {
 	const {loading: loadingTickets, tickets} = useAccountsTickets(
 		businessEvent,
 		accountKey,
-		loadingBusinessEvents ||
-			!businessEvent?.associatedTickets ||
-			businessEvent?.associatedTickets === '[]'
+		loadingBusinessEvents || !businessEvent?.associatedTickets
 	);
 
 	const {

@@ -21,6 +21,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.PermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.RestoreObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.StatusObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.UpdateObjectValuesBulkSelectionAction;
 import com.liferay.bulk.rest.client.json.BaseJSONParser;
@@ -138,6 +139,11 @@ public class BulkActionSerDes {
 			if (typeString.equals("ResetPermissionObjectBulkSelectionAction")) {
 				return ResetPermissionObjectBulkSelectionActionSerDes.toJSON(
 					(ResetPermissionObjectBulkSelectionAction)bulkAction);
+			}
+
+			if (typeString.equals("RestoreObjectBulkSelectionAction")) {
+				return RestoreObjectBulkSelectionActionSerDes.toJSON(
+					(RestoreObjectBulkSelectionAction)bulkAction);
 			}
 
 			if (typeString.equals("StatusObjectBulkSelectionAction")) {
@@ -302,6 +308,10 @@ public class BulkActionSerDes {
 						"ResetPermissionObjectBulkSelectionAction")) {
 
 					return ResetPermissionObjectBulkSelectionAction.toDTO(json);
+				}
+
+				if (typeString.equals("RestoreObjectBulkSelectionAction")) {
+					return RestoreObjectBulkSelectionAction.toDTO(json);
 				}
 
 				if (typeString.equals("StatusObjectBulkSelectionAction")) {

@@ -12,6 +12,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.performance.PerformanceTimer;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -39,30 +40,36 @@ public class BatchEngineExportTaskExecutorPerformanceTest
 	public void testExportBlogPostings() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		for (int i = 0; i < 3000; i++) {
-			blogsEntryLocalService.addEntry(
-				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
-				null, "articleBody" + i, new Date(baseDate.getTime()), false,
-				false, null, null, null, null,
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getCompanyId(), group.getGroupId(),
-					user.getUserId()));
-		}
+		_addBlogsEntries(group, 0, _EXPORT_BATCH_SIZE);
 
 		batchReadDurations.clear();
 
-		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
-				null, user.getCompanyId(), user.getUserId(), null,
-				BlogPosting.class.getName(), "JSON",
-				BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Arrays.asList("headline", "id"),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", group.getGroupId()
-				).build(),
-				null);
+		_executeExportTask(group);
 
-		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+		long baselineBatchReadTime = batchReadDurations.get(0);
+
+		_addBlogsEntries(group, _EXPORT_BATCH_SIZE, _ROW_COUNT);
+
+		batchReadDurations.clear();
+
+		try (PerformanceTimer performanceTimer = new PerformanceTimer(
+				BatchEngineExportTaskExecutorPerformanceTest.class,
+				baselineBatchReadTime * (_ROW_COUNT / _EXPORT_BATCH_SIZE) * 3,
+				"exportBlogPostings")) {
+
+			_executeExportTask(group);
+		}
+
+		long totalBatchReadTime = 0;
+
+		for (long batchReadDuration : batchReadDurations) {
+			totalBatchReadTime += batchReadDuration;
+		}
+
+		Assert.assertTrue(
+			totalBatchReadTime <=
+				(baselineBatchReadTime * (_ROW_COUNT / _EXPORT_BATCH_SIZE) *
+					2));
 
 		int batchCount = batchReadDurations.size();
 
@@ -84,6 +91,39 @@ public class BatchEngineExportTaskExecutorPerformanceTest
 
 		Assert.assertTrue(last5Average <= (first5Average * 2));
 	}
+
+	private void _addBlogsEntries(Group group, int start, int end)
+		throws Exception {
+
+		for (int i = start; i < end; i++) {
+			blogsEntryLocalService.addEntry(
+				user.getUserId(), "headline" + i, "alternativeHeadline" + i,
+				null, "articleBody" + i, new Date(baseDate.getTime()), false,
+				false, null, null, null, null,
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getCompanyId(), group.getGroupId(),
+					user.getUserId()));
+		}
+	}
+
+	private void _executeExportTask(Group group) throws Exception {
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+				null, user.getCompanyId(), user.getUserId(), null,
+				BlogPosting.class.getName(), "JSON",
+				BatchEngineTaskExecuteStatus.INITIAL.name(),
+				Arrays.asList("headline", "id"),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", group.getGroupId()
+				).build(),
+				null);
+
+		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+	}
+
+	private static final int _EXPORT_BATCH_SIZE = 100;
+
+	private static final int _ROW_COUNT = 3000;
 
 	@Inject
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;

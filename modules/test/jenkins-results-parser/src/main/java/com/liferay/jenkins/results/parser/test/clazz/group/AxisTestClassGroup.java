@@ -13,7 +13,6 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Collections;
 import java.util.List;
@@ -182,6 +181,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		return jsonObject;
 	}
 
+	@Override
 	public Integer getMinimumSlaveRAM() {
 		if (_segmentTestClassGroup != null) {
 			return _segmentTestClassGroup.getMinimumSlaveRAM();
@@ -280,36 +280,17 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		testClass.setAxisTestClassGroup(this);
 	}
 
-	@Override
-	protected String getBaseSlaveLabel() {
-		String baseSlaveLabel = _getBaseSlaveLabel();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			!JenkinsResultsParserUtil.isNullOrEmpty(baseSlaveLabel)) {
-
-			return baseSlaveLabel;
-		}
-
-		String slaveLabel = null;
-
-		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
-				String.valueOf(getMinimumSlaveRAM()));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return baseSlaveLabel;
-	}
-
 	protected GroupingStrategy getGroupingStrategy() {
 		return _batchTestClassGroup.getGroupingStrategy();
+	}
+
+	@Override
+	protected String getParentBaseSlaveLabel() {
+		if (_segmentTestClassGroup != null) {
+			return _segmentTestClassGroup.getBaseSlaveLabel();
+		}
+
+		return _batchTestClassGroup.getBaseSlaveLabel();
 	}
 
 	protected void setBatchTestClassGroup(
@@ -322,14 +303,6 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		SegmentTestClassGroup segmentTestClassGroup) {
 
 		_segmentTestClassGroup = segmentTestClassGroup;
-	}
-
-	private String _getBaseSlaveLabel() {
-		if (_segmentTestClassGroup != null) {
-			return _segmentTestClassGroup.getBaseSlaveLabel();
-		}
-
-		return _batchTestClassGroup.getBaseSlaveLabel();
 	}
 
 	private Long _averageDuration;

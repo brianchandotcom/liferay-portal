@@ -100,6 +100,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 		return _batchTestClassGroup.getMaximumSlavesPerHost();
 	}
 
+	@Override
 	public Integer getMinimumSlaveRAM() {
 		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
@@ -232,34 +233,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	@Override
-	protected String getBaseSlaveLabel() {
-		String baseSlaveLabel = _getBaseSlaveLabel();
-
-		if (!JenkinsResultsParserUtil.isCloudCINode() ||
-			!JenkinsResultsParserUtil.isNullOrEmpty(baseSlaveLabel)) {
-
-			return baseSlaveLabel;
-		}
-
-		String slaveLabel = null;
-
-		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
-				String.valueOf(getMinimumSlaveRAM()));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-			return slaveLabel;
-		}
-
-		return baseSlaveLabel;
-	}
-
-	private String _getBaseSlaveLabel() {
+	protected String getParentBaseSlaveLabel() {
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
 		return batchTestClassGroup.getBaseSlaveLabel();

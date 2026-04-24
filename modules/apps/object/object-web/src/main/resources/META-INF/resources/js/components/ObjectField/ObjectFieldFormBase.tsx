@@ -133,8 +133,8 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		'PhoneNumber',
 		[
 			{
-				name: 'showCounter',
-				value: false,
+				name: 'prefixType',
+				value: 'defineByUser',
 			},
 		],
 	],

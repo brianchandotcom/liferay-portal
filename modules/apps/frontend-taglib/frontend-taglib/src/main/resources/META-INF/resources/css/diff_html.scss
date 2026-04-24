@@ -29,10 +29,10 @@
 		}
 
 		&.diff-html-changed {
-			background: url(../images/diff/underline.png) bottom repeat-x;
+			border-bottom: 2px dotted #009ae5;
 
 			img {
-				border: 2px dotted #009;
+				border: 2px dotted #009ae5;
 			}
 		}
 

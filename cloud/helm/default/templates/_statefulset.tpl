@@ -202,6 +202,7 @@ spec:
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" .root }}-httproute
+{{- if .statefulset.network.gatewayName }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -270,6 +271,7 @@ spec:
                     scheme: https
                     statusCode: 301
                 type: RequestRedirect
+{{- end }}
 {{- end }}
 {{- end }}
 ---

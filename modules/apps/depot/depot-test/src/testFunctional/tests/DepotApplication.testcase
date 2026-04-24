@@ -145,47 +145,6 @@ definition {
 			value1 = "This application is not supported for Asset Libraries.");
 	}
 
-	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."
-	@priority = 4
-	@refactordone
-	test CollectionsRemainAfterReactivating {
-		JSONAssetlist.addManualAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Manual Asset List");
-
-		JSONAssetlist.addDynamicAssetListEntry(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Depot Dynamic Asset List");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Collections",
-			status = "Disabled");
-
-		Depot.configureApplication(
-			applicationList = "Collections",
-			status = "Enabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Collections",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Manual Asset List",
-			type = "Manual");
-
-		AssetListsAdmin.viewAssetList(
-			assetListTitle = "Depot Dynamic Asset List",
-			type = "Dynamic");
-	}
-
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = 4
 	@refactordone
@@ -349,29 +308,39 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
+		JSONAssetlist.addManualAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Manual Asset List");
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "Depot Dynamic Asset List");
+
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			status = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Documents and Media,Web Content",
+			applicationList = "Collections,Documents and Media,Web Content",
 			depotName = "Test Depot Name");
 
 		DepotNavigator.openToDMEntryInDepot(
@@ -383,6 +352,16 @@ definition {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Manual Asset List",
+			type = "Manual");
+
+		AssetListsAdmin.viewAssetList(
+			assetListTitle = "Depot Dynamic Asset List",
+			type = "Dynamic");
 	}
 
 }

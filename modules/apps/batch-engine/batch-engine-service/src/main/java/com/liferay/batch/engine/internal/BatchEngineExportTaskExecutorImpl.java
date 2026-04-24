@@ -533,22 +533,11 @@ public class BatchEngineExportTaskExecutorImpl
 		return filteredParameters;
 	}
 
-	private Long _getFirstItemId(Collection<?> items) {
-		if (items.isEmpty()) {
-			return null;
-		}
-
-		return _getItemId(
-			items.iterator(
-			).next());
-	}
-
 	private Long _getItemId(Object item) {
+		Class<?> clazz = item.getClass();
+
 		try {
-			Method method = item.getClass(
-			).getMethod(
-				"getId"
-			);
+			Method method = clazz.getMethod("getId");
 
 			Object id = method.invoke(item);
 
@@ -557,13 +546,14 @@ public class BatchEngineExportTaskExecutorImpl
 			}
 
 			if (id instanceof Number) {
-				return ((Number)id).longValue();
+				Number number = (Number)id;
+
+				return number.longValue();
 			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to extract ID from " + item.getClass(), exception);
+				_log.debug("Unable to extract ID from " + clazz, exception);
 			}
 		}
 

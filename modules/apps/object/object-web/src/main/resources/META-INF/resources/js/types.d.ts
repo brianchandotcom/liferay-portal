@@ -383,6 +383,7 @@ type ObjectFieldSettingName =
 	| 'objectRelationshipName'
 	| 'output'
 	| 'prefix'
+	| 'prefixType'
 	| 'script'
 	| 'showCounter'
 	| 'showFilesInLibrary'

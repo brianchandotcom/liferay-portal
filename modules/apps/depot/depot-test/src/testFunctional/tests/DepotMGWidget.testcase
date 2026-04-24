@@ -108,7 +108,7 @@ definition {
 
 	@description = "This ensures that a user can edit the image stored in asset library folder via MG on a connected site."
 	@priority = 5
-	test CanEditImage {
+	test CanEditImageAndCannotViewFromDisconnectedSite {
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",

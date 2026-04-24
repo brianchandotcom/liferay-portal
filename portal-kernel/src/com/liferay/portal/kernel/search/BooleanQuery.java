@@ -17,8 +17,6 @@ public interface BooleanQuery extends Query {
 	public Query add(Query query, BooleanClauseOccur booleanClauseOccur)
 		throws ParseException;
 
-	public Query add(Query query, String occur) throws ParseException;
-
 	public Query addExactTerm(String field, boolean value);
 
 	public Query addExactTerm(String field, Boolean value);

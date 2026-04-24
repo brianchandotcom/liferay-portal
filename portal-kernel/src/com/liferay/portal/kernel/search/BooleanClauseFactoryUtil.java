@@ -13,14 +13,16 @@ import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
  */
 public class BooleanClauseFactoryUtil {
 
-	public static BooleanClause<Query> create(Query query, String occur) {
-		return _booleanClauseFactory.create(query, occur);
+	public static BooleanClause<Query> create(
+		Query query, BooleanClauseOccur booleanClauseOccur) {
+
+		return _booleanClauseFactory.create(query, booleanClauseOccur);
 	}
 
 	public static BooleanClause<Query> create(
-		String field, String value, String occur) {
+		String field, String value, BooleanClauseOccur booleanClauseOccur) {
 
-		return _booleanClauseFactory.create(field, value, occur);
+		return _booleanClauseFactory.create(field, value, booleanClauseOccur);
 	}
 
 	public static BooleanClause<Filter> createFilter(

@@ -12,10 +12,11 @@ import com.liferay.portal.kernel.search.filter.Filter;
  */
 public interface BooleanClauseFactory {
 
-	public BooleanClause<Query> create(Query query, String occur);
+	public BooleanClause<Query> create(
+		Query query, BooleanClauseOccur booleanClauseOccur);
 
 	public BooleanClause<Query> create(
-		String field, String value, String occur);
+		String field, String value, BooleanClauseOccur booleanClauseOccur);
 
 	public BooleanClause<Filter> createFilter(
 		Filter filter, BooleanClauseOccur booleanClauseOccur);

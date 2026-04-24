@@ -101,8 +101,13 @@ export class CommerceAdminChannelDetailsPage {
 		buttonName: string,
 		tableName: string
 	) => Promise<Locator>;
+	readonly sidePanelFrameBodyHTML: (tableName: string) => Promise<string>;
 	readonly sidePanelFrameInput: (
 		input: string,
+		tableName: string
+	) => Promise<Locator>;
+	readonly sidePanelFrameNavLink: (
+		navItem: string,
 		tableName: string
 	) => Promise<Locator>;
 	readonly sidePanelFrameEditMenuItem: (
@@ -391,11 +396,25 @@ export class CommerceAdminChannelDetailsPage {
 				{exact: true, name: buttonName}
 			);
 		};
+		this.sidePanelFrameBodyHTML = async (tableName: string) => {
+			return (await this.sidePanelFrame(tableName))
+				.locator('body')
+				.innerHTML();
+		};
 		this.sidePanelFrameInput = async (
 			inputName: string,
 			tableName: string
 		) => {
 			return (await this.sidePanelFrame(tableName)).getByLabel(inputName);
+		};
+		this.sidePanelFrameNavLink = async (
+			navItem: string,
+			tableName: string
+		) => {
+			return (await this.sidePanelFrame(tableName)).getByRole('link', {
+				exact: true,
+				name: navItem,
+			});
 		};
 		this.sidePanelFrameEditMenuItem = async (tableName: string) => {
 			return (await this.sidePanelFrame(tableName)).getByRole(

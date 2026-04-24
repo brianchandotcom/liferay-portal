@@ -36,6 +36,7 @@ import {CommerceAdminReturnsPage} from '../pages/commerce/commerce-order-web/com
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
 import {CommercePaymentsPage} from '../pages/commerce/commerce-payment-web/commercePaymentsPage';
 import {OfflinePaymentMethodsSystemSettingPage} from '../pages/commerce/commerce-payment-web/offlinePaymentMethodsSystemSettingPage';
+import {RefundReasonsSystemSettingPage} from '../pages/commerce/commerce-payment-web/refundReasonsSystemSettingPage';
 import {CommerceAdminDiscountDetailsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminDiscountDetailsPage';
 import {CommerceAdminDiscountsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminDiscountsPage';
 import {CommerceAdminPriceListDetailsPage} from '../pages/commerce/commerce-pricing-web/commerceAdminPriceListDetailsPage';
@@ -60,6 +61,8 @@ import {CommerceAdminProductDetailsVisibilityPage} from '../pages/commerce/comme
 import {CommerceAdminProductPage} from '../pages/commerce/commerce-product-definitions-web/commerceAdminProductPage';
 import {CommerceSpecificationsPage} from '../pages/commerce/commerce-product-options-web/commerceSpecificationsPage';
 import {CommerceAdminShipmentsPage} from '../pages/commerce/commerce-shipment-web/commerceAdminShipmentsPage';
+import {TermsAndConditionDetailsPage} from '../pages/commerce/commerce-term-web/termsAndConditionDetailsPage';
+import {TermsAndConditionsPage} from '../pages/commerce/commerce-term-web/termsAndConditionsPage';
 import {CommerceThemeClassicCatalogPage} from '../pages/commerce/commerce-theme-classic/commerceThemeClassicCatalogPage';
 import {CommerceThemeClassicOrdersPage} from '../pages/commerce/commerce-theme-classic/commerceThemeClassicOrdersPage';
 import {CommerceThemeMiniumCatalogPage} from '../pages/commerce/commerce-theme-minium/commerceThemeMiniumCatalogPage';
@@ -138,9 +141,12 @@ const commercePagesTest = test.extend<{
 	productComparisonPage: ProductComparisonPage;
 	productDetailsPage: ProductDetailsPage;
 	productPublisherPage: ProductPublisherPage;
+	refundReasonsSystemSettingPage: RefundReasonsSystemSettingPage;
 	returnDetailsPage: ReturnDetailsPage;
 	returnsPage: ReturnsPage;
 	specificationFacetsPage: SpecificationFacetsPage;
+	termsAndConditionDetailsPage: TermsAndConditionDetailsPage;
+	termsAndConditionsPage: TermsAndConditionsPage;
 }>({
 	attachmentsPage: async ({page}, use) => {
 		await use(new AttachmentsPage(page));
@@ -341,6 +347,9 @@ const commercePagesTest = test.extend<{
 	productPublisherPage: async ({page}, use) => {
 		await use(new ProductPublisherPage(page));
 	},
+	refundReasonsSystemSettingPage: async ({page}, use) => {
+		await use(new RefundReasonsSystemSettingPage(page));
+	},
 	returnDetailsPage: async ({page}, use) => {
 		await use(new ReturnDetailsPage(page));
 	},
@@ -349,6 +358,12 @@ const commercePagesTest = test.extend<{
 	},
 	specificationFacetsPage: async ({page}, use) => {
 		await use(new SpecificationFacetsPage(page));
+	},
+	termsAndConditionDetailsPage: async ({page}, use) => {
+		await use(new TermsAndConditionDetailsPage(page));
+	},
+	termsAndConditionsPage: async ({page}, use) => {
+		await use(new TermsAndConditionsPage(page));
 	},
 });
 

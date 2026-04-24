@@ -82,4 +82,7 @@ class MockBroadcastChannel {
 		formatStorage: (size: number) => `${size / 1024} KB`,
 	},
 	authToken: 'mocked-auth-token',
+	detach: () => {},
+	fire: () => {},
+	on: () => {},
 };

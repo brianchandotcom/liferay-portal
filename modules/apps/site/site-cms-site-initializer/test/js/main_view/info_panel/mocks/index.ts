@@ -4,6 +4,12 @@
  */
 
 export const CONTENT_OBJECT_ENTRY = {
+	actions: {
+		versions: {
+			href: 'http://localhost:8080/o/cms/basic-web-contents/scopes/36030/by-external-reference-code/3fd76346-c116-ff19-e398-d7508ca98962/versions',
+			method: 'GET',
+		},
+	},
 	dateCreated: '2026-02-18T17:15:35Z',
 	dateModified: '2026-02-18T17:15:51Z',
 	description: 'content: Example content, title: My Web Content',
@@ -134,6 +140,12 @@ export const CONTENT_OBJECT_ENTRY = {
 };
 
 export const DOCUMENT_OBJECT_ENTRY = {
+	actions: {
+		versions: {
+			href: 'http://localhost:8080/o/cms/basic-documents/scopes/36030/by-external-reference-code/a6d58af4-04a9-63e3-b3fc-002948d514c6/versions',
+			method: 'GET',
+		},
+	},
 	dateCreated: '2026-02-18T17:20:12Z',
 	dateModified: '2026-02-18T17:20:41Z',
 	description: 'file: orange_cat.jpeg, title: My file',

@@ -21,7 +21,7 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 	}
 
 	public TermQueryImpl(String field, String value) {
-		this(new QueryTermImpl(field, value));
+		this(new QueryTerm(field, value));
 	}
 
 	@Override

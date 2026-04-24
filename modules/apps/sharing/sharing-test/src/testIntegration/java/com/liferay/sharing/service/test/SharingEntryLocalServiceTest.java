@@ -141,7 +141,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testAddOrUpdateSharingEntryUpdatesSharingEntryByTicket()
 		throws Exception {
 
@@ -290,7 +290,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testAddSharingEntryToTicket() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
@@ -494,7 +494,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchTicketException.class)
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testAddSharingEntryWithNonexistentTicket() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
 			null, _fromUser.getUserId(), RandomTestUtil.randomLong(), 0, 0,
@@ -503,7 +503,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = InvalidSharingEntryUserException.class)
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testAddSharingEntryWithNoTarget() throws Exception {
 		_sharingEntryLocalService.addSharingEntry(
 			RandomTestUtil.randomString(), _fromUser.getUserId(), 0, 0, 0,
@@ -810,7 +810,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testFetchSharingEntryByTicket() throws Exception {
 		Ticket ticket = _addTicket();
 
@@ -828,7 +828,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testFetchSharingEntryByUser() throws Exception {
 		Assert.assertNull(
 			_sharingEntryLocalService.fetchSharingEntry(
@@ -848,7 +848,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testFetchSharingEntryByUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
@@ -874,7 +874,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testGetSharingEntryByTicket() throws Exception {
 		Ticket ticket = _addTicket();
 
@@ -892,7 +892,7 @@ public class SharingEntryLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchEntryException.class)
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testGetSharingEntryThrowsWhenNotFound() throws Exception {
 		_sharingEntryLocalService.getSharingEntry(
 			0, 0, _toUser.getUserId(), _classNameId, _group.getGroupId());

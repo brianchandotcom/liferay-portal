@@ -11,13 +11,15 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -82,6 +84,8 @@ public class VersionedEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
+	private CollectionPersistenceFinder<VersionedEntry>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the versioned entries where groupId = &#63;.
@@ -155,93 +159,9 @@ public class VersionedEntryPersistenceImpl
 		OrderByComparator<VersionedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId;
-				finderArgs = new Object[] {groupId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId;
-			finderArgs = new Object[] {groupId, start, end, orderByComparator};
-		}
-
-		List<VersionedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<VersionedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (VersionedEntry versionedEntry : list) {
-					if (groupId != versionedEntry.getGroupId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_VERSIONEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(VersionedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				list = (List<VersionedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {groupId}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -320,53 +240,15 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
-
-		Object[] finderArgs = new Object[] {groupId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_VERSIONEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {groupId});
 	}
-
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
-		"versionedEntry.groupId = ?";
 
 	private FinderPath _finderPathWithPaginationFindByGroupId_Head;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId_Head;
 	private FinderPath _finderPathCountByGroupId_Head;
+	private CollectionPersistenceFinder<VersionedEntry>
+		_collectionPersistenceFinderByGroupId_Head;
 
 	/**
 	 * Returns all the versioned entries where groupId = &#63; and head = &#63;.
@@ -445,101 +327,9 @@ public class VersionedEntryPersistenceImpl
 		OrderByComparator<VersionedEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByGroupId_Head;
-				finderArgs = new Object[] {groupId, head};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByGroupId_Head;
-			finderArgs = new Object[] {
-				groupId, head, start, end, orderByComparator
-			};
-		}
-
-		List<VersionedEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<VersionedEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (VersionedEntry versionedEntry : list) {
-					if ((groupId != versionedEntry.getGroupId()) ||
-						(head != versionedEntry.isHead())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_VERSIONEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(VersionedEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(head);
-
-				list = (List<VersionedEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByGroupId_Head.find(
+			finderCache, new Object[] {groupId, head}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -628,58 +418,13 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId_Head(long groupId, boolean head) {
-		FinderPath finderPath = _finderPathCountByGroupId_Head;
-
-		Object[] finderArgs = new Object[] {groupId, head};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_VERSIONEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_GROUPID_HEAD_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_GROUPID_HEAD_HEAD_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(head);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByGroupId_Head.count(
+			finderCache, new Object[] {groupId, head});
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_HEAD_GROUPID_2 =
-		"versionedEntry.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_GROUPID_HEAD_HEAD_2 =
-		"versionedEntry.head = ?";
-
 	private FinderPath _finderPathFetchByHeadId;
+	private UniquePersistenceFinder<VersionedEntry>
+		_uniquePersistenceFinderByHeadId;
 
 	/**
 	 * Returns the versioned entry where headId = &#63; or throws a <code>NoSuchVersionedEntryException</code> if it could not be found.
@@ -734,77 +479,8 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public VersionedEntry fetchByHeadId(long headId, boolean useFinderCache) {
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {headId};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByHeadId, finderArgs, this);
-		}
-
-		if (result instanceof VersionedEntry) {
-			VersionedEntry versionedEntry = (VersionedEntry)result;
-
-			if (headId != versionedEntry.getHeadId()) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_VERSIONEDENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_HEADID_HEADID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(headId);
-
-				List<VersionedEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByHeadId, finderArgs, list);
-					}
-				}
-				else {
-					VersionedEntry versionedEntry = list.get(0);
-
-					result = versionedEntry;
-
-					cacheResult(versionedEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (VersionedEntry)result;
-		}
+		return _uniquePersistenceFinderByHeadId.fetch(
+			finderCache, new Object[] {headId}, useFinderCache);
 	}
 
 	/**
@@ -830,17 +506,9 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public int countByHeadId(long headId) {
-		VersionedEntry versionedEntry = fetchByHeadId(headId);
-
-		if (versionedEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByHeadId.count(
+			finderCache, new Object[] {headId});
 	}
-
-	private static final String _FINDER_COLUMN_HEADID_HEADID_2 =
-		"versionedEntry.headId = ?";
 
 	public VersionedEntryPersistenceImpl() {
 		setModelClass(VersionedEntry.class);
@@ -1392,6 +1060,17 @@ public class VersionedEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
+				_SQL_COUNT_VERSIONEDENTRY_WHERE,
+				VersionedEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, VersionedEntry::getGroupId));
+
 		_finderPathWithPaginationFindByGroupId_Head = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId_Head",
 			new String[] {
@@ -1411,9 +1090,30 @@ public class VersionedEntryPersistenceImpl
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "head"}, false);
 
+		_collectionPersistenceFinderByGroupId_Head =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId_Head,
+				_finderPathWithoutPaginationFindByGroupId_Head,
+				_finderPathCountByGroupId_Head,
+				_SQL_SELECT_VERSIONEDENTRY_WHERE,
+				_SQL_COUNT_VERSIONEDENTRY_WHERE,
+				VersionedEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					true, false, VersionedEntry::getGroupId),
+				new FinderColumn<>(
+					"versionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
+					true, true, VersionedEntry::isHead));
+
 		_finderPathFetchByHeadId = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
 			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+
+		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByHeadId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
+			new FinderColumn<>(
+				"versionedEntry.", "headId", FinderColumn.Type.LONG, "=", true,
+				true, VersionedEntry::getHeadId));
 
 		VersionedEntryUtil.setPersistence(this);
 	}
@@ -1486,4 +1186,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1464202611
+// LIFERAY-SERVICE-BUILDER-HASH:1792022042

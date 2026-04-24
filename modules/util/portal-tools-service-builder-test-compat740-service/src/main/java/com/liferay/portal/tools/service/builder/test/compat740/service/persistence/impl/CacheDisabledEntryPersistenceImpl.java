@@ -11,13 +11,14 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -38,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -81,6 +81,8 @@ public class CacheDisabledEntryPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathFetchByName;
+	private UniquePersistenceFinder<CacheDisabledEntry>
+		_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the cache disabled entry where name = &#63; or throws a <code>NoSuchCacheDisabledEntryException</code> if it could not be found.
@@ -135,90 +137,8 @@ public class CacheDisabledEntryPersistenceImpl
 	 */
 	@Override
 	public CacheDisabledEntry fetchByName(String name, boolean useFinderCache) {
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = dummyFinderCache.getResult(
-				_finderPathFetchByName, finderArgs, this);
-		}
-
-		if (result instanceof CacheDisabledEntry) {
-			CacheDisabledEntry cacheDisabledEntry = (CacheDisabledEntry)result;
-
-			if (!Objects.equals(name, cacheDisabledEntry.getName())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_CACHEDISABLEDENTRY_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				List<CacheDisabledEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						dummyFinderCache.putResult(
-							_finderPathFetchByName, finderArgs, list);
-					}
-				}
-				else {
-					CacheDisabledEntry cacheDisabledEntry = list.get(0);
-
-					result = cacheDisabledEntry;
-
-					cacheResult(cacheDisabledEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CacheDisabledEntry)result;
-		}
+		return _uniquePersistenceFinderByName.fetch(
+			dummyFinderCache, new Object[] {name}, useFinderCache);
 	}
 
 	/**
@@ -244,20 +164,9 @@ public class CacheDisabledEntryPersistenceImpl
 	 */
 	@Override
 	public int countByName(String name) {
-		CacheDisabledEntry cacheDisabledEntry = fetchByName(name);
-
-		if (cacheDisabledEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByName.count(
+			dummyFinderCache, new Object[] {name});
 	}
-
-	private static final String _FINDER_COLUMN_NAME_NAME_2 =
-		"cacheDisabledEntry.name = ?";
-
-	private static final String _FINDER_COLUMN_NAME_NAME_3 =
-		"(cacheDisabledEntry.name IS NULL OR cacheDisabledEntry.name = '')";
 
 	public CacheDisabledEntryPersistenceImpl() {
 		setModelClass(CacheDisabledEntry.class);
@@ -807,6 +716,12 @@ public class CacheDisabledEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, true);
 
+		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByName, _SQL_SELECT_CACHEDISABLEDENTRY_WHERE,
+			new FinderColumn<>(
+				"cacheDisabledEntry.", "name", FinderColumn.Type.STRING, "=",
+				true, true, CacheDisabledEntry::getName));
+
 		CacheDisabledEntryUtil.setPersistence(this);
 	}
 
@@ -852,9 +767,6 @@ public class CacheDisabledEntryPersistenceImpl
 	private static final String _SQL_COUNT_CACHEDISABLEDENTRY =
 		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry";
 
-	private static final String _SQL_COUNT_CACHEDISABLEDENTRY_WHERE =
-		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheDisabledEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -872,4 +784,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:175509702
+// LIFERAY-SERVICE-BUILDER-HASH:-1255280507

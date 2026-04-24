@@ -1112,9 +1112,6 @@ public class ConvertNullEntryPersistenceImpl
 	private static final String _SQL_COUNT_CONVERTNULLENTRY =
 		"SELECT COUNT(convertNullEntry) FROM ConvertNullEntry convertNullEntry";
 
-	private static final String _SQL_COUNT_CONVERTNULLENTRY_WHERE =
-		"SELECT COUNT(convertNullEntry) FROM ConvertNullEntry convertNullEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "convertNullEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -1127,4 +1124,4 @@ public class ConvertNullEntryPersistenceImpl
 		ConvertNullEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1404870320
+// LIFERAY-SERVICE-BUILDER-HASH:-107602603

@@ -1216,4 +1216,4 @@ public class MappingEntryPersistenceImpl
 		MappingEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:744892308
+// LIFERAY-SERVICE-BUILDER-HASH:1942986180

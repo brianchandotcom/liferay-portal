@@ -898,9 +898,6 @@ public class CacheDisabledEntryPersistenceImpl
 	private static final String _SQL_COUNT_CACHEDISABLEDENTRY =
 		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry";
 
-	private static final String _SQL_COUNT_CACHEDISABLEDENTRY_WHERE =
-		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry WHERE ";
-
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheDisabledEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
@@ -1015,4 +1012,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1501347238
+// LIFERAY-SERVICE-BUILDER-HASH:1434253572

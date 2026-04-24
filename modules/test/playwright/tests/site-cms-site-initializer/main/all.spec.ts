@@ -156,7 +156,7 @@ test(
 			).toBeVisible();
 
 			await expect(
-				page.getByLabel('contents', {exact: true})
+				page.getByLabel('Contents', {exact: true})
 			).toBeVisible();
 		});
 
@@ -175,7 +175,7 @@ test(
 				page.getByText('Showing 1 to 1 of 1 entries.')
 			).toBeVisible();
 
-			await expect(page.getByLabel('files', {exact: true})).toBeVisible();
+			await expect(page.getByLabel('Files', {exact: true})).toBeVisible();
 		});
 	}
 );

@@ -10,6 +10,7 @@ import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.taglib.internal.display.context.SideNavigationDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -123,6 +124,12 @@ public class SideNavigationControlMenuEntry
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && !layout.isTypeControlPanel()) {
+			return false;
+		}
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
 			_panelAppRegistry);

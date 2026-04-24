@@ -26,6 +26,18 @@ import org.json.JSONObject;
  */
 public class CompileModulesTestClass extends ModulesTestClass {
 
+	@Override
+	public long getOverheadWeight() {
+		return 0;
+	}
+
+	@Override
+	public long getWeight() {
+		List<TestClassMethod> testClassMethods = getTestClassMethods();
+
+		return testClassMethods.size();
+	}
+
 	protected CompileModulesTestClass(
 		BatchTestClassGroup batchTestClassGroup, File moduleBaseDir) {
 

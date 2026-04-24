@@ -450,6 +450,158 @@ test(
 );
 
 test(
+	'Can restore multiple contents from the Recycle Bin in bulk',
+	{tag: '@LPD-87118'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentName1 = `First Content ${getRandomString()}`;
+		const contentName2 = `Second Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {
+				logoColor: 'outline-3',
+				sharingEnabled: true,
+				trashEnabled: true,
+			},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName1,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName2,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await test.step('Delete the contents so they can go into the Recycle Bin', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName1);
+
+			await contentsPage.deleteContent(contentName2);
+		});
+
+		await test.step('Bulk restore both contents from the Recycle Bin toolbar', async () => {
+			await recycleBinPage.goto();
+
+			await recycleBinPage.selectItems([contentName1, contentName2]);
+
+			await page
+				.getByTestId('visualization-mode-table')
+				.getByLabel('Actions')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Restore'}).click();
+
+			await waitForAlert(
+				page,
+				'Success:2 items were restored to their original locations.',
+				{autoClose: false}
+			);
+
+			await checkAccessibility({
+				page,
+				selectors: ['.alert-success'],
+			});
+		});
+
+		await test.step('Assert both items are back in the Contents folder', async () => {
+			await contentsPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName1})
+			).toBeVisible();
+			await expect(
+				page.getByRole('row', {name: contentName2})
+			).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await contentsPage.deleteContent(contentName1);
+			await contentsPage.deleteContent(contentName2);
+		});
+	}
+);
+
+test(
+	'Can restore a single content from the Recycle Bin bulk toolbar with a destination link in the toast',
+	{tag: '@LPD-87118'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentName = `Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			applicationName,
+			spaceName
+		);
+
+		await test.step('Delete the content so it goes into the Recycle Bin', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName);
+		});
+
+		await test.step('Restore a single selected row through the bulk toolbar', async () => {
+			await recycleBinPage.goto();
+
+			await recycleBinPage.selectItems([contentName]);
+
+			await page
+				.getByTestId('visualization-mode-table')
+				.getByLabel('Actions')
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Restore'}).click();
+
+			await waitForAlert(
+				page,
+				`Success:${contentName} was restored to Contents.`,
+				{autoClose: false}
+			);
+		});
+
+		await test.step('Destination link in the toast navigates to the Contents folder', async () => {
+			await page
+				.locator('.alert-success')
+				.getByRole('link', {name: 'Contents'})
+				.click();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('Clean up', async () => {
+			await contentsPage.deleteContent(contentName);
+		});
+	}
+);
+
+test(
 	'Can restore a folder and its contents from Recycle Bin',
 	{tag: '@LPD-59716'},
 	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {

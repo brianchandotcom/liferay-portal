@@ -136,8 +136,8 @@ export class FiltersPage {
 		this.newSelectionFilterForm = {
 			...this.newFilterForm,
 			filterModeRadioButtons: page.getByText('Filter ModeIncludeExclude'),
-			itemKey: page.locator('.fds-filter-item-key'),
-			itemLabel: page.locator('.fds-filter-item-label'),
+			itemKey: page.locator('.fds-filter-item-key > button'),
+			itemLabel: page.locator('.fds-filter-item-label > button'),
 			picklistDropdown: page
 				.locator('label')
 				.filter({hasText: 'PicklistRequired'}),
@@ -349,7 +349,9 @@ export class FiltersPage {
 		await this.newSelectionFilterForm.restSchemaOptions
 			.getByRole('option', {exact: true, name: restSchema})
 			.click();
-		await this.newSelectionFilterForm.restSchemaField.click();
+		await this.newSelectionFilterForm.restSchemaOptions.waitFor({
+			state: 'hidden',
+		});
 
 		await this.newSelectionFilterForm.restEndpointField.waitFor();
 		await this.newSelectionFilterForm.restEndpointField.click();
@@ -357,7 +359,9 @@ export class FiltersPage {
 		await this.newSelectionFilterForm.restEndpointOptions
 			.getByRole('option', {exact: true, name: restEndpoint})
 			.click();
-		await this.newSelectionFilterForm.restEndpointField.click();
+		await this.newSelectionFilterForm.restEndpointOptions.waitFor({
+			state: 'hidden',
+		});
 
 		await this.newSelectionFilterForm.itemKey.click();
 		await this.page

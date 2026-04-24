@@ -165,7 +165,7 @@ definition {
 	@description = "This ensures that the web content language can be set in a depot."
 	@priority = 4
 	@refactordone
-	test CanViewCustomLanguagesOrderForWebContent {
+	test CanViewCustomLanguagesOrderForCustomTypeAndWebContent {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");

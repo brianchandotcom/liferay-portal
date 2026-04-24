@@ -5,7 +5,7 @@ set -o errtrace
 set -o nounset
 set -o pipefail
 
-trap '_recover_kubectl_context ${?}' ERR
+trap "_recover_kubectl_context \${?}" ERR
 
 _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -150,7 +150,7 @@ function _recover_kubectl_context {
 		exit "${exit_code}"
 	fi
 
-	echo "Terraform failed. Attempting to recover kubectl context via fleet membership." >&2
+	echo "Terraform apply failed. Attempting to recover the kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
 
 	if ! gcloud \
 		container \
@@ -161,7 +161,7 @@ function _recover_kubectl_context {
 		--project "${_GCP_PROJECT_ID}" \
 		> /dev/null 2>&1
 	then
-		echo "Fleet membership ${_GCP_DEPLOYMENT_NAME}-membership does not exist. No kubectl context to recover." >&2
+		echo "Fleet membership ${_GCP_DEPLOYMENT_NAME}-membership does not exist. No kubectl context can be recovered." >&2
 
 		exit "${exit_code}"
 	fi
@@ -174,12 +174,12 @@ function _recover_kubectl_context {
 		"${_GCP_DEPLOYMENT_NAME}-membership" \
 		--project "${_GCP_PROJECT_ID}"
 	then
-		echo "Failed to recover kubectl context for ${_GCP_DEPLOYMENT_NAME}-membership." >&2
+		echo "Unable to recover the kubectl context for fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
 
 		exit "${exit_code}"
 	fi
 
-	echo "Recovered kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
+	echo "Recovered the kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
 
 	exit "${exit_code}"
 }

@@ -6,17 +6,17 @@
 package com.liferay.portal.search.rest.search.query;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.DisMaxQuery;
+import com.liferay.portal.kernel.search.FuzzyQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
+import com.liferay.portal.kernel.search.MatchQuery;
+import com.liferay.portal.kernel.search.MoreLikeThisQuery;
+import com.liferay.portal.kernel.search.MultiMatchQuery;
+import com.liferay.portal.kernel.search.NestedQuery;
+import com.liferay.portal.kernel.search.StringQuery;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.DisMaxQuery;
-import com.liferay.portal.kernel.search.generic.FuzzyQuery;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
-import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**

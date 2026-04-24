@@ -6,7 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.highlight;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.search.StringQuery;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.OpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.highlight.BaseHighlightTestCase;

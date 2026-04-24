@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.logging;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexSearcher;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;

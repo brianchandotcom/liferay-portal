@@ -9,7 +9,7 @@ import co.elastic.clients.elasticsearch.core.SearchRequest;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch8.internal.index.LiferayIndexFixture;

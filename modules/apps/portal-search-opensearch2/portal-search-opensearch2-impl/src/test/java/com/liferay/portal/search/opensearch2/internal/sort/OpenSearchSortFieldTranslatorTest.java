@@ -6,8 +6,8 @@
 package com.liferay.portal.search.opensearch2.internal.sort;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;

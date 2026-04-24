@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.logging;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.elasticsearch8.internal.ElasticsearchIndexSearcher;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;

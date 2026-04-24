@@ -7,7 +7,7 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;

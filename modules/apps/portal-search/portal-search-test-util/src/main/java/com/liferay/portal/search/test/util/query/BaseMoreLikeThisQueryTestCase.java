@@ -38,10 +38,9 @@ public abstract class BaseMoreLikeThisQueryTestCase
 	public void testLegacyMoreLikeThisWithFieldAndLikeText() throws Exception {
 		addDocuments("java eclipse", "eclipse liferay", "java liferay eclipse");
 
-		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
-			moreLikeThisQuery =
-				new com.liferay.portal.kernel.search.generic.MoreLikeThisQuery(
-					getIndexName());
+		com.liferay.portal.kernel.search.MoreLikeThisQuery moreLikeThisQuery =
+			new com.liferay.portal.kernel.search.MoreLikeThisQuery(
+				getIndexName());
 
 		moreLikeThisQuery.addField(_FIELD_TITLE);
 		moreLikeThisQuery.setLikeText("java");
@@ -181,7 +180,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 	}
 
 	protected void assertSearch(
-		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
+		com.liferay.portal.kernel.search.MoreLikeThisQuery
 			legacyMoreLikeThisQuery,
 		List<String> expectedValues) {
 
@@ -192,7 +191,7 @@ public abstract class BaseMoreLikeThisQueryTestCase
 	}
 
 	protected void assertSearch(
-		com.liferay.portal.kernel.search.generic.MoreLikeThisQuery
+		com.liferay.portal.kernel.search.MoreLikeThisQuery
 			legacyMoreLikeThisQuery,
 		MoreLikeThisQuery moreLikeThisQuery, List<String> expectedValues) {
 

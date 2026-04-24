@@ -6,8 +6,8 @@
 package com.liferay.portal.search.internal.analysis;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 
 /**
  * @author André de Oliveira

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.solr8.internal.logging;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.solr8.internal.SolrIndexSearcher;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;

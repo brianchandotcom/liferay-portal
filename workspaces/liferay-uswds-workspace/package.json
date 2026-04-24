@@ -1,0 +1,8 @@
+{
+	"private": true,
+	"workspaces": {
+		"packages": [
+			"client-extensions/liferay-uswds-theme-css"
+		]
+	}
+}

@@ -344,6 +344,61 @@ public class SiteNavigationMenuExportImportTest
 	}
 
 	@Test
+	public void testExportImportWithLayoutDeletedFromLive() throws Exception {
+		_setUpLocalStaging();
+
+		Layout stagingLayout1 = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+		Layout stagingLayout2 = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+		Layout stagingLayout3 = LayoutTestUtil.addTypePortletLayout(
+			_stagingGroup);
+
+		_setUpSiteNavigationMenu(_stagingGroup);
+
+		SiteNavigationMenuItem layoutItem1 =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, stagingLayout1, 0L);
+
+		SiteNavigationMenuItem layoutItem2 =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, stagingLayout2, 0L);
+
+		SiteNavigationMenuItem layoutItem3 =
+			SiteNavigationMenuItemTestUtil.addLayoutTypeSiteNavigationMenuItem(
+				_siteNavigationMenu, stagingLayout3, 0L);
+
+		_publishAllLayouts();
+
+		Layout liveLayout3 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			stagingLayout3.getUuid(), _liveGroup.getGroupId(),
+			stagingLayout3.isPrivateLayout());
+
+		_layoutLocalService.deleteLayout(liveLayout3);
+
+		_publishLayouts(
+			new long[] {
+				stagingLayout1.getLayoutId(), stagingLayout2.getLayoutId()
+			});
+
+		Assert.assertNotNull(
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					layoutItem1.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+		Assert.assertNotNull(
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					layoutItem2.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+		Assert.assertNull(
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					layoutItem3.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+	}
+
+	@Test
 	@TestInfo("LPD-37038")
 	public void testExportImportWithSiteNavigationMenuFromDifferentGroup()
 		throws Exception {

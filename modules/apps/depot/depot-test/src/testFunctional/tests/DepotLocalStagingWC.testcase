@@ -55,105 +55,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that image in basic article in depot can be deleted and republished in staging site when enabling local staging."
-	@priority = 5
-	@refactordone
-	test CanDeleteWCInlineImage {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Test Depot Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		ItemSelector.gotoItemSelectorViaCKEditor();
-
-		ItemSelector.selectRepositoryImage(
-			depotName = "Test Depot Name",
-			imageFileName = "Document_2.jpg");
-
-		WebContent.publishWithPermissions();
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoPreviewEntryCP(
-			liveSite = "true",
-			webContentTitle = "WC WebContent Title");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(
-			key_imageTitle = "document_2-jpg",
-			locator1 = "WCPreview#PREVIEW_IMAGE");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
-
-		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
-
-		RecycleBin.deleteCP(
-			assetName = "Document_2.jpg",
-			assetType = "Document");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		WebContentNavigator.openToEditWCInSite(
-			groupName = "Site Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name",
-			staging = "true",
-			webContentTitle = "WC WebContent Title");
-
-		CKEditor.addSourceContent(content = " ");
-
-		SelectFrame(value1 = "relative=top");
-
-		WebContent.publishExistingWCArticleWithPermissions();
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
-
-		Staging.publishViaSAP(
-			confirmMessage = "Are you sure you want to publish the selected web content?",
-			entry = "WC WebContent Title");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		WebContentNavigator.gotoPreviewEntryCP(
-			liveSite = "true",
-			webContentTitle = "WC WebContent Title");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementNotPresent(
-			key_imageTitle = "document_2-jpg",
-			locator1 = "WCPreview#PREVIEW_IMAGE");
-	}
-
 	@description = "This ensures that friendly URL in basic article in depot can be edited and republished in staging site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 5
 	@refactordone
@@ -260,7 +161,7 @@ definition {
 	}
 
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling local staging."
-	@priority = 4
+	@priority = 5
 	@refactordone
 	test CanEditAndDeleteWCInlineImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
@@ -351,6 +252,51 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertElementPresent(
+			key_imageTitle = "document_2-jpg",
+			locator1 = "WCPreview#PREVIEW_IMAGE");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_3.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_3.jpg",
+			assetType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		WebContentNavigator.openToEditWCInSite(
+			groupName = "Site Name (Staging)",
+			site = "false",
+			siteURLKey = "site-name",
+			staging = "true",
+			webContentTitle = "WC WebContent Title");
+
+		CKEditor.addSourceContent(content = " ");
+
+		SelectFrame(value1 = "relative=top");
+
+		WebContent.publishExistingWCArticleWithPermissions();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishViaSAP(
+			confirmMessage = "Are you sure you want to publish the selected web content?",
+			entry = "WC WebContent Title");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		WebContentNavigator.gotoPreviewEntryCP(
+			liveSite = "true",
+			webContentTitle = "WC WebContent Title");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementNotPresent(
 			key_imageTitle = "document_2-jpg",
 			locator1 = "WCPreview#PREVIEW_IMAGE");
 	}

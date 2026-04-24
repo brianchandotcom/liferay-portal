@@ -10,6 +10,7 @@ import {
 	LifecycleContextProvider,
 	useLifecycle
 } from '../context/LifecycleContext';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -51,6 +52,7 @@ const LifecycleAccounts = ({
 				countryFilter={filters.countryFilter}
 				groupId={groupId}
 				industryFilter={filters.industryFilter}
+				lifecycleStageFilter={LifecycleStages.AT_RISK}
 			/>
 		</>
 	);

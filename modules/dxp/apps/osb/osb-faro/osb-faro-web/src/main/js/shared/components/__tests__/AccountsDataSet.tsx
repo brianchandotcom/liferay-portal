@@ -1,6 +1,7 @@
 import AccountsDataSet from '../AccountsDataSet';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 jest.unmock('react-dom');
 
@@ -54,14 +55,18 @@ describe('AccountsDataSet', () => {
 		);
 	});
 
-	it('should leave country/industry filters without preloadedData when no props are passed', () => {
+	it('should leave country/industry/lifecycleStatus filters without preloadedData when no props are passed', () => {
 		render(<AccountsDataSet channelId='123' groupId='23' />);
 
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
 		const industryFilter = lastFilters?.find(f => f.id === 'industry');
+		const lifecycleStatusFilter = lastFilters?.find(
+			f => f.id === 'lifecycleStatus'
+		);
 
 		expect(countryFilter?.preloadedData).toBeUndefined();
 		expect(industryFilter?.preloadedData).toBeUndefined();
+		expect(lifecycleStatusFilter?.preloadedData).toBeUndefined();
 	});
 
 	it('should preload the country filter when countryFilter prop is provided', () => {
@@ -91,6 +96,25 @@ describe('AccountsDataSet', () => {
 		expect(industryFilter?.preloadedData).toEqual({
 			exclude: false,
 			selectedItems: [{label: 'Tech', value: 'Tech'}]
+		});
+	});
+
+	it('should preload the lifecycleStatus filter when lifecycleStageFilter prop is provided', () => {
+		render(
+			<AccountsDataSet
+				channelId='123'
+				groupId='23'
+				lifecycleStageFilter={LifecycleStages.AT_RISK}
+			/>
+		);
+
+		const lifecycleStatusFilter = lastFilters?.find(
+			f => f.id === 'lifecycleStatus'
+		);
+
+		expect(lifecycleStatusFilter?.preloadedData).toEqual({
+			exclude: false,
+			selectedItems: [{label: 'At Risk', value: 'atRisk'}]
 		});
 	});
 });

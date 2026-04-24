@@ -33,26 +33,27 @@ const lifecycleStagesLabelMap = {
 	}
 };
 
-const lifecycleStageFilter = {
-	items: Object.entries(lifecycleStagesLabelMap).map(([stage]) => ({
+const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
+	([stage]) => ({
 		label: lifecycleStagesLabelMap[stage as LifecycleStages].label,
 		value: stage
-	}))
-};
+	})
+);
 
 interface IAccountsDataSetProps {
 	channelId: string;
 	countryFilter?: string;
 	groupId: string;
 	industryFilter?: string;
+	lifecycleStageFilter?: LifecycleStages;
 	loading?: boolean;
 }
 
-const buildSelectionPreloadedData = (value?: string) =>
+const buildSelectionPreloadedData = (value?: string, label?: string) =>
 	value
 		? {
 				exclude: false,
-				selectedItems: [{label: value, value}]
+				selectedItems: [{label: label ?? value, value}]
 		  }
 		: undefined;
 
@@ -61,6 +62,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	countryFilter,
 	groupId,
 	industryFilter,
+	lifecycleStageFilter,
 	loading
 }) => {
 	const FrontendDataSet = useFrontendDataSet();
@@ -106,9 +108,16 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				filters={[
 					{
 						id: 'lifecycleStatus',
-						items: lifecycleStageFilter.items,
+						items: lifecycleStageItems,
 						label: Liferay.Language.get('status'),
 						name: 'status',
+						preloadedData: buildSelectionPreloadedData(
+							lifecycleStageFilter,
+							lifecycleStageFilter
+								? lifecycleStagesLabelMap[lifecycleStageFilter]
+										.label
+								: undefined
+						),
 						type: 'selection'
 					},
 					{
@@ -139,7 +148,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 					}
 				]}
 				id='accounts-list-dataset'
-				key={`${countryFilter ?? ''}|${industryFilter ?? ''}`}
+				key={`${countryFilter ?? ''}|${industryFilter ?? ''}|${
+					lifecycleStageFilter ?? ''
+				}`}
 				loading={loading}
 				pagination={pagination}
 				showPagination

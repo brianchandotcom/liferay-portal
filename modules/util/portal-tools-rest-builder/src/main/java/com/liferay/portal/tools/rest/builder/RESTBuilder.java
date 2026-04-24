@@ -185,14 +185,14 @@ public class RESTBuilder {
 			_configYAML = YAMLUtil.loadConfigYAML(
 				_configDir.getPath(), configFile);
 
-			if (_configYAML.getForceObjectMethodNameSuffix() == null) {
-				_configYAML.setForceObjectMethodNameSuffix(
-					ConfigUtil.isVersionCompatible(_configYAML, 9));
-			}
-
 			if (forceClientVersionDescription != null) {
 				_configYAML.setForceClientVersionDescription(
 					forceClientVersionDescription);
+			}
+
+			if (_configYAML.getForceObjectMethodNameSuffix() == null) {
+				_configYAML.setForceObjectMethodNameSuffix(
+					ConfigUtil.isVersionCompatible(_configYAML, 9));
 			}
 
 			if (forcePredictableOperationId != null) {

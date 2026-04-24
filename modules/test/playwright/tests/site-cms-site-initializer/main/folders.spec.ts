@@ -10,6 +10,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -217,5 +218,102 @@ test(
 				})
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Shared folder shows a shared icon in the Files section only for the recipient',
+	{tag: '@LPD-66045'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderTitle1 = `Folder ${getRandomString()}`;
+		const folderTitle2 = `Folder ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const objectEntryFolder1 =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: space.assetLibraryKey,
+				title: folderTitle1,
+			});
+
+		const objectEntryFolder2 =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
+				scopeKey: space.assetLibraryKey,
+				title: folderTitle2,
+			});
+
+		try {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await apiHelpers.objectFolder.postObjectEntryFolderCollaborators(
+				[
+					{
+						actionIds: ['VIEW'],
+						id: user.id,
+						share: true,
+						type: 'User',
+					},
+				],
+				objectEntryFolder1.id
+			);
+
+			await performUserSwitch(page, user.alternateName);
+
+			await assetsPage.gotoFiles();
+
+			await assetsPage.changeVisualizationMode('Table');
+
+			const folderRow1 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: folderTitle1})});
+
+			await expect(folderRow1).toBeVisible();
+
+			await expect(
+				folderRow1.locator('.lexicon-icon-users').first()
+			).toBeVisible();
+
+			const folderRow2 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: folderTitle2})});
+
+			await expect(folderRow2).toBeVisible();
+
+			await expect(folderRow2.locator('.lexicon-icon-users')).toHaveCount(
+				0
+			);
+		}
+		finally {
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				objectEntryFolder1.id
+			);
+
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				objectEntryFolder2.id
+			);
+		}
 	}
 );

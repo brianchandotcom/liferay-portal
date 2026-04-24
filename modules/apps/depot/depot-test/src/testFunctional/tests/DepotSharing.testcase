@@ -88,7 +88,7 @@ definition {
 	@description = "This test ensures that depot sharing can be disabled at the instance level."
 	@priority = 4
 	@refactordone
-	test CanDisableDepotSharingAtInstanceScope {
+	test CanDisableDepotSharingAtInstanceAndSystemScope {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

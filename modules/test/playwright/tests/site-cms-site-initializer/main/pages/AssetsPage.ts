@@ -7,6 +7,8 @@ import {Locator, Page} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {getTempDir} from '../../../../utils/temp';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {DataSetPage} from './DataSetPage';
 
 // Page for All, Content and Files page
@@ -171,5 +173,46 @@ export class AssetsPage {
 			}),
 			trigger: this.getCardItem(filter).getByLabel(`${filter} Actions`),
 		});
+	}
+
+	async exportForTranslation(
+		targetLanguage: string,
+		isBulk: boolean
+	): Promise<string> {
+		const targetLanguageCheckbox = this.page
+			.locator('.modal')
+			.getByLabel(targetLanguage);
+
+		await targetLanguageCheckbox.check();
+
+		const downloadPromise = this.page.waitForEvent('download');
+
+		await this.page
+			.locator('.modal-footer')
+			.getByRole('button', {exact: true, name: 'Export'})
+			.click();
+
+		if (isBulk) {
+			await waitForAlert(
+				this.page,
+				'Warning:The export of all selected contents is being prepared. Please do not close this window or navigate to another section.',
+				{
+					type: 'warning',
+				}
+			);
+		}
+
+		await waitForAlert(
+			this.page,
+			'Success:The download will begin shortly'
+		);
+
+		const download = await downloadPromise;
+
+		const filePath = getTempDir() + download.suggestedFilename();
+
+		await download.saveAs(filePath);
+
+		return filePath;
 	}
 }

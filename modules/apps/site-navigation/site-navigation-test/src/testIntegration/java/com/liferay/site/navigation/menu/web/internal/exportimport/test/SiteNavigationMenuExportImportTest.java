@@ -231,6 +231,35 @@ public class SiteNavigationMenuExportImportTest
 	}
 
 	@Test
+	public void testExportImportWithDeletedSiteNavigationMenu()
+		throws Exception {
+
+		_setUpLocalStaging();
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuTestUtil.addSiteNavigationMenu(_stagingGroup);
+
+		_publishAllLayouts();
+
+		Assert.assertNotNull(
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					siteNavigationMenu.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+
+		_siteNavigationMenuLocalService.deleteSiteNavigationMenu(
+			siteNavigationMenu.getSiteNavigationMenuId());
+
+		_publishAllLayouts();
+
+		Assert.assertNull(
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					siteNavigationMenu.getExternalReferenceCode(),
+					_liveGroup.getGroupId()));
+	}
+
+	@Test
 	@TestInfo("LPD-37038")
 	public void testExportImportWithSiteNavigationMenuFromDifferentGroup()
 		throws Exception {

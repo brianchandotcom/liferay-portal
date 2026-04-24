@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -50,7 +49,7 @@ public class SearchUtil extends com.liferay.portal.vulcan.util.SearchUtil {
 
 				add(multiMatchQuery, BooleanClauseOccur.SHOULD);
 
-				WildcardQuery wildcardQuery = new WildcardQueryImpl(
+				WildcardQuery wildcardQuery = new WildcardQuery(
 					Field.USER_NAME, search + "*");
 
 				add(wildcardQuery, BooleanClauseOccur.SHOULD);

@@ -10,10 +10,10 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -194,11 +194,11 @@ public class UserModelPreFilterContributor
 
 		emailAddressBooleanFilter.add(
 			new QueryFilter(
-				new WildcardQueryImpl(
+				new WildcardQuery(
 					"emailAddress", emailAddress + StringPool.STAR)));
 		emailAddressBooleanFilter.add(
 			new QueryFilter(
-				new WildcardQueryImpl(
+				new WildcardQuery(
 					"emailAddressDomain", emailAddress + StringPool.STAR)));
 
 		booleanFilter.add(emailAddressBooleanFilter, BooleanClauseOccur.MUST);

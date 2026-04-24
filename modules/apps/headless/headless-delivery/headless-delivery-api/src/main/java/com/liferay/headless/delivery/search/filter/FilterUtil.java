@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 
 import java.util.List;
 import java.util.function.Function;
@@ -150,7 +149,7 @@ public class FilterUtil {
 
 				return _createNestedQueryFilter(
 					queryTerm.getField(), queryFilter,
-					nestedFieldName -> new WildcardQueryImpl(
+					nestedFieldName -> new WildcardQuery(
 						nestedFieldName, queryTerm.getValue()));
 			}
 

@@ -58,11 +58,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -1088,7 +1088,7 @@ public class OrganizationResourceImpl
 					if (serviceBuilderOrganizationId != 0L) {
 						booleanFilter.add(
 							new QueryFilter(
-								new WildcardQueryImpl(
+								new WildcardQuery(
 									"treePath",
 									"*" + parentOrganizationId + "*")));
 						booleanFilter.add(

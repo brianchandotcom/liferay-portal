@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,7 +32,7 @@ public class KeywordFieldQueryBuilder implements FieldQueryBuilder {
 			BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 			booleanQuery.add(
-				new WildcardQueryImpl(field, value + StringPool.STAR),
+				new WildcardQuery(field, value + StringPool.STAR),
 				BooleanClauseOccur.MUST);
 
 			TermQuery termQuery = new TermQuery(field, value);

@@ -348,6 +348,34 @@ describe('Analytics', () => {
 			expect(items.length).toBe(0);
 		});
 
+		it('clears stored account state when Demandbase becomes unavailable', async () => {
+			(window as any).Demandbase = {
+				IpApi: {CompanyProfile: COMPANY_PROFILE},
+			};
+
+			await Analytics.setIdentity(ANALYTICS_IDENTITY);
+			await wait(10);
+
+			expect(getItem(AnalyticsType.Keys.DemandbaseAccount)).toBeTruthy();
+			expect(
+				Analytics[AnalyticsType.Queues.AccountMessage].getItems().length
+			).toBe(1);
+
+			delete (window as any).Demandbase;
+			jest.spyOn(
+				Analytics.demandbase,
+				'waitForReadiness'
+			).mockResolvedValue(null);
+
+			Analytics.demandbase.sendAccountMessage('any-user-id');
+			await wait(10);
+
+			expect(getItem(AnalyticsType.Keys.DemandbaseAccount)).toBeNull();
+			expect(
+				Analytics[AnalyticsType.Queues.AccountMessage].getItems().length
+			).toBe(0);
+		});
+
 		it('does not throw when reading Demandbase throws', async () => {
 			Object.defineProperty(window, 'Demandbase', {
 				configurable: true,

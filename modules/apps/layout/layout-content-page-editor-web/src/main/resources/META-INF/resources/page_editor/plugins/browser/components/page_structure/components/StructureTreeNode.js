@@ -361,10 +361,10 @@ function NodeContent({
 				message: sub(
 					isWidget
 						? Liferay.Language.get(
-								'widget-name-cannot-be-empty.-the-last-saved-name-x-has-been-restored-automatically'
+								'widget-name-cannot-be-empty.-the-last-saved-name-x-was-restored-automatically'
 							)
 						: Liferay.Language.get(
-								'fragment-name-cannot-be-empty.-the-last-saved-name-x-has-been-restored-automatically'
+								'fragment-name-cannot-be-empty.-the-last-saved-name-x-was-restored-automatically'
 							),
 					[node.name]
 				),

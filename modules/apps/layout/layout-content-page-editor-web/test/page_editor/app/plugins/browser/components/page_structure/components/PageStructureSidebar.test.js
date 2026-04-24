@@ -461,7 +461,7 @@ describe('PageStructureSidebar', () => {
 
 		expect(openToast).toHaveBeenCalledWith({
 			message:
-				'fragment-name-cannot-be-empty.-the-last-saved-name-Fragment 1-has-been-restored-automatically',
+				'fragment-name-cannot-be-empty.-the-last-saved-name-Fragment 1-was-restored-automatically',
 			type: 'info',
 		});
 		expect(updateItemConfig).not.toHaveBeenCalled();
@@ -485,7 +485,7 @@ describe('PageStructureSidebar', () => {
 
 		expect(openToast).toHaveBeenCalledWith({
 			message:
-				'widget-name-cannot-be-empty.-the-last-saved-name-Widget 1-has-been-restored-automatically',
+				'widget-name-cannot-be-empty.-the-last-saved-name-Widget 1-was-restored-automatically',
 			type: 'info',
 		});
 		expect(updateItemConfig).not.toHaveBeenCalled();

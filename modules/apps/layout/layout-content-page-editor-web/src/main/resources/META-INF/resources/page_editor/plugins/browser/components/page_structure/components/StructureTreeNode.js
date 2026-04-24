@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import {useControlledState} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
@@ -347,20 +348,41 @@ function NodeContent({
 	const isValidDrop =
 		isOverTarget || keyboardMovementTargetId === item.itemId;
 
+	const isWidget = useSelectorCallback(
+		(state) => isItemWidget(item, state.fragmentEntryLinks),
+		[item]
+	);
+
 	const onEditName = (nextName) => {
 		const trimmedName = nextName?.trim();
 
-		if (trimmedName && node.name !== trimmedName) {
+		if (!trimmedName) {
+			openToast({
+				message: sub(
+					isWidget
+						? Liferay.Language.get(
+								'widget-name-cannot-be-empty.-the-last-saved-name-x-has-been-restored-automatically'
+							)
+						: Liferay.Language.get(
+								'fragment-name-cannot-be-empty.-the-last-saved-name-x-has-been-restored-automatically'
+							),
+					[node.name]
+				),
+				type: 'info',
+			});
+		}
+		else if (node.name !== trimmedName) {
 			dispatch(
 				updateItemConfig({
 					itemConfig: {name: trimmedName},
 					itemIds: [node.id],
 				})
 			);
+
+			setText(Liferay.Language.get('name-saved'));
 		}
 
 		setEditedNodeId(null);
-		setText(Liferay.Language.get('name-saved'));
 	};
 
 	const handleButtonsKeyDown = (event) => {
@@ -469,6 +491,7 @@ function NodeContent({
 				canUpdate={canUpdatePageStructure}
 				fieldTypes={fieldTypes}
 				fragmentEntryType={fragmentEntryType}
+				isWidget={isWidget}
 				item={item}
 				node={node}
 				nodeRef={nodeRef}
@@ -560,6 +583,10 @@ const NameLabel = React.forwardRef(
 					<input
 						className="flex-grow-1"
 						onBlur={() => {
+							if (!name?.trim()) {
+								setName(defaultName);
+							}
+
 							onEditName(name);
 						}}
 						onChange={(event) => {
@@ -634,6 +661,7 @@ const MoveButton = ({
 	canUpdate,
 	fieldTypes,
 	fragmentEntryType,
+	isWidget,
 	item,
 	node,
 	nodeRef,
@@ -642,11 +670,6 @@ const MoveButton = ({
 }) => {
 	const setMovementSources = useSetMovementSources();
 	const disableMovement = useDisableKeyboardMovement();
-
-	const isWidget = useSelectorCallback(
-		(state) => isItemWidget(item, state.fragmentEntryLinks),
-		[item]
-	);
 
 	const buttonRef = useRef(null);
 

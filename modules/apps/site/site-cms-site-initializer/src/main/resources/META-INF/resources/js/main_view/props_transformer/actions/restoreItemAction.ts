@@ -19,11 +19,12 @@ export default async function restoreItemAction(
 		folderName: string,
 		folderURL: string
 	) => {
+		const formattedItemLabel = `<strong>${Liferay.Util.escapeHTML(label)}</strong>`;
 		const formmatedFolderLink = `<strong><a href="${folderURL}" class="restore-link"><u>${Liferay.Util.escapeHTML(folderName)}</u></a></strong>`;
 		openToast({
 			message: sub(
 				Liferay.Language.get('x-was-restored-to-x'),
-				label,
+				formattedItemLabel,
 				formmatedFolderLink
 			),
 			type: 'success',

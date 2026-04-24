@@ -147,6 +147,7 @@ export interface IBulkActionType {
 		roleKey?: string;
 	};
 	ResetPermissionObjectBulkSelectionAction: {};
+	RestoreObjectBulkSelectionAction: {};
 	StatusObjectBulkSelectionAction: {
 		status?: string;
 	};
@@ -172,6 +173,7 @@ export interface IBulkActionTaskType {
 	MoveObjectBulkSelectionAction: string;
 	PermissionObjectBulkSelectionAction: string;
 	ResetPermissionObjectBulkSelectionAction: string;
+	RestoreObjectBulkSelectionAction: string;
 	StatusObjectBulkSelectionAction: string;
 	UpdateObjectValuesBulkSelectionAction: string;
 }

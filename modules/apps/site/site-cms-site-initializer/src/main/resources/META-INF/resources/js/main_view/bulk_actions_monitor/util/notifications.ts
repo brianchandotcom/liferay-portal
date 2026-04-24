@@ -25,6 +25,7 @@ import {
 	BULK_ACTION_MOVE,
 	BULK_ACTION_PERMISSIONS,
 	BULK_ACTION_RESET_PERMISSIONS,
+	BULK_ACTION_RESTORE,
 	BULK_ACTION_STATUS,
 	BULK_ACTION_TAGS,
 	BULK_ACTION_UPDATE_OBJECT_VALUES,
@@ -320,6 +321,26 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 		},
 	},
+	[BULK_ACTION_RESTORE]: {
+		info: {
+			all: Liferay.Language.get('restore-action-started-for-all-assets'),
+			plural: Liferay.Language.get('restore-action-started-for-x-assets'),
+			singular: Liferay.Language.get(
+				'restore-action-started-for-one-asset'
+			),
+		},
+		success: {
+			all: Liferay.Language.get(
+				'all-items-were-restored-to-their-original-locations'
+			),
+			plural: Liferay.Language.get(
+				'x-items-were-restored-to-their-original-locations'
+			),
+			singular: Liferay.Language.get(
+				'x-was-restored-to-its-original-location'
+			),
+		},
+	},
 	[BULK_ACTION_STATUS]: {
 		info: {
 			all: Liferay.Language.get(
@@ -425,7 +446,7 @@ export function getBulkActionTaskMessage(
 		}
 	}
 	else if (messageKey === 'plural') {
-		args.push(items.length);
+		args.push(`<strong>${items.length}</strong>`);
 	}
 
 	if (additionalData?.targetName) {

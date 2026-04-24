@@ -4,9 +4,15 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+trap '_recover_kubectl_context ${?}' ERR
+
 _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
+
+_GCP_DEPLOYMENT_NAME=""
+
+_GCP_PROJECT_ID=""
 
 function main {
 	if [ "${#}" -ne 2 ]
@@ -17,6 +23,10 @@ function main {
 	fi
 
 	_generate_tfvars "${1}" "${_SCRIPTS_DIR}/global_terraform.tfvars"
+
+	_GCP_DEPLOYMENT_NAME="$(jq --raw-output '.variables.deployment_name' "${1}")"
+
+	_GCP_PROJECT_ID="$(jq --raw-output '.variables.project_id' "${1}")"
 
 	echo "Attempting to login to your Google Cloud account via application default credentials."
 
@@ -129,6 +139,48 @@ function _popd {
 
 function _pushd {
 	pushd "${1}" > /dev/null
+}
+
+function _recover_kubectl_context {
+	local exit_code="${1}"
+
+	if [ -z "${_GCP_DEPLOYMENT_NAME:-}" ] || [ "${_GCP_DEPLOYMENT_NAME}" = "null" ] || [ -z "${_GCP_PROJECT_ID:-}" ] || [ "${_GCP_PROJECT_ID}" = "null" ]
+	then
+		exit "${exit_code}"
+	fi
+
+	echo "Terraform failed. Attempting to recover kubectl context via fleet membership." >&2
+
+	if ! gcloud \
+		container \
+		fleet \
+		memberships \
+		describe \
+		"${_GCP_DEPLOYMENT_NAME}-membership" \
+		--project "${_GCP_PROJECT_ID}" \
+		> /dev/null 2>&1
+	then
+		echo "Fleet membership ${_GCP_DEPLOYMENT_NAME}-membership does not exist. No kubectl context to recover." >&2
+
+		exit "${exit_code}"
+	fi
+
+	if ! gcloud \
+		container \
+		fleet \
+		memberships \
+		get-credentials \
+		"${_GCP_DEPLOYMENT_NAME}-membership" \
+		--project "${_GCP_PROJECT_ID}"
+	then
+		echo "Failed to recover kubectl context for ${_GCP_DEPLOYMENT_NAME}-membership." >&2
+
+		exit "${exit_code}"
+	fi
+
+	echo "Recovered kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
+
+	exit "${exit_code}"
 }
 
 function _set_up_gcp_gke {

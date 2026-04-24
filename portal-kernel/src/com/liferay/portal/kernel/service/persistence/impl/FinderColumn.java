@@ -13,10 +13,6 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * Describes a single column participating in a persistence finder. Handles SQL
- * fragment generation, value normalization, query parameter binding decisions,
- * cache result validation, and finder argument conversion for that column.
- *
  * @author Shuyang Zhou
  */
 public class FinderColumn<T extends BaseModel<T>> {

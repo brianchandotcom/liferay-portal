@@ -18,11 +18,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * Reusable implementation of collection finder operations (finders that return
- * {@code List<T>}). Encapsulates the core find-with-cache and count-with-cache
- * logic that is otherwise generated identically for every collection finder in
- * every PersistenceImpl class.
- *
  * @author Shuyang Zhou
  */
 public class CollectionPersistenceFinder<T extends BaseModel<T>>
@@ -55,7 +50,7 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 			_countFinderPath, finderArgs, basePersistenceImpl);
 
 		if (count == null) {
-			String sql = buildSqlWhere(_sqlCountWhere, values);
+			String sql = buildSQLWhere(_sqlCountWhere, values);
 
 			Session session = null;
 

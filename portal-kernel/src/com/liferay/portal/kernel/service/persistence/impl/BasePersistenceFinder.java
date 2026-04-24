@@ -10,10 +10,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.model.BaseModel;
 
 /**
- * Shared plumbing for persistence finder helpers: cache-key construction,
- * query-parameter binding, value normalization, cache-result validation, and
- * SQL-WHERE assembly from column fragments.
- *
  * @author Shuyang Zhou
  */
 public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
@@ -46,7 +42,7 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		return finderArgs;
 	}
 
-	protected String buildSqlWhere(String sqlWhere, Object[] values) {
+	protected String buildSQLWhere(String sqlWhere, Object[] values) {
 		StringBundler sb = new StringBundler(finderColumns.length + 1);
 
 		sb.append(sqlWhere);

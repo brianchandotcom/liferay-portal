@@ -6990,6 +6990,85 @@ ${custom.upgrade.properties}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-playwright-object-storage-salesforce-properties">
+		<sequential>
+			<var name="env.object.storage.salesforce.consumer.key" value="" />
+
+			<if>
+				<isset property="env.OBJECT_STORAGE_SALESFORCE_CONSUMER_KEY" />
+				<then>
+					<var name="env.object.storage.salesforce.consumer.key" value="--env=OBJECT_STORAGE_SALESFORCE_CONSUMER_KEY=${env.OBJECT_STORAGE_SALESFORCE_CONSUMER_KEY}" />
+				</then>
+				<elseif>
+					<isset property="object.storage.salesforce.consumer.key" />
+					<then>
+						<var name="env.object.storage.salesforce.consumer.key" value="--env=OBJECT_STORAGE_SALESFORCE_CONSUMER_KEY=${object.storage.salesforce.consumer.key}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.object.storage.salesforce.consumer.secret" value="" />
+
+			<if>
+				<isset property="env.OBJECT_STORAGE_SALESFORCE_CONSUMER_SECRET" />
+				<then>
+					<var name="env.object.storage.salesforce.consumer.secret" value="--env=OBJECT_STORAGE_SALESFORCE_CONSUMER_SECRET=${env.OBJECT_STORAGE_SALESFORCE_CONSUMER_SECRET}" />
+				</then>
+				<elseif>
+					<isset property="object.storage.salesforce.consumer.secret" />
+					<then>
+						<var name="env.object.storage.salesforce.consumer.secret" value="--env=OBJECT_STORAGE_SALESFORCE_CONSUMER_SECRET=${object.storage.salesforce.consumer.secret}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.object.storage.salesforce.login.url" value="" />
+
+			<if>
+				<isset property="env.OBJECT_STORAGE_SALESFORCE_LOGIN_URL" />
+				<then>
+					<var name="env.object.storage.salesforce.login.url" value="--env=OBJECT_STORAGE_SALESFORCE_LOGIN_URL=${env.OBJECT_STORAGE_SALESFORCE_LOGIN_URL}" />
+				</then>
+				<elseif>
+					<isset property="object.storage.salesforce.login.url" />
+					<then>
+						<var name="env.object.storage.salesforce.login.url" value="--env=OBJECT_STORAGE_SALESFORCE_LOGIN_URL=${object.storage.salesforce.login.url}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.object.storage.salesforce.password" value="" />
+
+			<if>
+				<isset property="env.OBJECT_STORAGE_SALESFORCE_PASSWORD" />
+				<then>
+					<var name="env.object.storage.salesforce.password" value="--env=OBJECT_STORAGE_SALESFORCE_PASSWORD=${env.OBJECT_STORAGE_SALESFORCE_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="object.storage.salesforce.password" />
+					<then>
+						<var name="env.object.storage.salesforce.password" value="--env=OBJECT_STORAGE_SALESFORCE_PASSWORD=${object.storage.salesforce.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.object.storage.salesforce.username" value="" />
+
+			<if>
+				<isset property="env.OBJECT_STORAGE_SALESFORCE_USERNAME" />
+				<then>
+					<var name="env.object.storage.salesforce.username" value="--env=OBJECT_STORAGE_SALESFORCE_USERNAME=${env.OBJECT_STORAGE_SALESFORCE_USERNAME}" />
+				</then>
+				<elseif>
+					<isset property="object.storage.salesforce.username" />
+					<then>
+						<var name="env.object.storage.salesforce.username" value="--env=OBJECT_STORAGE_SALESFORCE_USERNAME=${object.storage.salesforce.username}" />
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-portal-impl-portal-test-ext-properties">
 		<sequential>
 			<generate-jdbc-properties properties.file="portal-impl/test/portal-test-ext.properties">
@@ -8565,6 +8644,8 @@ ${docker.start.error}</fail>
 
 			<set-playwright-click-to-chat-properties />
 
+			<set-playwright-object-storage-salesforce-properties />
+
 			<local name="env.portal.url.arg" />
 
 			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.NODE_NAME}:8080">
@@ -8599,6 +8680,11 @@ ${docker.start.error}</fail>
 				${env.click.to.chat.tawkto.password} \
 				${env.click.to.chat.tidio.password} \
 				${env.click.to.chat.zendesk.password} \
+				${env.object.storage.salesforce.consumer.key} \
+				${env.object.storage.salesforce.consumer.secret} \
+				${env.object.storage.salesforce.login.url} \
+				${env.object.storage.salesforce.password} \
+				${env.object.storage.salesforce.username} \
 				${env.osb.asah.api.token} \
 				${env.osb.asah.backend.url} \
 				${env.osb.asah.batch.curator.url} \

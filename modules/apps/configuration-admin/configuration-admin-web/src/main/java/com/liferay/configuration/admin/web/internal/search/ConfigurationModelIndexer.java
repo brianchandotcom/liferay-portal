@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -213,7 +212,7 @@ public class ConfigurationModelIndexer
 			BooleanFilter fullQueryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery searchQuery = new BooleanQueryImpl();
+		BooleanQuery searchQuery = new BooleanQuery();
 
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, FieldNames.CONFIGURATION_CATEGORY,
@@ -234,7 +233,7 @@ public class ConfigurationModelIndexer
 			searchQuery, searchContext, FieldNames.CONFIGURATION_MODEL_ID,
 			false);
 
-		BooleanQuery fullBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery fullBooleanQuery = new BooleanQuery();
 
 		if (fullQueryBooleanFilter.hasClauses()) {
 			fullBooleanQuery.setPreBooleanFilter(fullQueryBooleanFilter);

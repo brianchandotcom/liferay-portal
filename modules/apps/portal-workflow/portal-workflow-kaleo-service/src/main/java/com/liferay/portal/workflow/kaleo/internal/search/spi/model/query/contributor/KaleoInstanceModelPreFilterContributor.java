@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
@@ -95,7 +94,7 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		try {
 			booleanQuery.addTerm(
@@ -120,7 +119,7 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		try {
 			booleanQuery.addTerm(
@@ -212,7 +211,7 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		try {
 			booleanQuery.addTerm("currentKaleoNodeName", currentKaleoNodeName);
@@ -234,7 +233,7 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		try {
 			booleanQuery.addTerm("kaleoDefinitionName", kaleoDefinitionName);
@@ -297,7 +296,7 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (String className : classNames) {
 			try {

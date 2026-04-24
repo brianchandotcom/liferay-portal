@@ -15,11 +15,9 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -189,7 +187,7 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 
 		for (String indexName : _getIndexNames(searchContext)) {
 			try {
-				BooleanQuery booleanQuery = new BooleanQueryImpl();
+				BooleanQuery booleanQuery = new BooleanQuery();
 
 				booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 
@@ -211,9 +209,6 @@ public class OpenSearchIndexWriter extends BaseIndexWriter {
 				}
 
 				_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
 			}
 			catch (RuntimeException runtimeException) {
 				if (_openSearchConfigurationWrapper.logExceptionsOnly()) {

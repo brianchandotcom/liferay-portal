@@ -6,10 +6,10 @@
 package com.liferay.portal.search.test.util.count;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -65,7 +65,7 @@ public abstract class BaseCountTestCase extends BaseIndexingTestCase {
 	public void testPostFilterWithoutMainQuery() throws Exception {
 		assertSearch(
 			indexingTestHelper -> {
-				Query query = new BooleanQueryImpl();
+				Query query = new BooleanQuery();
 
 				query.setPostFilter(_createBooleanFilter());
 
@@ -80,7 +80,7 @@ public abstract class BaseCountTestCase extends BaseIndexingTestCase {
 	public void testPreFilterWithoutMainQuery() throws Exception {
 		assertSearch(
 			indexingTestHelper -> {
-				Query query = new BooleanQueryImpl();
+				Query query = new BooleanQuery();
 
 				query.setPreBooleanFilter(_createBooleanFilter());
 

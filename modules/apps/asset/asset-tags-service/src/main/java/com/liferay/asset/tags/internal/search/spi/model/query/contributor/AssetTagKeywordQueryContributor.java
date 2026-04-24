@@ -5,13 +5,10 @@
 
 package com.liferay.asset.tags.internal.search.spi.model.query.contributor;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -42,17 +39,12 @@ public class AssetTagKeywordQueryContributor
 		String name = (String)searchContext.getAttribute(Field.NAME);
 
 		if (!Validator.isBlank(name)) {
-			BooleanQuery nameQuery = new BooleanQueryImpl();
+			BooleanQuery nameQuery = new BooleanQuery();
 
 			queryHelper.addSearchTerm(
 				nameQuery, searchContext, Field.NAME, true);
 
-			try {
-				booleanQuery.add(nameQuery, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(nameQuery, BooleanClauseOccur.SHOULD);
 		}
 	}
 

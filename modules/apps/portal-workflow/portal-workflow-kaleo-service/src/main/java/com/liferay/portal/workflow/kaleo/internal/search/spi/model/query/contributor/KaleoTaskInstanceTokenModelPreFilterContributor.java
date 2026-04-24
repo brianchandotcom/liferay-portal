@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
@@ -131,7 +130,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.ASSET_TITLE,
 			searchContext.getLanguageId());
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		try {
 			booleanQuery.addTerm(assetTitleLocalizedName, assetTitle);
@@ -233,7 +232,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (String assetType : assetTypes) {
 			try {
@@ -486,7 +485,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			return;
 		}
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (String taskName : taskNames) {
 			try {

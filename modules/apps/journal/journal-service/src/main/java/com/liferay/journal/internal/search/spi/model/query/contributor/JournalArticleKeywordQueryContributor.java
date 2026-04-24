@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
@@ -100,19 +99,7 @@ public class JournalArticleKeywordQueryContributor
 			booleanClauseOccur = BooleanClauseOccur.MUST;
 		}
 
-		try {
-			booleanQuery.add(localizedQuery, booleanClauseOccur);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to add localized localized query ",
-						localizedQuery, " with boolean clause occur ",
-						booleanClauseOccur),
-					parseException);
-			}
-		}
+		booleanQuery.add(localizedQuery, booleanClauseOccur);
 	}
 
 	private void _addSearchLocalizedTerm(
@@ -135,7 +122,7 @@ public class JournalArticleKeywordQueryContributor
 		}
 
 		if (Validator.isBlank(searchContext.getKeywords())) {
-			BooleanQuery localizedQuery = new BooleanQueryImpl();
+			BooleanQuery localizedQuery = new BooleanQuery();
 
 			_addLocalizedFields(
 				localizedQuery, fieldName, value, searchContext);

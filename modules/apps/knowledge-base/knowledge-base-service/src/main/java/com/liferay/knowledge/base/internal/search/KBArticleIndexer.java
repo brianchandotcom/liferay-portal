@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -27,13 +26,11 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -106,7 +103,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			return;
 		}
 
-		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery keywordsBooleanQuery = new BooleanQuery();
 
 		addSearchTerm(keywordsBooleanQuery, searchContext, Field.CONTENT, true);
 		addSearchTerm(
@@ -119,20 +116,14 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			return;
 		}
 
-		try {
-			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery modelBooleanQuery = new BooleanQuery();
 
-			modelBooleanQuery.add(
-				new TermQuery("entryClassName", CLASS_NAME),
-				BooleanClauseOccur.MUST);
-			modelBooleanQuery.add(
-				keywordsBooleanQuery, BooleanClauseOccur.MUST);
+		modelBooleanQuery.add(
+			new TermQuery("entryClassName", CLASS_NAME),
+			BooleanClauseOccur.MUST);
+		modelBooleanQuery.add(keywordsBooleanQuery, BooleanClauseOccur.MUST);
 
-			searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
-		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+		searchQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
 	}
 
 	@Override

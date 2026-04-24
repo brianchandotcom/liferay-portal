@@ -6,14 +6,11 @@
 package com.liferay.portal.search.internal.analysis;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,26 +25,21 @@ public class KeywordFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String value) {
-		try {
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-			booleanQuery.add(
-				new WildcardQuery(field, value + StringPool.STAR),
-				BooleanClauseOccur.MUST);
+		booleanQuery.add(
+			new WildcardQuery(field, value + StringPool.STAR),
+			BooleanClauseOccur.MUST);
 
-			TermQuery termQuery = new TermQuery(field, value);
+		TermQuery termQuery = new TermQuery(field, value);
 
-			if (_boost != null) {
-				termQuery.setBoost(_boost);
-			}
-
-			booleanQuery.add(termQuery, BooleanClauseOccur.SHOULD);
-
-			return booleanQuery;
+		if (_boost != null) {
+			termQuery.setBoost(_boost);
 		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+
+		booleanQuery.add(termQuery, BooleanClauseOccur.SHOULD);
+
+		return booleanQuery;
 	}
 
 	public void setBoost(float boost) {

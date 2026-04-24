@@ -8,10 +8,10 @@ package com.liferay.portal.search.internal.analysis;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
@@ -30,16 +30,16 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		List<String> tokens = keywordTokenizer.tokenize(keywords);
 
 		for (String token : tokens) {
-			booleanQueryImpl.add(
+			booleanQuery.add(
 				_createQuery(field, token), BooleanClauseOccur.SHOULD);
 		}
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	@Reference

@@ -8,8 +8,8 @@ package com.liferay.portal.search.internal.analysis;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
@@ -27,7 +27,7 @@ public class FullTextQueryBuilder {
 	}
 
 	public Query build(String field, String keywords) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		List<String> tokens = _keywordTokenizer.tokenize(keywords);
 
@@ -44,20 +44,19 @@ public class FullTextQueryBuilder {
 		}
 
 		for (String phrase : phrases) {
-			booleanQueryImpl.add(
+			booleanQuery.add(
 				_createPhraseQuery(field, phrase), BooleanClauseOccur.MUST);
 		}
 
 		if (!words.isEmpty()) {
 			_addSentenceQueries(
-				field, StringUtil.merge(words, StringPool.SPACE),
-				booleanQueryImpl);
+				field, StringUtil.merge(words, StringPool.SPACE), booleanQuery);
 		}
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			_createExactMatchQuery(field, keywords), BooleanClauseOccur.SHOULD);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	public void setAutocomplete(boolean autocomplete) {
@@ -77,13 +76,13 @@ public class FullTextQueryBuilder {
 	}
 
 	private void _addSentenceQueries(
-		String field, String sentence, BooleanQueryImpl booleanQueryImpl) {
+		String field, String sentence, BooleanQuery booleanQuery) {
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			_createMandatoryQuery(field, sentence), BooleanClauseOccur.MUST);
 
 		if (_proximitySlop != null) {
-			booleanQueryImpl.add(
+			booleanQuery.add(
 				_createProximityQuery(field, sentence),
 				BooleanClauseOccur.SHOULD);
 		}
@@ -113,15 +112,15 @@ public class FullTextQueryBuilder {
 			return matchQuery;
 		}
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(matchQuery, BooleanClauseOccur.SHOULD);
+		booleanQuery.add(matchQuery, BooleanClauseOccur.SHOULD);
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			_createAutocompleteQuery(field, sentence),
 			BooleanClauseOccur.SHOULD);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	private Query _createMatchQuery(String field, String value) {

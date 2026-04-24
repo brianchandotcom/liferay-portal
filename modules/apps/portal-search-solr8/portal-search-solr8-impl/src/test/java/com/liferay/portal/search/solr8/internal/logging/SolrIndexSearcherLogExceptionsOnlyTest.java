@@ -6,9 +6,9 @@
 package com.liferay.portal.search.solr8.internal.logging;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.solr8.internal.SolrIndexSearcher;
@@ -73,12 +73,12 @@ public class SolrIndexSearcherLogExceptionsOnlyTest
 	}
 
 	protected Query getMalformedQuery() {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new TermQuery("f^eld", "text"), BooleanClauseOccur.MUST);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 }

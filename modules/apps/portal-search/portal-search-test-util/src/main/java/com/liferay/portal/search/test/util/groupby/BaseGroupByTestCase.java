@@ -7,13 +7,13 @@ package com.liferay.portal.search.test.util.groupby;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
@@ -425,15 +425,14 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 						searchContext.setGroupBy(groupBy);
 					});
 
-				BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+				BooleanQuery booleanQuery = new BooleanQuery();
 
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "3");
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "2");
+				booleanQuery.addExactTerm(SORT_FIELD, "3");
+				booleanQuery.addExactTerm(SORT_FIELD, "2");
 
-				booleanQueryImpl.add(
-					getDefaultQuery(), BooleanClauseOccur.MUST);
+				booleanQuery.add(getDefaultQuery(), BooleanClauseOccur.MUST);
 
-				indexingTestHelper.setQuery(booleanQueryImpl);
+				indexingTestHelper.setQuery(booleanQuery);
 
 				indexingTestHelper.search();
 

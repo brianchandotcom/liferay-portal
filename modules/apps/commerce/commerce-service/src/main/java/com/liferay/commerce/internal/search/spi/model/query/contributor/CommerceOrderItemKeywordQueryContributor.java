@@ -6,15 +6,12 @@
 package com.liferay.commerce.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,33 +61,28 @@ public class CommerceOrderItemKeywordQueryContributor
 		}
 
 		if (Validator.isNotNull(keywords)) {
-			try {
-				keywords = StringUtil.toLowerCase(keywords);
+			keywords = StringUtil.toLowerCase(keywords);
 
-				BooleanQuery searchQuery = new BooleanQueryImpl();
+			BooleanQuery searchQuery = new BooleanQuery();
 
-				booleanQuery.add(
-					new TermQuery("sku.1_10_ngram", keywords),
-					BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				new TermQuery("sku.1_10_ngram", keywords),
+				BooleanClauseOccur.SHOULD);
 
-				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(
-					searchContext.getKeywords());
+			MultiMatchQuery multiMatchQuery = new MultiMatchQuery(
+				searchContext.getKeywords());
 
-				multiMatchQuery.addField("sku");
-				multiMatchQuery.addField("sku.reverse");
-				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
+			multiMatchQuery.addField("sku");
+			multiMatchQuery.addField("sku.reverse");
+			multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 
-				booleanQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
+			booleanQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
 
-				if (searchContext.isAndSearch()) {
-					searchQuery.add(booleanQuery, BooleanClauseOccur.MUST);
-				}
-				else {
-					searchQuery.add(booleanQuery, BooleanClauseOccur.SHOULD);
-				}
+			if (searchContext.isAndSearch()) {
+				searchQuery.add(booleanQuery, BooleanClauseOccur.MUST);
 			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
+			else {
+				searchQuery.add(booleanQuery, BooleanClauseOccur.SHOULD);
 			}
 		}
 	}

@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -136,9 +135,9 @@ public class LuceneRepositorySearchQueryTermBuilder
 			org.apache.lucene.search.BooleanQuery curBooleanQuery =
 				(org.apache.lucene.search.BooleanQuery)query;
 
-			BooleanQuery conjunctionQuery = new BooleanQueryImpl();
+			BooleanQuery conjunctionQuery = new BooleanQuery();
 
-			BooleanQuery disjunctionQuery = new BooleanQueryImpl();
+			BooleanQuery disjunctionQuery = new BooleanQuery();
 
 			for (BooleanClause booleanClause : curBooleanQuery.clauses()) {
 				BooleanClauseOccur curBooleanClauseOccur =

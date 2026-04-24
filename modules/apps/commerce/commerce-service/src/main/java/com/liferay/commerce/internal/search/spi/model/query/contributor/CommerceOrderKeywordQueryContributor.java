@@ -6,15 +6,12 @@
 package com.liferay.commerce.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,38 +75,30 @@ public class CommerceOrderKeywordQueryContributor
 		_queryHelper.addSearchTerm(booleanQuery, searchContext, "zip", false);
 
 		if (Validator.isNotNull(keywords)) {
-			try {
-				keywords = StringUtil.toLowerCase(keywords);
+			keywords = StringUtil.toLowerCase(keywords);
 
-				booleanQuery.add(
-					_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
-					BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
+				BooleanClauseOccur.SHOULD);
 
-				BooleanQuery searchBooleanQuery = new BooleanQueryImpl();
+			BooleanQuery searchBooleanQuery = new BooleanQuery();
 
-				searchBooleanQuery.add(
-					new TermQuery("accountName.1_10_ngram", keywords),
-					BooleanClauseOccur.SHOULD);
+			searchBooleanQuery.add(
+				new TermQuery("accountName.1_10_ngram", keywords),
+				BooleanClauseOccur.SHOULD);
 
-				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(keywords);
+			MultiMatchQuery multiMatchQuery = new MultiMatchQuery(keywords);
 
-				multiMatchQuery.addFields("accountName", "accountName.reverse");
-				multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
+			multiMatchQuery.addFields("accountName", "accountName.reverse");
+			multiMatchQuery.setType(MultiMatchQuery.Type.PHRASE_PREFIX);
 
-				searchBooleanQuery.add(
-					multiMatchQuery, BooleanClauseOccur.SHOULD);
+			searchBooleanQuery.add(multiMatchQuery, BooleanClauseOccur.SHOULD);
 
-				if (searchContext.isAndSearch()) {
-					booleanQuery.add(
-						searchBooleanQuery, BooleanClauseOccur.MUST);
-				}
-				else {
-					booleanQuery.add(
-						searchBooleanQuery, BooleanClauseOccur.SHOULD);
-				}
+			if (searchContext.isAndSearch()) {
+				booleanQuery.add(searchBooleanQuery, BooleanClauseOccur.MUST);
 			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
+			else {
+				booleanQuery.add(searchBooleanQuery, BooleanClauseOccur.SHOULD);
 			}
 		}
 	}

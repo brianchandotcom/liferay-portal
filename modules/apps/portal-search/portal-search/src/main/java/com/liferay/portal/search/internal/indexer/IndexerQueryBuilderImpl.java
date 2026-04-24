@@ -14,14 +14,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.indexer.IndexerQueryBuilder;
@@ -133,7 +131,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		BooleanQuery keywordsBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery keywordsBooleanQuery = new BooleanQuery();
 
 		_contributeClauses(keywordsBooleanQuery, searchContext);
 
@@ -141,21 +139,15 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		try {
-			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery modelBooleanQuery = new BooleanQuery();
 
-			modelBooleanQuery.add(
-				new TermQuery(
-					"entryClassName", _modelSearchSettings.getClassName()),
-				BooleanClauseOccur.MUST);
-			modelBooleanQuery.add(
-				keywordsBooleanQuery, BooleanClauseOccur.MUST);
+		modelBooleanQuery.add(
+			new TermQuery(
+				"entryClassName", _modelSearchSettings.getClassName()),
+			BooleanClauseOccur.MUST);
+		modelBooleanQuery.add(keywordsBooleanQuery, BooleanClauseOccur.MUST);
 
-			booleanQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
-		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+		booleanQuery.add(modelBooleanQuery, BooleanClauseOccur.SHOULD);
 	}
 
 	protected void contribute(
@@ -192,12 +184,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		BooleanQuery booleanQuery, Query query,
 		BooleanClauseOccur booleanClauseOccur) {
 
-		try {
-			booleanQuery.add(query, booleanClauseOccur);
-		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+		booleanQuery.add(query, booleanClauseOccur);
 	}
 
 	private void _addPreFilters(
@@ -282,7 +269,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	private BooleanQuery _createFullQuery(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		if (fullQueryBooleanFilter.hasClauses()) {
 			booleanQuery.setPreBooleanFilter(fullQueryBooleanFilter);
@@ -314,7 +301,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 	private BooleanQuery _createKeywordQuery(
 		BooleanFilter fullQueryBooleanFilter, SearchContext searchContext) {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		_addSearchKeywords(
 			booleanQuery,

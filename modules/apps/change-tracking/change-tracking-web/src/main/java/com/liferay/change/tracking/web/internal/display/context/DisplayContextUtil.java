@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -128,7 +128,7 @@ public class DisplayContextUtil {
 						"ctCollectionId", ctCollectionId);
 					searchContext.setAttribute("showHideable", showHideable);
 
-					BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+					BooleanQuery booleanQuery = new BooleanQuery();
 
 					BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -136,12 +136,12 @@ public class DisplayContextUtil {
 						new ExistsFilter(Field.GROUP_ID),
 						BooleanClauseOccur.MUST);
 
-					booleanQueryImpl.setPreBooleanFilter(booleanFilter);
+					booleanQuery.setPreBooleanFilter(booleanFilter);
 
 					searchContext.setBooleanClauses(
 						new BooleanClause[] {
 							new BooleanClause<>(
-								booleanQueryImpl, BooleanClauseOccur.MUST)
+								booleanQuery, BooleanClauseOccur.MUST)
 						});
 				}
 			);

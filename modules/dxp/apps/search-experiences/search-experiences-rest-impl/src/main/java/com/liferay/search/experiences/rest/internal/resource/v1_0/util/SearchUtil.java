@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -32,7 +31,7 @@ public class SearchUtil extends com.liferay.portal.vulcan.util.SearchUtil {
 			return;
 		}
 
-		BooleanQuery booleanQuery2 = new BooleanQueryImpl() {
+		BooleanQuery booleanQuery2 = new BooleanQuery() {
 			{
 				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(search);
 

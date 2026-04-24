@@ -7,7 +7,6 @@ package com.liferay.document.library.internal.search.spi.model.query.contributor
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -15,7 +14,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -68,28 +66,19 @@ public class DLFileEntryKeywordQueryContributor
 		_addSearchLocalizedTerm(booleanQuery, Field.TITLE, searchContext);
 
 		if (Validator.isNotNull(keywords)) {
-			try {
-				BooleanQuery fileNameBooleanQuery = new BooleanQueryImpl();
+			BooleanQuery fileNameBooleanQuery = new BooleanQuery();
 
-				_addKeywordsToFileNameBooleanQuery(
-					fileNameBooleanQuery, keywords);
+			_addKeywordsToFileNameBooleanQuery(fileNameBooleanQuery, keywords);
 
-				booleanQuery.add(
-					_getMatchQuery(
-						"fileExtension", keywords,
-						MatchQuery.Type.PHRASE_PREFIX),
-					BooleanClauseOccur.SHOULD);
-				fileNameBooleanQuery.add(
-					_getMatchQuery(
-						"fileName", keywords, MatchQuery.Type.PHRASE),
-					BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				_getMatchQuery(
+					"fileExtension", keywords, MatchQuery.Type.PHRASE_PREFIX),
+				BooleanClauseOccur.SHOULD);
+			fileNameBooleanQuery.add(
+				_getMatchQuery("fileName", keywords, MatchQuery.Type.PHRASE),
+				BooleanClauseOccur.SHOULD);
 
-				booleanQuery.add(
-					fileNameBooleanQuery, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(fileNameBooleanQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		_highlightFieldNamesQueryConfigContributor.
@@ -97,8 +86,7 @@ public class DLFileEntryKeywordQueryContributor
 	}
 
 	private void _addKeywordsToFileNameBooleanQuery(
-			BooleanQuery fileNameBooleanQuery, String keywords)
-		throws ParseException {
+		BooleanQuery fileNameBooleanQuery, String keywords) {
 
 		String exactMatch = StringUtils.substringBetween(
 			keywords, StringPool.QUOTE);
@@ -170,10 +158,8 @@ public class DLFileEntryKeywordQueryContributor
 		return matchPhraseQuery;
 	}
 
-	private BooleanQuery _getShouldBooleanQuery(String keyword)
-		throws ParseException {
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+	private BooleanQuery _getShouldBooleanQuery(String keyword) {
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		booleanQuery.add(
 			new MatchQuery("fileName", keyword), BooleanClauseOccur.SHOULD);

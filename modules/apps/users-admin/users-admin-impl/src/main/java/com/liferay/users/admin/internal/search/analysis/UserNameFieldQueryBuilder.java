@@ -7,8 +7,8 @@ package com.liferay.users.admin.internal.search.analysis;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
@@ -31,7 +31,7 @@ public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		List<String> tokens = _keywordTokenizer.tokenize(keywords);
 
@@ -45,12 +45,12 @@ public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 				continue;
 			}
 
-			booleanQueryImpl.add(
+			booleanQuery.add(
 				_getMatchQuery("userName.text", token),
 				BooleanClauseOccur.SHOULD);
 		}
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	private MatchQuery _getMatchQuery(String field, String value) {

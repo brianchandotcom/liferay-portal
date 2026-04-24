@@ -7,9 +7,9 @@ package com.liferay.portal.search.test.util.document;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
@@ -31,14 +31,14 @@ public abstract class BaseDocumentTestCase extends BaseIndexingTestCase {
 	}
 
 	protected static Query getQuery(String keywords) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("firstName", keywords), BooleanClauseOccur.SHOULD);
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("lastName", keywords), BooleanClauseOccur.SHOULD);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	protected static void populateNumberArrays() {

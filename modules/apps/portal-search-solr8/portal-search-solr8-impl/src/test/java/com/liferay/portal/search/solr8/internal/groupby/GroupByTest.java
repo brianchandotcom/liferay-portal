@@ -6,9 +6,9 @@
 package com.liferay.portal.search.solr8.internal.groupby;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
@@ -156,15 +156,14 @@ public class GroupByTest extends BaseGroupByTestCase {
 						searchRequestBuilder.groupByRequests(groupByRequest);
 					});
 
-				BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+				BooleanQuery booleanQuery = new BooleanQuery();
 
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "3");
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "2");
+				booleanQuery.addExactTerm(SORT_FIELD, "3");
+				booleanQuery.addExactTerm(SORT_FIELD, "2");
 
-				booleanQueryImpl.add(
-					getDefaultQuery(), BooleanClauseOccur.MUST);
+				booleanQuery.add(getDefaultQuery(), BooleanClauseOccur.MUST);
 
-				indexingTestHelper.setQuery(booleanQueryImpl);
+				indexingTestHelper.setQuery(booleanQuery);
 
 				indexingTestHelper.search();
 

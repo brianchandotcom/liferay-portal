@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -198,7 +197,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
 
-		BooleanQuery query = new BooleanQueryImpl();
+		BooleanQuery query = new BooleanQuery();
 
 		query.addTerm("title", RandomTestUtil.randomString());
 

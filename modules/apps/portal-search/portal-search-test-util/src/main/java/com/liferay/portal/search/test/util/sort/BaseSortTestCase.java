@@ -6,11 +6,11 @@
 package com.liferay.portal.search.test.util.sort;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactory;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.internal.SortFactoryImpl;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -114,13 +114,13 @@ public abstract class BaseSortTestCase extends BaseIndexingTestCase {
 	}
 
 	protected Query getScoredQuery(String fieldName, String fieldValue) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.addExactTerm(fieldName, fieldValue);
+		booleanQuery.addExactTerm(fieldName, fieldValue);
 
-		booleanQueryImpl.add(getDefaultQuery(), BooleanClauseOccur.SHOULD);
+		booleanQuery.add(getDefaultQuery(), BooleanClauseOccur.SHOULD);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	protected abstract String getScoreParameter();

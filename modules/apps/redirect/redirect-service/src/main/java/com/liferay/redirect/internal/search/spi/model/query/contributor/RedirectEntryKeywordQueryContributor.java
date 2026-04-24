@@ -5,10 +5,8 @@
 
 package com.liferay.redirect.internal.search.spi.model.query.contributor;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
@@ -37,47 +35,41 @@ public class RedirectEntryKeywordQueryContributor
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
 
-		try {
-			SearchContext searchContext =
-				keywordQueryContributorHelper.getSearchContext();
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
 
-			_queryHelper.addSearchTerm(
-				booleanQuery, searchContext, "destinationURL", false);
-			_queryHelper.addSearchTerm(
-				booleanQuery, searchContext, "sourceURL", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "destinationURL", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "sourceURL", false);
 
-			if (Validator.isNotNull(keywords)) {
-				booleanQuery.add(
-					_getMatchQuery("destinationURLParts", keywords),
-					BooleanClauseOccur.SHOULD);
-				booleanQuery.add(
-					new MatchQuery("destinationURLParts", keywords),
-					BooleanClauseOccur.SHOULD);
-				booleanQuery.add(
-					_getMatchQuery("sourceURLParts", keywords),
-					BooleanClauseOccur.SHOULD);
-				booleanQuery.add(
-					new MatchQuery("sourceURLParts", keywords),
-					BooleanClauseOccur.SHOULD);
-			}
-
-			String groupBaseURL = (String)searchContext.getAttribute(
-				"groupBaseURL");
-
-			if (Validator.isNotNull(groupBaseURL) &&
-				Validator.isNotNull(keywords) &&
-				keywords.startsWith(groupBaseURL)) {
-
-				Query query = fieldQueryFactory.createQuery(
-					"sourceURL",
-					StringUtil.removeSubstring(keywords, groupBaseURL), false,
-					false);
-
-				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
-			}
+		if (Validator.isNotNull(keywords)) {
+			booleanQuery.add(
+				_getMatchQuery("destinationURLParts", keywords),
+				BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				new MatchQuery("destinationURLParts", keywords),
+				BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				_getMatchQuery("sourceURLParts", keywords),
+				BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				new MatchQuery("sourceURLParts", keywords),
+				BooleanClauseOccur.SHOULD);
 		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
+
+		String groupBaseURL = (String)searchContext.getAttribute(
+			"groupBaseURL");
+
+		if (Validator.isNotNull(groupBaseURL) &&
+			Validator.isNotNull(keywords) &&
+			keywords.startsWith(groupBaseURL)) {
+
+			Query query = fieldQueryFactory.createQuery(
+				"sourceURL", StringUtil.removeSubstring(keywords, groupBaseURL),
+				false, false);
+
+			booleanQuery.add(query, BooleanClauseOccur.SHOULD);
 		}
 	}
 

@@ -182,9 +182,9 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "::warning ::Chart liferay-aws-marketplace@${CHART_VERSION} already exists. Bump Chart.yaml to publish."
+                        echo "::warning::Chart liferay-aws-marketplace@${CHART_VERSION} already exists."
 
-                        echo "- **liferay-aws-marketplace**: \`${CHART_VERSION}\` already published; bump to republish." >> ${GITHUB_STEP_SUMMARY}
+                        echo "- **liferay-aws-marketplace**: \`${CHART_VERSION}\` already published." >> ${GITHUB_STEP_SUMMARY}
                     fi
                 working-directory: ./cloud/helm/aws-marketplace
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}

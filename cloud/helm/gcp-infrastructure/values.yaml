@@ -44,7 +44,7 @@ podMonitoring:
                 app.kubernetes.io/name: envoy
             metricRelabeling:
                 -   action: keep
-                    regex: "^envoy_(http_downstream_(rq_(total|xx|time_bucket)|cx_[rt]x_bytes_total)|cluster_upstream_rq_(total|time_bucket))$"
+                    regex: ^envoy_(http_downstream_(rq_(total|xx|time_(bucket|sum|count))|cx_[rt]x_bytes_total)|cluster_upstream_rq_(total|time_(bucket|sum|count)))$
                     sourceLabels:
                         -   __name__
             path: /stats/prometheus
@@ -55,7 +55,7 @@ podMonitoring:
                 app.kubernetes.io/name: liferay-default
             metricRelabeling:
                 -   action: keep
-                    regex: "^jvm_(threads_(peak|current|state)|(memory(_pool)?|buffer_pool)_used_bytes|gc_collection_seconds_(count|sum)|classes_currently_loaded)$"
+                    regex: ^jvm_(threads_(peak|current|state)|(memory(_pool)?|buffer_pool)_used_bytes|gc_collection_seconds_(count|sum)|classes_currently_loaded)$
                     sourceLabels:
                         -   __name__
             path: /metrics

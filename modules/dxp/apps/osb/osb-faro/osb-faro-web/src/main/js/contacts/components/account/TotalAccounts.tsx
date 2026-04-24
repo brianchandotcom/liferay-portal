@@ -4,9 +4,13 @@ import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
 import Loading from 'shared/components/Loading';
 import React from 'react';
+import {
+	AccountMetricType,
+	IAccountMetric,
+	Metric
+} from '../../pages/account/utils/types';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {isNil} from 'lodash/fp';
-import {Metric} from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 import {toRounded} from 'shared/util/numbers';
@@ -17,7 +21,7 @@ interface IAccountCardProps {
 	className?: string;
 	description: string;
 	loading?: boolean;
-	metrics: Metric;
+	metrics?: Metric;
 	title: string;
 }
 
@@ -116,7 +120,10 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 		}
 	});
 
-	const {activeCount, newCount, totalCount} = data || {};
+	const metrics = data as IAccountMetric[] | undefined;
+
+	const getMetric = (metricType: AccountMetricType) =>
+		metrics?.find(metric => metric.metricType === metricType);
 
 	return (
 		<div className='d-flex w-100'>
@@ -126,7 +133,7 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 					'displays-all-accounts-included-in-this-property'
 				)}
 				loading={loading}
-				metrics={totalCount || {}}
+				metrics={getMetric(AccountMetricType.Total)}
 				title={Liferay.Language.get('total-accounts')}
 			/>
 
@@ -136,7 +143,7 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 					'displays-all-new-accounts-included-in-this-property'
 				)}
 				loading={loading}
-				metrics={newCount || {}}
+				metrics={getMetric(AccountMetricType.New)}
 				title={Liferay.Language.get('new-accounts')}
 			/>
 
@@ -145,7 +152,7 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 					'displays-all-active-accounts-included-in-this-property'
 				)}
 				loading={loading}
-				metrics={activeCount || {}}
+				metrics={getMetric(AccountMetricType.Active)}
 				title={Liferay.Language.get('active-accounts')}
 			/>
 		</div>

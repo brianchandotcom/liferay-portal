@@ -403,6 +403,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return JenkinsMaster.getSlavesPerHostDefault();
 	}
 
+	@Override
 	public Integer getMinimumSlaveRAM() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.minimum.slave.ram");

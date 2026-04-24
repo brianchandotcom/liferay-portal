@@ -25,6 +25,8 @@ import java.util.TreeSet;
  */
 public abstract class BaseTestClassGroup implements TestClassGroup {
 
+	public abstract Integer getMinimumSlaveRAM();
+
 	public abstract String getOSArchitecture();
 
 	public String getSlaveLabel() {
@@ -108,7 +110,32 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 		return !_testClasses.isEmpty();
 	}
 
-	protected abstract String getBaseSlaveLabel();
+	protected String getBaseSlaveLabel() {
+		String baseSlaveLabel = getParentBaseSlaveLabel();
+
+		if (!JenkinsResultsParserUtil.isCloudCINode() ||
+			!JenkinsResultsParserUtil.isNullOrEmpty(baseSlaveLabel)) {
+
+			return baseSlaveLabel;
+		}
+
+		String slaveLabel = null;
+
+		try {
+			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.osb.jenkins.web.slave.label.minimum.ram",
+				String.valueOf(getMinimumSlaveRAM()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
+			return slaveLabel;
+		}
+
+		return baseSlaveLabel;
+	}
 
 	protected String getBuildStartProperty(String propertyName) {
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
@@ -121,6 +148,10 @@ public abstract class BaseTestClassGroup implements TestClassGroup {
 				startProperties, propertyName);
 		}
 
+		return null;
+	}
+
+	protected String getParentBaseSlaveLabel() {
 		return null;
 	}
 

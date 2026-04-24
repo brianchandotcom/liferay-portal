@@ -16,33 +16,37 @@ import EmptyRecycleBinModalContent from '../modal/EmptyRecycleBinModalContent';
 
 interface Props {
 	breadcrumbItems: any[];
+	showEmptyRecycleBinAction: boolean;
 }
 
-export default function RecycleBinToolbar({breadcrumbItems}: Props) {
+export default function RecycleBinToolbar({
+	breadcrumbItems,
+	showEmptyRecycleBinAction,
+}: Props) {
 	return isRecycleBinRootPage(breadcrumbItems) ? (
-		<div>
-			<ClayToolbar
-				aria-label={Liferay.Language.get('recycle-bin')}
-				className="border-0"
-				light
-				style={{height: '72px'}}
-			>
-				<div className="container-fluid px-4">
-					<ClayToolbar.Nav>
-						<ClayToolbar.Item>
-							<ClayToolbar.Section>
-								<div
-									aria-level={2}
-									className="text-dark"
-									role="heading"
-								>
-									<Text as="span" size={7} weight="semi-bold">
-										{Liferay.Language.get('recycle-bin')}
-									</Text>
-								</div>
-							</ClayToolbar.Section>
-						</ClayToolbar.Item>
+		<ClayToolbar
+			aria-label={Liferay.Language.get('recycle-bin')}
+			className="border-0"
+			light
+			style={{height: '72px'}}
+		>
+			<div className="container-fluid px-4">
+				<ClayToolbar.Nav>
+					<ClayToolbar.Item>
+						<ClayToolbar.Section>
+							<div
+								aria-level={2}
+								className="text-dark"
+								role="heading"
+							>
+								<Text as="span" size={7} weight="semi-bold">
+									{Liferay.Language.get('recycle-bin')}
+								</Text>
+							</div>
+						</ClayToolbar.Section>
+					</ClayToolbar.Item>
 
+					{showEmptyRecycleBinAction && (
 						<ClayToolbar.Item>
 							<ClayDropDownWithItems
 								items={[
@@ -82,10 +86,10 @@ export default function RecycleBinToolbar({breadcrumbItems}: Props) {
 								}
 							/>
 						</ClayToolbar.Item>
-					</ClayToolbar.Nav>
-				</div>
-			</ClayToolbar>
-		</div>
+					)}
+				</ClayToolbar.Nav>
+			</div>
+		</ClayToolbar>
 	) : (
 		<Breadcrumb breadcrumbItems={breadcrumbItems} hideSpace={true} />
 	);

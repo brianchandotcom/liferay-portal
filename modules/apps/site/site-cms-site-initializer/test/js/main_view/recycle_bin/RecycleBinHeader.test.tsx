@@ -56,7 +56,12 @@ describe('RecycleBinToolbar', () => {
 	it('renders header text when isRecycleBinRootPage returns true', () => {
 		(isRecycleBinRootPage as jest.Mock).mockReturnValue(true);
 
-		render(<RecycleBinToolbar breadcrumbItems={breadcrumbItems} />);
+		render(
+			<RecycleBinToolbar
+				breadcrumbItems={breadcrumbItems}
+				showEmptyRecycleBinAction={true}
+			/>
+		);
 
 		expect(screen.getAllByText('recycle-bin')).toHaveLength(1);
 
@@ -67,10 +72,30 @@ describe('RecycleBinToolbar', () => {
 		).toBeInTheDocument();
 	});
 
+	it('hides Empty Recycle Bin action when showEmptyRecycleBinAction is false', () => {
+		(isRecycleBinRootPage as jest.Mock).mockReturnValue(true);
+
+		render(
+			<RecycleBinToolbar
+				breadcrumbItems={breadcrumbItems}
+				showEmptyRecycleBinAction={false}
+			/>
+		);
+
+		expect(
+			screen.queryByRole('button', {name: 'more-actions'})
+		).not.toBeInTheDocument();
+	});
+
 	it('renders breadcrumb links when isRecycleBinRootPage returns false', () => {
 		(isRecycleBinRootPage as jest.Mock).mockReturnValue(false);
 
-		render(<RecycleBinToolbar breadcrumbItems={breadcrumbItems} />);
+		render(
+			<RecycleBinToolbar
+				breadcrumbItems={breadcrumbItems}
+				showEmptyRecycleBinAction={true}
+			/>
+		);
 
 		expect(screen.getByRole('link', {name: 'Home'})).toHaveAttribute(
 			'href',

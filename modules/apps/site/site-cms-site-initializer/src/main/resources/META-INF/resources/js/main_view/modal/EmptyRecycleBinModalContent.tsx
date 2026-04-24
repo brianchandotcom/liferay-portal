@@ -9,7 +9,7 @@ import React from 'react';
 
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 
-const CMS_EMPTY_RECYCLE_BIN_FILTER =
+const CMS_RECYCLE_BIN_FILTER =
 	"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq 'files') and status eq 8";
 
 export default function EmptyRecycleBinModalContent({
@@ -21,7 +21,7 @@ export default function EmptyRecycleBinModalContent({
 		event.preventDefault();
 
 		triggerAssetBulkAction({
-			apiURL: `/o/bulk/v1.0/bulk-action?filter=${encodeURIComponent(CMS_EMPTY_RECYCLE_BIN_FILTER)}&nestedFields=embedded`,
+			apiURL: `/o/bulk/v1.0/bulk-action?filter=${encodeURIComponent(CMS_RECYCLE_BIN_FILTER)}&nestedFields=embedded`,
 			selectedData: {selectAll: true},
 			type: 'DeleteObjectBulkSelectionAction',
 		});

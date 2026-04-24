@@ -8,11 +8,14 @@ package com.liferay.ai.hub.cell.internal.security.auth.verifier;
 import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +26,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -56,7 +60,11 @@ public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 				return new AuthVerifierResult();
 			}
 
-			long userId = JWTTokenUtil.getUserId(token);
+			Company company = _companyLocalService.getCompany(
+				_portal.getCompanyId(httpServletRequest));
+
+			long userId = JWTTokenUtil.getUserId(
+				company.getVirtualHostname(), token);
 
 			if (userId == 0) {
 				AuthVerifierResult authVerifierResult =
@@ -95,5 +103,11 @@ public class AIHubCellRequestAuthVerifier implements AuthVerifier {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AIHubCellRequestAuthVerifier.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

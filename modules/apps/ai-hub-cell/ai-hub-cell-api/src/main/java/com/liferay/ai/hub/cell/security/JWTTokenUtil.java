@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -56,7 +57,7 @@ public class JWTTokenUtil {
 		return signedJWT.serialize();
 	}
 
-	public static long getUserId(String token) {
+	public static long getUserId(String issuer, String token) {
 		JWTClaimsSet jwtClaimsSet = null;
 
 		try {
@@ -76,6 +77,16 @@ public class JWTTokenUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to parse and verify the JWT token", exception);
+			}
+
+			return 0;
+		}
+
+		if (Validator.isNull(issuer) ||
+			!issuer.equals(jwtClaimsSet.getIssuer())) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid JWT issuer");
 			}
 
 			return 0;

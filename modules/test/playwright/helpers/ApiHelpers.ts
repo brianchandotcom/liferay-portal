@@ -516,7 +516,7 @@ export class DataApiHelpers extends ApiHelpers {
 			}
 			else if (item.type === 'keyword') {
 				await this.headlessAdminTaxonomy.deleteKeyword({
-					id: item.id
+					id: item.id,
 				});
 			}
 			else if (item.type === 'layoutSetPrototype') {

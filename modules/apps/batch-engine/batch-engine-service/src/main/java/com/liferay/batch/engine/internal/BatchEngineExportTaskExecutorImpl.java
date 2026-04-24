@@ -547,7 +547,7 @@ public class BatchEngineExportTaskExecutorImpl
 			}
 
 			if (id instanceof Number) {
-				return ((Number)id).longValue();
+				return GetterUtil.getLong(id);
 			}
 		}
 		catch (Exception exception) {

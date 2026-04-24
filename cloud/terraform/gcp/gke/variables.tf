@@ -5,6 +5,9 @@ variable "deployment_name" {
 		error_message="The variable \"deployment_name\" must be 3-24 characters, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens."
 	}
 }
+variable "envoy_gateway_helm_chart_version" {
+	type=string
+}
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
 	type=string

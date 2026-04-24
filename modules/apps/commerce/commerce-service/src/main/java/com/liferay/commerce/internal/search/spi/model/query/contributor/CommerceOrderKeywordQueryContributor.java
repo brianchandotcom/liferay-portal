@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
@@ -118,7 +117,7 @@ public class CommerceOrderKeywordQueryContributor
 	private WildcardQuery _getTrailingWildcardQuery(
 		String field, String value) {
 
-		return new WildcardQueryImpl(field, value + StringPool.STAR);
+		return new WildcardQuery(field, value + StringPool.STAR);
 	}
 
 	@Reference

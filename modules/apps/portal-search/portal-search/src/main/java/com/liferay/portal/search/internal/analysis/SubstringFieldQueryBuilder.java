@@ -10,8 +10,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
@@ -60,7 +60,7 @@ public class SubstringFieldQueryBuilder implements FieldQueryBuilder {
 				StringUtil.toLowerCase(value), StringPool.STAR);
 		}
 
-		return new WildcardQueryImpl(new QueryTerm(field, value));
+		return new WildcardQuery(new QueryTerm(field, value));
 	}
 
 }

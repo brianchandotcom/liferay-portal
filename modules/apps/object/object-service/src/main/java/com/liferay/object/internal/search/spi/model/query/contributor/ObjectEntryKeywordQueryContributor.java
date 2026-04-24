@@ -28,11 +28,11 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -154,7 +154,7 @@ public class ObjectEntryKeywordQueryContributor
 							BooleanClauseOccur.SHOULD);
 
 						booleanQuery.add(
-							new WildcardQueryImpl(
+							new WildcardQuery(
 								titleField, token + StringPool.STAR),
 							BooleanClauseOccur.SHOULD);
 					}
@@ -245,8 +245,7 @@ public class ObjectEntryKeywordQueryContributor
 			String lowerCaseToken = StringUtil.toLowerCase(token);
 
 			nestedBooleanQuery.add(
-				new WildcardQueryImpl(
-					fieldName, lowerCaseToken + StringPool.STAR),
+				new WildcardQuery(fieldName, lowerCaseToken + StringPool.STAR),
 				BooleanClauseOccur.MUST);
 			nestedBooleanQuery.add(
 				new TermQuery(fieldName, lowerCaseToken),

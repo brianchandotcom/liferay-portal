@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -111,7 +110,7 @@ public class OrganizationModelPreFilterContributor
 				throw new RuntimeException(portalException);
 			}
 
-			WildcardQuery wildcardQuery = new WildcardQueryImpl(
+			WildcardQuery wildcardQuery = new WildcardQuery(
 				Field.TREE_PATH, treePath);
 
 			treePathBooleanFilter.add(new QueryFilter(wildcardQuery));

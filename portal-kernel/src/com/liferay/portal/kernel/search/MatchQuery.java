@@ -3,43 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.search.generic;
+package com.liferay.portal.kernel.search;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Michael C. Han
  */
-public class MultiMatchQuery extends Query {
+public class MatchQuery extends Query {
 
-	public MultiMatchQuery(String value) {
+	public MatchQuery(String field, String value) {
+		_field = field;
 		_value = value;
 	}
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
 		return queryVisitor.visitQuery(this);
-	}
-
-	public void addField(String field) {
-		_fields.add(field);
-	}
-
-	public void addFields(Collection<String> fields) {
-		_fields.addAll(fields);
-	}
-
-	public void addFields(String... fields) {
-		Collections.addAll(_fields, fields);
 	}
 
 	public String getAnalyzer() {
@@ -50,19 +31,15 @@ public class MultiMatchQuery extends Query {
 		return _cutOffFrequency;
 	}
 
-	public Set<String> getFields() {
-		return _fields;
+	public String getField() {
+		return _field;
 	}
 
-	public Map<String, Float> getFieldsBoosts() {
-		return _fieldsBoosts;
-	}
-
-	public String getFuzziness() {
+	public Float getFuzziness() {
 		return _fuzziness;
 	}
 
-	public MatchQuery.RewriteMethod getFuzzyRewriteMethod() {
+	public RewriteMethod getFuzzyRewriteMethod() {
 		return _fuzzyRewriteMethod;
 	}
 
@@ -74,7 +51,7 @@ public class MultiMatchQuery extends Query {
 		return _minShouldMatch;
 	}
 
-	public MatchQuery.Operator getOperator() {
+	public Operator getOperator() {
 		return _operator;
 	}
 
@@ -86,10 +63,6 @@ public class MultiMatchQuery extends Query {
 		return _slop;
 	}
 
-	public Float getTieBreaker() {
-		return _tieBreaker;
-	}
-
 	public Type getType() {
 		return _type;
 	}
@@ -98,16 +71,12 @@ public class MultiMatchQuery extends Query {
 		return _value;
 	}
 
-	public MatchQuery.ZeroTermsQuery getZeroTermsQuery() {
+	public ZeroTermsQuery getZeroTermsQuery() {
 		return _zeroTermsQuery;
 	}
 
-	public boolean isFieldBoostsEmpty() {
-		return _fieldsBoosts.isEmpty();
-	}
-
-	public boolean isFieldsEmpty() {
-		return _fields.isEmpty();
+	public Boolean isFuzzyTranspositions() {
+		return _fuzzyTranspositions;
 	}
 
 	public Boolean isLenient() {
@@ -122,14 +91,16 @@ public class MultiMatchQuery extends Query {
 		_cutOffFrequency = cutOffFrequency;
 	}
 
-	public void setFuzziness(String fuzziness) {
+	public void setFuzziness(Float fuzziness) {
 		_fuzziness = fuzziness;
 	}
 
-	public void setFuzzyRewriteMethod(
-		MatchQuery.RewriteMethod fuzzyRewriteMethod) {
-
+	public void setFuzzyRewriteMethod(RewriteMethod fuzzyRewriteMethod) {
 		_fuzzyRewriteMethod = fuzzyRewriteMethod;
+	}
+
+	public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
+		_fuzzyTranspositions = fuzzyTranspositions;
 	}
 
 	public void setLenient(Boolean lenient) {
@@ -144,7 +115,7 @@ public class MultiMatchQuery extends Query {
 		_minShouldMatch = minShouldMatch;
 	}
 
-	public void setOperator(MatchQuery.Operator operator) {
+	public void setOperator(Operator operator) {
 		_operator = operator;
 	}
 
@@ -156,15 +127,11 @@ public class MultiMatchQuery extends Query {
 		_slop = slop;
 	}
 
-	public void setTieBreaker(Float tieBreaker) {
-		_tieBreaker = tieBreaker;
-	}
-
 	public void setType(Type type) {
 		_type = type;
 	}
 
-	public void setZeroTermsQuery(MatchQuery.ZeroTermsQuery zeroTermsQuery) {
+	public void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery) {
 		_zeroTermsQuery = zeroTermsQuery;
 	}
 
@@ -182,10 +149,12 @@ public class MultiMatchQuery extends Query {
 
 		sb.append(", cutOffFrequency=");
 		sb.append(_cutOffFrequency);
-		sb.append(", fields=");
-		sb.append(_fields);
+		sb.append(", field=");
+		sb.append(_field);
 		sb.append(", fuzziness=");
 		sb.append(_fuzziness);
+		sb.append(", fuzzyTranspositions=");
+		sb.append(_fuzzyTranspositions);
 		sb.append(", lenient=");
 		sb.append(_lenient);
 		sb.append(", maxExpansions=");
@@ -198,8 +167,6 @@ public class MultiMatchQuery extends Query {
 		sb.append(_prefixLength);
 		sb.append(", slop=");
 		sb.append(_slop);
-		sb.append(", tieBreaker=");
-		sb.append(_tieBreaker);
 		sb.append(", type=");
 		sb.append(_type);
 		sb.append(", value=");
@@ -209,27 +176,45 @@ public class MultiMatchQuery extends Query {
 		return sb.toString();
 	}
 
+	public enum Operator {
+
+		AND, OR
+
+	}
+
+	public enum RewriteMethod {
+
+		CONSTANT_SCORE_AUTO, CONSTANT_SCORE_BOOLEAN, CONSTANT_SCORE_FILTER,
+		SCORING_BOOLEAN, TOP_TERMS_BOOST_N, TOP_TERMS_N
+
+	}
+
 	public enum Type {
 
-		BEST_FIELDS, CROSS_FIELDS, MOST_FIELDS, PHRASE, PHRASE_PREFIX
+		BOOLEAN, PHRASE, PHRASE_PREFIX
+
+	}
+
+	public enum ZeroTermsQuery {
+
+		ALL, NONE
 
 	}
 
 	private String _analyzer;
 	private Float _cutOffFrequency;
-	private final Set<String> _fields = new HashSet<>();
-	private final Map<String, Float> _fieldsBoosts = new HashMap<>();
-	private String _fuzziness;
-	private MatchQuery.RewriteMethod _fuzzyRewriteMethod;
+	private final String _field;
+	private Float _fuzziness;
+	private RewriteMethod _fuzzyRewriteMethod;
+	private Boolean _fuzzyTranspositions;
 	private Boolean _lenient;
 	private Integer _maxExpansions;
 	private String _minShouldMatch;
-	private MatchQuery.Operator _operator;
+	private Operator _operator;
 	private Integer _prefixLength;
 	private Integer _slop;
-	private Float _tieBreaker;
 	private Type _type;
 	private final String _value;
-	private MatchQuery.ZeroTermsQuery _zeroTermsQuery;
+	private ZeroTermsQuery _zeroTermsQuery;
 
 }

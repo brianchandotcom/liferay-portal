@@ -15,6 +15,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.client.dto.v1_0.ValidationResponse;
+import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.model.Group;
@@ -60,17 +61,16 @@ public class ImportProcessResourceTest
 	public void testPostScopeScopeKeyValidate() throws Exception {
 		super.testPostScopeScopeKeyValidate();
 
-		_testPostScopeScopeKeyValidateInDifferentScope();
-		_testPostScopeScopeKeyValidateInSameScope();
-	}
+		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
 
-	@Override
-	@Test
-	public void testPostValidate() throws Exception {
-		super.testPostValidate();
+		_testPostScopeScopeKeyValidateSuccess(testGroup);
+		_testPostScopeScopeKeyValidateSuccess(companyGroup);
 
-		_testPostValidateInDifferentScope();
-		_testPostValidateInSameScope();
+		_testPostScopeScopeKeyValidateError(testGroup, companyGroup);
+		_testPostScopeScopeKeyValidateError(companyGroup, testGroup);
+
+		_testPostScopeScopeKeyValidateWithInvalidScope();
 	}
 
 	@Override
@@ -162,15 +162,16 @@ public class ImportProcessResourceTest
 		return group.getGroupId();
 	}
 
-	private void _testPostScopeScopeKeyValidateInDifferentScope()
+	private void _testPostScopeScopeKeyValidateError(
+			Group scopeGroup, Group fileGroup)
 		throws Exception {
 
-		File file = _exportLayoutAsFile(_getCompanyGroupId());
+		File file = _exportLayoutAsFile(fileGroup.getGroupId());
 
 		try {
 			ValidationResponse validationResponse =
 				importProcessResource.postScopeScopeKeyValidate(
-					String.valueOf(testGroup.getGroupId()), null,
+					String.valueOf(scopeGroup.getGroupId()), null,
 					HashMapBuilder.<String, File>put(
 						"file", file
 					).build());
@@ -186,56 +187,48 @@ public class ImportProcessResourceTest
 		}
 	}
 
-	private void _testPostScopeScopeKeyValidateInSameScope() throws Exception {
-		File file = _exportLayoutAsFile(testGroup.getGroupId());
+	private void _testPostScopeScopeKeyValidateSuccess(Group group)
+		throws Exception {
 
-		try {
-			ValidationResponse validationResponse =
-				importProcessResource.postScopeScopeKeyValidate(
-					String.valueOf(testGroup.getGroupId()), null,
-					HashMapBuilder.<String, File>put(
-						"file", file
-					).build());
+		for (String scopeKey :
+				new String[] {
+					group.getExternalReferenceCode(),
+					String.valueOf(group.getGroupId()), group.getGroupKey()
+				}) {
 
-			Assert.assertNotNull(validationResponse.getFileEntryId());
-			Assert.assertTrue(validationResponse.getSuccess());
-		}
-		finally {
-			FileUtil.delete(file);
-		}
-	}
+			File file = _exportLayoutAsFile(group.getGroupId());
 
-	private void _testPostValidateInDifferentScope() throws Exception {
-		File file = _exportLayoutAsFile(testGroup.getGroupId());
+			try {
+				ValidationResponse validationResponse =
+					importProcessResource.postScopeScopeKeyValidate(
+						scopeKey, null,
+						HashMapBuilder.<String, File>put(
+							"file", file
+						).build());
 
-		try {
-			ValidationResponse validationResponse =
-				importProcessResource.postValidate(
-					null,
-					HashMapBuilder.<String, File>put(
-						"file", file
-					).build());
-
-			Assert.assertFalse(validationResponse.getSuccess());
-		}
-		finally {
-			FileUtil.delete(file);
+				Assert.assertNotNull(validationResponse.getFileEntryId());
+				Assert.assertTrue(validationResponse.getSuccess());
+			}
+			finally {
+				FileUtil.delete(file);
+			}
 		}
 	}
 
-	private void _testPostValidateInSameScope() throws Exception {
-		File file = _exportLayoutAsFile(_getCompanyGroupId());
+	private void _testPostScopeScopeKeyValidateWithInvalidScope()
+		throws Exception {
+
+		File file = _exportLayoutAsFile(testGroup.getGroupId());
 
 		try {
-			ValidationResponse validationResponse =
-				importProcessResource.postValidate(
-					null,
+			HttpInvoker.HttpResponse httpResponse =
+				importProcessResource.postScopeScopeKeyValidateHttpResponse(
+					RandomTestUtil.randomString(), null,
 					HashMapBuilder.<String, File>put(
 						"file", file
 					).build());
 
-			Assert.assertNotNull(validationResponse.getFileEntryId());
-			Assert.assertTrue(validationResponse.getSuccess());
+			Assert.assertEquals(404, httpResponse.getStatusCode());
 		}
 		finally {
 			FileUtil.delete(file);

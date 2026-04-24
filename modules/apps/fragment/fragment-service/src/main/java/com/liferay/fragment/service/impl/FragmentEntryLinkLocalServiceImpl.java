@@ -27,8 +27,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.Table;
-import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -862,26 +860,24 @@ public class FragmentEntryLinkLocalServiceImpl
 			boolean maxCreateDatePredicate, long scopeGroupId)
 		throws PortalException {
 
-		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
-			LayoutTable.INSTANCE.plid
-		).from(
-			LayoutTable.INSTANCE
-		).leftJoinOn(
-			LayoutPageTemplateEntryTable.INSTANCE,
-			LayoutTable.INSTANCE.plid.eq(
-				LayoutPageTemplateEntryTable.INSTANCE.plid
-			).or(
-				LayoutTable.INSTANCE.classPK.eq(
-					LayoutPageTemplateEntryTable.INSTANCE.plid)
-			)
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.plid.isNull()
-		).as(
-			"tempLayoutTable", LayoutTable.INSTANCE
-		);
-
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, scopeGroupId);
+			fragmentEntry, scopeGroupId
+		).and(
+			FragmentEntryLinkTable.INSTANCE.plid.notIn(
+				DSLQueryFactoryUtil.select(
+					LayoutTable.INSTANCE.plid
+				).from(
+					LayoutTable.INSTANCE
+				).innerJoinON(
+					LayoutPageTemplateEntryTable.INSTANCE,
+					LayoutTable.INSTANCE.plid.eq(
+						LayoutPageTemplateEntryTable.INSTANCE.plid
+					).or(
+						LayoutTable.INSTANCE.classPK.eq(
+							LayoutPageTemplateEntryTable.INSTANCE.plid)
+					)
+				))
+		);
 
 		if (maxCreateDatePredicate) {
 			predicate = predicate.and(
@@ -890,10 +886,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fromStep.from(
 			FragmentEntryLinkTable.INSTANCE
-		).innerJoinON(
-			tempLayoutTableTable,
-			FragmentEntryLinkTable.INSTANCE.plid.eq(
-				(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
 		).where(
 			predicate
 		);
@@ -906,27 +898,27 @@ public class FragmentEntryLinkLocalServiceImpl
 				long scopeGroupId)
 		throws PortalException {
 
-		Table<LayoutTable> tempLayoutTableTable = DSLQueryFactoryUtil.select(
-			LayoutTable.INSTANCE.plid
-		).from(
-			LayoutTable.INSTANCE
-		).innerJoinON(
-			LayoutPageTemplateEntryTable.INSTANCE,
-			LayoutTable.INSTANCE.plid.eq(
-				LayoutPageTemplateEntryTable.INSTANCE.plid
-			).or(
-				LayoutTable.INSTANCE.classPK.eq(
-					LayoutPageTemplateEntryTable.INSTANCE.plid)
-			)
-		).where(
-			LayoutPageTemplateEntryTable.INSTANCE.type.eq(
-				layoutPageTemplateType)
-		).as(
-			"tempLayoutTable", LayoutTable.INSTANCE
-		);
-
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, scopeGroupId);
+			fragmentEntry, scopeGroupId
+		).and(
+			FragmentEntryLinkTable.INSTANCE.plid.in(
+				DSLQueryFactoryUtil.select(
+					LayoutTable.INSTANCE.plid
+				).from(
+					LayoutTable.INSTANCE
+				).innerJoinON(
+					LayoutPageTemplateEntryTable.INSTANCE,
+					LayoutTable.INSTANCE.plid.eq(
+						LayoutPageTemplateEntryTable.INSTANCE.plid
+					).or(
+						LayoutTable.INSTANCE.classPK.eq(
+							LayoutPageTemplateEntryTable.INSTANCE.plid)
+					)
+				).where(
+					LayoutPageTemplateEntryTable.INSTANCE.type.eq(
+						layoutPageTemplateType)
+				))
+		);
 
 		if (maxCreateDatePredicate) {
 			predicate = predicate.and(
@@ -935,10 +927,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fromStep.from(
 			FragmentEntryLinkTable.INSTANCE
-		).innerJoinON(
-			tempLayoutTableTable,
-			FragmentEntryLinkTable.INSTANCE.plid.eq(
-				(Expression<Long>)tempLayoutTableTable.getColumn("plid"))
 		).where(
 			predicate
 		);

@@ -8,7 +8,6 @@ import {createReadStream} from 'fs';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -39,7 +38,6 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	applicationsMenuPageTest,
 	collectionsPagesTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: false},

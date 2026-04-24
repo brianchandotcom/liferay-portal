@@ -3,7 +3,9 @@ defaults:
         shell: bash
 jobs:
     test-cloud-helm-chart:
-        if: ${{github.repository == 'liferay/liferay-portal'}}
+        if: |
+            (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
+            (github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -15,10 +17,38 @@ jobs:
                     helm upgrade -i liferay --wait .
 
                     helm test liferay
-                working-directory: ./cloud/helm
+                working-directory: ./cloud/helm/default
+    test-helm-templates:
+        if: |
+            (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
+            (github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal')
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Install helm-unittest plugin
+                run: helm plugin install https://github.com/helm-unittest/helm-unittest
+            -   name: Run GCP chart unit tests
+                run: helm unittest .
+                working-directory: ./cloud/helm/gcp
+            -   name: Run overlay init container template tests
+                run: ./cloud/helm/default/tests/overlay_init_container_test.sh
+            -   name: Run overlay-sync script tests
+                run: ./cloud/helm/default/scripts/tests/overlay-sync-test.sh
 on:
+    pull_request:
+        branches:
+            -   master
+        paths:
+            -   .github/workflows/ci-test-cloud-helm-chart.yaml
+            -   cloud/**
+        types:
+            -   opened
+            -   reopened
+            -   synchronize
     push:
         branches:
             -   master
         paths:
+            -   .github/workflows/ci-test-cloud-helm-chart.yaml
             -   cloud/**

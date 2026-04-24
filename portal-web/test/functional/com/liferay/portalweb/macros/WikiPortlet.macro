@@ -48,6 +48,10 @@ definition {
 			configurationName = "Deprecation",
 			configurationScope = "Virtual Instance Scope");
 
+		if (IsElementNotPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Wiki", toggle_state = "")) {
+			Search.searchCP(searchTerm = "Wiki");
+		}
+
 		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Wiki", toggle_state = "Disabled")) {
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlag#TOGGLE_ROW",

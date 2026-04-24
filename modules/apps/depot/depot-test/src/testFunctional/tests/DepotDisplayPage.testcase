@@ -129,6 +129,39 @@ definition {
 
 		Navigator.gotoBack();
 
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+		SelectWindow.selectPopUp(value1 = "null");
+
+		Navigator.gotoNavNested(navNested = "SEO");
+
+		OpenGraph.mapEditableTextToField(
+			field = "File Name",
+			mappedField = "HTML Title",
+			mappedFieldName = "HTML Title",
+			mappedFieldText = "HTML Title is ",
+			textType = "TextInput");
+
+		OpenGraph.mapEditableTextToField(
+			field = "MIME Type",
+			mappedField = "description",
+			mappedFieldName = "Description",
+			mappedFieldText = "Description is ",
+			textType = "TextArea");
+
+		Button.clickSave();
+
+		OpenGraph.viewMappedField(
+			mappedField = "title",
+			mappedFieldValue = "HTML Title is File Name: ${fileName:File Name}");
+
+		OpenGraph.viewMappedField(
+			mappedField = "description",
+			mappedFieldValue = "Description is MIME Type: ${mimeType:MiME Type}",
+			textType = "TextArea");
+
+		Navigator.gotoBack();
+
 		PageEditor.publish();
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
@@ -161,72 +194,6 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:title" content="Title is File Name: Document_1.jpg","og:description" content="Description is MIME Type: image/jpeg"''');
 
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image:alt" content="Image Alt is Author Name: Test Test","og:image" content="${portalURL}/documents/${siteId}/0/Document_1.jpg''');
-	}
-
-	@description = "This test ensures that a user can map the display page with SEO when using the DM type from AL on a connect site."
-	@priority = 5
-	@refactordone
-	test CanMapDMWithSEO {
-		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
-
-		DMDocumentType.add(
-			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text",
-			dmDocumentTypeName = "DM Document Type Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Test Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.configureDDMStructures(
-			depotName = "Test Depot Name",
-			siteName = "Test Site Name",
-			tableEntryText = "Yes");
-
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Document",
-			depotDocumentType = "true",
-			depotName = "Test Depot Name",
-			displayPageTemplateEntryName = "Display Page Template Name",
-			groupName = "Test Site Name",
-			subType = "DM Document Type Name");
-
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Template Name");
-
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
-
-		SelectWindow.selectPopUp(value1 = "null");
-
-		Navigator.gotoNavNested(navNested = "SEO");
-
-		OpenGraph.mapEditableTextToField(
-			field = "File Name",
-			mappedField = "HTML Title",
-			mappedFieldName = "HTML Title",
-			mappedFieldText = "HTML Title is ",
-			textType = "TextInput");
-
-		OpenGraph.mapEditableTextToField(
-			field = "MIME Type",
-			mappedField = "description",
-			mappedFieldName = "Description",
-			mappedFieldText = "Description is ",
-			textType = "TextArea");
-
-		Button.clickSave();
-
-		OpenGraph.viewMappedField(
-			mappedField = "title",
-			mappedFieldValue = "HTML Title is File Name: ${fileName:File Name}");
-
-		OpenGraph.viewMappedField(
-			mappedField = "description",
-			mappedFieldValue = "Description is MIME Type: ${mimeType:MiME Type}",
-			textType = "TextArea");
 	}
 
 	@description = "This test ensures that a user can view the web content using display page template with WC structure from AL on a connect site."

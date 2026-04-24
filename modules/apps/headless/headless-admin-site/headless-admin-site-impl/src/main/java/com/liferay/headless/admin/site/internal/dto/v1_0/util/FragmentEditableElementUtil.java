@@ -13,6 +13,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.dto.v1_0.DateFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
@@ -277,6 +278,48 @@ public class FragmentEditableElementUtil {
 		return jsonObject;
 	}
 
+	private static JSONObject _getDateFragmentEditableElementJSONObject(
+			long companyId,
+			DateFragmentEditableElementValue dateFragmentEditableElementValue,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		FragmentMappedValue fragmentMappedValue =
+			dateFragmentEditableElementValue.getDate();
+
+		if (fragmentMappedValue == null) {
+			return null;
+		}
+
+		JSONObject jsonObject =
+			FragmentMappingUtil.getFragmentMappedValueJSONObject(
+				companyId, fragmentMappedValue, infoItemServiceRegistry,
+				scopeGroupId);
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		FragmentInlineValue dateFormat =
+			dateFragmentEditableElementValue.getDateFormat();
+
+		if (dateFormat == null) {
+			return jsonObject;
+		}
+
+		JSONObject dateFormatJSONObject = _getFragmentInlineValueJSONObject(
+			dateFormat);
+
+		if (JSONUtil.isEmpty(dateFormatJSONObject)) {
+			return jsonObject;
+		}
+
+		return JSONUtil.merge(
+			jsonObject,
+			JSONUtil.put(
+				"config", JSONUtil.put("dateFormat", dateFormatJSONObject)));
+	}
+
 	private static JSONObject _getEditableFragmentEntryProcessorJSONObject(
 		FragmentEditableElement[] fragmentEditableElements,
 		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
@@ -314,6 +357,24 @@ public class FragmentEditableElementUtil {
 							(ActionFragmentEditableElementValue)
 								fragmentEditableElementValue,
 							layoutStructureItemImporterContext.getCompanyId(),
+							layoutStructureItemImporterContext.
+								getInfoItemServiceRegistry(),
+							layoutStructureItemImporterContext.getGroupId())));
+
+				continue;
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.DATE)) {
+
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getJSONObject(
+						() -> _getDateFragmentEditableElementJSONObject(
+							layoutStructureItemImporterContext.getCompanyId(),
+							(DateFragmentEditableElementValue)
+								fragmentEditableElementValue,
 							layoutStructureItemImporterContext.
 								getInfoItemServiceRegistry(),
 							layoutStructureItemImporterContext.getGroupId())));
@@ -451,6 +512,12 @@ public class FragmentEditableElementUtil {
 
 		if (Objects.equals(type, "background-image")) {
 			return _toBackgroundImageFragmentEditableElementValue(
+				companyId, dtoConverterContext, infoItemServiceRegistry,
+				jsonObject, scopeGroupId);
+		}
+
+		if (Objects.equals(type, "date-time")) {
+			return _toDateFragmentEditableElementValue(
 				companyId, dtoConverterContext, infoItemServiceRegistry,
 				jsonObject, scopeGroupId);
 		}
@@ -935,6 +1002,42 @@ public class FragmentEditableElementUtil {
 
 				return configJSONObject.put("prefix", "tel:");
 			});
+	}
+
+	private static DateFragmentEditableElementValue
+		_toDateFragmentEditableElementValue(
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		if (!FragmentMappingUtil.isMappedValue(jsonObject)) {
+			return null;
+		}
+
+		DateFragmentEditableElementValue dateFragmentEditableElementValue =
+			new DateFragmentEditableElementValue();
+
+		dateFragmentEditableElementValue.setDate(
+			() -> FragmentMappingUtil.toFragmentMappedValue(
+				companyId, dtoConverterContext, infoItemServiceRegistry,
+				jsonObject, scopeGroupId));
+
+		JSONObject configJSONObject = jsonObject.getJSONObject("config");
+
+		if (configJSONObject != null) {
+			JSONObject dateFormatJSONObject = configJSONObject.getJSONObject(
+				"dateFormat");
+
+			if (dateFormatJSONObject != null) {
+				dateFragmentEditableElementValue.setDateFormat(
+					() -> _getFragmentInlineValue(dateFormatJSONObject));
+			}
+		}
+
+		dateFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.DATE);
+
+		return dateFragmentEditableElementValue;
 	}
 
 	private static DisplayPageActionInteraction _toDisplayPageActionInteraction(

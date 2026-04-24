@@ -66,9 +66,9 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "::warning ::Chart ${{inputs.chart_name}}@${CHART_VERSION} already exists. Bump Chart.yaml to publish."
+                        echo "::warning::Chart ${{inputs.chart_name}}@${CHART_VERSION} already exists."
 
-                        echo "- **${{inputs.chart_name}}**: \`${CHART_VERSION}\` already published; bump to republish." >> ${GITHUB_STEP_SUMMARY}
+                        echo "- **${{inputs.chart_name}}**: \`${CHART_VERSION}\` already published." >> ${GITHUB_STEP_SUMMARY}
                     fi
                 working-directory: ${{inputs.working_directory}}
             -   id: auth

@@ -11,9 +11,7 @@ import React from 'react';
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 
 const renderComponent = () => {
-	return render(
-		<NewImport backURL="/some/back/url" isCompanyGroup={false} />
-	);
+	return render(<NewImport backURL="/some/back/url" groupId={0} />);
 };
 
 describe('NewImport', () => {

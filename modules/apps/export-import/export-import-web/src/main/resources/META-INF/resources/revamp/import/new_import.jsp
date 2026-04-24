@@ -52,7 +52,7 @@ portletDisplay.setURLBack(backURL);
 		module="{NewImport} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"isCompanyGroup", stagingGroupHelper.isCompanyGroup(liveGroup)
+				"groupId", liveGroupId
 			).build()
 		%>'
 	/>

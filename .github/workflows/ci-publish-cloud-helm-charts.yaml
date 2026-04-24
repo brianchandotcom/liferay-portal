@@ -45,7 +45,7 @@ jobs:
                     Charts for this PR are available at \`${REGISTRY}\`. To test on a cluster, set your ArgoCD namespace and run:
 
                     \`\`\`bash
-                    ARGOCD_NS=argocd  # adjust if your ArgoCD is in a different namespace
+                    ARGOCD_NS=\$(kubectl get pods -A -l app.kubernetes.io/name=argocd-server -o jsonpath='{.items[0].metadata.namespace}')
 
                     # Permit GHCR in ArgoCD AppProjects (only needed once per cluster)
                     kubectl patch appproject liferay-application -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'

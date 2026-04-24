@@ -172,23 +172,24 @@ describe('Analytics', () => {
 		Analytics.reset();
 		AnalyticsClient.dispose();
 
+		localStorage.removeItem(AnalyticsType.Keys.PrevEmailAddressHash);
+
 		Analytics = AnalyticsClient.create(INITIAL_CONFIG);
 
 		sendDummyEvents(Analytics, 1);
 
-		setTimeout(async () => {
+		await wait(FLUSH_INTERVAL * 2);
 
-			// Flush should have happened at least once
+		// Flush should have happened at least once
 
-			const userId = getItem(AnalyticsType.Keys.UserId);
+		const userId = getItem(AnalyticsType.Keys.UserId);
 
-			await Analytics.setIdentity({
-				email: 'john@liferay.com',
-				name: 'John',
-			});
+		await Analytics.setIdentity({
+			email: 'john@liferay.com',
+			name: 'John',
+		});
 
-			expect(getItem(AnalyticsType.Keys.UserId)).toEqual(userId);
-		}, FLUSH_INTERVAL * 2);
+		expect(getItem(AnalyticsType.Keys.UserId)).toEqual(userId);
 	});
 
 	it('replace the user id whenever the set identity hash is changed', async () => {

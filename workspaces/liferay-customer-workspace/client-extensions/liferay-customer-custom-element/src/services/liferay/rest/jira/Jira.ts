@@ -117,8 +117,8 @@ export async function getIssue(issueKey: string) {
 	return jiraFetchJSON(`/issue/${issueKey}`);
 }
 
-export async function getJSMObjects(name: string) {
-	const response = await jiraFetch(`/jsm-objects/${name}`);
+export async function getJSMObjects(schema: string, name: string) {
+	const response = await jiraFetch(`/jsm-objects/${schema}/${name}`);
 
 	if (!response.ok) {
 		return [];

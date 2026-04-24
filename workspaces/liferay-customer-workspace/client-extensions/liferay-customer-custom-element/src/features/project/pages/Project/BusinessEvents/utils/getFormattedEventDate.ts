@@ -43,7 +43,7 @@ function getFormattedEventDateTime(
 			: plannedEventTime?.minutes ?? '00';
 	}
 
-	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000`;
+	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000Z`;
 
 	return formattedDateTime;
 }

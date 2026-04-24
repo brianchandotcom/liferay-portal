@@ -84,7 +84,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
 
 	const isDescriptionRequired = useMemo(
-		() => businessEvent.eventType?.key === 'otherEvent',
+		() => businessEvent.eventType?.key === 'Other Event',
 		[businessEvent.eventType]
 	);
 
@@ -92,7 +92,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		useState<boolean>(false);
 
 	const isNewLiferayVersionRequired = useMemo(
-		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		() => ['Migration', 'Upgrade'].includes(businessEvent.eventType?.key!),
 		[businessEvent.eventType]
 	);
 
@@ -182,15 +182,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {
 			...businessEvent,
-			currentLiferayVersion: isJiraBackend
-				? businessEvent.currentLiferayVersion?.name
-				: businessEvent.currentLiferayVersion?.key,
-			newLiferayVersion: isJiraBackend
-				? businessEvent.newLiferayVersion?.name
-				: businessEvent.newLiferayVersion?.key,
-			timeZone: isJiraBackend
-				? businessEvent.timeZone?.name
-				: businessEvent.timeZone?.key,
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
+			plannedEventDate: getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
+			),
+			timeZone: businessEvent.timeZone?.key,
 		};
 
 		try {
@@ -233,34 +231,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		loadingUTCTimeZonesList;
 
 	useEffect(() => {
-		if (hasImpactingEvents === 'yes') {
-			const selectedTicketsMap = selectedTickets.map(
-				(ticket) => `"${ticket.ticketId}"`
-			);
-
-			setFieldValue(
-				'businessEvent.associatedTickets',
-				`[${selectedTicketsMap.length ? selectedTicketsMap.join(', ') : ''}]`
-			);
-		}
-		else {
-			setFieldValue('businessEvent.associatedTickets', '[]');
-		}
-	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
-
-	useEffect(() => {
 		setFieldValue(
-			'businessEvent.plannedEventDate',
-			getFormattedEventDateTime(
-				businessEvent.plannedEventDate,
-				businessEvent.plannedEventTime
-			)
+			'businessEvent.associatedTickets',
+			hasImpactingEvents === 'yes'
+				? selectedTickets.map((ticket) => ticket.ticketId).join(',')
+				: ''
 		);
-	}, [
-		businessEvent.plannedEventDate,
-		businessEvent.plannedEventTime,
-		setFieldValue,
-	]);
+	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
 
 	useEffect(() => {
 		const hasCurrentLiferayVersion =

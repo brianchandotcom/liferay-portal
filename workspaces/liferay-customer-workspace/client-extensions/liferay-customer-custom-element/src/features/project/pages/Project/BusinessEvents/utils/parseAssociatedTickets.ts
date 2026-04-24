@@ -11,11 +11,15 @@ export default function parseAssociatedTickets(
 	}
 
 	try {
-		return JSON.parse(associatedTickets);
-	}
-	catch (error) {
-		console.error('Error parsing associatedTickets:', error);
+		const parsed = JSON.parse(associatedTickets);
 
-		return [];
+		return Array.isArray(parsed) ? parsed.map(String) : [String(parsed)];
+	}
+	catch {
+		return associatedTickets
+			.replace(/^\[|\]$/g, '')
+			.split(',')
+			.map((id) => id.trim().replace(/^['"]|['"]$/g, ''))
+			.filter(Boolean);
 	}
 }

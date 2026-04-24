@@ -137,7 +137,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				updatedBusinessEvent.actualEventDate,
 				updatedBusinessEvent.actualEventTime
 			),
-			eventStatus: {key: 'completed'},
+			eventStatus: {key: 'Completed'},
 			lastComment: updatedBusinessEvent?.lastComment,
 			plannedEventDate: businessEvent.plannedEventDate,
 			r_accountEntryToBusinessEvents_accountEntryId:

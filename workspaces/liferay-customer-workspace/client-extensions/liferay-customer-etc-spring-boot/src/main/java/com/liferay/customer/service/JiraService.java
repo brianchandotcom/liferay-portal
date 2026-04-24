@@ -6,7 +6,7 @@
 package com.liferay.customer.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.customer.constants.HeatTagConstants;
+import com.liferay.customer.constants.BusinessEventConstants;
 import com.liferay.customer.constants.JiraIssueConstants;
 import com.liferay.customer.model.BusinessEvent;
 import com.liferay.customer.model.JiraSupportIssue;
@@ -18,15 +18,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -208,9 +201,8 @@ public class JiraService extends BaseService {
 				_getCredentials(),
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
-						_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-						"/jsm/assets/workspace/", workspaceId, "/v1/object/",
-						objectId)
+						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+						workspaceId, "/v1/object/", objectId)
 				).build(
 				).toUri()));
 
@@ -288,43 +280,6 @@ public class JiraService extends BaseService {
 		responseJSONObject.put("items", itemsJSONArray);
 
 		return responseJSONObject.toString();
-	}
-
-	public List<BusinessEvent> getBusinessEventsList(
-			String accountExternalReferenceCode)
-		throws Exception {
-
-		String aql = StringBundler.concat(
-			"objectType = \"Business Event\" AND (\"Account\" = \"",
-			accountExternalReferenceCode,
-			"\" OR \"Account\".\"External Key\" = \"",
-			accountExternalReferenceCode, "\")");
-
-		JSONObject jsmAssetsJSONObject = _searchJSMAssetsObjectsJSONObject(
-			_jiraWorkspaceId, aql);
-
-		JSONArray valuesJSONArray = jsmAssetsJSONObject.optJSONArray("values");
-
-		List<BusinessEvent> businessEvents = new ArrayList<>();
-
-		if ((valuesJSONArray != null) && !valuesJSONArray.isEmpty()) {
-			JSONArray objectTypeAttributesJSONArray =
-				_getJSMObjectTypeAttributesJSONArray(
-					_getJSMObjectTypeId(valuesJSONArray.getJSONObject(0)));
-
-			for (int i = 0; i < valuesJSONArray.length(); i++) {
-				JSONObject jsmJSONObject = valuesJSONArray.getJSONObject(i);
-
-				_injectAttributeNames(
-					jsmJSONObject, objectTypeAttributesJSONArray);
-
-				businessEvents.add(
-					new BusinessEvent(
-						accountExternalReferenceCode, jsmJSONObject));
-			}
-		}
-
-		return businessEvents;
 	}
 
 	public List<BusinessEvent> getBusinessEventsSince(String fromDate)
@@ -502,31 +457,39 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
-	@Cacheable("jsmObjects")
+	@Cacheable("jsmFieldOptions")
 	public String getFieldOptions(String fieldName) throws Exception {
-		String fieldId = getFieldId(fieldName);
-
-		if (Validator.isNull(fieldId)) {
-			return new JSONArray(
-			).toString();
-		}
-
-		JSONArray optionsJSONArray = getCustomFieldOptions(fieldId);
+		JSONArray objectTypeAttributesJSONArray =
+			_getJSMObjectTypeAttributesJSONArray(
+				_getBusinessEventObjectTypeId());
 
 		JSONArray itemsJSONArray = new JSONArray();
 
-		if (optionsJSONArray != null) {
-			for (int i = 0; i < optionsJSONArray.length(); i++) {
-				JSONObject optionJSONObject = optionsJSONArray.getJSONObject(i);
+		for (int i = 0; i < objectTypeAttributesJSONArray.length(); i++) {
+			JSONObject objectTypeAttributeJSONObject =
+				objectTypeAttributesJSONArray.getJSONObject(i);
 
-				itemsJSONArray.put(
-					new JSONObject(
-					).put(
-						"key", optionJSONObject.optString("value")
-					).put(
-						"name", optionJSONObject.optString("value")
-					));
+			if (!fieldName.equals(
+					objectTypeAttributeJSONObject.optString("name"))) {
+
+				continue;
 			}
+
+			String options = objectTypeAttributeJSONObject.optString("options");
+
+			if (Validator.isNotNull(options)) {
+				for (String option : options.split(",")) {
+					itemsJSONArray.put(
+						new JSONObject(
+						).put(
+							"key", option
+						).put(
+							"name", option
+						));
+				}
+			}
+
+			break;
 		}
 
 		return itemsJSONArray.toString();
@@ -620,40 +583,6 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
-	public Map<String, String> getJSMAssociatedTicketsHeatTags(
-		List<BusinessEvent> businessEvents) {
-
-		Map<String, String> associatedTicketsHeatTags = new HashMap<>();
-
-		for (BusinessEvent businessEvent : businessEvents) {
-			String heatTag = _getJSMHeatTag(businessEvent);
-
-			if (Validator.isNull(businessEvent.getAssociatedTickets())) {
-				continue;
-			}
-
-			JSONArray associatedTicketIdsJSONArray = new JSONArray(
-				businessEvent.getAssociatedTickets());
-
-			for (int j = 0; j < associatedTicketIdsJSONArray.length(); j++) {
-				String associatedTicketId =
-					associatedTicketIdsJSONArray.getString(j);
-
-				String highestHeatTag = associatedTicketsHeatTags.get(
-					associatedTicketId);
-
-				if (Validator.isNull(highestHeatTag) ||
-					(HeatTagConstants.getScore(highestHeatTag) <=
-						HeatTagConstants.getScore(heatTag))) {
-
-					associatedTicketsHeatTags.put(associatedTicketId, heatTag);
-				}
-			}
-		}
-
-		return associatedTicketsHeatTags;
-	}
-
 	public String getJSMIdByLiferayId(long liferayId) throws Exception {
 		String aql =
 			"objectType = \"Business Event\" AND \"ID\" = " + liferayId;
@@ -673,8 +602,12 @@ public class JiraService extends BaseService {
 	}
 
 	@Cacheable("jsmObjects")
-	public String getJSMObjects(String objectTypeName) throws Exception {
-		String aql = "objectType = \"" + objectTypeName + "\"";
+	public String getJSMObjects(String objectSchemaName, String objectTypeName)
+		throws Exception {
+
+		String aql = StringBundler.concat(
+			"objectSchema = \"", objectSchemaName, "\" AND objectType = \"",
+			objectTypeName, "\"");
 
 		JSONArray itemsJSONArray = new JSONArray();
 
@@ -753,15 +686,15 @@ public class JiraService extends BaseService {
 	}
 
 	public String getLiferayId(String id) throws Exception {
-		JSONObject rawBusinessEventJSONObject = _getJSMAssetObjectJSONObject(
+		JSONObject businessEventJSONObject = _getJSMAssetObjectJSONObject(
 			_jiraWorkspaceId, id);
 
 		JSONArray objectTypeAttributesJSONArray =
 			_getJSMObjectTypeAttributesJSONArray(
-				_getJSMObjectTypeId(rawBusinessEventJSONObject));
+				_getJSMObjectTypeId(businessEventJSONObject));
 
 		return _getLiferayId(
-			rawBusinessEventJSONObject, objectTypeAttributesJSONArray);
+			businessEventJSONObject, objectTypeAttributesJSONArray);
 	}
 
 	public JSONArray getProjectVersions(String projectKey) throws Exception {
@@ -801,7 +734,7 @@ public class JiraService extends BaseService {
 	public void scheduledIssuesCacheEviction() throws Exception {
 	}
 
-	@CacheEvict(allEntries = true, value = "jsmObjects")
+	@CacheEvict(allEntries = true, value = {"jsmFieldOptions", "jsmObjects"})
 	@Scheduled(
 		cron = "${liferay.customer.jira.service.jsm.objects.cache.eviction.cron}"
 	)
@@ -1042,49 +975,63 @@ public class JiraService extends BaseService {
 
 		attributesJSONObject.put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Actual Go-Live Date"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_ACTUAL_GO_LIVE_DATE),
 			businessEvent.getActualEventDate()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Associated Tickets"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_ASSOCIATED_TICKETS),
 			businessEvent.getAssociatedTickets()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Current Version"),
-			businessEvent.getCurrentLiferayVersionName()
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_CURRENT_VERSION),
+			businessEvent.getCurrentLiferayVersionKey()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Description"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_DESCRIPTION),
 			businessEvent.getDescription()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Event Status"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_EVENT_STATUS),
 			businessEvent.getEventStatusKey()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Event Type"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_EVENT_TYPE),
 			businessEvent.getEventTypeName()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Last Comment"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_LAST_COMMENT),
 			businessEvent.getLastComment()
 		).put(
-			_getObjectTypeAttributeId(objectTypeAttributesJSONArray, "Name"),
+			_getObjectTypeAttributeId(
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_NAME),
 			businessEvent.getName()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "New Version"),
-			businessEvent.getNewLiferayVersionName()
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_NEW_VERSION),
+			businessEvent.getNewLiferayVersionKey()
 		).put(
-			_getObjectTypeAttributeId(objectTypeAttributesJSONArray, "Status"),
+			_getObjectTypeAttributeId(
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_STATUS),
 			businessEvent.getEventStatusKey()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Target Event Date"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_TARGET_EVENT_DATE),
 			businessEvent.getPlannedEventDate()
 		).put(
 			_getObjectTypeAttributeId(
-				objectTypeAttributesJSONArray, "Time Zone"),
+				objectTypeAttributesJSONArray,
+				BusinessEventConstants.ATTRIBUTE_TIME_ZONE),
 			businessEvent.getTimeZoneName()
 		);
 
@@ -1092,7 +1039,9 @@ public class JiraService extends BaseService {
 
 		if (Validator.isNotNull(liferayId) && !liferayId.equals("0")) {
 			attributesJSONObject.put(
-				_getObjectTypeAttributeId(objectTypeAttributesJSONArray, "ID"),
+				_getObjectTypeAttributeId(
+					objectTypeAttributesJSONArray,
+					BusinessEventConstants.ATTRIBUTE_ID),
 				liferayId);
 		}
 
@@ -1102,7 +1051,8 @@ public class JiraService extends BaseService {
 		if (Validator.isNotNull(accountExternalReferenceCode)) {
 			attributesJSONObject.put(
 				_getObjectTypeAttributeId(
-					objectTypeAttributesJSONArray, "Account"),
+					objectTypeAttributesJSONArray,
+					BusinessEventConstants.ATTRIBUTE_ACCOUNT),
 				_getJSMAccountObjectId(accountExternalReferenceCode));
 		}
 
@@ -1113,57 +1063,6 @@ public class JiraService extends BaseService {
 		else {
 			_createJSMAssetObjectJSONObject(
 				_jiraWorkspaceId, objectTypeId, attributesJSONObject);
-		}
-	}
-
-	public void syncBusinessEvents(
-			String koroneikiAccountKey, String businessEvents,
-			Map<String, String> associatedTicketsHeatTags)
-		throws Exception {
-
-		updateAccountObject(koroneikiAccountKey, businessEvents);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("Organization in aqlFunction('\"External Key\" = \"");
-		sb.append(koroneikiAccountKey);
-		sb.append("\"') and (status not in ('");
-		sb.append(StringUtil.merge(JiraIssueConstants.STATUSES_CLOSED, "','"));
-		sb.append("'))");
-
-		List<JiraSupportIssue> jiraSupportIssues = search(
-			sb.toString(), new String[] {"key", "labels", "status", "summary"});
-
-		for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
-			List<String> addLabels = new ArrayList<>();
-			List<String> removeLabels = new ArrayList<>();
-
-			if (associatedTicketsHeatTags.containsKey(
-					jiraSupportIssue.getKey())) {
-
-				addLabels.add("impacting_business_event");
-
-				String heatTag = _getJSMHeatTag(jiraSupportIssue.getLabels());
-
-				String highestHeatTag = associatedTicketsHeatTags.get(
-					jiraSupportIssue.getKey());
-
-				if ((HeatTagConstants.getScore(heatTag) <=
-						HeatTagConstants.getScore(highestHeatTag)) &&
-					!heatTag.equals(highestHeatTag)) {
-
-					addLabels.add(
-						highestHeatTag + _JSM_AUTOMATION_HEAT_TAG_SUFFIX);
-				}
-			}
-			else {
-				removeLabels.add("impacting_business_event");
-			}
-
-			updateIssue(
-				jiraSupportIssue.getKey(), businessEvents,
-				addLabels.toArray(new String[0]),
-				removeLabels.toArray(new String[0]));
 		}
 	}
 
@@ -1218,88 +1117,19 @@ public class JiraService extends BaseService {
 			_jiraWorkspaceId, objectTypeId, attributesJSONObject);
 	}
 
-	public void updateAccountHeatTags(String externalReferenceCode)
-		throws Exception {
-
-		List<BusinessEvent> businessEvents = getBusinessEventsList(
-			externalReferenceCode);
-
-		_updateJSMTickets(
-			externalReferenceCode,
-			getJSMAssociatedTicketsHeatTags(businessEvents));
-	}
-
-	public void updateAccountObject(
-			String koroneikiAccountKey, String businessEvents)
-		throws Exception {
-
-		JSONObject accountResponseJSONObject =
-			_searchAccountByExternalKeyJSONObject(koroneikiAccountKey);
-
-		JSONArray valuesJSONArray = accountResponseJSONObject.getJSONArray(
-			"values");
-
-		if (valuesJSONArray == null) {
-			throw new Exception(
-				"Unable to find account with key " + koroneikiAccountKey);
-		}
-
-		String businessEventsAttributeId = _getObjectTypeAttributeId(
-			accountResponseJSONObject.getJSONArray("objectTypeAttributes"),
-			"Business Events");
-
-		JSONObject updateJSONObject = new JSONObject(
-		).put(
-			"attributes",
-			new JSONArray(
-			).put(
-				new JSONObject(
-				).put(
-					"objectAttributeValues",
-					new JSONArray(
-					).put(
-						new JSONObject(
-						).put(
-							"value", businessEvents
-						)
-					)
-				).put(
-					"objectTypeAttributeId", businessEventsAttributeId
-				)
-			)
-		);
-
-		JSONObject accountJSONObject = valuesJSONArray.getJSONObject(0);
-
-		put(
-			updateJSONObject.toString(),
-			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, _getCredentials()
-			).put(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).build(),
-			UriComponentsBuilder.fromUriString(
-				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
-					_jiraWorkspaceId, "/v1/object/",
-					accountJSONObject.getString("id"))
-			).build(
-			).toUri());
-	}
-
 	public String updateBusinessEvent(String id, String json) throws Exception {
-		JSONObject rawBusinessEventJSONObject = _getJSMAssetObjectJSONObject(
+		JSONObject jsmBusinessEventJSONObject = _getJSMAssetObjectJSONObject(
 			_jiraWorkspaceId, id);
 
 		JSONArray objectTypeAttributesJSONArray =
 			_getJSMObjectTypeAttributesJSONArray(
-				_getJSMObjectTypeId(rawBusinessEventJSONObject));
+				_getJSMObjectTypeId(jsmBusinessEventJSONObject));
 
 		JSONObject businessEventJSONObject = new JSONObject(json);
 
 		if (!businessEventJSONObject.has("id")) {
 			String liferayId = _getLiferayId(
-				rawBusinessEventJSONObject, objectTypeAttributesJSONArray);
+				jsmBusinessEventJSONObject, objectTypeAttributesJSONArray);
 
 			if (Validator.isNotNull(liferayId)) {
 				businessEventJSONObject.put("id", liferayId);
@@ -1315,90 +1145,6 @@ public class JiraService extends BaseService {
 			updatedBusinessEventJSONObject, objectTypeAttributesJSONArray);
 
 		return updatedBusinessEventJSONObject.toString();
-	}
-
-	public void updateIssue(
-		String issueKey, String businessEvents, String[] addLabels,
-		String[] removeLabels) {
-
-		JSONArray labelsJSONArray = new JSONArray();
-
-		for (String label : addLabels) {
-			JSONObject addLabelJSONObject = new JSONObject();
-
-			addLabelJSONObject.put("add", label);
-
-			labelsJSONArray.put(addLabelJSONObject);
-		}
-
-		for (String label : removeLabels) {
-			JSONObject removeLabelJSONObject = new JSONObject();
-
-			removeLabelJSONObject.put("remove", label);
-
-			labelsJSONArray.put(removeLabelJSONObject);
-		}
-
-		put(
-			new JSONObject(
-			).put(
-				"update",
-				new JSONObject(
-				).put(
-					_jiraSupportHCFieldBusinessEvent,
-					_transformADFTextArea(businessEvents)
-				).put(
-					"labels", labelsJSONArray
-				)
-			).toString(),
-			HashMapBuilder.put(
-				HttpHeaders.AUTHORIZATION, _getCredentials()
-			).put(
-				HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-			).build(),
-			UriComponentsBuilder.fromUriString(
-				StringBundler.concat(
-					_jiraURL, _URL_REST_API_3, "/issue/", issueKey)
-			).build(
-			).toUri());
-	}
-
-	public void updateOverdueBusinessEvents() throws Exception {
-		DateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-
-		String aql = StringBundler.concat(
-			"objectType = \"Business Event\" AND \"Status\" = \"open\" AND ",
-			"\"Target Go Live\" < \"", dateFormat.format(new Date()), "\"");
-
-		JSONObject jsmAssetsJSONObject = _searchJSMAssetsObjectsJSONObject(
-			_jiraWorkspaceId, aql);
-
-		JSONArray valuesJSONArray = jsmAssetsJSONObject.optJSONArray("values");
-
-		if (valuesJSONArray == null) {
-			return;
-		}
-
-		for (int i = 0; i < valuesJSONArray.length(); i++) {
-			JSONObject businessEventJSONObject = valuesJSONArray.getJSONObject(
-				i);
-
-			try {
-				updateBusinessEvent(
-					businessEventJSONObject.getString("id"),
-					new JSONObject(
-					).put(
-						"eventStatus", "overdue"
-					).toString());
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to update business event:\n" +
-						businessEventJSONObject.toString(),
-					exception);
-			}
-		}
 	}
 
 	private JSONObject _createJSMAssetObjectJSONObject(
@@ -1422,8 +1168,8 @@ public class JiraService extends BaseService {
 			).build(),
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", workspaceId, "/v1/object/create")
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
+					"/v1/object/create")
 			).build(
 			).toUri());
 
@@ -1438,9 +1184,8 @@ public class JiraService extends BaseService {
 			_getCredentials(), StringPool.BLANK,
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", workspaceId, "/v1/object/",
-					objectId)
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
+					"/v1/object/", objectId)
 			).build(
 			).toUri());
 
@@ -1592,50 +1337,12 @@ public class JiraService extends BaseService {
 			_getCredentials(),
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", workspaceId, "/v1/object/",
-					objectId)
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
+					"/v1/object/", objectId)
 			).build(
 			).toUri());
 
 		return new JSONObject(response);
-	}
-
-	private String _getJSMHeatTag(BusinessEvent businessEvent) {
-		if (Validator.isNull(businessEvent.getAssociatedTickets())) {
-			return StringPool.BLANK;
-		}
-
-		JSONArray associatedTicketIdsJSONArray = new JSONArray(
-			businessEvent.getAssociatedTickets());
-
-		if (associatedTicketIdsJSONArray.length() == 0) {
-			return StringPool.BLANK;
-		}
-
-		String targetGoLiveDateTime = businessEvent.getPlannedEventDate();
-
-		if (Validator.isNull(targetGoLiveDateTime)) {
-			return StringPool.BLANK;
-		}
-
-		return HeatTagConstants.getHeatTag(
-			businessEvent.getEventTypeName(),
-			ChronoUnit.DAYS.between(
-				LocalDate.now(),
-				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
-	}
-
-	private String _getJSMHeatTag(String[] issueLabels) {
-		for (String label : issueLabels) {
-			if (ArrayUtil.contains(
-					HeatTagConstants.SUPPORT_ISSUE_LABELS, label)) {
-
-				return label;
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private JSONArray _getJSMObjectTypeAttributesJSONArray(String objectTypeId)
@@ -1645,9 +1352,9 @@ public class JiraService extends BaseService {
 			_getCredentials(),
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", _jiraWorkspaceId,
-					"/v1/objecttype/", objectTypeId, "/attributes")
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+					_jiraWorkspaceId, "/v1/objecttype/", objectTypeId,
+					"/attributes")
 			).build(
 			).toUri());
 
@@ -1810,9 +1517,8 @@ public class JiraService extends BaseService {
 				).build(),
 				UriComponentsBuilder.fromUriString(
 					StringBundler.concat(
-						_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-						"/jsm/assets/workspace/", _jiraWorkspaceId,
-						"/v1/object/aql")
+						_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/",
+						_jiraWorkspaceId, "/v1/object/aql")
 				).build(
 				).toUri()));
 	}
@@ -1847,8 +1553,8 @@ public class JiraService extends BaseService {
 			).build(),
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", workspaceId, "/v1/object/aql")
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
+					"/v1/object/aql")
 			).build(
 			).toUri());
 
@@ -1967,42 +1673,6 @@ public class JiraService extends BaseService {
 		);
 
 		return jsonObject;
-	}
-
-	private JSONArray _transformADFTextArea(String text) {
-		return new JSONArray(
-		).put(
-			new JSONObject(
-			).put(
-				"set",
-				new JSONObject(
-				).put(
-					"content",
-					new JSONArray(
-					).put(
-						new JSONObject(
-						).put(
-							"content",
-							new JSONArray(
-							).put(
-								new JSONObject(
-								).put(
-									"text", text
-								).put(
-									"type", "text"
-								)
-							)
-						).put(
-							"type", "paragraph"
-						)
-					)
-				).put(
-					"type", "doc"
-				).put(
-					"version", 1
-				)
-			)
-		);
 	}
 
 	private JSONArray _transformAttributes(JSONObject attributesJSONObject) {
@@ -2192,63 +1862,12 @@ public class JiraService extends BaseService {
 			).build(),
 			UriComponentsBuilder.fromUriString(
 				StringBundler.concat(
-					_JIRA_CLOUD_API_URL, "/ex/jira/", _jiraCloudId,
-					"/jsm/assets/workspace/", workspaceId, "/v1/object/",
-					objectId)
+					_JIRA_CLOUD_API_URL, "/jsm/assets/workspace/", workspaceId,
+					"/v1/object/", objectId)
 			).build(
 			).toUri());
 
 		return new JSONObject(response);
-	}
-
-	private void _updateJSMTickets(
-			String koroneikiAccountKey,
-			Map<String, String> associatedTicketsHeatTags)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("Organization in aqlFunction('\"External Key\" = \"");
-		sb.append(koroneikiAccountKey);
-		sb.append("\"') and (status not in ('");
-		sb.append(
-			StringUtil.merge(
-				JiraIssueConstants.STATUSES_SOLVED_AND_CLOSED, "','"));
-		sb.append("')) and ");
-		sb.append(
-			JiraIssueConstants.toJQLCustomField(
-				_jiraSupportHCFieldRequestType));
-		sb.append(" = '");
-		sb.append(JiraIssueConstants.TYPE_GENERAL_REQUEST);
-		sb.append("'");
-
-		List<JiraSupportIssue> jiraSupportIssues = search(
-			sb.toString(), new String[] {"key", "labels", "status", "summary"});
-
-		for (JiraSupportIssue jiraSupportIssue : jiraSupportIssues) {
-			if (!associatedTicketsHeatTags.containsKey(
-					jiraSupportIssue.getKey())) {
-
-				continue;
-			}
-
-			String heatTag = _getJSMHeatTag(jiraSupportIssue.getLabels());
-
-			String highestHeatTag = associatedTicketsHeatTags.get(
-				jiraSupportIssue.getKey());
-
-			if ((HeatTagConstants.getScore(heatTag) > HeatTagConstants.getScore(
-					highestHeatTag)) ||
-				heatTag.equals(highestHeatTag)) {
-
-				continue;
-			}
-
-			updateIssue(
-				jiraSupportIssue.getKey(), null,
-				new String[] {highestHeatTag + _JSM_AUTOMATION_HEAT_TAG_SUFFIX},
-				new String[0]);
-		}
 	}
 
 	private static final String _FIELD_AFFECTED_VERSION = "affectedVersion";
@@ -2264,8 +1883,6 @@ public class JiraService extends BaseService {
 	private static final String _JIRA_CLOUD_API_URL =
 		"https://api.atlassian.com";
 
-	private static final String _JSM_AUTOMATION_HEAT_TAG_SUFFIX = "_be";
-
 	private static final int _JSM_OBJECTS_PAGE_SIZE = 500;
 
 	private static final String _URL_REST_API_3 = "/rest/api/3";
@@ -2277,9 +1894,6 @@ public class JiraService extends BaseService {
 
 	@Value("${liferay.customer.jira.api.token}")
 	private String _jiraAPIToken;
-
-	@Value("${liferay.customer.jira.cloud.id}")
-	private String _jiraCloudId;
 
 	@Value(
 		"${liferay.customer.jira.security.vulnerability.field.affected." +
@@ -2359,9 +1973,6 @@ public class JiraService extends BaseService {
 
 	@Value("${liferay.customer.jira.support.fls.project}")
 	private String _jiraSupportFLSProject;
-
-	@Value("${liferay.customer.jira.support.hc.field.business.event}")
-	private String _jiraSupportHCFieldBusinessEvent;
 
 	@Value("${liferay.customer.jira.support.hc.field.organization}")
 	private String _jiraSupportHCFieldOrganization;

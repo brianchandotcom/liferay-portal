@@ -14,6 +14,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForModal} from '../../../utils/waitFor';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {checkInZip} from '../../../utils/zip';
@@ -831,6 +832,109 @@ test(
 					);
 				}
 			}
+		}
+	}
+);
+
+test(
+	'Shared content shows a shared icon in the Contents section only for the recipient',
+	{tag: '@LPD-66045'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentTitle1 = `Content ${getRandomString()}`;
+		const contentTitle2 = `Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentTitle1,
+			},
+			applicationName,
+			spaceName
+		);
+
+		const objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentTitle2,
+			},
+			applicationName,
+			spaceName
+		);
+
+		try {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await apiHelpers.objectEntry.postObjectEntryCollaborators(
+				[
+					{
+						actionIds: ['VIEW'],
+						id: user.id,
+						share: true,
+						type: 'User',
+					},
+				],
+				applicationName,
+				objectEntry1.id
+			);
+
+			await performUserSwitch(page, user.alternateName);
+
+			await assetsPage.gotoContents();
+
+			const contentRow1 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: contentTitle1})});
+
+			await expect(contentRow1).toBeVisible();
+
+			await expect(
+				contentRow1.locator('.lexicon-icon-users').first()
+			).toBeVisible();
+
+			const contentRow2 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: contentTitle2})});
+
+			await expect(contentRow2).toBeVisible();
+
+			await expect(
+				contentRow2.locator('.lexicon-icon-users')
+			).toHaveCount(0);
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
+			);
 		}
 	}
 );

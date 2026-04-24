@@ -170,7 +170,7 @@ test(
 		finally {
 			await page.getByLabel('Hide in Control Panel').uncheck();
 
-			await clickToChatSettingsPage.saveButton.click();
+			await clickToChatSettingsPage.saveConfiguration();
 		}
 	}
 );

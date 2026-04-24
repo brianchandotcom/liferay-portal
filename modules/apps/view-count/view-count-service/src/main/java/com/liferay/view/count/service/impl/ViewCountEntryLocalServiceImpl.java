@@ -17,6 +17,8 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
@@ -159,9 +161,14 @@ public class ViewCountEntryLocalServiceImpl
 			return;
 		}
 
-		viewCountIncrementListener.onAfterIncrement(
-			fetchViewCountEntry(
-				new ViewCountEntryPK(companyId, classNameId, classPK)));
+		try {
+			viewCountIncrementListener.onAfterIncrement(
+				fetchViewCountEntry(
+					new ViewCountEntryPK(companyId, classNameId, classPK)));
+		}
+		catch (RuntimeException runtimeException) {
+			_log.error(runtimeException);
+		}
 	}
 
 	@Override
@@ -298,6 +305,9 @@ public class ViewCountEntryLocalServiceImpl
 
 		return viewCount;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewCountEntryLocalServiceImpl.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

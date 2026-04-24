@@ -3,7 +3,7 @@ defaults:
         shell: bash
 jobs:
     test-cloud-terraform:
-        if: ${{github.repository == 'liferay/liferay-portal'}}
+        if: ${{github.repository == 'pt-cloudnative/liferay-portal'}}
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
@@ -35,6 +35,9 @@ jobs:
                     -   gcp/gitops/resources
                     -   gcp/gke
 on:
+    pull_request:
+        paths:
+            -   cloud/terraform/**
     push:
         branches:
             -   master

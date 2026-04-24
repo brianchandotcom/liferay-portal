@@ -94,6 +94,7 @@ public class BuildFactory {
 						 jobVariant.startsWith("playwright-js") ||
 						 jobVariant.startsWith("rest-builder") ||
 						 jobVariant.startsWith("semantic-versioning") ||
+						 jobVariant.startsWith("service-and-rest-builder") ||
 						 jobVariant.startsWith("service-builder")) {
 
 					return new JUnitDownstreamBuild(

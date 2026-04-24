@@ -99,9 +99,7 @@ public class ServiceBuilderModulesBatchTestClassGroup
 			portalGitWorkingDirectory.getWorkingDirectory(),
 			"portal-impl/build.xml");
 
-		if (JenkinsResultsParserUtil.isUnifiedBuilderSupported(
-				portalGitWorkingDirectory.getUpstreamBranchName())) {
-
+		if (isUnifiedBuilderSupported()) {
 			addTestClass(
 				TestClassFactory.newTestClass(this, portalImplBuildFile));
 

@@ -11,7 +11,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
-import com.liferay.jenkins.results.parser.test.clazz.ServiceBuilderAntTargetTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.BaseAntTargetTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public class AntTargetBatchBuildTestrayCaseResult
 	extends BatchBuildTestrayCaseResult
-		<ServiceBuilderAntTargetTestClass, TestClassMethod> {
+		<BaseAntTargetTestClass, TestClassMethod> {
 
 	public AntTargetBatchBuildTestrayCaseResult(
 		AxisTestClassGroup axisTestClassGroup, TestClass testClass,
@@ -34,11 +34,10 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public String getComponentName() {
-		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
-			getTestClass();
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
 		String componentName =
-			serviceBuilderAntTargetTestClass.getTestrayMainComponentName();
+			baseAntTargetTestClass.getTestrayMainComponentName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(componentName)) {
 			return super.getComponentName();
@@ -49,6 +48,12 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public long getDuration() {
+		TestReport testReport = _getAntTargetTestReport();
+
+		if (testReport != null) {
+			return testReport.getDuration();
+		}
+
 		TestClassReport testClassReport = getTestClassReport();
 
 		if (testClassReport == null) {
@@ -60,11 +65,13 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public String getErrors() {
+		TestReport antTargetTestReport = _getAntTargetTestReport();
+
 		TestClassReport testClassReport = getTestClassReport();
 
 		BuildReport buildReport = getBuildReport();
 
-		if (testClassReport == null) {
+		if ((antTargetTestReport == null) && (testClassReport == null)) {
 			if (buildReport == null) {
 				return "Unable to run build on CI";
 			}
@@ -88,12 +95,22 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 		StringBuilder sb = new StringBuilder();
 
-		for (TestReport testReport : testClassReport.getTestReports()) {
-			if (testReport.isFailing()) {
-				sb.append(testReport.getTestName());
+		if (antTargetTestReport != null) {
+			if (antTargetTestReport.isFailing()) {
+				sb.append(antTargetTestReport.getTestName());
 				sb.append(": ");
-				sb.append(testReport.getErrorStackTrace());
+				sb.append(antTargetTestReport.getErrorStackTrace());
 				sb.append("\n");
+			}
+		}
+		else {
+			for (TestReport testReport : testClassReport.getTestReports()) {
+				if (testReport.isFailing()) {
+					sb.append(testReport.getTestName());
+					sb.append(": ");
+					sb.append(testReport.getErrorStackTrace());
+					sb.append("\n");
+				}
 			}
 		}
 
@@ -124,16 +141,21 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	public String getName() {
-		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
-			getTestClass();
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
-		if (serviceBuilderAntTargetTestClass == null) {
+		if (baseAntTargetTestClass == null) {
 			return super.getName();
 		}
 
+		String antTargetName = baseAntTargetTestClass.getAntTargetName();
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(antTargetName)) {
+			return JenkinsResultsParserUtil.combine(
+				getBatchName(), "[", antTargetName, "]");
+		}
+
 		return JenkinsResultsParserUtil.combine(
-			getBatchName(), "[", serviceBuilderAntTargetTestClass.getName(),
-			"]");
+			getBatchName(), "[", baseAntTargetTestClass.getName(), "]");
 	}
 
 	@Override
@@ -142,6 +164,20 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 		if (buildReport == null) {
 			return Status.UNTESTED;
+		}
+
+		TestReport antTargetTestReport = _getAntTargetTestReport();
+
+		if (antTargetTestReport != null) {
+			if (antTargetTestReport.isFailing()) {
+				return Status.FAILED;
+			}
+
+			if (antTargetTestReport.isSkipped()) {
+				return Status.UNTESTED;
+			}
+
+			return Status.PASSED;
 		}
 
 		TestClassReport testClassReport = getTestClassReport();
@@ -170,12 +206,11 @@ public class AntTargetBatchBuildTestrayCaseResult
 			return _testClassReport;
 		}
 
-		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
-			getTestClass();
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
-		if (serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
+		if (baseAntTargetTestClass.isBuildCachingEnabled()) {
 			TestClassReport cachedTestClassReport =
-				serviceBuilderAntTargetTestClass.getCachedTestClassReport();
+				baseAntTargetTestClass.getCachedTestClassReport();
 
 			if (cachedTestClassReport != null) {
 				_testClassReport = cachedTestClassReport;
@@ -208,13 +243,11 @@ public class AntTargetBatchBuildTestrayCaseResult
 
 	@Override
 	protected void initBuildReport() {
-		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
-			getTestClass();
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
-		if (serviceBuilderAntTargetTestClass.isBuildCachingEnabled()) {
+		if (baseAntTargetTestClass.isBuildCachingEnabled()) {
 			DownstreamBuildReport cachedDownstreamBuildReport =
-				serviceBuilderAntTargetTestClass.
-					getCachedDownstreamBuildReport();
+				baseAntTargetTestClass.getCachedDownstreamBuildReport();
 
 			if (cachedDownstreamBuildReport != null) {
 				setBuildReport(cachedDownstreamBuildReport);
@@ -226,11 +259,38 @@ public class AntTargetBatchBuildTestrayCaseResult
 		super.initBuildReport();
 	}
 
-	private String _getTestClassName() {
-		ServiceBuilderAntTargetTestClass serviceBuilderAntTargetTestClass =
-			getTestClass();
+	private TestReport _getAntTargetTestReport() {
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
-		String testClassName = serviceBuilderAntTargetTestClass.getName();
+		if (baseAntTargetTestClass == null) {
+			return null;
+		}
+
+		String antTargetName = baseAntTargetTestClass.getAntTargetName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(antTargetName)) {
+			return null;
+		}
+
+		TestClassReport testClassReport = getTestClassReport();
+
+		if (testClassReport == null) {
+			return null;
+		}
+
+		for (TestReport testReport : testClassReport.getTestReports()) {
+			if (Objects.equals(antTargetName, testReport.getTestName())) {
+				return testReport;
+			}
+		}
+
+		return null;
+	}
+
+	private String _getTestClassName() {
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
+
+		String testClassName = baseAntTargetTestClass.getName();
 
 		return testClassName.replaceAll("/", ".");
 	}

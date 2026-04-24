@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,24 +12,24 @@ import java.io.File;
 import org.json.JSONObject;
 
 /**
- * @author Michael Hashimoto
+ * @author Brittney Nguyen
  */
-public class ServiceBuilderAntTargetTestClass extends BaseAntTargetTestClass {
+public class RESTBuilderAntTargetTestClass extends BaseAntTargetTestClass {
 
-	protected ServiceBuilderAntTargetTestClass(
+	protected RESTBuilderAntTargetTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
 		super(batchTestClassGroup, testClassFile);
 	}
 
-	protected ServiceBuilderAntTargetTestClass(
+	protected RESTBuilderAntTargetTestClass(
 		BatchTestClassGroup batchTestClassGroup, File testClassFile,
 		String antTargetName) {
 
 		super(batchTestClassGroup, testClassFile, antTargetName);
 	}
 
-	protected ServiceBuilderAntTargetTestClass(
+	protected RESTBuilderAntTargetTestClass(
 		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
 
 		super(batchTestClassGroup, jsonObject);
@@ -37,17 +37,7 @@ public class ServiceBuilderAntTargetTestClass extends BaseAntTargetTestClass {
 
 	@Override
 	protected void addTestClassMethods() {
-		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
-
-		if (batchTestClassGroup.isUnifiedBuilderSupported()) {
-			addTestClassMethod("build-services");
-
-			return;
-		}
-
-		addTestClassMethod("build-service-counter");
-		addTestClassMethod("build-service-portal");
-		addTestClassMethod("build-service-portlets");
+		addTestClassMethod("build-rests");
 	}
 
 }

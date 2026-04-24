@@ -508,6 +508,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _testAnalyticsCloud;
 	}
 
+	public boolean isUnifiedBuilderSupported() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.unified.builder.supported");
+
+		if (jobProperty == null) {
+			return false;
+		}
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return false;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Boolean.parseBoolean(jobPropertyValue);
+	}
+
 	protected BatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 

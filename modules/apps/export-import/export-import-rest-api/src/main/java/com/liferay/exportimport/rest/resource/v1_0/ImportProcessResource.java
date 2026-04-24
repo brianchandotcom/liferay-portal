@@ -91,9 +91,6 @@ public interface ImportProcessResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public ValidationResponse postValidate(MultipartBody multipartBody)
-		throws Exception;
-
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}
@@ -190,4 +187,4 @@ public interface ImportProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1966132523
+// LIFERAY-REST-BUILDER-HASH:579775469

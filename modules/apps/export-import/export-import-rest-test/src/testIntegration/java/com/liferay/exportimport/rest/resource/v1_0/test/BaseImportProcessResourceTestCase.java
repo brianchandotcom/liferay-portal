@@ -1414,11 +1414,6 @@ public abstract class BaseImportProcessResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testPostValidate() throws Exception {
-		Assert.assertTrue(true);
-	}
-
 	protected void assertContains(
 		ImportProcess importProcess, List<ImportProcess> importProcesses) {
 
@@ -2353,4 +2348,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1726542759
+// LIFERAY-REST-BUILDER-HASH:-371503086

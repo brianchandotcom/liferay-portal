@@ -1,3 +1,7 @@
+variable "deletion_protection" {
+	default=true
+	type=bool
+}
 variable "deployment_name" {
 	type=string
 	validation {

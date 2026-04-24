@@ -40,7 +40,7 @@ definition {
 	@description = "This test ensures that a user can map the display page with Open Graph when using the DM type from AL on a connect site."
 	@priority = 5
 	@refactordone
-	test CanMapDMWithOpenGraph {
+	test CanMapDMWithOpenGraphAndSEO {
 		var portalURL = PropsUtil.get("portal.url");
 
 		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");

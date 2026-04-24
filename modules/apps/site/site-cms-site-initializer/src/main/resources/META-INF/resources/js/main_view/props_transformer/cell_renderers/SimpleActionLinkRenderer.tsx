@@ -24,6 +24,7 @@ export default function SimpleActionLinkRenderer({
 	itemData,
 	onViewClick,
 	options,
+	trailingIcon,
 	value,
 }: {
 	actions: ActionItem[];
@@ -36,6 +37,7 @@ export default function SimpleActionLinkRenderer({
 	itemData: any;
 	onViewClick?: (itemData: any) => void;
 	options: {actionId: string};
+	trailingIcon?: React.ReactNode;
 	value: string;
 }) {
 	const {actionId} = options;
@@ -128,11 +130,23 @@ export default function SimpleActionLinkRenderer({
 
 					{systemIcon}
 				</ClayLink>
+
+				{trailingIcon}
 			</div>
 		);
 	}
 
 	if (!formattedHref) {
+		if (trailingIcon) {
+			return (
+				<div className="align-items-center d-flex table-list-title">
+					<span>{title}</span>
+
+					{trailingIcon}
+				</div>
+			);
+		}
+
 		return <>{title}</>;
 	}
 
@@ -145,6 +159,8 @@ export default function SimpleActionLinkRenderer({
 
 				{systemIcon}
 			</ClayLink>
+
+			{trailingIcon}
 		</div>
 	);
 }

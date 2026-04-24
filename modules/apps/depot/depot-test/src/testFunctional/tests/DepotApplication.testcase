@@ -337,7 +337,7 @@ definition {
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
 	@priority = 4
 	@refactordone
-	test DMRemainsAfterReactivating {
+	test CollectionsDMAndWCRemainAfterReactivating {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

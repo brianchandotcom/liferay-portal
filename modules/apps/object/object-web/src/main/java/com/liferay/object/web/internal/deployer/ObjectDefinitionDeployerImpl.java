@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
@@ -248,11 +247,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				AssetRendererFactory.class,
 				new ObjectEntryAssetRendererFactory(
-					_assetDisplayPageFriendlyURLProvider,
-					_depotEntryLocalService, _dlAppLocalService, _dlURLHelper,
-					objectDefinition, _objectEntryDisplayContextFactory,
-					_objectEntryLocalService, _objectEntryService,
-					_objectFieldLocalService, _servletContext),
+					_assetDisplayPageFriendlyURLProvider, _dlAppLocalService,
+					_dlURLHelper, objectDefinition,
+					_objectEntryDisplayContextFactory, _objectEntryLocalService,
+					_objectEntryService, _objectFieldLocalService,
+					_servletContext),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(
@@ -769,9 +768,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;
-
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(
 		target = "(info.item.capability.key=" + DisplayPageInfoItemCapability.KEY + ")"

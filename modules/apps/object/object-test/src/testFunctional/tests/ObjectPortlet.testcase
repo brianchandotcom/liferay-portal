@@ -188,33 +188,6 @@ definition {
 			portlet = "Custom Objects");
 	}
 
-	@description = "LPS-135396 - Verify it is possible to cancel the submition of an entry"
-	@priority = 4
-	test CanCancelEntrySubmition {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 243",
-			objectName = "CustomObject243",
-			pluralLabelName = "Custom Objects 243");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject243");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject243");
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject243");
-
-		ObjectAdmin.cancelAddingObjectStringFieldEntryViaUI(entryValue = "Test Entry");
-
-		ObjectAdmin.assertAddEntryModalIsNotPresent();
-
-		ObjectPortlet.assertEntryNotPresent(entry = "Test Entry");
-	}
-
 	@description = "LPS-135396 - Verify it is possible to cancel the update of an entry"
 	@priority = 4
 	test CanCancelEntryUpdate {

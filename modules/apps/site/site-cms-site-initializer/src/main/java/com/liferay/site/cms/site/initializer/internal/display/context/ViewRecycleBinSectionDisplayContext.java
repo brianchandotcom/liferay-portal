@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -32,6 +34,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
+import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
 import com.liferay.trash.TrashHelper;
@@ -57,7 +63,7 @@ public class ViewRecycleBinSectionDisplayContext
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal,
+		Portal portal, SearchResultResource.Factory searchResultResourceFactory,
 		TranslationInfoItemFieldValuesExporterRegistry
 			translationInfoItemFieldValuesExporterRegistry,
 		TrashHelper trashHelper) {
@@ -72,6 +78,7 @@ public class ViewRecycleBinSectionDisplayContext
 		_assetLibraryResourceFactory = assetLibraryResourceFactory;
 		_groupId = groupId;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_searchResultResourceFactory = searchResultResourceFactory;
 		_trashHelper = trashHelper;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -90,6 +97,8 @@ public class ViewRecycleBinSectionDisplayContext
 				"breadcrumbItems", jsonArray
 			).put(
 				"hideSpace", true
+			).put(
+				"showEmptyRecycleBinAction", _isShowEmptyRecycleBinAction()
 			).build();
 		}
 
@@ -186,19 +195,7 @@ public class ViewRecycleBinSectionDisplayContext
 			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
 				"'files')";
 
-		List<Long> groupIds = ListUtil.filter(
-			DepotEntryServiceUtil.getDepotEntryGroupIds(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				DepotConstants.TYPE_SPACE),
-			groupId -> {
-				Group group = groupLocalService.fetchGroup(groupId);
-
-				if ((group != null) && _trashHelper.isTrashEnabled(group)) {
-					return true;
-				}
-
-				return false;
-			});
+		List<Long> groupIds = _getTrashEnabledDepotEntryGroupIds();
 
 		if (ListUtil.isEmpty(groupIds)) {
 			return filterString + " and status eq " +
@@ -211,9 +208,63 @@ public class ViewRecycleBinSectionDisplayContext
 			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
+	private List<Long> _getTrashEnabledDepotEntryGroupIds() {
+		return ListUtil.filter(
+			DepotEntryServiceUtil.getDepotEntryGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				DepotConstants.TYPE_SPACE),
+			groupId -> {
+				Group group = groupLocalService.fetchGroup(groupId);
+
+				if ((group != null) && _trashHelper.isTrashEnabled(group)) {
+					return true;
+				}
+
+				return false;
+			});
+	}
+
+	private boolean _isShowEmptyRecycleBinAction() {
+		if (ListUtil.isEmpty(_getTrashEnabledDepotEntryGroupIds())) {
+			return false;
+		}
+
+		try {
+			SearchResultResource searchResultResource =
+				_searchResultResourceFactory.create(
+				).httpServletRequest(
+					httpServletRequest
+				).preferredLocale(
+					themeDisplay.getLocale()
+				).user(
+					themeDisplay.getUser()
+				).build();
+
+			Page<SearchResult> page = searchResultResource.getSearchPage(
+				null, true, null, null, null,
+				searchResultResource.toFilter(getCMSSectionFilterString()),
+				Pagination.of(1, 0), null);
+
+			if (page.getTotalCount() > 0) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewRecycleBinSectionDisplayContext.class);
+
 	private final AssetLibraryResource.Factory _assetLibraryResourceFactory;
 	private final long _groupId;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private final SearchResultResource.Factory _searchResultResourceFactory;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

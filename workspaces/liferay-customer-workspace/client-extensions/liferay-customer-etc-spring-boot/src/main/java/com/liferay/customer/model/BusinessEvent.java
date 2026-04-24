@@ -5,13 +5,10 @@
 
 package com.liferay.customer.model;
 
+import com.liferay.customer.constants.BusinessEventConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,98 +48,42 @@ public class BusinessEvent {
 		_associatedTickets = propertiesJSONObject.optString(
 			"associatedTickets");
 
-		JSONObject currentLiferayVersionJSONObject =
-			propertiesJSONObject.optJSONObject("currentLiferayVersion");
+		JSONObject currentLiferayVersionJSONObject = _toKeyValueJSONObject(
+			propertiesJSONObject, "currentLiferayVersion");
 
-		if (currentLiferayVersionJSONObject != null) {
-			String currentLiferayVersionName =
-				currentLiferayVersionJSONObject.optString("name");
-
-			if (Validator.isNull(currentLiferayVersionName)) {
-				currentLiferayVersionName =
-					currentLiferayVersionJSONObject.optString("key");
-			}
-
-			_currentLiferayVersionName = currentLiferayVersionName;
-		}
-		else {
-			_currentLiferayVersionName = propertiesJSONObject.optString(
-				"currentLiferayVersion");
-		}
+		_currentLiferayVersionKey = currentLiferayVersionJSONObject.optString(
+			"key");
+		_currentLiferayVersionName = currentLiferayVersionJSONObject.optString(
+			"value");
 
 		_description = propertiesJSONObject.optString("description");
 
-		JSONObject eventStatusJSONObject = propertiesJSONObject.optJSONObject(
-			"eventStatus");
-
-		if (eventStatusJSONObject != null) {
-			String eventStatusKey = eventStatusJSONObject.optString("key");
-
-			if (Validator.isNull(eventStatusKey)) {
-				eventStatusKey = eventStatusJSONObject.optString("name");
-			}
-
-			_eventStatusKey = eventStatusKey;
-		}
-		else {
-			_eventStatusKey = propertiesJSONObject.optString("eventStatus");
-		}
-
-		JSONObject eventTypeJSONObject = propertiesJSONObject.optJSONObject(
-			"eventType");
-
-		if (eventTypeJSONObject != null) {
-			String eventTypeName = eventTypeJSONObject.optString("name");
-
-			if (Validator.isNull(eventTypeName)) {
-				eventTypeName = eventTypeJSONObject.optString("key");
-			}
-
-			_eventTypeName = eventTypeName;
-		}
-		else {
-			_eventTypeName = propertiesJSONObject.optString("eventType");
-		}
+		_eventStatusKey = _toKeyValueJSONObject(
+			propertiesJSONObject, "eventStatus"
+		).optString(
+			"key"
+		);
+		_eventTypeName = _toKeyValueJSONObject(
+			propertiesJSONObject, "eventType"
+		).optString(
+			"value"
+		);
 
 		_lastComment = propertiesJSONObject.optString("lastComment");
 		_name = propertiesJSONObject.optString("name");
 
-		JSONObject newLiferayVersionJSONObject =
-			propertiesJSONObject.optJSONObject("newLiferayVersion");
+		JSONObject newLiferayVersionJSONObject = _toKeyValueJSONObject(
+			propertiesJSONObject, "newLiferayVersion");
 
-		if (newLiferayVersionJSONObject != null) {
-			String newLiferayVersionName =
-				newLiferayVersionJSONObject.optString("name");
-
-			if (Validator.isNull(newLiferayVersionName)) {
-				newLiferayVersionName = newLiferayVersionJSONObject.optString(
-					"key");
-			}
-
-			_newLiferayVersionName = newLiferayVersionName;
-		}
-		else {
-			_newLiferayVersionName = propertiesJSONObject.optString(
-				"newLiferayVersion");
-		}
+		_newLiferayVersionKey = newLiferayVersionJSONObject.optString("key");
+		_newLiferayVersionName = newLiferayVersionJSONObject.optString("value");
 
 		_plannedEventDate = propertiesJSONObject.optString("plannedEventDate");
-
-		JSONObject timeZoneJSONObject = propertiesJSONObject.optJSONObject(
-			"timeZone");
-
-		if (timeZoneJSONObject != null) {
-			String timeZoneName = timeZoneJSONObject.optString("name");
-
-			if (Validator.isNull(timeZoneName)) {
-				timeZoneName = timeZoneJSONObject.optString("key");
-			}
-
-			_timeZoneName = timeZoneName;
-		}
-		else {
-			_timeZoneName = propertiesJSONObject.optString("timeZone");
-		}
+		_timeZoneName = _toKeyValueJSONObject(
+			propertiesJSONObject, "timeZone"
+		).optString(
+			"value"
+		);
 	}
 
 	public BusinessEvent(
@@ -160,54 +101,83 @@ public class BusinessEvent {
 		JSONArray attributesJSONArray = jsmJSONObject.getJSONArray(
 			"attributes");
 
-		Map<String, String> attributes = new HashMap<>();
+		_actualEventDate = _toAttributeJSONObject(
+			attributesJSONArray,
+			BusinessEventConstants.ATTRIBUTE_ACTUAL_GO_LIVE_DATE
+		).optString(
+			"key"
+		);
+		_associatedTickets = _toAttributeJSONObject(
+			attributesJSONArray,
+			BusinessEventConstants.ATTRIBUTE_ASSOCIATED_TICKETS
+		).optString(
+			"value"
+		);
 
-		for (int i = 0; i < attributesJSONArray.length(); i++) {
-			JSONObject attributeJSONObject = attributesJSONArray.getJSONObject(
-				i);
+		JSONObject currentLiferayVersionJSONObject = _toAttributeJSONObject(
+			attributesJSONArray,
+			BusinessEventConstants.ATTRIBUTE_CURRENT_VERSION);
 
-			String name = attributeJSONObject.getJSONObject(
-				"objectTypeAttribute"
-			).getString(
-				"name"
+		_currentLiferayVersionKey = currentLiferayVersionJSONObject.optString(
+			"key");
+		_currentLiferayVersionName = currentLiferayVersionJSONObject.optString(
+			"value");
+
+		_description = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_DESCRIPTION
+		).optString(
+			"value"
+		);
+
+		String eventStatusKey = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_EVENT_STATUS
+		).optString(
+			"value"
+		);
+
+		if (Validator.isNull(eventStatusKey)) {
+			eventStatusKey = _toAttributeJSONObject(
+				attributesJSONArray, BusinessEventConstants.ATTRIBUTE_STATUS
+			).optString(
+				"value"
 			);
-
-			JSONArray valuesJSONArray = attributeJSONObject.optJSONArray(
-				"objectAttributeValues");
-
-			if ((valuesJSONArray != null) && !valuesJSONArray.isEmpty()) {
-				JSONObject valueJSONObject = valuesJSONArray.getJSONObject(0);
-
-				String value = valueJSONObject.optString("displayValue");
-
-				if (Validator.isNull(value)) {
-					value = valueJSONObject.optString("value");
-				}
-
-				attributes.put(name, value);
-			}
 		}
 
-		_actualEventDate = attributes.getOrDefault(
-			"Actual Go-Live Date", StringPool.BLANK);
-		_associatedTickets = attributes.getOrDefault(
-			"Associated Tickets", StringPool.BLANK);
-		_currentLiferayVersionName = attributes.getOrDefault(
-			"Current Version", StringPool.BLANK);
-		_description = attributes.getOrDefault("Description", StringPool.BLANK);
-		_eventStatusKey = attributes.getOrDefault(
-			"Event Status",
-			attributes.getOrDefault("Status", StringPool.BLANK));
-		_eventTypeName = attributes.getOrDefault(
-			"Event Type", StringPool.BLANK);
-		_lastComment = attributes.getOrDefault(
-			"Last Comment", StringPool.BLANK);
-		_name = attributes.getOrDefault("Name", StringPool.BLANK);
-		_newLiferayVersionName = attributes.getOrDefault(
-			"New Version", StringPool.BLANK);
-		_plannedEventDate = attributes.getOrDefault(
-			"Target Event Date", StringPool.BLANK);
-		_timeZoneName = attributes.getOrDefault("Time Zone", StringPool.BLANK);
+		_eventStatusKey = eventStatusKey;
+
+		_eventTypeName = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_EVENT_TYPE
+		).optString(
+			"value"
+		);
+		_lastComment = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_LAST_COMMENT
+		).optString(
+			"value"
+		);
+		_name = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_NAME
+		).optString(
+			"value"
+		);
+
+		JSONObject newLiferayVersionJSONObject = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_NEW_VERSION);
+
+		_newLiferayVersionKey = newLiferayVersionJSONObject.optString("key");
+		_newLiferayVersionName = newLiferayVersionJSONObject.optString("value");
+
+		_plannedEventDate = _toAttributeJSONObject(
+			attributesJSONArray,
+			BusinessEventConstants.ATTRIBUTE_TARGET_EVENT_DATE
+		).optString(
+			"key"
+		);
+		_timeZoneName = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_TIME_ZONE
+		).optString(
+			"value"
+		);
 	}
 
 	public String getAccountExternalReferenceCode() {
@@ -242,6 +212,10 @@ public class BusinessEvent {
 		return _creatorId;
 	}
 
+	public String getCurrentLiferayVersionKey() {
+		return _currentLiferayVersionKey;
+	}
+
 	public String getCurrentLiferayVersionName() {
 		return _currentLiferayVersionName;
 	}
@@ -268,6 +242,10 @@ public class BusinessEvent {
 
 	public String getName() {
 		return _name;
+	}
+
+	public String getNewLiferayVersionKey() {
+		return _newLiferayVersionKey;
 	}
 
 	public String getNewLiferayVersionName() {
@@ -298,18 +276,6 @@ public class BusinessEvent {
 		return sb.toString();
 	}
 
-	public boolean isCanceled() {
-		return StringUtil.equals(_eventStatusKey, "canceled");
-	}
-
-	public boolean isCompleted() {
-		return StringUtil.equals(_eventStatusKey, "completed");
-	}
-
-	public boolean isOverdue() {
-		return StringUtil.equals(_eventStatusKey, "overdue");
-	}
-
 	public JSONObject toJSONObject() {
 		JSONObject jsonObject = new JSONObject();
 
@@ -321,7 +287,7 @@ public class BusinessEvent {
 			"currentLiferayVersion",
 			new JSONObject(
 			).put(
-				"key", _currentLiferayVersionName
+				"key", _currentLiferayVersionKey
 			).put(
 				"name", _currentLiferayVersionName
 			)
@@ -353,7 +319,7 @@ public class BusinessEvent {
 			"newLiferayVersion",
 			new JSONObject(
 			).put(
-				"key", _newLiferayVersionName
+				"key", _newLiferayVersionKey
 			).put(
 				"name", _newLiferayVersionName
 			)
@@ -372,6 +338,87 @@ public class BusinessEvent {
 		return jsonObject;
 	}
 
+	private JSONObject _toAttributeJSONObject(
+		JSONArray jsonArray, String attributeName) {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject attributeJSONObject = jsonArray.getJSONObject(i);
+
+			String name = attributeJSONObject.getJSONObject(
+				"objectTypeAttribute"
+			).getString(
+				"name"
+			);
+
+			if (!attributeName.equals(name)) {
+				continue;
+			}
+
+			JSONArray valuesJSONArray = attributeJSONObject.optJSONArray(
+				"objectAttributeValues");
+
+			if ((valuesJSONArray == null) || valuesJSONArray.isEmpty()) {
+				break;
+			}
+
+			JSONObject valueJSONObject = valuesJSONArray.getJSONObject(0);
+
+			String key = valueJSONObject.optString("value");
+
+			if (Validator.isNull(key)) {
+				JSONObject referencedObjectJSONObject =
+					valueJSONObject.optJSONObject("referencedObject");
+
+				if (referencedObjectJSONObject != null) {
+					key = referencedObjectJSONObject.optString("id");
+				}
+			}
+
+			String value = valueJSONObject.optString("displayValue", key);
+
+			return new JSONObject(
+			).put(
+				"key", key
+			).put(
+				"value", value
+			);
+		}
+
+		return new JSONObject();
+	}
+
+	private JSONObject _toKeyValueJSONObject(
+		JSONObject jsonObject, String fieldName) {
+
+		JSONObject keyValueJSONObject = jsonObject.optJSONObject(fieldName);
+
+		if (keyValueJSONObject != null) {
+			String key = keyValueJSONObject.optString("key");
+
+			String value = keyValueJSONObject.optString("name", key);
+
+			if (Validator.isNull(key)) {
+				key = value;
+			}
+
+			return new JSONObject(
+			).put(
+				"key", key
+			).put(
+				"value", value
+			);
+		}
+
+		String value = jsonObject.optString(fieldName);
+
+		return new JSONObject(
+		).put(
+			"key", value
+		).put(
+			"value", value
+		);
+	}
+
 	private final String _accountExternalReferenceCode;
 	private final long _accountId;
 	private final String _actualEventDate;
@@ -379,12 +426,14 @@ public class BusinessEvent {
 	private final String _businessEventId;
 	private final String _creatorGivenName;
 	private final long _creatorId;
+	private final String _currentLiferayVersionKey;
 	private final String _currentLiferayVersionName;
 	private final String _description;
 	private final String _eventStatusKey;
 	private final String _eventTypeName;
 	private final String _lastComment;
 	private final String _name;
+	private final String _newLiferayVersionKey;
 	private final String _newLiferayVersionName;
 	private final String _plannedEventDate;
 	private final String _timeZoneName;

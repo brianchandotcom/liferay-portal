@@ -28,6 +28,10 @@ const isLowercaseAndNumbers = (value: string) => {
 };
 
 const isValidDate = (value: string, years?: IYears) => {
+	if (!value) {
+		return;
+	}
+
 	const date = new Date(value.replace(/-/g, '/'));
 
 	if (date.toString() === 'Invalid Date') {

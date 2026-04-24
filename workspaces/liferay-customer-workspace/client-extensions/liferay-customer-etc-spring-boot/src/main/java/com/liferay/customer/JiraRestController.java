@@ -85,6 +85,7 @@ public class JiraRestController extends BaseRestController {
 
 			_jiraService.scheduledAffectedVersionsCacheEviction();
 			_jiraService.scheduledIssuesCacheEviction();
+			_jiraService.scheduledJSMObjectsCacheEviction();
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -271,14 +272,15 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/jsm-objects/{name}")
+	@GetMapping("/jsm-objects/{schema}/{name}")
 	public ResponseEntity<String> getJSMObjects(
+			@PathVariable("schema") String schema,
 			@PathVariable("name") String name)
 		throws Exception {
 
 		try {
 			return new ResponseEntity<>(
-				_jiraService.getJSMObjects(name), HttpStatus.OK);
+				_jiraService.getJSMObjects(schema, name), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -341,6 +343,30 @@ public class JiraRestController extends BaseRestController {
 			_log.error(exception, exception);
 
 			return new ResponseEntity<>(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/accounts/{externalReferenceCode}/tickets")
+	public ResponseEntity<String> getTickets(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestParam(defaultValue = "", required = false) String[]
+				ticketIds)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return new ResponseEntity<>(
+				_jiraService.getJSMTickets(externalReferenceCode, ticketIds),
+				HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

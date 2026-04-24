@@ -21,6 +21,7 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {waitForModal} from '../../../utils/waitFor';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {checkInZip} from '../../../utils/zip';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -3615,6 +3616,266 @@ test(
 						String(entry.id)
 					);
 				}
+			}
+		}
+	}
+);
+
+test(
+	'Export for Translation CMS assets in bulk',
+	{tag: '@LPD-85361'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const basicDocumentTitle = `Basic Document ${getRandomString()}`;
+		const basicWebContentTitle1 = `Basic Web Content ${getRandomString()}`;
+		const basicWebContentTitle2 = `Basic Web Content ${getRandomString()}`;
+		const blogTitle = `Blog ${getRandomString()}`;
+		const spaceName = 'Default';
+
+		await test.step('Create CMS assets', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: `file_${getRandomString()}.png`,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: basicDocumentTitle,
+				},
+				'cms/basic-documents',
+				spaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: basicWebContentTitle1,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: basicWebContentTitle2,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: blogTitle,
+				},
+				'cms/blogs',
+				spaceName
+			);
+		});
+
+		await test.step('Exporting for Translation a single file type object entry is not allowed', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems([basicDocumentTitle]);
+
+			await assetsPage.execBulkItemAction('Export for Translation');
+
+			await waitForModal({
+				page,
+			});
+
+			await expect(
+				page.getByText(
+					'This action is not available for the item you have selected.'
+				)
+			).toBeVisible();
+
+			await page
+				.locator('.modal')
+				.getByRole('button', {name: 'OK'})
+				.click();
+		});
+
+		await test.step('Exporting for Translation file and content type object entries together is not allowed', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems([
+				basicDocumentTitle,
+				basicWebContentTitle1,
+			]);
+
+			await assetsPage.execBulkItemAction('Export for Translation');
+
+			await waitForModal({
+				page,
+			});
+
+			await expect(
+				page.getByText(
+					'This action is not available for the item you have selected.'
+				)
+			).toBeVisible();
+
+			await page
+				.locator('.modal')
+				.getByRole('button', {name: 'OK'})
+				.click();
+		});
+
+		try {
+			await test.step('Exporting for Translation a single content type object entry', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems([basicWebContentTitle1]);
+
+				await assetsPage.execBulkItemAction('Export for Translation');
+
+				await waitForModal({
+					page,
+				});
+
+				await expect(
+					page
+						.locator('.modal-header')
+						.getByText('Export for Translation')
+				).toBeVisible();
+
+				const filePath = await assetsPage.exportForTranslation(
+					'Spanish (Spain)',
+					true
+				);
+
+				await expect(
+					checkInZip(
+						filePath,
+						`${basicWebContentTitle1}-en_US-es_ES.xlf`
+					)
+				).resolves.toBe(true);
+			});
+
+			await test.step('Exporting for Translation two equal content type object entries', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems([
+					basicWebContentTitle1,
+					basicWebContentTitle2,
+				]);
+
+				await assetsPage.execBulkItemAction('Export for Translation');
+
+				await waitForModal({
+					page,
+				});
+
+				await expect(
+					page
+						.locator('.modal-header')
+						.getByText('Export for Translation')
+				).toBeVisible();
+
+				const filePath = await assetsPage.exportForTranslation(
+					'Spanish (Spain)',
+					true
+				);
+
+				await expect(
+					checkInZip(
+						filePath,
+						`${basicWebContentTitle1}-en_US-es_ES.xlf`
+					)
+				).resolves.toBe(true);
+
+				await expect(
+					checkInZip(
+						filePath,
+						`${basicWebContentTitle2}-en_US-es_ES.xlf`
+					)
+				).resolves.toBe(true);
+			});
+
+			await test.step('Exporting for Translation two different content type object entries', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems([
+					basicWebContentTitle1,
+					blogTitle,
+				]);
+
+				await assetsPage.execBulkItemAction('Export for Translation');
+
+				await waitForModal({
+					page,
+				});
+
+				await expect(
+					page
+						.locator('.modal-header')
+						.getByText('Export for Translation')
+				).toBeVisible();
+
+				const filePath = await assetsPage.exportForTranslation(
+					'Spanish (Spain)',
+					true
+				);
+
+				await expect(
+					checkInZip(filePath, `${basicWebContentTitle1}-en_US.zip`)
+				).resolves.toBe(true);
+
+				await expect(
+					checkInZip(filePath, `${blogTitle}-en_US.zip`)
+				).resolves.toBe(true);
+			});
+
+			await test.step('Exporting for Translation multiple object entries of two different content types', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.selectItems([
+					basicWebContentTitle1,
+					basicWebContentTitle2,
+					blogTitle,
+				]);
+
+				await assetsPage.execBulkItemAction('Export for Translation');
+
+				await waitForModal({
+					page,
+				});
+
+				await expect(
+					page
+						.locator('.modal-header')
+						.getByText('Export for Translation')
+				).toBeVisible();
+
+				const filePath = await assetsPage.exportForTranslation(
+					'Spanish (Spain)',
+					true
+				);
+
+				await expect(
+					checkInZip(
+						filePath,
+						`Basic Web Content Translations-en_US.zip`
+					)
+				).resolves.toBe(true);
+
+				await expect(
+					checkInZip(filePath, `${blogTitle}-en_US.zip`)
+				).resolves.toBe(true);
+			});
+		}
+		finally {
+			const tasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'cms/bulk-action-tasks'
+				);
+
+			for (let i = 0; i < tasks.totalCount; i++) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					'cms/bulk-action-tasks',
+					tasks.items[i].id
+				);
 			}
 		}
 	}

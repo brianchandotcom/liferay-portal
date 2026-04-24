@@ -101,6 +101,10 @@ import java.util.function.Supplier;
 			value = ResetPermissionObjectBulkSelectionAction.class
 		),
 		@JsonSubTypes.Type(
+			name = "RestoreObjectBulkSelectionAction",
+			value = RestoreObjectBulkSelectionAction.class
+		),
+		@JsonSubTypes.Type(
 			name = "StatusObjectBulkSelectionAction",
 			value = StatusObjectBulkSelectionAction.class
 		),
@@ -375,6 +379,8 @@ public abstract class BulkAction implements Serializable {
 			"PermissionObjectBulkSelectionAction"),
 		RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION(
 			"ResetPermissionObjectBulkSelectionAction"),
+		RESTORE_OBJECT_BULK_SELECTION_ACTION(
+			"RestoreObjectBulkSelectionAction"),
 		STATUS_OBJECT_BULK_SELECTION_ACTION("StatusObjectBulkSelectionAction"),
 		EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION(
 			"EditObjectCategoriesBulkSelectionAction"),

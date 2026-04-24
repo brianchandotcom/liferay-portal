@@ -151,6 +151,8 @@ public abstract class BulkAction implements Cloneable, Serializable {
 			"PermissionObjectBulkSelectionAction"),
 		RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION(
 			"ResetPermissionObjectBulkSelectionAction"),
+		RESTORE_OBJECT_BULK_SELECTION_ACTION(
+			"RestoreObjectBulkSelectionAction"),
 		STATUS_OBJECT_BULK_SELECTION_ACTION("StatusObjectBulkSelectionAction"),
 		EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION(
 			"EditObjectCategoriesBulkSelectionAction"),

@@ -719,7 +719,7 @@ public class AssetHelperImpl implements AssetHelper {
 
 		BooleanClause<Query> assetEntryBooleanClauses =
 			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName());
+				booleanQueryImpl, BooleanClauseOccur.MUST);
 
 		BooleanClause<Query>[] booleanClauses =
 			searchContext.getBooleanClauses();

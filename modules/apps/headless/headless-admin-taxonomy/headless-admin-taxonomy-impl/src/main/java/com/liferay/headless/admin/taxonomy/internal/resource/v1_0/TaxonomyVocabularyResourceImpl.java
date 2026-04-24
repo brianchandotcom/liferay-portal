@@ -920,7 +920,7 @@ public class TaxonomyVocabularyResourceImpl
 										setPreBooleanFilter(booleanFilter);
 									}
 								},
-								BooleanClauseOccur.MUST.getName())
+								BooleanClauseOccur.MUST)
 						});
 				}
 				else {

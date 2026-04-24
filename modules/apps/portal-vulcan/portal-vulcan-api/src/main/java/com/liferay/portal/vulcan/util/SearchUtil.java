@@ -258,7 +258,7 @@ public class SearchUtil {
 		booleanQueryUnsafeConsumer.accept(booleanQuery);
 
 		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST.getName());
+			booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private static List<Facet> _getFacets(SearchContext searchContext) {

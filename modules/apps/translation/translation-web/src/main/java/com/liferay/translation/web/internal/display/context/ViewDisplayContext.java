@@ -282,7 +282,7 @@ public class ViewDisplayContext {
 
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName())
+				booleanQuery, BooleanClauseOccur.MUST)
 		};
 	}
 

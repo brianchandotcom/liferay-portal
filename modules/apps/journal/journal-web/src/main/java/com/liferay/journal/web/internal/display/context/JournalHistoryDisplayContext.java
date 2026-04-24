@@ -265,7 +265,7 @@ public class JournalHistoryDisplayContext {
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					BooleanClauseFactoryUtil.create(
-						booleanQuery, BooleanClauseOccur.MUST.getName())
+						booleanQuery, BooleanClauseOccur.MUST)
 				});
 		}
 		catch (ParseException parseException) {

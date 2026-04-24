@@ -77,7 +77,7 @@ public class KQLQueryVisitor implements QueryVisitor<KQLQuery> {
 			else {
 				throw new IllegalArgumentException(
 					"Unsupported boolean clause occur: " +
-						booleanClauseOccur.getName());
+						booleanClauseOccur.name());
 			}
 		}
 

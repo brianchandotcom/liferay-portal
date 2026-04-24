@@ -415,7 +415,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName())
+				booleanQuery, BooleanClauseOccur.MUST)
 		};
 	}
 

@@ -253,7 +253,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		booleanQueryUnsafeConsumer.accept(booleanQuery);
 
 		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST.getName());
+			booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private Long _getCommerceAccountId(

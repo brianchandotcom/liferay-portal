@@ -35,11 +35,11 @@ public class LiferayQueryExplainer {
 
 			Query query = booleanClause.getClause();
 
-			_print(sb, "<" + booleanClauseOccur.getName() + ">");
+			_print(sb, "<" + booleanClauseOccur.name() + ">");
 
 			_explain(sb, query);
 
-			_print(sb, "</" + booleanClauseOccur.getName() + ">");
+			_print(sb, "</" + booleanClauseOccur.name() + ">");
 		}
 	}
 

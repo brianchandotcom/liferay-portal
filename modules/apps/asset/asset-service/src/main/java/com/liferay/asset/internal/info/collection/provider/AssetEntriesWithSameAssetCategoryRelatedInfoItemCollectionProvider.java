@@ -138,7 +138,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 				new BooleanClause[] {
 					_getAssetEntryIdBooleanClause(assetEntry),
 					BooleanClauseFactoryUtil.create(
-						booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+						booleanQueryImpl, BooleanClauseOccur.MUST)
 				});
 
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
@@ -449,7 +449,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		booleanQueryImpl.setPreBooleanFilter(assetEntryIdBooleanFilter);
 
 		return BooleanClauseFactoryUtil.create(
-			booleanQueryImpl, BooleanClauseOccur.MUST.getName());
+			booleanQueryImpl, BooleanClauseOccur.MUST);
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(

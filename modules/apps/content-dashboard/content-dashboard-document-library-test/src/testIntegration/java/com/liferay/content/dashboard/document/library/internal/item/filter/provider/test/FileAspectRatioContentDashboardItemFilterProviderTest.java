@@ -151,7 +151,7 @@ public class FileAspectRatioContentDashboardItemFilterProviderTest {
 
 		BooleanClause[] booleanClauses = {
 			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 
 		searchContext.setBooleanClauses(booleanClauses);

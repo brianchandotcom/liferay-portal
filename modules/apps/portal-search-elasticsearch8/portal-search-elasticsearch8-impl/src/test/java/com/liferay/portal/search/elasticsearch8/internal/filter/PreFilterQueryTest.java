@@ -69,7 +69,7 @@ public class PreFilterQueryTest extends BaseIndexingTestCase {
 
 				@SuppressWarnings("rawtypes")
 				BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
-					booleanQueryImpl, BooleanClauseOccur.MUST.getName());
+					booleanQueryImpl, BooleanClauseOccur.MUST);
 
 				indexingTestHelper.define(
 					searchContext -> searchContext.setBooleanClauses(

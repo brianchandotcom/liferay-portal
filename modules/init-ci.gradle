@@ -105,9 +105,7 @@ private void _writeReport(
 
 		<testsuite errors="${failureCount}" failures="${failureCount}" hostname="localhost" name="${className}" skipped="0" tests="1" time="${duration}" timestamp="${date.format("yyyy-MM-dd_kk:mm:ss")}">
 			<properties />
-			<testcase classname="${className}" name="assemble" time="${duration}">
-				${failureElementString}
-			</testcase>
+			<testcase classname="${className}" name="assemble" time="${duration}">$failureElementString</testcase>
 			<system-out></system-out>
 			<system-err></system-err>
 		</testsuite>"""

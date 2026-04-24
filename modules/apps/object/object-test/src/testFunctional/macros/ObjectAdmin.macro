@@ -634,15 +634,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAddEntryModalIsNotPresent() {
-		AssertElementNotPresent(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
-
-		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_SAVE_BUTTON");
-
-		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_CANCEL_BUTTON");
-	}
-
-	@summary = "Default summary"
 	macro assertBlockIsPresent(fieldBlockName = null) {
 		AssertElementPresent(
 			key_fieldBlockName = ${fieldBlockName},
@@ -809,17 +800,6 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_SAVE_BUTTON");
 
 		AssertElementNotPresent(locator1 = "ObjectAdmin#ADD_ENTRY_CANCEL_BUTTON");
-	}
-
-	@summary = "Default summary"
-	macro cancelAddingObjectStringFieldEntryViaUI(entryValue = null) {
-		LexiconEntry.gotoAdd();
-
-		Type(
-			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-			value1 = ${entryValue});
-
-		Button.clickCancel();
 	}
 
 	@summary = "Default summary"

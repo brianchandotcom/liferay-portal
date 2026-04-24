@@ -62,14 +62,15 @@ public class SegmentsFeatureFlagListenerTest {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-78863");
 
-		Assert.assertTrue(
-			_segmentsEntryLocalService.getSegmentsEntry(
-				defaultSegmentsEntry.getSegmentsEntryId()
-			).isActive());
-		Assert.assertTrue(
-			_segmentsEntryLocalService.getSegmentsEntry(
-				referredSegmentsEntry.getSegmentsEntryId()
-			).isActive());
+		defaultSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
+			defaultSegmentsEntry.getSegmentsEntryId());
+
+		Assert.assertTrue(defaultSegmentsEntry.isActive());
+
+		referredSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
+			referredSegmentsEntry.getSegmentsEntryId());
+
+		Assert.assertTrue(referredSegmentsEntry.isActive());
 	}
 
 	@Test
@@ -81,10 +82,10 @@ public class SegmentsFeatureFlagListenerTest {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-78863");
 
-		Assert.assertFalse(
-			_segmentsEntryLocalService.getSegmentsEntry(
-				asahFaroSegmentsEntry.getSegmentsEntryId()
-			).isActive());
+		asahFaroSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
+			asahFaroSegmentsEntry.getSegmentsEntryId());
+
+		Assert.assertFalse(asahFaroSegmentsEntry.isActive());
 	}
 
 	@Test
@@ -98,14 +99,15 @@ public class SegmentsFeatureFlagListenerTest {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), false, "LPD-78863");
 
-		Assert.assertFalse(
-			_segmentsEntryLocalService.getSegmentsEntry(
-				defaultSegmentsEntry.getSegmentsEntryId()
-			).isActive());
-		Assert.assertFalse(
-			_segmentsEntryLocalService.getSegmentsEntry(
-				referredSegmentsEntry.getSegmentsEntryId()
-			).isActive());
+		defaultSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
+			defaultSegmentsEntry.getSegmentsEntryId());
+
+		Assert.assertFalse(defaultSegmentsEntry.isActive());
+
+		referredSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
+			referredSegmentsEntry.getSegmentsEntryId());
+
+		Assert.assertFalse(referredSegmentsEntry.isActive());
 	}
 
 	@Test
@@ -113,14 +115,15 @@ public class SegmentsFeatureFlagListenerTest {
 	public void testDeactivateSegmentsExperiences() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(
+		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
 			true, SegmentsEntryConstants.SOURCE_DEFAULT);
 		SegmentsEntry asahFaroSegmentsEntry = _addSegmentsEntry(
 			true, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND);
 
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
-				_group.getGroupId(), segmentsEntry.getExternalReferenceCode(),
+				_group.getGroupId(),
+				defaultSegmentsEntry.getExternalReferenceCode(),
 				_group.getExternalReferenceCode(), layout.getPlid());
 		SegmentsExperience asahFaroSegmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
@@ -131,14 +134,17 @@ public class SegmentsFeatureFlagListenerTest {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), false, "LPD-78863");
 
-		Assert.assertFalse(
+		SegmentsExperience defaultSegmentsExperience =
 			_segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperience.getSegmentsExperienceId()
-			).isActive());
-		Assert.assertTrue(
+				segmentsExperience.getSegmentsExperienceId());
+
+		Assert.assertFalse(defaultSegmentsExperience.isActive());
+
+		SegmentsExperience asahSegmentsExperience =
 			_segmentsExperienceLocalService.getSegmentsExperience(
-				asahFaroSegmentsExperience.getSegmentsExperienceId()
-			).isActive());
+				asahFaroSegmentsExperience.getSegmentsExperienceId());
+
+		Assert.assertTrue(asahSegmentsExperience.isActive());
 	}
 
 	private SegmentsEntry _addSegmentsEntry(boolean active, String source)

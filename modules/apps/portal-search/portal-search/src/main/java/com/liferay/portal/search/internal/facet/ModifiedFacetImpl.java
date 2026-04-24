@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.DateRangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.Facet;
@@ -102,7 +101,7 @@ public class ModifiedFacetImpl extends DateRangeFacet implements Facet {
 			dateRangeFilterBuilder.setTo(end);
 		}
 
-		return new BooleanClauseImpl(
+		return new BooleanClause<>(
 			dateRangeFilterBuilder.build(), BooleanClauseOccur.MUST);
 	}
 

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.BaseFacet;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.facet.Facet;
 
@@ -65,7 +64,7 @@ public class FacetImpl extends BaseFacet implements Facet {
 
 		termsFilter.addValues(_selections);
 
-		return new BooleanClauseImpl<>(termsFilter, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(termsFilter, BooleanClauseOccur.MUST);
 	}
 
 	private String _aggregationName;

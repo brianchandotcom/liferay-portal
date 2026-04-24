@@ -19,12 +19,12 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -94,7 +94,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 				portletSharedSearchSettings.getParameter("q")));
 
 		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl<Query>(
+			new BooleanClause<Query>(
 				new TermQueryImpl(
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
@@ -104,7 +104,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 		if (assetCategory != null) {
 			portletSharedSearchSettings.addCondition(
-				new BooleanClauseImpl<Query>(
+				new BooleanClause<Query>(
 					new TermQueryImpl(
 						Field.ASSET_CATEGORY_IDS,
 						String.valueOf(assetCategory.getCategoryId())),

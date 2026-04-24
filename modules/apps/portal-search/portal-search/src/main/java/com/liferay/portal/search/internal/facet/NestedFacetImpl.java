@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -118,7 +117,7 @@ public class NestedFacetImpl extends FacetImpl implements NestedFacet {
 
 		QueryFilter queryFilter = new QueryFilter(nestedQuery);
 
-		return new BooleanClauseImpl<>(queryFilter, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(queryFilter, BooleanClauseOccur.MUST);
 	}
 
 	private Aggregation _childAggregation;

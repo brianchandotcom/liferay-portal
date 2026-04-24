@@ -17,6 +17,7 @@ import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForModal} from '../../../utils/waitFor';
@@ -3414,6 +3415,28 @@ test(
 			);
 		});
 
+		await test.step('Log in as an CMS Administrator', async () => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await performUserSwitch(page, user.alternateName);
+		});
+
 		try {
 			await test.step('Navigate to history page and bulk delete all versions', async () => {
 				await assetsPage.gotoAll();
@@ -3669,6 +3692,28 @@ test(
 			);
 		});
 
+		await test.step('Log in as an CMS Administrator', async () => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await performUserSwitch(page, user.alternateName);
+		});
+
 		try {
 			await test.step('Expire one asset in bulk', async () => {
 				await assetsPage.gotoAll();
@@ -3796,6 +3841,28 @@ test(
 				'cms/blogs',
 				spaceName
 			);
+		});
+
+		await test.step('Log in as an CMS Administrator', async () => {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await performUserSwitch(page, user.alternateName);
 		});
 
 		await test.step('Exporting for Translation a single file type object entry is not allowed', async () => {

@@ -13,6 +13,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {getExportedConfiguration} from '../../../utils/getExportedConfiguration';
+import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -25,6 +26,13 @@ const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()
+);
+
+const testWithSiteTemplateSync = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-82107': {enabled: true},
+	})
 );
 
 test('Asserts that site scoped OSGi configurations can be used across different sites', async ({
@@ -135,4 +143,123 @@ test('LPD-38043 Assert that a configuration at the site scope can override a con
 			accessibilityMenuPage.openAccessibilityMenuButton
 		).not.toBeAttached();
 	});
+});
+
+testWithSiteTemplateSync(
+	'LPD-87025 Assert that the Site Template Sync screen shows a message when the site is not related to a site template',
+	async ({apiHelpers, page, site, siteSettingsPage}) => {
+		await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await siteSettingsPage.goToSiteSetting(
+			'Pages',
+			'Site Template Sync',
+			site.friendlyUrlPath
+		);
+
+		await expect(
+			page.locator('.sheet-subtitle', {hasText: 'Site Template Sync'})
+		).toBeVisible();
+
+		await expect(
+			page.getByText('This site is not related to a site template.')
+		).toBeVisible();
+	}
+);
+
+testWithSiteTemplateSync(
+	'LPD-87025 Assert that the Site Template Sync screen shows the propagation toggle when the site is linked to a site template',
+	async ({apiHelpers, page, site, siteSettingsPage}) => {
+		const templateName = 'SiteTemplate-' + getRandomString();
+
+		const layoutSetPrototype =
+			await apiHelpers.jsonWebServicesLayoutSetPrototype.addLayoutSetPrototypes(
+				{
+					name: templateName,
+				}
+			);
+
+		try {
+			await siteSettingsPage.goToSiteSetting(
+				'Pages',
+				'Site Template Sync',
+				site.friendlyUrlPath
+			);
+
+			await page
+				.getByRole('combobox', {name: 'Site Template'})
+				.selectOption({label: templateName});
+
+			await siteSettingsPage.saveConfiguration();
+
+			await page.reload();
+
+			await expect(
+				page.getByText(
+					new RegExp(
+						`Enable propagation of changes from the site template.*${templateName}`
+					)
+				)
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.headlessAdminSite.deleteSite(
+				site.externalReferenceCode
+			);
+
+			site.externalReferenceCode = '';
+
+			await apiHelpers.jsonWebServicesLayoutSetPrototype.deleteLayoutSetPrototypes(
+				layoutSetPrototype.layoutSetPrototypeId
+			);
+		}
+	}
+);
+
+test('LPD-87025 Assert that the Pages screen shows the Open Pages link when the site has pages', async ({
+	apiHelpers,
+	page,
+	site,
+	siteSettingsPage,
+}) => {
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
+	await siteSettingsPage.goToSiteSetting(
+		'Pages',
+		'Pages',
+		site.friendlyUrlPath
+	);
+
+	await expect(
+		page.locator('.sheet-subtitle', {hasText: 'Pages'})
+	).toBeVisible();
+
+	await expect(page.getByRole('link', {name: 'Open Pages'})).toBeVisible();
+
+	await expect(
+		page.getByText('This site is not related to a site template.')
+	).toBeHidden();
+});
+
+test('LPD-87025 Assert that the Pages screen shows the no-pages message when the site has no pages', async ({
+	page,
+	site,
+	siteSettingsPage,
+}) => {
+	await siteSettingsPage.goToSiteSetting(
+		'Pages',
+		'Pages',
+		site.friendlyUrlPath
+	);
+
+	await expect(
+		page.getByText('This site does not have any pages.')
+	).toBeVisible();
+
+	await expect(page.getByRole('link', {name: 'Open Pages'})).toBeHidden();
 });

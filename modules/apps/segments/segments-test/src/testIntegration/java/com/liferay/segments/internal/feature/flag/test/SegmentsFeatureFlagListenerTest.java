@@ -53,7 +53,7 @@ public class SegmentsFeatureFlagListenerTest {
 
 	@Test
 	@TestInfo("LPD-87246")
-	public void testActivateSegmentsEntries() throws Exception {
+	public void testOnValueActivateSegmentsEntries() throws Exception {
 		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
 			false, SegmentsEntryConstants.SOURCE_DEFAULT);
 		SegmentsEntry referredSegmentsEntry = _addSegmentsEntry(
@@ -75,7 +75,9 @@ public class SegmentsFeatureFlagListenerTest {
 
 	@Test
 	@TestInfo("LPD-87246")
-	public void testAsahFaroBackendSegmentEntriesAreSkipped() throws Exception {
+	public void testOnValueAsahFaroBackendSegmentEntriesAreSkipped()
+		throws Exception {
+
 		SegmentsEntry asahFaroSegmentsEntry = _addSegmentsEntry(
 			false, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND);
 
@@ -90,7 +92,7 @@ public class SegmentsFeatureFlagListenerTest {
 
 	@Test
 	@TestInfo("LPD-87246")
-	public void testDeactivateSegmentsEntries() throws Exception {
+	public void testOnValueDeactivateSegmentsEntries() throws Exception {
 		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(
 			true, SegmentsEntryConstants.SOURCE_DEFAULT);
 		SegmentsEntry referredSegmentsEntry = _addSegmentsEntry(
@@ -112,7 +114,7 @@ public class SegmentsFeatureFlagListenerTest {
 
 	@Test
 	@TestInfo("LPD-87246")
-	public void testDeactivateSegmentsExperiences() throws Exception {
+	public void testOnValueDeactivateSegmentsExperiences() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsEntry defaultSegmentsEntry = _addSegmentsEntry(

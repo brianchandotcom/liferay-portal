@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -321,6 +323,12 @@ public class ObjectEntryModelDocumentContributor
 			"objectDefinitionId", objectEntry.getObjectDefinitionId());
 
 		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		if (objectDefinition.isCMS() &&
+			(objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+
+			document.addKeyword(Field.VIEW_ACTION_ID, ActionKeys.DELETE);
+		}
 
 		document.addKeyword(
 			"objectDefinitionExternalReferenceCode",

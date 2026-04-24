@@ -168,13 +168,13 @@ public class DataSourceFactoryTest {
 	@Test
 	public void testRewriteJDBCURL() throws Exception {
 		_assertRewrittenJDBCURL(
-			_MYSQL_JDBC_URL, _MYSQL_JDBC_URL + "?" + _MYSQL_DEFAULT_PARAMETERS);
+			_JDBC_URL_MYSQL, _JDBC_URL_MYSQL + "?" + _DEFAULT_PARAMETERS_MYSQL);
 		_assertRewrittenJDBCURL(
-			_POSTGRESQL_JDBC_URL,
-			_POSTGRESQL_JDBC_URL + "?" + _POSTGRESQL_DEFAULT_PARAMETERS);
+			_JDBC_URL_POSTGRESQL,
+			_JDBC_URL_POSTGRESQL + "?" + _DEFAULT_PARAMETERS_POSTGRESQL);
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL,
-			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS, 12, 4);
+			_JDBC_URL_SQL_SERVER,
+			_JDBC_URL_SQL_SERVER + ";" + _DEFAULT_PARAMETERS_SQL_SERVER, 12, 4);
 	}
 
 	@Test
@@ -182,16 +182,16 @@ public class DataSourceFactoryTest {
 		throws Exception {
 
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL, _SQLSERVER_JDBC_URL, 11, 4);
+			_JDBC_URL_SQL_SERVER, _JDBC_URL_SQL_SERVER, 11, 4);
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL, _SQLSERVER_JDBC_URL, 12, 3);
+			_JDBC_URL_SQL_SERVER, _JDBC_URL_SQL_SERVER, 12, 3);
 
 		String jdbcURL =
-			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS;
+			_JDBC_URL_SQL_SERVER + ";" + _DEFAULT_PARAMETERS_SQL_SERVER;
 
-		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 12, 4);
-		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 12, 5);
-		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 13, 0);
+		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 12, 4);
+		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 12, 5);
+		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 13, 0);
 	}
 
 	@Test
@@ -210,7 +210,7 @@ public class DataSourceFactoryTest {
 			);
 
 			Assert.assertEquals(
-				_SQLSERVER_JDBC_URL, _rewriteJDBCURL(_SQLSERVER_JDBC_URL));
+				_JDBC_URL_SQL_SERVER, _rewriteJDBCURL(_JDBC_URL_SQL_SERVER));
 		}
 	}
 
@@ -219,19 +219,19 @@ public class DataSourceFactoryTest {
 		String parameter = "userParameter=userValue";
 
 		_assertRewrittenJDBCURL(
-			_MYSQL_JDBC_URL + "?" + parameter,
+			_JDBC_URL_MYSQL + "?" + parameter,
 			StringBundler.concat(
-				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
+				_JDBC_URL_MYSQL, "?", _DEFAULT_PARAMETERS_MYSQL, "&",
 				parameter));
 		_assertRewrittenJDBCURL(
-			_POSTGRESQL_JDBC_URL + "?" + parameter,
+			_JDBC_URL_POSTGRESQL + "?" + parameter,
 			StringBundler.concat(
-				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
+				_JDBC_URL_POSTGRESQL, "?", _DEFAULT_PARAMETERS_POSTGRESQL, "&",
 				parameter));
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL + ";" + parameter,
+			_JDBC_URL_SQL_SERVER + ";" + parameter,
 			StringBundler.concat(
-				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
+				_JDBC_URL_SQL_SERVER, ";", _DEFAULT_PARAMETERS_SQL_SERVER, ";",
 				parameter),
 			12, 4);
 	}
@@ -240,17 +240,17 @@ public class DataSourceFactoryTest {
 	public void testRewriteJDBCURLWithExistingDefaultParameters()
 		throws Exception {
 
-		String jdbcURL = _MYSQL_JDBC_URL + "?cachePrepStmts=false";
+		String jdbcURL = _JDBC_URL_MYSQL + "?cachePrepStmts=false";
 		String parameters = StringUtil.removeSubstring(
-			_MYSQL_DEFAULT_PARAMETERS, "cachePrepStmts=true&");
+			_DEFAULT_PARAMETERS_MYSQL, "cachePrepStmts=true&");
 
 		_assertRewrittenJDBCURL(jdbcURL, jdbcURL + "&" + parameters);
 
-		jdbcURL = _POSTGRESQL_JDBC_URL + "?reWriteBatchedInserts=false";
+		jdbcURL = _JDBC_URL_POSTGRESQL + "?reWriteBatchedInserts=false";
 
 		_assertRewrittenJDBCURL(jdbcURL, jdbcURL);
 
-		jdbcURL = _SQLSERVER_JDBC_URL + ";useBulkCopyForBatchInsert=false";
+		jdbcURL = _JDBC_URL_SQL_SERVER + ";useBulkCopyForBatchInsert=false";
 
 		_assertRewrittenJDBCURL(jdbcURL, jdbcURL, 12, 4);
 	}
@@ -260,21 +260,21 @@ public class DataSourceFactoryTest {
 		String parameter = "valuelessParameter";
 
 		_assertRewrittenJDBCURL(
-			_MYSQL_JDBC_URL + "?" + parameter,
+			_JDBC_URL_MYSQL + "?" + parameter,
 			StringBundler.concat(
-				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
+				_JDBC_URL_MYSQL, "?", _DEFAULT_PARAMETERS_MYSQL, "&",
 				parameter));
 
 		_assertRewrittenJDBCURL(
-			_POSTGRESQL_JDBC_URL + "?" + parameter,
+			_JDBC_URL_POSTGRESQL + "?" + parameter,
 			StringBundler.concat(
-				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
+				_JDBC_URL_POSTGRESQL, "?", _DEFAULT_PARAMETERS_POSTGRESQL, "&",
 				parameter));
 
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL + ";" + parameter,
+			_JDBC_URL_SQL_SERVER + ";" + parameter,
 			StringBundler.concat(
-				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
+				_JDBC_URL_SQL_SERVER, ";", _DEFAULT_PARAMETERS_SQL_SERVER, ";",
 				parameter),
 			12, 4);
 	}
@@ -331,7 +331,7 @@ public class DataSourceFactoryTest {
 		}
 	}
 
-	private static final String _MYSQL_DEFAULT_PARAMETERS =
+	private static final String _DEFAULT_PARAMETERS_MYSQL =
 		StringBundler.concat(
 			"cachePrepStmts=true&characterEncoding=UTF-8&",
 			"dontTrackOpenResources=true&",
@@ -341,19 +341,19 @@ public class DataSourceFactoryTest {
 			"useFastDateParsing=false&useLocalSessionState=true&",
 			"useLocalTransactionState=true&useUnicode=true");
 
-	private static final String _MYSQL_JDBC_URL =
-		"jdbc:mysql://localhost/lportal1";
-
-	private static final String _POSTGRESQL_DEFAULT_PARAMETERS =
+	private static final String _DEFAULT_PARAMETERS_POSTGRESQL =
 		"reWriteBatchedInserts=true";
 
-	private static final String _POSTGRESQL_JDBC_URL =
-		"jdbc:postgresql://localhost/lportal2";
-
-	private static final String _SQLSERVER_DEFAULT_PARAMETERS =
+	private static final String _DEFAULT_PARAMETERS_SQL_SERVER =
 		"useBulkCopyForBatchInsert=true";
 
-	private static final String _SQLSERVER_JDBC_URL =
+	private static final String _JDBC_URL_MYSQL =
+		"jdbc:mysql://localhost/lportal1";
+
+	private static final String _JDBC_URL_POSTGRESQL =
+		"jdbc:postgresql://localhost/lportal2";
+
+	private static final String _JDBC_URL_SQL_SERVER =
 		"jdbc:sqlserver://localhost;databaseName=lportal3";
 
 	private Path _path;

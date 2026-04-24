@@ -23,7 +23,7 @@ jobs:
                 run: |
                     CHART_VERSION=$(cat ./Chart.yaml | yq .version)
 
-                    SHORT_SHA=$(git rev-parse --short HEAD)
+                    SHORT_SHA="${GITHUB_SHA:0:7}"
 
                     NEW_VERSION="${CHART_VERSION}-pr-${{inputs.pr_number}}-g${SHORT_SHA}"
 

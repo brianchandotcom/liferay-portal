@@ -8,9 +8,9 @@ package com.liferay.portal.search.internal.query;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
 

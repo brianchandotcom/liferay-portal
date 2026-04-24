@@ -9,8 +9,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 
 import java.util.HashMap;

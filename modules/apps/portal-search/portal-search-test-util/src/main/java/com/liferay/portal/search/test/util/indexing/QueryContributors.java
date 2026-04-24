@@ -7,9 +7,9 @@ package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 
 /**
  * @author André de Oliveira

@@ -6,8 +6,8 @@
 package com.liferay.portal.search.elasticsearch8.internal.sort;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.internal.sort.SortsImpl;

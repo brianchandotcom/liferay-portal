@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.highlight;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.search.StringQuery;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.ElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.highlight.BaseHighlightTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;

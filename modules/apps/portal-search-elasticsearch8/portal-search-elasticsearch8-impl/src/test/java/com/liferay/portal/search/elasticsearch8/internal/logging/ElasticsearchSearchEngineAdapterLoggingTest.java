@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.logging;
 
 import co.elastic.clients.elasticsearch._types.HealthStatus;
 
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.search.MatchAllQuery;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ClusterHealthResponseUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionFixture;

@@ -3638,6 +3638,115 @@ test(
 );
 
 test(
+	'Expire CMS assets in bulk',
+	{tag: '@LPD-85361'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const basicDocumentTitle = `Basic Document ${getRandomString()}`;
+		const basicWebContentTitle = `Basic Web Content ${getRandomString()}`;
+		const spaceName = 'Default';
+
+		await test.step('Create CMS assets', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: `file_${getRandomString()}.png`,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: basicDocumentTitle,
+				},
+				'cms/basic-documents',
+				spaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: basicWebContentTitle,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		});
+
+		try {
+			await test.step('Expire one asset in bulk', async () => {
+				await assetsPage.gotoAll();
+
+				const row = page.getByRole('row', {name: basicDocumentTitle});
+
+				await expect(
+					row.getByRole('cell', {name: 'Approved'})
+				).toBeVisible();
+
+				await assetsPage.selectItems([basicDocumentTitle]);
+
+				await assetsPage.execBulkItemAction('Expire');
+
+				await waitForAlert(
+					page,
+					`Info:Expire action started for ${basicDocumentTitle} asset.`,
+					{
+						type: 'info',
+					}
+				);
+
+				await waitForAlert(
+					page,
+					`Success:${basicDocumentTitle} was successfully expired.`
+				);
+
+				await expect(
+					row.getByRole('cell', {name: 'Expired'})
+				).toBeVisible();
+			});
+
+			await test.step('Expire two assets in bulk', async () => {
+				const row = page.getByRole('row', {name: basicWebContentTitle});
+
+				await expect(
+					row.getByRole('cell', {name: 'Approved'})
+				).toBeVisible();
+
+				await assetsPage.selectItems([basicWebContentTitle]);
+
+				await assetsPage.execBulkItemAction('Expire');
+
+				await waitForAlert(
+					page,
+					'Info:Expire action started for 2 assets.',
+					{
+						type: 'info',
+					}
+				);
+
+				await waitForAlert(
+					page,
+					'Success:2 assets were successfully expired.'
+				);
+
+				await expect(
+					row.getByRole('cell', {name: 'Expired'})
+				).toBeVisible();
+			});
+		}
+		finally {
+			const tasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'cms/bulk-action-tasks'
+				);
+
+			for (let i = 0; i < tasks.totalCount; i++) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					'cms/bulk-action-tasks',
+					tasks.items[i].id
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Export for Translation CMS assets in bulk',
 	{tag: '@LPD-85361'},
 	async ({apiHelpers, assetsPage, page}) => {

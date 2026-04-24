@@ -28,6 +28,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -118,6 +119,10 @@ public class ExtensionSelectionFDSFilter extends BaseSelectionFDSFilter {
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)searchResponse.getAggregationResult(
 				"extensions");
+
+		if (termsAggregationResult == null) {
+			return Collections.emptyList();
+		}
 
 		return TransformUtil.transform(
 			termsAggregationResult.getBuckets(), Bucket::getKey);

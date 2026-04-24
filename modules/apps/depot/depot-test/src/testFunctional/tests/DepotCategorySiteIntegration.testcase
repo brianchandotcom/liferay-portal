@@ -361,7 +361,7 @@ definition {
 
 	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = 4
-	test VocabularyShouldNotBeViewedFromDisconnectedSite {
+	test VocabularyAndCategoryShouldNotBeViewedFromDisconnectedSite {
 		JSONCategory.addCategory(
 			groupName = "Test Depot Name",
 			site = "false",

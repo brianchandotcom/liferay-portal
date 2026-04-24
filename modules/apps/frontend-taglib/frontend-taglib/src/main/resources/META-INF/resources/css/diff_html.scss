@@ -1,0 +1,49 @@
+.taglib-diff-html {
+	div {
+		&.diff-removed-image {
+			background: #fdc6c6 url(../images/diff/minus.png);
+		}
+
+		&.diff-added-image {
+			background: #cfc url(../images/diff/plus.png) no-repeat;
+		}
+
+		&.diff-removed-image,
+		&.diff-added-image {
+			height: 300px;
+			margin: 2px;
+			opacity: 0.55;
+			position: absolute;
+			width: 200px;
+		}
+	}
+
+	span {
+		&.diff-html-added {
+			background-color: #cfc;
+			font-size: 1em;
+
+			img {
+				border: 2px solid #cfc;
+			}
+		}
+
+		&.diff-html-changed {
+			background: url(../images/diff/underline.png) bottom repeat-x;
+
+			img {
+				border: 2px dotted #009;
+			}
+		}
+
+		&.diff-html-removed {
+			background-color: #fdc6c6;
+			font-size: 1em;
+			text-decoration: line-through;
+
+			img {
+				border: 2px solid #fdc6c6;
+			}
+		}
+	}
+}

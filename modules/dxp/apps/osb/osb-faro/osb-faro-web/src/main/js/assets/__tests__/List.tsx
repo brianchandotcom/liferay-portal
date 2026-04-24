@@ -249,7 +249,7 @@ describe('List', () => {
 			);
 
 			expect(mimeTypeFilter).toBeDefined();
-			expect(mimeTypeFilter.label).toBe('MIME Type');
+			expect(mimeTypeFilter.label).toBe('File Type');
 			expect(mimeTypeFilter.apiURL).toContain('asset-summary-mime-types');
 		});
 

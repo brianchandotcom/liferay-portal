@@ -143,6 +143,39 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPD-80908")
+	public void testChildLayoutPropagationWithLinkEnabled() throws Exception {
+		Layout childPrototypeLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), true);
+
+		childPrototypeLayout = _layoutLocalService.updateParentLayoutId(
+			childPrototypeLayout.getPlid(), prototypeLayout.getPlid());
+
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			group.getGroupId(), false);
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
+
+		LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+
+		propagateChanges(group);
+
+		Layout propagatedChildLayout =
+			LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+				childPrototypeLayout.getExternalReferenceCode(),
+				group.getGroupId());
+
+		Assert.assertEquals(
+			layout.getLayoutId(), propagatedChildLayout.getParentLayoutId());
+	}
+
+	@Test
 	public void testIsLayoutDeleteable() throws Exception {
 		Assert.assertFalse(layout.isLayoutDeleteable());
 

@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class WildcardQuery extends BaseQueryImpl {
+public class WildcardQuery extends Query {
 
 	public WildcardQuery(QueryTerm queryTerm) {
 		_queryTerm = queryTerm;

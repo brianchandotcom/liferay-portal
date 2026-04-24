@@ -13,31 +13,67 @@ import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface Query extends Serializable {
+public abstract class Query implements Serializable {
 
 	public static final float BOOST_DEFAULT = 1.0F;
 
-	public <T> T accept(QueryVisitor<T> queryVisitor);
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return null;
+	}
 
-	public float getBoost();
+	public float getBoost() {
+		return _boost;
+	}
 
-	public Filter getPostFilter();
+	public Filter getPostFilter() {
+		return _postFilter;
+	}
 
-	public BooleanFilter getPreBooleanFilter();
+	public BooleanFilter getPreBooleanFilter() {
+		return _preFilter;
+	}
 
-	public QueryConfig getQueryConfig();
+	public QueryConfig getQueryConfig() {
+		if (_queryConfig == null) {
+			_queryConfig = new QueryConfig();
+		}
 
-	public boolean hasChildren();
+		return _queryConfig;
+	}
 
-	public boolean isDefaultBoost();
+	public boolean hasChildren() {
+		return false;
+	}
 
-	public void setBoost(float boost);
+	public boolean isDefaultBoost() {
+		if (_boost == BOOST_DEFAULT) {
+			return true;
+		}
 
-	public void setPostFilter(Filter filter);
+		return false;
+	}
 
-	public void setPreBooleanFilter(BooleanFilter preBooleanFilter);
+	public void setBoost(float boost) {
+		_boost = boost;
+	}
 
-	public void setQueryConfig(QueryConfig queryConfig);
+	public void setPostFilter(Filter postFilter) {
+		_postFilter = postFilter;
+	}
+
+	public void setPreBooleanFilter(BooleanFilter preFilter) {
+		_preFilter = preFilter;
+	}
+
+	public void setQueryConfig(QueryConfig queryConfig) {
+		_queryConfig = queryConfig;
+	}
+
+	private float _boost = BOOST_DEFAULT;
+	private Filter _postFilter;
+	private BooleanFilter _preFilter;
+	private QueryConfig _queryConfig;
 
 }

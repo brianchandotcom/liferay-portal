@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
  * @author Brian Wing Shun Chan
  * @author Michael C. Han
  */
-public class TermQuery extends BaseQueryImpl {
+public class TermQuery extends Query {
 
 	public TermQuery(QueryTerm queryTerm) {
 		_queryTerm = queryTerm;

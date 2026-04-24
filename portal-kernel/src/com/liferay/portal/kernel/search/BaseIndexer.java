@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -654,7 +653,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			Collection<Facet> facets)
 		throws ParseException {
 
-		BooleanQuery facetBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery facetBooleanQuery = new BooleanQuery();
 
 		for (Facet facet : facets) {
 			BooleanClause<Query> facetBooleanClause = facet.getFacetClause();
@@ -981,7 +980,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter fullQueryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		BooleanQuery searchQuery = new BooleanQueryImpl();
+		BooleanQuery searchQuery = new BooleanQuery();
 
 		addSearchKeywords(searchQuery, searchContext);
 
@@ -1002,7 +1001,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				facetBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
-		BooleanQuery fullBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery fullBooleanQuery = new BooleanQuery();
 
 		if (fullQueryBooleanFilter.hasClauses()) {
 			fullBooleanQuery.setPreBooleanFilter(fullQueryBooleanFilter);

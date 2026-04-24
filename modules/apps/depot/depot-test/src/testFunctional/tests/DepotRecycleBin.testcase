@@ -39,25 +39,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureRecycleBin(recycleBin = "Disabled");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		Depot.deleteContentViaBulkEditing(
-			dmDocumentTitle = "DM Document Title",
-			recycleBinDisabled = "true");
-	}
-
-	@description = "This ensures that the web content can be deleted after the recycle bin is disabled."
-	@priority = 5
-	@refactordone
-	test CanDeleteWCAfterDisabling {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -67,6 +48,12 @@ definition {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureRecycleBin(recycleBin = "Disabled");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		Depot.deleteContentViaBulkEditing(
+			dmDocumentTitle = "DM Document Title",
+			recycleBinDisabled = "true");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

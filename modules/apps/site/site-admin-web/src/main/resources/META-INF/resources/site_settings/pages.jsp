@@ -44,7 +44,14 @@ if (!LanguageUtil.isInheritLocales(siteGroup.getGroupId()) && !siteAdminConfigur
 boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
-<div class="sheet-subtitle"><liferay-ui:message key="pages" /></div>
+<c:choose>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82107") %>'>
+		<div class="sheet-subtitle"><liferay-ui:message key="site-template-sync" /></div>
+	</c:when>
+	<c:otherwise>
+		<div class="sheet-subtitle"><liferay-ui:message key="pages" /></div>
+	</c:otherwise>
+</c:choose>
 
 <aui:field-wrapper cssClass="form-group">
 	<c:choose>
@@ -94,13 +101,24 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		</c:when>
 		<c:otherwise>
 			<c:choose>
-				<c:when test="<%= siteGroup.getPublicLayoutsPageCount() > 0 %>">
-					<aui:a href="<%= siteGroup.getDisplayURL(themeDisplay, false) %>" label="open-pages" target="_blank" />
-				</c:when>
-				<c:otherwise>
+				<c:when test="<%= siteGroup.getPublicLayoutsPageCount() == 0 %>">
 					<p class="small text-secondary">
 						<liferay-ui:message key="this-site-does-not-have-any-pages" />
 					</p>
+				</c:when>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82107") %>'>
+					<c:if test="<%= publicLayoutSetPrototype == null %>">
+						<p class="small text-secondary">
+							<liferay-ui:message key="this-site-is-not-related-to-a-site-template" />
+						</p>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<clay:link
+						href="<%= siteGroup.getDisplayURL(themeDisplay, false) %>"
+						label="open-pages"
+						target="_blank"
+					/>
 				</c:otherwise>
 			</c:choose>
 

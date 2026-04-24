@@ -7,9 +7,11 @@ package com.liferay.site.admin.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -72,6 +74,12 @@ public class PagesSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getName(Locale locale) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					CompanyThreadLocal.getCompanyId(), "LPD-82107")) {
+
+				return _language.get(locale, "site-template-sync");
+			}
+
 			return _language.get(locale, "pages");
 		}
 

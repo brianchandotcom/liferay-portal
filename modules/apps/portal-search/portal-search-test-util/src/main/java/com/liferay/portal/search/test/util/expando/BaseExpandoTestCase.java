@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -295,7 +294,7 @@ public abstract class BaseExpandoTestCase extends BaseIndexingTestCase {
 	protected Void doAssertSearch(String keywords, int expectedCount)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		SearchContext searchContext = createSearchContext();
 

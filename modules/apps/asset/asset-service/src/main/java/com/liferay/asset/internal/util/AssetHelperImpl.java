@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -689,7 +688,7 @@ public class AssetHelperImpl implements AssetHelper {
 			SearchContext searchContext, int start)
 		throws Exception {
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (AssetEntryQuery assetEntryQuery : assetEntryQueries) {
 			SearchContext assetEntryQuerySearchContext = new SearchContext();
@@ -710,14 +709,14 @@ public class AssetHelperImpl implements AssetHelper {
 			BaseSearcher baseSearcher =
 				_assetSearcherFactory.createBaseSearcher(assetEntryQuery);
 
-			BooleanQuery booleanQuery = baseSearcher.getFullQuery(
+			BooleanQuery innerBooleanQuery = baseSearcher.getFullQuery(
 				assetEntryQuerySearchContext);
 
-			booleanQueryImpl.add(booleanQuery, BooleanClauseOccur.SHOULD);
+			booleanQuery.add(innerBooleanQuery, BooleanClauseOccur.SHOULD);
 		}
 
 		BooleanClause<Query> assetEntryBooleanClauses = new BooleanClause<>(
-			booleanQueryImpl, BooleanClauseOccur.MUST);
+			booleanQuery, BooleanClauseOccur.MUST);
 
 		BooleanClause<Query>[] booleanClauses =
 			searchContext.getBooleanClauses();

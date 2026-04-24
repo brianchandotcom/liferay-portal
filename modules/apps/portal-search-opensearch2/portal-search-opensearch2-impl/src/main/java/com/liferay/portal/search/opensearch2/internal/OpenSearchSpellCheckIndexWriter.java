@@ -5,17 +5,14 @@
 
 package com.liferay.portal.search.opensearch2.internal;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
@@ -126,36 +123,28 @@ public class OpenSearchSpellCheckIndexWriter
 	protected void deleteDocuments(
 		SearchContext searchContext, String typeFieldValue) {
 
-		try {
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
+		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 
-			BooleanFilter booleanFilter = new BooleanFilter();
+		BooleanFilter booleanFilter = new BooleanFilter();
 
-			booleanFilter.add(
-				new TermFilter(Field.TYPE, typeFieldValue),
-				BooleanClauseOccur.MUST);
+		booleanFilter.add(
+			new TermFilter(Field.TYPE, typeFieldValue),
+			BooleanClauseOccur.MUST);
 
-			booleanQuery.setPreBooleanFilter(booleanFilter);
+		booleanQuery.setPreBooleanFilter(booleanFilter);
 
-			DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
-				new DeleteByQueryDocumentRequest(
-					booleanQuery,
-					_indexNameBuilder.getIndexName(
-						searchContext.getCompanyId()));
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest =
+			new DeleteByQueryDocumentRequest(
+				booleanQuery,
+				_indexNameBuilder.getIndexName(searchContext.getCompanyId()));
 
-			if (PortalRunMode.isTestMode() ||
-				searchContext.isCommitImmediately()) {
-
-				deleteByQueryDocumentRequest.setRefresh(true);
-			}
-
-			_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
+		if (PortalRunMode.isTestMode() || searchContext.isCommitImmediately()) {
+			deleteByQueryDocumentRequest.setRefresh(true);
 		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+
+		_searchEngineAdapter.execute(deleteByQueryDocumentRequest);
 	}
 
 	protected void setLocalization(Localization localization) {

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 
 import java.util.List;
@@ -201,7 +200,7 @@ public class FilterUtil {
 			}
 
 			try {
-				BooleanQuery booleanQuery = new BooleanQueryImpl();
+				BooleanQuery booleanQuery = new BooleanQuery();
 
 				DDMStructureField ddmStructureField = DDMStructureField.from(
 					fieldName);

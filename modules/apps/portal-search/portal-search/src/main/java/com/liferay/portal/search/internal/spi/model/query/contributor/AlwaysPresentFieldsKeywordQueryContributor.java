@@ -5,11 +5,9 @@
 
 package com.liferay.portal.search.internal.spi.model.query.contributor;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.FieldQueryFactory;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,12 +37,7 @@ public class AlwaysPresentFieldsKeywordQueryContributor
 			Query query = fieldQueryFactory.createQuery(
 				field, keywords, false, false);
 
-			try {
-				booleanQuery.add(query, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(query, BooleanClauseOccur.SHOULD);
 		}
 	}
 

@@ -6,10 +6,10 @@
 package com.liferay.portal.search.opensearch2.internal.logging;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.LiferayOpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
@@ -64,13 +64,13 @@ public class OpenSearchIndexSearcherExceptionsTest
 	}
 
 	protected Query getMalformedQuery() {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new TermQuery(Field.EXPIRATION_DATE, "text"),
 			BooleanClauseOccur.MUST);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 }

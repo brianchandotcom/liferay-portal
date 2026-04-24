@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -362,7 +361,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 					_FIELD_NAME, Boolean.FALSE
 				).build()));
 
-		BooleanQuery query = new BooleanQueryImpl();
+		BooleanQuery query = new BooleanQuery();
 
 		query.addExactTerm(_FIELD_NAME, true);
 
@@ -475,7 +474,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 					_FIELD_NAME, Boolean.TRUE
 				).build()));
 
-		BooleanQuery query = new BooleanQueryImpl();
+		BooleanQuery query = new BooleanQuery();
 
 		query.addExactTerm(_FIELD_NAME, true);
 

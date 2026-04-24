@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -186,7 +185,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 			FilterParser filterParser, Locale locale)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 
@@ -217,7 +216,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 				"Missing " + sortField + " in the last document");
 		}
 
-		BooleanQuery lastDocumentBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery lastDocumentBooleanQuery = new BooleanQuery();
 
 		lastDocumentBooleanQuery.add(booleanQuery, BooleanClauseOccur.MUST);
 

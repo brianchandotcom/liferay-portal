@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -89,7 +88,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 	protected BooleanQuery getBooleanQuery(
 		String scope, String period, String target) {
 
-		return new BooleanQueryImpl() {
+		return new BooleanQuery() {
 			{
 				setPreBooleanFilter(_getBooleanFilter(scope, period, target));
 			}
@@ -101,7 +100,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 			Date endDate)
 		throws com.liferay.portal.kernel.search.ParseException {
 
-		return new BooleanQueryImpl() {
+		return new BooleanQuery() {
 			{
 				BooleanFilter booleanFilter = _getBooleanFilter(
 					scope, period, target);
@@ -124,7 +123,7 @@ public abstract class BaseCommerceMLForecastServiceImpl
 		List<T> searchResults = getSearchResults(
 			getSearchSearchRequest(
 				getIndexName(companyId),
-				new BooleanQueryImpl() {
+				new BooleanQuery() {
 					{
 						setPreBooleanFilter(
 							new BooleanFilter() {

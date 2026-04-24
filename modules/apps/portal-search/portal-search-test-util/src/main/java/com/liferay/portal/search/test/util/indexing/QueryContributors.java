@@ -7,7 +7,6 @@ package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
@@ -52,12 +51,7 @@ public class QueryContributors {
 		BooleanQuery booleanQuery, Query query,
 		BooleanClauseOccur booleanClauseOccur) {
 
-		try {
-			booleanQuery.add(query, booleanClauseOccur);
-		}
-		catch (ParseException parseException) {
-			throw new RuntimeException(parseException);
-		}
+		booleanQuery.add(query, booleanClauseOccur);
 	}
 
 }

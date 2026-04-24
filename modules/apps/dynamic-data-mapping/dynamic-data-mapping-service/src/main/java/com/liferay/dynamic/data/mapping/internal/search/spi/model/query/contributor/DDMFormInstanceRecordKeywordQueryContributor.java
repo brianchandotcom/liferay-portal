@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
@@ -62,19 +61,7 @@ public class DDMFormInstanceRecordKeywordQueryContributor
 			booleanClauseOccur = BooleanClauseOccur.MUST;
 		}
 
-		try {
-			booleanQuery.add(localizedBooleanQuery, booleanClauseOccur);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to add localized boolean query ",
-						localizedBooleanQuery, " with boolean clause occur ",
-						booleanClauseOccur),
-					parseException);
-			}
-		}
+		booleanQuery.add(localizedBooleanQuery, booleanClauseOccur);
 	}
 
 	private void _addLocalizedFields(
@@ -113,7 +100,7 @@ public class DDMFormInstanceRecordKeywordQueryContributor
 		}
 
 		if (Validator.isBlank(searchContext.getKeywords())) {
-			BooleanQuery localizedBooleanQuery = new BooleanQueryImpl();
+			BooleanQuery localizedBooleanQuery = new BooleanQuery();
 
 			_addLocalizedFields(
 				localizedBooleanQuery, fieldName, searchContext, value);

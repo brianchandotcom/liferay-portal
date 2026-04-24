@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -124,7 +123,7 @@ public class SegmentsEntrySearchContainerFactory {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyConstants.SYSTEM, "LPD-78863")) {
 
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			BooleanQuery booleanQuery = new BooleanQuery();
 
 			booleanQuery.addTerm(
 				"source",

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -148,19 +147,13 @@ public class ObjectEntryKeywordQueryContributor
 		else {
 			for (String token : _tokenizeKeywords(keywords)) {
 				if (addObjectEntryTitle.get() && !Validator.isBlank(token)) {
-					try {
-						booleanQuery.add(
-							new TermQuery(Field.ENTRY_CLASS_PK, token),
-							BooleanClauseOccur.SHOULD);
+					booleanQuery.add(
+						new TermQuery(Field.ENTRY_CLASS_PK, token),
+						BooleanClauseOccur.SHOULD);
 
-						booleanQuery.add(
-							new WildcardQuery(
-								titleField, token + StringPool.STAR),
-							BooleanClauseOccur.SHOULD);
-					}
-					catch (ParseException parseException) {
-						throw new SystemException(parseException);
-					}
+					booleanQuery.add(
+						new WildcardQuery(titleField, token + StringPool.STAR),
+						BooleanClauseOccur.SHOULD);
 				}
 
 				for (ObjectField objectField : objectFields) {
@@ -237,7 +230,7 @@ public class ObjectEntryKeywordQueryContributor
 					objectField.getName()));
 		}
 
-		BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+		BooleanQuery nestedBooleanQuery = new BooleanQuery();
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -270,8 +263,7 @@ public class ObjectEntryKeywordQueryContributor
 					_searchLocalizationHelper.getLocalizedFieldNames(
 						new String[] {"nestedFieldArray.value"}, searchContext);
 
-				BooleanQuery localizedNestedBooleanQuery =
-					new BooleanQueryImpl();
+				BooleanQuery localizedNestedBooleanQuery = new BooleanQuery();
 
 				for (String localizedFieldName : localizedFieldNames) {
 					localizedNestedBooleanQuery.add(

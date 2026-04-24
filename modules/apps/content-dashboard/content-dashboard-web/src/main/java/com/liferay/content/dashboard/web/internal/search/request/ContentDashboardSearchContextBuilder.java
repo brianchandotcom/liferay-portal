@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -268,7 +268,7 @@ public class ContentDashboardSearchContextBuilder {
 	}
 
 	private BooleanClause[] _getBooleanClauses() {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
@@ -314,10 +314,10 @@ public class ContentDashboardSearchContextBuilder {
 			}
 		}
 
-		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
+		booleanQuery.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
-			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 		};
 	}
 

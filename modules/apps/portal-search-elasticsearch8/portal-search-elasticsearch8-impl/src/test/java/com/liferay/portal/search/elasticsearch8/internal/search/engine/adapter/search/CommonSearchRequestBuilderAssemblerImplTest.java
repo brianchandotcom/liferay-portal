@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
@@ -166,12 +166,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -192,12 +192,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -218,12 +218,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -244,12 +244,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -270,12 +270,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -296,12 +296,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -322,12 +322,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -348,12 +348,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -372,12 +372,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -396,12 +396,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -420,12 +420,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 
@@ -444,12 +444,12 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		SearchSearchRequest searchSearchRequest = _createSearchSearchRequest();
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new MatchQuery("title", "alpha"), BooleanClauseOccur.MUST);
 
-		searchSearchRequest.setQuery(booleanQueryImpl);
+		searchSearchRequest.setQuery(booleanQuery);
 
 		_assertSearch(searchSearchRequest, "alpha 1", "alpha 2");
 

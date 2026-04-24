@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -129,15 +128,14 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 					0);
 			}
 
-			BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+			BooleanQuery booleanQuery = new BooleanQuery();
 
-			booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
+			booleanQuery.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
 
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					_getAssetEntryIdBooleanClause(assetEntry),
-					new BooleanClause<>(
-						booleanQueryImpl, BooleanClauseOccur.MUST)
+					new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 				});
 
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
@@ -432,7 +430,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 	private BooleanClause<Query> _getAssetEntryIdBooleanClause(
 		AssetEntry assetEntry) {
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		BooleanFilter assetEntryIdBooleanFilter = new BooleanFilter();
 
@@ -445,9 +443,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		assetEntryIdBooleanFilter.add(
 			assetEntryIdTermsFilter, BooleanClauseOccur.MUST_NOT);
 
-		booleanQueryImpl.setPreBooleanFilter(assetEntryIdBooleanFilter);
+		booleanQuery.setPreBooleanFilter(assetEntryIdBooleanFilter);
 
-		return new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(

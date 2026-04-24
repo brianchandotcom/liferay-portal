@@ -6,11 +6,9 @@
 package com.liferay.commerce.payment.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,16 +42,11 @@ public class CommercePaymentEntryKeywordQueryContributor
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 
 		if (Validator.isNotNull(keywords)) {
-			try {
-				keywords = StringUtil.toLowerCase(keywords);
+			keywords = StringUtil.toLowerCase(keywords);
 
-				booleanQuery.add(
-					_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
-					BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(
+				_getTrailingWildcardQuery(Field.ENTRY_CLASS_PK, keywords),
+				BooleanClauseOccur.SHOULD);
 		}
 
 		_queryHelper.addSearchTerm(

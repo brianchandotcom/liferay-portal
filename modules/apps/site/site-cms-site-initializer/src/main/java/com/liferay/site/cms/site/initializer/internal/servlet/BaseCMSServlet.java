@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -156,7 +155,7 @@ public abstract class BaseCMSServlet extends HttpServlet {
 		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 		Filter filter) {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+		BooleanQuery booleanQuery = new BooleanQuery() {
 			{
 				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 

@@ -6,8 +6,8 @@
 package com.liferay.scim.rest.internal.search.analysis;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
@@ -26,14 +26,14 @@ public class ScimClientIdFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override
 	public Query build(String field, String keywords) {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (String token : keywordTokenizer.tokenize(keywords)) {
-			booleanQueryImpl.add(
+			booleanQuery.add(
 				new MatchQuery(field, token), BooleanClauseOccur.SHOULD);
 		}
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	@Reference

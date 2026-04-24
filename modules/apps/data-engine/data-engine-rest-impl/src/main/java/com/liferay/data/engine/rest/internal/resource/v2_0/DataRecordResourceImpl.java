@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -176,7 +175,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 					return;
 				}
 
-				BooleanQuery ddmContentBooleanQuery = new BooleanQueryImpl();
+				BooleanQuery ddmContentBooleanQuery = new BooleanQuery();
 
 				for (Locale locale :
 						_language.getCompanyAvailableLocales(

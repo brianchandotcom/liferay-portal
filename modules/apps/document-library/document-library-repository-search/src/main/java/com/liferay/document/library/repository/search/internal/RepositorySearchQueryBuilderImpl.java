@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,15 +40,15 @@ public class RepositorySearchQueryBuilderImpl
 		throws SearchException {
 
 		try {
-			BooleanQuery contextQuery = new BooleanQueryImpl();
+			BooleanQuery contextQuery = new BooleanQuery();
 
 			_addContext(contextQuery, searchContext);
 
-			BooleanQuery searchQuery = new BooleanQueryImpl();
+			BooleanQuery searchQuery = new BooleanQuery();
 
 			_addSearchKeywords(searchQuery, searchContext);
 
-			BooleanQuery fullQuery = new BooleanQueryImpl();
+			BooleanQuery fullQuery = new BooleanQuery();
 
 			if (contextQuery.hasClauses()) {
 				fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
@@ -91,7 +90,7 @@ public class RepositorySearchQueryBuilderImpl
 			return;
 		}
 
-		BooleanQuery folderIdsQuery = new BooleanQueryImpl();
+		BooleanQuery folderIdsQuery = new BooleanQuery();
 
 		for (long folderId : folderIds) {
 			try {
@@ -123,7 +122,7 @@ public class RepositorySearchQueryBuilderImpl
 			return;
 		}
 
-		BooleanQuery titleQuery = new BooleanQueryImpl();
+		BooleanQuery titleQuery = new BooleanQuery();
 
 		_repositorySearchQueryTermBuilder.addTerm(
 			titleQuery, searchContext, Field.TITLE, keywords);
@@ -132,7 +131,7 @@ public class RepositorySearchQueryBuilderImpl
 			searchQuery.add(titleQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		BooleanQuery userNameQuery = new BooleanQueryImpl();
+		BooleanQuery userNameQuery = new BooleanQuery();
 
 		_repositorySearchQueryTermBuilder.addTerm(
 			userNameQuery, searchContext, Field.USER_NAME, keywords);
@@ -143,7 +142,7 @@ public class RepositorySearchQueryBuilderImpl
 			searchQuery.add(userNameQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		BooleanQuery contentQuery = new BooleanQueryImpl();
+		BooleanQuery contentQuery = new BooleanQuery();
 
 		_repositorySearchQueryTermBuilder.addTerm(
 			contentQuery, searchContext, Field.CONTENT, keywords);

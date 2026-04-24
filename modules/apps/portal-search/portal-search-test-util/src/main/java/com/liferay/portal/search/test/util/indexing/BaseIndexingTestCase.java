@@ -8,6 +8,7 @@ package com.liferay.portal.search.test.util.indexing;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -20,7 +21,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -227,13 +227,13 @@ public abstract class BaseIndexingTestCase {
 			toMap(Field.COMPANY_ID, String.valueOf(getCompanyId())),
 			toMap(Field.ENTRY_CLASS_NAME, _entryClassName));
 
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		map.forEach(
-			(key, value) -> booleanQueryImpl.add(
+			(key, value) -> booleanQuery.add(
 				new TermQuery(key, value), BooleanClauseOccur.MUST));
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 	protected String getEntryClassName() {

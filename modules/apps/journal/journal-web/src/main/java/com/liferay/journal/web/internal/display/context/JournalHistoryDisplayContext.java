@@ -14,7 +14,6 @@ import com.liferay.journal.web.internal.util.JournalPortletUtil;
 import com.liferay.journal.web.internal.util.JournalSearcherUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -25,11 +24,9 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -254,21 +251,16 @@ public class JournalHistoryDisplayContext {
 
 		searchContext.setAttributes(attributes);
 
-		try {
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-			booleanQuery.add(
-				new TermQuery(Field.ARTICLE_ID, _article.getArticleId()),
-				BooleanClauseOccur.MUST);
+		booleanQuery.add(
+			new TermQuery(Field.ARTICLE_ID, _article.getArticleId()),
+			BooleanClauseOccur.MUST);
 
-			searchContext.setBooleanClauses(
-				new BooleanClause[] {
-					new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
-				});
-		}
-		catch (ParseException parseException) {
-			throw new SystemException(parseException);
-		}
+		searchContext.setBooleanClauses(
+			new BooleanClause[] {
+				new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
+			});
 
 		searchContext.setCompanyId(_article.getCompanyId());
 		searchContext.setEnd(end);

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -346,7 +345,7 @@ public class BaseBatchEngineTaskExecutorTest {
 				Filter filter)
 			throws Exception {
 
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			BooleanQuery booleanQuery = new BooleanQuery();
 
 			booleanQuery.add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 

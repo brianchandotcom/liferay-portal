@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -303,7 +302,7 @@ public class BulkActionBulkSelectionFactory {
 		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 		Filter filter) {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+		BooleanQuery booleanQuery = new BooleanQuery() {
 			{
 				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 

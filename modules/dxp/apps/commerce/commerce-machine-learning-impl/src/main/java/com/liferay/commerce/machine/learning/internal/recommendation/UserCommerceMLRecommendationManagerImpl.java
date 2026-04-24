@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -64,7 +63,7 @@ public class UserCommerceMLRecommendationManagerImpl
 		searchSearchRequest.setIndexNames(
 			new String[] {_getIndexName(companyId)});
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		if (assetCategoryIds != null) {
 			for (long categoryId : assetCategoryIds) {

@@ -6,13 +6,10 @@
 package com.liferay.portal.search.internal.query;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
@@ -32,25 +29,20 @@ public class NestedFieldQueryHelperImpl implements NestedFieldQueryHelper {
 		if (field.startsWith("nestedFieldArray.") &&
 			field.contains(StringPool.POUND)) {
 
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			BooleanQuery booleanQuery = new BooleanQuery();
 
 			String[] parts = StringUtil.split(field, StringPool.POUND);
 
 			String fieldName = parts[1];
+
 			String valueFieldName = parts[0];
 
-			try {
-				booleanQuery.add(
-					queryFunction.apply(valueFieldName),
-					BooleanClauseOccur.MUST);
+			booleanQuery.add(
+				queryFunction.apply(valueFieldName), BooleanClauseOccur.MUST);
 
-				booleanQuery.add(
-					new TermQuery("nestedFieldArray.fieldName", fieldName),
-					BooleanClauseOccur.MUST);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(
+				new TermQuery("nestedFieldArray.fieldName", fieldName),
+				BooleanClauseOccur.MUST);
 
 			return new NestedQuery("nestedFieldArray", booleanQuery);
 		}

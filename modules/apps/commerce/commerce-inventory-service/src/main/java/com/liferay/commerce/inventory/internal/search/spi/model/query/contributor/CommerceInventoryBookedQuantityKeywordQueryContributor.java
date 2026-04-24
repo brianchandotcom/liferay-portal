@@ -6,10 +6,8 @@
 package com.liferay.commerce.inventory.internal.search.spi.model.query.contributor;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,19 +43,14 @@ public class CommerceInventoryBookedQuantityKeywordQueryContributor
 			booleanQuery, searchContext, "commerceOrderId", false);
 
 		if (Validator.isNotNull(keywords)) {
-			try {
-				keywords = StringUtil.toLowerCase(keywords);
+			keywords = StringUtil.toLowerCase(keywords);
 
-				booleanQuery.add(
-					_getTrailingWildcardQuery("orderId", keywords),
-					BooleanClauseOccur.SHOULD);
-				booleanQuery.add(
-					_getTrailingWildcardQuery("accountName", keywords),
-					BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException parseException) {
-				throw new SystemException(parseException);
-			}
+			booleanQuery.add(
+				_getTrailingWildcardQuery("orderId", keywords),
+				BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				_getTrailingWildcardQuery("accountName", keywords),
+				BooleanClauseOccur.SHOULD);
 		}
 	}
 

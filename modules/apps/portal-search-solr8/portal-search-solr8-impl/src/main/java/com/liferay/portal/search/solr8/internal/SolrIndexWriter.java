@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -208,7 +207,7 @@ public class SolrIndexWriter extends BaseIndexWriter {
 		SearchContext searchContext, String className) {
 
 		try {
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
+			BooleanQuery booleanQuery = new BooleanQuery();
 
 			long companyId = searchContext.getCompanyId();
 

@@ -8,10 +8,10 @@ package com.liferay.portal.search.elasticsearch8.internal.logging;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -60,13 +60,13 @@ public class ElasticsearchIndexSearcherExceptionsTest
 	}
 
 	protected Query getMalformedQuery() {
-		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
-		booleanQueryImpl.add(
+		booleanQuery.add(
 			new TermQuery(Field.EXPIRATION_DATE, "text"),
 			BooleanClauseOccur.MUST);
 
-		return booleanQueryImpl;
+		return booleanQuery;
 	}
 
 }

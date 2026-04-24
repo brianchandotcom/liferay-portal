@@ -73,7 +73,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -370,7 +369,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 	private BooleanClause[] _getBooleanClauses(CollectionQuery collectionQuery)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -397,7 +396,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 				continue;
 			}
 
-			BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+			BooleanQuery nestedBooleanQuery = new BooleanQuery();
 
 			nestedBooleanQuery.add(
 				new TermQuery(_getFieldName(objectField), entry.getValue()[0]),

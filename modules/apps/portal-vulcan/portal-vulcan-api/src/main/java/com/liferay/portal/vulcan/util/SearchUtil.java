@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -240,7 +239,7 @@ public class SearchUtil {
 			Filter filter)
 		throws Exception {
 
-		BooleanQuery booleanQuery = new BooleanQueryImpl() {
+		BooleanQuery booleanQuery = new BooleanQuery() {
 			{
 				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
 

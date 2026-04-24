@@ -300,52 +300,6 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				<AssignedPropertiesTable
 					addAlert={addAlert}
 					close={close}
-					customColumns={[
-						{
-							accessor: 'accounts',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('accounts')
-						},
-						{
-							accessor: 'intentData',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('intent-data')
-						},
-						{
-							accessor: 'buyingCommittee',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('buying-committee')
-						},
-						{
-							accessor: 'customAttributes',
-							cellRenderer: ({data}) => (
-								<td key={data.channelId}>
-									<div className='table-title text-truncate'>
-										<Text>{data.count}</Text>
-									</div>
-								</td>
-							),
-							label: Liferay.Language.get('custom-attributes')
-						}
-					]}
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}
 					loading={loading}

@@ -33,7 +33,7 @@ definition {
 	@description = "This ensures that the document can be deleted after the recycle bin is disabled."
 	@priority = 5
 	@refactordone
-	test CanDeleteDocumentAfterDisabling {
+	test CanDeleteDocumentAndWCAfterDisabling {
 		JSONDocument.addFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document Title",

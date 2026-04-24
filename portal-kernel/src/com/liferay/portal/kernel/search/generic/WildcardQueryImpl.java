@@ -21,7 +21,7 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 	}
 
 	public WildcardQueryImpl(String field, String value) {
-		this(new QueryTermImpl(field, value));
+		this(new QueryTerm(field, value));
 	}
 
 	@Override

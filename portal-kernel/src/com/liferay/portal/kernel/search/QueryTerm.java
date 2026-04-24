@@ -5,15 +5,34 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.Serializable;
 
 /**
  * @author Michael C. Han
  */
-public interface QueryTerm extends Serializable {
+public class QueryTerm implements Serializable {
 
-	public String getField();
+	public QueryTerm(String field, String value) {
+		_field = field;
+		_value = value;
+	}
 
-	public String getValue();
+	public String getField() {
+		return _field;
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat("{field=", _field, ", value=", _value, "}");
+	}
+
+	private final String _field;
+	private final String _value;
 
 }

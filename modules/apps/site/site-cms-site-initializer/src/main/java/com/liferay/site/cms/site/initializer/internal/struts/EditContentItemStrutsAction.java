@@ -43,8 +43,6 @@ public class EditContentItemStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
-
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
 			ParamUtil.getLong(httpServletRequest, "objectEntryId"));
 
@@ -56,16 +54,9 @@ public class EditContentItemStrutsAction implements StrutsAction {
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId()));
 
-		if (Validator.isNotNull(redirect)) {
-			editURL = HttpComponentsUtil.addParameter(
-				editURL, "redirect", redirect);
-		}
-
 		String layoutMode = ParamUtil.getString(httpServletRequest, "p_l_mode");
 
-		if (Validator.isNotNull(layoutMode) &&
-			Objects.equals(layoutMode, Constants.READ)) {
-
+		if (Objects.equals(layoutMode, Constants.READ)) {
 			editURL = HttpComponentsUtil.addParameter(
 				editURL, "p_l_mode", layoutMode);
 		}

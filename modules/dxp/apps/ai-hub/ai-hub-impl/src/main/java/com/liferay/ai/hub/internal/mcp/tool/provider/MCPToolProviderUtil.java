@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -35,6 +38,8 @@ import dev.langchain4j.mcp.client.transport.http.StreamableHttpMcpTransport;
 import dev.langchain4j.model.chat.request.json.JsonAnyOfSchema;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
 import dev.langchain4j.model.chat.request.json.JsonSchemaElement;
+
+import java.net.UnknownHostException;
 
 import java.util.Base64;
 import java.util.List;
@@ -112,14 +117,25 @@ public class MCPToolProviderUtil {
 	}
 
 	private static McpTransport _createMcpTransport(
-		Map<String, Object> properties) {
+			Map<String, Object> properties)
+		throws UnknownHostException {
+
+		String url = GetterUtil.getString(properties.get("url"));
+
+		if (!PortalRunMode.isTestMode() &&
+			InetAddressUtil.isLocalInetAddress(
+				InetAddressUtil.getInetAddressByName(
+					HttpComponentsUtil.getDomain(url)))) {
+
+			throw new SecurityException("Local links are not allowed: " + url);
+		}
 
 		return new StreamableHttpMcpTransport.Builder(
 		).customHeaders(
 			_createCustomHeaders(
 				GetterUtil.getString(properties.get("authArguments")))
 		).url(
-			GetterUtil.getString(properties.get("url"))
+			url
 		).build();
 	}
 

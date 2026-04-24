@@ -9,6 +9,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -145,6 +146,20 @@ public class ViewRecycleBinSectionDisplayContext
 		).put(
 			"size", "md"
 		).build();
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		List<DropdownItem> bulkActionDropdownItems =
+			super.getBulkActionDropdownItems();
+
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				"#", "restore", "restore",
+				LanguageUtil.get(httpServletRequest, "restore"), null, null,
+				null));
+
+		return bulkActionDropdownItems;
 	}
 
 	public Map<String, Object> getEmptyState() {

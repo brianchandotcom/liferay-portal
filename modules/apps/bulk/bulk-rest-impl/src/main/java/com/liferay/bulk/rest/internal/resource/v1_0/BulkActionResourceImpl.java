@@ -502,6 +502,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _resetPermissionObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.RESTORE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return _restoreObjectBulkSelectionAction;
+		}
 		else if (BulkAction.Type.STATUS_OBJECT_BULK_SELECTION_ACTION.equals(
 					type)) {
 
@@ -688,6 +693,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 		else if (BulkAction.Type.RESET_PERMISSION_OBJECT_BULK_SELECTION_ACTION.
 					equals(type)) {
+
+			return hashMapWrapper.build();
+		}
+		else if (BulkAction.Type.RESTORE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
 
 			return hashMapWrapper.build();
 		}
@@ -1185,6 +1195,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference(target = "(bulk.selection.action.key=reset.permission.object)")
 	private BulkSelectionAction<Object>
 		_resetPermissionObjectBulkSelectionAction;
+
+	@Reference(target = "(bulk.selection.action.key=restore.object)")
+	private BulkSelectionAction<Object> _restoreObjectBulkSelectionAction;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

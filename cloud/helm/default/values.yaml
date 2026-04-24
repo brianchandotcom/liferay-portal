@@ -320,10 +320,11 @@ readinessProbe:
 replicaCount: 1
 resources:
     limits:
-        memory: 6Gi
+        cpu: 4000m
+        memory: 8Gi
     requests:
-        cpu: 1
-        memory: 4Gi
+        cpu: 2000m
+        memory: 6Gi
 schedulingGates: []
 securityContext:
     allowPrivilegeEscalation: false

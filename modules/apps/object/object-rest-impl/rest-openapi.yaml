@@ -38,6 +38,30 @@ components:
                     type: object
                 oldValue:
                     type: object
+        CollaboratorBrief:
+            description:
+                Brief of the collaborator record for the user making the request, present only when this asset is shared
+                with them.
+            properties:
+                actionIds:
+                    description:
+                        The sharing actions granted to the user making the request (e.g. VIEW, UPDATE).
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                dateExpired:
+                    description:
+                        The date when the sharing access expires, or null if it never expires.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                share:
+                    description:
+                        Whether the user making the request can reshare this asset with others.
+                    readOnly: true
+                    type: boolean
+            type: object
         FileEntry:
             properties:
                 alternativeText:
@@ -279,6 +303,8 @@ components:
             type: object
         SystemProperties:
             properties:
+                collaboratorBrief:
+                    $ref: "#/components/schemas/CollaboratorBrief"
                 objectDefinitionBrief:
                     $ref: "#/components/schemas/ObjectDefinitionBrief"
                 scope:

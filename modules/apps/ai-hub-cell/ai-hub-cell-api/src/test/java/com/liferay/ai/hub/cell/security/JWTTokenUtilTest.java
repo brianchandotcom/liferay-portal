@@ -54,7 +54,7 @@ public class JWTTokenUtilTest {
 		String token = JWTTokenUtil.generateToken(
 			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
-		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(token));
+		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(_ISSUER, token));
 
 		byte[] secret = new byte[64];
 
@@ -66,26 +66,32 @@ public class JWTTokenUtilTest {
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					JWTTokenUtil.class, "_SECRET", secret)) {
 
-			_testGetUserId("Invalid JWT signature", token);
+			_testGetUserId("Invalid JWT signature", _ISSUER, token);
 		}
 
 		_testGetUserId(
-			"Invalid JWT signature",
+			"Invalid JWT signature", _ISSUER,
 			token.substring(0, token.length() - 5) + "abcde");
 		_testGetUserId(
-			"The JWT token is expired",
+			"Invalid JWT issuer", RandomTestUtil.randomString(),
+			JWTTokenUtil.generateToken(
+				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID));
+		_testGetUserId(
+			"The JWT token is expired", _ISSUER,
 			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
 		_testGetUserId(
-			"Unable to parse and verify the JWT token",
+			"Unable to parse and verify the JWT token", _ISSUER,
 			RandomTestUtil.randomString());
 	}
 
-	private void _testGetUserId(String expectedLogMessage, String token) {
+	private void _testGetUserId(
+		String expectedLogMessage, String issuer, String token) {
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.ai.hub.cell.security.JWTTokenUtil",
 				LoggerTestUtil.DEBUG)) {
 
-			JWTTokenUtil.getUserId(token);
+			JWTTokenUtil.getUserId(issuer, token);
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 

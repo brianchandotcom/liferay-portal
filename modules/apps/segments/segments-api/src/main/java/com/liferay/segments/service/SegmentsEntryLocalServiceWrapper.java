@@ -402,6 +402,14 @@ public class SegmentsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<SegmentsEntry> getSegmentsEntries(
+		long[] groupIds, boolean active, String[] sources) {
+
+		return _segmentsEntryLocalService.getSegmentsEntries(
+			groupIds, active, sources);
+	}
+
+	@Override
+	public java.util.List<SegmentsEntry> getSegmentsEntries(
 		long[] segmentsEntryIds, int start, int end) {
 
 		return _segmentsEntryLocalService.getSegmentsEntries(
@@ -599,4 +607,4 @@ public class SegmentsEntryLocalServiceWrapper
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1286173547
+// LIFERAY-SERVICE-BUILDER-HASH:311403988

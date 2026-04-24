@@ -1,5 +1,5 @@
 create index IX_F6225631 on SegmentsEntry (active_);
-create index IX_2E0C3F77 on SegmentsEntry (groupId, active_);
+create index IX_C6E84946 on SegmentsEntry (groupId, active_, source[$COLUMN_LENGTH:75$]);
 create unique index IX_E42D8589 on SegmentsEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_DB53F1B1 on SegmentsEntry (groupId, segmentsEntryKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_1EDBDAA1 on SegmentsEntry (groupId, source[$COLUMN_LENGTH:75$]);

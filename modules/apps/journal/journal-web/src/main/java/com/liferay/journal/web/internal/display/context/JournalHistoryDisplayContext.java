@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -259,7 +259,7 @@ public class JournalHistoryDisplayContext {
 			BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 			booleanQuery.add(
-				new TermQueryImpl(Field.ARTICLE_ID, _article.getArticleId()),
+				new TermQuery(Field.ARTICLE_ID, _article.getArticleId()),
 				BooleanClauseOccur.MUST);
 
 			searchContext.setBooleanClauses(

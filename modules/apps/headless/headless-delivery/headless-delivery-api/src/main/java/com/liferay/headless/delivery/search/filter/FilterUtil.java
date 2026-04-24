@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 
@@ -131,7 +130,7 @@ public class FilterUtil {
 
 				return _createNestedQueryFilter(
 					queryTerm.getField(), queryFilter,
-					nestedFieldName -> new TermQueryImpl(
+					nestedFieldName -> new TermQuery(
 						nestedFieldName, queryTerm.getValue()));
 			}
 			else if (query instanceof TermRangeQuery) {
@@ -174,7 +173,7 @@ public class FilterUtil {
 		public Filter visit(TermFilter termFilter) {
 			return _createNestedQueryFilter(
 				termFilter.getField(), termFilter,
-				nestedFieldName -> new TermQueryImpl(
+				nestedFieldName -> new TermQuery(
 					nestedFieldName, termFilter.getValue()));
 		}
 

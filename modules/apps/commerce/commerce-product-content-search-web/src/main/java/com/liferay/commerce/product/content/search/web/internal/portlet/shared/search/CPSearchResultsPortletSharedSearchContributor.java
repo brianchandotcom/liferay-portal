@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -95,7 +95,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 		portletSharedSearchSettings.addCondition(
 			new BooleanClause<Query>(
-				new TermQueryImpl(
+				new TermQuery(
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
 
@@ -105,7 +105,7 @@ public class CPSearchResultsPortletSharedSearchContributor
 		if (assetCategory != null) {
 			portletSharedSearchSettings.addCondition(
 				new BooleanClause<Query>(
-					new TermQueryImpl(
+					new TermQuery(
 						Field.ASSET_CATEGORY_IDS,
 						String.valueOf(assetCategory.getCategoryId())),
 					BooleanClauseOccur.MUST));

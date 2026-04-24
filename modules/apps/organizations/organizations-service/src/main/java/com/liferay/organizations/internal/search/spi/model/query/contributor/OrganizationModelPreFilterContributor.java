@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -77,7 +76,7 @@ public class OrganizationModelPreFilterContributor
 			BooleanFilter booleanFilter = new BooleanFilter();
 
 			if (organizationsTree.isEmpty()) {
-				TermQuery termQuery = new TermQueryImpl(
+				TermQuery termQuery = new TermQuery(
 					Field.TREE_PATH, StringPool.BLANK);
 
 				booleanFilter.add(new QueryFilter(termQuery));

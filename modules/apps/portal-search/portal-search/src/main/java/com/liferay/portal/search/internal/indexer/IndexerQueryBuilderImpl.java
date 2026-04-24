@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.indexer.IndexerQueryBuilder;
@@ -145,7 +145,7 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
 
 			modelBooleanQuery.add(
-				new TermQueryImpl(
+				new TermQuery(
 					"entryClassName", _modelSearchSettings.getClassName()),
 				BooleanClauseOccur.MUST);
 			modelBooleanQuery.add(

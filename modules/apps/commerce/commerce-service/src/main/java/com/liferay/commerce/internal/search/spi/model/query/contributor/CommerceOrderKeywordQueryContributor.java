@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -89,7 +89,7 @@ public class CommerceOrderKeywordQueryContributor
 				BooleanQuery searchBooleanQuery = new BooleanQueryImpl();
 
 				searchBooleanQuery.add(
-					new TermQueryImpl("accountName.1_10_ngram", keywords),
+					new TermQuery("accountName.1_10_ngram", keywords),
 					BooleanClauseOccur.SHOULD);
 
 				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(keywords);

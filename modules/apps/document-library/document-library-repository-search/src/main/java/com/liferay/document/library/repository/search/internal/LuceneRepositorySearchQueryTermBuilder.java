@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -130,7 +129,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			String termValue = term.text();
 
-			TermQuery termQuery = new TermQueryImpl(term.field(), termValue);
+			TermQuery termQuery = new TermQuery(term.field(), termValue);
 
 			booleanQuery.add(termQuery, getBooleanClauseOccur(occur));
 		}
@@ -194,7 +193,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 				sb.append(StringPool.SPACE);
 			}
 
-			TermQuery termQuery = new TermQueryImpl(
+			TermQuery termQuery = new TermQuery(
 				terms[0].field(), StringUtil.trim(sb.toString()));
 
 			booleanQuery.add(termQuery, booleanClauseOccur);

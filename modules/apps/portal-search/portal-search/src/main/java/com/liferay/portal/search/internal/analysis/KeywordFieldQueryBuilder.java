@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 
@@ -36,7 +35,7 @@ public class KeywordFieldQueryBuilder implements FieldQueryBuilder {
 				new WildcardQueryImpl(field, value + StringPool.STAR),
 				BooleanClauseOccur.MUST);
 
-			TermQuery termQuery = new TermQueryImpl(field, value);
+			TermQuery termQuery = new TermQuery(field, value);
 
 			if (_boost != null) {
 				termQuery.setBoost(_boost);

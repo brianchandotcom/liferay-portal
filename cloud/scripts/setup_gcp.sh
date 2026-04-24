@@ -7,13 +7,13 @@ set -o pipefail
 
 trap "_recover_kubectl_context \${?}" ERR
 
-_SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-
-_ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
-
 _GCP_DEPLOYMENT_NAME=""
 
 _GCP_PROJECT_ID=""
+
+_SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+_ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
 function main {
 	if [ "${#}" -ne 2 ]

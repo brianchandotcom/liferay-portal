@@ -39,9 +39,7 @@ test.beforeEach(async ({apiHelpers, page}) => {
 	};
 
 	const cmsAdminRole =
-		await apiHelpers.headlessAdminUser.getRoleByName(
-			'CMS Administrator'
-		);
+		await apiHelpers.headlessAdminUser.getRoleByName('CMS Administrator');
 
 	await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 		cmsAdminRole.id,
@@ -52,10 +50,9 @@ test.beforeEach(async ({apiHelpers, page}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	const tasks =
-		await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-			'cms/bulk-action-tasks'
-		);
+	const tasks = await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+		'cms/bulk-action-tasks'
+	);
 
 	for (const task of tasks.items) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
@@ -312,283 +309,283 @@ test(
 			);
 		}
 
-			await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
-				await assetsPage.gotoAll();
+		await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
+			await assetsPage.gotoAll();
 
-				await assetsPage
-					.getItem(filesNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage.execBulkItemAction('Delete');
+			await assetsPage
+				.getItem(filesNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage.execBulkItemAction('Delete');
 
-				await waitForAlert(
-					page,
-					`Info:Delete action started for ${filesNames[0]} asset.`,
-					{
-						autoClose: true,
-						type: 'info',
-					}
+			await waitForAlert(
+				page,
+				`Info:Delete action started for ${filesNames[0]} asset.`,
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
+
+		await test.step('Check that the processingTask button appear and click on it', async () => {
+			await expect(assetsPage.processingTasksButton).toBeVisible();
+
+			await assetsPage.processingTasksButton.click();
+		});
+
+		await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
+			await expect(
+				assetsPage
+					.taskStatusDropdownItemButton('Assets Deletion')
+					.nth(0)
+			).toBeVisible();
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'1 Items'
+			);
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'a few seconds ago'
+			);
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'Completed'
+			);
+
+			await expect(assetsPage.viewAllTasksLink).toBeVisible();
+		});
+
+		await test.step('Go to View All Task redirect to the Task Report page and check that Result column show the correct results', async () => {
+			tasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasks
 				);
+
+			await assetsPage.viewAllTasksLink.click();
+
+			await expect(
+				page.getByRole('heading', {
+					exact: true,
+					name: 'Task Report',
+				})
+			).toBeVisible();
+
+			const row = page.getByRole('row').filter({
+				hasText: tasks.items[0].id,
 			});
 
-			await test.step('Check that the processingTask button appear and click on it', async () => {
-				await expect(assetsPage.processingTasksButton).toBeVisible();
-
-				await assetsPage.processingTasksButton.click();
-			});
-
-			await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Deletion')
-						.nth(0)
-				).toBeVisible();
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'1 Items'
-				);
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'a few seconds ago'
-				);
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Completed'
-				);
-
-				await expect(assetsPage.viewAllTasksLink).toBeVisible();
-			});
-
-			await test.step('Go to View All Task redirect to the Task Report page and check that Result column show the correct results', async () => {
-				tasks =
-					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-						bulkActionTasks
-					);
-
-				await assetsPage.viewAllTasksLink.click();
-
-				await expect(
-					page.getByRole('heading', {
-						exact: true,
-						name: 'Task Report',
-					})
-				).toBeVisible();
-
-				const row = page.getByRole('row').filter({
-					hasText: tasks.items[0].id,
-				});
-
-				await expect(row).toBeVisible();
-				await expect(
-					row.getByRole('cell', {
+			await expect(row).toBeVisible();
+			await expect(
+				row.getByRole('cell', {
+					name: 'All Successful',
+				})
+			).toBeVisible();
+			await expect(
+				row
+					.getByRole('cell', {
 						name: 'All Successful',
 					})
-				).toBeVisible();
-				await expect(
-					row
-						.getByRole('cell', {
-							name: 'All Successful',
-						})
-						.locator('.lexicon-icon-check-circle-full')
-				).toBeVisible();
+					.locator('.lexicon-icon-check-circle-full')
+			).toBeVisible();
 
-				await apiHelpers.objectEntry.patchObjectEntry(
-					{
-						executionStatus: {
-							key: 'failed',
-							name: 'Failed',
-						},
-						numberOfFailedItems: 3,
-						numberOfSuccessfulItems: 3,
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{
+					executionStatus: {
+						key: 'failed',
+						name: 'Failed',
 					},
-					bulkActionTasks,
-					tasks.items[0].id
-				);
+					numberOfFailedItems: 3,
+					numberOfSuccessfulItems: 3,
+				},
+				bulkActionTasks,
+				tasks.items[0].id
+			);
 
-				await page.reload();
+			await page.reload();
 
-				await expect(
-					page.getByRole('cell', {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: '3 Successful 3 Failed',
+				})
+			).toBeVisible();
+			await expect(
+				page
+					.getByRole('cell', {
 						exact: true,
 						name: '3 Successful 3 Failed',
 					})
-				).toBeVisible();
-				await expect(
-					page
-						.getByRole('cell', {
-							exact: true,
-							name: '3 Successful 3 Failed',
-						})
-						.locator('.lexicon-icon-check-circle-full')
-				).toBeVisible();
-				await expect(
-					page
-						.getByRole('cell', {
-							exact: true,
-							name: '3 Successful 3 Failed',
-						})
-						.locator('.lexicon-icon-times-circle-full')
-				).toBeVisible();
+					.locator('.lexicon-icon-check-circle-full')
+			).toBeVisible();
+			await expect(
+				page
+					.getByRole('cell', {
+						exact: true,
+						name: '3 Successful 3 Failed',
+					})
+					.locator('.lexicon-icon-times-circle-full')
+			).toBeVisible();
 
-				await apiHelpers.objectEntry.patchObjectEntry(
-					{
-						executionStatus: {
-							key: 'started',
-							name: 'Started',
-						},
-						numberOfFailedItems: 0,
-						numberOfSuccessfulItems: 0,
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{
+					executionStatus: {
+						key: 'started',
+						name: 'Started',
 					},
-					bulkActionTasks,
-					tasks.items[0].id
-				);
+					numberOfFailedItems: 0,
+					numberOfSuccessfulItems: 0,
+				},
+				bulkActionTasks,
+				tasks.items[0].id
+			);
 
-				await page.reload();
+			await page.reload();
 
-				await expect(
-					page.getByRole('cell', {exact: true, name: 'Processing'})
-				).toBeVisible();
-				await expect(
-					page
-						.getByRole('cell', {exact: true, name: 'Processing'})
-						.locator('.lexicon-icon-time')
-				).toBeVisible();
+			await expect(
+				page.getByRole('cell', {exact: true, name: 'Processing'})
+			).toBeVisible();
+			await expect(
+				page
+					.getByRole('cell', {exact: true, name: 'Processing'})
+					.locator('.lexicon-icon-time')
+			).toBeVisible();
 
-				await apiHelpers.objectEntry.patchObjectEntry(
-					{
-						executionStatus: {
-							key: 'failed',
-							name: 'Failed',
-						},
-						numberOfFailedItems: 3,
-						numberOfSuccessfulItems: 0,
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{
+					executionStatus: {
+						key: 'failed',
+						name: 'Failed',
 					},
-					bulkActionTasks,
-					tasks.items[0].id
-				);
+					numberOfFailedItems: 3,
+					numberOfSuccessfulItems: 0,
+				},
+				bulkActionTasks,
+				tasks.items[0].id
+			);
 
-				await expect(
-					page.getByRole('cell', {exact: true, name: 'All Failed'})
-				).toBeVisible();
-				await expect(
-					page
-						.getByRole('cell', {exact: true, name: 'All Failed'})
-						.locator('.lexicon-icon-times-circle-full')
-				).toBeVisible();
+			await expect(
+				page.getByRole('cell', {exact: true, name: 'All Failed'})
+			).toBeVisible();
+			await expect(
+				page
+					.getByRole('cell', {exact: true, name: 'All Failed'})
+					.locator('.lexicon-icon-times-circle-full')
+			).toBeVisible();
 
-				await assetsPage.gotoAll();
-			});
+			await assetsPage.gotoAll();
+		});
 
-			await test.step('Update the task status to Started', async () => {
-				await apiHelpers.objectEntry.patchObjectEntry(
-					{
-						executionStatus: {
-							key: 'started',
-							name: 'Started',
-						},
-						numberOfFailedItems: 0,
-						numberOfSuccessfulItems: 1,
+		await test.step('Update the task status to Started', async () => {
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{
+					executionStatus: {
+						key: 'started',
+						name: 'Started',
 					},
-					bulkActionTasks,
-					tasks.items[0].id
-				);
+					numberOfFailedItems: 0,
+					numberOfSuccessfulItems: 1,
+				},
+				bulkActionTasks,
+				tasks.items[0].id
+			);
 
-				expect.poll(
-					async () => {
-						await expect(
-							assetsPage.taskStatusFormsButton
-						).toBeVisible();
-					},
-					{
-						timeout: 5000,
-					}
-				);
+			expect.poll(
+				async () => {
+					await expect(
+						assetsPage.taskStatusFormsButton
+					).toBeVisible();
+				},
+				{
+					timeout: 5000,
+				}
+			);
 
-				await assetsPage.taskStatusFormsButton.click();
+			await assetsPage.taskStatusFormsButton.click();
 
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Processing'
-				);
-			});
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'Processing'
+			);
+		});
 
-			await test.step('Select 2 assets and delete them using the Bulk Action', async () => {
-				await expect(
-					assetsPage
-						.getItem(filesNames[0])
-						.locator('input[title="Select Item"]')
-				).not.toBeVisible();
-
-				await assetsPage
-					.getItem(filesNames[1])
+		await test.step('Select 2 assets and delete them using the Bulk Action', async () => {
+			await expect(
+				assetsPage
+					.getItem(filesNames[0])
 					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(filesNames[2])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage.execBulkItemAction('Delete');
+			).not.toBeVisible();
 
-				await waitForAlert(
-					page,
-					'Info:Delete action started for 2 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+			await assetsPage
+				.getItem(filesNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(filesNames[2])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage.execBulkItemAction('Delete');
 
-				await expect(assetsPage.processingTasksButton).toBeVisible();
+			await waitForAlert(
+				page,
+				'Info:Delete action started for 2 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
 
-				await assetsPage.processingTasksButton.click();
+			await expect(assetsPage.processingTasksButton).toBeVisible();
 
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'2 Items'
-				);
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'a few seconds ago'
-				);
+			await assetsPage.processingTasksButton.click();
 
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Deletion')
-						.nth(0)
-				).toBeVisible();
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Deletion')
-						.nth(1)
-				).toBeVisible();
-			});
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'2 Items'
+			);
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'a few seconds ago'
+			);
 
-			await test.step('Update the status of the task to Failed', async () => {
-				const processingTasks =
-					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-						bulkActionTasks,
-						new URLSearchParams({
-							filter: `executionStatus eq 'started'`,
-						})
-					);
+			await expect(
+				assetsPage
+					.taskStatusDropdownItemButton('Assets Deletion')
+					.nth(0)
+			).toBeVisible();
+			await expect(
+				assetsPage
+					.taskStatusDropdownItemButton('Assets Deletion')
+					.nth(1)
+			).toBeVisible();
+		});
 
-				await apiHelpers.objectEntry.patchObjectEntry(
-					{
-						executionStatus: {
-							key: 'failed',
-							name: 'Failed',
-						},
-					},
+		await test.step('Update the status of the task to Failed', async () => {
+			const processingTasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					bulkActionTasks,
-					processingTasks.items[0].id
+					new URLSearchParams({
+						filter: `executionStatus eq 'started'`,
+					})
 				);
 
-				expect.poll(
-					async () => {
-						await expect(
-							assetsPage.taskStatusDropdownList
-						).toContainText('Failed');
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{
+					executionStatus: {
+						key: 'failed',
+						name: 'Failed',
 					},
-					{
-						timeout: 5000,
-					}
-				);
-			});
+				},
+				bulkActionTasks,
+				processingTasks.items[0].id
+			);
+
+			expect.poll(
+				async () => {
+					await expect(
+						assetsPage.taskStatusDropdownList
+					).toContainText('Failed');
+				},
+				{
+					timeout: 5000,
+				}
+			);
+		});
 	}
 );
 
@@ -651,109 +648,107 @@ test(
 			);
 		}
 
-			await test.step('Select 3 assets and bulk edit their categories', async () => {
-				await assetsPage.gotoAll();
+		await test.step('Select 3 assets and bulk edit their categories', async () => {
+			await assetsPage.gotoAll();
 
-				await assetsPage
-					.getItem(fileNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(fileNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(fileNames[2])
-					.locator('input[title="Select Item"]')
-					.check();
+			await assetsPage
+				.getItem(fileNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(fileNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(fileNames[2])
+				.locator('input[title="Select Item"]')
+				.check();
 
-				await assetsPage.execBulkItemAction('Edit Categories');
+			await assetsPage.execBulkItemAction('Edit Categories');
 
-				await waitForModal({
-					page,
-				});
+			await waitForModal({
+				page,
+			});
+		});
+
+		await test.step('Add a new category to the selected assets', async () => {
+			const categoriesAutocomplete =
+				page.getByPlaceholder('Add category');
+
+			await categoriesAutocomplete.fill(categoryName);
+
+			const option = page.getByRole('option', {name: categoryName});
+
+			await option.waitFor();
+			await option.click();
+
+			const categoryLabel = page.locator('.label-item', {
+				hasText: categoryName,
 			});
 
-			await test.step('Add a new category to the selected assets', async () => {
-				const categoriesAutocomplete =
-					page.getByPlaceholder('Add category');
+			await expect(categoryLabel).toBeAttached();
 
-				await categoriesAutocomplete.fill(categoryName);
+			await page.getByRole('button', {name: 'Save'}).click();
 
-				const option = page.getByRole('option', {name: categoryName});
+			await waitForAlert(
+				page,
+				'Info:Categories update action started for 3 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
 
-				await option.waitFor();
-				await option.click();
+		await test.step('Check that the "Processing Task" button appears and click on it', async () => {
+			await expect(assetsPage.processingTasksButton).toBeVisible();
 
-				const categoryLabel = page.locator('.label-item', {
-					hasText: categoryName,
-				});
+			await assetsPage.processingTasksButton.click();
 
-				await expect(categoryLabel).toBeAttached();
+			expect.poll(
+				async () => {
+					await expect(assetsPage.processingTasksButton).toBeHidden();
+				},
+				{
+					timeout: 5000,
+				}
+			);
 
-				await page.getByRole('button', {name: 'Save'}).click();
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'Completed'
+			);
+		});
 
-				await waitForAlert(
-					page,
-					'Info:Categories update action started for 3 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+		await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
+			await expect(
+				assetsPage
+					.taskStatusDropdownItemButton('Assets Categorization')
+					.nth(0)
+			).toBeVisible();
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'3 Items'
+			);
+		});
+
+		await test.step('Verify the category has been correctly applied.', async () => {
+			await page.reload();
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: fileNames[0],
 			});
 
-			await test.step('Check that the "Processing Task" button appears and click on it', async () => {
-				await expect(assetsPage.processingTasksButton).toBeVisible();
+			await expect(
+				page.getByRole('heading', {name: fileNames[0]})
+			).toBeVisible();
 
-				await assetsPage.processingTasksButton.click();
+			await infoPanelPage.selectTab('Categorization').click();
 
-				expect.poll(
-					async () => {
-						await expect(
-							assetsPage.processingTasksButton
-						).toBeHidden();
-					},
-					{
-						timeout: 5000,
-					}
-				);
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Completed'
-				);
-			});
-
-			await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Categorization')
-						.nth(0)
-				).toBeVisible();
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'3 Items'
-				);
-			});
-
-			await test.step('Verify the category has been correctly applied.', async () => {
-				await page.reload();
-
-				await assetsPage.execItemAction({
-					action: 'Show Details',
-					filter: fileNames[0],
-				});
-
-				await expect(
-					page.getByRole('heading', {name: fileNames[0]})
-				).toBeVisible();
-
-				await infoPanelPage.selectTab('Categorization').click();
-
-				await expect(
-					page.getByText(categoryName, {exact: true})
-				).toBeVisible();
-			});
+			await expect(
+				page.getByText(categoryName, {exact: true})
+			).toBeVisible();
+		});
 	}
 );
 
@@ -854,265 +849,242 @@ test(
 			'Default'
 		);
 
-			await test.step('Select 3 assets including a folder and bulk edit their categories', async () => {
-				await assetsPage.gotoContents();
+		await test.step('Select 3 assets including a folder and bulk edit their categories', async () => {
+			await assetsPage.gotoContents();
 
-				await assetsPage
-					.getItem(webContentNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(folderName)
-					.locator('input[title="Select Item"]')
-					.check();
+			await assetsPage
+				.getItem(webContentNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(folderName)
+				.locator('input[title="Select Item"]')
+				.check();
 
-				await assetsPage.execBulkItemAction('Edit Categories');
+			await assetsPage.execBulkItemAction('Edit Categories');
 
-				await waitForModal({
-					page,
-				});
+			await waitForModal({
+				page,
 			});
+		});
 
-			await test.step('Add categories to the selected assets', async () => {
-				const categoriesAutocomplete =
-					page.getByPlaceholder('Add category');
+		await test.step('Add categories to the selected assets', async () => {
+			const categoriesAutocomplete =
+				page.getByPlaceholder('Add category');
 
-				for (const category of categories) {
-					await categoriesAutocomplete.fill(category);
+			for (const category of categories) {
+				await categoriesAutocomplete.fill(category);
 
-					const option = page.getByRole('option', {name: category});
+				const option = page.getByRole('option', {name: category});
 
-					await option.waitFor();
-					await option.click();
+				await option.waitFor();
+				await option.click();
 
-					const categoryLabel = page.locator('.label-item', {
-						hasText: category,
-					});
-
-					await expect(categoryLabel).toBeAttached();
-				}
-
-				await page.getByRole('button', {name: 'Save'}).click();
-
-				await waitForAlert(
-					page,
-					'Info:Categories update action started for 2 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
-			});
-
-			await test.step('Check that the "Processing Task" button appears and click on it', async () => {
-				await expect(assetsPage.processingTasksButton).toBeVisible();
-
-				await assetsPage.processingTasksButton.click();
-
-				expect.poll(
-					async () => {
-						await expect(
-							assetsPage.processingTasksButton
-						).toBeHidden();
-					},
-					{
-						timeout: 5000,
-					}
-				);
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Completed'
-				);
-			});
-
-			await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Categorization')
-						.nth(0)
-				).toBeVisible();
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'2 Items'
-				);
-			});
-
-			await test.step('Verify the categories has been correctly applied.', async () => {
-				for (const webContentName of webContentNames) {
-					await page.reload();
-
-					await assetsPage.execItemAction({
-						action: 'Show Details',
-						filter: webContentName,
-					});
-
-					await expect(
-						page.getByRole('heading', {name: webContentName})
-					).toBeVisible();
-
-					await infoPanelPage.selectTab('Categorization').click();
-
-					for (const category of categories) {
-						await expect(
-							page.getByText(category, {exact: true})
-						).toBeVisible();
-					}
-				}
-			});
-
-			await test.step('Delete more than one category', async () => {
-				await page.reload();
-
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-
-				await assetsPage.execBulkItemAction('Edit Categories');
-
-				await waitForModal({
-					page,
+				const categoryLabel = page.locator('.label-item', {
+					hasText: category,
 				});
 
-				await page
-					.locator('span', {hasText: categories[0]})
-					.getByRole('button', {name: 'Close'})
-					.click();
-				await page
-					.locator('span', {hasText: categories[1]})
-					.getByRole('button', {name: 'Close'})
-					.click();
+				await expect(categoryLabel).toBeAttached();
+			}
 
-				await page.getByRole('button', {name: 'Save'}).click();
+			await page.getByRole('button', {name: 'Save'}).click();
 
-				await waitForAlert(
-					page,
-					'Info:Categories update action started for one asset.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
-			});
+			await waitForAlert(
+				page,
+				'Info:Categories update action started for 2 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
 
-			await test.step('Verify the categories has been correctly removed.', async () => {
+		await test.step('Check that the "Processing Task" button appears and click on it', async () => {
+			await expect(assetsPage.processingTasksButton).toBeVisible();
+
+			await assetsPage.processingTasksButton.click();
+
+			expect.poll(
+				async () => {
+					await expect(assetsPage.processingTasksButton).toBeHidden();
+				},
+				{
+					timeout: 5000,
+				}
+			);
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'Completed'
+			);
+		});
+
+		await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
+			await expect(
+				assetsPage
+					.taskStatusDropdownItemButton('Assets Categorization')
+					.nth(0)
+			).toBeVisible();
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'2 Items'
+			);
+		});
+
+		await test.step('Verify the categories has been correctly applied.', async () => {
+			for (const webContentName of webContentNames) {
 				await page.reload();
 
 				await assetsPage.execItemAction({
 					action: 'Show Details',
-					filter: webContentNames[1],
+					filter: webContentName,
 				});
 
 				await expect(
-					page.getByRole('heading', {name: webContentNames[1]})
+					page.getByRole('heading', {name: webContentName})
 				).toBeVisible();
 
 				await infoPanelPage.selectTab('Categorization').click();
 
-				await expect(
-					page.getByText(categories[2], {exact: true})
-				).toBeVisible();
-			});
-
-			await test.step('Select 3 mixed assets and bulk edit their categories', async () => {
-				await assetsPage.gotoAll();
-
-				await assetsPage
-					.getItem(webContentNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(titleImg)
-					.locator('input[title="Select Item"]')
-					.check();
-
-				await assetsPage.execBulkItemAction('Edit Categories');
-
-				await waitForModal({
-					page,
-				});
-			});
-
-			await test.step('Add and remove categories to the selected assets', async () => {
-				const categoriesAutocomplete =
-					page.getByPlaceholder('Add category');
-
 				for (const category of categories) {
-					await categoriesAutocomplete.fill(category);
-
-					const option = page.getByRole('option', {name: category});
-
-					await option.waitFor();
-					await option.click();
-
-					const categoryLabel = page.locator('.label-item', {
-						hasText: category,
-					});
-
-					await expect(categoryLabel).toBeAttached();
+					await expect(
+						page.getByText(category, {exact: true})
+					).toBeVisible();
 				}
+			}
+		});
 
-				await page
-					.locator('span', {hasText: categories[1]})
-					.getByRole('button', {name: 'Close'})
-					.click();
-				await page
-					.locator('span', {hasText: categories[2]})
-					.getByRole('button', {name: 'Close'})
-					.click();
+		await test.step('Delete more than one category', async () => {
+			await page.reload();
 
-				await page.getByRole('button', {name: 'Save'}).click();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
 
-				await waitForAlert(
-					page,
-					'Info:Categories update action started for 3 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+			await assetsPage.execBulkItemAction('Edit Categories');
+
+			await waitForModal({
+				page,
 			});
 
-			await test.step('Verify the categories has been correctly edited.', async () => {
-				await page.reload();
+			await page
+				.locator('span', {hasText: categories[0]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+			await page
+				.locator('span', {hasText: categories[1]})
+				.getByRole('button', {name: 'Close'})
+				.click();
 
-				for (const webContentName of webContentNames) {
-					await assetsPage.execItemAction({
-						action: 'Show Details',
-						filter: webContentName,
-					});
+			await page.getByRole('button', {name: 'Save'}).click();
 
-					await expect(
-						page.getByRole('heading', {name: webContentName})
-					).toBeVisible();
-
-					await infoPanelPage.selectTab('Categorization').click();
-
-					await expect(
-						page.getByText(categories[0], {exact: true})
-					).toBeVisible();
-
-					await assetsPage
-						.getItem(webContentName)
-						.locator('input[title="Select Item"]')
-						.uncheck();
+			await waitForAlert(
+				page,
+				'Info:Categories update action started for one asset.',
+				{
+					autoClose: true,
+					type: 'info',
 				}
+			);
+		});
 
+		await test.step('Verify the categories has been correctly removed.', async () => {
+			await page.reload();
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: webContentNames[1],
+			});
+
+			await expect(
+				page.getByRole('heading', {name: webContentNames[1]})
+			).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await expect(
+				page.getByText(categories[2], {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('Select 3 mixed assets and bulk edit their categories', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage
+				.getItem(webContentNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(titleImg)
+				.locator('input[title="Select Item"]')
+				.check();
+
+			await assetsPage.execBulkItemAction('Edit Categories');
+
+			await waitForModal({
+				page,
+			});
+		});
+
+		await test.step('Add and remove categories to the selected assets', async () => {
+			const categoriesAutocomplete =
+				page.getByPlaceholder('Add category');
+
+			for (const category of categories) {
+				await categoriesAutocomplete.fill(category);
+
+				const option = page.getByRole('option', {name: category});
+
+				await option.waitFor();
+				await option.click();
+
+				const categoryLabel = page.locator('.label-item', {
+					hasText: category,
+				});
+
+				await expect(categoryLabel).toBeAttached();
+			}
+
+			await page
+				.locator('span', {hasText: categories[1]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+			await page
+				.locator('span', {hasText: categories[2]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Categories update action started for 3 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
+
+		await test.step('Verify the categories has been correctly edited.', async () => {
+			await page.reload();
+
+			for (const webContentName of webContentNames) {
 				await assetsPage.execItemAction({
 					action: 'Show Details',
-					filter: titleImg,
+					filter: webContentName,
 				});
 
 				await expect(
-					page.getByRole('heading', {name: titleImg})
+					page.getByRole('heading', {name: webContentName})
 				).toBeVisible();
 
 				await infoPanelPage.selectTab('Categorization').click();
@@ -1120,7 +1092,28 @@ test(
 				await expect(
 					page.getByText(categories[0], {exact: true})
 				).toBeVisible();
+
+				await assetsPage
+					.getItem(webContentName)
+					.locator('input[title="Select Item"]')
+					.uncheck();
+			}
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: titleImg,
 			});
+
+			await expect(
+				page.getByRole('heading', {name: titleImg})
+			).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await expect(
+				page.getByText(categories[0], {exact: true})
+			).toBeVisible();
+		});
 	}
 );
 
@@ -1202,269 +1195,244 @@ test(
 			});
 		}
 
-			await test.step('Select 3 assets including a folder and bulk edit their tags', async () => {
-				await assetsPage.gotoContents();
+		await test.step('Select 3 assets including a folder and bulk edit their tags', async () => {
+			await assetsPage.gotoContents();
 
-				await assetsPage
-					.getItem(webContentNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(folderName)
-					.locator('input[title="Select Item"]')
-					.check();
+			await assetsPage
+				.getItem(webContentNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(folderName)
+				.locator('input[title="Select Item"]')
+				.check();
 
-				await assetsPage.execBulkItemAction('Edit Tags');
+			await assetsPage.execBulkItemAction('Edit Tags');
 
-				await waitForModal({
-					page,
-				});
+			await waitForModal({
+				page,
 			});
+		});
 
-			await test.step('Add tags to the selected assets', async () => {
-				const categoriesAutocomplete = page.getByPlaceholder('Add tag');
+		await test.step('Add tags to the selected assets', async () => {
+			const categoriesAutocomplete = page.getByPlaceholder('Add tag');
 
-				for (const tagName of tagNames) {
-					await categoriesAutocomplete.fill(tagName);
+			for (const tagName of tagNames) {
+				await categoriesAutocomplete.fill(tagName);
 
-					const option = page.getByRole('option', {
-						exact: true,
-						name: tagName,
-					});
-
-					await option.waitFor();
-					await option.click();
-
-					const categoryLabel = page.locator('.label-item', {
-						hasText: tagName,
-					});
-
-					await expect(categoryLabel).toBeAttached();
-				}
-
-				await page.getByRole('button', {name: 'Save'}).click();
-
-				await waitForAlert(
-					page,
-					'Info:Tags update action started for 2 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
-			});
-
-			await test.step('Check that the "Processing Task" button appears and click on it', async () => {
-				await expect(assetsPage.processingTasksButton).toBeVisible();
-
-				await assetsPage.processingTasksButton.click();
-
-				expect.poll(
-					async () => {
-						await expect(
-							assetsPage.processingTasksButton
-						).toBeHidden();
-					},
-					{
-						timeout: 5000,
-					}
-				);
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'Completed'
-				);
-			});
-
-			await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
-				await expect(
-					assetsPage
-						.taskStatusDropdownItemButton('Assets Tagging')
-						.nth(0)
-				).toBeVisible();
-
-				await expect(assetsPage.taskStatusDropdownList).toContainText(
-					'2 Items'
-				);
-			});
-
-			await test.step('Verify the tags has been correctly applied.', async () => {
-				for (const webContentName of webContentNames) {
-					await page.reload();
-
-					await assetsPage.execItemAction({
-						action: 'Show Details',
-						filter: webContentName,
-					});
-
-					await expect(
-						page.getByRole('heading', {name: webContentName})
-					).toBeVisible();
-
-					await infoPanelPage.selectTab('Categorization').click();
-
-					for (const tagName of tagNames) {
-						await expect(
-							page.getByText(tagName, {exact: true})
-						).toBeVisible();
-					}
-				}
-			});
-
-			await test.step('Delete more than one tag', async () => {
-				await page.reload();
-
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-
-				await assetsPage.execBulkItemAction('Edit Tags');
-
-				await waitForModal({
-					page,
+				const option = page.getByRole('option', {
+					exact: true,
+					name: tagName,
 				});
 
-				await page
-					.locator('span', {hasText: tagNames[0]})
-					.getByRole('button', {name: 'Close'})
-					.click();
-				await page
-					.locator('span', {hasText: tagNames[1]})
-					.getByRole('button', {name: 'Close'})
-					.click();
+				await option.waitFor();
+				await option.click();
 
-				await page.getByRole('button', {name: 'Save'}).click();
+				const categoryLabel = page.locator('.label-item', {
+					hasText: tagName,
+				});
 
-				await waitForAlert(
-					page,
-					'Info:Tags update action started for one asset.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
-			});
+				await expect(categoryLabel).toBeAttached();
+			}
 
-			await test.step('Verify the tags has been correctly removed.', async () => {
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Tags update action started for 2 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
+
+		await test.step('Check that the "Processing Task" button appears and click on it', async () => {
+			await expect(assetsPage.processingTasksButton).toBeVisible();
+
+			await assetsPage.processingTasksButton.click();
+
+			expect.poll(
+				async () => {
+					await expect(assetsPage.processingTasksButton).toBeHidden();
+				},
+				{
+					timeout: 5000,
+				}
+			);
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'Completed'
+			);
+		});
+
+		await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
+			await expect(
+				assetsPage.taskStatusDropdownItemButton('Assets Tagging').nth(0)
+			).toBeVisible();
+
+			await expect(assetsPage.taskStatusDropdownList).toContainText(
+				'2 Items'
+			);
+		});
+
+		await test.step('Verify the tags has been correctly applied.', async () => {
+			for (const webContentName of webContentNames) {
 				await page.reload();
 
 				await assetsPage.execItemAction({
 					action: 'Show Details',
-					filter: webContentNames[1],
+					filter: webContentName,
 				});
 
 				await expect(
-					page.getByRole('heading', {name: webContentNames[1]})
+					page.getByRole('heading', {name: webContentName})
 				).toBeVisible();
 
 				await infoPanelPage.selectTab('Categorization').click();
 
-				await expect(
-					page.getByText(tagNames[2], {exact: true})
-				).toBeVisible();
-			});
-
-			await test.step('Select 3 mixed assets and bulk edit their tags', async () => {
-				await assetsPage.gotoAll();
-
-				await assetsPage
-					.getItem(webContentNames[0])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(webContentNames[1])
-					.locator('input[title="Select Item"]')
-					.check();
-				await assetsPage
-					.getItem(titleImg)
-					.locator('input[title="Select Item"]')
-					.check();
-
-				await assetsPage.execBulkItemAction('Edit Tags');
-
-				await waitForModal({
-					page,
-				});
-			});
-
-			await test.step('Add and remove tags to the selected assets', async () => {
-				const categoriesAutocomplete = page.getByPlaceholder('Add tag');
-
 				for (const tagName of tagNames) {
-					await categoriesAutocomplete.fill(tagName);
-
-					const option = page.getByRole('option', {
-						exact: true,
-						name: tagName,
-					});
-
-					await option.waitFor();
-					await option.click();
-
-					const categoryLabel = page.locator('.label-item', {
-						hasText: tagName,
-					});
-
-					await expect(categoryLabel).toBeAttached();
+					await expect(
+						page.getByText(tagName, {exact: true})
+					).toBeVisible();
 				}
+			}
+		});
 
-				await page
-					.locator('span', {hasText: tagNames[1]})
-					.getByRole('button', {name: 'Close'})
-					.click();
-				await page
-					.locator('span', {hasText: tagNames[2]})
-					.getByRole('button', {name: 'Close'})
-					.click();
+		await test.step('Delete more than one tag', async () => {
+			await page.reload();
 
-				await page.getByRole('button', {name: 'Save'}).click();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
 
-				await waitForAlert(
-					page,
-					'Info:Tags update action started for 3 assets.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+			await assetsPage.execBulkItemAction('Edit Tags');
+
+			await waitForModal({
+				page,
 			});
 
-			await test.step('Verify the tags has been correctly edited.', async () => {
-				await page.reload();
+			await page
+				.locator('span', {hasText: tagNames[0]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+			await page
+				.locator('span', {hasText: tagNames[1]})
+				.getByRole('button', {name: 'Close'})
+				.click();
 
-				for (const webContentName of webContentNames) {
-					await assetsPage.execItemAction({
-						action: 'Show Details',
-						filter: webContentName,
-					});
+			await page.getByRole('button', {name: 'Save'}).click();
 
-					await expect(
-						page.getByRole('heading', {name: webContentName})
-					).toBeVisible();
-
-					await infoPanelPage.selectTab('Categorization').click();
-
-					await expect(
-						page.getByText(tagNames[0], {exact: true})
-					).toBeVisible();
-
-					await assetsPage
-						.getItem(webContentName)
-						.locator('input[title="Select Item"]')
-						.uncheck();
+			await waitForAlert(
+				page,
+				'Info:Tags update action started for one asset.',
+				{
+					autoClose: true,
+					type: 'info',
 				}
+			);
+		});
 
+		await test.step('Verify the tags has been correctly removed.', async () => {
+			await page.reload();
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: webContentNames[1],
+			});
+
+			await expect(
+				page.getByRole('heading', {name: webContentNames[1]})
+			).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await expect(
+				page.getByText(tagNames[2], {exact: true})
+			).toBeVisible();
+		});
+
+		await test.step('Select 3 mixed assets and bulk edit their tags', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage
+				.getItem(webContentNames[0])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(webContentNames[1])
+				.locator('input[title="Select Item"]')
+				.check();
+			await assetsPage
+				.getItem(titleImg)
+				.locator('input[title="Select Item"]')
+				.check();
+
+			await assetsPage.execBulkItemAction('Edit Tags');
+
+			await waitForModal({
+				page,
+			});
+		});
+
+		await test.step('Add and remove tags to the selected assets', async () => {
+			const categoriesAutocomplete = page.getByPlaceholder('Add tag');
+
+			for (const tagName of tagNames) {
+				await categoriesAutocomplete.fill(tagName);
+
+				const option = page.getByRole('option', {
+					exact: true,
+					name: tagName,
+				});
+
+				await option.waitFor();
+				await option.click();
+
+				const categoryLabel = page.locator('.label-item', {
+					hasText: tagName,
+				});
+
+				await expect(categoryLabel).toBeAttached();
+			}
+
+			await page
+				.locator('span', {hasText: tagNames[1]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+			await page
+				.locator('span', {hasText: tagNames[2]})
+				.getByRole('button', {name: 'Close'})
+				.click();
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Tags update action started for 3 assets.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
+
+		await test.step('Verify the tags has been correctly edited.', async () => {
+			await page.reload();
+
+			for (const webContentName of webContentNames) {
 				await assetsPage.execItemAction({
 					action: 'Show Details',
-					filter: titleImg,
+					filter: webContentName,
 				});
 
 				await expect(
-					page.getByRole('heading', {name: titleImg})
+					page.getByRole('heading', {name: webContentName})
 				).toBeVisible();
 
 				await infoPanelPage.selectTab('Categorization').click();
@@ -1472,7 +1440,28 @@ test(
 				await expect(
 					page.getByText(tagNames[0], {exact: true})
 				).toBeVisible();
+
+				await assetsPage
+					.getItem(webContentName)
+					.locator('input[title="Select Item"]')
+					.uncheck();
+			}
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: titleImg,
 			});
+
+			await expect(
+				page.getByRole('heading', {name: titleImg})
+			).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await expect(
+				page.getByText(tagNames[0], {exact: true})
+			).toBeVisible();
+		});
 	}
 );
 
@@ -1658,41 +1647,41 @@ test(
 			);
 		});
 
-			await test.step('Navigate to history page and bulk delete all versions', async () => {
-				await assetsPage.gotoAll();
+		await test.step('Navigate to history page and bulk delete all versions', async () => {
+			await assetsPage.gotoAll();
 
-				await assetsPage.execItemAction({
-					action: 'View History',
-					filter: webContentNames[2],
-				});
-
-				for (const webContentName of webContentNames) {
-					await assetsPage
-						.getItem(webContentName)
-						.locator('input[title="Select Item"]')
-						.check();
-				}
-
-				await assetsPage.execBulkItemAction('Delete');
-
-				await waitForModal({
-					page,
-				});
-
-				await page
-					.locator('.modal')
-					.getByRole('button', {name: 'Delete'})
-					.click();
-
-				await waitForAlert(
-					page,
-					'Info:Delete asset versions action started for 3 versions.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+			await assetsPage.execItemAction({
+				action: 'View History',
+				filter: webContentNames[2],
 			});
+
+			for (const webContentName of webContentNames) {
+				await assetsPage
+					.getItem(webContentName)
+					.locator('input[title="Select Item"]')
+					.check();
+			}
+
+			await assetsPage.execBulkItemAction('Delete');
+
+			await waitForModal({
+				page,
+			});
+
+			await page
+				.locator('.modal')
+				.getByRole('button', {name: 'Delete'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Info:Delete asset versions action started for 3 versions.',
+				{
+					autoClose: true,
+					type: 'info',
+				}
+			);
+		});
 
 		await test.step('All versions are removed excluding the current one', async () => {
 			await page.reload();
@@ -1772,74 +1761,74 @@ test(
 			);
 		});
 
-			await test.step('Expire one asset in bulk', async () => {
-				await assetsPage.gotoAll();
+		await test.step('Expire one asset in bulk', async () => {
+			await assetsPage.gotoAll();
 
-				const row = page.getByRole('row', {name: basicDocumentTitle});
+			const row = page.getByRole('row', {name: basicDocumentTitle});
 
+			await expect(
+				row.getByRole('cell', {name: 'Approved'})
+			).toBeVisible();
+
+			await assetsPage.selectItems([basicDocumentTitle]);
+
+			await assetsPage.execBulkItemAction('Expire');
+
+			await waitForAlert(
+				page,
+				`Info:Expire action started for ${basicDocumentTitle} asset.`,
+				{
+					type: 'info',
+				}
+			);
+
+			await waitForAlert(
+				page,
+				`Success:${basicDocumentTitle} was successfully expired.`
+			);
+
+			await expect(
+				row.getByRole('cell', {name: 'Expired'})
+			).toBeVisible();
+		});
+
+		await test.step('Expire two assets in bulk', async () => {
+			await assetsPage.gotoAll();
+
+			const rows = [
+				page.getByRole('row', {name: basicWebContentTitle}),
+				page.getByRole('row', {name: blogTitle}),
+			];
+
+			for (const row of rows) {
 				await expect(
 					row.getByRole('cell', {name: 'Approved'})
 				).toBeVisible();
+			}
 
-				await assetsPage.selectItems([basicDocumentTitle]);
+			await assetsPage.selectItems([basicWebContentTitle, blogTitle]);
 
-				await assetsPage.execBulkItemAction('Expire');
+			await assetsPage.execBulkItemAction('Expire');
 
-				await waitForAlert(
-					page,
-					`Info:Expire action started for ${basicDocumentTitle} asset.`,
-					{
-						type: 'info',
-					}
-				);
+			await waitForAlert(
+				page,
+				'Info:Expire action started for 2 assets.',
+				{
+					type: 'info',
+				}
+			);
 
-				await waitForAlert(
-					page,
-					`Success:${basicDocumentTitle} was successfully expired.`
-				);
+			await waitForAlert(
+				page,
+				'Success:2 assets were successfully expired.'
+			);
 
+			for (const row of rows) {
 				await expect(
 					row.getByRole('cell', {name: 'Expired'})
 				).toBeVisible();
-			});
-
-			await test.step('Expire two assets in bulk', async () => {
-				await assetsPage.gotoAll();
-
-				const rows = [
-					page.getByRole('row', {name: basicWebContentTitle}), 
-					page.getByRole('row', {name: blogTitle})
-				];
-
-				for (const row of rows) {
-					await expect(
-						row.getByRole('cell', {name: 'Approved'})
-					).toBeVisible();
-				}
-
-				await assetsPage.selectItems([basicWebContentTitle, blogTitle]);
-
-				await assetsPage.execBulkItemAction('Expire');
-
-				await waitForAlert(
-					page,
-					'Info:Expire action started for 2 assets.',
-					{
-						type: 'info',
-					}
-				);
-
-				await waitForAlert(
-					page,
-					'Success:2 assets were successfully expired.'
-				);
-
-				for (const row of rows) {
-					await expect(
-						row.getByRole('cell', {name: 'Expired'})
-					).toBeVisible();
-				}
-			});
+			}
+		});
 	}
 );
 
@@ -1944,146 +1933,131 @@ test(
 				.click();
 		});
 
-			await test.step('Exporting for Translation a single content type object entry', async () => {
-				await assetsPage.gotoAll();
+		await test.step('Exporting for Translation a single content type object entry', async () => {
+			await assetsPage.gotoAll();
 
-				await assetsPage.selectItems([basicWebContentTitle1]);
+			await assetsPage.selectItems([basicWebContentTitle1]);
 
-				await assetsPage.execBulkItemAction('Export for Translation');
+			await assetsPage.execBulkItemAction('Export for Translation');
 
-				await waitForModal({
-					page,
-				});
-
-				await expect(
-					page
-						.locator('.modal-header')
-						.getByText('Export for Translation')
-				).toBeVisible();
-
-				const filePath = await assetsPage.exportForTranslation(
-					'Spanish (Spain)',
-					true
-				);
-
-				await expect(
-					checkInZip(
-						filePath,
-						`${basicWebContentTitle1}-en_US-es_ES.xlf`
-					)
-				).resolves.toBe(true);
+			await waitForModal({
+				page,
 			});
 
-			await test.step('Exporting for Translation two equal content type object entries', async () => {
-				await assetsPage.gotoAll();
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
 
-				await assetsPage.selectItems([
-					basicWebContentTitle1,
-					basicWebContentTitle2,
-				]);
+			const filePath = await assetsPage.exportForTranslation(
+				'Spanish (Spain)',
+				true
+			);
 
-				await assetsPage.execBulkItemAction('Export for Translation');
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle1}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+		});
 
-				await waitForModal({
-					page,
-				});
+		await test.step('Exporting for Translation two equal content type object entries', async () => {
+			await assetsPage.gotoAll();
 
-				await expect(
-					page
-						.locator('.modal-header')
-						.getByText('Export for Translation')
-				).toBeVisible();
+			await assetsPage.selectItems([
+				basicWebContentTitle1,
+				basicWebContentTitle2,
+			]);
 
-				const filePath = await assetsPage.exportForTranslation(
-					'Spanish (Spain)',
-					true
-				);
+			await assetsPage.execBulkItemAction('Export for Translation');
 
-				await expect(
-					checkInZip(
-						filePath,
-						`${basicWebContentTitle1}-en_US-es_ES.xlf`
-					)
-				).resolves.toBe(true);
-
-				await expect(
-					checkInZip(
-						filePath,
-						`${basicWebContentTitle2}-en_US-es_ES.xlf`
-					)
-				).resolves.toBe(true);
+			await waitForModal({
+				page,
 			});
 
-			await test.step('Exporting for Translation two different content type object entries', async () => {
-				await assetsPage.gotoAll();
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
 
-				await assetsPage.selectItems([
-					basicWebContentTitle1,
-					blogTitle,
-				]);
+			const filePath = await assetsPage.exportForTranslation(
+				'Spanish (Spain)',
+				true
+			);
 
-				await assetsPage.execBulkItemAction('Export for Translation');
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle1}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
 
-				await waitForModal({
-					page,
-				});
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle2}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+		});
 
-				await expect(
-					page
-						.locator('.modal-header')
-						.getByText('Export for Translation')
-				).toBeVisible();
+		await test.step('Exporting for Translation two different content type object entries', async () => {
+			await assetsPage.gotoAll();
 
-				const filePath = await assetsPage.exportForTranslation(
-					'Spanish (Spain)',
-					true
-				);
+			await assetsPage.selectItems([basicWebContentTitle1, blogTitle]);
 
-				await expect(
-					checkInZip(filePath, `${basicWebContentTitle1}-en_US.zip`)
-				).resolves.toBe(true);
+			await assetsPage.execBulkItemAction('Export for Translation');
 
-				await expect(
-					checkInZip(filePath, `${blogTitle}-en_US.zip`)
-				).resolves.toBe(true);
+			await waitForModal({
+				page,
 			});
 
-			await test.step('Exporting for Translation multiple object entries of two different content types', async () => {
-				await assetsPage.gotoAll();
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
 
-				await assetsPage.selectItems([
-					basicWebContentTitle1,
-					basicWebContentTitle2,
-					blogTitle,
-				]);
+			const filePath = await assetsPage.exportForTranslation(
+				'Spanish (Spain)',
+				true
+			);
 
-				await assetsPage.execBulkItemAction('Export for Translation');
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle1}-en_US.zip`)
+			).resolves.toBe(true);
 
-				await waitForModal({
-					page,
-				});
+			await expect(
+				checkInZip(filePath, `${blogTitle}-en_US.zip`)
+			).resolves.toBe(true);
+		});
 
-				await expect(
-					page
-						.locator('.modal-header')
-						.getByText('Export for Translation')
-				).toBeVisible();
+		await test.step('Exporting for Translation multiple object entries of two different content types', async () => {
+			await assetsPage.gotoAll();
 
-				const filePath = await assetsPage.exportForTranslation(
-					'Spanish (Spain)',
-					true
-				);
+			await assetsPage.selectItems([
+				basicWebContentTitle1,
+				basicWebContentTitle2,
+				blogTitle,
+			]);
 
-				await expect(
-					checkInZip(
-						filePath,
-						`Basic Web Content Translations-en_US.zip`
-					)
-				).resolves.toBe(true);
+			await assetsPage.execBulkItemAction('Export for Translation');
 
-				await expect(
-					checkInZip(filePath, `${blogTitle}-en_US.zip`)
-				).resolves.toBe(true);
+			await waitForModal({
+				page,
 			});
+
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
+
+			const filePath = await assetsPage.exportForTranslation(
+				'Spanish (Spain)',
+				true
+			);
+
+			await expect(
+				checkInZip(filePath, `Basic Web Content Translations-en_US.zip`)
+			).resolves.toBe(true);
+
+			await expect(
+				checkInZip(filePath, `${blogTitle}-en_US.zip`)
+			).resolves.toBe(true);
+		});
 	}
 );

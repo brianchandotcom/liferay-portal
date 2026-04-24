@@ -143,37 +143,6 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title Edit");
-	}
-
-	@description = "This ensures that assets stored in the asset library folder will not be displayed in DM widget once the site is disconnected."
-	@priority = 5
-	test CannotViewAssetsFromWidgetAfterDisconnecting {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "Depot Folder Name",
-			groupName = "Test Depot Name");
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			folderName = "Depot Folder Name",
-			groupName = "Test Depot Name",
-			mimeType = "video/mp4",
-			sourceFileName = "Document_1.mp4");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.setRootFolder(
-			depotName = "Test Depot Name",
-			dmRootFolderName = "Depot Folder Name");
-
-		Navigator.openSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Site Name");
-
-		DMDocument.viewPG(dmDocumentTitle = "DM Document Title");
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
 
@@ -181,7 +150,7 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
-		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title");
+		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title Edit");
 
 		DMPortlet.viewInvalidRootFolder();
 	}

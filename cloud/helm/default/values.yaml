@@ -245,7 +245,9 @@ global:
                     resources:
                         -   configmaps
                     verbs:
-                        -   "*"
+                        -   get
+                        -   list
+                        -   watch
 image:
     pullPolicy: IfNotPresent
     pullSecrets: []

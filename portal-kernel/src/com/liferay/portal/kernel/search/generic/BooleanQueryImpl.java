@@ -5,27 +5,36 @@
 
 package com.liferay.portal.kernel.search.generic;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.BaseBooleanQueryImpl;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.query.FieldQueryFactoryUtil;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Michael C. Han
+ * @author Brian Wing Shun Chan
  * @author Hugo Huijser
+ * @author Michael C. Han
  */
-public class BooleanQueryImpl extends BaseBooleanQueryImpl {
+public class BooleanQueryImpl extends BaseQueryImpl implements BooleanQuery {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
@@ -331,6 +340,49 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
+	public Map<String, Query> addTerms(String[] fields, String values)
+		throws ParseException {
+
+		if (Validator.isNull(values)) {
+			return Collections.emptyMap();
+		}
+
+		if (fields == null) {
+			fields = new String[0];
+		}
+
+		Map<String, Query> queries = new HashMap<>((int)(fields.length / .75));
+
+		for (String field : fields) {
+			Query query = addTerm(field, values);
+
+			queries.put(field, query);
+		}
+
+		return queries;
+	}
+
+	@Override
+	public Map<String, Query> addTerms(
+			String[] fields, String value, boolean like)
+		throws ParseException {
+
+		if (Validator.isNull(value)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Query> queries = new HashMap<>((int)(fields.length / .75));
+
+		for (String field : fields) {
+			Query query = addTerm(field, value, like);
+
+			queries.put(field, query);
+		}
+
+		return queries;
+	}
+
+	@Override
 	public List<BooleanClause<Query>> clauses() {
 		return Collections.unmodifiableList(_booleanClauses);
 	}
@@ -360,6 +412,72 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	protected Map<String, List<Query>> addTerms(
+			String[] fields, Map<String, List<String>> termFieldsValuesMap)
+		throws ParseException {
+
+		Map<String, List<Query>> queries = new HashMap<>(
+			(int)(fields.length / .75));
+
+		for (String field : fields) {
+			List<String> valuesList = termFieldsValuesMap.get(field);
+
+			List<Query> queriesList = new ArrayList<>(valuesList.size());
+
+			queries.put(field, queriesList);
+
+			for (String value : valuesList) {
+				Query query = addTerm(field, value);
+
+				queriesList.add(query);
+			}
+		}
+
+		return queries;
+	}
+
+	protected String[] parseKeywords(String values) {
+		if (!values.contains(StringPool.QUOTE)) {
+			return StringUtil.split(values, CharPool.SPACE);
+		}
+
+		List<String> keywords = new ArrayList<>();
+
+		while (values.length() > 0) {
+			if (values.startsWith(StringPool.QUOTE)) {
+				values = values.substring(1);
+
+				if (values.contains(StringPool.QUOTE)) {
+					int pos = values.indexOf(StringPool.QUOTE);
+
+					keywords.add(values.substring(0, pos));
+
+					values = values.substring(pos + 1);
+
+					values = values.trim();
+				}
+			}
+			else {
+				if (values.contains(StringPool.SPACE)) {
+					int pos = values.indexOf(StringPool.SPACE);
+
+					keywords.add(values.substring(0, pos));
+
+					values = values.substring(pos + 1);
+
+					values = values.trim();
+				}
+				else {
+					keywords.add(values);
+
+					break;
+				}
+			}
+		}
+
+		return keywords.toArray(new String[0]);
 	}
 
 	private final List<BooleanClause<Query>> _booleanClauses =

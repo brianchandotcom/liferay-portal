@@ -23,6 +23,7 @@ import {performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {closeProductMenu} from '../../../utils/productMenu';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdminPagesTest';
@@ -519,24 +520,28 @@ test(
 
 		await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
 
-		await page
-			.getByRole('row', {name: navigationMenuName})
-			.getByLabel('Show Actions')
-			.click();
-
-		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Permissions'}),
+			trigger: page
+				.getByRole('row', {name: navigationMenuName})
+				.getByLabel('Show Actions'),
+		});
 
 		const permissionsModal = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
 
-		await page.waitForTimeout(1500);
+		const guestViewCheckbox =
+			permissionsModal.locator('#guest_ACTION_VIEW');
 
-		await permissionsModal.locator('#guest_ACTION_VIEW').uncheck();
+		await guestViewCheckbox.uncheck({trial: true});
 
-		await page.waitForTimeout(1500);
+		await guestViewCheckbox.uncheck();
 
 		await permissionsModal.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(permissionsModal);
 
 		await page.locator('.modal').getByLabel('Close', {exact: true}).click();
 

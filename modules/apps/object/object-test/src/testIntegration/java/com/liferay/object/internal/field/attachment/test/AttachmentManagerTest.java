@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -47,11 +48,21 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -269,6 +280,80 @@ public class AttachmentManagerTest {
 		}
 	}
 
+	@Test
+	public void testGetOrAddFileEntryConcurrent() throws Exception {
+		_attachmentManager.getOrAddFileEntry(
+			_objectField.getCompanyId(), RandomTestUtil.randomString(),
+			DLTestUtil.randomTextFileBytes(), "warmup.png",
+			TestPropsValues.getGroupId(), _objectField.getObjectFieldId(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			_THREAD_COUNT);
+
+		List<FileEntry> fileEntries = new CopyOnWriteArrayList<>();
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"org.hibernate.engine.jdbc.spi.SqlExceptionHelper",
+				LoggerTestUtil.OFF)) {
+
+			CountDownLatch finishCountDownLatch = new CountDownLatch(
+				_THREAD_COUNT);
+			CountDownLatch startCountDownLatch = new CountDownLatch(1);
+
+			User user = UserTestUtil.addUser();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			serviceContext.setUserId(user.getUserId());
+
+			for (int i = 0; i < _THREAD_COUNT; i++) {
+				String fileName = "file" + i + ".png";
+
+				executorService.submit(
+					new CompanyInheritableThreadLocalCallable<Runnable>(
+						() -> {
+							try {
+								startCountDownLatch.await();
+
+								fileEntries.add(
+									_attachmentManager.getOrAddFileEntry(
+										_objectField.getCompanyId(),
+										RandomTestUtil.randomString(),
+										DLTestUtil.randomTextFileBytes(),
+										fileName, TestPropsValues.getGroupId(),
+										_objectField.getObjectFieldId(),
+										serviceContext));
+							}
+							finally {
+								finishCountDownLatch.countDown();
+							}
+
+							return null;
+						}));
+			}
+
+			startCountDownLatch.countDown();
+
+			Assert.assertTrue(finishCountDownLatch.await(60, TimeUnit.SECONDS));
+		}
+		finally {
+			executorService.shutdown();
+		}
+
+		Assert.assertEquals(
+			fileEntries.toString(), _THREAD_COUNT, fileEntries.size());
+
+		Set<Long> folderIds = new HashSet<>();
+
+		for (FileEntry fileEntry : fileEntries) {
+			folderIds.add(fileEntry.getFolderId());
+		}
+
+		Assert.assertEquals(folderIds.toString(), 1, folderIds.size());
+	}
+
 	private ObjectDefinition _addObjectDefinition(String acceptedFileExtensions)
 		throws Exception {
 
@@ -317,6 +402,8 @@ public class AttachmentManagerTest {
 			TempFileEntryUtil.getTempFileName(fileName + extension),
 			FileUtil.createTempFile(content), mimeType);
 	}
+
+	private static final int _THREAD_COUNT = 8;
 
 	@Inject
 	private AttachmentManager _attachmentManager;

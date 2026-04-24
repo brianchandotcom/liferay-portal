@@ -36,6 +36,7 @@ public class TestReportFactory {
 		else if (batchName.startsWith("modules-compile") ||
 				 batchName.startsWith("modules-semantic-versioning") ||
 				 batchName.startsWith("rest-builder") ||
+				 batchName.startsWith("service-and-rest-builder") ||
 				 batchName.startsWith("service-builder") ||
 				 batchName.startsWith("workspaces-compile")) {
 

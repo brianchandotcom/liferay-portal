@@ -8,7 +8,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
-import com.liferay.jenkins.results.parser.test.clazz.ServiceBuilderAntTargetTestClass;
+import com.liferay.jenkins.results.parser.test.clazz.BaseAntTargetTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -71,7 +71,7 @@ public class TestrayFactory {
 					topLevelBuildReport);
 			}
 			else if (axisTestClassGroup instanceof ModulesAxisTestClassGroup) {
-				if (testClass instanceof ServiceBuilderAntTargetTestClass) {
+				if (testClass instanceof BaseAntTargetTestClass) {
 					return new AntTargetBatchBuildTestrayCaseResult(
 						axisTestClassGroup, testClass, testrayBuild,
 						topLevelBuildReport);

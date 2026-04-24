@@ -564,6 +564,18 @@ public class TestClassGroupFactory {
 						batchName, portalTestClassJob);
 				}
 			}
+			else if (batchName.startsWith("service-and-rest-builder")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new ServiceAndRESTBuilderModulesBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new ServiceAndRESTBuilderModulesBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
 			else if (batchName.startsWith("service-builder")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =

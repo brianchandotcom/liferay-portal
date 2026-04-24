@@ -5,9 +5,6 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-
 import org.json.JSONObject;
 
 /**
@@ -22,12 +19,8 @@ public class ServiceBuilderModulesSegmentTestClassGroup
 
 		sb.append(super.getTestCasePropertiesContent());
 
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_serviceBuilderModulesBatchTestClassGroup.
-				getPortalGitWorkingDirectory();
-
-		if (JenkinsResultsParserUtil.isUnifiedBuilderSupported(
-				portalGitWorkingDirectory.getUpstreamBranchName())) {
+		if (_serviceBuilderModulesBatchTestClassGroup.
+				isUnifiedBuilderSupported()) {
 
 			return sb.toString();
 		}

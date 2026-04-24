@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"@clayui/css": "file:../../../../modules/apps/frontend-js/frontend-js-clay-web/clay/clay-css"
+	},
+	"liferayDesignPack": {
+		"baseTheme": "styled"
+	},
+	"main": "package.json",
+	"name": "@liferay/liferay-uswds-theme-css",
+	"version": "0.0.1"
+}

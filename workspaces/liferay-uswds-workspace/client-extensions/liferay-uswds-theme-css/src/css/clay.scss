@@ -1,0 +1,24 @@
+@use "sass:math" as *;
+
+@import '@clayui/css/src/scss/_license-text';
+
+@import '@clayui/css/src/scss/functions/_global-functions';
+
+@import '_clay_variables';
+
+@import '@clayui/css/src/scss/atlas-custom-properties/_variables';
+
+@import '@clayui/css/src/scss/atlas/_variables';
+
+@import '@clayui/css/src/scss/_variables';
+
+@import '@clayui/css/src/scss/_mixins';
+
+@import '@clayui/css/src/scss/_components';
+
+@import "_liferay_variables";
+@import "_liferay_variables_custom";
+
+@import "_clay_custom";
+@import "_liferay_custom";
+

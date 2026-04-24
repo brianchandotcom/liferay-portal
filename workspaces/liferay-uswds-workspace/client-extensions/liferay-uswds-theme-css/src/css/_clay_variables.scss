@@ -1,0 +1,462 @@
+$moz-osx-font-smoothing: auto !default;
+$webkit-font-smoothing: auto !default;
+
+$legend: () !default;
+$legend: map-merge(
+	(
+		font-size: var(--legend-font-size, 1.5rem),
+	),
+	$legend
+);
+
+$reference-mark: () !default;
+$reference-mark: map-deep-merge(
+	(
+		color: var(--reference-mark-color),
+		font-size: var(--reference-mark-font-size),
+	),
+	$reference-mark
+);
+
+$btn-disabled-opacity: 1;
+
+$btn: (
+	text-decoration: none,
+
+	disabled: (
+		background-color: var(--btn-disabled-background-color, var(--gray-200))
+			!important,
+		border-color: var(--btn-disabled-border-color, transparent) !important,
+		color: var(--btn-disabled-color, var(--gray-700)) !important,
+	),
+);
+
+$btn-primary: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-secondary: () !default;
+$btn-secondary: map-deep-merge(
+	(
+		font-weight: var(--font-weight-normal),
+		text-decoration: underline,
+
+		hover: (
+			text-decoration: underline,
+		),
+
+		active: (
+			enabled: false,
+		),
+
+		disabled: (
+			enabled: false,
+		),
+	),
+	$btn-secondary
+);
+
+$btn-info: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-success: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-warning: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-danger: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-palette: () !default;
+$btn-palette: map-deep-merge(
+	(
+		primary: $btn-primary,
+
+		secondary: $btn-secondary,
+
+		success: $btn-success,
+
+		info: $btn-info,
+
+		warning: $btn-warning,
+
+		danger: $btn-danger,
+
+		light: 'c-unset',
+
+		dark: 'c-unset',
+
+		'.btn-translucent': 'c-unset',
+
+		'.btn-translucent.btn-primary': 'c-unset',
+
+		'.btn-translucent.btn-secondary': 'c-unset',
+
+		'.btn-translucent.btn-info, .btn-beta': 'c-unset',
+
+		'.btn-translucent.btn-success': 'c-unset',
+
+		'.btn-translucent.btn-warning': 'c-unset',
+
+		'.btn-translucent.btn-danger': 'c-unset',
+
+		'%clay-dark-btn-translucent-primary': 'c-unset',
+
+		'.clay-dark .btn-translucent.btn-primary': 'c-unset',
+
+		'.clay-dark.btn-translucent.btn-primary': 'c-unset',
+
+		'%clay-dark-btn-translucent-info': 'c-unset',
+
+		'.clay-dark .btn-translucent.btn-info, .btn-beta-dark': 'c-unset',
+
+		'.clay-dark.btn-translucent.btn-info': 'c-unset',
+
+		'%clay-dark-btn-translucent-success': 'c-unset',
+
+		'.clay-dark .btn-translucent.btn-success': 'c-unset',
+
+		'.clay-dark.btn-translucent.btn-success': 'c-unset',
+
+		'%clay-dark-btn-translucent-warning': 'c-unset',
+
+		'.clay-dark .btn-translucent.btn-warning': 'c-unset',
+
+		'.clay-dark.btn-translucent.btn-warning': 'c-unset',
+
+		'%clay-dark-btn-translucent-danger': 'c-unset',
+
+		'.clay-dark .btn-translucent.btn-danger': 'c-unset',
+
+		'.clay-dark.btn-translucent.btn-danger': 'c-unset',
+	),
+	$btn-palette
+);
+
+$btn-outline-primary: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-outline-secondary: (
+	active: (
+		enabled: false,
+	),
+
+	disabled: (
+		enabled: false,
+	),
+);
+
+$btn-outline-palette: () !default;
+$btn-outline-palette: map-deep-merge(
+	(
+		primary: $btn-outline-primary,
+
+		secondary: $btn-outline-secondary,
+
+		success: 'c-unset',
+
+		info: 'c-unset',
+
+		warning: 'c-unset',
+
+		danger: 'c-unset',
+
+		light: 'c-unset',
+
+		dark: 'c-unset',
+
+		'%clay-dark-btn-outline-primary': 'c-unset',
+
+		'.clay-dark .btn-outline-primary, .clay-dark.btn-outline-primary':
+			'c-unset',
+
+		'%clay-dark-btn-outline-secondary': 'c-unset',
+
+		'.clay-dark .btn-outline-secondary, .clay-dark.btn-outline-secondary':
+			'c-unset',
+	),
+	$btn-outline-palette
+);
+
+// Label Reference Mark
+
+$input-label-reference-mark-color: var(
+	--input-label-reference-mark-color
+) !important !default;
+
+// .form-text
+
+$form-text-color: var(--form-text-color, var(--gray-60)) !default;
+$form-text-font-size: var(--form-text-font-size, 14px) !default;
+$form-text-font-weight: var(
+	--form-text-font-weight,
+	var(--font-weight-semi-bold)
+) !default;
+$form-text-margin-top: var(--form-text-margin-top, 4px) !default;
+
+$form-text: () !default;
+$form-text: map-merge(
+	(
+		color: $form-text-color,
+		display: block,
+		font-size: $form-text-font-size,
+		font-weight: $form-text-font-weight,
+		margin-top: $form-text-margin-top,
+		word-wrap: break-word,
+
+		blockquote: (
+			font-style: italic,
+			font-weight: var(--font-weight-normal),
+			margin-bottom: 0px,
+			margin-top: 12px,
+			padding-left: 12px,
+			position: relative,
+
+			before: (
+				background-color: var(--gray-60),
+				bottom: 0px,
+				content: '',
+				display: block,
+				left: 0px,
+				position: absolute,
+				top: 0px,
+				width: 2px,
+			),
+		),
+	),
+	$form-text
+);
+
+$form-help-text: () !default;
+$form-help-text: map-deep-merge(
+	(
+		color: var(--form-help-text-color, inherit),
+		display: block,
+		font-size: 14px,
+		margin-top: 4px,
+	),
+	$form-help-text
+);
+
+$bg-theme-colors: () !default;
+$bg-theme-colors: map-deep-merge(
+	(
+		'light': (
+			background-color: var(--light) !important,
+
+			hover: (
+				background-color:
+					unquote('hsl(from var(--light) h s calc(l - 10))') !important,
+			),
+		),
+		'primary-d2': (
+			background-color: var(--primary-d2) !important,
+
+			hover: (
+				background-color:
+					unquote('hsl(from var(--primary-d2) h s calc(l - 10))') !important,
+			),
+		),
+		'secondary-l3': (
+			background-color: var(--secondary-l3) !important,
+
+			hover: (
+				background-color:
+					unquote('hsl(from var(--secondary-l3) h s calc(l - 10))') !important,
+			),
+		),
+	),
+	$bg-theme-colors
+);
+
+$alert-indicator-font-size: var(--alert-indicator-font-size) !default;
+
+$link-primary: () !default;
+$link-primary: map-deep-merge(
+	(
+		border-radius: c-unset,
+		color: var(--link-primary-color, var(--gray-90)),
+		display: inline-block,
+		font-weight: var(--font-weight-bold),
+		padding: 1rem 0,
+		text-decoration: underline,
+		transition: var(--link-primary-transition, box-shadow 0.15s ease-in-out),
+		hover: (
+			background-color:
+				var(--link-primary-hover-background-color, transparent),
+			color: var(--link-primary-hover-color, var(--primary-d1)),
+		),
+
+		focus: (
+			enabled: false,
+		),
+	),
+	$link-primary
+);
+
+$link-secondary: () !default;
+$link-secondary: map-deep-merge(
+	(
+		border-radius: 1px,
+		color: var(--link-secondary-color, var(--gray-90)),
+		transition: box-shadow 0.15s ease-in-out,
+
+		hover: (
+			background-color:
+				var(--link-secondary-background-color, transparent),
+			color: var(--link-secondary-hover-color, var(--primary-d1)),
+		),
+
+		focus: (
+			enabled: false,
+		),
+	),
+	$link-secondary
+);
+
+$nav-link: () !default;
+$nav-link: map-deep-merge(
+	(
+		text-decoration: none,
+	),
+	$nav-link
+);
+
+$navbar-border-radius: var(--navbar-border-radius, 0px) !default;
+$navbar-font-size: var(--navbar-font-size, 14px) !default;
+$navbar-padding-x: var(--navbar-padding-x, 1rem) !default;
+$navbar-padding-y: var(--navbar-padding-y, 0.5rem) !default;
+
+$navbar-nav-link-padding-x: var(--navbar-nav-link-padding-x, 8px) !default;
+
+$navbar-title-font-size: var(--navbar-title-font-size, 20px) !default;
+$navbar-title-font-weight: var(
+	--navbar-title-font-weight,
+	var(--font-weight-semi-bold)
+) !default;
+$navbar-title-margin-bottom: var(--navbar-title-margin-bottom, 0) !default;
+$navbar-title-text-transform: var(--navbar-title-text-transform, none) !default;
+
+$navbar-text-truncate-spacer-right: var(
+	--navbar-text-truncate-spacer-right,
+	25px
+) !default;
+$navbar-text-truncate-max-width: var(
+	--navbar-text-truncate-max-width,
+	200px
+) !default;
+
+$navbar-light-color: var(--navbar-light-color, var(--gray-60)) !default;
+
+$navbar-light-hover-color: var(
+	--navbar-light-hover-color,
+	var(--primary-d1)
+) !default;
+
+$navbar-light-active-color: var(
+	--navbar-light-active-color,
+	var(--gray-60)
+) !default;
+
+$navbar-light-brand-color: var(
+	--navbar-light-brand-color,
+	$navbar-light-color
+) !default;
+
+$navbar-light-brand-hover-color: var(
+	--navbar-light-brand-hover-color,
+	$navbar-light-hover-color
+) !default;
+
+$navigation-bar-light: () !default;
+$navigation-bar-light: map-deep-merge(
+	(
+		border-bottom-color: var(--gray-cool-10),
+		padding: 0.4375rem 2rem,
+
+		navbar-brand: (
+			color: var(--gray-90),
+			font-size: 1.46rem,
+			text-decoration: none,
+
+			active: (
+				enabled: false,
+			),
+		),
+
+		navbar-nav: (
+			nav-link: (
+				border-radius: 0,
+				color: var(--gray-cool-60),
+				font-size: 0.93rem,
+				margin: 0,
+				overflow: visible,
+				padding-bottom: 0.75rem,
+				padding-top: 0.75rem,
+
+				hover: (
+					color: var(--primary),
+				),
+
+				focus: (),
+
+				active: (),
+
+				disabled: (),
+			),
+		),
+	),
+	$navigation-bar-light
+);
+
+$sticker-xxl: () !default;
+$sticker-xxl: map-deep-merge(
+	(
+		lexicon-icon: (
+			font-size: inherit,
+		),
+	),
+	$sticker-xxl
+);

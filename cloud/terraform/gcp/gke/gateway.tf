@@ -25,7 +25,7 @@ resource "helm_release" "envoy_gateway" {
 				}
 			}),
 	]
-	version="v1.6.3"
+	version="v${var.envoy_gateway_helm_chart_version}"
 }
 resource "kubernetes_pod_disruption_budget_v1" "envoy_proxy_pdb" {
 	metadata {

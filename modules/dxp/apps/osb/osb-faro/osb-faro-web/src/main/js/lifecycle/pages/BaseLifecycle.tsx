@@ -1,5 +1,6 @@
 import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
+import AccountsDataSet from 'shared/components/AccountsDataSet';
 import BasePage from 'shared/components/base-page';
 import GlobalFilters from '../components/GlobalFilters';
 import OverviewSection from '../components/OverviewSection';
@@ -12,7 +13,13 @@ import {
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
-const LifecycleOverview = ({groupId}: {groupId: string}) => {
+const LifecycleOverview = ({
+	channelId,
+	groupId
+}: {
+	channelId: string;
+	groupId: string;
+}) => {
 	const {filters} = useLifecycle();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
@@ -25,7 +32,13 @@ const LifecycleOverview = ({groupId}: {groupId: string}) => {
 		}
 	});
 
-	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
+	return (
+		<>
+			<OverviewSection loading={overviewLoading} metrics={overviewData} />
+
+			<AccountsDataSet channelId={channelId} groupId={groupId} />
+		</>
+	);
 };
 
 const BaseLifecycle = () => {
@@ -59,7 +72,10 @@ const BaseLifecycle = () => {
 					</div>
 				</BasePage.SubHeader>
 				<BasePage.Body>
-					<LifecycleOverview groupId={groupId} />
+					<LifecycleOverview
+						channelId={channelId}
+						groupId={groupId}
+					/>
 				</BasePage.Body>
 			</BasePage>
 		</LifecycleContextProvider>

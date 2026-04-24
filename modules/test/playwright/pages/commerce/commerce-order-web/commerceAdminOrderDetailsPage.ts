@@ -18,6 +18,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		action: string
 	) => Promise<Locator>;
 	readonly editPaymentMethodFrame: FrameLocator;
+	readonly editPaymentStatusFrame: FrameLocator;
+	readonly editPaymentStatusSelect: Locator;
+	readonly editPaymentStatusSubmitButton: Locator;
 	readonly expandProductButton: Locator;
 	readonly headerDetailsTitle: Locator;
 	readonly orderDetailsEntryDescription: (
@@ -49,6 +52,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly paymentMethodRadioButton: (
 		paymentMethod: string
 	) => Promise<Locator>;
+	readonly paymentStatusText: (status: string) => Locator;
 	readonly recalculateButton: Locator;
 	readonly recalculateOrderSummaryModalTitle: Locator;
 	readonly recalculateOrderSummaryModalCancelButton: Locator;
@@ -95,6 +99,14 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.editPaymentMethodFrame = page.frameLocator(
 			'iframe[title="Edit Payment Method"]'
 		);
+		this.editPaymentStatusFrame = page.frameLocator(
+			'iframe[title="Edit Payment Status"]'
+		);
+		this.editPaymentStatusSelect =
+			this.editPaymentStatusFrame.getByLabel('Payment Status');
+		this.editPaymentStatusSubmitButton = page.getByRole('button', {
+			name: 'Submit',
+		});
 		this.expandProductButton = page
 			.locator('.autofit-col-toggle')
 			.getByRole('button');
@@ -166,6 +178,8 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 				.filter({hasText: paymentMethod})
 				.getByLabel('');
 		};
+		this.paymentStatusText = (status: string) =>
+			page.getByText(status).first();
 		this.recalculateButton = page
 			.getByText('Order Summary')
 			.getByRole('link', {name: 'Recalculate'});

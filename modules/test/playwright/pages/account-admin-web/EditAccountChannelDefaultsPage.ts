@@ -5,13 +5,14 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
+
 export class EditAccountChannelDefaultsPage {
+	readonly addChannelAccountManagerButton: Locator;
 	readonly addDefaultBillingAddressButton: Locator;
-	readonly addDefaultShippingAddressButton: Locator;
 	readonly addDefaultPaymentTermButton: Locator;
 	readonly addDefaultPaymentTermSelector: Locator;
-	readonly modalContainer: FrameLocator;
-	readonly modalSaveButton: Locator;
+	readonly addDefaultShippingAddressButton: Locator;
 	readonly addressTableRowColumn: (
 		columnIndex: number,
 		tableName: string,
@@ -19,6 +20,17 @@ export class EditAccountChannelDefaultsPage {
 	) => Promise<Locator>;
 	readonly billingAddressAllChannelsText: Locator;
 	readonly billingAddressAllOtherChannelsText: Locator;
+	readonly channelAccountManagerModalChannelSelect: Locator;
+	readonly channelAccountManagerModalUserSelect: Locator;
+	readonly channelAccountManagerRow: (
+		channelName: string,
+		userName: string
+	) => Locator;
+	readonly channelAccountManagerRowActionsButton: (
+		channelName: string,
+		userName: string
+	) => Locator;
+	readonly channelAccountManagerTable: Locator;
 	readonly defaultBillingAddressesTable: Locator;
 	readonly defaultShippingAddressesTable: Locator;
 	readonly defaultShippingOptionsTable: Locator;
@@ -31,12 +43,17 @@ export class EditAccountChannelDefaultsPage {
 		action: string,
 		channelName: string
 	) => Promise<Locator>;
+	readonly defaultUsersTable: Locator;
 	readonly deleteMenuItem: Locator;
+	readonly duplicateChannelAccountManagerError: Locator;
+	readonly editMenuItem: Locator;
 	readonly getRowByTextFromTable: (
 		tableName: string,
 		text: string
 	) => Locator;
+	readonly modalContainer: FrameLocator;
 	readonly modalOptionCheckbox: (optionName: string) => Locator;
+	readonly modalSaveButton: Locator;
 	readonly page: Page;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
 	readonly setDefaultAddressFrameChannelDropdownOptions: Locator;
@@ -48,8 +65,26 @@ export class EditAccountChannelDefaultsPage {
 	readonly shippingAddressAllOtherChannelsText: Locator;
 
 	constructor(page: Page) {
-		this.addDefaultBillingAddressButton = page
-			.getByTestId('defaultBillingCommerceAddresses')
+		this.defaultBillingAddressesTable = page.getByTestId(
+			'defaultBillingCommerceAddresses'
+		);
+		this.defaultShippingAddressesTable = page.getByTestId(
+			'defaultShippingCommerceAddresses'
+		);
+		this.defaultUsersTable = page.getByTestId('defaultUsers');
+		this.modalContainer = page.frameLocator('.fds-modal-body > iframe');
+		this.page = page;
+
+		this.addChannelAccountManagerButton = this.defaultUsersTable
+			.getByRole('button', {name: 'Add'})
+			.or(
+				this.defaultUsersTable.getByRole('link', {
+					exact: true,
+					name: 'Add',
+				})
+			)
+			.first();
+		this.addDefaultBillingAddressButton = this.defaultBillingAddressesTable
 			.getByRole('button', {name: 'Add Default Address'})
 			.first();
 		this.addDefaultPaymentTermButton = page
@@ -58,13 +93,12 @@ export class EditAccountChannelDefaultsPage {
 			)
 			.getByRole('button', {name: 'Add Default Term'})
 			.first();
-		this.modalContainer = page.frameLocator('.fds-modal-body > iframe');
 		this.addDefaultPaymentTermSelector =
 			this.modalContainer.getByLabel('Term');
-		this.addDefaultShippingAddressButton = page
-			.getByTestId('defaultShippingCommerceAddresses')
-			.getByRole('button', {name: 'Add Default Address'})
-			.first();
+		this.addDefaultShippingAddressButton =
+			this.defaultShippingAddressesTable
+				.getByRole('button', {name: 'Add Default Address'})
+				.first();
 		this.addressTableRowColumn = async (
 			columnIndex: number,
 			tableName: 'Billing' | 'Shipping',
@@ -77,9 +111,6 @@ export class EditAccountChannelDefaultsPage {
 				.locator('td')
 				.nth(columnIndex);
 		};
-		this.defaultBillingAddressesTable = page.getByTestId(
-			'defaultBillingCommerceAddresses'
-		);
 		this.billingAddressAllChannelsText =
 			this.defaultBillingAddressesTable.getByRole('cell', {
 				exact: true,
@@ -90,9 +121,28 @@ export class EditAccountChannelDefaultsPage {
 				exact: true,
 				name: 'All Other Channels',
 			});
-		this.defaultShippingAddressesTable = page.getByTestId(
-			'defaultShippingCommerceAddresses'
-		);
+		this.channelAccountManagerModalChannelSelect =
+			this.modalContainer.getByLabel('Channel');
+		this.channelAccountManagerModalUserSelect =
+			this.modalContainer.getByLabel('User');
+		this.channelAccountManagerRow = (
+			channelName: string,
+			userName: string
+		) =>
+			this.channelAccountManagerTable.locator('tbody tr').filter({
+				has: page.locator('td', {hasText: channelName}),
+				hasText: userName,
+			});
+		this.channelAccountManagerRowActionsButton = (
+			channelName: string,
+			userName: string
+		) =>
+			this.channelAccountManagerRow(channelName, userName).getByRole(
+				'button',
+				{name: 'Actions'}
+			);
+		this.channelAccountManagerTable =
+			this.defaultUsersTable.locator('table');
 		this.defaultShippingOptionsTable = page.locator(
 			'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_defaultCommerceShippingOption .fds table'
 		);
@@ -124,7 +174,16 @@ export class EditAccountChannelDefaultsPage {
 				`Cannot locate shipping option row with name ${channelName}`
 			);
 		};
-		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
+		this.deleteMenuItem = page
+			.getByRole('menu')
+			.getByRole('menuitem', {exact: true, name: 'Delete'});
+		this.duplicateChannelAccountManagerError =
+			this.modalContainer.getByText(
+				'This user is already defined for the selected channel.'
+			);
+		this.editMenuItem = page
+			.getByRole('menu')
+			.getByRole('menuitem', {exact: true, name: 'Edit'});
 		this.getRowByTextFromTable = (
 			tableName: string,
 			text: string
@@ -137,13 +196,12 @@ export class EditAccountChannelDefaultsPage {
 					has: this.page.getByText(text).first(),
 				});
 		};
-		this.modalSaveButton = this.modalContainer.getByRole('button', {
-			name: 'Save',
-		});
 		this.modalOptionCheckbox = (optionName: string) => {
 			return this.modalContainer.getByLabel(optionName);
 		};
-		this.page = page;
+		this.modalSaveButton = this.modalContainer.getByRole('button', {
+			name: 'Save',
+		});
 		this.setDefaultAddressFrameChannelDropdownMenu =
 			this.modalContainer.getByLabel('Channel');
 		this.setDefaultAddressFrameChannelDropdownOptions =
@@ -172,6 +230,37 @@ export class EditAccountChannelDefaultsPage {
 			});
 	}
 
+	async addChannelAccountManager({
+		channelName,
+		expectDuplicateError = false,
+		userScreenName,
+	}: {
+		channelName: string;
+		expectDuplicateError?: boolean;
+		userScreenName: string;
+	}) {
+		await this.addChannelAccountManagerButton.click();
+		await this.channelAccountManagerModalChannelSelect.selectOption({
+			label: channelName,
+		});
+		await this.channelAccountManagerModalUserSelect.selectOption({
+			label: userScreenName,
+		});
+
+		await this.modalSaveButton.click();
+
+		if (expectDuplicateError) {
+			await expect(
+				this.duplicateChannelAccountManagerError
+			).toBeVisible();
+		}
+		else {
+			await expect(
+				this.page.locator('.fds-modal-body > iframe')
+			).toHaveCount(0);
+		}
+	}
+
 	async addDefaultPaymentTerm(paymentTermId: number) {
 		await this.addDefaultPaymentTermButton.click();
 		await expect(async () => {
@@ -183,6 +272,59 @@ export class EditAccountChannelDefaultsPage {
 			);
 			await this.modalSaveButton.click();
 		}).toPass({timeout: 5000});
+	}
+
+	async deleteChannelAccountManager({
+		channelName,
+		userScreenName,
+	}: {
+		channelName: string;
+		userScreenName: string;
+	}) {
+		this.page.on('dialog', (dialog) => dialog.accept());
+
+		await expect(async () => {
+			await this.channelAccountManagerRowActionsButton(
+				channelName,
+				userScreenName
+			).click();
+
+			await expect(this.deleteMenuItem).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await this.deleteMenuItem.click();
+
+		await waitForAlert(this.page);
+	}
+
+	async editChannelAccountManager({
+		channelName,
+		currentUserScreenName,
+		newUserScreenName,
+	}: {
+		channelName: string;
+		currentUserScreenName: string;
+		newUserScreenName: string;
+	}) {
+		await expect(async () => {
+			await this.channelAccountManagerRowActionsButton(
+				channelName,
+				currentUserScreenName
+			).click();
+
+			await expect(this.editMenuItem).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
+		await this.editMenuItem.click();
+
+		await this.channelAccountManagerModalUserSelect.selectOption({
+			label: newUserScreenName,
+		});
+		await this.modalSaveButton.click();
+
+		await expect(this.page.locator('.fds-modal-body > iframe')).toHaveCount(
+			0
+		);
 	}
 
 	searchTableRowByValue = async function (

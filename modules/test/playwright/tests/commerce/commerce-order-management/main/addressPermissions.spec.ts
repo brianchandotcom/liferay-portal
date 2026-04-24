@@ -27,7 +27,7 @@ const ADDRESS_TYPES = {
 	BILLING: 1,
 	BILLING_AND_SHIPPING: 2,
 	SHIPPING: 3,
-}
+};
 
 const CHECKOUT_BASELINE_PERMISSIONS = (companyId: string) => [
 	{
@@ -197,9 +197,11 @@ test(
 
 		const role = await apiHelpers.headlessAdminUser.postRole({
 			name: 'Test Buyer ' + getRandomString(),
-			rolePermissions: CHECKOUT_BASELINE_PERMISSIONS(await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getCompanyId();
-		})),
+			rolePermissions: CHECKOUT_BASELINE_PERMISSIONS(
+				await page.evaluate(() => {
+					return Liferay.ThemeDisplay.getCompanyId();
+				})
+			),
 		});
 
 		const buyerUser = await setupBuyerUser(apiHelpers, account, role);
@@ -235,9 +237,11 @@ test(
 					resourceName: 'com.liferay.account.model.AccountEntry',
 					scope: 3,
 				},
-				...CHECKOUT_BASELINE_PERMISSIONS(await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getCompanyId();
-		})),
+				...CHECKOUT_BASELINE_PERMISSIONS(
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getCompanyId();
+					})
+				),
 			],
 		});
 
@@ -281,9 +285,11 @@ test(
 					resourceName: 'com.liferay.account.model.AccountEntry',
 					scope: 3,
 				},
-				...CHECKOUT_BASELINE_PERMISSIONS(await page.evaluate(() => {
-			return Liferay.ThemeDisplay.getCompanyId();
-		})),
+				...CHECKOUT_BASELINE_PERMISSIONS(
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getCompanyId();
+					})
+				),
 			],
 		});
 

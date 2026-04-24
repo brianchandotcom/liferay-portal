@@ -6,38 +6,33 @@ jobs:
         if: |
             github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         needs:
-            -   publish-gcp
-            -   publish-gcp-infrastructure
-            -   publish-gcp-infrastructure-provider
+            -   release-helm-charts
         permissions:
             pull-requests: write
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout code
-                uses: actions/checkout@v4
-                with:
-                    fetch-depth: 1
-                    filter: blob:none
-                    show-progress: false
-                    sparse-checkout: |
-                        cloud/helm/gcp/Chart.yaml
-                        cloud/helm/gcp-infrastructure/Chart.yaml
-                        cloud/helm/gcp-infrastructure-provider/Chart.yaml
             -   env:
                     GH_TOKEN: ${{github.token}}
                     PR_NUMBER: ${{github.event.pull_request.number}}
                     REGISTRY: ghcr.io/${{github.repository_owner}}/charts-pr/${{github.event.pull_request.number}}
+                    SHA: ${{github.sha}}
                 name: Post ArgoCD patch commands
                 run: |
                     set -o errexit
                     set -o nounset
                     set -o pipefail
 
-                    SHORT_SHA=$(git rev-parse --short HEAD)
+                    SHORT_SHA="${SHA:0:7}"
 
-                    GCP_VERSION="$(yq .version cloud/helm/gcp/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
-                    GCP_INFRA_VERSION="$(yq .version cloud/helm/gcp-infrastructure/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
-                    GCP_INFRA_PROVIDER_VERSION="$(yq .version cloud/helm/gcp-infrastructure-provider/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    _chart_version() {
+                        gh api repos/${{github.repository}}/contents/cloud/helm/"${1}"/Chart.yaml?ref="${SHA}" --jq '.content' \
+                            | base64 --decode \
+                            | yq .version
+                    }
+
+                    GCP_VERSION="$(_chart_version gcp)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    GCP_INFRA_VERSION="$(_chart_version gcp-infrastructure)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    GCP_INFRA_PROVIDER_VERSION="$(_chart_version gcp-infrastructure-provider)-pr-${PR_NUMBER}-g${SHORT_SHA}"
 
                     cat > /tmp/pr-comment.md << EOF
                     ## GCP Helm Charts Published

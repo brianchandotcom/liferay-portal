@@ -511,21 +511,3 @@ paths:
                                     $ref: "#/components/schemas/ImportProcess"
                                 type: array
             tags: ["ImportProcess"]
-    "/validate":
-        post:
-            operationId: postValidate
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            $ref: "#/components/schemas/ValidationRequest"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ValidationResponse"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ValidationResponse"
-            tags: ["ImportProcess"]

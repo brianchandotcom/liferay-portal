@@ -262,7 +262,7 @@ definition {
 	@description = "This ensures that image in basic article in depot can be edited and republished in staging site when enabling local staging."
 	@priority = 4
 	@refactordone
-	test CanEditWCInlineImageInDepot {
+	test CanEditAndDeleteWCInlineImageInDepot {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		AssertTextEquals(

@@ -3,27 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.kernel.search.generic;
+package com.liferay.portal.kernel.search;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
- * Provides support for parsing raw, human readable query syntax. No
- * transformation is made on user input.
- *
- * <p>
- * The actual query syntax and any further processing are dependent on your
- * search engine's implementation details. Consult your search provider's
- * documentation for more information.
- * </p>
- *
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public class StringQuery extends Query {
+public class NestedQuery extends Query {
 
-	public StringQuery(String query) {
+	public NestedQuery(String path, Query query) {
+		_path = path;
 		_query = query;
 	}
 
@@ -32,13 +23,26 @@ public class StringQuery extends Query {
 		return queryVisitor.visitQuery(this);
 	}
 
-	public String getQuery() {
+	public String getPath() {
+		return _path;
+	}
+
+	public Query getQuery() {
 		return _query;
 	}
 
 	@Override
+	public boolean hasChildren() {
+		if (_query == null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("{className=");
 
@@ -46,6 +50,8 @@ public class StringQuery extends Query {
 
 		sb.append(clazz.getSimpleName());
 
+		sb.append(", path=");
+		sb.append(_path);
 		sb.append(", query=");
 		sb.append(_query);
 		sb.append("}");
@@ -53,6 +59,7 @@ public class StringQuery extends Query {
 		return sb.toString();
 	}
 
-	private final String _query;
+	private final String _path;
+	private final Query _query;
 
 }

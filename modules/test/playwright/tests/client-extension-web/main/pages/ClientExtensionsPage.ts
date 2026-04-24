@@ -93,7 +93,10 @@ export class ClientExtensionsPage extends POM {
 	}
 
 	async search(query: string) {
-		await this.page.getByPlaceholder('Search').fill(query);
+		await this.page
+			.getByTestId('managementToolbar')
+			.getByRole('searchbox', {name: 'Search'})
+			.fill(query);
 		await this.page.getByRole('button', {name: 'Search'}).click();
 	}
 

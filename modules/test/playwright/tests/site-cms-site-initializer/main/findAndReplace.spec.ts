@@ -13,6 +13,10 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {expectToPass} from '../../../utils/expectToPass';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {SITE_CMS_SPACE_NAME} from '../../setup/site-cms-site/constants/space';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -286,5 +290,66 @@ test(
 		await contentsPage.editContent('Orange');
 
 		await expect(page.getByLabel('Text')).toHaveValue('This is Orange');
+	}
+);
+
+test(
+	'Find and Replace bulk action is hidden when user cannot update selected items',
+	{tag: '@LPD-78865'},
+	async ({
+		apiHelpers,
+		assetsPage,
+		dataSetPage,
+		findAndReplacePage,
+		page,
+	}) => {
+
+		// Create content
+
+		const contentTitle = `Green ${getRandomString()}`;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentTitle,
+			},
+			'cms/basic-web-contents',
+			SITE_CMS_SPACE_NAME
+		);
+
+		// Add user without update permission
+
+		const [space] = await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+			`name eq '${SITE_CMS_SPACE_NAME}'`
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.jsonWebServicesUser.agreeToTermsOfUse(user.id);
+		await apiHelpers.jsonWebServicesUser.answerReminderQuery(user.id);
+
+		await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
+			user.id,
+		]);
+
+		await page.context().clearCookies();
+
+		await performLogin(page, user.alternateName);
+
+		// Check that the option is not displayed
+
+		await assetsPage.gotoAll();
+
+		await dataSetPage.selectAll();
+
+		await expect(findAndReplacePage.openButton).not.toBeVisible();
+
+		await performLogout(page);
 	}
 );

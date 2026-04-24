@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.search.generic;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactory;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
@@ -20,22 +19,16 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 
 	@Override
 	public BooleanClause<Query> create(Query query, String occur) {
-		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
-			occur);
-
-		return new BooleanClauseImpl<>(query, booleanClauseOccur);
+		return new BooleanClauseImpl<>(
+			query, BooleanClauseOccur.valueOf(occur));
 	}
 
 	@Override
 	public BooleanClause<Query> create(
 		String field, String value, String occur) {
 
-		Query query = new TermQueryImpl(field, value);
-
-		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
-			occur);
-
-		return new BooleanClauseImpl<>(query, booleanClauseOccur);
+		return new BooleanClauseImpl<>(
+			new TermQueryImpl(field, value), BooleanClauseOccur.valueOf(occur));
 	}
 
 	@Override

@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.BaseBooleanQueryImpl;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanClauseOccurImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.query.FieldQueryFactoryUtil;
@@ -44,10 +43,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query add(Query query, String occur) {
-		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
-			occur);
-
-		add(query, booleanClauseOccur);
+		add(query, BooleanClauseOccur.valueOf(occur));
 
 		return query;
 	}

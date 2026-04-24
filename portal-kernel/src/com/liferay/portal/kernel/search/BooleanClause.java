@@ -5,15 +5,36 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.io.Serializable;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface BooleanClause<T> extends Serializable {
+public class BooleanClause<T> implements Serializable {
 
-	public BooleanClauseOccur getBooleanClauseOccur();
+	public BooleanClause(T clause, BooleanClauseOccur booleanClauseOccur) {
+		_clause = clause;
+		_booleanClauseOccur = booleanClauseOccur;
+	}
 
-	public T getClause();
+	public BooleanClauseOccur getBooleanClauseOccur() {
+		return _booleanClauseOccur;
+	}
+
+	public T getClause() {
+		return _clause;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			"{", _booleanClauseOccur, "(", _clause, ")}");
+	}
+
+	private final BooleanClauseOccur _booleanClauseOccur;
+	private final T _clause;
 
 }

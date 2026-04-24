@@ -36,7 +36,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 			throw new IllegalArgumentException("Query is null");
 		}
 
-		_booleanClauses.add(new BooleanClauseImpl<>(query, booleanClauseOccur));
+		_booleanClauses.add(new BooleanClause<>(query, booleanClauseOccur));
 
 		return query;
 	}

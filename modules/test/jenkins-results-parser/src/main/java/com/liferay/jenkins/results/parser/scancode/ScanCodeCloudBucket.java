@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.scancode;
 
 import com.google.api.gax.paging.Page;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;

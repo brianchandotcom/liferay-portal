@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Hugo Huijser
  * @author Michael C. Han
  */
-public class BooleanQuery extends BaseQueryImpl {
+public class BooleanQuery extends Query {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

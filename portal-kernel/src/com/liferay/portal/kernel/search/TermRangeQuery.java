@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 /**
  * @author Raymond Augé
  */
-public class TermRangeQuery extends BaseQueryImpl {
+public class TermRangeQuery extends Query {
 
 	public TermRangeQuery(
 		String field, String lowerTerm, String upperTerm, boolean includesLower,

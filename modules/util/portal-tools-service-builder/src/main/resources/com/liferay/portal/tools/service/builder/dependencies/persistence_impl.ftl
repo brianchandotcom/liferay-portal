@@ -3248,7 +3248,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	private static final String _SQL_COUNT_${entity.alias?upper_case} = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}";
 
-	<#if entity.hasCollectionEntityFinder()>
+	<#if entity.hasCollectionEntityFinder() || (serviceBuilder.isVersionLTE_7_3_0() && (entity.entityFinders?size != 0))>
 		private static final String _SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias} WHERE ";
 	</#if>
 

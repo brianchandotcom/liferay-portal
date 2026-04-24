@@ -7,9 +7,6 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
-import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -23,6 +20,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.web.internal.constants.ObjectPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,19 +61,15 @@ public class ObjectEntryAssetRenderer
 	extends BaseJSPAssetRenderer<ObjectEntry> implements TrashRenderer {
 
 	public ObjectEntryAssetRenderer(
-			AssetDisplayPageFriendlyURLProvider
-				assetDisplayPageFriendlyURLProvider,
-			DepotEntryLocalService depotEntryLocalService,
-			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
-			ObjectEntryService objectEntryService,
-			ObjectFieldLocalService objectFieldLocalService)
-		throws PortalException {
+		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
+		DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
+		ObjectEntryService objectEntryService,
+		ObjectFieldLocalService objectFieldLocalService) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
-		_depotEntryLocalService = depotEntryLocalService;
 		_dlAppLocalService = dlAppLocalService;
 		_dlURLHelper = dlURLHelper;
 		_objectDefinition = objectDefinition;
@@ -199,18 +193,29 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public PortletURL getURLEdit(HttpServletRequest httpServletRequest)
-		throws Exception {
-
+	public PortletURL getURLEdit(HttpServletRequest httpServletRequest) {
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			_objectEntry.getGroupId());
 
-		if ((group != null) && group.isCompany()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if ((group != null) && group.isCompany()) {
 			group = themeDisplay.getScopeGroup();
+		}
+
+		if (_objectDefinition.isCMS()) {
+			return PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					httpServletRequest, group,
+					ObjectPortletKeys.CMS_OBJECT_ENTRY, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setParameter(
+				"objectEntryId", _objectEntry.getObjectEntryId()
+			).buildPortletURL();
 		}
 
 		return PortletURLBuilder.create(
@@ -228,9 +233,8 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public PortletURL getURLEdit(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		return getURLEdit(
 			PortalUtil.getHttpServletRequest(liferayPortletRequest));
@@ -245,12 +249,7 @@ public class ObjectEntryAssetRenderer
 			return null;
 		}
 
-		DepotEntry depotEntry = _depotEntryLocalService.fetchGroupDepotEntry(
-			_objectEntry.getGroupId());
-
-		if ((depotEntry == null) ||
-			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
-
+		if (!_objectDefinition.isCMS()) {
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
@@ -330,9 +329,7 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		try {
 			return _objectEntryService.hasModelResourcePermission(
 				_objectEntry, ActionKeys.UPDATE);
@@ -347,9 +344,7 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker)
-		throws PortalException {
-
+	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
 			return _objectEntryService.hasModelResourcePermission(
 				_objectEntry, ActionKeys.VIEW);
@@ -418,7 +413,6 @@ public class ObjectEntryAssetRenderer
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final DLAppLocalService _dlAppLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final ObjectDefinition _objectDefinition;

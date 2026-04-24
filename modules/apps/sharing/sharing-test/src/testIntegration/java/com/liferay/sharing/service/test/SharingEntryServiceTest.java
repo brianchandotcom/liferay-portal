@@ -225,7 +225,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testAddSharingEntryToTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -577,7 +577,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testDeleteSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 
@@ -598,7 +598,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testFetchSharingEntry() throws Exception {
 		Assert.assertNull(
 			_sharingEntryService.fetchSharingEntry(
@@ -656,7 +656,7 @@ public class SharingEntryServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testGetSharingEntryByTicket() throws Exception {
 		_registerSharingPermissionChecker(SharingEntryAction.VIEW);
 

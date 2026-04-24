@@ -74,7 +74,7 @@ public class SharingEntryUpgradeProcessTest {
 	}
 
 	@Test
-	@TestInfo("LPD-86507")
+	@TestInfo("LPD-48130")
 	public void testUpgrade() throws Exception {
 		User toUser = UserTestUtil.addUser();
 

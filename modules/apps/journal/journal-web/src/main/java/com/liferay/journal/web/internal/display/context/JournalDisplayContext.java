@@ -85,7 +85,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -2183,8 +2182,7 @@ public class JournalDisplayContext {
 
 		searchContext.setBooleanClauses(
 			new BooleanClause[] {
-				BooleanClauseFactoryUtil.create(
-					booleanQuery, BooleanClauseOccur.MUST)
+				new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 			});
 	}
 

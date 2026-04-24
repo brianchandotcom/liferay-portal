@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -137,8 +136,7 @@ public class ScopeFacet extends MultiValueFacet {
 				scopeGroupIdsTermsFilter, BooleanClauseOccur.MUST);
 		}
 
-		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, facetBooleanFilter, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(facetBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected long[] getGroupIds(SearchContext searchContext) {

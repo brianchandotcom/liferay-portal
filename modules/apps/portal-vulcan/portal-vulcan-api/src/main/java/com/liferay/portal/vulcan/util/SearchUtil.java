@@ -11,7 +11,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -257,8 +256,7 @@ public class SearchUtil {
 
 		booleanQueryUnsafeConsumer.accept(booleanQuery);
 
-		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private static List<Facet> _getFacets(SearchContext searchContext) {

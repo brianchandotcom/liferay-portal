@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -137,7 +136,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
 					_getAssetEntryIdBooleanClause(assetEntry),
-					BooleanClauseFactoryUtil.create(
+					new BooleanClause<>(
 						booleanQueryImpl, BooleanClauseOccur.MUST)
 				});
 
@@ -448,8 +447,7 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 
 		booleanQueryImpl.setPreBooleanFilter(assetEntryIdBooleanFilter);
 
-		return BooleanClauseFactoryUtil.create(
-			booleanQueryImpl, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST);
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(

@@ -8,11 +8,11 @@ package com.liferay.portal.kernel.search.facet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -50,8 +50,8 @@ public class SimpleFacet extends BaseFacet {
 			return null;
 		}
 
-		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, getFieldName(), value, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(
+			new TermFilter(getFieldName(), value), BooleanClauseOccur.MUST);
 	}
 
 }

@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -166,8 +165,7 @@ public class MultiValueFacet extends BaseFacet {
 			return null;
 		}
 
-		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, facetTermsFilter, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(facetTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void doSetValues(JSONArray valuesJSONArray) {

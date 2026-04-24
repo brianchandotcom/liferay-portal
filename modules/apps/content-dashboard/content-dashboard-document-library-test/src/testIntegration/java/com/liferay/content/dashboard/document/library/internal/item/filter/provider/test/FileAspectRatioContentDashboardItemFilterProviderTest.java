@@ -15,7 +15,6 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -150,8 +149,7 @@ public class FileAspectRatioContentDashboardItemFilterProviderTest {
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 		BooleanClause[] booleanClauses = {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 
 		searchContext.setBooleanClauses(booleanClauses);

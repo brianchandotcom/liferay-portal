@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -1445,7 +1444,7 @@ public class ViewChangesDisplayContext {
 
 						searchContext.setBooleanClauses(
 							new BooleanClause[] {
-								BooleanClauseFactoryUtil.create(
+								new BooleanClause<>(
 									booleanQueryImpl, BooleanClauseOccur.MUST)
 							});
 					}

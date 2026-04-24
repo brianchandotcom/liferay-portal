@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch8.internal.filter;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -68,7 +67,7 @@ public class PreFilterQueryTest extends BaseIndexingTestCase {
 				booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 				@SuppressWarnings("rawtypes")
-				BooleanClause booleanClause = BooleanClauseFactoryUtil.create(
+				BooleanClause booleanClause = new BooleanClause<>(
 					booleanQueryImpl, BooleanClauseOccur.MUST);
 
 				indexingTestHelper.define(

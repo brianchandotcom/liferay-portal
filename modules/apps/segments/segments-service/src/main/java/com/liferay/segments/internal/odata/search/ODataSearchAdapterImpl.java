@@ -8,7 +8,6 @@ package com.liferay.segments.internal.odata.search;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -180,8 +179,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 	private BooleanClause<Query> _getBooleanClause(BooleanQuery booleanQuery)
 		throws PortalException {
 
-		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private BooleanQuery _getBooleanQuery(

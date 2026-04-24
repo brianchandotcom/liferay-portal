@@ -13,6 +13,7 @@ import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi, {
 	performUserSwitch,
+	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -647,6 +648,250 @@ test(
 			await expect(
 				page.getByText(`Success:${contentName} was moved to the`)
 			).toBeHidden();
+		});
+	}
+);
+
+test(
+	'Default user can trash a CMS content and empty the Recycle Bin',
+	{tag: '@LPD-83226'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const contentName = `Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {trashEnabled: true},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			'cms/basic-web-contents',
+			spaceName
+		);
+
+		await test.step('Send the content to the Recycle Bin', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName);
+		});
+
+		await test.step('The content appears in the Recycle Bin', async () => {
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('The Empty Recycle Bin option is available', async () => {
+			await page.getByLabel('More Actions').click();
+
+			await expect(recycleBinPage.emptyRecycleBinButton).toBeVisible();
+		});
+
+		await test.step('Empty the Recycle Bin and the content is gone', async () => {
+			await recycleBinPage.emptyRecycleBinButton.click();
+
+			await page.getByRole('button', {name: 'Empty Bin'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Delete action started for all assets.',
+				{type: 'info'}
+			);
+
+			await expect(async () => {
+				await page.reload();
+
+				await expect(
+					page.getByRole('row', {name: contentName})
+				).toBeHidden();
+			}).toPass();
+		});
+	}
+);
+
+test(
+	'Space member without delete permission does not see trashed content nor the Empty Recycle Bin action',
+	{tag: '@LPD-83226'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const contentName = `Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {trashEnabled: true},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			'cms/basic-web-contents',
+			spaceName
+		);
+
+		await test.step('As the default user, trash the content', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName);
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await test.step('Create a user and add as space member', async () => {
+			await apiHelpers.jsonWebServicesUser.agreeToTermsOfUse(user.id);
+
+			await apiHelpers.jsonWebServicesUser.answerReminderQuery(user.id);
+
+			await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
+				user.id,
+			]);
+		});
+
+		await test.step('Log in as the space member', async () => {
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('The space member does not see the trashed content', async () => {
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeHidden();
+		});
+
+		await test.step('The Empty Recycle Bin action is not rendered', async () => {
+			await expect(page.getByLabel('More Actions')).toBeHidden();
+		});
+
+		await test.step('The default user still sees the trashed content', async () => {
+			await performUserSwitch(page, 'test');
+
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Space member with delete permission sees trashed content and can empty the Recycle Bin',
+	{tag: '@LPD-83226'},
+	async ({apiHelpers, contentsPage, page, recycleBinPage}) => {
+		const contentName = `Content ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {trashEnabled: true},
+			type: 'Space',
+		});
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: contentName,
+			},
+			'cms/basic-web-contents',
+			spaceName
+		);
+
+		const objectDefinition = await apiHelpers.get(
+			`${apiHelpers.baseUrl}object-admin/v1.0/object-definitions/by-external-reference-code/L_CMS_BASIC_WEB_CONTENT`
+		);
+
+		const assetLibraryMemberRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Asset Library Member'
+			);
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		await test.step('Grant delete permission to Asset Library Member on the content', async () => {
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.setIndividualResourcePermissions(
+				['DELETE', 'VIEW'],
+				String(companyId),
+				String(space.siteId),
+				objectDefinition.className,
+				String(objectEntry.id),
+				String(assetLibraryMemberRole.id)
+			);
+		});
+
+		await test.step('As the default user, trash the content', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent(contentName);
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await test.step('Create a user and add as space member', async () => {
+			await apiHelpers.jsonWebServicesUser.agreeToTermsOfUse(user.id);
+
+			await apiHelpers.jsonWebServicesUser.answerReminderQuery(user.id);
+
+			await apiHelpers.jsonWebServicesUser.addGroupUsers(space.siteId, [
+				user.id,
+			]);
+		});
+
+		await test.step('Log in as the space member', async () => {
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('The space member sees the trashed content', async () => {
+			await recycleBinPage.goto();
+
+			await expect(
+				page.getByRole('row', {name: contentName})
+			).toBeVisible();
+		});
+
+		await test.step('Empty the Recycle Bin and the content is gone', async () => {
+			await page.getByLabel('More Actions').click();
+
+			await recycleBinPage.emptyRecycleBinButton.click();
+
+			await page.getByRole('button', {name: 'Empty Bin'}).click();
+
+			await waitForAlert(
+				page,
+				'Info:Delete action started for all assets.',
+				{type: 'info'}
+			);
+
+			await expect(async () => {
+				await page.reload();
+
+				await expect(
+					page.getByRole('row', {name: contentName})
+				).toBeHidden();
+			}).toPass();
 		});
 	}
 );

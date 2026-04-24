@@ -169,11 +169,9 @@ public class DataSourceFactoryTest {
 	public void testRewriteJDBCURL() throws Exception {
 		_assertRewrittenJDBCURL(
 			_MYSQL_JDBC_URL, _MYSQL_JDBC_URL + "?" + _MYSQL_DEFAULT_PARAMETERS);
-
 		_assertRewrittenJDBCURL(
 			_POSTGRESQL_JDBC_URL,
 			_POSTGRESQL_JDBC_URL + "?" + _POSTGRESQL_DEFAULT_PARAMETERS);
-
 		_assertRewrittenJDBCURL(
 			_SQLSERVER_JDBC_URL,
 			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS, 12, 4);
@@ -188,15 +186,12 @@ public class DataSourceFactoryTest {
 		_assertRewrittenJDBCURL(
 			_SQLSERVER_JDBC_URL, _SQLSERVER_JDBC_URL, 12, 3);
 
-		String sqlServerJDBCURLWithBulkCopy =
+		String jdbcURL =
 			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS;
 
-		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 12, 4);
-		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 12, 5);
-		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 13, 0);
+		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 12, 4);
+		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 12, 5);
+		_assertRewrittenJDBCURL(_SQLSERVER_JDBC_URL, jdbcURL, 13, 0);
 	}
 
 	@Test
@@ -221,25 +216,23 @@ public class DataSourceFactoryTest {
 
 	@Test
 	public void testRewriteJDBCURLWithCustomParameters() throws Exception {
-		String userParameter = "userParameter=userValue";
+		String parameter = "userParameter=userValue";
 
 		_assertRewrittenJDBCURL(
-			_MYSQL_JDBC_URL + "?" + userParameter,
+			_MYSQL_JDBC_URL + "?" + parameter,
 			StringBundler.concat(
 				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
-				userParameter));
-
+				parameter));
 		_assertRewrittenJDBCURL(
-			_POSTGRESQL_JDBC_URL + "?" + userParameter,
+			_POSTGRESQL_JDBC_URL + "?" + parameter,
 			StringBundler.concat(
 				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
-				userParameter));
-
+				parameter));
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL + ";" + userParameter,
+			_SQLSERVER_JDBC_URL + ";" + parameter,
 			StringBundler.concat(
 				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
-				userParameter),
+				parameter),
 			12, 4);
 	}
 
@@ -247,45 +240,42 @@ public class DataSourceFactoryTest {
 	public void testRewriteJDBCURLWithExistingDefaultParameters()
 		throws Exception {
 
-		String expectedMySQLParameters = StringUtil.removeSubstring(
+		String jdbcURL = _MYSQL_JDBC_URL + "?cachePrepStmts=false";
+		String parameters = StringUtil.removeSubstring(
 			_MYSQL_DEFAULT_PARAMETERS, "cachePrepStmts=true&");
-		String mysqlJDBCURL = _MYSQL_JDBC_URL + "?cachePrepStmts=false";
 
-		_assertRewrittenJDBCURL(
-			mysqlJDBCURL, mysqlJDBCURL + "&" + expectedMySQLParameters);
+		_assertRewrittenJDBCURL(jdbcURL, jdbcURL + "&" + parameters);
 
-		String postgresqlJDBCURL =
-			_POSTGRESQL_JDBC_URL + "?reWriteBatchedInserts=false";
+		jdbcURL = _POSTGRESQL_JDBC_URL + "?reWriteBatchedInserts=false";
 
-		_assertRewrittenJDBCURL(postgresqlJDBCURL, postgresqlJDBCURL);
+		_assertRewrittenJDBCURL(jdbcURL, jdbcURL);
 
-		String sqlserverJDBCURL =
-			_SQLSERVER_JDBC_URL + ";useBulkCopyForBatchInsert=false";
+		jdbcURL = _SQLSERVER_JDBC_URL + ";useBulkCopyForBatchInsert=false";
 
-		_assertRewrittenJDBCURL(sqlserverJDBCURL, sqlserverJDBCURL, 12, 4);
+		_assertRewrittenJDBCURL(jdbcURL, jdbcURL, 12, 4);
 	}
 
 	@Test
 	public void testRewriteJDBCURLWithMalformedParameters() throws Exception {
-		String valuelessParameter = "valuelessParameter";
+		String parameter = "valuelessParameter";
 
 		_assertRewrittenJDBCURL(
-			_MYSQL_JDBC_URL + "?" + valuelessParameter,
+			_MYSQL_JDBC_URL + "?" + parameter,
 			StringBundler.concat(
 				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
-				valuelessParameter));
+				parameter));
 
 		_assertRewrittenJDBCURL(
-			_POSTGRESQL_JDBC_URL + "?" + valuelessParameter,
+			_POSTGRESQL_JDBC_URL + "?" + parameter,
 			StringBundler.concat(
 				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
-				valuelessParameter));
+				parameter));
 
 		_assertRewrittenJDBCURL(
-			_SQLSERVER_JDBC_URL + ";" + valuelessParameter,
+			_SQLSERVER_JDBC_URL + ";" + parameter,
 			StringBundler.concat(
 				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
-				valuelessParameter),
+				parameter),
 			12, 4);
 	}
 

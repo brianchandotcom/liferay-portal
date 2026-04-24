@@ -15,11 +15,13 @@ import {sitesPageTest} from '../../../fixtures/sitesPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
+import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(
 	globalMenuPagesTest,
 	dataApiHelpersTest,
+	layoutSetPrototypePageTest,
 	loginTest(),
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
@@ -252,5 +254,46 @@ test(
 		await expect(
 			pagesAdminPage.getPageMenuItem(childPageName)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Only one product menu toggle is visible on Site Template pages',
+	{tag: '@LPD-86999'},
+	async ({apiHelpers, globalMenuPage, layoutSetPrototypePage, page}) => {
+		const siteTemplateName: string = 'SiteTemplate-' + getRandomString();
+
+		await globalMenuPage.goToControlPanel('Site Templates');
+		await layoutSetPrototypePage.addSiteTemplate(siteTemplateName);
+		await globalMenuPage.goToControlPanel('Site Templates');
+
+		let layoutSetPrototypeId;
+
+		try {
+			const siteTemplateUrl =
+				await layoutSetPrototypePage.getSiteTemplateUrl(
+					siteTemplateName
+				);
+
+			expect(siteTemplateUrl).toBeTruthy();
+
+			layoutSetPrototypeId =
+				siteTemplateUrl!.match(/template-(\d+)/)?.[1];
+
+			expect(layoutSetPrototypeId).toBeTruthy();
+
+			await page.goto(siteTemplateUrl!);
+
+			await expect(
+				page.locator('.lexicon-icon-product-menu-open')
+			).toHaveCount(1);
+		}
+		finally {
+			if (layoutSetPrototypeId) {
+				await apiHelpers.jsonWebServicesLayoutSetPrototype.deleteLayoutSetPrototypes(
+					layoutSetPrototypeId
+				);
+			}
+		}
 	}
 );

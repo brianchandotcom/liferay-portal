@@ -67,13 +67,45 @@ definition {
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
 	}
 
-	@description = "This ensures that the custom type language can be set in a depot."
+	@description = "This ensures that the web content language can be set in a depot."
 	@priority = 4
 	@refactordone
-	test CanViewCustomLanguagesOrderForCustomType {
+	test CanViewCustomLanguagesOrderForCustomTypeAndWebContent {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.viewLanguageItems(
+			depotLanguage = "English (United States)",
+			firstLanguageItem = "true");
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.moveLanguage(
+			depotLanguage = "English (United States)",
+			moveDown = "true");
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.viewLanguageItems(depotLanguage = "English (United States)");
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.moveLanguage(depotLanguage = "English (United States)");
+
+		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
+
+		Depot.viewLanguageItems(
+			depotLanguage = "English (United States)",
+			firstLanguageItem = "true");
 
 		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
 
@@ -154,87 +186,6 @@ definition {
 		Click.clickNoMouseOver(locator1 = "Form#SIDEBAR_PROPERTIES_TAB");
 
 		Click(locator1 = "Button#LOCALIZATION_GENERIC_2");
-
-		Depot.viewLanguageSelectionOrder(
-			localizationName1 = "en-US",
-			localizationName2 = "es-ES",
-			localizationName3 = "fr-FR",
-			localizationName4 = "ja-JP");
-	}
-
-	@description = "This ensures that the web content language can be set in a depot."
-	@priority = 4
-	@refactordone
-	test CanViewCustomLanguagesOrderForCustomTypeAndWebContent {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.viewDefaultLanguage(defaultDepotLanguage = "English (United States)");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.viewLanguageItems(
-			depotLanguage = "English (United States)",
-			firstLanguageItem = "true");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.moveLanguage(
-			depotLanguage = "English (United States)",
-			moveDown = "true");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.viewLanguageItems(depotLanguage = "English (United States)");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.moveLanguage(depotLanguage = "English (United States)");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.viewLanguageItems(
-			depotLanguage = "English (United States)",
-			firstLanguageItem = "true");
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Button.click(button = "Edit");
-
-		Depot.configureCurrentLanguages(
-			currentLanguages = "English (United States),French (France),Japanese (Japan),Spanish (Spain)",
-			defaultDepotLanguage = "English (United States)");
-
-		Depot.changeLanguagesOrder(
-			fromRowNumber = 2,
-			toRowNumber = 3);
-
-		Depot.changeLanguagesOrder(
-			fromRowNumber = 4,
-			toRowNumber = 1);
-
-		Button.click(button = "Save");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Click(
-			key_fieldName = "Name",
-			locator1 = "Button#LOCALIZATION");
-
-		Depot.viewLanguageSelectionOrder(
-			localizationName1 = "en-US",
-			localizationName2 = "es-ES",
-			localizationName3 = "fr-FR",
-			localizationName4 = "ja-JP");
-
-		Click(
-			key_fieldName = "Description",
-			locator1 = "Button#LOCALIZATION");
 
 		Depot.viewLanguageSelectionOrder(
 			localizationName1 = "en-US",

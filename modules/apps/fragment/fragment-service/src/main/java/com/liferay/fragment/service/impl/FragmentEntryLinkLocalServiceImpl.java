@@ -823,7 +823,7 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	private Predicate _getFragmentEntryLinksByFragmentEntryPredicate(
-			FragmentEntry fragmentEntry, long scopeGroupId)
+			FragmentEntry fragmentEntry, Predicate predicate, long scopeGroupId)
 		throws PortalException {
 
 		String fragmentEntryScopeERC =
@@ -841,6 +841,8 @@ public class FragmentEntryLinkLocalServiceImpl
 					fragmentEntryScopeERC)
 			).and(
 				FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+			).and(
+				predicate
 			);
 		}
 
@@ -853,6 +855,8 @@ public class FragmentEntryLinkLocalServiceImpl
 			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull()
 		).and(
 			FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
+		).and(
+			predicate
 		);
 	}
 
@@ -862,10 +866,9 @@ public class FragmentEntryLinkLocalServiceImpl
 		throws PortalException {
 
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, scopeGroupId
-		).and(
-			FragmentEntryLinkTable.INSTANCE.plid.notIn(_getPlidsDSLQuery(null))
-		);
+			fragmentEntry,
+			FragmentEntryLinkTable.INSTANCE.plid.notIn(_getPlidsDSLQuery(null)),
+			scopeGroupId);
 
 		if (maxCreateDatePredicate) {
 			predicate = predicate.and(
@@ -887,13 +890,12 @@ public class FragmentEntryLinkLocalServiceImpl
 		throws PortalException {
 
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, scopeGroupId
-		).and(
+			fragmentEntry,
 			FragmentEntryLinkTable.INSTANCE.plid.in(
 				_getPlidsDSLQuery(
 					LayoutPageTemplateEntryTable.INSTANCE.type.eq(
-						layoutPageTemplateType)))
-		);
+						layoutPageTemplateType))),
+			scopeGroupId);
 
 		if (maxCreateDatePredicate) {
 			predicate = predicate.and(

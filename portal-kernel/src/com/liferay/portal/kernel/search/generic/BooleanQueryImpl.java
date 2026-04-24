@@ -172,7 +172,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query addRangeTerm(String field, int startValue, int endValue) {
-		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
+		TermRangeQuery termRangeQuery = new TermRangeQuery(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
 			true);
 
@@ -188,7 +188,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query addRangeTerm(String field, long startValue, long endValue) {
-		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
+		TermRangeQuery termRangeQuery = new TermRangeQuery(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
 			true);
 
@@ -203,7 +203,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query addRangeTerm(String field, short startValue, short endValue) {
-		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
+		TermRangeQuery termRangeQuery = new TermRangeQuery(
 			field, String.valueOf(startValue), String.valueOf(endValue), true,
 			true);
 
@@ -220,7 +220,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	public Query addRangeTerm(
 		String field, String startValue, String endValue) {
 
-		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
+		TermRangeQuery termRangeQuery = new TermRangeQuery(
 			field, startValue, endValue, true, true);
 
 		return add(termRangeQuery, BooleanClauseOccur.SHOULD);

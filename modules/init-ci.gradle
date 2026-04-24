@@ -1,0 +1,114 @@
+import groovy.xml.XmlUtil
+
+import java.util.concurrent.atomic.DoubleAdder
+
+File testResultsDir = null
+
+gradle.buildFinished {
+	gradle.rootProject.allprojects.each {
+		Project project ->
+
+		if (!project.ext.has("targetTaskName") || project.ext.has("reportWritten")) {
+			return
+		}
+
+		project.ext.reportWritten = true
+
+		_writeReport(
+			0.0d, "${project.path}:${project.ext.targetTaskName} was not executed. Please check the logs for details.", "", project.path, testResultsDir)
+	}
+}
+
+gradle.taskGraph.addTaskExecutionListener(
+	new TaskExecutionListener() {
+
+		void afterExecute(Task task, TaskState taskState) {
+			Project project = task.project
+
+			if (!project.ext.has("targetTaskName")) {
+				return
+			}
+
+			if (task.ext.has("startTime")) {
+				project.ext.compileDurationAdder.add((System.currentTimeMillis() - task.ext.startTime) / 1000.0d)
+			}
+
+			Throwable failure = taskState.failure
+
+			if ((task.name != project.ext.targetTaskName) && (failure == null)) {
+				return
+			}
+
+			double duration = project.ext.compileDurationAdder.sum()
+
+			project.ext.reportWritten = true
+
+			if (failure == null) {
+				_writeReport(duration, null, null, project.path, testResultsDir)
+			}
+			else {
+				StringWriter stringWriter = new StringWriter()
+
+				failure.printStackTrace(new PrintWriter(stringWriter))
+
+				_writeReport(
+					duration, "${task.path} failed. Please check the logs for details.", stringWriter.toString(), project.path, testResultsDir)
+			}
+		}
+
+		void beforeExecute(Task task) {
+			if (task.project.ext.has("targetTaskName")) {
+				task.ext.startTime = System.currentTimeMillis()
+			}
+		}
+
+	})
+
+gradle.taskGraph.whenReady {
+	TaskExecutionGraph taskGraph ->
+
+	taskGraph.allTasks.each {
+		Task task ->
+
+		if (!(task.name in ["assemble", "compileTestIntegrationJava"])) {
+			return
+		}
+
+		if (testResultsDir == null) {
+			testResultsDir = new File(gradle.rootProject.rootDir, "test-results")
+
+			testResultsDir.mkdirs()
+		}
+
+		Project project = task.project
+
+		project.ext.compileDurationAdder = new DoubleAdder()
+		project.ext.targetTaskName = task.name
+	}
+}
+
+private void _writeReport(
+	double duration, String failureMessage, String failureStacktrace, String projectPath, File testResultsDir) {
+
+	String className = "modules" + projectPath.replace(":", ".")
+	Date date = new Date()
+	int failureCount = (failureMessage == null) ? 0 : 1
+	String failureElementString = ""
+
+	if (failureMessage != null) {
+		failureElementString = "<failure message=\"${XmlUtil.escapeXml(failureMessage)}\">${XmlUtil.escapeXml(failureStacktrace ?: "")}</failure>"
+	}
+
+	File file = new File(testResultsDir, "TEST-${className}.xml")
+
+	file.text = """<?xml version="1.0" encoding="UTF-8"?>
+
+		<testsuite errors="${failureCount}" failures="${failureCount}" hostname="localhost" name="${className}" skipped="0" tests="1" time="${duration}" timestamp="${date.format("yyyy-MM-dd_kk:mm:ss")}">
+			<properties />
+			<testcase classname="${className}" name="assemble" time="${duration}">
+				${failureElementString}
+			</testcase>
+			<system-out></system-out>
+			<system-err></system-err>
+		</testsuite>"""
+}

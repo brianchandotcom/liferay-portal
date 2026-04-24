@@ -1736,6 +1736,7 @@ test(
 	async ({apiHelpers, assetsPage, page}) => {
 		const basicDocumentTitle = `Basic Document ${getRandomString()}`;
 		const basicWebContentTitle = `Basic Web Content ${getRandomString()}`;
+		const blogTitle = `Blog ${getRandomString()}`;
 		const spaceName = 'Default';
 
 		await test.step('Create CMS assets', async () => {
@@ -1758,6 +1759,15 @@ test(
 					title: basicWebContentTitle,
 				},
 				'cms/basic-web-contents',
+				spaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: blogTitle,
+				},
+				'cms/blogs',
 				spaceName
 			);
 		});
@@ -1816,13 +1826,20 @@ test(
 			});
 
 			await test.step('Expire two assets in bulk', async () => {
-				const row = page.getByRole('row', {name: basicWebContentTitle});
+				await assetsPage.gotoAll();
 
-				await expect(
-					row.getByRole('cell', {name: 'Approved'})
-				).toBeVisible();
+				const rows = [
+					page.getByRole('row', {name: basicWebContentTitle}), 
+					page.getByRole('row', {name: blogTitle})
+				];
 
-				await assetsPage.selectItems([basicWebContentTitle]);
+				for (const row of rows) {
+					await expect(
+						row.getByRole('cell', {name: 'Approved'})
+					).toBeVisible();
+				}
+
+				await assetsPage.selectItems([basicWebContentTitle, blogTitle]);
 
 				await assetsPage.execBulkItemAction('Expire');
 
@@ -1839,9 +1856,11 @@ test(
 					'Success:2 assets were successfully expired.'
 				);
 
-				await expect(
-					row.getByRole('cell', {name: 'Expired'})
-				).toBeVisible();
+				for (const row of rows) {
+					await expect(
+						row.getByRole('cell', {name: 'Expired'})
+					).toBeVisible();
+				}
 			});
 	}
 );

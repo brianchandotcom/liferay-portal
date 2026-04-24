@@ -375,6 +375,32 @@ test(
 	}
 );
 
+test(
+	'Publishing a new or edited basic web content redirects back to the CMS contents listing',
+	{tag: '@LPD-86074'},
+	async ({contentsPage, page}) => {
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		const title = getRandomString();
+
+		await page.getByLabel('Title').fill(title);
+
+		await contentsPage.saveContent();
+
+		await expect(page).toHaveURL(/\/web\/cms\/contents$/);
+
+		await contentsPage.editContent(title);
+
+		await contentsPage.saveContent();
+
+		await expect(page).toHaveURL(/\/web\/cms\/contents$/);
+
+		await contentsPage.deleteContent(title);
+	}
+);
+
 test.describe('Comments Panel', () => {
 	const addComment = async ({
 		content = 'New Comment',

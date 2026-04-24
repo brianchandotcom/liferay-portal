@@ -367,11 +367,9 @@ public class ScanCodeCloudBucket {
 
 	private Storage _getStorage() {
 		try {
-			String scancodeCredentialsPath =
+			Storage storage = _getBucketStorage(
 				JenkinsResultsParserUtil.getBuildProperty(
-					"google.application.crendential.file[scancode]");
-
-			Storage storage = _getBucketStorage(scancodeCredentialsPath);
+					"google.application.crendential.file[scancode]"));
 
 			if (storage != null) {
 				return storage;
@@ -380,19 +378,16 @@ public class ScanCodeCloudBucket {
 		catch (Exception exception) {
 		}
 
-		Storage storage = null;
-
 		try {
-			String credentials = JenkinsResultsParserUtil.getBuildProperty(
-				"scancode.credentials.file");
-
-			storage = _getBucketStorage(credentials);
+			return _getBucketStorage(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"scancode.credentials.file"));
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
 
-		return storage;
+		return null;
 	}
 
 	private static final Pattern _fileNamePattern = Pattern.compile(

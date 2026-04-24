@@ -303,54 +303,6 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				<AssignedPropertiesTable
 					addAlert={addAlert}
 					close={close}
-					customColumns={
-						[
-							{
-								accessor: 'accounts',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('accounts')
-							},
-							{
-								accessor: 'intentData',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('intent-data')
-							},
-							{
-								accessor: 'buyingCommittee',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('buying-committee')
-							},
-							{
-								accessor: 'customAttributes',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('custom-attributes')
-							}
-						] as unknown as any[]
-					}
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}
 					loading={loading}

@@ -16,6 +16,25 @@ When creating or editing any Markdown file under `.claude` (CLAUDE.md, SKILL.md,
 - Keep short flags only for tools without portable long-form support (`nc`, `ps`, `rm`, `sed`).
 - When arguments span multiple lines, place the command alone on the first line and each argument on its own tab-indented line. Do not mix arguments on the command line with arguments on continuation lines.
 
+Before:
+
+```bash
+curl -s -u "$JIRA_API_USER:$JIRA_API_TOKEN" -X POST \
+  -d '{"key":"value"}' \
+  "https://example.com/api"
+```
+
+After:
+
+```bash
+curl \
+	--data '{"key": "value"}' \
+	--request POST \
+	--silent \
+	--url "https://example.com/api" \
+	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
+```
+
 ## Code Blocks
 
 - Always leave a blank line before a fenced code block (` ``` `). A code block must never immediately follow a line of text.
@@ -44,6 +63,20 @@ When creating or editing any Markdown file under `.claude` (CLAUDE.md, SKILL.md,
 ## Heredocs
 
 - Lift multiline heredoc values into named variables so the containing command keeps its sorted flag order.
+
+```bash
+PR_BODY=$(cat <<'EOF'
+<body>
+EOF
+)
+
+gh pr create \
+	--base master \
+	--body "${PR_BODY}" \
+	--head <username>:<branch> \
+	--repo <target-org/repo> \
+	--title "<title>"
+```
 
 ## Inline JSON
 

@@ -5,6 +5,7 @@
 
 import {v4 as uuidv4} from 'uuid';
 
+import {Demandbase} from './demandbase';
 import middlewares from './middlewares/defaults';
 import defaultPlugins from './plugins/defaults';
 import QueueFlushService from './queueFlushService';
@@ -16,8 +17,6 @@ import {Segment} from './segment';
 import {Analytics as AnalyticsType} from './types';
 import {
 	ANALYTICS_CLIENT_VERSION,
-	DEMANDBASE_READY_POLL_INTERVAL,
-	DEMANDBASE_READY_TIMEOUT,
 	FLUSH_INTERVAL,
 	QUEUE_PRIORITY_ACCOUNT,
 	QUEUE_PRIORITY_DEFAULT,
@@ -64,6 +63,7 @@ class Analytics {
 		projectId: '',
 		userId: '',
 	};
+	demandbase!: Demandbase;
 	middlewares: AnalyticsType.Middleware[] = [];
 	segment!: Segment;
 	version: string = '';
@@ -108,6 +108,7 @@ class Analytics {
 		this._initializeIdentityMessageQueue();
 		this._initializeAccountMessageQueue();
 
+		this.demandbase = new Demandbase(this);
 		this.segment = new Segment(this);
 
 		// Upgrade storage
@@ -329,7 +330,7 @@ class Analytics {
 
 		this._sendIdentity(hashedIdentity, userId);
 
-		this._sendDemandbaseAccount(userId);
+		this.demandbase.sendAccountMessage(userId);
 
 		return Promise.resolve(userId);
 	}
@@ -595,124 +596,6 @@ class Analytics {
 
 		this._queueFlushService.addQueue(accountMessageQueue, {
 			priority: QUEUE_PRIORITY_ACCOUNT,
-		});
-	}
-
-	/**
-	 * Resolves with window.Demandbase.IpApi.CompanyProfile once it becomes
-	 * available, or null when the timeout hits. Uses Demandbase's native
-	 * registerCallback when the API is exposed, and falls back to polling.
-	 */
-	_waitForDemandbase(
-		timeoutMs: number = DEMANDBASE_READY_TIMEOUT
-	): Promise<{[key: string]: unknown} | null> {
-		try {
-			const current = window.Demandbase?.IpApi?.CompanyProfile;
-
-			if (current) {
-				return Promise.resolve(current);
-			}
-		}
-		catch {
-			return Promise.resolve(null);
-		}
-
-		return new Promise((resolve) => {
-			const timers: {
-				pollId?: ReturnType<typeof setInterval>;
-				timeoutId?: ReturnType<typeof setTimeout>;
-			} = {};
-			let settled = false;
-
-			const done = (value: {[key: string]: unknown} | null) => {
-				if (settled) {
-					return;
-				}
-
-				settled = true;
-
-				if (timers.pollId) {
-					clearInterval(timers.pollId);
-				}
-
-				if (timers.timeoutId) {
-					clearTimeout(timers.timeoutId);
-				}
-
-				resolve(value);
-			};
-
-			try {
-				window.Demandbase?.Utilities?.Callbacks?.registerCallback?.(
-					() => {
-						try {
-							done(
-								window.Demandbase?.IpApi?.CompanyProfile ?? null
-							);
-						}
-						catch {
-							done(null);
-						}
-					}
-				);
-			}
-			catch {
-
-				// Callback registration failed; rely on polling.
-
-			}
-
-			timers.pollId = setInterval(() => {
-				try {
-					const profile = window.Demandbase?.IpApi?.CompanyProfile;
-
-					if (profile) {
-						done(profile);
-					}
-				}
-				catch {
-					done(null);
-				}
-			}, DEMANDBASE_READY_POLL_INTERVAL);
-
-			timers.timeoutId = setTimeout(() => done(null), timeoutMs);
-		});
-	}
-
-	/**
-	 * Sends Demandbase account data once per userId + profile. Waits for the
-	 * Demandbase client-side SDK to be available before enqueuing. If the
-	 * SDK never loads, nothing is sent.
-	 */
-	_sendDemandbaseAccount(userId: string) {
-		this._waitForDemandbase().then((profile) => {
-			if (this._disposed || !profile) {
-				return;
-			}
-
-			const {emailAddressHashed} = this.config.identity;
-
-			const messageHash = hash({
-				companyProfile: profile,
-				emailAddressHashed,
-				userId,
-			});
-			const storedHash = getItem<string>(
-				AnalyticsType.Keys.DemandbaseAccount
-			);
-
-			if (messageHash === storedHash) {
-				return;
-			}
-
-			setItem(AnalyticsType.Keys.DemandbaseAccount, messageHash);
-
-			this[AnalyticsType.Queues.AccountMessage].addItem({
-				companyProfile: profile,
-				emailAddressHashed,
-				id: messageHash,
-				userId,
-			});
 		});
 	}
 }

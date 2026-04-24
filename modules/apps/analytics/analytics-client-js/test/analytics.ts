@@ -363,21 +363,23 @@ describe('Analytics', () => {
 			await wait(10);
 		});
 
-		it('_waitForDemandbase resolves immediately when CompanyProfile is available', async () => {
+		it('demandbase.waitForReadiness resolves immediately when CompanyProfile is available', async () => {
 			(window as any).Demandbase = {
 				IpApi: {CompanyProfile: COMPANY_PROFILE},
 			};
 
-			await expect(Analytics._waitForDemandbase(100)).resolves.toEqual(
-				COMPANY_PROFILE
-			);
+			await expect(
+				Analytics.demandbase.waitForReadiness(100)
+			).resolves.toEqual(COMPANY_PROFILE);
 		});
 
-		it('_waitForDemandbase resolves null on timeout when Demandbase never loads', async () => {
-			await expect(Analytics._waitForDemandbase(50)).resolves.toBeNull();
+		it('demandbase.waitForReadiness resolves null on timeout when Demandbase never loads', async () => {
+			await expect(
+				Analytics.demandbase.waitForReadiness(50)
+			).resolves.toBeNull();
 		});
 
-		it('_waitForDemandbase resolves via registerCallback when invoked', async () => {
+		it('demandbase.waitForReadiness resolves via registerCallback when invoked', async () => {
 			let registered: ((data: unknown) => void) | undefined;
 
 			(window as any).Demandbase = {
@@ -391,7 +393,7 @@ describe('Analytics', () => {
 				},
 			};
 
-			const promise = Analytics._waitForDemandbase(2000);
+			const promise = Analytics.demandbase.waitForReadiness(2000);
 
 			setTimeout(() => {
 				(window as any).Demandbase.IpApi.CompanyProfile =

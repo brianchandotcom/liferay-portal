@@ -1,0 +1,58 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "uswds-header"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "uswds-landing-page"
+							},
+							"fragmentFields": [
+								{
+									"id": "uswds-landing-page-image",
+									"value": {
+										"fragmentImage": {
+											"url": {
+												"value_i18n": {
+												}
+											}
+										},
+										"fragmentLink": {
+											"value_i18n": {
+											}
+										}
+									}
+								}
+							]
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "uswds-footer-medium"
+							}
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	}
+}

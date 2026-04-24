@@ -1,0 +1,18 @@
+[
+	{
+		"externalReferenceCode": "SITENAVIGATIONMENU1",
+		"menuItems": [
+			{
+				"friendlyURL": "/landing-page",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/sign-in",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "Main Navigation"
+	}
+]

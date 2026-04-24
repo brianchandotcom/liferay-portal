@@ -1,0 +1,25 @@
+#uswdsCreateAccountPortlet {
+	.portlet {
+		margin: 0;
+	}
+
+	.sheet {
+		border-width: 0;
+		padding: 0;
+
+		&::after {
+			content: normal;
+		}
+	}
+
+	.sheet-section {
+		&,
+		.form-group:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.navigation {
+		display: none;
+	}
+}

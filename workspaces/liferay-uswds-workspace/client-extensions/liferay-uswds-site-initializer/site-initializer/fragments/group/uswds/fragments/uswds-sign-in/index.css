@@ -1,0 +1,13 @@
+#uswdsLoginPortlet {
+	.portlet {
+		margin-bottom: 0;
+	}
+
+	.panel-body {
+		padding: 0;
+	}
+
+	.navigation .list-unstyled li:first-child {
+		display: none;
+	}
+}

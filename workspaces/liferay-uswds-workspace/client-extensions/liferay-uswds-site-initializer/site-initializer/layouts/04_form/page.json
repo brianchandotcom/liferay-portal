@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/form",
+	"hidden": false,
+	"name": "Form",
+	"name_i18n": {
+		"en_US": "Form"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

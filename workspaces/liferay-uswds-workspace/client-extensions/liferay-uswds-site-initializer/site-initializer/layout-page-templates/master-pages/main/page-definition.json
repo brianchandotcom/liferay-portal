@@ -1,0 +1,36 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "uswds-header"
+							}
+						},
+						"type": "Fragment"
+					},
+					{
+						"type": "DropZone"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "uswds-footer-medium"
+							}
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	}
+}

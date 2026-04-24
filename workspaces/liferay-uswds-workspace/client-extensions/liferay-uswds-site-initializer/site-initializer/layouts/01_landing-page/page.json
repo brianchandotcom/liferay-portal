@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/landing-page",
+	"hidden": false,
+	"name": "Landing Page",
+	"name_i18n": {
+		"en_US": "Landing Page"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

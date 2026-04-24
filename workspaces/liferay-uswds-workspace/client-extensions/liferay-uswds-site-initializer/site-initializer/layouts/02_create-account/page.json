@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/create-account",
+	"hidden": true,
+	"name": "Create Account",
+	"name_i18n": {
+		"en_US": "Create Account"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

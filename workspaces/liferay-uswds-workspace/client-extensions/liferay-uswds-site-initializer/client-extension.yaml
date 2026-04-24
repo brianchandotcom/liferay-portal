@@ -1,0 +1,13 @@
+liferay-uswds-site-initializer:
+    name: Liferay USWDS Site Initializer
+    oAuthApplicationHeadlessServer: liferay-uswds-site-initializer-oahs
+    siteExternalReferenceCode: liferayUswds
+    siteName: Liferay USWDS
+    type: siteInitializer
+liferay-uswds-site-initializer-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay USWDS OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

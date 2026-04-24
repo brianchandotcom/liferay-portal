@@ -254,6 +254,12 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
+	private int _getExecutionWindowIndex() {
+		ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+
+		return zonedDateTime.getHour() / _WINDOW_SIZE_HOURS;
+	}
+
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -650,15 +656,11 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processMostPurchasedProducts() throws Exception {
-		int currentHour = ZonedDateTime.now(
-			ZoneOffset.UTC
-		).getHour();
-
-		if (currentHour > _WINDOW_SIZE_HOURS) {
+		if (_getExecutionWindowIndex() != 0) {
 			return;
 		}
 
-		Map<Long, JSONObject> productsCountMap = new HashMap<>();
+		Map<String, JSONObject> productPurchases = new HashMap<>();
 
 		String filterString = StringBundler.concat(
 			"orderStatus/any(x:(x eq ", _ORDER_STATUS_COMPLETED,
@@ -674,22 +676,14 @@ public class MarketplaceCommandLineRunner
 				}
 
 				OrderItem orderItem = orderItems[0];
-				String productName = null;
 
-				if (orderItem.getName() != null) {
-					productName = orderItem.getName(
-					).get(
-						"en_US"
-					);
-				}
+				String productName = orderItem.getName(
+				).get(
+					"en_US"
+				);
 
-				Long productId = orderItem.getProductId();
-
-				if ((productName == null) || (productId == null)) {
-					return;
-				}
-
-				JSONObject productJSONObject = productsCountMap.get(productId);
+				JSONObject productJSONObject = productPurchases.get(
+					productName);
 
 				if (productJSONObject == null) {
 					productJSONObject = new JSONObject(
@@ -697,45 +691,28 @@ public class MarketplaceCommandLineRunner
 						"orderTypeExternalReferenceCode",
 						order.getOrderTypeExternalReferenceCode()
 					).put(
-						"productId", productId
+						"productId", orderItem.getProductId()
 					).put(
-						"productName", productName
-					).put(
-						"total", 1L
+						"total", 1
 					);
 
-					productsCountMap.put(productId, productJSONObject);
+					productPurchases.put(productName, productJSONObject);
 				}
 				else {
 					productJSONObject.put(
-						"total", productJSONObject.getLong("total") + 1L);
+						"total", productJSONObject.getInt("total") + 1);
 				}
 			});
-
-		JSONArray productsPurchasedJSONArray = new JSONArray();
-
-		for (JSONObject productJSONObject : productsCountMap.values()) {
-			productsPurchasedJSONArray.put(productJSONObject);
-		}
-
-		JSONObject valueJSONObject = new JSONObject(
-		).put(
-			"createDate",
-			ZonedDateTime.now(
-				ZoneOffset.UTC
-			).format(
-				DateTimeFormatter.ISO_OFFSET_DATE_TIME
-			)
-		).put(
-			"productsPurchased", productsPurchasedJSONArray
-		);
 
 		_patchReport(
 			new JSONObject(
 			).put(
-				"value", valueJSONObject.toString()
+				"value",
+				new JSONObject(
+					productPurchases
+				).toString()
 			).toString(),
-			"PURCHASED-PRODUCTS-COUNT");
+			"PRODUCT-PURCHASES-COUNT");
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Processed most purchased products");
@@ -901,8 +878,6 @@ public class MarketplaceCommandLineRunner
 					).put(
 						"accountExternalReferenceCode",
 						accountExternalReferenceCode
-					).put(
-						"createDate", order.getCreateDate()
 					).put(
 						"creatorEmailAddress", order.getCreatorEmailAddress()
 					).put(

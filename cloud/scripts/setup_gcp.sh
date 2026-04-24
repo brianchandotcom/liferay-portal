@@ -8,7 +8,6 @@ set -o pipefail
 trap "_recover_kubectl_context \${?}" ERR
 
 _GCP_DEPLOYMENT_NAME=""
-
 _GCP_PROJECT_ID=""
 
 _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -26,7 +25,6 @@ function main {
 	_generate_tfvars "${1}" "${_SCRIPTS_DIR}/global_terraform.tfvars"
 
 	_GCP_DEPLOYMENT_NAME="$(jq --raw-output '.variables.deployment_name' "${1}")"
-
 	_GCP_PROJECT_ID="$(jq --raw-output '.variables.project_id' "${1}")"
 
 	echo "Attempting to login to your Google Cloud account via application default credentials."
@@ -150,7 +148,7 @@ function _recover_kubectl_context {
 		exit "${exit_code}"
 	fi
 
-	echo "Terraform apply failed. Attempting to recover the kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
+	echo "Unable to apply Terraform. Attempting to recover the kubectl context via fleet membership ${_GCP_DEPLOYMENT_NAME}-membership." >&2
 
 	if ! gcloud \
 		container \

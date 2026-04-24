@@ -12,12 +12,25 @@ jobs:
                 uses: hashicorp/setup-terraform@v3
                 with:
                     terraform_version: 1.5.7
+            -   name: Setup tflint
+                uses: terraform-linters/setup-tflint@v4
             -   name: Initialize Terraform
                 run: terraform init -backend=false -input=false
                 working-directory: ./cloud/terraform/${{matrix.stack}}
             -   name: Validate Terraform
                 run: terraform validate
                 working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Run tflint
+                run: |
+                    tflint --init
+                    tflint
+                working-directory: ./cloud/terraform/${{matrix.stack}}
+            -   name: Run Checkov
+                uses: bridgecrewio/checkov-action@v12
+                with:
+                    directory: ./cloud/terraform/${{matrix.stack}}
+                    framework: terraform
+                    soft_fail: true
         strategy:
             fail-fast: false
             matrix:

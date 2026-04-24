@@ -10,6 +10,7 @@ import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import com.liferay.osb.faro.web.internal.context.GroupInfoContextProvider;
 import com.liferay.osb.faro.web.internal.controller.api.DemandbaseAccountController;
 import com.liferay.osb.faro.web.internal.controller.api.GraphQLController;
+import com.liferay.osb.faro.web.internal.controller.api.HubspotWebhookController;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -44,6 +45,7 @@ public class ApiApplication extends Application {
 		singletons.add(_demandbaseAccountController);
 		singletons.add(_graphQLController);
 		singletons.add(_groupInfoContextProvider);
+		singletons.add(_hubspotWebhookController);
 		singletons.add(new JacksonJsonProvider(JSONUtil.getObjectMapper()));
 		singletons.add(_recommendationController);
 		singletons.add(_reportController);
@@ -55,6 +57,9 @@ public class ApiApplication extends Application {
 
 		public static final String ACCOUNTS_WRITE =
 			"Liferay.Analytics.Cloud.REST.accounts.write";
+
+		public static final String HUBSPOT_WRITE =
+			"Liferay.Analytics.Cloud.REST.hubspot.write";
 
 		public static final String RECOMMENDATIONS_EVERYTHING =
 			"Liferay.Analytics.Cloud.REST.recommendations.everything";
@@ -72,6 +77,9 @@ public class ApiApplication extends Application {
 
 	@Reference
 	private GroupInfoContextProvider _groupInfoContextProvider;
+
+	@Reference
+	private HubspotWebhookController _hubspotWebhookController;
 
 	@Reference
 	private RecommendationController _recommendationController;

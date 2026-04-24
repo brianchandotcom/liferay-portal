@@ -18,6 +18,7 @@ import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.osb.faro.web.internal.application.ApiApplication;
 import com.liferay.osb.faro.web.internal.controller.api.DemandbaseAccountController;
+import com.liferay.osb.faro.web.internal.controller.api.HubspotWebhookController;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -193,6 +194,10 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 		{
 			"OAUTH2_" + ApiApplication.OAuth2ScopeAliases.ACCOUNTS_WRITE,
 			DemandbaseAccountController.class.getName() + "#postAccount"
+		},
+		{
+			"OAUTH2_" + ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE,
+			HubspotWebhookController.class.getName() + "#postWebhook"
 		},
 		{
 			"OAUTH2_" +

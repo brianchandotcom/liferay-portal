@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,6 +53,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -289,17 +291,11 @@ public class OAuth2Controller extends BaseFaroController {
 
 		ClientProfile clientProfile = ClientProfile.HEADLESS_SERVER;
 
-		List<String> scopes;
-
-		if (Validator.isNotNull(type)) {
-			scopes = Arrays.asList(
-				ApiApplication.OAuth2ScopeAliases.ACCOUNTS_WRITE);
-		}
-		else {
-			scopes = Arrays.asList(
+		List<String> scopes = _oAuth2ScopesMap.getOrDefault(
+			type,
+			Arrays.asList(
 				ApiApplication.OAuth2ScopeAliases.RECOMMENDATIONS_EVERYTHING,
-				ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING);
-		}
+				ApiApplication.OAuth2ScopeAliases.REPORTS_EVERYTHING));
 
 		return _oAuth2ApplicationLocalService.addOAuth2Application(
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
@@ -410,5 +406,14 @@ public class OAuth2Controller extends BaseFaroController {
 
 	@Reference
 	private OAuth2AuthorizationService _oAuth2AuthorizationService;
+
+	private final Map<String, List<String>> _oAuth2ScopesMap =
+		HashMapBuilder.<String, List<String>>put(
+			"demandbase",
+			Arrays.asList(ApiApplication.OAuth2ScopeAliases.ACCOUNTS_WRITE)
+		).put(
+			"hubspot",
+			Arrays.asList(ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE)
+		).build();
 
 }

@@ -533,16 +533,6 @@ public class BatchEngineExportTaskExecutorImpl
 		return filteredParameters;
 	}
 
-	private Long _getFirstItemId(Collection<?> items) {
-		if (items.isEmpty()) {
-			return null;
-		}
-
-		return _getItemId(
-			items.iterator(
-			).next());
-	}
-
 	private Long _getItemId(Object item) {
 		try {
 			Method method = item.getClass(

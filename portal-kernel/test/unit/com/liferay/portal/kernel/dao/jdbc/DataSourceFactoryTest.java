@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 
@@ -166,48 +167,36 @@ public class DataSourceFactoryTest {
 
 	@Test
 	public void testRewriteJDBCURL() throws Exception {
-		Assert.assertEquals(
-			StringBundler.concat(
-				"jdbc:mysql://localhost/lportal1?cachePrepStmts=",
-				"true&characterEncoding=UTF-8&dontTrackOpenResources=true",
-				"&holdResultsOpenOverStatementClose=true&prepStmtCacheSize=",
-				"1000&prepStmtCacheSqlLimit=2048&rewriteBatchedStatements=",
-				"true&serverTimezone=GMT&useFastDateParsing=false",
-				"&useLocalSessionState=true&useLocalTransactionState=true",
-				"&useUnicode=true"),
-			_rewriteJDBCURL("jdbc:mysql://localhost/lportal1"));
+		_assertRewrittenJDBCURL(
+			_MYSQL_JDBC_URL, _MYSQL_JDBC_URL + "?" + _MYSQL_DEFAULT_PARAMETERS);
 
-		Assert.assertEquals(
-			"jdbc:postgresql://localhost/lportal2?reWriteBatchedInserts=true",
-			_rewriteJDBCURL("jdbc:postgresql://localhost/lportal2"));
+		_assertRewrittenJDBCURL(
+			_POSTGRESQL_JDBC_URL,
+			_POSTGRESQL_JDBC_URL + "?" + _POSTGRESQL_DEFAULT_PARAMETERS);
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"useBulkCopyForBatchInsert=true",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 4));
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL,
+			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS, 12, 4);
+	}
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3", 11, 4));
+	@Test
+	public void testRewriteJDBCURLForSQLServerWithDriverVersion()
+		throws Exception {
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 3));
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL, _SQLSERVER_JDBC_URL, 11, 4);
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL, _SQLSERVER_JDBC_URL, 12, 3);
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"useBulkCopyForBatchInsert=true",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3", 12, 5));
+		String sqlServerJDBCURLWithBulkCopy =
+			_SQLSERVER_JDBC_URL + ";" + _SQLSERVER_DEFAULT_PARAMETERS;
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"useBulkCopyForBatchInsert=true",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3", 13, 0));
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 12, 4);
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 12, 5);
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL, sqlServerJDBCURLWithBulkCopy, 13, 0);
 	}
 
 	@Test
@@ -226,126 +215,93 @@ public class DataSourceFactoryTest {
 			);
 
 			Assert.assertEquals(
-				"jdbc:sqlserver://localhost;databaseName=lportal3",
-				_rewriteJDBCURL(
-					"jdbc:sqlserver://localhost;databaseName=lportal3"));
+				_SQLSERVER_JDBC_URL, _rewriteJDBCURL(_SQLSERVER_JDBC_URL));
 		}
 	}
 
 	@Test
 	public void testRewriteJDBCURLWithCustomParameters() throws Exception {
-		String rewrittenMySQLJDBCURL = _rewriteJDBCURL(
-			"jdbc:mysql://localhost/lportal1?customParam=customValue");
+		String userParameter = "userParameter=userValue";
 
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("cachePrepStmts=true"));
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("characterEncoding=UTF-8"));
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("customParam=customValue"));
+		_assertRewrittenJDBCURL(
+			_MYSQL_JDBC_URL + "?" + userParameter,
+			StringBundler.concat(
+				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
+				userParameter));
 
-		String rewrittenPostgreSQLJDBCURL = _rewriteJDBCURL(
-			"jdbc:postgresql://localhost/lportal2?customParam=customValue");
+		_assertRewrittenJDBCURL(
+			_POSTGRESQL_JDBC_URL + "?" + userParameter,
+			StringBundler.concat(
+				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
+				userParameter));
 
-		Assert.assertTrue(
-			rewrittenPostgreSQLJDBCURL.contains("customParam=customValue"));
-		Assert.assertTrue(
-			rewrittenPostgreSQLJDBCURL.contains("reWriteBatchedInserts=true"));
-
-		String rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"customParam=customValue",
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL + ";" + userParameter,
+			StringBundler.concat(
+				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
+				userParameter),
 			12, 4);
-
-		Assert.assertTrue(
-			rewrittenSQLServerJDBCURL.contains("customParam=customValue"));
-		Assert.assertTrue(
-			rewrittenSQLServerJDBCURL.contains(
-				"useBulkCopyForBatchInsert=true"));
-
-		rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"customParam=customValue",
-			11, 4);
-
-		Assert.assertTrue(
-			rewrittenSQLServerJDBCURL.contains("customParam=customValue"));
-		Assert.assertFalse(
-			rewrittenSQLServerJDBCURL.contains(
-				"useBulkCopyForBatchInsert=true"));
 	}
 
 	@Test
 	public void testRewriteJDBCURLWithExistingDefaultParameters()
 		throws Exception {
 
-		String rewrittenMySQLJDBCURL = _rewriteJDBCURL(
-			"jdbc:mysql://localhost/lportal1?cachePrepStmts=false");
+		String expectedMySQLParameters = StringUtil.removeSubstring(
+			_MYSQL_DEFAULT_PARAMETERS, "cachePrepStmts=true&");
+		String mysqlJDBCURL = _MYSQL_JDBC_URL + "?cachePrepStmts=false";
 
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("cachePrepStmts=false"));
-		Assert.assertFalse(
-			rewrittenMySQLJDBCURL.contains("cachePrepStmts=true"));
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("characterEncoding=UTF-8"));
+		_assertRewrittenJDBCURL(
+			mysqlJDBCURL, mysqlJDBCURL + "&" + expectedMySQLParameters);
 
-		Assert.assertEquals(
-			"jdbc:postgresql://localhost/lportal2?reWriteBatchedInserts=false",
-			_rewriteJDBCURL(
-				"jdbc:postgresql://localhost/lportal2?reWriteBatchedInserts=" +
-					"false"));
+		String postgresqlJDBCURL =
+			_POSTGRESQL_JDBC_URL + "?reWriteBatchedInserts=false";
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"useBulkCopyForBatchInsert=false",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-					"useBulkCopyForBatchInsert=false",
-				12, 4));
+		_assertRewrittenJDBCURL(postgresqlJDBCURL, postgresqlJDBCURL);
 
-		Assert.assertEquals(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-				"useBulkCopyForBatchInsert=false",
-			_rewriteJDBCURL(
-				"jdbc:sqlserver://localhost;databaseName=lportal3;" +
-					"useBulkCopyForBatchInsert=false",
-				11, 4));
+		String sqlserverJDBCURL =
+			_SQLSERVER_JDBC_URL + ";useBulkCopyForBatchInsert=false";
+
+		_assertRewrittenJDBCURL(sqlserverJDBCURL, sqlserverJDBCURL, 12, 4);
 	}
 
 	@Test
 	public void testRewriteJDBCURLWithMalformedParameters() throws Exception {
-		String rewrittenMySQLJDBCURL = _rewriteJDBCURL(
-			"jdbc:mysql://localhost/lportal1?malformedParam");
+		String valuelessParameter = "valuelessParameter";
 
-		Assert.assertTrue(
-			rewrittenMySQLJDBCURL.contains("cachePrepStmts=true"));
-		Assert.assertTrue(rewrittenMySQLJDBCURL.contains("malformedParam"));
+		_assertRewrittenJDBCURL(
+			_MYSQL_JDBC_URL + "?" + valuelessParameter,
+			StringBundler.concat(
+				_MYSQL_JDBC_URL, "?", _MYSQL_DEFAULT_PARAMETERS, "&",
+				valuelessParameter));
 
-		String rewrittenPostgreSQLJDBCURL = _rewriteJDBCURL(
-			"jdbc:postgresql://localhost/lportal2?malformedParam");
+		_assertRewrittenJDBCURL(
+			_POSTGRESQL_JDBC_URL + "?" + valuelessParameter,
+			StringBundler.concat(
+				_POSTGRESQL_JDBC_URL, "?", _POSTGRESQL_DEFAULT_PARAMETERS, "&",
+				valuelessParameter));
 
-		Assert.assertTrue(
-			rewrittenPostgreSQLJDBCURL.contains("malformedParam"));
-		Assert.assertTrue(
-			rewrittenPostgreSQLJDBCURL.contains("reWriteBatchedInserts=true"));
-
-		String rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;malformedParam",
+		_assertRewrittenJDBCURL(
+			_SQLSERVER_JDBC_URL + ";" + valuelessParameter,
+			StringBundler.concat(
+				_SQLSERVER_JDBC_URL, ";", _SQLSERVER_DEFAULT_PARAMETERS, ";",
+				valuelessParameter),
 			12, 4);
+	}
 
-		Assert.assertTrue(rewrittenSQLServerJDBCURL.contains("malformedParam"));
-		Assert.assertTrue(
-			rewrittenSQLServerJDBCURL.contains(
-				"useBulkCopyForBatchInsert=true"));
+	private void _assertRewrittenJDBCURL(String jdbcURL, String expectedURL)
+		throws Exception {
 
-		rewrittenSQLServerJDBCURL = _rewriteJDBCURL(
-			"jdbc:sqlserver://localhost;databaseName=lportal3;malformedParam",
-			11, 4);
+		Assert.assertEquals(expectedURL, _rewriteJDBCURL(jdbcURL));
+	}
 
-		Assert.assertTrue(rewrittenSQLServerJDBCURL.contains("malformedParam"));
-		Assert.assertFalse(
-			rewrittenSQLServerJDBCURL.contains(
-				"useBulkCopyForBatchInsert=true"));
+	private void _assertRewrittenJDBCURL(
+			String jdbcURL, String expectedURL, int majorVersion,
+			int minorVersion)
+		throws Exception {
+
+		Assert.assertEquals(
+			expectedURL, _rewriteJDBCURL(jdbcURL, majorVersion, minorVersion));
 	}
 
 	private String _rewriteJDBCURL(String jdbcURL) throws Exception {
@@ -384,6 +340,31 @@ public class DataSourceFactoryTest {
 			return _rewriteJDBCURL(jdbcURL);
 		}
 	}
+
+	private static final String _MYSQL_DEFAULT_PARAMETERS =
+		StringBundler.concat(
+			"cachePrepStmts=true&characterEncoding=UTF-8&",
+			"dontTrackOpenResources=true&",
+			"holdResultsOpenOverStatementClose=true&",
+			"prepStmtCacheSize=1000&prepStmtCacheSqlLimit=2048&",
+			"rewriteBatchedStatements=true&serverTimezone=GMT&",
+			"useFastDateParsing=false&useLocalSessionState=true&",
+			"useLocalTransactionState=true&useUnicode=true");
+
+	private static final String _MYSQL_JDBC_URL =
+		"jdbc:mysql://localhost/lportal1";
+
+	private static final String _POSTGRESQL_DEFAULT_PARAMETERS =
+		"reWriteBatchedInserts=true";
+
+	private static final String _POSTGRESQL_JDBC_URL =
+		"jdbc:postgresql://localhost/lportal2";
+
+	private static final String _SQLSERVER_DEFAULT_PARAMETERS =
+		"useBulkCopyForBatchInsert=true";
+
+	private static final String _SQLSERVER_JDBC_URL =
+		"jdbc:sqlserver://localhost;databaseName=lportal3";
 
 	private Path _path;
 

@@ -528,6 +528,7 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	@Test
+	@TestInfo("LPD-80908")
 	public void testLayoutPropagationWithLinkEnabled() throws Exception {
 		doTestLayoutPropagation(true);
 	}
@@ -1320,6 +1321,12 @@ public class LayoutSetPrototypePropagationTest
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototypeGroup, true);
 
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			_layoutSetPrototypeGroup.getGroupId(), true);
+
+		childLayout = _layoutLocalService.updateParentLayoutId(
+			childLayout.getPlid(), layout.getPlid());
+
 		Assert.assertEquals(
 			_initialPrototypeLayoutsCount, getGroupLayoutCount());
 
@@ -1327,7 +1334,19 @@ public class LayoutSetPrototypePropagationTest
 
 		if (linkEnabled) {
 			Assert.assertEquals(
-				_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
+				_initialPrototypeLayoutsCount + 2, getGroupLayoutCount());
+
+			Layout propagatedLayout =
+				LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+					layout.getExternalReferenceCode(), group.getGroupId());
+
+			Layout propagatedChildLayout =
+				LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+					childLayout.getExternalReferenceCode(), group.getGroupId());
+
+			Assert.assertEquals(
+				propagatedLayout.getLayoutId(),
+				propagatedChildLayout.getParentLayoutId());
 		}
 		else {
 			Assert.assertEquals(
@@ -1339,7 +1358,7 @@ public class LayoutSetPrototypePropagationTest
 
 		if (linkEnabled) {
 			Assert.assertEquals(
-				_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
+				_initialPrototypeLayoutsCount + 2, getGroupLayoutCount());
 		}
 		else {
 			Assert.assertEquals(
@@ -1453,6 +1472,14 @@ public class LayoutSetPrototypePropagationTest
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 			group.getGroupId(), false);
+
+		UnicodeProperties settingsUnicodeProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
+
+		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 

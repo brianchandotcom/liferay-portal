@@ -73,11 +73,21 @@ export default function ContentEditorToolbar({
 			const form = getForm();
 
 			if (form?.checkValidity?.()) {
-				const titleInput = form.querySelector(
-					'[name^="ObjectField_title"]'
-				) as HTMLInputElement;
+				const defaultLanguageId =
+					Liferay.ThemeDisplay.getDefaultLanguageId();
 
-				const value = titleInput ? titleInput.value : headerTitle;
+				const defaultTitleInput = form.querySelector(
+					`[name="ObjectField_title_${defaultLanguageId}"]`
+				) as HTMLInputElement | null;
+
+				const currentTitleInput = form.querySelector(
+					'[name="ObjectField_title"]'
+				) as HTMLInputElement | null;
+
+				const value =
+					defaultTitleInput?.value ||
+					currentTitleInput?.value ||
+					headerTitle;
 
 				sessionStorage.setItem(
 					'com.liferay.site.cms.site.initializer.successMessage',

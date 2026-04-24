@@ -1,5 +1,6 @@
 import React from 'react';
 import TotalAccounts from '../TotalAccounts';
+import {AccountMetricType} from 'contacts/pages/account/utils/types';
 import {render} from '@testing-library/react';
 import {TrendClassification} from 'segment/types';
 
@@ -9,29 +10,32 @@ describe('TotalAccounts', () => {
 	it('should render', () => {
 		const useRequest = require('shared/hooks/useRequest');
 		useRequest.useRequest = jest.fn(() => ({
-			data: {
-				activeCount: {
+			data: [
+				{
+					metricType: AccountMetricType.Total,
 					trend: {
-						percentage: 0,
-						trendClassification: TrendClassification.Neutral
+						percentage: 50,
+						trendClassification: TrendClassification.Positive
 					},
-					value: 1
+					value: 15
 				},
-				newCount: {
+				{
+					metricType: AccountMetricType.New,
 					trend: {
 						percentage: -30,
 						trendClassification: TrendClassification.Negative
 					},
 					value: 10
 				},
-				totalCount: {
+				{
+					metricType: AccountMetricType.Active,
 					trend: {
-						percentage: 50,
-						trendClassification: TrendClassification.Positive
+						percentage: 0,
+						trendClassification: TrendClassification.Neutral
 					},
-					value: 15
+					value: 1
 				}
-			}
+			]
 		}));
 
 		const {container} = render(<TotalAccounts groupId='123' />);

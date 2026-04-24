@@ -10,16 +10,11 @@ import {
 	LifecycleContextProvider,
 	useLifecycle
 } from '../context/LifecycleContext';
+import {SectionHeader} from 'shared/components/SectionHeader';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
-const LifecycleOverview = ({
-	channelId,
-	groupId
-}: {
-	channelId: string;
-	groupId: string;
-}) => {
+const LifecycleOverview = ({groupId}: {groupId: string}) => {
 	const {filters} = useLifecycle();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
@@ -32,9 +27,24 @@ const LifecycleOverview = ({
 		}
 	});
 
+	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
+};
+
+const LifecycleAccounts = ({
+	channelId,
+	groupId
+}: {
+	channelId: string;
+	groupId: string;
+}) => {
+	const {filters} = useLifecycle();
+
 	return (
 		<>
-			<OverviewSection loading={overviewLoading} metrics={overviewData} />
+			<SectionHeader
+				icon='box-container'
+				title={Liferay.Language.get('accounts')}
+			/>
 
 			<AccountsDataSet
 				channelId={channelId}
@@ -77,7 +87,9 @@ const BaseLifecycle = () => {
 					</div>
 				</BasePage.SubHeader>
 				<BasePage.Body>
-					<LifecycleOverview
+					<LifecycleOverview groupId={groupId} />
+
+					<LifecycleAccounts
 						channelId={channelId}
 						groupId={groupId}
 					/>

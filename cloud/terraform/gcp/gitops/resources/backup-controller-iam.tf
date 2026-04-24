@@ -20,6 +20,11 @@ resource "google_project_iam_custom_role" "backup_controller_custom_role" {
 		"storagetransfer.projects.getServiceAccount",
 	]
 	project=var.project_id
+	provisioner "local-exec" {
+		command="gcloud iam roles delete ${self.role_id} --project ${self.project} --quiet"
+		on_failure=continue
+		when=destroy
+	}
 	role_id=replace("${var.deployment_name}_backup_controller", "-", "_")
 	title="Liferay Backup Controller Role"
 }

@@ -46,11 +46,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>DUPLICATED_ENTRY_VALUE</td>
-		<td>(//tbody//*[contains(text(),'${key_entry}')])[2]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>ENTRY_COLUMN</td>
 		<td>//th[contains(.,'${key_column}')]</td>
 		<td></td>

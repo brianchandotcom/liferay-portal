@@ -29,6 +29,20 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
+test.afterEach(async ({apiHelpers}) => {
+	const tasks =
+		await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+			'cms/bulk-action-tasks'
+		);
+
+	for (const task of tasks.items) {
+		await apiHelpers.objectEntry.deleteObjectEntry(
+			'cms/bulk-action-tasks',
+			task.id
+		);
+	}
+});
+
 test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
@@ -258,7 +272,6 @@ test(
 		const bulkActionTasks = 'cms/bulk-action-tasks';
 		const spaceName = 'Default';
 
-		const createdFiles = [];
 		const filesNames = [
 			getRandomString(),
 			getRandomString(),
@@ -267,7 +280,7 @@ test(
 		let tasks;
 
 		for (const fileName of filesNames) {
-			const file = await apiHelpers.objectEntry.postObjectEntry(
+			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 					title: fileName,
@@ -275,9 +288,8 @@ test(
 				basicWebContent,
 				spaceName
 			);
-			createdFiles.push(file);
 		}
-		try {
+
 			await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
 				await assetsPage.gotoAll();
 
@@ -555,29 +567,6 @@ test(
 					}
 				);
 			});
-		}
-		finally {
-			tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					tasks.items[i].id
-				);
-			}
-
-			if (createdFiles) {
-				for (const file of createdFiles) {
-					await apiHelpers.objectEntry.deleteObjectEntry(
-						basicWebContent,
-						file.id
-					);
-				}
-			}
-		}
 	}
 );
 
@@ -616,10 +605,12 @@ test(
 			})
 			.then((response) => response.id);
 
-		const basicWebContent = 'cms/basic-web-contents';
-		const bulkActionTasks = 'cms/bulk-action-tasks';
+		apiHelpers.data.push({
+			id: vocabularyId,
+			type: 'taxonomyVocabulary',
+		});
 
-		const createdFiles = [];
+		const basicWebContent = 'cms/basic-web-contents';
 
 		const fileNames = [
 			getRandomString(),
@@ -627,10 +618,8 @@ test(
 			getRandomString(),
 		];
 
-		let tasks;
-
 		for (const fileName of fileNames) {
-			const file = await apiHelpers.objectEntry.postObjectEntry(
+			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 					title: fileName,
@@ -638,10 +627,8 @@ test(
 				basicWebContent,
 				'Default'
 			);
-
-			createdFiles.push(file);
 		}
-		try {
+
 			await test.step('Select 3 assets and bulk edit their categories', async () => {
 				await assetsPage.gotoAll();
 
@@ -745,33 +732,6 @@ test(
 					page.getByText(categoryName, {exact: true})
 				).toBeVisible();
 			});
-		}
-		finally {
-			tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					tasks.items[i].id
-				);
-			}
-
-			if (createdFiles.length) {
-				for (const file of createdFiles) {
-					await apiHelpers.objectEntry.deleteObjectEntry(
-						basicWebContent,
-						file.id
-					);
-				}
-			}
-
-			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
-				vocabularyId
-			);
-		}
 	}
 );
 
@@ -816,19 +776,18 @@ test(
 					vocabularyId,
 				})
 				.then((response) => response.id);
+
+			apiHelpers.data.push({
+				id: vocabularyId,
+				type: 'taxonomyVocabulary',
+			});
 		}
 
 		const basicWebContent = 'cms/basic-web-contents';
-		const bulkActionTasks = 'cms/bulk-action-tasks';
-
-		const createdFiles = [];
-
 		const webContentNames = [getRandomString(), getRandomString()];
 
-		let tasks;
-
 		for (const fileName of webContentNames) {
-			const file = await apiHelpers.objectEntry.postObjectEntry(
+			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 					title: fileName,
@@ -836,8 +795,6 @@ test(
 				basicWebContent,
 				'Default'
 			);
-
-			createdFiles.push(file);
 		}
 
 		const folderName = `Folder ${getRandomInt()}`;
@@ -875,7 +832,6 @@ test(
 			'Default'
 		);
 
-		try {
 			await test.step('Select 3 assets including a folder and bulk edit their categories', async () => {
 				await assetsPage.gotoContents();
 
@@ -1143,35 +1099,6 @@ test(
 					page.getByText(categories[0], {exact: true})
 				).toBeVisible();
 			});
-		}
-		finally {
-			tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					tasks.items[i].id
-				);
-			}
-
-			if (createdFiles.length) {
-				for (const file of createdFiles) {
-					await apiHelpers.objectEntry.deleteObjectEntry(
-						basicWebContent,
-						file.id
-					);
-				}
-			}
-
-			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
-				vocabularyId
-			);
-		}
 	}
 );
 
@@ -1187,16 +1114,10 @@ test(
 			.then((response) => response.id);
 
 		const basicWebContent = 'cms/basic-web-contents';
-		const bulkActionTasks = 'cms/bulk-action-tasks';
-
-		const createdFiles = [];
-
 		const webContentNames = [getRandomString(), getRandomString()];
 
-		let tasks;
-
 		for (const fileName of webContentNames) {
-			const file = await apiHelpers.objectEntry.postObjectEntry(
+			await apiHelpers.objectEntry.postObjectEntry(
 				{
 					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
 					title: fileName,
@@ -1204,8 +1125,6 @@ test(
 				basicWebContent,
 				'Default'
 			);
-
-			createdFiles.push(file);
 		}
 
 		const folderName = `Folder ${getRandomInt()}`;
@@ -1243,8 +1162,6 @@ test(
 			'Default'
 		);
 
-		const createdTags = [];
-
 		const tagNames = [
 			'Tag' + getRandomInt(),
 			'Tag' + getRandomInt(),
@@ -1257,10 +1174,12 @@ test(
 				siteId,
 			});
 
-			createdTags.push(tag);
+			apiHelpers.data.push({
+				id: tag.id,
+				type: 'keyword',
+			});
 		}
 
-		try {
 			await test.step('Select 3 assets including a folder and bulk edit their tags', async () => {
 				await assetsPage.gotoContents();
 
@@ -1532,39 +1451,6 @@ test(
 					page.getByText(tagNames[0], {exact: true})
 				).toBeVisible();
 			});
-		}
-		finally {
-			tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			await apiHelpers.objectFolder.deleteObjectEntryFolder(folder.id);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					tasks.items[i].id
-				);
-			}
-
-			if (createdFiles.length) {
-				for (const file of createdFiles) {
-					await apiHelpers.objectEntry.deleteObjectEntry(
-						basicWebContent,
-						file.id
-					);
-				}
-			}
-
-			if (createdTags.length) {
-				for (const tag of createdTags) {
-					await apiHelpers.headlessAdminTaxonomy.deleteKeyword({
-						id: tag.id,
-					});
-				}
-			}
-		}
 	}
 );
 
@@ -1710,7 +1596,6 @@ test(
 	'Delete Asset Versions in bulk',
 	{tag: '@LPD-67234'},
 	async ({apiHelpers, assetsPage, page}) => {
-		const bulkActionTasksApplicationName = 'cms/bulk-action-tasks';
 		const contentApplicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 
@@ -1773,7 +1658,6 @@ test(
 			await performUserSwitch(page, user.alternateName);
 		});
 
-		try {
 			await test.step('Navigate to history page and bulk delete all versions', async () => {
 				await assetsPage.gotoAll();
 
@@ -1809,20 +1693,6 @@ test(
 					}
 				);
 			});
-		}
-		finally {
-			const tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksApplicationName
-				);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksApplicationName,
-					tasks.items[i].id
-				);
-			}
-		}
 
 		await test.step('All versions are removed excluding the current one', async () => {
 			await page.reload();
@@ -1914,7 +1784,6 @@ test(
 			await performUserSwitch(page, user.alternateName);
 		});
 
-		try {
 			await test.step('Expire one asset in bulk', async () => {
 				await assetsPage.gotoAll();
 
@@ -1974,20 +1843,6 @@ test(
 					row.getByRole('cell', {name: 'Expired'})
 				).toBeVisible();
 			});
-		}
-		finally {
-			const tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					'cms/bulk-action-tasks'
-				);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					'cms/bulk-action-tasks',
-					tasks.items[i].id
-				);
-			}
-		}
 	}
 );
 
@@ -2114,7 +1969,6 @@ test(
 				.click();
 		});
 
-		try {
 			await test.step('Exporting for Translation a single content type object entry', async () => {
 				await assetsPage.gotoAll();
 
@@ -2256,19 +2110,5 @@ test(
 					checkInZip(filePath, `${blogTitle}-en_US.zip`)
 				).resolves.toBe(true);
 			});
-		}
-		finally {
-			const tasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					'cms/bulk-action-tasks'
-				);
-
-			for (let i = 0; i < tasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					'cms/bulk-action-tasks',
-					tasks.items[i].id
-				);
-			}
-		}
 	}
 );

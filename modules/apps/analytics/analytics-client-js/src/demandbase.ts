@@ -10,7 +10,7 @@ import {
 	DEMANDBASE_READY_TIMEOUT,
 } from './utils/constants';
 import hash from './utils/hash';
-import {getItem, setItem} from './utils/storage';
+import {getItem, removeItem, setItem} from './utils/storage';
 
 type CompanyProfile = {[key: string]: unknown};
 
@@ -105,11 +105,22 @@ class Demandbase {
 	/**
 	 * Sends Demandbase account data once per userId + profile + email. Waits
 	 * for the Demandbase client-side SDK to be available before enqueuing.
-	 * If the SDK never loads, nothing is sent.
+	 * If the SDK is unavailable (customer removed the tag), any previously
+	 * stored dedup hash and pending messages are cleared.
 	 */
 	sendAccountMessage(userId: string) {
 		this.waitForReadiness().then((profile) => {
-			if (this.analyticsInstance._disposed || !profile) {
+			if (this.analyticsInstance._disposed) {
+				return;
+			}
+
+			if (!profile) {
+				removeItem(AnalyticsType.Keys.DemandbaseAccount);
+
+				this.analyticsInstance[
+					AnalyticsType.Queues.AccountMessage
+				].reset();
+
 				return;
 			}
 

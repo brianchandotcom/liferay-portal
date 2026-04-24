@@ -1,13 +1,5 @@
 [
 	{
-		"key": "businessEvent",
-		"name": "Business Event",
-		"name_i18n": {
-			"en-US": "Business Event"
-		},
-		"type": "string"
-	},
-	{
 		"key": "licenseExpiration",
 		"name": "License Expiration",
 		"name_i18n": {

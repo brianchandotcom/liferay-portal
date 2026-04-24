@@ -5,13 +5,13 @@
 
 export default function getInitialEvent() {
 	return {
-		associatedTickets: '[]',
+		associatedTickets: '',
 		currentLiferayVersion: {
 			key: '',
 		},
 		description: '',
 		eventStatus: {
-			key: 'open',
+			key: 'Open',
 		},
 		eventType: {
 			key: '',

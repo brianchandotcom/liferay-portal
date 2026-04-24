@@ -65,8 +65,7 @@ const BusinessEvents = () => {
 
 	const accountKey = useAccountKey();
 
-	const {filters, handleFilterChange, handleSearchChange} =
-		useFilters(project);
+	const {filters, handleFilterChange, handleSearchChange} = useFilters();
 
 	const {businessEvents, fetchBusinessEvents, loading} =
 		useGetBusinessEvents();

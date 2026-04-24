@@ -28,6 +28,7 @@ export const BULK_ACTION_MOVE = 'MoveObjectBulkSelectionAction';
 export const BULK_ACTION_PERMISSIONS = 'PermissionObjectBulkSelectionAction';
 export const BULK_ACTION_RESET_PERMISSIONS =
 	'ResetPermissionObjectBulkSelectionAction';
+export const BULK_ACTION_RESTORE = 'RestoreObjectBulkSelectionAction';
 export const BULK_ACTION_STATUS = 'StatusObjectBulkSelectionAction';
 export const BULK_ACTION_TAGS = 'EditObjectTagsBulkSelectionAction';
 export const BULK_ACTION_UPDATE_OBJECT_VALUES =
@@ -63,6 +64,7 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 		[BULK_ACTION_RESET_PERMISSIONS]: Liferay.Language.get(
 			'reset-to-default-permissions'
 		),
+		[BULK_ACTION_RESTORE]: Liferay.Language.get('assets-restoration'),
 		[BULK_ACTION_STATUS]: Liferay.Language.get('state-update'),
 		[BULK_ACTION_TAGS]: Liferay.Language.get('assets-tagging'),
 		[BULK_ACTION_UPDATE_OBJECT_VALUES]:

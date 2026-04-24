@@ -17,10 +17,10 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -231,7 +231,7 @@ public abstract class BaseIndexingTestCase {
 
 		map.forEach(
 			(key, value) -> booleanQueryImpl.add(
-				new TermQueryImpl(key, value), BooleanClauseOccur.MUST));
+				new TermQuery(key, value), BooleanClauseOccur.MUST));
 
 		return booleanQueryImpl;
 	}

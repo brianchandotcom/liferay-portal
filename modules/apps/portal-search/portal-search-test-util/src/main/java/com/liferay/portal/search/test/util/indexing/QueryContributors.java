@@ -9,8 +9,8 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 
 /**
  * @author André de Oliveira
@@ -41,11 +41,11 @@ public class QueryContributors {
 	}
 
 	public static QueryContributor mustNotTerm(String field, String value) {
-		return mustNot(new TermQueryImpl(field, value));
+		return mustNot(new TermQuery(field, value));
 	}
 
 	public static QueryContributor mustTerm(String field, String value) {
-		return must(new TermQueryImpl(field, value));
+		return must(new TermQuery(field, value));
 	}
 
 	private static void _add(

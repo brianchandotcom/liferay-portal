@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.NestedFieldQueryHelper;
 
@@ -45,7 +45,7 @@ public class NestedFieldQueryHelperImpl implements NestedFieldQueryHelper {
 					BooleanClauseOccur.MUST);
 
 				booleanQuery.add(
-					new TermQueryImpl("nestedFieldArray.fieldName", fieldName),
+					new TermQuery("nestedFieldArray.fieldName", fieldName),
 					BooleanClauseOccur.MUST);
 			}
 			catch (ParseException parseException) {

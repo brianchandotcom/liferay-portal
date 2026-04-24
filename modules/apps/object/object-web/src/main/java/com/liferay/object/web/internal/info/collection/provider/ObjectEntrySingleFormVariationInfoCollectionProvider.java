@@ -73,9 +73,9 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -401,11 +401,10 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 			BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
 
 			nestedBooleanQuery.add(
-				new TermQueryImpl(
-					_getFieldName(objectField), entry.getValue()[0]),
+				new TermQuery(_getFieldName(objectField), entry.getValue()[0]),
 				BooleanClauseOccur.MUST);
 			nestedBooleanQuery.add(
-				new TermQueryImpl("nestedFieldArray.fieldName", entry.getKey()),
+				new TermQuery("nestedFieldArray.fieldName", entry.getKey()),
 				BooleanClauseOccur.MUST);
 
 			booleanQuery.add(

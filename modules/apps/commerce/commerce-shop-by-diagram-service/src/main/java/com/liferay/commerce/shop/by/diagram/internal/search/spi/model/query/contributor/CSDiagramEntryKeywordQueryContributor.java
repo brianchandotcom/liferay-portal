@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
@@ -62,7 +62,7 @@ public class CSDiagramEntryKeywordQueryContributor
 				keywords = StringUtil.toLowerCase(keywords);
 
 				booleanQuery.add(
-					new TermQueryImpl("sku.1_10_ngram", keywords),
+					new TermQuery("sku.1_10_ngram", keywords),
 					BooleanClauseOccur.SHOULD);
 
 				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(

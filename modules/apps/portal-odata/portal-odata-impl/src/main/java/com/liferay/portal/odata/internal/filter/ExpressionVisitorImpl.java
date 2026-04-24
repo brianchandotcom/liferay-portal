@@ -12,12 +12,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -333,7 +333,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return new QueryFilter(
 			_nestedFieldQueryHelper.getQuery(
 				entityField.getFilterableName(locale),
-				fieldName -> new TermQueryImpl(
+				fieldName -> new TermQuery(
 					fieldName, entityField.getFilterableValue(fieldValue))));
 	}
 
@@ -401,7 +401,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				booleanQuery.add(
 					_nestedFieldQueryHelper.getQuery(
 						entityField.getFilterableName(locale),
-						fieldName -> new TermQueryImpl(
+						fieldName -> new TermQuery(
 							fieldName,
 							entityField.getFilterableValue(fieldValue))),
 					BooleanClauseOccur.SHOULD);
@@ -502,7 +502,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					fieldName -> new TermQueryImpl(
+					fieldName -> new TermQuery(
 						fieldName,
 						entityField.getFilterableValue(fieldValue)))),
 			BooleanClauseOccur.MUST_NOT);

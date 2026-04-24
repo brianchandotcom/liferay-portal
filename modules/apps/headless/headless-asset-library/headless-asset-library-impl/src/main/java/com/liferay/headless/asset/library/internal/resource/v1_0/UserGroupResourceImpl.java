@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -202,7 +202,7 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 					_groupModelResourcePermission)
 			).build(),
 			booleanQuery -> booleanQuery.add(
-				new TermQueryImpl("groupIds", String.valueOf(groupId)),
+				new TermQuery("groupIds", String.valueOf(groupId)),
 				BooleanClauseOccur.MUST),
 			null, com.liferay.portal.kernel.model.UserGroup.class.getName(),
 			keywords, pagination,

@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -165,8 +165,7 @@ public class OpenSearchSpellCheckIndexWriterTest extends BaseIndexingTestCase {
 	private void _assertDocumentCount(int count, String type) {
 		assertSearch(
 			indexingTestHelper -> {
-				indexingTestHelper.setQuery(
-					new TermQueryImpl(Field.TYPE, type));
+				indexingTestHelper.setQuery(new TermQuery(Field.TYPE, type));
 
 				indexingTestHelper.search();
 

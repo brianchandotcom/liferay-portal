@@ -8,8 +8,8 @@ package com.liferay.portal.search.solr8.internal.logging;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -62,7 +62,7 @@ public class SolrIndexSearcherExceptionsTest extends BaseIndexingTestCase {
 		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
 
 		booleanQueryImpl.add(
-			new TermQueryImpl(Field.PRIORITY, "text"), BooleanClauseOccur.MUST);
+			new TermQuery(Field.PRIORITY, "text"), BooleanClauseOccur.MUST);
 
 		return booleanQueryImpl;
 	}

@@ -15,10 +15,10 @@ import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -113,7 +113,7 @@ public class CPDefinitionKeywordQueryContributor
 				BooleanQuery searchQuery = new BooleanQueryImpl();
 
 				searchQuery.add(
-					new TermQueryImpl(CPField.SKUS + ".1_10_ngram", keywords),
+					new TermQuery(CPField.SKUS + ".1_10_ngram", keywords),
 					BooleanClauseOccur.SHOULD);
 
 				MultiMatchQuery multiMatchQuery = new MultiMatchQuery(keywords);

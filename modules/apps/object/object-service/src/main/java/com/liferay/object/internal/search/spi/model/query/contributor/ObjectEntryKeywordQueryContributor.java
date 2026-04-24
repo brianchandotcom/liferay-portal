@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -150,7 +150,7 @@ public class ObjectEntryKeywordQueryContributor
 				if (addObjectEntryTitle.get() && !Validator.isBlank(token)) {
 					try {
 						booleanQuery.add(
-							new TermQueryImpl(Field.ENTRY_CLASS_PK, token),
+							new TermQuery(Field.ENTRY_CLASS_PK, token),
 							BooleanClauseOccur.SHOULD);
 
 						booleanQuery.add(
@@ -186,7 +186,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		if (!addedRangeQuery && _isValidInput(token, objectField.getDBType())) {
 			nestedBooleanQuery.add(
-				new TermQueryImpl(fieldName, token), BooleanClauseOccur.MUST);
+				new TermQuery(fieldName, token), BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -249,7 +249,7 @@ public class ObjectEntryKeywordQueryContributor
 					fieldName, lowerCaseToken + StringPool.STAR),
 				BooleanClauseOccur.MUST);
 			nestedBooleanQuery.add(
-				new TermQueryImpl(fieldName, lowerCaseToken),
+				new TermQuery(fieldName, lowerCaseToken),
 				BooleanClauseOccur.SHOULD);
 
 			queryConfig.addHighlightFieldNames(fieldName);
@@ -334,7 +334,7 @@ public class ObjectEntryKeywordQueryContributor
 
 			if (fieldName != null) {
 				nestedBooleanQuery.add(
-					new TermQueryImpl(fieldName, StringUtil.toLowerCase(token)),
+					new TermQuery(fieldName, StringUtil.toLowerCase(token)),
 					BooleanClauseOccur.MUST);
 
 				queryConfig.addHighlightFieldNames(fieldName);
@@ -385,7 +385,7 @@ public class ObjectEntryKeywordQueryContributor
 				booleanClauseOccur);
 
 			nestedBooleanQuery.add(
-				new TermQueryImpl(
+				new TermQuery(
 					"nestedFieldArray.fieldName", objectField.getName()),
 				BooleanClauseOccur.MUST);
 		}

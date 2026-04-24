@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -174,7 +174,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 			BooleanQuery modelBooleanQuery = new BooleanQueryImpl();
 
 			modelBooleanQuery.add(
-				new TermQueryImpl("entryClassName", CLASS_NAME),
+				new TermQuery("entryClassName", CLASS_NAME),
 				BooleanClauseOccur.MUST);
 			modelBooleanQuery.add(
 				keywordsBooleanQuery, BooleanClauseOccur.MUST);

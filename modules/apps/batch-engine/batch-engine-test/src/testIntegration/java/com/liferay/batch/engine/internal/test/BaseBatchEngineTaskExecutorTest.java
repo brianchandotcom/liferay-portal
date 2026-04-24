@@ -362,7 +362,7 @@ public class BaseBatchEngineTaskExecutorTest {
 			booleanQueryUnsafeConsumer.accept(booleanQuery);
 
 			return BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName());
+				booleanQuery, BooleanClauseOccur.MUST);
 		}
 
 		private Page<BlogPosting> _search(

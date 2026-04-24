@@ -153,7 +153,7 @@ public class ContentElementResourceImpl extends BaseContentElementResourceImpl {
 		searchContext.setBooleanClauses(
 			new BooleanClause[] {
 				BooleanClauseFactoryUtil.create(
-					booleanQuery, BooleanClauseOccur.MUST.getName())
+					booleanQuery, BooleanClauseOccur.MUST)
 			});
 
 		searchContext.setCompanyId(contextCompany.getCompanyId());

@@ -142,8 +142,7 @@ public class DisplayContextUtil {
 					searchContext.setBooleanClauses(
 						new BooleanClause[] {
 							BooleanClauseFactoryUtil.create(
-								booleanQueryImpl,
-								BooleanClauseOccur.MUST.getName())
+								booleanQueryImpl, BooleanClauseOccur.MUST)
 						});
 				}
 			);

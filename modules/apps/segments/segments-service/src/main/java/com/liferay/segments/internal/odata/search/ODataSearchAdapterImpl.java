@@ -181,7 +181,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 		throws PortalException {
 
 		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST.getName());
+			booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private BooleanQuery _getBooleanQuery(

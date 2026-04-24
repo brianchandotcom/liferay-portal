@@ -150,7 +150,7 @@ public class FileSizeContentDashboardItemFilterProviderTest {
 
 		BooleanClause[] booleanClauses = {
 			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 
 		searchContext.setBooleanClauses(booleanClauses);

@@ -319,7 +319,7 @@ public class ContentDashboardSearchContextBuilder {
 
 		return new BooleanClause[] {
 			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+				booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 	}
 

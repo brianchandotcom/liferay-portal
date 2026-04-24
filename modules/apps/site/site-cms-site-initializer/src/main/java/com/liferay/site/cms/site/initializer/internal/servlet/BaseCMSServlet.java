@@ -173,7 +173,7 @@ public abstract class BaseCMSServlet extends HttpServlet {
 			booleanQueryUnsafeConsumer.accept(booleanQuery);
 
 			return BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName());
+				booleanQuery, BooleanClauseOccur.MUST);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

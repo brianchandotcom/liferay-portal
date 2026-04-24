@@ -192,7 +192,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 									setPreBooleanFilter(booleanFilter);
 								}
 							},
-							BooleanClauseOccur.MUST.getName())
+							BooleanClauseOccur.MUST)
 					});
 
 				if (Validator.isNotNull(search)) {

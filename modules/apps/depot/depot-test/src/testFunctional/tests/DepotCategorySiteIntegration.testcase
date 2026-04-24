@@ -229,33 +229,6 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
-	@description = "This ensures that a depot category cannot be shown in Category Navigation on a disconnected site."
-	@priority = 4
-	test CannotViewCategoryInCategoriesNavigationFromDisconnectedSite {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Page Name",
-			widgetName = "Category Filter");
-
-		var categoryId = JSONCategory.addCategory(
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Site Name");
-
-		JSONDepot.disconnectSite(groupName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Page Name",
-			siteName = "Site Name");
-
-		CategoriesNavigationPortlet.viewNoCategory();
-	}
-
 	@description = "This ensures that a depot category can be selected in Category Navigation on a connected site."
 	@priority = 4
 	test CanSelectCategoryInCategoriesNavigation {
@@ -362,6 +335,11 @@ definition {
 	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = 4
 	test VocabularyAndCategoryShouldNotBeViewedFromDisconnectedSite {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Page Name",
+			widgetName = "Category Filter");
+
 		JSONCategory.addCategory(
 			groupName = "Test Depot Name",
 			site = "false",
@@ -373,6 +351,12 @@ definition {
 			groupName = "Site Name");
 
 		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		CategoriesNavigationPortlet.viewNoCategory();
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 

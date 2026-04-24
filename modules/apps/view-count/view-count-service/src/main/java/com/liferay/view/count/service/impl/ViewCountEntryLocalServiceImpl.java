@@ -166,8 +166,8 @@ public class ViewCountEntryLocalServiceImpl
 				fetchViewCountEntry(
 					new ViewCountEntryPK(companyId, classNameId, classPK)));
 		}
-		catch (RuntimeException runtimeException) {
-			_log.error(runtimeException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 

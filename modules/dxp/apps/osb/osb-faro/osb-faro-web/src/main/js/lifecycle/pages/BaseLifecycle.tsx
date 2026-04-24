@@ -36,7 +36,12 @@ const LifecycleOverview = ({
 		<>
 			<OverviewSection loading={overviewLoading} metrics={overviewData} />
 
-			<AccountsDataSet channelId={channelId} groupId={groupId} />
+			<AccountsDataSet
+				channelId={channelId}
+				countryFilter={filters.countryFilter}
+				groupId={groupId}
+				industryFilter={filters.industryFilter}
+			/>
 		</>
 	);
 };

@@ -42,13 +42,25 @@ const lifecycleStageFilter = {
 
 interface IAccountsDataSetProps {
 	channelId: string;
+	countryFilter?: string;
 	groupId: string;
+	industryFilter?: string;
 	loading?: boolean;
 }
 
+const buildSelectionPreloadedData = (value?: string) =>
+	value
+		? {
+				exclude: false,
+				selectedItems: [{label: value, value}]
+		  }
+		: undefined;
+
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	channelId,
+	countryFilter,
 	groupId,
+	industryFilter,
 	loading
 }) => {
 	const FrontendDataSet = useFrontendDataSet();
@@ -107,6 +119,9 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						itemLabel: 'name',
 						label: Liferay.Language.get('industry'),
 						multiple: true,
+						preloadedData: buildSelectionPreloadedData(
+							industryFilter
+						),
 						type: 'selection'
 					},
 					{
@@ -117,10 +132,14 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						itemLabel: 'name',
 						label: Liferay.Language.get('country'),
 						multiple: true,
+						preloadedData: buildSelectionPreloadedData(
+							countryFilter
+						),
 						type: 'selection'
 					}
 				]}
 				id='accounts-list-dataset'
+				key={`${countryFilter ?? ''}|${industryFilter ?? ''}`}
 				loading={loading}
 				pagination={pagination}
 				showPagination

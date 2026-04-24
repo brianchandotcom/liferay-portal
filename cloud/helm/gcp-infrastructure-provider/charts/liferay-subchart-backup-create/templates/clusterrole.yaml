@@ -5,7 +5,15 @@ metadata:
         component: backup-create-platform
     name: backup-create-cluster-role
 rules:
+    -   apiGroups: ["argoproj.io"]
+        resources: ["workflowtaskresults"]
+        verbs:
+            -   create
+            -   patch
     -   apiGroups: ["backup.liferay.cloud"]
         resources: ["liferaybackups"]
         verbs:
             -   create
+            -   get
+            -   list
+            -   watch

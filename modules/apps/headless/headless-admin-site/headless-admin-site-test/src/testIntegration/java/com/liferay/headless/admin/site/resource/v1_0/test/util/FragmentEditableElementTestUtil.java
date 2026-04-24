@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DateFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
@@ -98,6 +99,28 @@ public class FragmentEditableElementTestUtil {
 
 		fragmentEditableElement.setFragmentEditableElementValue(
 			() -> backgroundImageFragmentEditableElementValue);
+
+		fragmentEditableElement.setId(() -> id);
+
+		return fragmentEditableElement;
+	}
+
+	public static FragmentEditableElement getDateFragmentEditableElement(
+		FragmentMappedValue date, FragmentInlineValue dateFormat, String id) {
+
+		DateFragmentEditableElementValue dateFragmentEditableElementValue =
+			new DateFragmentEditableElementValue();
+
+		dateFragmentEditableElementValue.setDate(() -> date);
+		dateFragmentEditableElementValue.setDateFormat(() -> dateFormat);
+		dateFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.DATE);
+
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
+		fragmentEditableElement.setFragmentEditableElementValue(
+			() -> dateFragmentEditableElementValue);
 
 		fragmentEditableElement.setId(() -> id);
 

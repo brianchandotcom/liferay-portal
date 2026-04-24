@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
-import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -209,7 +209,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		booleanQuery.add(
-			new TermRangeQueryImpl(fieldName, lowerTerm, upperTerm, true, true),
+			new TermRangeQuery(fieldName, lowerTerm, upperTerm, true, true),
 			BooleanClauseOccur.MUST);
 
 		return true;

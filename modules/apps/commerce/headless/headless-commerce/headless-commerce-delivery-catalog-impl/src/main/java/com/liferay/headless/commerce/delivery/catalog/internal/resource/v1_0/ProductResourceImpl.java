@@ -36,7 +36,6 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -252,8 +251,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		booleanQueryUnsafeConsumer.accept(booleanQuery);
 
-		return BooleanClauseFactoryUtil.create(
-			booleanQuery, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST);
 	}
 
 	private Long _getCommerceAccountId(

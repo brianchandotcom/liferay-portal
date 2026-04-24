@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -264,8 +263,7 @@ public class JournalHistoryDisplayContext {
 
 			searchContext.setBooleanClauses(
 				new BooleanClause[] {
-					BooleanClauseFactoryUtil.create(
-						booleanQuery, BooleanClauseOccur.MUST)
+					new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 				});
 		}
 		catch (ParseException parseException) {

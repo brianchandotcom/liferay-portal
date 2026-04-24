@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -114,8 +113,7 @@ public class DepotEntryAdminSearchProvider {
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 	}
 

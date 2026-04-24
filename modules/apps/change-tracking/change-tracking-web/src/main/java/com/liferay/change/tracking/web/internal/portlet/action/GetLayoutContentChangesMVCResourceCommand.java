@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -254,7 +253,7 @@ public class GetLayoutContentChangesMVCResourceCommand
 
 					searchContext.setBooleanClauses(
 						new BooleanClause[] {
-							BooleanClauseFactoryUtil.create(
+							new BooleanClause<>(
 								booleanQueryImpl, BooleanClauseOccur.MUST)
 						});
 				}

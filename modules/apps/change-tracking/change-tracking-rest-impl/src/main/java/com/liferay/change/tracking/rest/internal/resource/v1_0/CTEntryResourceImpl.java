@@ -19,7 +19,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
@@ -181,7 +180,7 @@ public class CTEntryResourceImpl extends BaseCTEntryResourceImpl {
 
 				searchContext.setBooleanClauses(
 					new BooleanClause[] {
-						BooleanClauseFactoryUtil.create(
+						new BooleanClause<>(
 							new BooleanQueryImpl() {
 								{
 									if (filter != null) {

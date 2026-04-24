@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -908,7 +907,7 @@ public class TaxonomyVocabularyResourceImpl
 
 					searchContext.setBooleanClauses(
 						new BooleanClause[] {
-							BooleanClauseFactoryUtil.create(
+							new BooleanClause<>(
 								new BooleanQueryImpl() {
 									{
 										if (filter != null) {

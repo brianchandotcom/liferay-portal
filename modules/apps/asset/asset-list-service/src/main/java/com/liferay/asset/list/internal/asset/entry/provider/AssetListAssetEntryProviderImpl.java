@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -370,8 +369,7 @@ public class AssetListAssetEntryProviderImpl
 		booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 	}
 
@@ -430,8 +428,7 @@ public class AssetListAssetEntryProviderImpl
 		booleanQueryImpl.setPreBooleanFilter(assetTagNamesBooleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 	}
 
@@ -550,8 +547,7 @@ public class AssetListAssetEntryProviderImpl
 		booleanQueryImpl.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQueryImpl, BooleanClauseOccur.MUST)
 		};
 	}
 

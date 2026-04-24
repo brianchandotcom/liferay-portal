@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -717,9 +716,8 @@ public class AssetHelperImpl implements AssetHelper {
 			booleanQueryImpl.add(booleanQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		BooleanClause<Query> assetEntryBooleanClauses =
-			BooleanClauseFactoryUtil.create(
-				booleanQueryImpl, BooleanClauseOccur.MUST);
+		BooleanClause<Query> assetEntryBooleanClauses = new BooleanClause<>(
+			booleanQueryImpl, BooleanClauseOccur.MUST);
 
 		BooleanClause<Query>[] booleanClauses =
 			searchContext.getBooleanClauses();

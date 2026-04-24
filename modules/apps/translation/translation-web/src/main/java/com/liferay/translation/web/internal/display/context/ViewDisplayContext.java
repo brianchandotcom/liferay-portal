@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -281,8 +280,7 @@ public class ViewDisplayContext {
 		booleanQuery.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 		};
 	}
 

@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Field;
@@ -720,8 +719,7 @@ public class DLAdminDisplayContext {
 		booleanQuery.setPreBooleanFilter(booleanFilter);
 
 		return new BooleanClause[] {
-			BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST)
+			new BooleanClause<>(booleanQuery, BooleanClauseOccur.MUST)
 		};
 	}
 

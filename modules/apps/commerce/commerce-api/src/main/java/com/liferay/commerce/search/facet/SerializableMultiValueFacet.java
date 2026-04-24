@@ -6,7 +6,6 @@
 package com.liferay.commerce.search.facet;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
@@ -59,8 +58,7 @@ public class SerializableMultiValueFacet extends MultiValueFacet {
 			return null;
 		}
 
-		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, facetTermsFilter, BooleanClauseOccur.MUST);
+		return new BooleanClause<>(facetTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 }

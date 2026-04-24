@@ -162,6 +162,8 @@ const typeFormatter = (type: DataSourceTypes): string => {
 	switch (type) {
 		case DataSourceTypes.Csv:
 			return Liferay.Language.get('.csv');
+		case DataSourceTypes.Demandbase:
+			return Liferay.Language.get('demandbase');
 		case DataSourceTypes.Liferay:
 			return Liferay.Language.get('liferay-portal');
 		case DataSourceTypes.Salesforce:

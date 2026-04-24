@@ -140,7 +140,6 @@ export function BasicInfoContainer({
 
 				{(values.businessType === 'Encrypted' ||
 					values.businessType === 'LongText' ||
-					values.businessType === 'PhoneNumber' ||
 					values.businessType === 'Text') && (
 					<MaxLengthProperties
 						disabled={values.system}

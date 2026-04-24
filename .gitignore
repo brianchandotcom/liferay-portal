@@ -15,12 +15,12 @@
 *.swp
 *~
 .DS_Store
-.worktree-port-offset
 .ant-targets-build.xml
 .ant_targets
 .gh.json
 .sass-cache
 .sass_cache_*.css
+.worktree-port-offset
 /*.ant-*
 /*.ipr
 /*.iws
@@ -94,7 +94,6 @@
 /portal-web/*.iws
 /portal-web/ROOT.war
 /portal-web/build
-/portal-web/poshi-ext.properties
 /portal-web/classes
 /portal-web/docroot/WEB-INF/classes
 /portal-web/docroot/WEB-INF/lib
@@ -112,6 +111,7 @@
 /portal-web/liferay-portal.war
 /portal-web/portal-web.war
 /portal-web/portal-web.war.asc
+/portal-web/poshi-ext.properties
 /portal-web/poshi-ext.properties
 /portal-web/test-ant-scripts
 /portal-web/test-classes

@@ -343,42 +343,6 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Documents and Media",
-			status = "Disabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Documents and Media",
-			depotName = "Test Depot Name",
-			noApplication = "true");
-
-		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
-
-		Depot.configureApplication(
-			applicationList = "Documents and Media",
-			status = "Enabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Documents and Media",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openToDMEntryInDepot(
-			depotName = "Test Depot Name",
-			dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-	}
-
-	@description = "This ensures that the WC application can be viewed after reactivating in a depot."
-	@priority = 4
-	@refactordone
-	test WCRemainsAfterReactivating {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Depot Name",
@@ -388,27 +352,33 @@ definition {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Web Content",
+			applicationList = "Documents and Media,Web Content",
 			status = "Disabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Web Content",
+			applicationList = "Documents and Media,Web Content",
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
-			applicationList = "Web Content",
+			applicationList = "Documents and Media,Web Content",
 			status = "Enabled");
 
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
-			applicationList = "Web Content",
+			applicationList = "Documents and Media,Web Content",
 			depotName = "Test Depot Name");
+
+		DepotNavigator.openToDMEntryInDepot(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 

@@ -101,14 +101,6 @@ definition {
 		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.viewNoPanel(panelName = "Sharing");
-	}
-
-	@description = "This test ensures that depot sharing can be disabled at the system level."
-	@priority = 4
-	@refactordone
-	test CanDisableDepotSharingAtSystemScope {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		DepotNavigator.openToConfigSharingInSystemSettings();
 

@@ -60,6 +60,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -1050,6 +1052,44 @@ public class LayoutsImporterTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-86505")
+	public void testImportUtilityPageEntryIsApprovedAndCanBeSetAsDefault()
+		throws Exception {
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+
+		try {
+			_layoutsImporter.importFile(
+				TestPropsValues.getUserId(), _group1.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				_getFile(_RESOURCES_PATH_UTILITY_PAGES),
+				LayoutsImportStrategy.OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					"test-default-utility-page", _group1.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertTrue(layout.isPublished());
+
+		layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				setDefaultLayoutUtilityPageEntry(
+					layoutUtilityPageEntry.getLayoutUtilityPageEntryId());
+
+		Assert.assertTrue(
+			layoutUtilityPageEntry.isDefaultLayoutUtilityPageEntry());
 	}
 
 	@Test
@@ -2481,6 +2521,10 @@ public class LayoutsImporterTest {
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
 			"/dependencies/page-templates";
 
+	private static final String _RESOURCES_PATH_UTILITY_PAGES =
+		"com/liferay/layout/page/template/admin/web/internal/importer/test" +
+			"/dependencies/utility-pages";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsImporterTest.class);
 
@@ -2552,6 +2596,10 @@ public class LayoutsImporterTest {
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private Portal _portal;

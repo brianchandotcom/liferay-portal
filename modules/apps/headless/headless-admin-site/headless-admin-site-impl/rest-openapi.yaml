@@ -591,6 +591,24 @@ components:
                         The localized custom meta tag's values.
                     type: object
             type: object
+        DateFragmentEditableElementValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentEditableElementValue"
+                -   properties:
+                        date:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+                            # @review
+                            description:
+                                The mapped date value of the date fragment editable element.
+                        dateFormat:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized date format patterns. When absent, the Default format is used.
+            # @review
+            description:
+                A fragment editable element value of type date.
+            type: object
         DefaultFragmentReference:
             allOf:
                 -   $ref: "#/components/schemas/FragmentReference"
@@ -1296,6 +1314,7 @@ components:
                 mapping:
                     Action: "#/components/schemas/ActionFragmentEditableElementValue"
                     BackgroundImage: "#/components/schemas/BackgroundImageFragmentEditableElementValue"
+                    Date: "#/components/schemas/DateFragmentEditableElementValue"
                     HTML: "#/components/schemas/HTMLFragmentEditableElementValue"
                     Image: "#/components/schemas/ImageFragmentEditableElementValue"
                     Link: "#/components/schemas/LinkFragmentEditableElementValue"
@@ -1310,6 +1329,7 @@ components:
                     enum:
                         -   Action
                         -   BackgroundImage
+                        -   Date
                         -   HTML
                         -   Image
                         -   Link

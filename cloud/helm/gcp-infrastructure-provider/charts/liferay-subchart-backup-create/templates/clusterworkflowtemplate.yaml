@@ -20,7 +20,18 @@ spec:
             steps:
                 -   -   name: create-backup
                         template: create-backup
+                -   -   arguments:
+                            parameters:
+                                -   name: backup-name
+                                    value: "{{ "{{" }}steps.create-backup.outputs.parameters.backup-name}}"
+                        name: wait-backup-ready
+                        template: wait-backup-ready
         -   name: create-backup
+            outputs:
+                parameters:
+                    -   name: backup-name
+                        valueFrom:
+                            jsonPath: "{.metadata.name}"
             resource:
                 action: create
                 manifest: |-
@@ -58,5 +69,16 @@ spec:
                                             project-id: {{ "{{" }}workflow.parameters.project-id}}
                                             should-back-up: "true"
                                 type: gcs
+        -   inputs:
+                parameters:
+                    -   name: backup-name
+            name: wait-backup-ready
+            script:
+                command: [sh]
+                image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/wait-backup-ready.sh") . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}

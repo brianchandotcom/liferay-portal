@@ -6,3 +6,17 @@ argo:
             strategy: OnWorkflowSuccess
         ttlStrategy:
             secondsAfterCompletion: 86400
+images:
+    helmKubectl:
+        repository: dtzar/helm-kubectl
+        tag: 4.1.1
+liferayBackup:
+    waitTimeoutSeconds: 7200
+resources:
+    default:
+        limits:
+            cpu: 250m
+            memory: 256Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi

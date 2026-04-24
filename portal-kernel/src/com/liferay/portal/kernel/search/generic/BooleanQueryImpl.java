@@ -42,13 +42,6 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
-	public Query add(Query query, String occur) {
-		add(query, BooleanClauseOccur.valueOf(occur));
-
-		return query;
-	}
-
-	@Override
 	public Query addExactTerm(String field, boolean value) {
 		return addExactTerm(field, String.valueOf(value));
 	}

@@ -18,17 +18,18 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 
 	@Override
-	public BooleanClause<Query> create(Query query, String occur) {
-		return new BooleanClauseImpl<>(
-			query, BooleanClauseOccur.valueOf(occur));
+	public BooleanClause<Query> create(
+		Query query, BooleanClauseOccur booleanClauseOccur) {
+
+		return new BooleanClauseImpl<>(query, booleanClauseOccur);
 	}
 
 	@Override
 	public BooleanClause<Query> create(
-		String field, String value, String occur) {
+		String field, String value, BooleanClauseOccur booleanClauseOccur) {
 
 		return new BooleanClauseImpl<>(
-			new TermQueryImpl(field, value), BooleanClauseOccur.valueOf(occur));
+			new TermQueryImpl(field, value), booleanClauseOccur);
 	}
 
 	@Override

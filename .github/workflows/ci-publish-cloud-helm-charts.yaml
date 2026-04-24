@@ -2,6 +2,76 @@ defaults:
     run:
         shell: bash
 jobs:
+    comment-argocd-patch-commands:
+        if: |
+            github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
+        needs:
+            -   publish-gcp
+            -   publish-gcp-infrastructure
+            -   publish-gcp-infrastructure-provider
+        permissions:
+            pull-requests: write
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 1
+                    filter: blob:none
+                    show-progress: false
+                    sparse-checkout: |
+                        cloud/helm/gcp/Chart.yaml
+                        cloud/helm/gcp-infrastructure/Chart.yaml
+                        cloud/helm/gcp-infrastructure-provider/Chart.yaml
+            -   env:
+                    GH_TOKEN: ${{github.token}}
+                    PR_NUMBER: ${{github.event.pull_request.number}}
+                    REGISTRY: ghcr.io/${{github.repository_owner}}/charts-pr/${{github.event.pull_request.number}}
+                name: Post ArgoCD patch commands
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    SHORT_SHA=$(git rev-parse --short HEAD)
+
+                    GCP_VERSION="$(yq .version cloud/helm/gcp/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    GCP_INFRA_VERSION="$(yq .version cloud/helm/gcp-infrastructure/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+                    GCP_INFRA_PROVIDER_VERSION="$(yq .version cloud/helm/gcp-infrastructure-provider/Chart.yaml)-pr-${PR_NUMBER}-g${SHORT_SHA}"
+
+                    cat > /tmp/pr-comment.md << EOF
+                    ## GCP Helm Charts Published
+
+                    Charts for this PR are available at \`${REGISTRY}\`. To test on a cluster, set your ArgoCD namespace and run:
+
+                    \`\`\`bash
+                    ARGOCD_NS=argocd  # adjust if your ArgoCD is in a different namespace
+
+                    # Permit GHCR in ArgoCD AppProjects (only needed once per cluster)
+                    kubectl patch appproject liferay-application -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+                    kubectl patch appproject liferay-infrastructure -n "\${ARGOCD_NS}" --type=json -p='[{"op":"add","path":"/spec/sourceRepos/-","value":"${REGISTRY}"}]'
+
+                    # Update ApplicationSets and Application to use PR charts
+                    kubectl patch applicationset liferay-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_VERSION}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-gcp"}
+                    ]'
+                    kubectl patch applicationset liferay-infrastructure-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_INFRA_VERSION}"},
+                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-gcp-infrastructure"}
+                    ]'
+                    kubectl patch application liferay-infrastructure-provider -n "\${ARGOCD_NS}" --type=json -p='[
+                      {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${GCP_INFRA_PROVIDER_VERSION}"},
+                      {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-gcp-infrastructure-provider"}
+                    ]'
+                    \`\`\`
+                    EOF
+
+                    gh pr comment "${PR_NUMBER}" --edit-last --body-file /tmp/pr-comment.md 2>/dev/null || \
+                        gh pr comment "${PR_NUMBER}" --body-file /tmp/pr-comment.md
     delete-packages-pr:
         if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         runs-on: ubuntu-latest

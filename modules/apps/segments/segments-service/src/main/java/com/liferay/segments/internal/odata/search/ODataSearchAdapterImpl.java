@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
-import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -222,7 +221,7 @@ public class ODataSearchAdapterImpl implements ODataSearchAdapter {
 
 		lastDocumentBooleanQuery.add(booleanQuery, BooleanClauseOccur.MUST);
 
-		TermRangeQuery termRangeQuery = new TermRangeQueryImpl(
+		TermRangeQuery termRangeQuery = new TermRangeQuery(
 			sortField, lastDocument.get(sortField), null, false, true);
 
 		lastDocumentBooleanQuery.add(termRangeQuery, BooleanClauseOccur.MUST);

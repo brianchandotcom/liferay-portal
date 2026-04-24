@@ -13,12 +13,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.TermQuery;
+import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -354,7 +354,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					fieldName -> new TermRangeQueryImpl(
+					fieldName -> new TermRangeQuery(
 						fieldName, entityField.getFilterableValue(fieldValue),
 						null, true, true)));
 		}
@@ -381,7 +381,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					fieldName -> new TermRangeQueryImpl(
+					fieldName -> new TermRangeQuery(
 						fieldName, entityField.getFilterableValue(fieldValue),
 						null, false, true)));
 		}
@@ -450,7 +450,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					fieldName -> new TermRangeQueryImpl(
+					fieldName -> new TermRangeQuery(
 						fieldName, null,
 						entityField.getFilterableValue(fieldValue), false,
 						true)));
@@ -478,7 +478,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			return new QueryFilter(
 				_nestedFieldQueryHelper.getQuery(
 					entityField.getFilterableName(locale),
-					fieldName -> new TermRangeQueryImpl(
+					fieldName -> new TermRangeQuery(
 						fieldName, null,
 						entityField.getFilterableValue(fieldValue), false,
 						false)));

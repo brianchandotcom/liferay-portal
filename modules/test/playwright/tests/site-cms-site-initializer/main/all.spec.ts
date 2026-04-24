@@ -3373,6 +3373,7 @@ test(
 	'Delete Asset Versions in bulk',
 	{tag: '@LPD-67234'},
 	async ({apiHelpers, assetsPage, page}) => {
+		const bulkActionTasksApplicationName = 'cms/bulk-action-tasks';
 		const contentApplicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 
@@ -3413,41 +3414,56 @@ test(
 			);
 		});
 
-		await test.step('Navigate to history page and bulk delete all versions', async () => {
-			await assetsPage.gotoAll();
+		try {
+			await test.step('Navigate to history page and bulk delete all versions', async () => {
+				await assetsPage.gotoAll();
 
-			await assetsPage.execItemAction({
-				action: 'View History',
-				filter: webContentNames[2],
-			});
+				await assetsPage.execItemAction({
+					action: 'View History',
+					filter: webContentNames[2],
+				});
 
-			for (const webContentName of webContentNames) {
-				await assetsPage
-					.getItem(webContentName)
-					.locator('input[title="Select Item"]')
-					.check();
-			}
-
-			await assetsPage.execBulkItemAction('Delete');
-
-			await waitForModal({
-				page,
-			});
-
-			await page
-				.locator('.modal')
-				.getByRole('button', {name: 'Delete'})
-				.click();
-
-			await waitForAlert(
-				page,
-				'Info:Delete asset versions action started for 3 versions.',
-				{
-					autoClose: true,
-					type: 'info',
+				for (const webContentName of webContentNames) {
+					await assetsPage
+						.getItem(webContentName)
+						.locator('input[title="Select Item"]')
+						.check();
 				}
-			);
-		});
+
+				await assetsPage.execBulkItemAction('Delete');
+
+				await waitForModal({
+					page,
+				});
+
+				await page
+					.locator('.modal')
+					.getByRole('button', {name: 'Delete'})
+					.click();
+
+				await waitForAlert(
+					page,
+					'Info:Delete asset versions action started for 3 versions.',
+					{
+						autoClose: true,
+						type: 'info',
+					}
+				);
+			});
+		}
+		finally {
+			const tasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasksApplicationName
+				);
+
+			for (let i = 0; i < tasks.totalCount; i++) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasksApplicationName,
+					tasks.items[i].id
+				);
+			}
+		}
 
 		await test.step('All versions are removed excluding the current one', async () => {
 			await page.reload();

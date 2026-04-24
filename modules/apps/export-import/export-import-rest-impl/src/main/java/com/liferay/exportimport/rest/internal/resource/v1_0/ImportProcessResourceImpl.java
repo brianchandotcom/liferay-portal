@@ -42,7 +42,10 @@ import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.staging.StagingGroupHelper;
+
+import jakarta.ws.rs.NotFoundException;
 
 import java.io.Serializable;
 
@@ -140,20 +143,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			String scopeKey, MultipartBody multipartBody)
 		throws Exception {
 
-		long groupId = GetterUtil.getLong(scopeKey);
-
-		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
-
-		FileEntry fileEntry = _addTempFileEntry(groupId, multipartBody);
-
-		return _validateImportLayoutsFile(groupId, fileEntry);
-	}
-
-	@Override
-	public ValidationResponse postValidate(MultipartBody multipartBody)
-		throws Exception {
-
-		long groupId = _getCompanyGroupId();
+		long groupId = _getGroupId(scopeKey);
 
 		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
 
@@ -240,6 +230,30 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		}
 
 		return dynamicQuery;
+	}
+
+	private long _getGroupId(String scopeKey) {
+		Long groupId = GroupUtil.getGroupId(
+			contextCompany.getCompanyId(), scopeKey, groupLocalService);
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
+			contextCompany.getCompanyId());
+
+		if ((companyGroup != null) &&
+			((companyGroup.getGroupId() == GetterUtil.getLong(scopeKey)) ||
+			 StringUtil.equals(
+				 companyGroup.getExternalReferenceCode(), scopeKey) ||
+			 StringUtil.equals(companyGroup.getGroupKey(), scopeKey))) {
+
+			return companyGroup.getGroupId();
+		}
+
+		throw new NotFoundException(
+			"Unable to get a valid scope with key " + scopeKey);
 	}
 
 	private void _setSorts(DynamicQuery dynamicQuery, Sort[] sorts) {

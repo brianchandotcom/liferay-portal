@@ -48,6 +48,9 @@ jobs:
                     -   gcp/gitops/resources
                     -   gcp/gke
 on:
+    pull_request:
+        paths:
+            -   cloud/terraform/**
     push:
         branches:
             -   master

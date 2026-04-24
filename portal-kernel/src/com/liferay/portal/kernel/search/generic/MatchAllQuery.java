@@ -5,13 +5,13 @@
 
 package com.liferay.portal.kernel.search.generic;
 
-import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
  * @author Michael C. Han
  */
-public class MatchAllQuery extends BaseQueryImpl {
+public class MatchAllQuery extends Query {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

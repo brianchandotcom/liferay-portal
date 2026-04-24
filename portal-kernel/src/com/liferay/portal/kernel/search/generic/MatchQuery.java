@@ -6,13 +6,13 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
  * @author Michael C. Han
  */
-public class MatchQuery extends BaseQueryImpl {
+public class MatchQuery extends Query {
 
 	public MatchQuery(String field, String value) {
 		_field = field;

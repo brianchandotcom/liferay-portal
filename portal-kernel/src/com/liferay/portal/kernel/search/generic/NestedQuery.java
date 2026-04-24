@@ -6,14 +6,13 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
  * @author Michael C. Han
  */
-public class NestedQuery extends BaseQueryImpl {
+public class NestedQuery extends Query {
 
 	public NestedQuery(String path, Query query) {
 		_path = path;

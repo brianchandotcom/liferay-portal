@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import java.util.Collection;
@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class MultiMatchQuery extends BaseQueryImpl {
+public class MultiMatchQuery extends Query {
 
 	public MultiMatchQuery(String value) {
 		_value = value;

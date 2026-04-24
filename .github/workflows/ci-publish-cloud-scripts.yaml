@@ -37,7 +37,9 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Version ${CURRENT_VERSION} already exists. The publish step will be skipped."
+                        echo "::warning ::Bootstrap liferay-aws-bootstrap@${CURRENT_VERSION} already exists. Bump cloud/scripts/versions.json to publish."
+
+                        echo "- **liferay-aws-bootstrap**: \`${CURRENT_VERSION}\` already published; bump to republish." >> ${GITHUB_STEP_SUMMARY}
                     fi
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push AWS bootstrap scripts
@@ -92,7 +94,9 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "Version ${CURRENT_VERSION} already exists. The publish step will be skipped."
+                        echo "::warning ::Bootstrap liferay-gcp-bootstrap@${CURRENT_VERSION} already exists. Bump cloud/scripts/versions.json to publish."
+
+                        echo "- **liferay-gcp-bootstrap**: \`${CURRENT_VERSION}\` already published; bump to republish." >> ${GITHUB_STEP_SUMMARY}
                     fi
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push GCP bootstrap scripts

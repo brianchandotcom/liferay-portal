@@ -12,30 +12,15 @@ definition {
 	property testray.main.component.name = "Segmentation";
 
 	setUp {
-		task ("Enable DXP segments deprecation feature flag") {
-			SignIn.signInTestSetup();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "System Scope");
-
-			FeatureFlag.enableFeatureFlag(
-				configurationScope = "System Scope",
-				featureFlag = "DXP Segments",
-				scope = "Deprecation");
-		}
-
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
 		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		task ("Enable DXP segments deprecation feature flag") {
+			Segmentation.enableDXPSegments();
+		}
 
 		task ("Add segment in Test Site Name") {
 			JSONSegmentsentry.addSegment(

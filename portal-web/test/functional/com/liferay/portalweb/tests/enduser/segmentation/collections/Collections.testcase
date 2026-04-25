@@ -15,20 +15,7 @@ definition {
 		task ("Enable DXP segments deprecation feature flag") {
 			SignIn.signInTestSetup();
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "System Scope");
-
-			FeatureFlag.enableFeatureFlag(
-				configurationScope = "System Scope",
-				featureFlag = "DXP Segments",
-				scope = "Deprecation");
+			Segmentation.enableDXPSegments();
 		}
 
 		TestCase.setUpPortalInstance();

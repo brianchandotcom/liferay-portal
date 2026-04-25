@@ -1574,13 +1574,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	@Test
 	public void testIncludeUrl() throws Exception {
-
-		// Default request
-
-		_assertCanonicalLinkAndSocialTags(
-			_getHttpServletRequest(),
-			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
@@ -1604,6 +1597,12 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 				mockHttpServletRequest,
 				PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
 		}
+
+		// Default request
+
+		_assertCanonicalLinkAndSocialTags(
+			_getHttpServletRequest(),
+			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
 	}
 
 	@Test
@@ -1767,9 +1766,8 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertCanonicalLinkTag(document, canonicalURL);
 
-		_assertMetaTag(document, "property", "og:url", canonicalURL);
-
 		_assertMetaTag(document, "name", "twitter:url", canonicalURL);
+		_assertMetaTag(document, "property", "og:url", canonicalURL);
 	}
 
 	private void _assertCanonicalLinkTag(Document document, String href) {

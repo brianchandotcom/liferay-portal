@@ -81,7 +81,6 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 				seedURI.getScheme() + "://" + seedURI.getAuthority();
 
 			crawlerConfig = _replace(
-				crawlerConfig,
 				Map.of(
 					"[$CRAWLER_DOMAIN_URL$]", domainUrl,
 					"[$CRAWLER_ELASTICSEARCH_HOST$]", _crawlerElasticsearchHost,
@@ -97,7 +96,8 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 					valuesJSONObject.getString("indexName"),
 					"[$CRAWLER_SEED_URL$]", seedUrl,
 					"[$CRAWLER_URL_QUEUE_SIZE_LIMIT$]",
-					String.valueOf(_crawlerUrlQueueSizeLimit)));
+					String.valueOf(_crawlerUrlQueueSizeLimit)),
+				crawlerConfig);
 
 			Files.writeString(path, crawlerConfig, StandardCharsets.UTF_8);
 
@@ -170,7 +170,7 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 		}
 	}
 
-	private String _replace(String string, Map<String, String> map) {
+	private String _replace(Map<String, String> map, String string) {
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			string = StringUtil.replace(
 				string, entry.getKey(), entry.getValue());

@@ -72,18 +72,15 @@ jobs:
 
                     kubectl patch applicationset liferay-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_VERSION}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-gcp"}
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_VERSION}"}
                     ]'
                     kubectl patch applicationset liferay-infrastructure-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_INFRA_VERSION}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-gcp-infrastructure"}
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${GCP_INFRA_VERSION}"}
                     ]'
                     kubectl patch application liferay-infrastructure-provider -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${GCP_INFRA_PROVIDER_VERSION}"},
-                      {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-gcp-infrastructure-provider"}
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${GCP_INFRA_PROVIDER_VERSION}"}
                     ]'
                     \`\`\`
                     EOF
@@ -103,24 +100,21 @@ jobs:
 
                     kubectl patch applicationset liferay-aws-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_VERSION}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-aws"}
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_VERSION}"}
                     ]'
                     kubectl patch applicationset liferay-aws-infrastructure-applicationset -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_INFRA_VERSION}"},
-                      {"op":"replace","path":"/spec/template/spec/sources/0/chart","value":"liferay-aws-infrastructure"}
+                      {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${AWS_INFRA_VERSION}"}
                     ]'
                     kubectl patch application liferay-aws-infrastructure-provider -n "\${ARGOCD_NS}" --type=json -p='[
                       {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
-                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${AWS_INFRA_PROVIDER_VERSION}"},
-                      {"op":"replace","path":"/spec/sources/0/chart","value":"liferay-aws-infrastructure-provider"}
+                      {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${AWS_INFRA_PROVIDER_VERSION}"}
                     ]'
                     \`\`\`
                     EOF
 
-                    _upsert_comment "argocd-gcp-charts" /tmp/gcp-comment.md
                     _upsert_comment "argocd-aws-charts" /tmp/aws-comment.md
+                    _upsert_comment "argocd-gcp-charts" /tmp/gcp-comment.md
     delete-packages-pr:
         if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'pt-cloudnative/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'pt-cloudnative/liferay-portal'
         runs-on: ubuntu-latest

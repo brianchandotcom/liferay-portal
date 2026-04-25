@@ -5,7 +5,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Order;
 
 /**
@@ -13,19 +12,29 @@ import com.liferay.portal.kernel.dao.orm.Order;
  */
 public class OrderImpl implements Order {
 
-	public OrderImpl(org.hibernate.criterion.Order order) {
-		_order = order;
+	public OrderImpl(boolean ascending, String propertyName) {
+		_ascending = ascending;
+		_propertyName = propertyName;
 	}
 
-	public org.hibernate.criterion.Order getWrappedOrder() {
-		return _order;
+	public String getPropertyName() {
+		return _propertyName;
+	}
+
+	public boolean isAscending() {
+		return _ascending;
 	}
 
 	@Override
 	public String toString() {
-		return StringBundler.concat("{_order=", _order, "}");
+		if (_ascending) {
+			return _propertyName + " asc";
+		}
+
+		return _propertyName + " desc";
 	}
 
-	private final org.hibernate.criterion.Order _order;
+	private final boolean _ascending;
+	private final String _propertyName;
 
 }

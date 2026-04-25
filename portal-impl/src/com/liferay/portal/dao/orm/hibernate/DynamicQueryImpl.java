@@ -47,7 +47,15 @@ public class DynamicQueryImpl implements DynamicQuery {
 	public DynamicQuery addOrder(Order order) {
 		OrderImpl orderImpl = (OrderImpl)order;
 
-		_detachedCriteria.addOrder(orderImpl.getWrappedOrder());
+		if (orderImpl.isAscending()) {
+			_detachedCriteria.addOrder(
+				org.hibernate.criterion.Order.asc(orderImpl.getPropertyName()));
+		}
+		else {
+			_detachedCriteria.addOrder(
+				org.hibernate.criterion.Order.desc(
+					orderImpl.getPropertyName()));
+		}
 
 		return this;
 	}

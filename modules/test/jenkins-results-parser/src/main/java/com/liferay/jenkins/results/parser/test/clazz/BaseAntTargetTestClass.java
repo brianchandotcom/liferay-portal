@@ -61,7 +61,7 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 			return null;
 		}
 
-		if (_cachedTestClassReportSearched) {
+		if (!_cachedTestClassReportSearched) {
 			getCachedTestClassReport();
 		}
 

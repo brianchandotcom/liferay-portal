@@ -12,25 +12,6 @@ definition {
 	property testray.main.component.name = "Segmentation";
 
 	setUp {
-		task ("Enable DXP segments deprecation feature flag") {
-			SignIn.signInTestSetup();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "System Scope");
-
-			FeatureFlag.enableFeatureFlag(
-				configurationScope = "System Scope",
-				featureFlag = "DXP Segments",
-				scope = "Deprecation");
-		}
-
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -55,6 +36,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Experience Content Page",
 			type = "content");
+
+		task ("Enable DXP segments deprecation feature flag") {
+			Segmentation.enableDXPSegments();
+		}
 	}
 
 	@description = "LPS-125710 When a user, that Belongs To two or more different segments with experiences for them and these experiences are below of any other Anyone-targeted experience, lands on the page, the Anyone-targeted experience labeled as active will be shown"

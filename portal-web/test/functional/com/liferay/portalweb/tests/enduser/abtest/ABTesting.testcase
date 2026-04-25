@@ -19,25 +19,6 @@ definition {
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Enable DXP segments deprecation feature flag") {
-			SignIn.signInTestSetup();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "System Scope");
-
-			FeatureFlag.enableFeatureFlag(
-				configurationScope = "System Scope",
-				featureFlag = "DXP Segments",
-				scope = "Deprecation");
-		}
-
 		task ("Go to DXP portal, login and create site") {
 			TestCase.setUpPortalInstance();
 
@@ -55,8 +36,10 @@ definition {
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
 				type = "content");
+		}
 
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		task ("Enable DXP segments deprecation feature flag") {
+			Segmentation.enableDXPSegments();
 		}
 	}
 

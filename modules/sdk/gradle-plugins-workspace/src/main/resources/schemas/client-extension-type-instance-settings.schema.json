@@ -166,6 +166,33 @@
 		},
 		{
 			"properties": {
+				"location": {
+					"title": "Location",
+					"type": "string"
+				},
+				"modelName": {
+					"title": "Model Name",
+					"type": "string"
+				},
+				"pid": {
+					"const": "com.liferay.ai.hub.internal.configuration.VertexAIConfiguration",
+					"title": "Vertex AI Configuration"
+				},
+				"projectId": {
+					"title": "Project ID",
+					"type": "string"
+				}
+			},
+			"required": [
+				"pid",
+				"location",
+				"modelName",
+				"projectId"
+			],
+			"title": "Vertex AI Configuration"
+		},
+		{
+			"properties": {
 				"commerceSyncEnabledAnalyticsChannelIds": {
 					"items": {
 						"type": "string"
@@ -746,6 +773,12 @@
 		},
 		{
 			"properties": {
+				"cleanUpCTSContentData": {
+					"default": false,
+					"description": "Enable this to remove change tracking store content immediately after a publication publishes.",
+					"title": "Clean Up Change Tracking Store Content Data",
+					"type": "boolean"
+				},
 				"defaultCTCollectionTemplateId": {
 					"default": 0,
 					"title": "Default Publication Template ID",
@@ -815,6 +848,12 @@
 		},
 		{
 			"properties": {
+				"contextViewScoreThreshold": {
+					"default": 60000,
+					"description": "Set the maximum score a publication can have and still render the context view. Publications with a score above this threshold will skip the context view for better performance.",
+					"title": "Context View Score Threshold",
+					"type": "number"
+				},
 				"hiddenApplications": {
 					"description": "These applications will be hidden from the application menu when you are in a publication.",
 					"items": {
@@ -4844,6 +4883,7 @@
 				"com.liferay.adaptive.media.image.internal.configuration.AMImageCompanyConfiguration",
 				"com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration",
 				"com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration",
+				"com.liferay.ai.hub.internal.configuration.VertexAIConfiguration",
 				"com.liferay.analytics.settings.configuration.AnalyticsConfiguration",
 				"com.liferay.asset.auto.tagger.google.cloud.natural.language.internal.configuration.GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration",
 				"com.liferay.asset.auto.tagger.internal.configuration.AssetAutoTaggerCompanyConfiguration",

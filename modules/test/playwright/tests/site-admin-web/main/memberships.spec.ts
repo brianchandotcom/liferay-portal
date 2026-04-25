@@ -801,6 +801,79 @@ test('Assign organization as site member and search', async ({
 	}).toPass();
 });
 
+test('Search and paginate site members', async ({
+	apiHelpers,
+	membershipsPage,
+	page,
+}) => {
+	const siteId = await page.evaluate(() => {
+		return String(Liferay.ThemeDisplay.getSiteGroupId());
+	});
+
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	const users: TUserAccount[] = [];
+
+	for (let i = 0; i < 20; i++) {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			siteId,
+			user.id
+		);
+
+		users.push(user);
+	}
+
+	await membershipsPage.goto();
+
+	await expect(
+		page.getByText('Showing 1 to 20 of 21 entries.')
+	).toBeVisible();
+
+	await page.getByLabel('Page 2').click();
+
+	await expect(
+		page.getByText('Showing 21 to 21 of 21 entries.')
+	).toBeVisible();
+
+	await page.getByLabel('Page 1').click();
+
+	await expect(
+		page.getByText('Showing 1 to 20 of 21 entries.')
+	).toBeVisible();
+
+	const searchBox = page.getByPlaceholder('Search for');
+
+	const searchForMember = async (query: string, user: TUserAccount) => {
+		await expect(async () => {
+			await searchBox.fill(query);
+			await searchBox.press('Enter');
+
+			await expect(
+				page.locator(
+					`[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_${user.alternateName}"]`
+				)
+			).toBeVisible({timeout: 2000});
+		}).toPass();
+	};
+
+	await searchForMember(users[0].givenName, users[0]);
+	await searchForMember(users[1].familyName, users[1]);
+	await searchForMember(users[2].alternateName, users[2]);
+
+	await searchBox.fill('nonexistentmember');
+	await searchBox.press('Enter');
+
+	await expect(
+		page.getByText(
+			'No user was found that is a direct member of this site.'
+		)
+	).toBeVisible();
+});
+
 test('Search user group site members', async ({
 	apiHelpers,
 	membershipsPage,

@@ -747,6 +747,41 @@ test(
 	}
 );
 
+test('Allow Manual Membership Management toggle controls product menu visibility', async ({
+	membershipsPage,
+	page,
+	site,
+	siteSettingsPage,
+}) => {
+	await page.goto(`/group${site.friendlyUrlPath}/~/control_panel/manage`);
+
+	await membershipsPage.productMenuPage.openProductMenuIfClosed();
+	await membershipsPage.productMenuPage.peopleButton.click();
+
+	await expect(
+		membershipsPage.productMenuPage.membershipsButton
+	).toBeVisible();
+
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		null,
+		site.friendlyUrlPath
+	);
+
+	await page.getByLabel('Allow Manual Membership Management').click();
+
+	await siteSettingsPage.saveConfiguration();
+
+	await page.goto(`/group${site.friendlyUrlPath}/~/control_panel/manage`);
+
+	await membershipsPage.productMenuPage.openProductMenuIfClosed();
+	await membershipsPage.productMenuPage.peopleButton.click();
+
+	await expect(
+		membershipsPage.productMenuPage.membershipsButton
+	).not.toBeVisible();
+});
+
 test('Assign organization as site member and search', async ({
 	apiHelpers,
 	membershipsPage,

@@ -103,6 +103,8 @@ packageRunTest {
 }
 
 packageRunWebpack {
+	dependsOn osbYarnInstall
+
 	if (project.hasProperty("faroEnvironmentName")) {
 		environment "FARO_ENVIRONMENT_NAME", faroEnvironmentName
 	}

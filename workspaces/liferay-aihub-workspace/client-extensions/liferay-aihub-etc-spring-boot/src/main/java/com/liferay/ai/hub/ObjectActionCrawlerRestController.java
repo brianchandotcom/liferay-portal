@@ -64,7 +64,7 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 		try {
 			path = Files.createTempFile("crawler-config", ".yml");
 
-			String crawlerConfig;
+			String crawlerConfig = null;
 
 			try (InputStream inputStream = getClass().getResourceAsStream(
 					"/crawler-config-template.yml")) {

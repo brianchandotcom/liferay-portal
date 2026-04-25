@@ -16,15 +16,23 @@ import java.util.regex.Pattern;
 /**
  * @author Hugo Huijser
  */
-public class XMLEmbeddedJSONCheck extends BaseFileCheck {
+public class EmbeddedJSONCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = _formatJSONInCDATA(content);
+		if (fileName.endsWith(".md")) {
+			return _formatJSONInFencedCodeBlock(content);
+		}
 
-		return _formatJSONInFencedCodeBlock(content);
+		if (fileName.endsWith(".xml")) {
+			content = _formatJSONInCDATA(content);
+
+			return _formatJSONInFencedCodeBlock(content);
+		}
+
+		return content;
 	}
 
 	private String _formatJSONInCDATA(String content) {

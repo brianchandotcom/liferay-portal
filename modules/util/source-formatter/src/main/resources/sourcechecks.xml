@@ -1539,6 +1539,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
+		<check name="EmbeddedJSONCheck">
+			<category name="Bug Prevention" />
+			<description name="Ensures consistent formatting for embedded JSON." />
+		</check>
 		<check name="MarkdownBreakingChangesAmendmentsFileCheck">
 			<category name="Styling" />
 			<description name="Checks that breaking changes amendments should contain the schematized breaking changes in `BREAKING_CHANGES_AMENDMENTS.md` file." />
@@ -2093,6 +2097,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
+		<check name="EmbeddedJSONCheck">
+			<category name="Bug Prevention" />
+			<description name="Ensures consistent formatting for embedded JSON." />
+		</check>
 		<check name="XMLBuildFileCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on `build.xml`." />
@@ -2116,10 +2124,6 @@
 		<check name="XMLEchoMessageCheck">
 			<category name="Styling" />
 			<description name="Checks the echo message attributes in `*.xml` file." />
-		</check>
-		<check name="XMLEmbeddedJSONCheck">
-			<category name="Bug Prevention" />
-			<description name="Performs several checks on JSON embedded in XML." />
 		</check>
 		<check name="XMLFriendlyURLRoutesFileCheck">
 			<category name="Styling" />

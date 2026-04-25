@@ -801,6 +801,62 @@ test('Assign organization as site member and search', async ({
 	}).toPass();
 });
 
+test('Limit child site membership to parent site members', async ({
+	apiHelpers,
+	membershipsPage,
+	page,
+	siteSettingsPage,
+}) => {
+	const parentSite = await apiHelpers.headlessAdminSite.postSite({
+		name: getRandomString(),
+	});
+
+	const childSite = await apiHelpers.headlessAdminSite.postSite({
+		name: getRandomString(),
+		parentSiteExternalReferenceCode: parentSite.externalReferenceCode,
+	});
+
+	const userInParent = await apiHelpers.headlessAdminUser.postUserAccount();
+	const userNotInParent =
+		await apiHelpers.headlessAdminUser.postUserAccount();
+
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		parentSite.id,
+		userInParent.id
+	);
+
+	await siteSettingsPage.goToSiteSetting(
+		'Site Configuration',
+		null,
+		childSite.friendlyUrlPath
+	);
+
+	await page
+		.getByLabel('Limit membership to members of the parent site')
+		.click();
+
+	await siteSettingsPage.saveConfiguration();
+
+	await membershipsPage.goto();
+
+	await page.getByRole('button', {name: 'Add'}).click();
+
+	await page.waitForTimeout(500);
+
+	const usersFrame = page.frameLocator(
+		'iframe[title="Assign Users to This Site"]'
+	);
+
+	await expect(usersFrame.getByLabel(userInParent.givenName)).toBeVisible();
+	await expect(
+		usersFrame.getByLabel(userNotInParent.givenName)
+	).not.toBeVisible();
+});
+
 test('Search and paginate site members', async ({
 	apiHelpers,
 	membershipsPage,

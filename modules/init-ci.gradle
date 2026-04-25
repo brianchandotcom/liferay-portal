@@ -51,8 +51,7 @@ gradle.taskGraph.addTaskExecutionListener(
 
 				failure.printStackTrace(new PrintWriter(stringWriter))
 
-				_writeReport(
-					duration, "${task.path} failed. Please check the logs for details.", stringWriter.toString(), project.path, testResultsDir)
+				_writeReport(duration, "${task.path} failed. Please check the logs for details.", stringWriter.toString(), project.path, testResultsDir)
 			}
 		}
 

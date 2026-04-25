@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author José Abelenda
  */
-@RequestMapping("/object/action/crawl")
+@RequestMapping("/object/action/crawler")
 @RestController
 public class ObjectActionCrawlerRestController extends BaseRestController {
 

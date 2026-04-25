@@ -53,11 +53,11 @@ public class PlacedCommerceOrderAttachmentTableFDSViewTest {
 
 	@Test
 	public void testGetFDSTableSchemaField() throws Exception {
-		_testGetFDSTableSchemaField("date", "modified-date", "dateModified");
 		_testGetFDSTableSchemaField(null, "extension", "attachment.extension");
+		_testGetFDSTableSchemaField(null, "type", "attachmentType.name");
+		_testGetFDSTableSchemaField("date", "modified-date", "dateModified");
 		_testGetFDSTableSchemaField(null, "priority", "priority");
 		_testGetFDSTableSchemaField(null, "title", "title");
-		_testGetFDSTableSchemaField(null, "type", "attachmentType.name");
 	}
 
 	private void _testGetFDSTableSchemaField(

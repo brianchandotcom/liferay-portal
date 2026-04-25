@@ -110,42 +110,6 @@ definition {
 		}
 	}
 
-	@description = "Assert could search user group memebership in site membership admin."
-	@priority = 3
-	test SiteMembershipSearchUserGroup {
-		task ("Add 2 user groups") {
-			for (var n : list "1,2") {
-				UserGroup.openUserGroupsAdmin();
-
-				UserGroup.addCP(userGroupName = "User Group Name ${n}");
-			}
-		}
-
-		task ("Assign the first user group to site in memeberships") {
-			Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
-
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name 1");
-		}
-
-		task ("Assert could not find the second orgnization in memeberships") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			NavItem.gotoUserGroups();
-
-			Site.searchMembershipCP(
-				emptyResults = "true",
-				searchValue = "\"User Group Name 2\"");
-		}
-
-		task ("Assert could find the first orgnization in memeberships") {
-			Site.searchMembershipCP(searchValue = "\"User Group Name 1\"");
-		}
-	}
-
 	@description = "View pagination in site memberships admin."
 	@priority = 3
 	test SiteMembershipsPagination {

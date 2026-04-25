@@ -800,3 +800,59 @@ test('Assign organization as site member and search', async ({
 		).toBeVisible({timeout: 2000});
 	}).toPass();
 });
+
+test('Search user group site members', async ({
+	apiHelpers,
+	membershipsPage,
+	page,
+}) => {
+	const userGroup1 = await apiHelpers.headlessAdminUser.postUserGroup();
+	const userGroup2 = await apiHelpers.headlessAdminUser.postUserGroup();
+
+	await membershipsPage.goto();
+
+	await page.getByRole('link', {name: 'User Groups'}).click();
+
+	await expect(
+		page.getByText('No user group was found that is a member of this site.')
+	).toBeVisible();
+
+	await page.getByRole('button', {name: 'Add'}).click();
+
+	await page.waitForTimeout(500);
+
+	const userGroupsFrame = page.frameLocator(
+		'iframe[title="Assign User Groups to This Site"]'
+	);
+
+	await userGroupsFrame.getByPlaceholder('Search for').fill(userGroup1.name);
+	await userGroupsFrame.getByPlaceholder('Search for').press('Enter');
+
+	await userGroupsFrame.getByLabel('Select All Items on the Page').click();
+
+	await page.getByRole('button', {name: 'Done'}).click();
+
+	await waitForAlert(page);
+
+	const searchBox = page.getByPlaceholder('Search for');
+
+	await expect(async () => {
+		await searchBox.fill(userGroup1.name);
+		await searchBox.press('Enter');
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: userGroup1.name})
+		).toBeVisible({timeout: 2000});
+	}).toPass();
+
+	await expect(async () => {
+		await searchBox.fill(userGroup2.name);
+		await searchBox.press('Enter');
+
+		await expect(
+			page.getByText(
+				'No user group was found that is a member of this site.'
+			)
+		).toBeVisible({timeout: 2000});
+	}).toPass();
+});

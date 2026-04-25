@@ -51,6 +51,8 @@ public class TestClassStaticVariableCheck extends BaseCheck {
 			return;
 		}
 
+		List<DetailAST> variableDefDetailASTs = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 		List<DetailAST> staticMemberDefDetailASTs =
 			_getStaticMemberDefDetailASTs(objBlockDetailAST);
 
@@ -59,7 +61,8 @@ public class TestClassStaticVariableCheck extends BaseCheck {
 
 			String variableName = getName(staticVariableDefDetailAST);
 
-			if (_containsVariableName(
+			if (_containsVariableName(variableDefDetailASTs, variableName) ||
+				_containsVariableName(
 					staticMemberDefDetailASTs, variableName)) {
 
 				continue;

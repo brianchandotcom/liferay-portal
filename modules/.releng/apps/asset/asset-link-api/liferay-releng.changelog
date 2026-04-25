@@ -12,3 +12,8 @@
 # Bundle Version 3.0.0
 #
 bb02778a6c249d1af0a5124e1bd7072f8f89bad2^..4b3cd568245227d8aa91716ca9bcfcce314dd43a=LPD-82927 LPD-83108 LPD-83622
+
+#
+# Bundle Version 3.0.1
+#
+4b3cd568245227d8aa91716ca9bcfcce314dd43a^..1c04baf0b9809a55c2b8a13780eaff719d2e3ab6=LPD-87214

@@ -222,9 +222,8 @@ $btn-outline-palette: map-deep-merge(
 
 // Label Reference Mark
 
-$input-label-reference-mark-color: var(
-	--input-label-reference-mark-color
-) !important !default;
+$input-label-reference-mark-color: var(--input-label-reference-mark-color)
+	!important !default;
 
 // .form-text
 
@@ -288,7 +287,8 @@ $bg-theme-colors: map-deep-merge(
 
 			hover: (
 				background-color:
-					unquote('hsl(from var(--light) h s calc(l - 10))') !important,
+					unquote('hsl(from var(--light) h s calc(l - 10))')
+					!important,
 			),
 		),
 		'primary-d2': (
@@ -296,7 +296,8 @@ $bg-theme-colors: map-deep-merge(
 
 			hover: (
 				background-color:
-					unquote('hsl(from var(--primary-d2) h s calc(l - 10))') !important,
+					unquote('hsl(from var(--primary-d2) h s calc(l - 10))')
+					!important,
 			),
 		),
 		'secondary-l3': (
@@ -304,7 +305,8 @@ $bg-theme-colors: map-deep-merge(
 
 			hover: (
 				background-color:
-					unquote('hsl(from var(--secondary-l3) h s calc(l - 10))') !important,
+					unquote('hsl(from var(--secondary-l3) h s calc(l - 10))')
+					!important,
 			),
 		),
 	),
@@ -441,9 +443,7 @@ $navigation-bar-light: map-deep-merge(
 				),
 
 				focus: (),
-
 				active: (),
-
 				disabled: (),
 			),
 		),

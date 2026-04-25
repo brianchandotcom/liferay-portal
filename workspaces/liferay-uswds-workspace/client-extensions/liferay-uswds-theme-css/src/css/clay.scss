@@ -1,4 +1,4 @@
-@use "sass:math" as *;
+@use 'sass:math' as *;
 
 @import '@clayui/css/src/scss/_license-text';
 
@@ -16,9 +16,8 @@
 
 @import '@clayui/css/src/scss/_components';
 
-@import "_liferay_variables";
-@import "_liferay_variables_custom";
+@import '_liferay_variables';
+@import '_liferay_variables_custom';
 
-@import "_clay_custom";
-@import "_liferay_custom";
-
+@import '_clay_custom';
+@import '_liferay_custom';

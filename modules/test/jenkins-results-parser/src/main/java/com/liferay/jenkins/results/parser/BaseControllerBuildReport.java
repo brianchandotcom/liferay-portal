@@ -31,7 +31,7 @@ public abstract class BaseControllerBuildReport
 			String.valueOf(getBuildURL()), "description");
 
 		if (jsonObject == null) {
-			return null;
+			return "";
 		}
 
 		_description = jsonObject.optString("description");
@@ -41,7 +41,13 @@ public abstract class BaseControllerBuildReport
 
 	@Override
 	public String getSHA() {
-		Matcher matcher = _buildDescriptionPattern.matcher(getDescription());
+		String description = getDescription();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(description)) {
+			return null;
+		}
+
+		Matcher matcher = _buildDescriptionPattern.matcher(description);
 
 		if (!matcher.find()) {
 			return null;

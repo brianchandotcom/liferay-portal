@@ -25,8 +25,13 @@ import org.hibernate.criterion.DetachedCriteria;
  */
 public class DynamicQueryImpl implements DynamicQuery {
 
-	public DynamicQueryImpl(DetachedCriteria detachedCriteria) {
-		_detachedCriteria = detachedCriteria;
+	public DynamicQueryImpl(String alias, Class<?> clazz) {
+		if (alias != null) {
+			_detachedCriteria = DetachedCriteria.forClass(clazz, alias);
+		}
+		else {
+			_detachedCriteria = DetachedCriteria.forClass(clazz);
+		}
 	}
 
 	@Override

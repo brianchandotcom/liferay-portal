@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import org.hibernate.criterion.DetachedCriteria;
-
 /**
  * @author Brian Wing Shun Chan
  */
@@ -20,23 +18,14 @@ public class DynamicQueryFactoryImpl implements DynamicQueryFactory {
 
 	@Override
 	public DynamicQuery forClass(Class<?> clazz, ClassLoader classLoader) {
-		clazz = getImplClass(clazz, classLoader);
-
-		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
+		return forClass(clazz, null, classLoader);
 	}
 
 	@Override
 	public DynamicQuery forClass(
 		Class<?> clazz, String alias, ClassLoader classLoader) {
 
-		clazz = getImplClass(clazz, classLoader);
-
-		if (alias != null) {
-			return new DynamicQueryImpl(
-				DetachedCriteria.forClass(clazz, alias));
-		}
-
-		return new DynamicQueryImpl(DetachedCriteria.forClass(clazz));
+		return new DynamicQueryImpl(alias, getImplClass(clazz, classLoader));
 	}
 
 	protected Class<?> getImplClass(Class<?> clazz, ClassLoader classLoader) {

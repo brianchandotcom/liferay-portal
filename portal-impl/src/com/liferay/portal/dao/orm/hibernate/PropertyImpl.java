@@ -28,7 +28,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Order asc() {
-		return new OrderImpl(_property.asc());
+		return new OrderImpl(_property.getPropertyName(), true);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Order desc() {
-		return new OrderImpl(_property.desc());
+		return new OrderImpl(_property.getPropertyName(), false);
 	}
 
 	@Override

@@ -52,15 +52,15 @@ public class PlacedCommerceOrderAttachmentTableFDSViewTest {
 	}
 
 	@Test
-	public void testGetFDSTableSchema() throws Exception {
-		_assertFDSTableSchemaField("date", "modified-date", "dateModified");
-		_assertFDSTableSchemaField(null, "extension", "attachment.extension");
-		_assertFDSTableSchemaField(null, "priority", "priority");
-		_assertFDSTableSchemaField(null, "title", "title");
-		_assertFDSTableSchemaField(null, "type", "attachmentType.name");
+	public void testGetFDSTableSchemaField() throws Exception {
+		_testGetFDSTableSchemaField("date", "modified-date", "dateModified");
+		_testGetFDSTableSchemaField(null, "extension", "attachment.extension");
+		_testGetFDSTableSchemaField(null, "priority", "priority");
+		_testGetFDSTableSchemaField(null, "title", "title");
+		_testGetFDSTableSchemaField(null, "type", "attachmentType.name");
 	}
 
-	private void _assertFDSTableSchemaField(
+	private void _testGetFDSTableSchemaField(
 		String expectedContentRenderer, String expectedLabel,
 		String fieldName) {
 

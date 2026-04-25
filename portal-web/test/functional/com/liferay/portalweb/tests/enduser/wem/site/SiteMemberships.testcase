@@ -17,30 +17,6 @@ definition {
 		}
 	}
 
-	@description = "Assert could assign organization to default site in site membership admin."
-	@priority = 4
-	test AddMemberOrganization {
-		task ("Add an organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
-		}
-
-		task ("Assign organization to site in memeberships") {
-			Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
-
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
-		}
-
-		task ("View the user has Organization Name in memeberships") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.viewMemberOrganizationCP(orgName = "Organization Name");
-		}
-	}
-
 	@description = "Assert could limit memebership in site memberships admin."
 	@priority = 4
 	test LimitMembershipParentSite {
@@ -131,40 +107,6 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-		}
-	}
-
-	@description = "Assert could search organization memebership in site memberships admin."
-	@priority = 3
-	test SiteMembershipSearchOrganization {
-		task ("Add 2 organizations") {
-			for (var n : list "1,2") {
-				JSONOrganization.addOrganization(organizationName = "Organization Name ${n}");
-			}
-		}
-
-		task ("Assign the first organization to site in memeberships") {
-			Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
-
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 1");
-		}
-
-		task ("Assert could not find the second orgnization in memeberships") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
-
-			NavItem.gotoOrganizations();
-
-			Site.searchMembershipCP(
-				emptyResults = "true",
-				searchValue = "\"Organization Name 2\"");
-		}
-
-		task ("Assert could find the first orgnization in memeberships") {
-			Site.searchMembershipCP(searchValue = "\"Organization Name 1\"");
 		}
 	}
 

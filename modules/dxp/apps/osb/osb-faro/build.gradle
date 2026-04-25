@@ -35,7 +35,6 @@ buildscript {
 
 apply plugin: "com.liferay.app.docker"
 apply plugin: "com.liferay.root.defaults.plugin"
-apply plugin: "com.liferay.yarn.defaults.plugin"
 
 task buildNexusCredentials(type: Exec)
 task checkDocker(type: DockerWaitHealthyContainer)

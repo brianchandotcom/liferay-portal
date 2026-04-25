@@ -746,3 +746,57 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test('Assign organization as site member and search', async ({
+	apiHelpers,
+	membershipsPage,
+	page,
+}) => {
+	const organization1 = await apiHelpers.headlessAdminUser.postOrganization();
+	const organization2 = await apiHelpers.headlessAdminUser.postOrganization();
+
+	await membershipsPage.goto();
+
+	await page.getByRole('link', {name: 'Organizations'}).click();
+
+	await expect(
+		page.getByText(
+			'No organization was found that is a member of this site.'
+		)
+	).toBeVisible();
+
+	await page.getByRole('button', {name: 'Add'}).click();
+
+	await page.waitForTimeout(500);
+
+	await page
+		.frameLocator('iframe[title="Assign Organizations to This Site"]')
+		.getByLabel(organization1.name)
+		.check();
+
+	await page.getByRole('button', {name: 'Done'}).click();
+
+	await waitForAlert(page);
+
+	const searchBox = page.getByPlaceholder('Search for');
+
+	await expect(async () => {
+		await searchBox.fill(organization1.name);
+		await searchBox.press('Enter');
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: organization1.name})
+		).toBeVisible({timeout: 2000});
+	}).toPass();
+
+	await expect(async () => {
+		await searchBox.fill(organization2.name);
+		await searchBox.press('Enter');
+
+		await expect(
+			page.getByText(
+				'No organization was found that is a member of this site.'
+			)
+		).toBeVisible({timeout: 2000});
+	}).toPass();
+});

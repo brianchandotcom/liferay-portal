@@ -520,7 +520,8 @@ public abstract class BaseTopLevelBuildReport
 			getPreviousTopLevelBuildReport();
 
 		if (previousTopLevelBuildReport == null) {
-			_uniqueFailureReports = getDistinctFailureReports();
+			_uniqueFailureReports = new ArrayList<>(
+				getDistinctFailureReports());
 
 			return _uniqueFailureReports;
 		}

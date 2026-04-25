@@ -188,8 +188,6 @@ public class PortletLayoutFinderTest {
 		return themeDisplay;
 	}
 
-	private static String[] _portletIds;
-
 	private Layout _assetLayout;
 	private Layout _blogLayout;
 	private long _blogsEntryGroupId;
@@ -198,6 +196,7 @@ public class PortletLayoutFinderTest {
 	private Group _group;
 
 	private PermissionChecker _originalPermissionChecker;
+	private String[] _portletIds;
 	private PortletLayoutFinder _portletLayoutFinder;
 
 }

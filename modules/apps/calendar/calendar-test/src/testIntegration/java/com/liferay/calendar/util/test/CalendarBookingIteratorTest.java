@@ -141,9 +141,9 @@ public class CalendarBookingIteratorTest {
 		Assert.assertEquals(2, count);
 	}
 
-	@Inject
-	private static CalendarBookingLocalService _calendarBookingLocalService;
-
 	private CalendarBooking _calendarBooking;
+
+	@Inject
+	private CalendarBookingLocalService _calendarBookingLocalService;
 
 }

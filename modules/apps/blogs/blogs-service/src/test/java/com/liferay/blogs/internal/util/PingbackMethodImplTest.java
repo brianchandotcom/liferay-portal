@@ -731,7 +731,6 @@ public class PingbackMethodImplTest {
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private static MockedStatic<InetAddressUtil> _inetAddressUtilMockedStatic;
-	private static MockedStatic<XmlRpcUtil> _xmlRpcUtilMockedStatic;
 
 	private final BlogsEntry _blogsEntry = Mockito.mock(BlogsEntry.class);
 	private final BlogsEntryLocalService _blogsEntryLocalService = Mockito.mock(
@@ -755,5 +754,6 @@ public class PingbackMethodImplTest {
 	private ServiceRegistration<Http> _serviceRegistration;
 	private final UserLocalService _userLocalService = Mockito.mock(
 		UserLocalService.class);
+	private MockedStatic<XmlRpcUtil> _xmlRpcUtilMockedStatic;
 
 }

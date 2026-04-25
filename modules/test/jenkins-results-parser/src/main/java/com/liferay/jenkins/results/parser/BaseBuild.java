@@ -3488,9 +3488,7 @@ public abstract class BaseBuild implements Build {
 					JSONArray mergedCasesJSONArray =
 						mergedSuiteJSONObject.getJSONArray("cases");
 
-					for (int j = 0; j < casesJSONArray.length(); j++) {
-						mergedCasesJSONArray.put(casesJSONArray.get(j));
-					}
+					mergedCasesJSONArray.putAll(casesJSONArray);
 				}
 
 				mergedSuiteJSONObject.put(

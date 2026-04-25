@@ -260,31 +260,39 @@ public class AntTargetBatchBuildTestrayCaseResult
 	}
 
 	private TestReport _getAntTargetTestReport() {
+		if (_antTargetTestReportSearched) {
+			return _antTargetTestReport;
+		}
+
+		_antTargetTestReportSearched = true;
+
 		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
 
 		if (baseAntTargetTestClass == null) {
-			return null;
+			return _antTargetTestReport;
 		}
 
 		String antTargetName = baseAntTargetTestClass.getAntTargetName();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(antTargetName)) {
-			return null;
+			return _antTargetTestReport;
 		}
 
 		TestClassReport testClassReport = getTestClassReport();
 
 		if (testClassReport == null) {
-			return null;
+			return _antTargetTestReport;
 		}
 
 		for (TestReport testReport : testClassReport.getTestReports()) {
 			if (Objects.equals(antTargetName, testReport.getTestName())) {
-				return testReport;
+				_antTargetTestReport = testReport;
+
+				break;
 			}
 		}
 
-		return null;
+		return _antTargetTestReport;
 	}
 
 	private String _getTestClassName() {
@@ -295,6 +303,8 @@ public class AntTargetBatchBuildTestrayCaseResult
 		return testClassName.replaceAll("/", ".");
 	}
 
+	private TestReport _antTargetTestReport;
+	private boolean _antTargetTestReportSearched;
 	private TestClassReport _testClassReport;
 
 }

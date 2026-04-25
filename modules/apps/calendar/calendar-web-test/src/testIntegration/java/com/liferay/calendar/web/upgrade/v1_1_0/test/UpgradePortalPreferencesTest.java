@@ -202,17 +202,17 @@ public class UpgradePortalPreferencesTest {
 	private static final String _NAMESPACE_OLD_SESSION_CLICKS =
 		"com.liferay.portal.util.SessionClicks";
 
-	@Inject
-	private static PortalPreferencesLocalService _portalPreferencesLocalService;
-
-	@Inject
-	private static PortalPreferenceValueLocalService
-		_portalPreferenceValueLocalService;
-
 	private PortalCache<?, ?> _portalCache;
 
 	@DeleteAfterTestRun
 	private PortalPreferences _portalPreferences;
+
+	@Inject
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private PortalPreferenceValueLocalService
+		_portalPreferenceValueLocalService;
 
 	private UpgradeProcess _upgradeProcess;
 

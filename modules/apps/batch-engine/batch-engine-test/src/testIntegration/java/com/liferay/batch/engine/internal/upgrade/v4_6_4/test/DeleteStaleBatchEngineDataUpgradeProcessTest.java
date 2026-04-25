@@ -128,11 +128,6 @@ public class DeleteStaleBatchEngineDataUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.batch.engine.internal.upgrade.registry.BatchEngineServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private BatchEngineExportTaskLocalService
 		_batchEngineExportTaskLocalService;
@@ -153,5 +148,10 @@ public class DeleteStaleBatchEngineDataUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.batch.engine.internal.upgrade.registry.BatchEngineServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

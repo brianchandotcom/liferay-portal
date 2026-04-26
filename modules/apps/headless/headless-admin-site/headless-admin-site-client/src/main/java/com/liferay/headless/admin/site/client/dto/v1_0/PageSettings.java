@@ -188,4 +188,4 @@ public abstract class PageSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-622345860
+// LIFERAY-REST-BUILDER-HASH:1887395940

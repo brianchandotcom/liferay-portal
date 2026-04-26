@@ -101,4 +101,4 @@ public class NestedWidgetSection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:360352070
+// LIFERAY-REST-BUILDER-HASH:1660887198

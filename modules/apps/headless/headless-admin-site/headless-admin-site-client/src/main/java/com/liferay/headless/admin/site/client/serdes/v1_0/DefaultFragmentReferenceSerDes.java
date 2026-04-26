@@ -247,4 +247,4 @@ public class DefaultFragmentReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1171822604
+// LIFERAY-REST-BUILDER-HASH:1883300580

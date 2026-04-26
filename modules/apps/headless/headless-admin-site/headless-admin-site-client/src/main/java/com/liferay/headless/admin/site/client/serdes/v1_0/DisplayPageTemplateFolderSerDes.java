@@ -602,4 +602,4 @@ public class DisplayPageTemplateFolderSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-142845620
+// LIFERAY-REST-BUILDER-HASH:-413913740

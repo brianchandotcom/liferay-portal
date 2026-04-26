@@ -238,4 +238,4 @@ public class TextFragmentMappedValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1362502351
+// LIFERAY-REST-BUILDER-HASH:803356263

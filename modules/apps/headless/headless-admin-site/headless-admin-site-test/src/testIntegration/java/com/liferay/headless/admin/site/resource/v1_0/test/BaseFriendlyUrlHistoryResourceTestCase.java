@@ -809,4 +809,4 @@ public abstract class BaseFriendlyUrlHistoryResourceTestCase {
 			_friendlyUrlHistoryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1872832843
+// LIFERAY-REST-BUILDER-HASH:-1049351675

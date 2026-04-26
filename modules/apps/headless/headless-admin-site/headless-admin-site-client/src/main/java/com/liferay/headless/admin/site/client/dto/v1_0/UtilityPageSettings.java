@@ -79,4 +79,4 @@ public class UtilityPageSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2104769692
+// LIFERAY-REST-BUILDER-HASH:1539830652

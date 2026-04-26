@@ -667,4 +667,4 @@ public class CollectionDisplayPageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-313366557
+// LIFERAY-REST-BUILDER-HASH:-1528658053

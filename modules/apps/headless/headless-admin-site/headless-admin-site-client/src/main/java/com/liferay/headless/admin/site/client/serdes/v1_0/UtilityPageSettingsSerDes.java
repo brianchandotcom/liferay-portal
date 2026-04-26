@@ -204,4 +204,4 @@ public class UtilityPageSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-342625672
+// LIFERAY-REST-BUILDER-HASH:1702820176

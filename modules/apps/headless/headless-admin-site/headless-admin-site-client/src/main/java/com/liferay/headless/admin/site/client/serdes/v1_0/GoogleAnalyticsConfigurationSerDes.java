@@ -391,4 +391,4 @@ public class GoogleAnalyticsConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1403907093
+// LIFERAY-REST-BUILDER-HASH:318346669

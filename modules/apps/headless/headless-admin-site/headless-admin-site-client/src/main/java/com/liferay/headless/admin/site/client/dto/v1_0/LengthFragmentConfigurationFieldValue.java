@@ -107,4 +107,4 @@ public class LengthFragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-977138637
+// LIFERAY-REST-BUILDER-HASH:-1181721125

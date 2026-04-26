@@ -272,4 +272,4 @@ public class ItemExternalReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:531123450
+// LIFERAY-REST-BUILDER-HASH:-1954909230

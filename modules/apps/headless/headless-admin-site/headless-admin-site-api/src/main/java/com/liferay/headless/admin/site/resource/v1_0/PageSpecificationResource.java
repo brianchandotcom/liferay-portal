@@ -193,4 +193,4 @@ public interface PageSpecificationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1384331609
+// LIFERAY-REST-BUILDER-HASH:-1538358250

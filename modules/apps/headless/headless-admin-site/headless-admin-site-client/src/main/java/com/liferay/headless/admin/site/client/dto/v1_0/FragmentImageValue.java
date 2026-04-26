@@ -117,4 +117,4 @@ public abstract class FragmentImageValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1889652800
+// LIFERAY-REST-BUILDER-HASH:-1020258408

@@ -337,4 +337,4 @@ public class DisplayPageTemplateOpenGraphSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1574375755
+// LIFERAY-REST-BUILDER-HASH:-2099073869

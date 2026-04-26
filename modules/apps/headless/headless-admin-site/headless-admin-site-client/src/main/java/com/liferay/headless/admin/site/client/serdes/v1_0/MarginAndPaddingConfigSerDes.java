@@ -243,4 +243,4 @@ public class MarginAndPaddingConfigSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-960735143
+// LIFERAY-REST-BUILDER-HASH:739514817

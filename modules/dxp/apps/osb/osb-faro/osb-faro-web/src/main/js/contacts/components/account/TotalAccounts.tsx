@@ -93,7 +93,7 @@ const AccountCard: React.FC<IAccountCardProps> = ({
 									color:
 										getStatsColor(
 											metrics?.trend
-												?.trendClassification || ''
+												?.trendClassification ?? ''
 										) || TrendClassification.Neutral
 								}}
 							>

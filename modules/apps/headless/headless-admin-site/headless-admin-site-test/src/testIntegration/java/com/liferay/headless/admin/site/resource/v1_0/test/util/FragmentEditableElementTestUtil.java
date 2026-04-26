@@ -108,6 +108,9 @@ public class FragmentEditableElementTestUtil {
 	public static FragmentEditableElement getDateFragmentEditableElement(
 		FragmentMappedValue date, FragmentInlineValue dateFormat, String id) {
 
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
 		DateFragmentEditableElementValue dateFragmentEditableElementValue =
 			new DateFragmentEditableElementValue();
 
@@ -115,9 +118,6 @@ public class FragmentEditableElementTestUtil {
 		dateFragmentEditableElementValue.setDateFormat(() -> dateFormat);
 		dateFragmentEditableElementValue.setType(
 			() -> FragmentEditableElementValue.Type.DATE);
-
-		FragmentEditableElement fragmentEditableElement =
-			new FragmentEditableElement();
 
 		fragmentEditableElement.setFragmentEditableElementValue(
 			() -> dateFragmentEditableElementValue);

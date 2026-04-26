@@ -5,29 +5,19 @@ import {
 	METRIC_TABS_FRAGMENT
 } from 'shared/queries/fragments';
 
-const assetMetricFragment = (metrics: Metric[]) => {
-	let fragment = '';
-
-	for (let i = 0; i < metrics.length; i++) {
-		fragment += `${metrics[i].name} {
-			...TabsFragment
-		}`;
-	}
-
-	return fragment;
-};
-
-const capitalizeFirstLetter = (str: string): string =>
+const capitalize = (str: string): string =>
 	str.charAt(0).toUpperCase() + str.slice(1);
 
-const queryTabsName = (str: string): string =>
-	`${capitalizeFirstLetter(str)}MetricTabsQuery`;
+const tabsOperationName = (name: string) =>
+	`${capitalize(name)}MetricTabsQuery`;
 
-const queryMetricName = (str: string): string =>
-	`${capitalizeFirstLetter(str)}MetricQuery`;
+const metricOperationName = (name: string) => `${capitalize(name)}MetricQuery`;
+
+const buildAssetTabsBody = (metrics: Metric[]) =>
+	metrics.map(({name}) => `${name} { ...TabsFragment }`).join('\n\t\t\t\t');
 
 export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
-	query ${queryTabsName(name)}(
+	query ${tabsOperationName(name)}(
 		$assetId: String!
 		$channelId: String
 		$devices: String
@@ -49,7 +39,7 @@ export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
 			rangeStart: $rangeStart
 			title: $title
 		) {
-			${assetMetricFragment(metrics)}
+			${buildAssetTabsBody(metrics)}
 		}
 	}
 
@@ -58,7 +48,7 @@ export const AssetTabsQuery = (metrics: Metric[], name: string) => gql`
 
 export const AssetMetricQuery = (queryName: string) => (metricName: string) =>
 	gql`
-	query ${queryMetricName(queryName)}(
+	query ${metricOperationName(queryName)}(
 		$assetId: String!
 		$channelId: String
 		$devices: String
@@ -122,7 +112,7 @@ export const SitesTabsQuery = gql`
 	${METRIC_TABS_FRAGMENT}
 `;
 
-const GenericMetricQuery = (metricName: string) => gql`
+const SitesGenericMetricQuery = (metricName: string) => gql`
 	query SitesMetricQuery(
 		$channelId: String
 		$interval: String!
@@ -146,7 +136,7 @@ const GenericMetricQuery = (metricName: string) => gql`
 	${METRIC_HISTOGRAM_FRAGMENT}
 `;
 
-const CompositeMetricQuery = gql`
+const SitesCompositeMetricQuery = gql`
 	query SitesMetricQuery(
 		$channelId: String
 		$interval: String!
@@ -176,13 +166,10 @@ const CompositeMetricQuery = gql`
 	${METRIC_HISTOGRAM_FRAGMENT}
 `;
 
-export const SitesMetricQuery = (metricName: string) => {
-	if (metricName === 'visitorsMetric') {
-		return CompositeMetricQuery;
-	}
-
-	return GenericMetricQuery(metricName);
-};
+export const SitesMetricQuery = (metricName: string) =>
+	metricName === 'visitorsMetric'
+		? SitesCompositeMetricQuery
+		: SitesGenericMetricQuery(metricName);
 
 export const PageMetricQuery = (metricName: string) => gql`
 	query PageMetricQuery(

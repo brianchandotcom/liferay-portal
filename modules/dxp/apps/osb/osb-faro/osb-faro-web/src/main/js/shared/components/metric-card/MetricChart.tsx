@@ -1,5 +1,3 @@
-// @ts-nocheck - Fix it at this LRAC-13388
-
 import Checkbox from 'shared/components/Checkbox';
 import ClayLink from '@clayui/link';
 import ComposedChartWithEmptyState from 'shared/components/ComposedChartWithEmptyState';
@@ -26,23 +24,37 @@ import {
 	XAxis,
 	YAxis
 } from 'recharts';
+import {
+	CHART_DATA_PREVIOUS,
+	getActiveItem,
+	getMetricData,
+	getMetricName,
+	METRIC_TOOLTIP_LABEL_MAP
+} from './util';
 import {formatXAxisDate} from 'shared/util/charts';
-import {getActiveItem, getMetricData, getMetricName} from './util';
 import {ICommonMetricProps, useActions, useData} from './MetricBaseCard';
+import {Interval, RangeSelectors} from 'shared/types';
 import {useMetricQuery} from './hooks';
 import {useRetentionPeriod} from 'shared/hooks/useRetentionPeriod';
 
-export const CHART_DATA_PREVIOUS = 'data_previous';
-export const METRIC_TOOLTIP_LABEL_MAP = {
-	bounceRateMetric: Liferay.Language.get('avg-bounce')
+export {CHART_DATA_PREVIOUS, METRIC_TOOLTIP_LABEL_MAP};
+
+type TChartSeries = {
+	color?: string;
+	data: any;
+	dataName?: string;
+	id: string;
+	name?: string;
+	tooltipTitle?: string;
+	type?: string;
 };
 
 interface IMetricChartProps extends Partial<ICommonMetricProps> {
-	// @deprecated. It is used only on CustomAsset
-	onCompareToPreviousChange?: (compareToPrevious: boolean) => void;
 	chartHeight?: number;
 	compareToPrevious: boolean;
 	data: any;
+	// @deprecated. It is used only on CustomAsset
+	onCompareToPreviousChange?: (compareToPrevious: boolean) => void;
 }
 
 export const MetricChart: React.FC<IMetricChartProps> = ({
@@ -55,8 +67,10 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 }) => {
 	const {changeCompareToPrevious} = useActions();
 
-	const [hoveredLegendItem, setHoveredLegendItem] = useState(null);
-	const [hoverIndex, setHoverIndex] = useState(-1);
+	const [hoveredLegendItem, setHoveredLegendItem] = useState<string | null>(
+		null
+	);
+	const [hoverIndex, setHoverIndex] = useState<number>(-1);
 
 	const {
 		chartData,
@@ -71,14 +85,14 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 		[compareToPrevious, data]
 	);
 
-	const dataIds = chartData.map(item => item.id);
+	const dataIds: string[] = chartData.map((item: TChartSeries) => item.id);
 
 	let yAxisWidth = 40;
 
 	const combinedData = useMemo(
 		() =>
-			timeline.data.map((date, i) =>
-				dataIds.reduce(
+			timeline.data.map((date: number, i: number) =>
+				dataIds.reduce<Record<string, any>>(
 					(acc, item, j) => {
 						acc[item] = chartData[j].data[i];
 
@@ -96,8 +110,8 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 						date,
 						dateString: formatXAxisDate(
 							date,
-							rangeSelectors.rangeKey,
-							interval,
+							rangeSelectors!.rangeKey,
+							interval as Interval,
 							dateKeysIMap
 						)
 					}
@@ -106,11 +120,13 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 		[timeline, dataIds, chartData]
 	);
 
-	const barData = chartData.filter(item => item.type === 'bar');
+	const barData = chartData.filter(
+		(item: TChartSeries) => item.type === 'bar'
+	);
 
-	const lineData = chartData.filter(item => {
+	const lineData = chartData.filter((item: TChartSeries) => {
 		if (!compareToPrevious && item.id === CHART_DATA_PREVIOUS) {
-			return;
+			return false;
 		}
 
 		return item.type !== 'bar';
@@ -129,17 +145,15 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<XAxis
-						axisLine={{
-							stroke: AXIS.borderStroke
-						}}
+						axisLine={{stroke: AXIS.borderStroke}}
 						dataKey='date'
 						interval='preserveStart'
 						stroke={AXIS.gridStroke}
-						tick={getAxisTickText('x', int =>
+						tick={getAxisTickText('x', (int: number | string) =>
 							formatXAxisDate(
 								int,
-								rangeSelectors.rangeKey,
-								interval,
+								rangeSelectors!.rangeKey,
+								interval as Interval,
 								dateKeysIMap
 							)
 						)}
@@ -149,9 +163,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<XAxis
-						axisLine={{
-							stroke: AXIS.borderStroke
-						}}
+						axisLine={{stroke: AXIS.borderStroke}}
 						dataKey='date'
 						orientation='top'
 						stroke={AXIS.gridStroke}
@@ -161,9 +173,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<YAxis
-						axisLine={{
-							stroke: AXIS.borderStroke
-						}}
+						axisLine={{stroke: AXIS.borderStroke}}
 						label={getYAxisLabel(
 							METRIC_TOOLTIP_LABEL_MAP[name] || title,
 							'left',
@@ -176,9 +186,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<YAxis
-						axisLine={{
-							stroke: AXIS.borderStroke
-						}}
+						axisLine={{stroke: AXIS.borderStroke}}
 						orientation='right'
 						stroke={AXIS.gridStroke}
 						tick={false}
@@ -188,12 +196,14 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					/>
 
 					<Tooltip
-						content={props => (
+						content={(props: any) => (
 							<MetricTooltip
 								compareToPrevious={compareToPrevious}
 								data={data}
-								interval={interval}
-								rangeSelectors={rangeSelectors}
+								interval={interval as Interval}
+								rangeSelectors={
+									rangeSelectors as RangeSelectors
+								}
 								retentionPeriod={retentionPeriod}
 								{...props}
 							/>
@@ -203,31 +213,32 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 
 					<Legend
 						align='right'
-						formatter={(label, {dataKey}) => {
+						formatter={(label: string, {dataKey}: any) => {
 							if (
 								compositeContent &&
-								dataKey !== 'data_previous'
+								dataKey !== CHART_DATA_PREVIOUS
 							) {
-								const {dataName} = barData.find(
-									({id}) => id === dataKey
+								const barItem = barData.find(
+									({id}: TChartSeries) => id === dataKey
 								);
+								const dataName = barItem?.dataName;
 
-								const {value} = compositeContent[dataName];
+								if (dataName && compositeContent[dataName]) {
+									const {value} = compositeContent[dataName];
 
-								return (
-									<>
+									return (
 										<span className='legend-text-color'>
 											{label}
 											<b className='ml-1'>{value}</b>
 										</span>
-									</>
-								);
+									);
+								}
 							}
 
 							return label;
 						}}
 						iconSize={8}
-						onMouseEnter={({dataKey}) =>
+						onMouseEnter={({dataKey}: any) =>
 							setHoveredLegendItem(dataKey)
 						}
 						onMouseLeave={() => setHoveredLegendItem(null)}
@@ -240,7 +251,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 						}}
 					/>
 
-					{barData.map(item => (
+					{barData.map((item: TChartSeries) => (
 						<Bar
 							animationDuration={ANIMATION_DURATION.bar}
 							dataKey={item.id}
@@ -254,11 +265,13 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 							key={item.id}
 							legendType='circle'
 							name={item.name}
-							onMouseEnter={(e, index) => setHoverIndex(index)}
+							onMouseEnter={(_e: unknown, index: number) =>
+								setHoverIndex(index)
+							}
 							onMouseLeave={() => setHoverIndex(-1)}
 							stackId='a'
 						>
-							{item.data.map((entry, index) => (
+							{item.data.map((_entry: unknown, index: number) => (
 								<Cell
 									fill={item.color}
 									key={`cell-${index}`}
@@ -268,7 +281,7 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 						</Bar>
 					))}
 
-					{lineData.map(item => (
+					{lineData.map((item: TChartSeries) => (
 						<Line
 							animationDuration={ANIMATION_DURATION.line}
 							dataKey={item.id}
@@ -277,8 +290,6 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 							key={item.id}
 							legendType='plainline'
 							name={item.name}
-							onMouseEnter={(e, index) => setHoverIndex(index)}
-							onMouseLeave={() => setHoverIndex(-1)}
 							stroke={item.color}
 							strokeDasharray={
 								item.id === CHART_DATA_PREVIOUS
@@ -305,61 +316,27 @@ export const MetricChart: React.FC<IMetricChartProps> = ({
 					onChange={() => {
 						changeCompareToPrevious(!compareToPrevious);
 
-						onCompareToPreviousChange &&
-							onCompareToPreviousChange(!compareToPrevious);
+						onCompareToPreviousChange?.(!compareToPrevious);
 					}}
 				/>
 			</div>
 
 			<div
 				data-qa-is-chart-populated={data.data[0].data.some(
-					value => value
+					(value: number) => value
 				)}
 			/>
 		</>
 	);
 };
 
-interface IMetricChartRendererProps extends ICommonMetricProps {}
-
-const MetricChartRenderer: React.FC<IMetricChartRendererProps> = ({
-	emptyDescription,
-	emptyTitle,
-	experienceId,
-	filters,
-	interval,
-	rangeSelectors
-}) => {
-	const {activeItemIndex, metrics, queries, variables} = useData();
-
-	const metricName = getMetricName(activeItemIndex, metrics);
-
-	const {data, error, loading} = useMetricQuery({
-		experienceId,
-		filters,
-		interval,
-		Query: queries.MetricQuery(metricName),
-		rangeSelectors,
-		variables
-	});
-
-	return (
-		<MetricStateRenderer error={error} loading={loading}>
-			<MetricChartWrapper
-				data={data}
-				emptyDescription={emptyDescription}
-				emptyTitle={emptyTitle}
-				interval={interval}
-				metricName={metricName}
-				rangeSelectors={rangeSelectors}
-			/>
-		</MetricStateRenderer>
-	);
-};
-
-interface IMetricChartWrapperProps extends Partial<IMetricChartRendererProps> {
+interface IMetricChartWrapperProps {
 	data: any;
+	emptyDescription?: string | React.ReactElement;
+	emptyTitle?: string;
+	interval: Interval;
 	metricName: string;
+	rangeSelectors: RangeSelectors;
 }
 
 const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
@@ -389,7 +366,7 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 	const {chartDataMapFn, compareToPrevious, metrics, queries} = useData();
 
 	const {compositeMetrics, name, title, tooltipTitle, type} = metrics.find(
-		({name}) => metricName === name
+		({name}: {name: string}) => name === metricName
 	);
 
 	const formattedData = useMemo(
@@ -428,6 +405,43 @@ const MetricChartWrapper: React.FC<IMetricChartWrapperProps> = ({
 				/>
 			</ComposedChartWithEmptyState>
 		</div>
+	);
+};
+
+const MetricChartRenderer: React.FC<ICommonMetricProps> = ({
+	emptyDescription,
+	emptyTitle,
+	experienceId,
+	filters,
+	interval,
+	rangeSelectors
+}) => {
+	const {activeItemIndex, metrics, queries, variables} = useData();
+
+	const metricName = getMetricName(activeItemIndex, metrics);
+
+	const {data, error, loading} = useMetricQuery({
+		experienceId,
+		filters,
+		interval,
+		Query: queries.MetricQuery(metricName),
+		rangeSelectors,
+		variables
+	});
+
+	return (
+		<MetricStateRenderer error={error} loading={loading}>
+			<MetricChartWrapper
+				data={data}
+				emptyDescription={
+					emptyDescription as string | React.ReactElement | undefined
+				}
+				emptyTitle={emptyTitle}
+				interval={interval}
+				metricName={metricName}
+				rangeSelectors={rangeSelectors}
+			/>
+		</MetricStateRenderer>
 	);
 };
 

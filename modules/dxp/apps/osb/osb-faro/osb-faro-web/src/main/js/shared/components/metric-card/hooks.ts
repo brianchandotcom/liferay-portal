@@ -35,14 +35,28 @@ export const useAssetVariables = (variables: ICommonVariables) => {
 	};
 };
 
-type TMetricQuery = {
-	filters: RawFilters;
+type TMetricQueryParams = {
 	experienceId?: string;
+	filters: RawFilters;
 	interval: Interval;
 	Query: DocumentNode;
 	rangeSelectors: RangeSelectors;
 	variables: (commonVariables: ICommonVariables) => any;
 };
+
+const buildQueryVariables = ({
+	experienceId,
+	filters,
+	interval,
+	rangeSelectors,
+	variables
+}: Omit<TMetricQueryParams, 'Query'>) =>
+	variables({
+		interval,
+		...getFilters(filters),
+		...getSafeRangeSelectors(rangeSelectors),
+		...(experienceId && {experienceId})
+	});
 
 export const useMetricQuery = ({
 	Query,
@@ -51,14 +65,15 @@ export const useMetricQuery = ({
 	interval,
 	rangeSelectors,
 	variables
-}: TMetricQuery) => {
+}: TMetricQueryParams) => {
 	const {data, error, loading} = useQuery(Query, {
 		fetchPolicy: fetchPolicyDefinition(rangeSelectors),
-		variables: variables({
+		variables: buildQueryVariables({
+			experienceId,
+			filters,
 			interval,
-			...getFilters(filters),
-			...getSafeRangeSelectors(rangeSelectors),
-			...(experienceId && {experienceId})
+			rangeSelectors,
+			variables
 		})
 	});
 

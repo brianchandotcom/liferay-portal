@@ -78,7 +78,11 @@ public class JsonSourceUtil extends SourceUtil {
 
 			int y = content.indexOf("*/", x + 2);
 
-			return content.substring(0, x) + content.substring(y + 2);
+			if (y == -1) {
+				break;
+			}
+
+			content = content.substring(0, x) + content.substring(y + 2);
 		}
 
 		x = -1;
@@ -96,11 +100,11 @@ public class JsonSourceUtil extends SourceUtil {
 
 			int y = content.indexOf("\n", x);
 
-			if (y != -1) {
-				return content.substring(0, x) + content.substring(y);
+			if (y == -1) {
+				return content.substring(0, x);
 			}
 
-			return content.substring(0, x);
+			content = content.substring(0, x) + content.substring(y);
 		}
 
 		return content;

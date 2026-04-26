@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
@@ -165,7 +165,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 					continue;
 				}
 
-				JSONObject jsonObject = JsonSourceUtil.getJSONObject(s);
+				JSONObject jsonObject = JSONSourceUtil.getJSONObject(s);
 
 				if (jsonObject == null) {
 					break;
@@ -177,7 +177,7 @@ public class FTLStylingCheck extends BaseStylingCheck {
 
 				sb.append("\n");
 				sb.append(
-					JsonSourceUtil.fixIndentation(jsonObject, indent + "\t"));
+					JSONSourceUtil.fixIndentation(jsonObject, indent + "\t"));
 
 				String replacement = sb.toString();
 

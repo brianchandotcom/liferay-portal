@@ -8,7 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
 import java.io.IOException;
 
@@ -30,7 +30,7 @@ public class JSONValidationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		content = JsonSourceUtil.removeJSONComments(content);
+		content = JSONSourceUtil.removeJSONComments(content);
 
 		try {
 			if (StringUtil.startsWith(

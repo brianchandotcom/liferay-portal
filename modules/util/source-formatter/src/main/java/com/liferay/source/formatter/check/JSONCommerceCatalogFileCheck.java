@@ -9,7 +9,7 @@ import com.liferay.portal.json.JSONArrayImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
 import java.util.Comparator;
 
@@ -32,13 +32,13 @@ public class JSONCommerceCatalogFileCheck extends BaseFileCheck {
 			absolutePath.endsWith(".products.json")) {
 
 			return JSONUtil.toString(
-				JsonSourceUtil.sortJSONArray(
+				JSONSourceUtil.sortJSONArray(
 					new JSONArrayImpl(content),
 					new ExternalReferenceCodeComparator()));
 		}
 		else if (absolutePath.endsWith(".products.specifications.json")) {
 			return JSONUtil.toString(
-				JsonSourceUtil.sortJSONArray(
+				JSONSourceUtil.sortJSONArray(
 					new JSONArrayImpl(content),
 					new CPDefinitionExternalReferenceCodeComparator()));
 		}

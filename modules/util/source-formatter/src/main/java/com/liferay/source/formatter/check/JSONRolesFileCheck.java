@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -61,7 +61,7 @@ public class JSONRolesFileCheck extends BaseFileCheck {
 			if (actionsJSONArray != null) {
 				jsonObject.put(
 					"actions",
-					JsonSourceUtil.sortJSONArray(
+					JSONSourceUtil.sortJSONArray(
 						actionsJSONArray, new ResourceComparator()));
 			}
 

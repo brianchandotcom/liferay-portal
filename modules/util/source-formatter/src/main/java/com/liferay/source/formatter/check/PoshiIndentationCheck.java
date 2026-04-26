@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
@@ -210,7 +210,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 				continue;
 			}
 
-			JSONObject jsonObject = JsonSourceUtil.getJSONObject(s);
+			JSONObject jsonObject = JSONSourceUtil.getJSONObject(s);
 
 			if (jsonObject == null) {
 				break;
@@ -218,7 +218,7 @@ public class PoshiIndentationCheck extends BaseFileCheck {
 
 			int lineNumber = SourceUtil.getLineNumber(content, x);
 
-			String replacement = JsonSourceUtil.fixIndentation(
+			String replacement = JSONSourceUtil.fixIndentation(
 				jsonObject,
 				SourceUtil.getIndent(SourceUtil.getLine(content, lineNumber)));
 

@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class JsonSourceUtil extends SourceUtil {
+public class JSONSourceUtil extends SourceUtil {
 
 	public static String fixIndentation(JSONObject jsonObject, String indent) {
 		String s = JSONUtil.toString(jsonObject);
@@ -126,6 +126,6 @@ public class JsonSourceUtil extends SourceUtil {
 		return jsonArray;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(JsonSourceUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(JSONSourceUtil.class);
 
 }

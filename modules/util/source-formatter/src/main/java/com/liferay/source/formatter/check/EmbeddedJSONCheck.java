@@ -8,7 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,9 +41,9 @@ public class EmbeddedJSONCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String cdataValue = matcher.group(5);
 
-			cdataValue = JsonSourceUtil.removeJSONComments(cdataValue);
+			cdataValue = JSONSourceUtil.removeJSONComments(cdataValue);
 
-			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
+			JSONObject jsonObject = JSONSourceUtil.getJSONObject(cdataValue);
 
 			if (jsonObject == null) {
 				continue;
@@ -58,7 +58,7 @@ public class EmbeddedJSONCheck extends BaseFileCheck {
 			sb.append(indent);
 			sb.append("\t<![CDATA[\n");
 			sb.append(
-				JsonSourceUtil.fixIndentation(jsonObject, indent + "\t\t"));
+				JSONSourceUtil.fixIndentation(jsonObject, indent + "\t\t"));
 			sb.append(indent);
 			sb.append("\t]]>\n");
 			sb.append(indent);
@@ -72,9 +72,9 @@ public class EmbeddedJSONCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String cdataValue = matcher.group(3);
 
-			cdataValue = JsonSourceUtil.removeJSONComments(cdataValue);
+			cdataValue = JSONSourceUtil.removeJSONComments(cdataValue);
 
-			JSONObject jsonObject = JsonSourceUtil.getJSONObject(cdataValue);
+			JSONObject jsonObject = JSONSourceUtil.getJSONObject(cdataValue);
 
 			if (jsonObject == null) {
 				continue;
@@ -87,7 +87,7 @@ public class EmbeddedJSONCheck extends BaseFileCheck {
 
 			sb.append(matcher.group(1));
 			sb.append("\n");
-			sb.append(JsonSourceUtil.fixIndentation(jsonObject, indent + "\t"));
+			sb.append(JSONSourceUtil.fixIndentation(jsonObject, indent + "\t"));
 			sb.append(indent);
 			sb.append("]]>\n");
 
@@ -107,16 +107,16 @@ public class EmbeddedJSONCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String jsonString = matcher.group(1);
 
-			String newJsonString = JsonSourceUtil.removeJSONComments(
+			String newJsonString = JSONSourceUtil.removeJSONComments(
 				jsonString);
 
-			JSONObject jsonObject = JsonSourceUtil.getJSONObject(newJsonString);
+			JSONObject jsonObject = JSONSourceUtil.getJSONObject(newJsonString);
 
 			if (jsonObject == null) {
 				continue;
 			}
 
-			newJsonString = JsonSourceUtil.fixIndentation(jsonObject, "");
+			newJsonString = JSONSourceUtil.fixIndentation(jsonObject, "");
 
 			if (jsonString.equals(newJsonString)) {
 				continue;

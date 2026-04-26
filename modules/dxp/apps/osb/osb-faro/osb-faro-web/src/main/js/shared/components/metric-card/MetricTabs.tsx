@@ -3,17 +3,43 @@ import MetricStateRenderer from './MetricStateRenderer';
 import React from 'react';
 import {buildTabs, getMetricCardTabsData} from './util';
 import {ICommonMetricProps, useActions, useData} from './MetricBaseCard';
+import {Metric} from './metrics';
 import {useMetricQuery} from './hooks';
 
-interface IMetricTabsRendererProps extends ICommonMetricProps {}
+interface IMetricTabsViewProps {
+	activeItemIndex: number;
+	changeActiveItemIndex: (index: number) => void;
+	data: any;
+	metrics: Metric[];
+	queryName: string;
+}
 
-const MetricTabsRenderer: React.FC<IMetricTabsRendererProps> = ({
+const MetricTabsView: React.FC<IMetricTabsViewProps> = React.memo(
+	({activeItemIndex, changeActiveItemIndex, data, metrics, queryName}) => {
+		const items = getMetricCardTabsData(data[queryName], metrics);
+
+		return (
+			<CardTabs
+				activeTabId={activeItemIndex}
+				className='analytics-metrics-tabs'
+				tabs={buildTabs({
+					activeItemIndex,
+					items,
+					onActiveItemIndexChange: changeActiveItemIndex
+				})}
+			/>
+		);
+	}
+);
+
+const MetricTabsRenderer: React.FC<ICommonMetricProps> = ({
 	experienceId,
 	filters,
 	interval,
 	rangeSelectors
 }) => {
-	const {queries, variables} = useData();
+	const {activeItemIndex, metrics, queries, variables} = useData();
+	const {changeActiveItemIndex} = useActions();
 
 	const {data, error, loading} = useMetricQuery({
 		experienceId,
@@ -26,30 +52,14 @@ const MetricTabsRenderer: React.FC<IMetricTabsRendererProps> = ({
 
 	return (
 		<MetricStateRenderer error={error} loading={loading} spacer>
-			<MetricTabs data={data} />
+			<MetricTabsView
+				activeItemIndex={activeItemIndex}
+				changeActiveItemIndex={changeActiveItemIndex}
+				data={data}
+				metrics={metrics}
+				queryName={queries.name}
+			/>
 		</MetricStateRenderer>
-	);
-};
-
-interface IMetricTabsProps extends Partial<IMetricTabsRendererProps> {
-	data: any;
-}
-
-const MetricTabs: React.FC<IMetricTabsProps> = ({data}) => {
-	const {activeItemIndex, metrics, queries} = useData();
-	const {changeActiveItemIndex} = useActions();
-	const items = getMetricCardTabsData(data[queries.name], metrics);
-
-	return (
-		<CardTabs
-			activeTabId={activeItemIndex}
-			className='analytics-metrics-tabs'
-			tabs={buildTabs({
-				activeItemIndex,
-				items,
-				onActiveItemIndexChange: changeActiveItemIndex
-			})}
-		/>
 	);
 };
 

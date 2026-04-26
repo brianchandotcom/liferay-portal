@@ -168,6 +168,24 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceOrderAttachment">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceOrderAttachmentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceOrderId" type="long" />
+		<field name="fileEntryId" type="long" />
+		<field name="priority" type="double" />
+		<field name="restricted" type="boolean" />
+		<field name="title" type="String" />
+		<field name="type" type="String" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderItem">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

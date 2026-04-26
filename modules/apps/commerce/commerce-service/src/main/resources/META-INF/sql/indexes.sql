@@ -27,6 +27,10 @@ create index IX_4B11FAD8 on CommerceOrder (shippingAddressId);
 create index IX_EFAA753 on CommerceOrder (userId);
 create index IX_35A4137B on CommerceOrder (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_E43DF711 on CommerceOrderAttachment (commerceOrderId, restricted);
+create unique index IX_819684A7 on CommerceOrderAttachment (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_B5221A52 on CommerceOrderAttachment (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_654BB574 on CommerceOrderItem (CIBookedQuantityId);
 create index IX_2E1BB39D on CommerceOrderItem (CPInstanceId);
 create index IX_F9E8D927 on CommerceOrderItem (CProductId);

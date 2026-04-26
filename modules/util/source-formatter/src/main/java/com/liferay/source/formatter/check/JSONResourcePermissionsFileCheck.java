@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.source.formatter.check.util.JsonSourceUtil;
+import com.liferay.source.formatter.check.util.JSONSourceUtil;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,7 +51,7 @@ public class JSONResourcePermissionsFileCheck extends BaseFileCheck {
 			if (actionIdsJSONArray != null) {
 				jsonObject.put(
 					"actionIds",
-					JsonSourceUtil.sortJSONArray(
+					JSONSourceUtil.sortJSONArray(
 						actionIdsJSONArray, new ActionIdComparator()));
 			}
 

@@ -1,0 +1,2649 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.service.persistence.impl;
+
+import com.liferay.commerce.exception.DuplicateCommerceOrderAttachmentExternalReferenceCodeException;
+import com.liferay.commerce.exception.NoSuchOrderAttachmentException;
+import com.liferay.commerce.model.CommerceOrderAttachment;
+import com.liferay.commerce.model.CommerceOrderAttachmentTable;
+import com.liferay.commerce.model.impl.CommerceOrderAttachmentImpl;
+import com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl;
+import com.liferay.commerce.service.persistence.CommerceOrderAttachmentPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderAttachmentUtil;
+import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+
+import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+
+import javax.sql.DataSource;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * The persistence implementation for the commerce order attachment service.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Alessio Antonio Rendina
+ * @generated
+ */
+@Component(service = CommerceOrderAttachmentPersistence.class)
+public class CommerceOrderAttachmentPersistenceImpl
+	extends BasePersistenceImpl<CommerceOrderAttachment>
+	implements CommerceOrderAttachmentPersistence {
+
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. Always use <code>CommerceOrderAttachmentUtil</code> to access the commerce order attachment persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CommerceOrderAttachmentImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
+
+	/**
+	 * Returns all the commerce order attachments where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid(String uuid) {
+		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator,
+		boolean useFinderCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid;
+				finderArgs = new Object[] {uuid};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
+		}
+
+		List<CommerceOrderAttachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderAttachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderAttachment commerceOrderAttachment : list) {
+					if (!uuid.equals(commerceOrderAttachment.getUuid())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_UUID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				list = (List<CommerceOrderAttachment>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByUuid_First(
+			String uuid,
+			OrderByComparator<CommerceOrderAttachment> orderByComparator)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByUuid_First(
+			uuid, orderByComparator);
+
+		if (commerceOrderAttachment != null) {
+			return commerceOrderAttachment;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("uuid=");
+		sb.append(uuid);
+
+		sb.append("}");
+
+		throw new NoSuchOrderAttachmentException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByUuid_First(
+		String uuid,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		List<CommerceOrderAttachment> list = findByUuid(
+			uuid, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the commerce order attachments where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	@Override
+	public void removeByUuid(String uuid) {
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(commerceOrderAttachment);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByUuid(String uuid) {
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_UUID_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"commerceOrderAttachment.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(commerceOrderAttachment.uuid IS NULL OR commerceOrderAttachment.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+
+	/**
+	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchOrderAttachmentException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByUUID_G(String uuid, long groupId)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByUUID_G(
+			uuid, groupId);
+
+		if (commerceOrderAttachment == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("uuid=");
+			sb.append(uuid);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchOrderAttachmentException(sb.toString());
+		}
+
+		return commerceOrderAttachment;
+	}
+
+	/**
+	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {uuid, groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByUUID_G, finderArgs, this);
+		}
+
+		if (result instanceof CommerceOrderAttachment) {
+			CommerceOrderAttachment commerceOrderAttachment =
+				(CommerceOrderAttachment)result;
+
+			if (!Objects.equals(uuid, commerceOrderAttachment.getUuid()) ||
+				(groupId != commerceOrderAttachment.getGroupId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(groupId);
+
+				List<CommerceOrderAttachment> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByUUID_G, finderArgs, list);
+					}
+				}
+				else {
+					CommerceOrderAttachment commerceOrderAttachment = list.get(
+						0);
+
+					result = commerceOrderAttachment;
+
+					cacheResult(commerceOrderAttachment);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceOrderAttachment)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce order attachment where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the commerce order attachment that was removed
+	 */
+	@Override
+	public CommerceOrderAttachment removeByUUID_G(String uuid, long groupId)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = findByUUID_G(
+			uuid, groupId);
+
+		return remove(commerceOrderAttachment);
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		CommerceOrderAttachment commerceOrderAttachment = fetchByUUID_G(
+			uuid, groupId);
+
+		if (commerceOrderAttachment == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"commerceOrderAttachment.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(commerceOrderAttachment.uuid IS NULL OR commerceOrderAttachment.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"commerceOrderAttachment.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
+
+	/**
+	 * Returns all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator,
+		boolean useFinderCache) {
+
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByUuid_C;
+				finderArgs = new Object[] {uuid, companyId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByUuid_C;
+			finderArgs = new Object[] {
+				uuid, companyId, start, end, orderByComparator
+			};
+		}
+
+		List<CommerceOrderAttachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderAttachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderAttachment commerceOrderAttachment : list) {
+					if (!uuid.equals(commerceOrderAttachment.getUuid()) ||
+						(companyId != commerceOrderAttachment.getCompanyId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(companyId);
+
+				list = (List<CommerceOrderAttachment>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CommerceOrderAttachment> orderByComparator)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
+
+		if (commerceOrderAttachment != null) {
+			return commerceOrderAttachment;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("uuid=");
+		sb.append(uuid);
+
+		sb.append(", companyId=");
+		sb.append(companyId);
+
+		sb.append("}");
+
+		throw new NoSuchOrderAttachmentException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByUuid_C_First(
+		String uuid, long companyId,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		List<CommerceOrderAttachment> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the commerce order attachments where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByUuid_C(String uuid, long companyId) {
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(commerceOrderAttachment);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByUuid_C(String uuid, long companyId) {
+		uuid = Objects.toString(uuid, "");
+
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid.isEmpty()) {
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				sb.append(_FINDER_COLUMN_UUID_C_UUID_2);
+			}
+
+			sb.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindUuid) {
+					queryPos.add(uuid);
+				}
+
+				queryPos.add(companyId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"commerceOrderAttachment.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(commerceOrderAttachment.uuid IS NULL OR commerceOrderAttachment.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"commerceOrderAttachment.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByCommerceOrderId;
+	private FinderPath _finderPathWithoutPaginationFindByCommerceOrderId;
+	private FinderPath _finderPathCountByCommerceOrderId;
+
+	/**
+	 * Returns all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @return the matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId) {
+
+		return findByCommerceOrderId(
+			commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end) {
+
+		return findByCommerceOrderId(commerceOrderId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByCommerceOrderId;
+				finderArgs = new Object[] {commerceOrderId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByCommerceOrderId;
+			finderArgs = new Object[] {
+				commerceOrderId, start, end, orderByComparator
+			};
+		}
+
+		List<CommerceOrderAttachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderAttachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderAttachment commerceOrderAttachment : list) {
+					if (commerceOrderId !=
+							commerceOrderAttachment.getCommerceOrderId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			sb.append(_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceOrderId);
+
+				list = (List<CommerceOrderAttachment>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByCommerceOrderId_First(
+			long commerceOrderId,
+			OrderByComparator<CommerceOrderAttachment> orderByComparator)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment =
+			fetchByCommerceOrderId_First(commerceOrderId, orderByComparator);
+
+		if (commerceOrderAttachment != null) {
+			return commerceOrderAttachment;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceOrderId=");
+		sb.append(commerceOrderId);
+
+		sb.append("}");
+
+		throw new NoSuchOrderAttachmentException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByCommerceOrderId_First(
+		long commerceOrderId,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		List<CommerceOrderAttachment> list = findByCommerceOrderId(
+			commerceOrderId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the commerce order attachments where commerceOrderId = &#63; from the database.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 */
+	@Override
+	public void removeByCommerceOrderId(long commerceOrderId) {
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				findByCommerceOrderId(
+					commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(commerceOrderAttachment);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByCommerceOrderId(long commerceOrderId) {
+		FinderPath finderPath = _finderPathCountByCommerceOrderId;
+
+		Object[] finderArgs = new Object[] {commerceOrderId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE);
+
+			sb.append(_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceOrderId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_COMMERCEORDERID_COMMERCEORDERID_2 =
+			"commerceOrderAttachment.commerceOrderId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByC_R;
+	private FinderPath _finderPathWithoutPaginationFindByC_R;
+	private FinderPath _finderPathCountByC_R;
+
+	/**
+	 * Returns all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @return the matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted) {
+
+		return findByC_R(
+			commerceOrderId, restricted, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end) {
+
+		return findByC_R(commerceOrderId, restricted, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return findByC_R(
+			commerceOrderId, restricted, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_R;
+				finderArgs = new Object[] {commerceOrderId, restricted};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_R;
+			finderArgs = new Object[] {
+				commerceOrderId, restricted, start, end, orderByComparator
+			};
+		}
+
+		List<CommerceOrderAttachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderAttachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceOrderAttachment commerceOrderAttachment : list) {
+					if ((commerceOrderId !=
+							commerceOrderAttachment.getCommerceOrderId()) ||
+						(restricted !=
+							commerceOrderAttachment.isRestricted())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_R_COMMERCEORDERID_2);
+
+			sb.append(_FINDER_COLUMN_C_R_RESTRICTED_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceOrderId);
+
+				queryPos.add(restricted);
+
+				list = (List<CommerceOrderAttachment>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByC_R_First(
+			long commerceOrderId, boolean restricted,
+			OrderByComparator<CommerceOrderAttachment> orderByComparator)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByC_R_First(
+			commerceOrderId, restricted, orderByComparator);
+
+		if (commerceOrderAttachment != null) {
+			return commerceOrderAttachment;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceOrderId=");
+		sb.append(commerceOrderId);
+
+		sb.append(", restricted=");
+		sb.append(restricted);
+
+		sb.append("}");
+
+		throw new NoSuchOrderAttachmentException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce order attachment in the ordered set where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByC_R_First(
+		long commerceOrderId, boolean restricted,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		List<CommerceOrderAttachment> list = findByC_R(
+			commerceOrderId, restricted, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Removes all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63; from the database.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 */
+	@Override
+	public void removeByC_R(long commerceOrderId, boolean restricted) {
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				findByC_R(
+					commerceOrderId, restricted, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commerceOrderAttachment);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByC_R(long commerceOrderId, boolean restricted) {
+		FinderPath finderPath = _finderPathCountByC_R;
+
+		Object[] finderArgs = new Object[] {commerceOrderId, restricted};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_R_COMMERCEORDERID_2);
+
+			sb.append(_FINDER_COLUMN_C_R_RESTRICTED_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceOrderId);
+
+				queryPos.add(restricted);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_R_COMMERCEORDERID_2 =
+		"commerceOrderAttachment.commerceOrderId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_R_RESTRICTED_2 =
+		"commerceOrderAttachment.restricted = ?";
+
+	private FinderPath _finderPathFetchByERC_C;
+
+	/**
+	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchOrderAttachmentException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (commerceOrderAttachment == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchOrderAttachmentException(sb.toString());
+		}
+
+		return commerceOrderAttachment;
+	}
+
+	/**
+	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return fetchByERC_C(externalReferenceCode, companyId, true);
+	}
+
+	/**
+	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, companyId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_C, finderArgs, this);
+		}
+
+		if (result instanceof CommerceOrderAttachment) {
+			CommerceOrderAttachment commerceOrderAttachment =
+				(CommerceOrderAttachment)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					commerceOrderAttachment.getExternalReferenceCode()) ||
+				(companyId != commerceOrderAttachment.getCompanyId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_C_COMPANYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(companyId);
+
+				List<CommerceOrderAttachment> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_C, finderArgs, list);
+					}
+				}
+				else {
+					CommerceOrderAttachment commerceOrderAttachment = list.get(
+						0);
+
+					result = commerceOrderAttachment;
+
+					cacheResult(commerceOrderAttachment);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CommerceOrderAttachment)result;
+		}
+	}
+
+	/**
+	 * Removes the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the commerce order attachment that was removed
+	 */
+	@Override
+	public CommerceOrderAttachment removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = findByERC_C(
+			externalReferenceCode, companyId);
+
+		return remove(commerceOrderAttachment);
+	}
+
+	/**
+	 * Returns the number of commerce order attachments where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching commerce order attachments
+	 */
+	@Override
+	public int countByERC_C(String externalReferenceCode, long companyId) {
+		CommerceOrderAttachment commerceOrderAttachment = fetchByERC_C(
+			externalReferenceCode, companyId);
+
+		if (commerceOrderAttachment == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_2 =
+		"commerceOrderAttachment.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_EXTERNALREFERENCECODE_3 =
+		"(commerceOrderAttachment.externalReferenceCode IS NULL OR commerceOrderAttachment.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_C_COMPANYID_2 =
+		"commerceOrderAttachment.companyId = ?";
+
+	public CommerceOrderAttachmentPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
+
+		setModelClass(CommerceOrderAttachment.class);
+
+		setModelImplClass(CommerceOrderAttachmentImpl.class);
+		setModelPKClass(long.class);
+
+		setTable(CommerceOrderAttachmentTable.INSTANCE);
+	}
+
+	/**
+	 * Caches the commerce order attachment in the entity cache if it is enabled.
+	 *
+	 * @param commerceOrderAttachment the commerce order attachment
+	 */
+	@Override
+	public void cacheResult(CommerceOrderAttachment commerceOrderAttachment) {
+		entityCache.putResult(
+			CommerceOrderAttachmentImpl.class,
+			commerceOrderAttachment.getPrimaryKey(), commerceOrderAttachment);
+
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {
+				commerceOrderAttachment.getUuid(),
+				commerceOrderAttachment.getGroupId()
+			},
+			commerceOrderAttachment);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C,
+			new Object[] {
+				commerceOrderAttachment.getExternalReferenceCode(),
+				commerceOrderAttachment.getCompanyId()
+			},
+			commerceOrderAttachment);
+	}
+
+	private int _valueObjectFinderCacheListThreshold;
+
+	/**
+	 * Caches the commerce order attachments in the entity cache if it is enabled.
+	 *
+	 * @param commerceOrderAttachments the commerce order attachments
+	 */
+	@Override
+	public void cacheResult(
+		List<CommerceOrderAttachment> commerceOrderAttachments) {
+
+		if ((_valueObjectFinderCacheListThreshold == 0) ||
+			((_valueObjectFinderCacheListThreshold > 0) &&
+			 (commerceOrderAttachments.size() >
+				 _valueObjectFinderCacheListThreshold))) {
+
+			return;
+		}
+
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				commerceOrderAttachments) {
+
+			if (entityCache.getResult(
+					CommerceOrderAttachmentImpl.class,
+					commerceOrderAttachment.getPrimaryKey()) == null) {
+
+				cacheResult(commerceOrderAttachment);
+			}
+		}
+	}
+
+	/**
+	 * Clears the cache for all commerce order attachments.
+	 *
+	 * <p>
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * </p>
+	 */
+	@Override
+	public void clearCache() {
+		entityCache.clearCache(CommerceOrderAttachmentImpl.class);
+
+		finderCache.clearCache(CommerceOrderAttachmentImpl.class);
+	}
+
+	/**
+	 * Clears the cache for the commerce order attachment.
+	 *
+	 * <p>
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
+	 * </p>
+	 */
+	@Override
+	public void clearCache(CommerceOrderAttachment commerceOrderAttachment) {
+		entityCache.removeResult(
+			CommerceOrderAttachmentImpl.class, commerceOrderAttachment);
+	}
+
+	@Override
+	public void clearCache(
+		List<CommerceOrderAttachment> commerceOrderAttachments) {
+
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				commerceOrderAttachments) {
+
+			entityCache.removeResult(
+				CommerceOrderAttachmentImpl.class, commerceOrderAttachment);
+		}
+	}
+
+	@Override
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(CommerceOrderAttachmentImpl.class);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				CommerceOrderAttachmentImpl.class, primaryKey);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		CommerceOrderAttachmentModelImpl commerceOrderAttachmentModelImpl) {
+
+		Object[] args = new Object[] {
+			commerceOrderAttachmentModelImpl.getUuid(),
+			commerceOrderAttachmentModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, commerceOrderAttachmentModelImpl);
+
+		args = new Object[] {
+			commerceOrderAttachmentModelImpl.getExternalReferenceCode(),
+			commerceOrderAttachmentModelImpl.getCompanyId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByERC_C, args, commerceOrderAttachmentModelImpl);
+	}
+
+	/**
+	 * Creates a new commerce order attachment with the primary key. Does not add the commerce order attachment to the database.
+	 *
+	 * @param commerceOrderAttachmentId the primary key for the new commerce order attachment
+	 * @return the new commerce order attachment
+	 */
+	@Override
+	public CommerceOrderAttachment create(long commerceOrderAttachmentId) {
+		CommerceOrderAttachment commerceOrderAttachment =
+			new CommerceOrderAttachmentImpl();
+
+		commerceOrderAttachment.setNew(true);
+		commerceOrderAttachment.setPrimaryKey(commerceOrderAttachmentId);
+
+		String uuid = PortalUUIDUtil.generate();
+
+		commerceOrderAttachment.setUuid(uuid);
+
+		commerceOrderAttachment.setCompanyId(CompanyThreadLocal.getCompanyId());
+
+		return commerceOrderAttachment;
+	}
+
+	/**
+	 * Removes the commerce order attachment with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param commerceOrderAttachmentId the primary key of the commerce order attachment
+	 * @return the commerce order attachment that was removed
+	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment remove(long commerceOrderAttachmentId)
+		throws NoSuchOrderAttachmentException {
+
+		return remove((Serializable)commerceOrderAttachmentId);
+	}
+
+	/**
+	 * Removes the commerce order attachment with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param primaryKey the primary key of the commerce order attachment
+	 * @return the commerce order attachment that was removed
+	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment remove(Serializable primaryKey)
+		throws NoSuchOrderAttachmentException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceOrderAttachment commerceOrderAttachment =
+				(CommerceOrderAttachment)session.get(
+					CommerceOrderAttachmentImpl.class, primaryKey);
+
+			if (commerceOrderAttachment == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				}
+
+				throw new NoSuchOrderAttachmentException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			return remove(commerceOrderAttachment);
+		}
+		catch (NoSuchOrderAttachmentException noSuchEntityException) {
+			throw noSuchEntityException;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	protected CommerceOrderAttachment removeImpl(
+		CommerceOrderAttachment commerceOrderAttachment) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			if (!session.contains(commerceOrderAttachment)) {
+				commerceOrderAttachment = (CommerceOrderAttachment)session.get(
+					CommerceOrderAttachmentImpl.class,
+					commerceOrderAttachment.getPrimaryKeyObj());
+			}
+
+			if (commerceOrderAttachment != null) {
+				session.delete(commerceOrderAttachment);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		if (commerceOrderAttachment != null) {
+			clearCache(commerceOrderAttachment);
+		}
+
+		return commerceOrderAttachment;
+	}
+
+	@Override
+	public CommerceOrderAttachment updateImpl(
+		CommerceOrderAttachment commerceOrderAttachment) {
+
+		boolean isNew = commerceOrderAttachment.isNew();
+
+		if (!(commerceOrderAttachment instanceof
+				CommerceOrderAttachmentModelImpl)) {
+
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(commerceOrderAttachment.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					commerceOrderAttachment);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in commerceOrderAttachment proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CommerceOrderAttachment implementation " +
+					commerceOrderAttachment.getClass());
+		}
+
+		CommerceOrderAttachmentModelImpl commerceOrderAttachmentModelImpl =
+			(CommerceOrderAttachmentModelImpl)commerceOrderAttachment;
+
+		if (Validator.isNull(commerceOrderAttachment.getUuid())) {
+			String uuid = PortalUUIDUtil.generate();
+
+			commerceOrderAttachment.setUuid(uuid);
+		}
+
+		if (Validator.isNull(
+				commerceOrderAttachment.getExternalReferenceCode())) {
+
+			commerceOrderAttachment.setExternalReferenceCode(
+				commerceOrderAttachment.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					commerceOrderAttachmentModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					commerceOrderAttachment.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = commerceOrderAttachment.getCompanyId();
+
+					long groupId = commerceOrderAttachment.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = commerceOrderAttachment.getPrimaryKey();
+					}
+
+					try {
+						commerceOrderAttachment.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								CommerceOrderAttachment.class.getName(),
+								classPK, ContentTypes.TEXT_HTML,
+								Sanitizer.MODE_ALL,
+								commerceOrderAttachment.
+									getExternalReferenceCode(),
+								null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			CommerceOrderAttachment ercCommerceOrderAttachment = fetchByERC_C(
+				commerceOrderAttachment.getExternalReferenceCode(),
+				commerceOrderAttachment.getCompanyId());
+
+			if (isNew) {
+				if (ercCommerceOrderAttachment != null) {
+					throw new DuplicateCommerceOrderAttachmentExternalReferenceCodeException(
+						"Duplicate commerce order attachment with external reference code " +
+							commerceOrderAttachment.getExternalReferenceCode() +
+								" and company " +
+									commerceOrderAttachment.getCompanyId());
+				}
+			}
+			else {
+				if ((ercCommerceOrderAttachment != null) &&
+					(commerceOrderAttachment.getCommerceOrderAttachmentId() !=
+						ercCommerceOrderAttachment.
+							getCommerceOrderAttachmentId())) {
+
+					throw new DuplicateCommerceOrderAttachmentExternalReferenceCodeException(
+						"Duplicate commerce order attachment with external reference code " +
+							commerceOrderAttachment.getExternalReferenceCode() +
+								" and company " +
+									commerceOrderAttachment.getCompanyId());
+				}
+			}
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (commerceOrderAttachment.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				commerceOrderAttachment.setCreateDate(date);
+			}
+			else {
+				commerceOrderAttachment.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
+		if (!commerceOrderAttachmentModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				commerceOrderAttachment.setModifiedDate(date);
+			}
+			else {
+				commerceOrderAttachment.setModifiedDate(
+					serviceContext.getModifiedDate(date));
+			}
+		}
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			if (isNew) {
+				session.save(commerceOrderAttachment);
+			}
+			else {
+				commerceOrderAttachment =
+					(CommerceOrderAttachment)session.merge(
+						commerceOrderAttachment);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		entityCache.putResult(
+			CommerceOrderAttachmentImpl.class, commerceOrderAttachmentModelImpl,
+			false, true);
+
+		cacheUniqueFindersCache(commerceOrderAttachmentModelImpl);
+
+		if (isNew) {
+			commerceOrderAttachment.setNew(false);
+		}
+
+		commerceOrderAttachment.resetOriginalValues();
+
+		return commerceOrderAttachment;
+	}
+
+	/**
+	 * Returns the commerce order attachment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
+	 *
+	 * @param primaryKey the primary key of the commerce order attachment
+	 * @return the commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByPrimaryKey(Serializable primaryKey)
+		throws NoSuchOrderAttachmentException {
+
+		CommerceOrderAttachment commerceOrderAttachment = fetchByPrimaryKey(
+			primaryKey);
+
+		if (commerceOrderAttachment == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			}
+
+			throw new NoSuchOrderAttachmentException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+		}
+
+		return commerceOrderAttachment;
+	}
+
+	/**
+	 * Returns the commerce order attachment with the primary key or throws a <code>NoSuchOrderAttachmentException</code> if it could not be found.
+	 *
+	 * @param commerceOrderAttachmentId the primary key of the commerce order attachment
+	 * @return the commerce order attachment
+	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment findByPrimaryKey(
+			long commerceOrderAttachmentId)
+		throws NoSuchOrderAttachmentException {
+
+		return findByPrimaryKey((Serializable)commerceOrderAttachmentId);
+	}
+
+	/**
+	 * Returns the commerce order attachment with the primary key or returns <code>null</code> if it could not be found.
+	 *
+	 * @param commerceOrderAttachmentId the primary key of the commerce order attachment
+	 * @return the commerce order attachment, or <code>null</code> if a commerce order attachment with the primary key could not be found
+	 */
+	@Override
+	public CommerceOrderAttachment fetchByPrimaryKey(
+		long commerceOrderAttachmentId) {
+
+		return fetchByPrimaryKey((Serializable)commerceOrderAttachmentId);
+	}
+
+	/**
+	 * Returns all the commerce order attachments.
+	 *
+	 * @return the commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findAll(int start, int end) {
+		return findAll(start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findAll(
+		int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of commerce order attachments
+	 */
+	@Override
+	public List<CommerceOrderAttachment> findAll(
+		int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
+		}
+
+		List<CommerceOrderAttachment> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceOrderAttachment>)finderCache.getResult(
+				finderPath, finderArgs, this);
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+			String sql = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
+
+				sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT);
+
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+
+				sql = sb.toString();
+			}
+			else {
+				sql = _SQL_SELECT_COMMERCEORDERATTACHMENT;
+
+				sql = sql.concat(
+					CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
+			}
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				list = (List<CommerceOrderAttachment>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the commerce order attachments from the database.
+	 *
+	 */
+	@Override
+	public void removeAll() {
+		for (CommerceOrderAttachment commerceOrderAttachment : findAll()) {
+			remove(commerceOrderAttachment);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce order attachments.
+	 *
+	 * @return the number of commerce order attachments
+	 */
+	@Override
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(
+					_SQL_COUNT_COMMERCEORDERATTACHMENT);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
+	protected EntityCache getEntityCache() {
+		return entityCache;
+	}
+
+	@Override
+	protected String getPKDBName() {
+		return "commerceOrderAttachmentId";
+	}
+
+	@Override
+	protected String getSelectSQL() {
+		return _SQL_SELECT_COMMERCEORDERATTACHMENT;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return CommerceOrderAttachmentModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	/**
+	 * Initializes the commerce order attachment persistence.
+	 */
+	@Activate
+	public void activate() {
+		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
+
+		_finderPathWithPaginationFindAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
+			new String[0], true);
+
+		_finderPathCountAll = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0], new String[0], false);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_"}, true);
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			true);
+
+		_finderPathCountByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"},
+			false);
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, true);
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_", "companyId"}, true);
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, true);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"commerceOrderId"}, true);
+
+		_finderPathWithoutPaginationFindByCommerceOrderId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCommerceOrderId",
+			new String[] {Long.class.getName()},
+			new String[] {"commerceOrderId"}, true);
+
+		_finderPathCountByCommerceOrderId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCommerceOrderId",
+			new String[] {Long.class.getName()},
+			new String[] {"commerceOrderId"}, false);
+
+		_finderPathWithPaginationFindByC_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"commerceOrderId", "restricted"}, true);
+
+		_finderPathWithoutPaginationFindByC_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"commerceOrderId", "restricted"}, true);
+
+		_finderPathCountByC_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"commerceOrderId", "restricted"}, false);
+
+		_finderPathFetchByERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, true);
+
+		CommerceOrderAttachmentUtil.setPersistence(this);
+	}
+
+	@Deactivate
+	public void deactivate() {
+		CommerceOrderAttachmentUtil.setPersistence(null);
+
+		entityCache.removeCache(CommerceOrderAttachmentImpl.class.getName());
+	}
+
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.SERVICE_CONFIGURATION_FILTER,
+		unbind = "-"
+	)
+	public void setConfiguration(Configuration configuration) {
+	}
+
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+	}
+
+	@Override
+	@Reference(
+		target = CommercePersistenceConstants.ORIGIN_BUNDLE_SYMBOLIC_NAME_FILTER,
+		unbind = "-"
+	)
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		super.setSessionFactory(sessionFactory);
+	}
+
+	@Reference
+	protected EntityCache entityCache;
+
+	@Reference
+	protected FinderCache finderCache;
+
+	private static final String _SQL_SELECT_COMMERCEORDERATTACHMENT =
+		"SELECT commerceOrderAttachment FROM CommerceOrderAttachment commerceOrderAttachment";
+
+	private static final String _SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE =
+		"SELECT commerceOrderAttachment FROM CommerceOrderAttachment commerceOrderAttachment WHERE ";
+
+	private static final String _SQL_COUNT_COMMERCEORDERATTACHMENT =
+		"SELECT COUNT(commerceOrderAttachment) FROM CommerceOrderAttachment commerceOrderAttachment";
+
+	private static final String _SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE =
+		"SELECT COUNT(commerceOrderAttachment) FROM CommerceOrderAttachment commerceOrderAttachment WHERE ";
+
+	private static final String _ORDER_BY_ENTITY_ALIAS =
+		"commerceOrderAttachment.";
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CommerceOrderAttachment exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CommerceOrderAttachment exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderAttachmentPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid", "type"});
+
+	@Override
+	protected FinderCache getFinderCache() {
+		return finderCache;
+	}
+
+}
+// LIFERAY-SERVICE-BUILDER-HASH:660334733

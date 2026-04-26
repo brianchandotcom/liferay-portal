@@ -105,6 +105,37 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.commerce.model.CommerceOrderAttachment</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet</portlet-name>
+			<portlet-name>com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+			<owner-defaults>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</owner-defaults>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.commerce.model.CommerceOrderType</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet</portlet-name>
@@ -148,6 +179,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_ORDER</action-key>
+				<action-key>ADD_COMMERCE_ORDER_ATTACHMENT</action-key>
 				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
@@ -168,12 +200,14 @@
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_ORGANIZATION_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_RESTRICTED_COMMERCE_ORDER_ATTACHMENTS</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>ADD_COMMERCE_ORDER</action-key>
 			</site-member-defaults>
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_ORDER</action-key>
+				<action-key>ADD_COMMERCE_ORDER_ATTACHMENT</action-key>
 				<action-key>APPROVE_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>CHECKOUT_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>DELETE_COMMERCE_ORDERS</action-key>
@@ -189,6 +223,7 @@
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_ORGANIZATION_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_RESTRICTED_COMMERCE_ORDER_ATTACHMENTS</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

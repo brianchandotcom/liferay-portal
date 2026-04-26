@@ -1,14 +1,14 @@
 import MetricValue from './MetricValue';
 import React, {Fragment} from 'react';
 import Trend from 'shared/components/Trend';
-import {CHART_COLOR_NAMES} from 'shared/util/charts';
-import {get, last} from 'lodash';
 import {
+	CHART_COLOR_NAMES,
 	getAxisFormatter,
 	getDataFormatter,
 	getIntervals,
 	getMetricFormatter
 } from 'shared/util/charts';
+import {get, last} from 'lodash';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {Interval, RangeSelectors} from 'shared/types';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
@@ -16,16 +16,42 @@ import {Metric, MetricType} from './metrics';
 import {toRounded} from 'shared/util/numbers';
 import {toUnix} from 'shared/util/date';
 
+export const CHART_DATA_ID_1 = 'data_1';
+export const CHART_DATA_ID_2 = 'data_2';
+export const CHART_DATA_PREVIOUS = 'data_previous';
+
+const PREVIOUS_PERIOD_VISITORS_COLOR = '#393A4A';
+
+export const METRIC_TOOLTIP_LABEL_MAP: Record<string, string> = {
+	bounceRateMetric: Liferay.Language.get('avg-bounce')
+};
+
+const {
+	martell: CHART_GREEN,
+	martellL2: CHART_GREEN_L2,
+	mormont: CHART_ORANGE,
+	stark: CHART_BLUE,
+	starkL2: CHART_BLUE_L2
+} = CHART_COLOR_NAMES;
+
+export const Icons = {
+	negative: 'caret-bottom-l',
+	neutral: undefined,
+	positive: 'caret-top-l'
+};
+
+type THistogramItem = {
+	key: string;
+	previousValue: number;
+	previousValueKey: string;
+	value: number;
+	valueKey: string;
+};
+
 type TMetricResultItem = {
 	histogram: {
 		asymmetricComparison?: boolean;
-		metrics: Array<{
-			key: string;
-			previousValue: number;
-			previousValueKey: string;
-			value: number;
-			valueKey: string;
-		}>;
+		metrics: THistogramItem[];
 	};
 	trend: {
 		percentage: number;
@@ -46,64 +72,47 @@ type TChartDataSet = {
 	type?: string;
 };
 
-const CHART_DATA_ID_1 = 'data_1';
-const CHART_DATA_ID_2 = 'data_2';
-const CHART_DATA_PREVIOUS = 'data_previous';
-const METRIC_TOOLTIP_LABEL_MAP = {
-	bounceRateMetric: Liferay.Language.get('avg-bounce')
+type TTabContent = {
+	details: {
+		color: string;
+		icon?: string;
+		label: string;
+	};
+	name: string;
+	title: string;
+	type: MetricType;
+	value: string;
 };
 
-const {
-	martell: CHART_GREEN,
-	martellL2: CHART_GREEN_L2,
-	mormont: CHART_ORANGE,
-	stark: CHART_BLUE,
-	starkL2: CHART_BLUE_L2
-} = CHART_COLOR_NAMES;
-
-export const Icons = {
-	negative: 'caret-bottom-l',
-	neutral: undefined,
-	positive: 'caret-top-l'
+type TTabItem = {
+	content: TTabContent;
 };
 
-const PREVIOUS_PERIOD_VISITORS_COLOR = '#393A4A';
-
-type TBuildTabs = (props: {
-	activeItemIndex: number;
-	items: {
-		content: {
-			details: {
-				color: string;
-				icon?: string;
-				label: string;
-			};
-			title: string;
-			type: MetricType;
-			value: string;
-		};
-	}[];
-	onActiveItemIndexChange: (index: number) => void;
-}) => {
-	onClick: () => void | ((index: number) => void);
+type TTab = {
+	onClick: () => void;
 	secondaryInfo: React.ReactElement;
-}[];
+	tabId: number;
+	title: string;
+};
 
-export const buildTabs: TBuildTabs = ({
+export const buildTabs = ({
 	activeItemIndex,
 	items,
 	onActiveItemIndexChange
-}) =>
+}: {
+	activeItemIndex: number;
+	items: TTabItem[];
+	onActiveItemIndexChange: (index: number) => void;
+}): TTab[] =>
 	items.map(({content}, index) => {
 		const {details, title, type, value} = content;
 		const {color, icon, label} = details;
 
 		return {
 			onClick: () => {
-				if (activeItemIndex !== index && !onActiveItemIndexChange)
-					return () => {};
-
-				return onActiveItemIndexChange(index);
+				if (activeItemIndex !== index) {
+					onActiveItemIndexChange(index);
+				}
 			},
 			secondaryInfo: (
 				<span>
@@ -155,10 +164,7 @@ export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 				...retVal,
 				compositeData: compositeDataKeys.reduce(
 					(acc: Record<string, any>, val) => {
-						acc = {
-							...acc,
-							[val]: retVal.compositeData[val].slice(1)
-						};
+						acc[val] = retVal.compositeData[val].slice(1);
 
 						return acc;
 					},
@@ -172,7 +178,7 @@ export const getActiveItem = (retVal: any, compareToPrevious: boolean) => {
 			chartData: chartData.map((dataSet: TChartDataSet) => ({
 				...dataSet,
 				data:
-					dataSet.id !== 'data_previous'
+					dataSet.id !== CHART_DATA_PREVIOUS
 						? [null, ...dataSet.data.slice(1)]
 						: dataSet.data
 			})),
@@ -202,50 +208,39 @@ export const getPreviousValueFromCompositeData = (
 	}
 };
 
-export const getRegexType = (type: MetricType): RegExp => {
-	if (type === MetricType.Ratings) {
-		return /([/][0-9]+)/g;
-	} else {
-		return /([a-zA-Z%])+/g;
-	}
-};
+export const getRegexType = (type: MetricType): RegExp =>
+	type === MetricType.Ratings ? /([/][0-9]+)/g : /([a-zA-Z%])+/g;
 
 export const formatValue = (
 	value: string,
 	regex: RegExp
-): React.ReactElement[] => {
-	const items = value.split(' ');
-
-	return items.map((item, i) => {
-		const [value, unit] = item.split(regex);
+): React.ReactElement[] =>
+	value.split(' ').map((item, i) => {
+		const [head, unit] = item.split(regex);
 
 		return (
 			<Fragment key={i}>
-				{value}
+				{head}
 
 				<span className='metric-value-letter'>{unit}</span>
 			</Fragment>
 		);
 	});
-};
 
 export const getMetricCardTabsData = (
 	result: TMetricsResult,
 	metrics: Metric[]
-) =>
+): TTabItem[] =>
 	metrics.map(({name, title, type}) => {
 		const metricFormatter = getMetricFormatter(type);
+		const {percentage, trendClassification} = result[name].trend;
 
 		return {
 			content: {
 				details: {
-					color: getStatsColor(
-						result[name].trend.trendClassification
-					),
-					icon: getIcon(result[name].trend.percentage),
-					label: `${toRounded(
-						Math.abs(result[name].trend.percentage)
-					)}%`
+					color: getStatsColor(trendClassification),
+					icon: getIcon(percentage),
+					label: `${toRounded(Math.abs(percentage))}%`
 				},
 				name,
 				title,
@@ -254,68 +249,6 @@ export const getMetricCardTabsData = (
 			}
 		};
 	});
-
-export const getMetricsData = (
-	result: TMetricsResult,
-	metrics: Metric[],
-	rangeSelectors: Partial<RangeSelectors> = {},
-	chartDataMapFn: (...args: any[]) => any = getMetricsChartData,
-	interval: string = INTERVAL_KEY_MAP.day
-) =>
-	metrics.map(({compositeMetrics, name, title, tooltipTitle, type}) =>
-		getMetricData({
-			chartDataMapFn,
-			compositeMetrics,
-			interval,
-			name,
-			rangeSelectors,
-			result,
-			title,
-			tooltipTitle,
-			type
-		})
-	);
-
-export const getMetricsChartData = ({
-	histogram,
-	name,
-	title,
-	tooltipTitle,
-	type
-}: {
-	histogram: Array<{
-		key: string;
-		previousValue: number;
-		value: number;
-	}>;
-	name: string;
-	title: string;
-	tooltipTitle?: string;
-	type: MetricType;
-}) => [
-	{
-		color: CHART_BLUE,
-		data: getDataFormatter(type)(histogram.map(({value}) => value)),
-		id: CHART_DATA_ID_1,
-		name:
-			tooltipTitle ||
-			(METRIC_TOOLTIP_LABEL_MAP as Record<string, string>)[name] ||
-			title,
-		tooltipTitle
-	},
-	{
-		color: CHART_BLUE_L2,
-		data: getDataFormatter(type)(
-			histogram.map(({previousValue}) => previousValue)
-		),
-		id: CHART_DATA_PREVIOUS,
-		name: Liferay.Language.get('previous-period')
-	},
-	{
-		data: histogram.map(({key}) => key),
-		id: 'x'
-	}
-];
 
 export const convertHistogramKeysToDate = ({
 	key,
@@ -333,6 +266,84 @@ export const convertHistogramKeysToDate = ({
 	valueKey: valueKey.split('/').map(toUnix),
 	...otherParams
 });
+
+export const getMetricsChartData = ({
+	histogram,
+	name,
+	title,
+	tooltipTitle,
+	type
+}: {
+	histogram: Array<{
+		key: string;
+		previousValue: number;
+		value: number;
+	}>;
+	name: string;
+	title: string;
+	tooltipTitle?: string;
+	type: MetricType;
+}): TChartDataSet[] => {
+	const formatter = getDataFormatter(type);
+
+	return [
+		{
+			color: CHART_BLUE,
+			data: formatter(histogram.map(({value}) => value)),
+			id: CHART_DATA_ID_1,
+			name: tooltipTitle || METRIC_TOOLTIP_LABEL_MAP[name] || title,
+			tooltipTitle
+		},
+		{
+			color: CHART_BLUE_L2,
+			data: formatter(histogram.map(({previousValue}) => previousValue)),
+			id: CHART_DATA_PREVIOUS,
+			name: Liferay.Language.get('previous-period')
+		},
+		{
+			data: histogram.map(({key}) => key),
+			id: 'x'
+		}
+	];
+};
+
+const buildCompositeData = (
+	compositeMetrics: Metric[],
+	result: TMetricsResult
+) => {
+	const compositeContent = compositeMetrics.reduce(
+		(acc: Record<string, any>, {name, title, type}) => {
+			const metricFormatter = getMetricFormatter(type);
+			const {percentage, trendClassification} = result[name].trend;
+
+			acc[name] = {
+				details: {
+					color: getStatsColor(trendClassification),
+					icon: getIcon(percentage),
+					label: `${toRounded(Math.abs(percentage))}%`
+				},
+				name,
+				title,
+				type,
+				value: metricFormatter(result[name].value)
+			};
+
+			return acc;
+		},
+		{}
+	);
+
+	const compositeData = compositeMetrics.reduce(
+		(acc: Record<string, any>, {name}) => {
+			acc[name] = result[name].histogram.metrics;
+
+			return acc;
+		},
+		{}
+	);
+
+	return {compositeContent, compositeData};
+};
 
 export const getMetricData = ({
 	chartDataMapFn = getMetricsChartData,
@@ -361,69 +372,24 @@ export const getMetricData = ({
 		convertHistogramKeysToDate
 	);
 
-	const compositeData = compositeMetrics
-		? {
-				compositeContent: compositeMetrics.reduce(
-					(
-						acc: Record<string, any>,
-						{
-							name: compositeMetricName,
-							title: compositeMetricTitle,
-							type: compositeMetricType
-						}
-					) => {
-						acc[compositeMetricName] = {
-							details: {
-								color: getStatsColor(
-									result[compositeMetricName].trend
-										.trendClassification
-								),
-								icon: getIcon(
-									result[compositeMetricName].trend.percentage
-								),
-								label: `${toRounded(
-									Math.abs(
-										result[compositeMetricName].trend
-											.percentage
-									)
-								)}%`
-							},
-							name: compositeMetricName,
-							title: compositeMetricTitle,
-							type: compositeMetricType,
-							value: metricFormatter(
-								result[compositeMetricName].value
-							)
-						};
-
-						return acc;
-					},
-					{}
-				),
-				compositeData: compositeMetrics.reduce(
-					(acc: Record<string, any>, {name: compositeMetricName}) => {
-						acc[compositeMetricName] =
-							result[compositeMetricName].histogram.metrics;
-
-						return acc;
-					},
-					{}
-				)
-		  }
+	const compositeMeta = compositeMetrics
+		? buildCompositeData(compositeMetrics, result)
 		: {};
 
 	const dateKeysIMap = new Map(
 		histogram.map(({key, valueKey}) => [key, valueKey])
 	);
 
+	const {percentage, trendClassification} = result[name].trend;
+
 	return {
-		...compositeData,
+		...compositeMeta,
 		asymmetricComparison: result[name].histogram.asymmetricComparison,
 		content: {
 			details: {
-				color: getStatsColor(result[name].trend.trendClassification),
-				icon: getIcon(result[name].trend.percentage),
-				label: `${toRounded(Math.abs(result[name].trend.percentage))}%`
+				color: getStatsColor(trendClassification),
+				icon: getIcon(percentage),
+				label: `${toRounded(Math.abs(percentage))}%`
 			},
 			name,
 			title,
@@ -431,7 +397,7 @@ export const getMetricData = ({
 			value: metricFormatter(result[name].value)
 		},
 		data: chartDataMapFn({
-			...compositeData,
+			...compositeMeta,
 			histogram,
 			name,
 			title,
@@ -452,6 +418,27 @@ export const getMetricData = ({
 	};
 };
 
+export const getMetricsData = (
+	result: TMetricsResult,
+	metrics: Metric[],
+	rangeSelectors: Partial<RangeSelectors> = {},
+	chartDataMapFn: (...args: any[]) => any = getMetricsChartData,
+	interval: string = INTERVAL_KEY_MAP.day
+) =>
+	metrics.map(({compositeMetrics, name, title, tooltipTitle, type}) =>
+		getMetricData({
+			chartDataMapFn,
+			compositeMetrics,
+			interval,
+			name,
+			rangeSelectors,
+			result,
+			title,
+			tooltipTitle,
+			type
+		})
+	);
+
 export const getSiteMetricsChartData = ({
 	compositeData,
 	histogram,
@@ -470,58 +457,62 @@ export const getSiteMetricsChartData = ({
 	title: string;
 	tooltipTitle?: string;
 	type: MetricType;
-}) =>
-	name === 'visitorsMetric'
-		? [
-				{
-					color: CHART_BLUE,
-					data: getDataFormatter(type)(
-						compositeData.knownVisitorsMetric.map(
-							({value}: {value: number}) => value
-						)
-					),
-					dataName: 'knownVisitorsMetric',
-					id: CHART_DATA_ID_1,
-					name: Liferay.Language.get('known-visitors'),
-					tooltipTitle: Liferay.Language.get('known'),
-					type: 'bar'
-				},
-				{
-					color: CHART_ORANGE,
-					data: getDataFormatter(type)(
-						compositeData.anonymousVisitorsMetric.map(
-							({value}: {value: number}) => value
-						)
-					),
-					dataName: 'anonymousVisitorsMetric',
-					id: CHART_DATA_ID_2,
-					name: Liferay.Language.get('anonymous-visitors'),
-					tooltipTitle: Liferay.Language.get('anonymous'),
-					type: 'bar'
-				},
-				{
-					color: PREVIOUS_PERIOD_VISITORS_COLOR,
-					data: getDataFormatter(type)(
-						histogram.map(({previousValue}) => previousValue)
-					),
-					id: CHART_DATA_PREVIOUS,
-					name: Liferay.Language.get('previous-period'),
-					type: 'line'
-				},
-				{
-					data: histogram.map(({key}) => key),
-					id: 'x'
-				}
-		  ]
-		: getMetricsChartData({histogram, name, title, tooltipTitle, type}).map(
-				data =>
-					[CHART_DATA_ID_1, CHART_DATA_PREVIOUS].includes(data.id)
-						? {
-								...data,
-								color:
-									data.id === CHART_DATA_PREVIOUS
-										? CHART_GREEN_L2
-										: CHART_GREEN
-						  }
-						: data
-		  );
+}): TChartDataSet[] => {
+	if (name !== 'visitorsMetric') {
+		return getMetricsChartData({
+			histogram,
+			name,
+			title,
+			tooltipTitle,
+			type
+		}).map(data =>
+			[CHART_DATA_ID_1, CHART_DATA_PREVIOUS].includes(data.id)
+				? {
+						...data,
+						color:
+							data.id === CHART_DATA_PREVIOUS
+								? CHART_GREEN_L2
+								: CHART_GREEN
+				  }
+				: data
+		);
+	}
+
+	const formatter = getDataFormatter(type);
+
+	return [
+		{
+			color: CHART_BLUE,
+			data: formatter(
+				compositeData.knownVisitorsMetric.map(({value}) => value)
+			),
+			dataName: 'knownVisitorsMetric',
+			id: CHART_DATA_ID_1,
+			name: Liferay.Language.get('known-visitors'),
+			tooltipTitle: Liferay.Language.get('known'),
+			type: 'bar'
+		},
+		{
+			color: CHART_ORANGE,
+			data: formatter(
+				compositeData.anonymousVisitorsMetric.map(({value}) => value)
+			),
+			dataName: 'anonymousVisitorsMetric',
+			id: CHART_DATA_ID_2,
+			name: Liferay.Language.get('anonymous-visitors'),
+			tooltipTitle: Liferay.Language.get('anonymous'),
+			type: 'bar'
+		},
+		{
+			color: PREVIOUS_PERIOD_VISITORS_COLOR,
+			data: formatter(histogram.map(({previousValue}) => previousValue)),
+			id: CHART_DATA_PREVIOUS,
+			name: Liferay.Language.get('previous-period'),
+			type: 'line'
+		},
+		{
+			data: histogram.map(({key}) => key),
+			id: 'x'
+		}
+	];
+};

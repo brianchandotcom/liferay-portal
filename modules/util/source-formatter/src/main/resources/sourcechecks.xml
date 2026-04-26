@@ -1540,7 +1540,7 @@
 	</source-processor>
 	<source-processor name="MarkdownSourceProcessor">
 		<check name="EmbeddedJSONCheck">
-			<category name="Bug Prevention" />
+			<category name="Styling" />
 			<description name="Ensures consistent formatting for embedded JSON." />
 		</check>
 		<check name="MarkdownBreakingChangesAmendmentsFileCheck">
@@ -2098,7 +2098,7 @@
 	</source-processor>
 	<source-processor name="XMLSourceProcessor">
 		<check name="EmbeddedJSONCheck">
-			<category name="Bug Prevention" />
+			<category name="Styling" />
 			<description name="Ensures consistent formatting for embedded JSON." />
 		</check>
 		<check name="XMLBuildFileCheck">

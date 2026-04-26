@@ -56,6 +56,9 @@ exports[`List rendering should match the snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="embedded-alert-list-root notification-alert-list-root"
+      />
     </header>
     <div
       class="body-root page-container"

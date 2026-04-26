@@ -259,4 +259,4 @@ public class FragmentDropZonePageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1056142576
+// LIFERAY-REST-BUILDER-HASH:1511292536

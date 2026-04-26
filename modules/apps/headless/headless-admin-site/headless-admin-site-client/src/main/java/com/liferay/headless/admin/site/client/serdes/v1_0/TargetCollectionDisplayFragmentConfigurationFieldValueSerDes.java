@@ -341,4 +341,4 @@ public class TargetCollectionDisplayFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1795900868
+// LIFERAY-REST-BUILDER-HASH:-934120812

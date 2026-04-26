@@ -263,4 +263,4 @@ public class BasicFragmentInstancePageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2060766905
+// LIFERAY-REST-BUILDER-HASH:-1359759519

@@ -131,4 +131,4 @@ public class FragmentMappedValueItemExternalReference
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1608353096
+// LIFERAY-REST-BUILDER-HASH:-804608496

@@ -239,4 +239,4 @@ public class DirectBackgroundImageValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:793025320
+// LIFERAY-REST-BUILDER-HASH:-539275824

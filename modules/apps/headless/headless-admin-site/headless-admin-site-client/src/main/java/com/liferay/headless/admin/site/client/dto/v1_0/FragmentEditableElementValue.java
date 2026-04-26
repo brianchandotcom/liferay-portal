@@ -90,8 +90,9 @@ public abstract class FragmentEditableElementValue
 
 	public static enum Type {
 
-		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), HTML("HTML"),
-		IMAGE("Image"), LINK("Link"), RICH_TEXT("RichText"), TEXT("Text");
+		ACTION("Action"), BACKGROUND_IMAGE("BackgroundImage"), DATE("Date"),
+		HTML("HTML"), IMAGE("Image"), LINK("Link"), RICH_TEXT("RichText"),
+		TEXT("Text");
 
 		public static Type create(String value) {
 			for (Type type : values()) {
@@ -123,4 +124,4 @@ public abstract class FragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1469667902
+// LIFERAY-REST-BUILDER-HASH:1215909710

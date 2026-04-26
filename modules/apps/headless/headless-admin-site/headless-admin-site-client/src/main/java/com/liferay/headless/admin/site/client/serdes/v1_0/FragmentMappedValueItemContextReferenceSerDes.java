@@ -260,4 +260,4 @@ public class FragmentMappedValueItemContextReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:741370060
+// LIFERAY-REST-BUILDER-HASH:30276148

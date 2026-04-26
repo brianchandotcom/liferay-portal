@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DateFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentEditableElementValue;
@@ -67,6 +68,12 @@ public class FragmentEditableElementValueSerDes {
 			if (typeString.equals("BackgroundImage")) {
 				return BackgroundImageFragmentEditableElementValueSerDes.toJSON(
 					(BackgroundImageFragmentEditableElementValue)
+						fragmentEditableElementValue);
+			}
+
+			if (typeString.equals("Date")) {
+				return DateFragmentEditableElementValueSerDes.toJSON(
+					(DateFragmentEditableElementValue)
 						fragmentEditableElementValue);
 			}
 
@@ -173,6 +180,10 @@ public class FragmentEditableElementValueSerDes {
 				if (typeString.equals("BackgroundImage")) {
 					return BackgroundImageFragmentEditableElementValue.toDTO(
 						json);
+				}
+
+				if (typeString.equals("Date")) {
+					return DateFragmentEditableElementValue.toDTO(json);
 				}
 
 				if (typeString.equals("HTML")) {
@@ -296,4 +307,4 @@ public class FragmentEditableElementValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1024819649
+// LIFERAY-REST-BUILDER-HASH:-471578562

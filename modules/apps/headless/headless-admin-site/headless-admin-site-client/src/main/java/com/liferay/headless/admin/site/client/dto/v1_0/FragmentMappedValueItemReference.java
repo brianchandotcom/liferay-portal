@@ -123,4 +123,4 @@ public abstract class FragmentMappedValueItemReference
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1255364857
+// LIFERAY-REST-BUILDER-HASH:608546977

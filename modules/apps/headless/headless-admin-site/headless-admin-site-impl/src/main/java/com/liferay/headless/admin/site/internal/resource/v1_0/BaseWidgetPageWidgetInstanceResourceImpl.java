@@ -1168,4 +1168,4 @@ public abstract class BaseWidgetPageWidgetInstanceResourceImpl
 		LogFactoryUtil.getLog(BaseWidgetPageWidgetInstanceResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1079907745
+// LIFERAY-REST-BUILDER-HASH:912054474

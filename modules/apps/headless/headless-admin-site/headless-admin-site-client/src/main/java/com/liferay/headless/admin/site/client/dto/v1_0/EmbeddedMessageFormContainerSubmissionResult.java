@@ -113,4 +113,4 @@ public class EmbeddedMessageFormContainerSubmissionResult
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-940930694
+// LIFERAY-REST-BUILDER-HASH:979904210

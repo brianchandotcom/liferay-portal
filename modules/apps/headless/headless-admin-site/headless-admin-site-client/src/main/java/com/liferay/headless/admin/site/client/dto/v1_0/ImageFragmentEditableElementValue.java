@@ -113,4 +113,4 @@ public class ImageFragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:363803708
+// LIFERAY-REST-BUILDER-HASH:1138033044

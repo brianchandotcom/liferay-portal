@@ -274,4 +274,4 @@ public class FavIconClientExtensionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:539008953
+// LIFERAY-REST-BUILDER-HASH:-835868383

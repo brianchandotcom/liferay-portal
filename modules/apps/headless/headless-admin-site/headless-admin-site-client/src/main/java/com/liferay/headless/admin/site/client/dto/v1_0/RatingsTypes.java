@@ -632,4 +632,4 @@ public class RatingsTypes implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-129128558
+// LIFERAY-REST-BUILDER-HASH:-2092853014

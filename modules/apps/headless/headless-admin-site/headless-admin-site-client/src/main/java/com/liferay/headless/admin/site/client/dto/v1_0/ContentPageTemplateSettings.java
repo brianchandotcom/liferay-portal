@@ -61,4 +61,4 @@ public class ContentPageTemplateSettings
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:66086226
+// LIFERAY-REST-BUILDER-HASH:-2095946182

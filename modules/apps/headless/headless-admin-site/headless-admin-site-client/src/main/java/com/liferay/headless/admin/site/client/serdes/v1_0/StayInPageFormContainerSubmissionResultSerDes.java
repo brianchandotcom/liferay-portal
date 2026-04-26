@@ -265,4 +265,4 @@ public class StayInPageFormContainerSubmissionResultSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:179668494
+// LIFERAY-REST-BUILDER-HASH:-229293706

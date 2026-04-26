@@ -61,4 +61,4 @@ public class FormStepPageElementDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1136472733
+// LIFERAY-REST-BUILDER-HASH:-1455497029

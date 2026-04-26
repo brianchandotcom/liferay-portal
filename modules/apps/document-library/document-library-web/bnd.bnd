@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Web
 Bundle-SymbolicName: com.liferay.document.library.web
-Bundle-Version: 6.0.221
+Bundle-Version: 6.0.222
 Import-Package:\
 	org.apache.xerces.parsers,\
 	\

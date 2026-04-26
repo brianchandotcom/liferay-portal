@@ -2,6 +2,7 @@ import cache from './cache';
 import {ApolloClient, from, HttpLink} from '@apollo/client';
 import {DEVELOPER_MODE} from 'shared/util/constants';
 import {get} from 'lodash';
+import {loadDevMessages, loadErrorMessages} from '@apollo/client/dev';
 import {onError} from '@apollo/client/link/error';
 import {reloadPage} from 'shared/util/router';
 import {resolvers} from './resolvers/resolvers';
@@ -62,5 +63,11 @@ const client = new ApolloClient({
 		Query: DEVELOPER_MODE ? resolvers : {}
 	}
 });
+
+if (DEVELOPER_MODE) {
+	// Adds messages only in a dev environment
+	loadDevMessages();
+	loadErrorMessages();
+}
 
 export default client;

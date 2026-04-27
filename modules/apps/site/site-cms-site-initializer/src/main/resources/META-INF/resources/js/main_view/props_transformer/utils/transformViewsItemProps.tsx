@@ -192,7 +192,7 @@ const getLabels = (item: any, props: Card) => {
 			...labels,
 			{
 				'aria-label': sub(
-					Liferay.Language.get('expiring-soon.expires-on-x'),
+					Liferay.Language.get('expiring-soon-expires-on-x'),
 					formattedDateLong
 				),
 				'className': 'lfr-portal-tooltip',

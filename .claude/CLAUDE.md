@@ -16,7 +16,7 @@ This is Liferay Portal's main source code repository.
 - `modules/apps` — Most of the OSGi modules. This is where most development happens.
 - `modules/core` — Core OSGi infrastructure modules.
 - `modules/dxp/apps` — DXP-only (commercial) OSGi modules.
-- `modules/sdk` — Gradle plugins used throughout the build (source formatter, service builder, etc.).
+- `modules/sdk` — Gradle plugins used throughout the build (service builder, source formatter, etc.).
 - `modules/util` — Custom build tools like rest-builder, service-builder, and source formatter.
 
 ## Development
@@ -115,19 +115,7 @@ Functional tests are a last resort, reserved for complete UI flows that cannot b
 
 ### Format Source
 
-All the code is strictly formatted using source formatter. Code should be formatted before every commit. This is how it works:
-
-Run for a specific module:
-
-```bash
-cd <module-root> && <gradlew> formatSource
-```
-
-Run across the entire codebase:
-
-```bash
-cd <repo-root>/portal-impl && ant format-source-current-branch
-```
+Run `/format-source` (the `format-source` skill). See `.claude/skills/format-source/SKILL.md` for details.
 
 # Skills
 

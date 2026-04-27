@@ -13103,24 +13103,16 @@ public class ObjectEntryResourceTest {
 			endpoint3, Http.Method.POST);
 
 		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -13517,24 +13509,16 @@ public class ObjectEntryResourceTest {
 			endpoint3, Http.Method.POST);
 
 		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -13965,24 +13949,16 @@ public class ObjectEntryResourceTest {
 		);
 
 		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -14508,14 +14484,10 @@ public class ObjectEntryResourceTest {
 			endpoint3, Http.Method.POST);
 
 		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -15050,14 +15022,10 @@ public class ObjectEntryResourceTest {
 		);
 
 		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			JSONFactoryUtil.getNullJSON(
-			).toString(),
-			endpoint1, Http.Method.POST);
+			JSONFactoryUtil.getNullJSON(), endpoint1, Http.Method.POST);
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,

@@ -83,12 +83,23 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 						itemsActions?.[0]?.onClick?.({
 							itemData: {
 								assetCategories: [
-									{id: 'cat-1', name: 'Category One'},
-									{id: 'cat-2', name: 'Category Two'}
+									{
+										id: 'cat-1',
+										name: 'Category One',
+										vocabularyId: 'vocab-1'
+									},
+									{
+										id: 'cat-2',
+										name: 'Category Two',
+										vocabularyId: 'vocab-1'
+									}
 								],
 								assetTags: [{id: 'tag-1', name: 'Tag One'}],
 								assetTitle: 'Rich Asset',
 								assetType: 'webContent',
+								assetVocabularies: [
+									{id: 'vocab-1', name: 'Topic'}
+								],
 								id: 'asset-id-4',
 								mimeType: 'basic-web-content'
 							}
@@ -96,6 +107,34 @@ jest.mock('shared/hooks/useFrontendDataSet', () => ({
 					}
 				>
 					{'Open Info Panel With Items'}
+				</button>
+
+				<button
+					data-testid='trigger-info-panel-empty-vocab'
+					onClick={() =>
+						itemsActions?.[0]?.onClick?.({
+							itemData: {
+								assetCategories: [
+									{
+										id: 'cat-1',
+										name: 'Category One',
+										vocabularyId: 'vocab-1'
+									}
+								],
+								assetTags: [],
+								assetTitle: 'Asset With Empty Vocab',
+								assetType: 'blog',
+								assetVocabularies: [
+									{id: 'vocab-1', name: 'Topics'},
+									{id: 'vocab-2', name: 'Genres'}
+								],
+								id: 'asset-id-5',
+								mimeType: 'blog'
+							}
+						})
+					}
+				>
+					{'Open Info Panel Empty Vocab'}
 				</button>
 			</div>
 		);
@@ -531,70 +570,104 @@ describe('List', () => {
 		});
 	});
 
-	describe('InfoPanelContent', () => {
-		it('should display the empty state message when categories list is empty', () => {
+	describe('CategoriesInfoPanelContent', () => {
+		it('should display empty state when there are no categories', () => {
 			renderList();
 
 			fireEvent.click(screen.getByTestId('trigger-info-panel'));
-
 			fireEvent.click(screen.getByText('Categorization'));
 
 			expect(
-				screen.getByText(/No Categories were found for this asset/i)
+				screen.getByText('No Categories were found for this asset.')
 			).toBeInTheDocument();
 		});
 
-		it('should display the empty state message when tags list is empty', () => {
-			renderList();
-
-			fireEvent.click(screen.getByTestId('trigger-info-panel'));
-
-			fireEvent.click(screen.getByText('Categorization'));
-
-			// Tags section uses the 'tags' language key as the title.
-
-			expect(
-				screen.getByText(/No tags were found for this asset/i)
-			).toBeInTheDocument();
-		});
-
-		it('should render a label for each category when categories are present', () => {
+		it('should group categories under their vocabulary name', () => {
 			renderList();
 
 			fireEvent.click(
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
-
 			fireEvent.click(screen.getByText('Categorization'));
 
+			expect(screen.getByText('Topic')).toBeInTheDocument();
 			expect(screen.getByText('Category One')).toBeInTheDocument();
 			expect(screen.getByText('Category Two')).toBeInTheDocument();
 		});
 
-		it('should render a label for each tag when tags are present', () => {
+		it('should not render a vocabulary that has no matching categories', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-empty-vocab')
+			);
+			fireEvent.click(screen.getByText('Categorization'));
+
+			expect(screen.getByText('Topics')).toBeInTheDocument();
+			expect(screen.queryByText('Genres')).not.toBeInTheDocument();
+		});
+
+		it('should group all categories from the same vocabulary under one header', () => {
 			renderList();
 
 			fireEvent.click(
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
+			fireEvent.click(screen.getByText('Categorization'));
 
+			expect(screen.getAllByText('Topic')).toHaveLength(1);
+			expect(screen.getByText('Category One')).toBeInTheDocument();
+			expect(screen.getByText('Category Two')).toBeInTheDocument();
+		});
+
+		it('should not show empty state when categories are present', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-with-items')
+			);
+			fireEvent.click(screen.getByText('Categorization'));
+
+			expect(
+				screen.queryByText('No Categories were found for this asset.')
+			).not.toBeInTheDocument();
+		});
+	});
+
+	describe('TagsInfoPanelContent', () => {
+		it('should display empty state when there are no tags', () => {
+			renderList();
+
+			fireEvent.click(screen.getByTestId('trigger-info-panel'));
+			fireEvent.click(screen.getByText('Categorization'));
+
+			expect(
+				screen.getByText('No Tags were found for this asset.')
+			).toBeInTheDocument();
+		});
+
+		it('should render tags as labels', () => {
+			renderList();
+
+			fireEvent.click(
+				screen.getByTestId('trigger-info-panel-with-items')
+			);
 			fireEvent.click(screen.getByText('Categorization'));
 
 			expect(screen.getByText('Tag One')).toBeInTheDocument();
 		});
 
-		it('should not render empty state when categories are present', () => {
+		it('should not show empty state when tags are present', () => {
 			renderList();
 
 			fireEvent.click(
 				screen.getByTestId('trigger-info-panel-with-items')
 			);
-
 			fireEvent.click(screen.getByText('Categorization'));
 
 			expect(
-				screen.queryByText(/No Categories were found for this asset/i)
-			).toBeNull();
+				screen.queryByText('No Tags were found for this asset.')
+			).not.toBeInTheDocument();
 		});
 	});
 });

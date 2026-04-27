@@ -366,11 +366,42 @@ spec:
         {{- with .statefulset.networkPolicy.extraIngress }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+    egress:
+        -   ports:
+                -   port: 53
+                    protocol: UDP
+                -   port: 53
+                    protocol: TCP
+            to:
+                -   namespaceSelector:
+                        matchLabels:
+                            kubernetes.io/metadata.name: kube-system
+                    podSelector:
+                        matchLabels:
+                            k8s-app: kube-dns
+        -   to:
+                -   podSelector:
+                        matchLabels:
+                            {{- include "liferay.selectorLabels" .root | nindent 28 }}
+        {{- if .statefulset.networkPolicy.cluster.kubernetesEndpointCidrs }}
+        {{- range (splitList "," .statefulset.networkPolicy.cluster.kubernetesEndpointCidrs) }}
+        -   ports:
+                -   port: 443
+                    protocol: TCP
+            to:
+                -   ipBlock:
+                        cidr: {{ . | trim }}
+        {{- end }}
+        {{- end }}
+        {{- with .statefulset.networkPolicy.extraEgress }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     podSelector:
         matchLabels:
             app: {{ include "liferay.name" .root }}{{ $suffix }}
             {{- include "liferay.selectorLabels" .root | nindent 12 }}
     policyTypes:
+        -   Egress
         -   Ingress
 {{- end }}
 {{- end -}}

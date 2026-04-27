@@ -60,8 +60,8 @@ export type ValueInputRenderer = (
 ) => React.ReactNode;
 
 export interface ConditionBuilderProps {
-	conditions: FilterCondition[];
 	conditionType: ConditionType;
+	conditions: FilterCondition[];
 
 	/**
 	 * Returns the operator set for a given property.

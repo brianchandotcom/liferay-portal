@@ -5,7 +5,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import React, {useCallback} from 'react';
 
 import './ConditionBuilder.scss';
@@ -21,9 +20,9 @@ import type {
 
 let condCounter = 0;
 
-export const generateConditionId = () => {
+export function generateConditionId() {
 	return `condition_${++condCounter}`;
-};
+}
 
 export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -74,7 +73,7 @@ function ConditionRow({
 
 	return (
 		<div
-			className="condition-builder__row rounded p-2 mb-3 d-flex align-items-center justify-content-between"
+			className="align-items-center condition-builder__row d-flex justify-content-between mb-3 p-2 rounded"
 			role="menuitem"
 		>
 			<div className="c-gap-2 d-flex flex-grow-1 flex-wrap">
@@ -97,8 +96,9 @@ function ConditionRow({
 
 							onChange({
 								id: condition.id,
-								operatorName:
-									operators.length === 0 ? 'eq' : undefined,
+								operatorName: !operators.length
+									? 'eq'
+									: undefined,
 								propertyName: (key as string) || undefined,
 								value: undefined,
 							});
@@ -112,7 +112,7 @@ function ConditionRow({
 					</Picker>
 				</div>
 
-				{operators.length > 0 && (
+				{!!operators.length && (
 					<div className="condition-builder__select form-group mb-0 w-100">
 						<Picker
 							aria-label={Liferay.Language.get('operator')}
@@ -139,7 +139,7 @@ function ConditionRow({
 					</div>
 				)}
 
-				<div className="condition-builder__value-input d-flex c-gap-2 flex-grow-1">
+				<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
 					{selectedProperty && condition.operatorName
 						? renderValueInput(
 								selectedProperty,
@@ -155,7 +155,7 @@ function ConditionRow({
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('delete-condition')}
 					borderless
-					className="align-self-baseline condition-builder__delete c-ml-auto"
+					className="align-self-baseline c-ml-auto condition-builder__delete"
 					displayType="secondary"
 					onClick={onDelete}
 					size="sm"
@@ -167,8 +167,8 @@ function ConditionRow({
 }
 
 export function ConditionBuilder({
-	conditions,
 	conditionType,
+	conditions,
 	getOperators,
 	onChange,
 	properties,
@@ -202,7 +202,7 @@ export function ConditionBuilder({
 	return (
 		<div className="condition-builder">
 			{showConjunctionPicker && (
-				<div className="condition-builder__conjunction c-gapx-2 c-mb-3 d-flex align-items-center">
+				<div className="align-items-center c-gapx-2 c-mb-3 condition-builder__conjunction d-flex">
 					<span>{Liferay.Language.get('if')}</span>
 
 					<div className="condition-builder__select">
@@ -239,7 +239,7 @@ export function ConditionBuilder({
 			)}
 
 			<div
-				className="condition-builder__conditions d-flex flex-column c-gapx-3"
+				className="c-gapx-3 condition-builder__conditions d-flex flex-column"
 				role="list"
 			>
 				{conditions.map((condition, index) => (

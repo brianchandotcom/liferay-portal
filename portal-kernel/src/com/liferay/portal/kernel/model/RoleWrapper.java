@@ -543,6 +543,11 @@ public class RoleWrapper
 	}
 
 	@Override
+	public boolean isProtected() {
+		return model.isProtected();
+	}
+
+	@Override
 	public boolean isSystem() {
 		return model.isSystem();
 	}
@@ -916,4 +921,4 @@ public class RoleWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1371612081
+// LIFERAY-SERVICE-BUILDER-HASH:2010397374

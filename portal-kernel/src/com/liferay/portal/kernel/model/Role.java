@@ -92,9 +92,11 @@ public interface Role extends PersistedModel, RoleModel {
 
 	public String getTypeLabel();
 
+	public boolean isProtected();
+
 	public boolean isSystem();
 
 	public boolean isTeam();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1539703615
+// LIFERAY-SERVICE-BUILDER-HASH:-421240556

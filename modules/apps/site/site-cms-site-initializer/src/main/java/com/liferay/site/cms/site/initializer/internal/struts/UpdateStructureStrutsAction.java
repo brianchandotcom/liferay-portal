@@ -12,8 +12,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,6 +31,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.jaxrs.exception.mapper.ExceptionMapperUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -100,19 +99,10 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				throwable = throwable.getCause();
 			}
 
-			// See com.liferay.portal.vulcan.jaxrs.exception
-			// .mapper.BaseExceptionMapper#toResponse
-
-			Class<?> clazz = throwable.getClass();
-
-			List<String> segments = StringUtil.split(
-				clazz.getName(), CharPool.PERIOD);
-
 			jsonObject.put(
 				"type",
-				StringUtil.replace(
-					segments.get(segments.size() - 1), CharPool.DOLLAR,
-					CharPool.PERIOD));
+				ExceptionMapperUtil.getExceptionType(
+					throwable.getClass().getName()));
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

@@ -262,4 +262,4 @@ public class ActionInteractionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:909730950
+// LIFERAY-REST-BUILDER-HASH:-2071361516

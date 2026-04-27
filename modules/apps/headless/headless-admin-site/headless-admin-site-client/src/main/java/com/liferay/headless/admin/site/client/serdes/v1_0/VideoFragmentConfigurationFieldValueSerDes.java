@@ -278,4 +278,4 @@ public class VideoFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:352529425
+// LIFERAY-REST-BUILDER-HASH:-804506017

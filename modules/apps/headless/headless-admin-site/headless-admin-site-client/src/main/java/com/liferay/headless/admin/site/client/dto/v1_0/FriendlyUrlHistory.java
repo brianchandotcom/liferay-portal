@@ -78,4 +78,4 @@ public class FriendlyUrlHistory implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:696213356
+// LIFERAY-REST-BUILDER-HASH:-636225186

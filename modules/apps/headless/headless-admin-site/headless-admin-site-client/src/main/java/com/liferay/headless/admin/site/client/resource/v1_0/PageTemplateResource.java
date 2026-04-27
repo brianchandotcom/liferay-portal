@@ -1848,4 +1848,4 @@ public interface PageTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:437245514
+// LIFERAY-REST-BUILDER-HASH:63762689

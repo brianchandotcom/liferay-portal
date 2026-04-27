@@ -129,4 +129,4 @@ public class ContentPageSpecification
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:242799869
+// LIFERAY-REST-BUILDER-HASH:-641870609

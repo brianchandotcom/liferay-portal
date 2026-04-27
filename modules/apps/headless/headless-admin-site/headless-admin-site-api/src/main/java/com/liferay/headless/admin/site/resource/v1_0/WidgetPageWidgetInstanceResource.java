@@ -177,4 +177,4 @@ public interface WidgetPageWidgetInstanceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-947101578
+// LIFERAY-REST-BUILDER-HASH:358309821

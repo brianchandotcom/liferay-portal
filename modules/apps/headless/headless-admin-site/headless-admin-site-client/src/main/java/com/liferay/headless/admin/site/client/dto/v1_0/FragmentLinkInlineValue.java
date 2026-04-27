@@ -82,4 +82,4 @@ public class FragmentLinkInlineValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1314439519
+// LIFERAY-REST-BUILDER-HASH:-347522769

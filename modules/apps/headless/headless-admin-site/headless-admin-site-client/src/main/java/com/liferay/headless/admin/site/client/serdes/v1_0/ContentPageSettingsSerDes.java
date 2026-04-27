@@ -407,4 +407,4 @@ public class ContentPageSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-527529840
+// LIFERAY-REST-BUILDER-HASH:-901208930

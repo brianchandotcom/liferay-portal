@@ -302,4 +302,4 @@ public class DisplayPageTemplateFolder implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1266051300
+// LIFERAY-REST-BUILDER-HASH:-1158206926

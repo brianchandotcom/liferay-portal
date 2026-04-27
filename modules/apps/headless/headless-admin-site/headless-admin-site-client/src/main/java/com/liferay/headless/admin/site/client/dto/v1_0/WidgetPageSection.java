@@ -122,4 +122,4 @@ public class WidgetPageSection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1545693292
+// LIFERAY-REST-BUILDER-HASH:1773041338

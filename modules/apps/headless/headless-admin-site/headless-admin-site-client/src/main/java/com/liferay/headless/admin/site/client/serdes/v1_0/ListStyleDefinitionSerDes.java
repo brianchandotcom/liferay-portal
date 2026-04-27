@@ -233,4 +233,4 @@ public class ListStyleDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-783182792
+// LIFERAY-REST-BUILDER-HASH:-688985814

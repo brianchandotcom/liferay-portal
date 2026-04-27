@@ -406,4 +406,4 @@ public interface SiteTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2066289726
+// LIFERAY-REST-BUILDER-HASH:-1349161689

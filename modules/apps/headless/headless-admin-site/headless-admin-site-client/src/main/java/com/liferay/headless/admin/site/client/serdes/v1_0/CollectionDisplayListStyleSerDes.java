@@ -259,4 +259,4 @@ public class CollectionDisplayListStyleSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:308705870
+// LIFERAY-REST-BUILDER-HASH:1037805376

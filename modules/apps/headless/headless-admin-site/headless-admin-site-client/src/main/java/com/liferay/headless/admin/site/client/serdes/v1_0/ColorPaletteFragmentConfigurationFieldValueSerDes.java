@@ -294,4 +294,4 @@ public class ColorPaletteFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:114383942
+// LIFERAY-REST-BUILDER-HASH:-260228680

@@ -76,4 +76,4 @@ public class IconImageURL implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:759188405
+// LIFERAY-REST-BUILDER-HASH:-308596605

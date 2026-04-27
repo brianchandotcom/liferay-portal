@@ -118,4 +118,4 @@ public abstract class FragmentLinkValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1927400805
+// LIFERAY-REST-BUILDER-HASH:38511795

@@ -2423,4 +2423,4 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 		DisplayPageTemplateFolderResource _displayPageTemplateFolderResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:807290440
+// LIFERAY-REST-BUILDER-HASH:-609089714

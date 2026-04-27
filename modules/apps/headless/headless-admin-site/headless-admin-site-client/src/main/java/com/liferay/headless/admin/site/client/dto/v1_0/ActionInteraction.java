@@ -118,4 +118,4 @@ public abstract class ActionInteraction implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1900090882
+// LIFERAY-REST-BUILDER-HASH:-1096121140

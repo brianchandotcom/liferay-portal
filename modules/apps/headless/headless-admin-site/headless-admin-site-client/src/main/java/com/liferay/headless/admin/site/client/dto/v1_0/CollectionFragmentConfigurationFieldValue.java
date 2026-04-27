@@ -107,4 +107,4 @@ public class CollectionFragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1165301961
+// LIFERAY-REST-BUILDER-HASH:-1990321303

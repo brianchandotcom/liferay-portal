@@ -1333,4 +1333,4 @@ public abstract class BaseStyleBookResourceImpl
 		LogFactoryUtil.getLog(BaseStyleBookResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1338395061
+// LIFERAY-REST-BUILDER-HASH:-977499382

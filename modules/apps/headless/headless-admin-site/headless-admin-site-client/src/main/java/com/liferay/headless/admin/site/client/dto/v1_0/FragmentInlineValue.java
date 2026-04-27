@@ -80,4 +80,4 @@ public class FragmentInlineValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1577602756
+// LIFERAY-REST-BUILDER-HASH:232366

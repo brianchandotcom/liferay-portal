@@ -120,4 +120,4 @@ public abstract class FavIcon implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:58696339
+// LIFERAY-REST-BUILDER-HASH:-1969292731

@@ -242,4 +242,4 @@ public class DisplayPageTemplateSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1248714329
+// LIFERAY-REST-BUILDER-HASH:795865063

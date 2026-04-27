@@ -76,4 +76,4 @@ public class HrefURLValue extends URLValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:783600713
+// LIFERAY-REST-BUILDER-HASH:1637639035

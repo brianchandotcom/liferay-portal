@@ -1158,4 +1158,4 @@ public interface PageElementResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1051794452
+// LIFERAY-REST-BUILDER-HASH:5664983

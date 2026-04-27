@@ -123,4 +123,4 @@ public abstract class FragmentReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-843376177
+// LIFERAY-REST-BUILDER-HASH:-1606956671

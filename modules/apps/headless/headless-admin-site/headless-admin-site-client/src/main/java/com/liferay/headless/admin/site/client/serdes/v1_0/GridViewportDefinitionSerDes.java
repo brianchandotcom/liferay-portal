@@ -234,4 +234,4 @@ public class GridViewportDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2071379496
+// LIFERAY-REST-BUILDER-HASH:-1533896166

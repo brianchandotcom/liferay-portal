@@ -282,4 +282,4 @@ public class CheckboxFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2047686687
+// LIFERAY-REST-BUILDER-HASH:-549596143

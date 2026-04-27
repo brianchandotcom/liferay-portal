@@ -1303,4 +1303,4 @@ public abstract class BaseSiteTemplateResourceTestCase {
 		_siteTemplateResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1464185231
+// LIFERAY-REST-BUILDER-HASH:2070907711

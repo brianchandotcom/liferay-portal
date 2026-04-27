@@ -120,4 +120,4 @@ public class BorderStylesConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:517078321
+// LIFERAY-REST-BUILDER-HASH:577878463

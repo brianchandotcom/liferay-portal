@@ -83,4 +83,4 @@ public class DirectBackgroundImageValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-571186493
+// LIFERAY-REST-BUILDER-HASH:1284738997

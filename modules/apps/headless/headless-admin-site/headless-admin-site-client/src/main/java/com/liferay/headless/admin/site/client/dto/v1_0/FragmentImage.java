@@ -147,4 +147,4 @@ public class FragmentImage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2030380758
+// LIFERAY-REST-BUILDER-HASH:756274468

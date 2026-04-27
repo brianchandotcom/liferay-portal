@@ -2061,4 +2061,4 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		_navigationMenuResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-50643514
+// LIFERAY-REST-BUILDER-HASH:-274362880

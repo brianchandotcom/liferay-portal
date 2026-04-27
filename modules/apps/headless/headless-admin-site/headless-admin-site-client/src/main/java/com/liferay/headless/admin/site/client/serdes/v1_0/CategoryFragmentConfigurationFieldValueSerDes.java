@@ -287,4 +287,4 @@ public class CategoryFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1123926520
+// LIFERAY-REST-BUILDER-HASH:1357946490

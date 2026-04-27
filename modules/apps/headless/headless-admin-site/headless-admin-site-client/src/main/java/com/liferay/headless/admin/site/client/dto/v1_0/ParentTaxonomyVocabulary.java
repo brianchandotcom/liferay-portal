@@ -79,4 +79,4 @@ public class ParentTaxonomyVocabulary implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:750679147
+// LIFERAY-REST-BUILDER-HASH:-1958708551

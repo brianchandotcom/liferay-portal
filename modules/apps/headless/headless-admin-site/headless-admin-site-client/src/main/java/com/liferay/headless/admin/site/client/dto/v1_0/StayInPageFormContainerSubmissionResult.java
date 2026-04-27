@@ -89,4 +89,4 @@ public class StayInPageFormContainerSubmissionResult
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1170075490
+// LIFERAY-REST-BUILDER-HASH:1669839696

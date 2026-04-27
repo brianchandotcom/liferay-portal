@@ -205,4 +205,4 @@ public interface UtilityPageResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-366192854
+// LIFERAY-REST-BUILDER-HASH:-1930322635

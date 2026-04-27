@@ -140,4 +140,4 @@ public class NavigationSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1739487968
+// LIFERAY-REST-BUILDER-HASH:-1340648594

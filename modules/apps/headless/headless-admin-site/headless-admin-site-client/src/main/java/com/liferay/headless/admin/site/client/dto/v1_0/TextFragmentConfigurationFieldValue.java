@@ -107,4 +107,4 @@ public class TextFragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:782302765
+// LIFERAY-REST-BUILDER-HASH:2080980575

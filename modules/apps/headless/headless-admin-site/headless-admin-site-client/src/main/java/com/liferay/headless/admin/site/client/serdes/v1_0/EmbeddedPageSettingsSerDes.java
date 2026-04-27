@@ -328,4 +328,4 @@ public class EmbeddedPageSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:757704001
+// LIFERAY-REST-BUILDER-HASH:-282182833

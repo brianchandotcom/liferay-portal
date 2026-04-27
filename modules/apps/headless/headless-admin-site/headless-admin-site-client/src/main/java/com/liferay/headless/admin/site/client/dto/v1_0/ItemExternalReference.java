@@ -125,4 +125,4 @@ public class ItemExternalReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1545890848
+// LIFERAY-REST-BUILDER-HASH:-468551122

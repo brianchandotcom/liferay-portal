@@ -122,4 +122,4 @@ public abstract class CollectionReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1533014443
+// LIFERAY-REST-BUILDER-HASH:-1284566585

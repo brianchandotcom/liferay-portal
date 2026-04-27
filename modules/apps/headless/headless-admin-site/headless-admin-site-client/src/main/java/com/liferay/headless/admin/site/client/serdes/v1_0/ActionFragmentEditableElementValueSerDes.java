@@ -370,4 +370,4 @@ public class ActionFragmentEditableElementValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1621720971
+// LIFERAY-REST-BUILDER-HASH:249913411

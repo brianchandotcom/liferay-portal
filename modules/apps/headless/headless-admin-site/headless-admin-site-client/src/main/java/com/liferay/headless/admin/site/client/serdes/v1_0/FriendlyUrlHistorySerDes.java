@@ -212,4 +212,4 @@ public class FriendlyUrlHistorySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-955581261
+// LIFERAY-REST-BUILDER-HASH:-1322477887

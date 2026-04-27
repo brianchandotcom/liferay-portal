@@ -86,4 +86,4 @@ public class LinkFragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-97370566
+// LIFERAY-REST-BUILDER-HASH:984085640

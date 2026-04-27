@@ -112,4 +112,4 @@ public class NavigationMenuFragmentConfigurationFieldValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:200128817
+// LIFERAY-REST-BUILDER-HASH:-1528233629

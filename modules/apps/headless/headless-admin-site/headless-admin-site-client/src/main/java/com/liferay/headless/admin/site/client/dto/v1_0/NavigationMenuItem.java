@@ -405,4 +405,4 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:834480678
+// LIFERAY-REST-BUILDER-HASH:86305624

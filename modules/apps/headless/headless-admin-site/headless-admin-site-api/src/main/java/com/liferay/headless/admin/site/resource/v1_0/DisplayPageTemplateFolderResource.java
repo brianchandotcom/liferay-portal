@@ -203,4 +203,4 @@ public interface DisplayPageTemplateFolderResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1784272270
+// LIFERAY-REST-BUILDER-HASH:1582364835

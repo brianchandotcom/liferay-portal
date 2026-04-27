@@ -104,4 +104,4 @@ public class CollectionSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-268209771
+// LIFERAY-REST-BUILDER-HASH:-935545181

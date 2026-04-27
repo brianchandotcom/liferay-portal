@@ -50,6 +50,9 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -165,44 +168,21 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		serviceContext.setAttribute("addDefaultLayout", Boolean.FALSE);
 
-		LayoutSetPrototype importedLayoutSetPrototype = null;
+		LayoutSetPrototype importedLayoutSetPrototype;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			LayoutSetPrototype existingLayoutSetPrototype =
-				_layoutSetPrototypeLocalService.
-					fetchLayoutSetPrototypeByUuidAndCompanyId(
-						layoutSetPrototype.getUuid(),
-						portletDataContext.getCompanyId());
-
-			if (existingLayoutSetPrototype == null) {
-				serviceContext.setUuid(layoutSetPrototype.getUuid());
-
-				importedLayoutSetPrototype =
-					_layoutSetPrototypeLocalService.addLayoutSetPrototype(
-						userId, portletDataContext.getCompanyId(),
-						layoutSetPrototype.getNameMap(),
-						layoutSetPrototype.getDescriptionMap(),
-						layoutSetPrototype.isActive(), layoutsUpdateable,
-						serviceContext);
-			}
-			else {
-				importedLayoutSetPrototype =
-					_layoutSetPrototypeLocalService.updateLayoutSetPrototype(
-						existingLayoutSetPrototype.getLayoutSetPrototypeId(),
-						layoutSetPrototype.getNameMap(),
-						layoutSetPrototype.getDescriptionMap(),
-						layoutSetPrototype.isActive(), layoutsUpdateable,
-						serviceContext);
-			}
+		try {
+			importedLayoutSetPrototype = TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> _addOrUpdateLayoutSetPrototype(
+					layoutSetPrototype, layoutsUpdateable, portletDataContext,
+					serviceContext, userId));
 		}
-		else {
-			importedLayoutSetPrototype =
-				_layoutSetPrototypeLocalService.addLayoutSetPrototype(
-					userId, portletDataContext.getCompanyId(),
-					layoutSetPrototype.getNameMap(),
-					layoutSetPrototype.getDescriptionMap(),
-					layoutSetPrototype.isActive(), layoutsUpdateable,
-					serviceContext);
+		catch (Throwable throwable) {
+			if (throwable instanceof PortalException) {
+				throw (PortalException)throwable;
+			}
+
+			throw new PortalException(throwable);
 		}
 
 		_importLayoutPrototypes(portletDataContext, layoutSetPrototype);
@@ -217,6 +197,38 @@ public class LayoutSetPrototypeStagedModelDataHandler
 	@Override
 	protected boolean isSkipImportReferenceStagedModels() {
 		return true;
+	}
+
+	private LayoutSetPrototype _addOrUpdateLayoutSetPrototype(
+			LayoutSetPrototype layoutSetPrototype, boolean layoutsUpdateable,
+			PortletDataContext portletDataContext,
+			ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			LayoutSetPrototype existingLayoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					fetchLayoutSetPrototypeByUuidAndCompanyId(
+						layoutSetPrototype.getUuid(),
+						portletDataContext.getCompanyId());
+
+			if (existingLayoutSetPrototype != null) {
+				return _layoutSetPrototypeLocalService.updateLayoutSetPrototype(
+					existingLayoutSetPrototype.getLayoutSetPrototypeId(),
+					layoutSetPrototype.getNameMap(),
+					layoutSetPrototype.getDescriptionMap(),
+					layoutSetPrototype.isActive(), layoutsUpdateable,
+					serviceContext);
+			}
+
+			serviceContext.setUuid(layoutSetPrototype.getUuid());
+		}
+
+		return _layoutSetPrototypeLocalService.addLayoutSetPrototype(
+			userId, portletDataContext.getCompanyId(),
+			layoutSetPrototype.getNameMap(),
+			layoutSetPrototype.getDescriptionMap(),
+			layoutSetPrototype.isActive(), layoutsUpdateable, serviceContext);
 	}
 
 	private void _exportLayoutPrototypes(
@@ -574,6 +586,10 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeStagedModelDataHandler.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

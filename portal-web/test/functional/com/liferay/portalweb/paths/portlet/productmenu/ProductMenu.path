@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_BODY</td>
-	<td>//*[@data-qa-id='productMenuBody']</td>
+	<td>//*[@data-qa-id='productMenuBody'] | //*[@data-qa-id='sideNavigation']</td>
 	<td></td>
 </tr>
 <tr>

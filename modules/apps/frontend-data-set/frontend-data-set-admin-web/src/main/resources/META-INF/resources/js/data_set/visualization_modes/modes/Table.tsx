@@ -14,7 +14,6 @@ import {
 	FDS_INTERNAL_RENDERERS,
 	IClientExtensionRenderer,
 	IInternalRenderer,
-	getFDSInternalRenderer,
 } from '@liferay/frontend-data-set-web';
 import {InputLocalized, openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
@@ -62,7 +61,11 @@ const getRendererLabel = ({
 }): string => {
 	let clientExtensionRenderer;
 
-	const internalRenderer = getFDSInternalRenderer(rendererName);
+	const internalRenderer = FDS_INTERNAL_RENDERERS.find(
+		(renderer: IInternalRenderer) => {
+			return renderer.name === rendererName;
+		}
+	);
 
 	if (internalRenderer?.label) {
 		return internalRenderer.label;

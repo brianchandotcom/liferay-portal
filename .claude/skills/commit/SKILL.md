@@ -1,6 +1,6 @@
 ---
 
-allowed-tools: [Bash, Glob, Grep, Read]
+allowed-tools: [Bash, Glob, Grep, Read, Skill]
 argument-hint: "[optional message hint]"
 description: Create a Git commit with a Jira-prefixed message derived from the staged diff. Use when the user asks to commit, wants to commit changes, or invokes /commit.
 name: commit
@@ -11,7 +11,11 @@ name: commit
 
 Compose a well-crafted Git commit for the current set of changes.
 
-## 1. Gather Context
+## 1. Format Source
+
+Before composing the commit, invoke the `format-source` skill to ensure all changes follow Liferay's coding standards (both the automatic formatter and the manual rules). After it completes, any edits the formatter applied are part of what gets committed.
+
+## 2. Gather Context
 
 - When Claude modified or created files during this conversation, commit **only** those files. Stage them explicitly by name with `git add <file1> <file2> ...`. Do not include the user's own changes.
 - When Claude did **not** modify any files in this conversation, commit **all** changes. Stage modified and deleted files, but leave untracked files alone. When untracked files exist, ask the user whether to include them.
@@ -20,7 +24,7 @@ Never use `git add -A` or `git add .`.
 
 When nothing is staged, unstaged, or untracked, inform the user that there is nothing to commit and stop.
 
-## 2. Extract the Jira Ticket
+## 3. Extract the Jira Ticket
 
 The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and similar forms (uppercase letters, hyphen, digits). Resolve the ticket in this order:
 
@@ -32,7 +36,7 @@ The ticket ID follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and sim
 
 1. **Fallback** — when no ticket surfaces, prompt the user for one.
 
-## 3. Compose the Commit Message
+## 4. Compose the Commit Message
 
 Read the diff, understand the actual behavior change, then compose the message.
 
@@ -67,7 +71,7 @@ When a body is warranted:
 
 When `${ARGUMENTS}` carries a hint or description rather than a ticket ID, incorporate it into the message.
 
-## 4. Confirm and Commit
+## 5. Confirm and Commit
 
 Present the proposed commit message to the user and request confirmation. Once they approve, create the commit:
 
@@ -84,6 +88,6 @@ git commit --message "${COMMIT_MESSAGE}"
 
 When the user requests changes, revise the message and reconfirm.
 
-## 5. Post-Commit
+## 6. Post-Commit
 
 Run `git status` to confirm the commit succeeded, then display the result.

@@ -200,16 +200,11 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ercVersionedEntryId=");
-		sb.append(ercVersionedEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByErcVersionedEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {ercVersionedEntryId}));
 	}
 
 	/**
@@ -224,14 +219,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		long ercVersionedEntryId,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByErcVersionedEntryId(
-			ercVersionedEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByErcVersionedEntryId.fetchFirst(
+			finderCache, new Object[] {ercVersionedEntryId}, orderByComparator);
 	}
 
 	/**
@@ -241,13 +230,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByErcVersionedEntryId(long ercVersionedEntryId) {
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByErcVersionedEntryId(
-					ercVersionedEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByErcVersionedEntryId.remove(
+			finderCache, new Object[] {ercVersionedEntryId});
 	}
 
 	/**
@@ -283,23 +267,17 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			fetchByErcVersionedEntryId_Version(ercVersionedEntryId, version);
 
 		if (ercVersionedEntryVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ercVersionedEntryId=");
-			sb.append(ercVersionedEntryId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByErcVersionedEntryId_Version.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {ercVersionedEntryId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+			throw new NoSuchERCVersionedEntryVersionException(message);
 		}
 
 		return ercVersionedEntryVersion;
@@ -473,16 +451,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -497,14 +468,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		String uuid,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -514,11 +479,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -645,19 +607,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByUuid_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, version}));
 	}
 
 	/**
@@ -673,14 +625,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		String uuid, int version,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByUuid_Version(
-			uuid, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_Version.fetchFirst(
+			finderCache, new Object[] {uuid, version}, orderByComparator);
 	}
 
 	/**
@@ -691,13 +637,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_Version(String uuid, int version) {
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByUuid_Version(
-					uuid, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_Version.remove(
+			finderCache, new Object[] {uuid, version});
 	}
 
 	/**
@@ -824,19 +765,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
 	}
 
 	/**
@@ -852,14 +783,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		String uuid, long groupId,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByUUID_G(
-			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUUID_G.fetchFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -870,13 +795,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUUID_G(String uuid, long groupId) {
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByUUID_G(
-					uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByUUID_G.remove(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -914,26 +834,16 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			fetchByUUID_G_Version(uuid, groupId, version);
 
 		if (ercVersionedEntryVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G_Version.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {uuid, groupId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+			throw new NoSuchERCVersionedEntryVersionException(message);
 		}
 
 		return ercVersionedEntryVersion;
@@ -1116,19 +1026,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -1144,14 +1044,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -1162,13 +1056,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1303,22 +1192,10 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			return ercVersionedEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchERCVersionedEntryVersionException(sb.toString());
+		throw new NoSuchERCVersionedEntryVersionException(
+			_collectionPersistenceFinderByUuid_C_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {uuid, companyId, version}));
 	}
 
 	/**
@@ -1335,14 +1212,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		String uuid, long companyId, int version,
 		OrderByComparator<ERCVersionedEntryVersion> orderByComparator) {
 
-		List<ERCVersionedEntryVersion> list = findByUuid_C_Version(
-			uuid, companyId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C_Version.fetchFirst(
+			finderCache, new Object[] {uuid, companyId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1356,13 +1228,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	public void removeByUuid_C_Version(
 		String uuid, long companyId, int version) {
 
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				findByUuid_C_Version(
-					uuid, companyId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ercVersionedEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C_Version.remove(
+			finderCache, new Object[] {uuid, companyId, version});
 	}
 
 	/**
@@ -2362,4 +2229,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-216947326
+// LIFERAY-SERVICE-BUILDER-HASH:-623474286

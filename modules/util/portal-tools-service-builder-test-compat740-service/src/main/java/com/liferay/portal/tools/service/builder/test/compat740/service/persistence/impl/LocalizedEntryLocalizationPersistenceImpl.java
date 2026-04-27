@@ -188,16 +188,10 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			return localizedEntryLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("localizedEntryId=");
-		sb.append(localizedEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLocalizedEntryLocalizationException(sb.toString());
+		throw new NoSuchLocalizedEntryLocalizationException(
+			_collectionPersistenceFinderByLocalizedEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {localizedEntryId}));
 	}
 
 	/**
@@ -212,14 +206,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		long localizedEntryId,
 		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
 
-		List<LocalizedEntryLocalization> list = findByLocalizedEntryId(
-			localizedEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLocalizedEntryId.fetchFirst(
+			finderCache, new Object[] {localizedEntryId}, orderByComparator);
 	}
 
 	/**
@@ -229,13 +217,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByLocalizedEntryId(long localizedEntryId) {
-		for (LocalizedEntryLocalization localizedEntryLocalization :
-				findByLocalizedEntryId(
-					localizedEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(localizedEntryLocalization);
-		}
+		_collectionPersistenceFinderByLocalizedEntryId.remove(
+			finderCache, new Object[] {localizedEntryId});
 	}
 
 	/**
@@ -271,23 +254,17 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			fetchByLocalizedEntryId_LanguageId(localizedEntryId, languageId);
 
 		if (localizedEntryLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("localizedEntryId=");
-			sb.append(localizedEntryId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByLocalizedEntryId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {localizedEntryId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLocalizedEntryLocalizationException(sb.toString());
+			throw new NoSuchLocalizedEntryLocalizationException(message);
 		}
 
 		return localizedEntryLocalization;
@@ -1064,4 +1041,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930977992
+// LIFERAY-SERVICE-BUILDER-HASH:-1607363979

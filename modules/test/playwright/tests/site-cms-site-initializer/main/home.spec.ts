@@ -9,13 +9,20 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
+	performLoginViaApi,
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
+import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {DataSetPage} from './pages/DataSetPage';
+import {SpaceSummaryPage} from './pages/SpaceSummaryPage';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -25,8 +32,77 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest(),
+	structureBuilderPagesTest,
 	workflowPagesTest
 );
+
+let cmsAdminUser: TUserAccount;
+let setupData: Array<{id: number | string; type: string}>;
+let spaceAdminUser: TUserAccount;
+let spaceUser: TUserAccount;
+
+test.beforeAll(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLoginViaApi({page, screenName: 'test'});
+
+	const apiHelpers = new DataApiHelpers(page);
+
+	cmsAdminUser = await addCMSAdministrator(apiHelpers);
+
+	apiHelpers.data.push({id: cmsAdminUser.id, type: 'userAccount'});
+
+	spaceAdminUser = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	apiHelpers.data.push({id: spaceAdminUser.id, type: 'userAccount'});
+
+	userData[spaceAdminUser.alternateName] = {
+		name: spaceAdminUser.givenName,
+		password: 'test',
+		surname: spaceAdminUser.familyName,
+	};
+
+	spaceUser = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	apiHelpers.data.push({id: spaceUser.id, type: 'userAccount'});
+
+	userData[spaceUser.alternateName] = {
+		name: spaceUser.givenName,
+		password: 'test',
+		surname: spaceUser.familyName,
+	};
+
+	const spaceSummaryPage = new SpaceSummaryPage(page);
+
+	await spaceSummaryPage.goto('Default');
+
+	await spaceSummaryPage.addUserOrUserGroup(spaceAdminUser.name, 'users');
+
+	await spaceSummaryPage.addRoleToSpaceMember(
+		'Space Administrator',
+		spaceAdminUser.name
+	);
+
+	await spaceSummaryPage.addUserOrUserGroup(spaceUser.name, 'users');
+
+	setupData = [...apiHelpers.data];
+
+	await page.close();
+});
+
+test.afterAll(async ({browser}) => {
+	const page = await browser.newPage();
+
+	await performLoginViaApi({page, screenName: 'test'});
+
+	const apiHelpers = new DataApiHelpers(page);
+
+	apiHelpers.setData(setupData);
+
+	await apiHelpers.clearData();
+
+	await page.close();
+});
 
 test(
 	'My Workflow Tasks full view preserves the back button when switching tabs',
@@ -522,6 +598,63 @@ test(
 			await homePage.vocabularyButton.click();
 
 			await expect(page.getByText('Basic Info')).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can see a custom Content Structure as a quick action',
+	{tag: '@LPD-87559'},
+	async ({homePage, page, structureBuilderPage}) => {
+		const structureLabel = `Custom${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+			spaces: ['Default'],
+		});
+
+		const verifyCustomStructureQuickAction = async () => {
+			await homePage.goto();
+
+			const customStructureButton = page.getByRole('button', {
+				name: structureLabel,
+			});
+
+			await expect(customStructureButton).toBeVisible();
+
+			await customStructureButton.click();
+
+			await expect(
+				page.getByPlaceholder(`New ${structureLabel}`)
+			).toBeVisible();
+		};
+
+		await test.step(
+			'Default admin can use the custom Content Structure quick action',
+			verifyCustomStructureQuickAction
+		);
+
+		await test.step('CMS Administrator can use the custom Content Structure quick action', async () => {
+			await performUserSwitch(page, cmsAdminUser.alternateName);
+
+			await verifyCustomStructureQuickAction();
+		});
+
+		await test.step('Space Administrator can use the custom Content Structure quick action', async () => {
+			await performUserSwitch(page, spaceAdminUser.alternateName);
+
+			await verifyCustomStructureQuickAction();
+		});
+
+		await test.step('Space User does not see the Quick Actions section', async () => {
+			await performUserSwitch(page, spaceUser.alternateName);
+
+			await homePage.goto();
+
+			await expect(
+				page.getByRole('heading', {name: 'Quick Actions'})
+			).not.toBeVisible();
 		});
 	}
 );

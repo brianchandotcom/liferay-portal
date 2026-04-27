@@ -104,6 +104,22 @@ public class ViewRecycleBinSectionDisplayContextTest
 			_getBreadcrumbProps(displayContext));
 	}
 
+	@Test
+	public void testGetBulkActionDropdownItems() throws Exception {
+		List<FDSActionDropdownItem> bulkActionDropdownItems =
+			getBulkActionDropdownItems();
+
+		Assert.assertEquals(
+			bulkActionDropdownItems.toString(), 2,
+			bulkActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", null, bulkActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"restore", "restore", "Restore", null,
+			bulkActionDropdownItems.get(1));
+	}
+
 	@Override
 	@Test
 	public void testGetCMSSectionFilterString() throws Exception {

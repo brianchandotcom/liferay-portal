@@ -2690,15 +2690,21 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, String> urlTitleMap = new HashMap<>();
 
 		for (Map.Entry<String, String> entry : friendlyUrlMap.entrySet()) {
-			if (Validator.isNull(entry.getValue())) {
+			String friendlyURL = entry.getValue();
+
+			if (Validator.isNull(friendlyURL)) {
 				continue;
+			}
+
+			if (friendlyURL.startsWith(StringPool.SLASH)) {
+				friendlyURL = friendlyURL.replaceAll("^/+", StringPool.BLANK);
 			}
 
 			urlTitleMap.put(
 				entry.getKey(),
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					groupId, classNameId, objectEntry.getObjectEntryId(),
-					entry.getValue(), entry.getKey()));
+					friendlyURL, entry.getKey()));
 		}
 
 		urlTitleMap.computeIfAbsent(

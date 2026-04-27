@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EXPIRING_SOON_THRESHOLD_DAYS} from './constants';
+import {EXPIRING_SOON_THRESHOLD_DAYS, MS_PER_DAY} from './constants';
 import dateFormat from './dateFormat';
-
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 export function isExpiringSoon(expirationDate?: string | Date): boolean {
 	if (!expirationDate) {

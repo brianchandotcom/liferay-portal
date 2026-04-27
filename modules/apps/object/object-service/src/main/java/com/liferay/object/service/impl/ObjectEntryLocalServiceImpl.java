@@ -2700,6 +2700,10 @@ public class ObjectEntryLocalServiceImpl
 				friendlyURL = friendlyURL.replaceAll("^/+", StringPool.BLANK);
 			}
 
+			if (friendlyURL.contains(StringPool.SLASH)) {
+				friendlyURL = friendlyURL.replaceAll("/+", StringPool.SLASH);
+			}
+
 			urlTitleMap.put(
 				entry.getKey(),
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(

@@ -31,7 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tancredi Covioli
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS,
+	property = {
+		"frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS,
+		"frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS
+	},
 	service = FDSFilter.class
 )
 public class CommerceOrderAttachmentTypeSelectionFDSFilter
@@ -44,7 +47,7 @@ public class CommerceOrderAttachmentTypeSelectionFDSFilter
 
 	@Override
 	public String getId() {
-		return "attachmentType";
+		return "type";
 	}
 
 	@Override

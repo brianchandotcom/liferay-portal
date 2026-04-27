@@ -18,13 +18,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Tancredi Covioli
+ * @author Stefano Motta
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS,
+	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS,
 	service = FDSView.class
 )
-public class PlacedCommerceOrderAttachmentTableFDSView
+public class PendingCommerceOrderAttachmentTableFDSView
 	extends BaseTableFDSView {
 
 	@Override

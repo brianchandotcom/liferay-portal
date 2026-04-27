@@ -11,7 +11,7 @@
 	additionalProps="<%= additionalProps %>"
 	apiURL="<%= apiURL %>"
 	fdsActionDropdownItems="<%= fdsActionDropdownItems %>"
-	id="<%= CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS %>"
+	id="<%= name %>"
 	propsTransformer="{OrderDataSetPropsTransformer} from commerce-order-content-web"
 	style="<%= displayStyle %>"
 />

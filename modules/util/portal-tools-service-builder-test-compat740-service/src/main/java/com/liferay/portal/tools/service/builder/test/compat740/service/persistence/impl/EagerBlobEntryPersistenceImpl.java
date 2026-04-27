@@ -185,16 +185,9 @@ public class EagerBlobEntryPersistenceImpl
 			return eagerBlobEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEagerBlobEntryException(sb.toString());
+		throw new NoSuchEagerBlobEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -208,13 +201,8 @@ public class EagerBlobEntryPersistenceImpl
 	public EagerBlobEntry fetchByUuid_First(
 		String uuid, OrderByComparator<EagerBlobEntry> orderByComparator) {
 
-		List<EagerBlobEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			dummyFinderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -224,11 +212,8 @@ public class EagerBlobEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (EagerBlobEntry eagerBlobEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(eagerBlobEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			dummyFinderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -262,23 +247,15 @@ public class EagerBlobEntryPersistenceImpl
 		EagerBlobEntry eagerBlobEntry = fetchByUUID_G(uuid, groupId);
 
 		if (eagerBlobEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEagerBlobEntryException(sb.toString());
+			throw new NoSuchEagerBlobEntryException(message);
 		}
 
 		return eagerBlobEntry;
@@ -1011,4 +988,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-761674728
+// LIFERAY-SERVICE-BUILDER-HASH:1942438642

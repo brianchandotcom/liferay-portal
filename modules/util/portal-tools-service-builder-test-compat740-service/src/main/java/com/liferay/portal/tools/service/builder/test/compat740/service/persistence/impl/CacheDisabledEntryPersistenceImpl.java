@@ -98,20 +98,15 @@ public class CacheDisabledEntryPersistenceImpl
 		CacheDisabledEntry cacheDisabledEntry = fetchByName(name);
 
 		if (cacheDisabledEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCacheDisabledEntryException(sb.toString());
+			throw new NoSuchCacheDisabledEntryException(message);
 		}
 
 		return cacheDisabledEntry;
@@ -784,4 +779,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1255280507
+// LIFERAY-SERVICE-BUILDER-HASH:-1257589330

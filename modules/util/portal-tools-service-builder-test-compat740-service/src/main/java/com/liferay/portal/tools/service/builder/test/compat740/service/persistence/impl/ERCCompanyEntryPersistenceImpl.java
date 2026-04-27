@@ -194,16 +194,9 @@ public class ERCCompanyEntryPersistenceImpl
 			return ercCompanyEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchERCCompanyEntryException(sb.toString());
+		throw new NoSuchERCCompanyEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -217,13 +210,8 @@ public class ERCCompanyEntryPersistenceImpl
 	public ERCCompanyEntry fetchByUuid_First(
 		String uuid, OrderByComparator<ERCCompanyEntry> orderByComparator) {
 
-		List<ERCCompanyEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +221,8 @@ public class ERCCompanyEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ERCCompanyEntry ercCompanyEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ercCompanyEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -362,19 +347,9 @@ public class ERCCompanyEntryPersistenceImpl
 			return ercCompanyEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchERCCompanyEntryException(sb.toString());
+		throw new NoSuchERCCompanyEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -390,14 +365,8 @@ public class ERCCompanyEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ERCCompanyEntry> orderByComparator) {
 
-		List<ERCCompanyEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -408,13 +377,8 @@ public class ERCCompanyEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ERCCompanyEntry ercCompanyEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ercCompanyEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -451,23 +415,16 @@ public class ERCCompanyEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (ercCompanyEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchERCCompanyEntryException(sb.toString());
+			throw new NoSuchERCCompanyEntryException(message);
 		}
 
 		return ercCompanyEntry;
@@ -1314,4 +1271,4 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:545573868
+// LIFERAY-SERVICE-BUILDER-HASH:798526766

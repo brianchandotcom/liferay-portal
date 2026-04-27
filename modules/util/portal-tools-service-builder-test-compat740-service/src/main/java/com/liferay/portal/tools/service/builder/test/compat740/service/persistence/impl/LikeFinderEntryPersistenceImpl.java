@@ -104,26 +104,16 @@ public class LikeFinderEntryPersistenceImpl
 			ownerId, ownerType, portletId);
 
 		if (likeFinderEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ownerId=");
-			sb.append(ownerId);
-
-			sb.append(", ownerType=");
-			sb.append(ownerType);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByO_O_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {ownerId, ownerType, portletId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLikeFinderEntryException(sb.toString());
+			throw new NoSuchLikeFinderEntryException(message);
 		}
 
 		return likeFinderEntry;
@@ -323,25 +313,10 @@ public class LikeFinderEntryPersistenceImpl
 			return likeFinderEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchLikeFinderEntryException(sb.toString());
+		throw new NoSuchLikeFinderEntryException(
+			_collectionPersistenceFinderByC_O_O_LikeP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, ownerId, ownerType, portletId}));
 	}
 
 	/**
@@ -359,14 +334,10 @@ public class LikeFinderEntryPersistenceImpl
 		long companyId, long ownerId, int ownerType, String portletId,
 		OrderByComparator<LikeFinderEntry> orderByComparator) {
 
-		List<LikeFinderEntry> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_O_O_LikeP.fetchFirst(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -381,13 +352,9 @@ public class LikeFinderEntryPersistenceImpl
 	public void removeByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId) {
 
-		for (LikeFinderEntry likeFinderEntry :
-				findByC_O_O_LikeP(
-					companyId, ownerId, ownerType, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(likeFinderEntry);
-		}
+		_collectionPersistenceFinderByC_O_O_LikeP.remove(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -1084,4 +1051,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1585417470
+// LIFERAY-SERVICE-BUILDER-HASH:1442231408

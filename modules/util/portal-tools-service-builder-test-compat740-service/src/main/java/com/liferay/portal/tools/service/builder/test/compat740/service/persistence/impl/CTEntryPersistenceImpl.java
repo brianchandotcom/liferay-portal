@@ -195,16 +195,9 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTEntryException(sb.toString());
+		throw new NoSuchCTEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -218,14 +211,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			dummyFinderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -235,12 +222,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTEntry ctEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			dummyFinderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -278,23 +261,15 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByC_N(companyId, name);
 
 		if (ctEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCTEntryException(sb.toString());
+			throw new NoSuchCTEntryException(message);
 		}
 
 		return ctEntry;
@@ -1250,4 +1225,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:417767605
+// LIFERAY-SERVICE-BUILDER-HASH:890294144

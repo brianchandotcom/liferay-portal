@@ -182,16 +182,9 @@ public class MVCCEntryPersistenceImpl
 			return mvccEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMVCCEntryException(sb.toString());
+		throw new NoSuchMVCCEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -205,14 +198,8 @@ public class MVCCEntryPersistenceImpl
 	public MVCCEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<MVCCEntry> orderByComparator) {
 
-		List<MVCCEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -222,12 +209,8 @@ public class MVCCEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (MVCCEntry mvccEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mvccEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -260,23 +243,15 @@ public class MVCCEntryPersistenceImpl
 		MVCCEntry mvccEntry = fetchByC_N(companyId, name);
 
 		if (mvccEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMVCCEntryException(sb.toString());
+			throw new NoSuchMVCCEntryException(message);
 		}
 
 		return mvccEntry;
@@ -980,4 +955,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:468726256
+// LIFERAY-SERVICE-BUILDER-HASH:-1245512827

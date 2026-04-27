@@ -372,20 +372,35 @@ that may or may not be enforced with a unique index at the database level. Case
 			return ${entity.variableName};
 		}
 
-		StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
+		<#if entityFinder.collectionPersistenceFinderEnabled>
+			throw new ${noSuchEntity}Exception(
+				_collectionPersistenceFinderBy${entityFinder.name}.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						<#list entityColumns as entityColumn>
+							${entityColumn.name}
 
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+					}));
+		<#else>
+			StringBundler sb = new StringBundler(${(entityColumns?size * 2) + 2});
 
-		<#list entityColumns as entityColumn>
-			sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
-			sb.append(${entityColumn.name});
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			<#if !entityColumn_has_next>
-				sb.append("}");
-			</#if>
-		</#list>
+			<#list entityColumns as entityColumn>
+				sb.append("<#if entityColumn_index != 0>, </#if>${entityColumn.name}${entityColumn.comparator}");
+				sb.append(${entityColumn.name});
 
-		throw new ${noSuchEntity}Exception(sb.toString());
+				<#if !entityColumn_has_next>
+					sb.append("}");
+				</#if>
+			</#list>
+
+			throw new ${noSuchEntity}Exception(sb.toString());
+		</#if>
 	}
 
 	/**

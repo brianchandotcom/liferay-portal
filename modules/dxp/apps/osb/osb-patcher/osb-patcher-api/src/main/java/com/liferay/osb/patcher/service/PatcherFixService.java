@@ -47,4 +47,4 @@ public interface PatcherFixService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1439594847
+// LIFERAY-SERVICE-BUILDER-HASH:-92495690

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -95,6 +96,10 @@ public interface PatcherFixLocalService
 
 	public boolean addPatcherFixPackPatcherFixes(
 		long patcherFixPackId, long[] patcherFixIds);
+
+	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
+			String patcherProjectVersionName, String ticketList)
+		throws PortalException;
 
 	public void clearPatcherBuildPatcherFixes(long patcherBuildId);
 
@@ -469,4 +474,4 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-651926271
+// LIFERAY-SERVICE-BUILDER-HASH:1127782650

@@ -22,4 +22,5 @@ import org.osgi.service.component.annotations.Component;
 )
 public class PatcherFixServiceImpl extends PatcherFixServiceBaseImpl {
 }
+
 // LIFERAY-SERVICE-BUILDER-HASH:1619952532

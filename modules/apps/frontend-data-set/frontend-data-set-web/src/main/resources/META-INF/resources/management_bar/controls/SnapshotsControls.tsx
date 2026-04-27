@@ -209,7 +209,9 @@ const SnapshotsControls = () => {
 
 	const hasSharedSnapshots = sharedSnapshots.length > 0;
 
-	const pickerItems = hasSharedSnapshots
+	type PickerItem = ISnapshot | {items: ISnapshot[]; label?: string};
+
+	const pickerItems: PickerItem[] = hasSharedSnapshots
 		? [
 				{items: [defaultSnapshotItem, ...ownedSnapshots]},
 				{

@@ -374,11 +374,12 @@ public class EditAssetListDisplayContextTest {
 				ListUtil.fromArray(assetVocabulary)
 			);
 
+			EditAssetListDisplayContext editAssetListDisplayContext =
+				_getEditAssetListDisplayContext(new UnicodeProperties());
+
 			Assert.assertEquals(
 				Collections.emptyList(),
-				_getEditAssetListDisplayContext(
-					new UnicodeProperties()
-				).getVocabularyIds());
+				editAssetListDisplayContext.getVocabularyIds());
 		}
 	}
 

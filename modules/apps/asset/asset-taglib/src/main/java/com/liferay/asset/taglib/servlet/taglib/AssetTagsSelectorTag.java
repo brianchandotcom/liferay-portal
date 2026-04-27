@@ -12,6 +12,7 @@ import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -207,12 +208,12 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		assetTagsItemSelectorCriterion.setGroupIds(getGroupIds());
 		assetTagsItemSelectorCriterion.setMultiSelection(true);
 
+		ItemSelector itemSelector = ItemSelectorUtil.getItemSelector();
+
 		return PortletURLBuilder.create(
-			ItemSelectorUtil.getItemSelector(
-			).getItemSelectorURL(
+			itemSelector.getItemSelectorURL(
 				RequestBackedPortletURLFactoryUtil.create(getRequest()),
-				eventName, assetTagsItemSelectorCriterion
-			)
+				eventName, assetTagsItemSelectorCriterion)
 		).buildString();
 	}
 

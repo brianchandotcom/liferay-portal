@@ -19,13 +19,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Tancredi Covioli
+ * @author Stefano Motta
  */
 @Component(
-	property = "fds.rest.application.key=/headless-commerce-delivery-order/v1.0/Attachment",
+	property = "fds.rest.application.key=/headless-commerce-delivery-cart/v1.0/Attachment",
 	service = FDSAPIURLResolver.class
 )
-public class PlacedCommerceOrderAttachmentsFDSAPIURLResolver
+public class PendingCommerceOrderAttachmentsFDSAPIURLResolver
 	implements FDSAPIURLResolver {
 
 	@Override
@@ -46,11 +46,10 @@ public class PlacedCommerceOrderAttachmentsFDSAPIURLResolver
 		}
 
 		return StringUtil.replace(
-			baseURL,
-			new String[] {"{externalReferenceCode}", "{placedOrderId}"},
+			baseURL, new String[] {"{cartId}", "{externalReferenceCode}"},
 			new String[] {
-				String.valueOf(commerceOrder.getExternalReferenceCode()),
-				String.valueOf(commerceOrder.getCommerceOrderId())
+				String.valueOf(commerceOrder.getCommerceOrderId()),
+				String.valueOf(commerceOrder.getExternalReferenceCode())
 			});
 	}
 

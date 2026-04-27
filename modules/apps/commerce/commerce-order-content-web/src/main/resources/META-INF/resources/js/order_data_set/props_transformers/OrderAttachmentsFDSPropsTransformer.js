@@ -4,7 +4,7 @@
  */
 
 import {openModal, openToast} from 'frontend-js-components-web';
-import {addParams, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 
 const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 	openModal({
@@ -72,7 +72,7 @@ const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 	});
 };
 
-const PlacedOrderAttachmentsFDSPropsTransformer = (props) => ({
+const OrderAttachmentsFDSPropsTransformer = (props) => ({
 	...props,
 	itemsActions: props.itemsActions?.map((action) => {
 		if (action?.data?.id === 'delete') {
@@ -104,17 +104,15 @@ const PlacedOrderAttachmentsFDSPropsTransformer = (props) => ({
 		else if (actionId === 'download') {
 			event?.preventDefault();
 
-			const fileURL = itemData?.attachment?.fileURL;
+			const fileURL = itemData?.url;
 
 			if (!fileURL) {
 				return;
 			}
 
-			const url = addParams({download: true}, fileURL);
-
-			window.location.href = url;
+			window.location.href = fileURL;
 		}
 	},
 });
 
-export default PlacedOrderAttachmentsFDSPropsTransformer;
+export default OrderAttachmentsFDSPropsTransformer;

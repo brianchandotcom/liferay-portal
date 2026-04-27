@@ -11,13 +11,13 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Tancredi Covioli
+ * @author Stefano Motta
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS,
+	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS,
 	service = SystemFDSEntry.class
 )
-public class PlacedCommerceOrderAttachmentsSystemFDSEntry
+public class PendingCommerceOrderAttachmentsSystemFDSEntry
 	implements SystemFDSEntry {
 
 	@Override
@@ -27,17 +27,17 @@ public class PlacedCommerceOrderAttachmentsSystemFDSEntry
 
 	@Override
 	public String getName() {
-		return CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS;
+		return CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS;
 	}
 
 	@Override
 	public String getRESTApplication() {
-		return "/headless-commerce-delivery-order/v1.0";
+		return "/headless-commerce-delivery-cart/v1.0";
 	}
 
 	@Override
 	public String getRESTEndpoint() {
-		return "/v1.0/placed-orders/{placedOrderId}/attachments";
+		return "/v1.0/carts/{cartId}/attachments";
 	}
 
 	@Override

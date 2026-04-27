@@ -144,6 +144,7 @@ export function Option({
 				onClick={() => onSelectionChange(keyValue!)}
 				role="option"
 				tabIndex={-1}
+				type={href ? undefined : 'button'}
 			>
 				{selectedKey === keyValue && (
 					<span className="dropdown-item-indicator-start">

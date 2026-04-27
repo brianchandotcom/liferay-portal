@@ -254,12 +254,6 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
-	private int _getExecutionWindowIndex() {
-		ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
-
-		return zonedDateTime.getHour() / _WINDOW_SIZE_HOURS;
-	}
-
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -656,7 +650,9 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processMostPurchasedProducts() throws Exception {
-		if (_getExecutionWindowIndex() != 0) {
+		ZonedDateTime nowZonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+
+		if ((nowZonedDateTime.getHour() / _WINDOW_SIZE_HOURS) != 0) {
 			return;
 		}
 

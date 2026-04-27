@@ -41,7 +41,7 @@ type SplitProducts = {
 };
 
 const REPORTS_ENDPOINT = 'o/c/reports';
-const REPORTS_FILTER = "externalReferenceCode eq 'PURCHASED-PRODUCTS-COUNT'";
+const REPORTS_FILTER = "externalReferenceCode eq 'PRODUCT-PURCHASES-COUNT'";
 const TOP_PRODUCTS_COUNT = 5;
 
 function getTopProducts(

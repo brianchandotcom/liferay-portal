@@ -1,38 +1,44 @@
-import ConnectDemandbaseAuth from '../ConnectDemandbaseAuth';
+import ConnectorAuth from '../ConnectorAuth';
 import React from 'react';
 import {Alert} from 'shared/types';
+import {ConnectorConfig} from '../types';
 import {Routes, toRoute} from 'shared/util/router';
 import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
 import {useWizardPage} from '../../base-page/WizardPageContext';
 
-interface IConnectDemandbaseStepProps {
+interface IConnectorAuthStepProps {
 	addAlert: Alert.AddAlert;
+	config: ConnectorConfig;
 	groupId: string;
 	onNext: () => void;
 }
 
-const ConnectDemandbaseStep = ({
+const ConnectorAuthStep = ({
 	addAlert,
+	config,
 	groupId,
 	onNext
-}: IConnectDemandbaseStepProps) => {
+}: IConnectorAuthStepProps) => {
 	const {dataSource} = useWizardPage();
 	const history = useHistory();
 
+	const handleCancel = () => {
+		history.push(
+			toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
+				groupId
+			})
+		);
+	};
+
 	if (!dataSource) {
 		return (
-			<ConnectDemandbaseAuth
+			<ConnectorAuth
 				addAlert={addAlert}
 				buttonProps={{block: true}}
+				config={config}
 				groupId={groupId}
-				onCancel={() => {
-					history.push(
-						toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-							groupId
-						})
-					);
-				}}
+				onCancel={handleCancel}
 				onSubmit={createdDataSource => {
 					updateSearchParams(
 						history,
@@ -46,21 +52,16 @@ const ConnectDemandbaseStep = ({
 	}
 
 	return (
-		<ConnectDemandbaseAuth
+		<ConnectorAuth
 			addAlert={addAlert}
 			buttonProps={{block: true}}
+			config={config}
 			dataSource={dataSource}
 			groupId={groupId}
-			onCancel={() => {
-				history.push(
-					toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-						groupId
-					})
-				);
-			}}
+			onCancel={handleCancel}
 			onSubmit={onNext}
 		/>
 	);
 };
 
-export {ConnectDemandbaseStep};
+export {ConnectorAuthStep};

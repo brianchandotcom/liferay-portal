@@ -11,13 +11,6 @@ export function generate({
 	});
 }
 
-export function generateDemandbaseToken({groupId}: RESTParams) {
-	return sendRequest({
-		method: 'POST',
-		path: `main/${groupId}/oauth2/tokens/new?type=demandbase&expiresIn=`
-	});
-}
-
 export function search({groupId}: RESTParams) {
 	return sendRequest({
 		method: 'GET',

@@ -21,6 +21,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -143,6 +144,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-85494")
 	public void testProcessExportPortletPreferencesWhenPlidIsZero()
 		throws Exception {
 
@@ -162,6 +164,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-85494")
 	public void testProcessImportPortletPreferencesWhenGroupIdMappingsElementIsMissing()
 		throws Exception {
 
@@ -184,6 +187,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-85494")
 	public void testProcessImportPortletPreferencesWhenPlidIsZero()
 		throws Exception {
 

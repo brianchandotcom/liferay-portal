@@ -183,25 +183,29 @@ const getLabels = (item: any, props: Card) => {
 		item.embedded?.status?.label === ASSET_STATUS.APPROVED &&
 		isExpiringSoon(item.embedded?.expirationDate)
 	) {
-		const formattedDate =
-			formatExpirationDate(item.embedded.expirationDate) ?? '';
-		const formattedDateLong =
-			formatExpirationDateLong(item.embedded.expirationDate) ?? '';
+		const formattedDate = formatExpirationDate(
+			item.embedded.expirationDate
+		);
+		const formattedDateLong = formatExpirationDateLong(
+			item.embedded.expirationDate
+		);
 
-		return [
-			...labels,
-			{
-				'aria-label': sub(
-					Liferay.Language.get('expiring-soon-expires-on-x'),
-					formattedDateLong
-				),
-				'className': 'lfr-portal-tooltip',
-				'displayType': 'warning',
-				'tabIndex': 0,
-				'title': formattedDate,
-				'value': Liferay.Language.get('expiring-soon'),
-			},
-		];
+		if (formattedDate && formattedDateLong) {
+			return [
+				...labels,
+				{
+					'aria-label': sub(
+						Liferay.Language.get('expiring-soon-expires-on-x'),
+						formattedDateLong
+					),
+					'className': 'lfr-portal-tooltip',
+					'displayType': 'warning',
+					'tabIndex': 0,
+					'title': formattedDate,
+					'value': Liferay.Language.get('expiring-soon'),
+				},
+			];
+		}
 	}
 
 	if (

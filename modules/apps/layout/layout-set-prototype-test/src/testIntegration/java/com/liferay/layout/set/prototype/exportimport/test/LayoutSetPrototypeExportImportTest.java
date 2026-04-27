@@ -6,18 +6,29 @@
 package com.liferay.layout.set.prototype.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.File;
 
 import java.util.Map;
 
@@ -66,6 +77,79 @@ public class LayoutSetPrototypeExportImportTest
 	@Test
 	public void testExportImportLayoutSetPrototype() throws Exception {
 		exportImportLayoutSetPrototype(false);
+	}
+
+	@Test
+	@TestInfo("LPD-83275")
+	public void testExportImportLayoutSetPrototypeWithCleanImport()
+		throws Exception {
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototypes();
+
+		LayoutSetPrototype exportedLayoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group exportedLayoutSetPrototypeGroup =
+			exportedLayoutSetPrototype.getGroup();
+
+		LayoutTestUtil.addTypePortletLayout(
+			exportedLayoutSetPrototypeGroup, true);
+
+		String uuid = exportedLayoutSetPrototype.getUuid();
+		long companyId = exportedLayoutSetPrototype.getCompanyId();
+		int privateLayoutsPageCount =
+			exportedLayoutSetPrototypeGroup.getPrivateLayoutsPageCount();
+
+		User user = TestPropsValues.getUser();
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addDraftExportImportConfiguration(
+					user.getUserId(),
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportPortletSettingsMap(
+							user, layout.getPlid(), layout.getGroupId(),
+							getPortletId(), getExportParameterMap(),
+							StringPool.BLANK));
+
+		File larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+			exportImportConfiguration);
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			exportedLayoutSetPrototype);
+
+		importedLayout = LayoutTestUtil.addTypePortletLayout(importedGroup);
+
+		exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				updateExportImportConfiguration(
+					user.getUserId(),
+					exportImportConfiguration.getExportImportConfigurationId(),
+					StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportPortletSettingsMap(
+							user, importedLayout.getPlid(),
+							importedGroup.getGroupId(), getPortletId(),
+							getImportParameterMap()),
+					new ServiceContext());
+
+		ExportImportLocalServiceUtil.importPortletInfo(
+			exportImportConfiguration, larFile);
+
+		LayoutSetPrototype importedLayoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
+
+		Group importedGroup = importedLayoutSetPrototype.getGroup();
+
+		Assert.assertEquals(
+			privateLayoutsPageCount,
+			importedGroup.getPrivateLayoutsPageCount());
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			importedLayoutSetPrototype);
 	}
 
 	@Test

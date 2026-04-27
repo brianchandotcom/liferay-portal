@@ -6,6 +6,9 @@
 export const PENDING_ORDERS_FDS_NAME =
 	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrdersDataSetFragmentRenderer-pendingOrders';
 
+export const PENDING_ORDER_ATTACHMENTS_FDS_NAME =
+	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderAttachmentsDataSetFragmentRenderer-pendingOrderAttachments';
+
 export const PENDING_ORDER_ITEMS_FDS_NAME =
 	'com_liferay_commerce_order_content_web_internal_fragment_renderer_OrderItemsDataSetFragmentRenderer-pendingOrderItems';
 

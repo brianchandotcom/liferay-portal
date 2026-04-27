@@ -6,6 +6,7 @@
 package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -15,7 +16,6 @@ import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
-import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -145,7 +144,7 @@ public class OrderAttachmentsDataSetFragmentRenderer
 				_getFDSAdditionalProps(commerceOrder.getCommerceOrderId()));
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-attachments-data-set:apiURL",
-				_getAPIURL(commerceOrder.getCommerceOrderId()));
+				_getAPIURL(commerceOrder));
 
 			FragmentEntryLink fragmentEntryLink =
 				fragmentRendererContext.getFragmentEntryLink();
@@ -162,6 +161,9 @@ public class OrderAttachmentsDataSetFragmentRenderer
 				"liferay-commerce:order-attachments-data-set:" +
 					"fdsActionDropdownItems",
 				_getFDSActionDropdownItems(httpServletRequest));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:order-attachments-data-set:name",
+				_getName(commerceOrder));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -172,19 +174,18 @@ public class OrderAttachmentsDataSetFragmentRenderer
 		}
 	}
 
-	private String _getAPIURL(long commerceOrderId) {
+	private String _getAPIURL(CommerceOrder commerceOrder) {
+		if (commerceOrder.isOpen()) {
+			return StringBundler.concat(
+				Portal.PATH_MODULE,
+				"/headless-commerce-delivery-cart/v1.0/carts/",
+				commerceOrder.getCommerceOrderId(), "/attachments");
+		}
+
 		return StringBundler.concat(
 			Portal.PATH_MODULE,
-			ObjectDefinitionUtil.
-				getModifiableSystemObjectDefinitionRESTContextPath(
-					"CommerceOrderAttachment"),
-			"?filter=",
-			URLCodec.encodeURL(
-				StringBundler.concat(
-					"r_commerceOrderToCommerceOrderAttachments_",
-					"commerceOrderId eq '", commerceOrderId,
-					StringPool.APOSTROPHE),
-				true));
+			"/headless-commerce-delivery-order/v1.0/placed-orders/",
+			commerceOrder.getCommerceOrderId(), "/attachments");
 	}
 
 	private List<FDSActionDropdownItem> _getFDSActionDropdownItems(
@@ -197,8 +198,6 @@ public class OrderAttachmentsDataSetFragmentRenderer
 				"download"
 			).setLabel(
 				_language.get(httpServletRequest, "download")
-			).setPermissionKey(
-				"get"
 			).build(
 				"download"
 			),
@@ -219,6 +218,14 @@ public class OrderAttachmentsDataSetFragmentRenderer
 		return HashMapBuilder.<String, Object>put(
 			"commerceOrderId", commerceOrderId
 		).build();
+	}
+
+	private String _getName(CommerceOrder commerceOrder) {
+		if (commerceOrder.isOpen()) {
+			return CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS;
+		}
+
+		return CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS;
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {

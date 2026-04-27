@@ -8,8 +8,7 @@
 <%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames" %><%@
-page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %>
+<%@ page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
@@ -21,4 +20,5 @@ Map<String, Object> additionalProps = (Map<String, Object>)request.getAttribute(
 String apiURL = (String)request.getAttribute("liferay-commerce:order-attachments-data-set:apiURL");
 String displayStyle = (String)request.getAttribute("liferay-commerce:order-attachments-data-set:displayStyle");
 List<FDSActionDropdownItem> fdsActionDropdownItems = (List<FDSActionDropdownItem>)request.getAttribute("liferay-commerce:order-attachments-data-set:fdsActionDropdownItems");
+String name = (String)request.getAttribute("liferay-commerce:order-attachments-data-set:name");
 %>

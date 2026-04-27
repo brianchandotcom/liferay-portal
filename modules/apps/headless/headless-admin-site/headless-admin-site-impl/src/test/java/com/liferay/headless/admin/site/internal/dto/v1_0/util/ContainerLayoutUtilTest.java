@@ -33,28 +33,18 @@ public class ContainerLayoutUtilTest {
 	}
 
 	@Test
-	public void testToLayoutWithEmptyJSONObject() {
+	public void testToLayout() {
 		Assert.assertNull(ContainerLayoutUtil.toLayout(JSONUtil.put("", "")));
-	}
-
-	@Test
-	public void testToLayoutWithJSONObjectWithoutLayoutFields() {
 		Assert.assertNull(
 			ContainerLayoutUtil.toLayout(JSONUtil.put("other", "value")));
-	}
 
-	@Test
-	public void testToLayoutWithOnlyAlign() {
 		Layout layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("align", "align-items-center"));
 
 		Assert.assertNotNull(layout);
 		Assert.assertEquals(Layout.Align.CENTER, layout.getAlign());
-	}
 
-	@Test
-	public void testToLayoutWithOnlyContentDisplay() {
-		Layout layout = ContainerLayoutUtil.toLayout(
+		layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("contentDisplay", "flex-row"));
 
 		Assert.assertNotNull(
@@ -64,29 +54,20 @@ public class ContainerLayoutUtilTest {
 			layout);
 		Assert.assertEquals(
 			Layout.ContentDisplay.FLEX_ROW, layout.getContentDisplay());
-	}
 
-	@Test
-	public void testToLayoutWithOnlyFlexWrap() {
-		Layout layout = ContainerLayoutUtil.toLayout(
+		layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("flexWrap", "flex-wrap"));
 
 		Assert.assertNotNull(layout);
 		Assert.assertEquals(Layout.FlexWrap.WRAP, layout.getFlexWrap());
-	}
 
-	@Test
-	public void testToLayoutWithOnlyJustify() {
-		Layout layout = ContainerLayoutUtil.toLayout(
+		layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("justify", "justify-content-center"));
 
 		Assert.assertNotNull(layout);
 		Assert.assertEquals(Layout.Justify.CENTER, layout.getJustify());
-	}
 
-	@Test
-	public void testToLayoutWithOnlyWidthType() {
-		Layout layout = ContainerLayoutUtil.toLayout(
+		layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("widthType", "fixed"));
 
 		Assert.assertNotNull(layout);

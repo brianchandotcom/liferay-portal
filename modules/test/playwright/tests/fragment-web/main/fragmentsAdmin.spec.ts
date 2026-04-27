@@ -1855,7 +1855,7 @@ testEmbeddingWidgets(
 	}
 );
 
-testEmbeddingWidgets(
+test(
 	'The Embedded Widget Modal appears when embedding widgets inside of fragments using liferay_portlet taglib',
 	{
 		tag: '@LPD-44999',

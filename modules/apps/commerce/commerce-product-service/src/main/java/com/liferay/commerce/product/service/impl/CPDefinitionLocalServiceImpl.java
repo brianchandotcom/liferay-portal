@@ -1178,23 +1178,23 @@ public class CPDefinitionLocalServiceImpl
 					newCPInstanceOptionValueRel.setCPDefinitionOptionRelId(
 						cpDefinitionOptionRelId);
 
-					for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-							cpDefinitionOptionRel.
-								getCPDefinitionOptionValueRels()) {
+					CPDefinitionOptionValueRel
+						sourceCPDefinitionOptionValueRel =
+							_cpDefinitionOptionValueRelPersistence.
+								findByPrimaryKey(
+									cpInstanceOptionValueRel.
+										getCPDefinitionOptionValueRelId());
 
-						if (cpDefinitionOptionRelId !=
-								cpDefinitionOptionValueRel.
-									getCPDefinitionOptionRelId()) {
+					CPDefinitionOptionValueRel newCPDefinitionOptionValueRel =
+						_cpDefinitionOptionValueRelPersistence.fetchByC_K(
+							cpDefinitionOptionRelId,
+							sourceCPDefinitionOptionValueRel.getKey());
 
-							continue;
-						}
-
+					if (newCPDefinitionOptionValueRel != null) {
 						newCPInstanceOptionValueRel.
-							setCPInstanceOptionValueRelId(
-								cpDefinitionOptionValueRel.
+							setCPDefinitionOptionValueRelId(
+								newCPDefinitionOptionValueRel.
 									getCPDefinitionOptionValueRelId());
-
-						break;
 					}
 
 					break;

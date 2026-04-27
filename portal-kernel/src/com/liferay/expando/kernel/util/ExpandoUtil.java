@@ -38,6 +38,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 /**
@@ -326,8 +327,9 @@ public class ExpandoUtil {
 	private static boolean _isLocalizedExpandoBridgeAttributeValue(
 		Map<?, ?> value) {
 
-		Iterator<? extends Map.Entry<?, ?>> iterator = value.entrySet(
-		).iterator();
+		Set<? extends Map.Entry<?, ?>> set = value.entrySet();
+
+		Iterator<? extends Map.Entry<?, ?>> iterator = set.iterator();
 
 		if (!iterator.hasNext()) {
 			return false;

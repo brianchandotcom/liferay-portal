@@ -90,8 +90,8 @@ public abstract class BaseFDSSerializer {
 
 			if (!sharedClassPKs.isEmpty()) {
 				sharedClause = StringBundler.concat(
-					" or id in ('",
-					StringUtil.merge(sharedClassPKs, "','"), "')");
+					" or id in ('", StringUtil.merge(sharedClassPKs, "','"),
+					"')");
 			}
 
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(

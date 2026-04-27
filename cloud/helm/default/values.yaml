@@ -277,6 +277,7 @@ networkPolicy:
     allowGatewayIngress: true
     annotations: {}
     enabled: false
+    extraEgress: []
     extraIngress: []
     gatewayNamespace: envoy-gateway-system
     gatewayPodLabel: envoy

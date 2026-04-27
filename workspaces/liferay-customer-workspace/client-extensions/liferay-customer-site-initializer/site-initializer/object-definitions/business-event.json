@@ -221,7 +221,7 @@
 			"label": {
 				"en_US": "New Liferay Version"
 			},
-			"listTypeDefinitionExternalReferenceCode": "DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
+			"listTypeDefinitionExternalReferenceCode": "LT_DXP_MINOR_VERSION_AND_PORTAL_MAJOR_VERSION",
 			"localized": false,
 			"name": "newLiferayVersion",
 			"readOnly": "false",

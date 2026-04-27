@@ -8,6 +8,7 @@ import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import SearchBuilder from '~/lib/SearchBuilder';
 import IncidentContactCard from '~/features/project/containers/IncidentContactCard';
+import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 import i18n from '~/utils/I18n';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import {getAccountSubscriptionGroups} from '~/services/liferay/graphql/queries';
@@ -52,6 +53,13 @@ const TeamMembers = () => {
 			item?.activationStatus === 'Active'
 	);
 
+	const hasDXPCloudSubscription = accountSubscriptionGroups?.some(
+		(item) =>
+			item.name === PRODUCT_TYPES.liferayCloud &&
+				item.activationProductName?.split(',')
+					.includes(PRODUCT_TYPES.dxpCloud)
+	);
+
 	const loading = loadingCurrentKoroneikiAccount || loadingSubscriptionGroups;
 
 	useEffect(() => {
@@ -83,6 +91,7 @@ const TeamMembers = () => {
 						<IncidentContactCard
 							accountSubscriptionGroupsNames={accountSubscriptionGroupsNames}
 							hasActiveProduct={hasActiveProduct}
+							hasDXPCloudSubscription={hasDXPCloudSubscription}
 							koroneikiAccount={koroneikiAccount}
 							loading={loading}
 						/>

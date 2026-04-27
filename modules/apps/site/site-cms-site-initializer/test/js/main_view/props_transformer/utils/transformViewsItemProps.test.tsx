@@ -9,6 +9,7 @@ import {
 	MS_PER_DAY,
 	OBJECT_ENTRY_FOLDER_CLASS_NAME,
 } from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
+import * as expirationStatus from '../../../../../src/main/resources/META-INF/resources/js/common/utils/expirationStatus';
 import {transformItemCardView} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/transformViewsItemProps';
 
 const NOW = new Date('2026-04-21T10:00:00Z');
@@ -80,7 +81,36 @@ describe('transformItemCardView labels', () => {
 		expect(expiringSoon.className).toBe('lfr-portal-tooltip');
 		expect(expiringSoon.tabIndex).toBe(0);
 		expect(expiringSoon.title).toBeTruthy();
-		expect(expiringSoon['aria-label']).toBe('expiring-soon.expires-on-x');
+		expect(expiringSoon['aria-label']).toBe('expiring-soon-expires-on-x');
+	});
+
+	it('does not append an Expiring Soon label when the formatted dates are not available', () => {
+		const formatSpy = jest
+			.spyOn(expirationStatus, 'formatExpirationDate')
+			.mockReturnValueOnce(null);
+		const formatLongSpy = jest
+			.spyOn(expirationStatus, 'formatExpirationDateLong')
+			.mockReturnValueOnce(null);
+
+		const labels = [{displayType: 'success', value: 'approved'}];
+
+		const result = callTransform(
+			{
+				embedded: {
+					expirationDate: new Date(
+						NOW.getTime() + 3 * MS_PER_DAY
+					).toISOString(),
+					status: {label: 'approved'},
+				},
+				entryClassName: 'some.Class',
+			},
+			{actions: [], labels}
+		);
+
+		expect(result.labels).toEqual(labels);
+
+		formatSpy.mockRestore();
+		formatLongSpy.mockRestore();
 	});
 
 	it('decorates the Expired label with tooltip attributes when item is expired and has expirationDate', () => {

@@ -1933,7 +1933,7 @@ test(
 				.click();
 		});
 
-		await test.step('Exporting for Translation a single content type object entry', async () => {
+		await test.step('Exporting for Translation a single content type object entry to a single target language', async () => {
 			await assetsPage.gotoAll();
 
 			await assetsPage.selectItems([basicWebContentTitle1]);
@@ -1950,13 +1950,43 @@ test(
 					.getByText('Export for Translation')
 			).toBeVisible();
 
-			const filePath = await assetsPage.exportForTranslation(
+			const filePath = await assetsPage.exportForTranslation(true, [
 				'Spanish (Spain)',
-				true
-			);
+			]);
 
 			await expect(
 				checkInZip(filePath, `${basicWebContentTitle1}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+		});
+
+		await test.step('Exporting for Translation a single content type object entry to a multiple target languages', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems([basicWebContentTitle1]);
+
+			await assetsPage.execBulkItemAction('Export for Translation');
+
+			await waitForModal({
+				page,
+			});
+
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
+
+			const filePath = await assetsPage.exportForTranslation(true, [
+				'Chinese (China)',
+				'Spanish (Spain)',
+			]);
+
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle1}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle1}-en_US-zh_CN.xlf`)
 			).resolves.toBe(true);
 		});
 
@@ -1980,10 +2010,9 @@ test(
 					.getByText('Export for Translation')
 			).toBeVisible();
 
-			const filePath = await assetsPage.exportForTranslation(
+			const filePath = await assetsPage.exportForTranslation(true, [
 				'Spanish (Spain)',
-				true
-			);
+			]);
 
 			await expect(
 				checkInZip(filePath, `${basicWebContentTitle1}-en_US-es_ES.xlf`)
@@ -2011,10 +2040,9 @@ test(
 					.getByText('Export for Translation')
 			).toBeVisible();
 
-			const filePath = await assetsPage.exportForTranslation(
+			const filePath = await assetsPage.exportForTranslation(true, [
 				'Spanish (Spain)',
-				true
-			);
+			]);
 
 			await expect(
 				checkInZip(filePath, `${basicWebContentTitle1}-en_US.zip`)
@@ -2046,10 +2074,9 @@ test(
 					.getByText('Export for Translation')
 			).toBeVisible();
 
-			const filePath = await assetsPage.exportForTranslation(
+			const filePath = await assetsPage.exportForTranslation(true, [
 				'Spanish (Spain)',
-				true
-			);
+			]);
 
 			await expect(
 				checkInZip(filePath, `Basic Web Content Translations-en_US.zip`)

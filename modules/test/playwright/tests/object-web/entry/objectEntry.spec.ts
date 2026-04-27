@@ -2403,6 +2403,90 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('can cancel entry update', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						label: {en_US: 'Field'},
+						name: 'textField',
+						required: false,
+					},
+				],
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Test Entry'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('Field', {exact: true}).clear();
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldLabel: 'Field',
+			objectFieldValue: 'Test Entry 2',
+		});
+
+		await viewObjectEntriesPage.cancelObjectEntryButton.click();
+
+		await expect(page.getByText('Test Entry 2')).not.toBeVisible();
+
+		await expect(page.getByText('Test Entry')).toBeVisible();
+	});
+
+	test('can change columns to be displayed on auto-generated table', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Test text'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).toBeVisible();
+
+		await page.getByLabel('Manage Columns Visibility').click();
+
+		await page.getByRole('menuitem', {name: 'ID'}).click();
+
+		await page.keyboard.press('Escape');
+
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).not.toBeVisible();
+	});
+
 	test('can create an object entry with aggregation field', async ({
 		apiHelpers,
 		objectFieldsPage,
@@ -3407,6 +3491,47 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await expect(page.getByText(account2.name)).toBeVisible();
 	});
 
+	test('can order auto-generated table by entry', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		for (const number of ['1', '2']) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{textField: `Test text ${number}`},
+				'c/' + objectDefinition.name.toLowerCase() + 's'
+			);
+		}
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		const textHeader = page.getByRole('columnheader', {name: 'textField'});
+
+		await textHeader.click();
+
+		const rows = page
+			.getByRole('row')
+			.filter({hasNot: page.getByRole('columnheader')});
+
+		await expect(rows.first()).toContainText('Test text 1');
+		await expect(rows.last()).toContainText('Test text 2');
+
+		await textHeader.click();
+
+		await expect(rows.first()).toContainText('Test text 2');
+		await expect(rows.last()).toContainText('Test text 1');
+	});
+
 	test('can prevent duplicate value when creating an entry with unique values', async ({
 		apiHelpers,
 		page,
@@ -3536,6 +3661,46 @@ test.describe('Manage object entries through View Object Entries', () => {
 			`Error:The ${objectFieldLabel} is already in use. Please enter a unique ${objectFieldLabel}.`,
 			{type: 'danger'}
 		);
+	});
+
+	test('can search for an entry on auto-generated table', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Test 1'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry 2'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.getByPlaceholder('Search').fill('Entry 2');
+
+		await page.getByPlaceholder('Search').press('Enter');
+
+		await expect(
+			page.getByRole('table').getByText('Entry 2')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('table').getByText('Test 1')
+		).not.toBeVisible();
 	});
 
 	test('can set picklist default value via expression builder', async ({
@@ -4155,6 +4320,50 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('columns ID, Fields and Status are displayed', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						label: {en_US: 'Field'},
+						name: 'textField',
+						required: false,
+					},
+				],
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'String'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByRole('columnheader').getByText('ID')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('columnheader').getByText('Field')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('columnheader').getByText('Status')
+		).toBeVisible();
+	});
+
 	test(
 		'different versions of Commerce Products have same input values when used as relationship of an object entry',
 		{tag: '@LPD-65249'},
@@ -4334,6 +4543,55 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await expect(
 			page.locator('td').getByText('test', {exact: true})
 		).toHaveCount(1);
+	});
+
+	test('empty state is displayed when no entry exists', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
+	});
+
+	test('empty state is displayed when searching for nonexistent value', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Test text'},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page.getByPlaceholder('Search').fill('Lorem ipsum');
+
+		await page.getByPlaceholder('Search').press('Enter');
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
 	});
 
 	test('error message is displayed in the language of the site context', async ({

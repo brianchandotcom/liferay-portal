@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -48,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceOrderAttachmentLocalServiceImpl
 	extends CommerceOrderAttachmentLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderAttachment addCommerceOrderAttachment(
 			String externalReferenceCode, long userId, long commerceOrderId,
@@ -98,6 +101,7 @@ public class CommerceOrderAttachmentLocalServiceImpl
 		return commerceOrderAttachment;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrderAttachment deleteCommerceOrderAttachment(
 			CommerceOrderAttachment commerceOrderAttachment)
@@ -186,6 +190,7 @@ public class CommerceOrderAttachmentLocalServiceImpl
 			commerceOrderId, restricted);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderAttachment updateCommerceOrderAttachment(
 			long commerceOrderAttachmentId, double priority, boolean restricted,

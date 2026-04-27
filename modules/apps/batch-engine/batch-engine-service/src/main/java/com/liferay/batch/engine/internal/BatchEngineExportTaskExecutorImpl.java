@@ -296,8 +296,7 @@ public class BatchEngineExportTaskExecutorImpl
 			Sort[] sorts = _getSorts(
 				batchEngineTaskItemDelegate, parameters, user);
 
-			boolean cursorPaginationActive = _isSearchCursorPaginationEnabled(
-				sorts);
+			boolean cursorPaginationActive = _isCursorPaginationEnabled(sorts);
 
 			Page<?> page = batchEngineTaskItemDelegate.read(
 				filter, Pagination.of(1, exportBatchSize), sorts,
@@ -641,7 +640,7 @@ public class BatchEngineExportTaskExecutorImpl
 		return zipOutputStream;
 	}
 
-	private boolean _isSearchCursorPaginationEnabled(Sort[] sorts) {
+	private boolean _isCursorPaginationEnabled(Sort[] sorts) {
 		if (sorts == null) {
 			return true;
 		}

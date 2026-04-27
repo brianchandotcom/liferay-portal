@@ -30,6 +30,7 @@ import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderAttachmentService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -605,6 +606,36 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	}
 
 	@Override
+	public boolean hasCommerceOrderAttachments(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-6252")) {
+
+			return false;
+		}
+
+		CommerceOrder commerceOrder =
+			CommerceOrderInfoItemUtil.getCommerceOrder(
+				_commerceOrderService, httpServletRequest);
+
+		if (commerceOrder == null) {
+			return false;
+		}
+
+		int count =
+			_commerceOrderAttachmentService.getCommerceOrderAttachmentsCount(
+				commerceOrder.getCommerceOrderId());
+
+		if (count > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasCommerceOrderPortlet(
 			HttpServletRequest httpServletRequest, String portletKey)
 		throws PortalException {
@@ -1165,6 +1196,9 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	@Reference
 	private CommerceCheckoutStepRegistry _commerceCheckoutStepRegistry;
+
+	@Reference
+	private CommerceOrderAttachmentService _commerceOrderAttachmentService;
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;

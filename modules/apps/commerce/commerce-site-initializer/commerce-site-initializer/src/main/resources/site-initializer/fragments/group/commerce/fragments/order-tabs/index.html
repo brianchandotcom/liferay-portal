@@ -1,3 +1,4 @@
+[#assign hasAttachments = commerceOrderHttpHelper.hasCommerceOrderAttachments(request)]
 [#assign hasReturns = commerceOrderHttpHelper.hasCommerceOrderReturns(request)]
 [#assign hasShipments = commerceOrderHttpHelper.hasCommerceOrderShipments(request)]
 
@@ -44,7 +45,7 @@
 						</span>
 					</button>
 
-					<button aria-controls="tabPanel4-${fragmentEntryLinkNamespace}" aria-selected="false" class="nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab4-${fragmentEntryLinkNamespace}" role="tab">
+					<button aria-controls="tabPanel4-${fragmentEntryLinkNamespace}" aria-selected="false" class="[#if !hasAttachments]hide[/#if] nav-link" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab4-${fragmentEntryLinkNamespace}" role="tab">
 						<span class="navbar-text-truncate" data-lfr-editable-id="title4" data-lfr-editable-type="text" data-lfr-priority="1" tabindex="-1">
 							${languageUtil.get(locale, "Attachments")}
 						</span>

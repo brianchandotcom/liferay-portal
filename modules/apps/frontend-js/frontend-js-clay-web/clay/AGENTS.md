@@ -56,8 +56,13 @@ yarn run build
 ```bash
 yarn build
 yarn buildTypes
-yarn test
 ```
+
+> **Do not run `yarn test` from a package root.** Jest depends on `node_modules`
+> hoisted at `modules/`, so package-level test runs fail with `Cannot find
+> module 'browserslist-config-clay'` and similar resolution errors. Always run
+> tests from the module root (`frontend-js-clay-web/`) — see
+> [Testing Expectations](#testing-expectations).
 
 ### Clay CSS (`clay/clay-css/`)
 
@@ -197,7 +202,7 @@ Release notes:
 - Prefer explicit, behavior-focused assertions for specific cases.
 - Avoid snapshot testing for new coverage unless there is a clear reason and strong review value.
 - Update stories when component behavior, props, or visuals change.
-- **Running tests**: Run tests from the `frontend-js-clay-web` directory.
+- **Running tests**: **Always run from the `frontend-js-clay-web` module root, never from a package root** (`clay/clay-*/`). Package-level runs fail because `node_modules` is hoisted to `modules/`.
     - Running `yarn test` with no arguments will run tests for all packages.
     - To run tests for a specific package, specify it as the first positional argument. Use the `-t` flag to isolate specific tests.
     - Example: `yarn test clay/clay-drop-down`

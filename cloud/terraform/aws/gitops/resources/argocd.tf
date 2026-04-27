@@ -374,6 +374,10 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 											value=local.gateway_name
 										},
 										{
+											name="${local.liferay_helm_chart_config.values_scope_prefix}networkPolicy.cluster.kubernetesEndpointCidrs"
+											value=join(",", local.eks_endpoint_cidrs)
+										},
+										{
 											name="global.aws.accountId"
 											value=local.account_id
 										},

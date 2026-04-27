@@ -276,6 +276,8 @@ network:
 networkPolicy:
     allowGatewayIngress: true
     annotations: {}
+    cluster:
+        kubernetesEndpointCidrs: ""
     enabled: false
     extraEgress: []
     extraIngress: []

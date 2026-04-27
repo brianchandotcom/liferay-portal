@@ -71,6 +71,7 @@ locals {
 			--overwrite
 	EOT
 	ecr_credentials_sync_serviceaccount_name="ecr-credentials-sync-sa"
+	eks_endpoint_cidrs=[for s in data.aws_subnet.private : s.cidr_block]
 	gateway_class_name="liferay-gateway-class"
 	gateway_name="${var.infrastructure_git_repo_config.target.slugProjectId}-${var.infrastructure_git_repo_config.target.slugEnvironmentId}-gateway"
 	git_repo_auth_configs=merge(

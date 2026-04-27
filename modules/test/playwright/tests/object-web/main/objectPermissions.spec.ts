@@ -276,3 +276,107 @@ test('Can only update Picklist permissions when PERMISSIONS permission is grante
 		).toBeHidden();
 	});
 });
+
+test('Can restrict site-scoped object portlet to the site where the role permission is granted', async ({
+	apiHelpers,
+	page,
+	viewObjectEntriesPage,
+}) => {
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			panelCategoryKey: 'site_administration.content',
+			scope: 'site',
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const company =
+		await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+			'liferay.com'
+		);
+
+	const siteA = await apiHelpers.headlessAdminSite.postSite({
+		name: 'Site A ' + getRandomInt(),
+	});
+
+	const siteB = await apiHelpers.headlessAdminSite.postSite({
+		name: 'Site B ' + getRandomInt(),
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: 'role' + getRandomInt(),
+		rolePermissions: [
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+				primaryKey: siteA.id,
+				resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+				scope: 2,
+			},
+			{
+				actionIds: ['VIEW', 'VIEW_SITE_ADMINISTRATION'],
+				primaryKey: company.companyId,
+				resourceName: 'com.liferay.portal.kernel.model.Group',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW_SITE_ADMINISTRATION'],
+				primaryKey: company.companyId,
+				resourceName: 'com.liferay.depot.model.DepotEntry',
+				scope: 1,
+			},
+			{
+				actionIds: ['VIEW_SITE_ADMINISTRATION'],
+				primaryKey: siteA.id,
+				resourceName: 'com.liferay.portal.kernel.model.Group',
+				scope: 2,
+			},
+		],
+	});
+
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	await performUserSwitch(page, user.alternateName);
+
+	await test.step('custom object portlet is reachable by site A', async () => {
+		await viewObjectEntriesPage.goto(
+			objectDefinition.className,
+			undefined,
+			siteA.friendlyUrlPath
+		);
+
+		await expect(
+			page.getByRole('heading', {
+				name: objectDefinition.label['en_US'],
+			})
+		).toBeVisible();
+	});
+
+	await test.step('custom object portlet is not reachable by site B', async () => {
+		await viewObjectEntriesPage.goto(
+			objectDefinition.className,
+			undefined,
+			siteB.friendlyUrlPath
+		);
+
+		await expect(
+			page.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+		).toBeVisible();
+	});
+});

@@ -25,7 +25,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.Objects;
@@ -92,16 +94,15 @@ public class GlobalPrivacyControlWellKnownFilter extends BaseFilter {
 					ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
 
 		if (modifiedDate > 0) {
+			Instant instant = Instant.ofEpochMilli(modifiedDate);
+
+			ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
+
+			LocalDate localDate = zonedDateTime.toLocalDate();
+
 			jsonObject.put(
 				"lastUpdate",
-				Instant.ofEpochMilli(
-					modifiedDate
-				).atZone(
-					ZoneOffset.UTC
-				).toLocalDate(
-				).format(
-					DateTimeFormatter.ISO_LOCAL_DATE
-				));
+				localDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
 		}
 
 		_writeJSON(httpServletResponse, jsonObject.toString());

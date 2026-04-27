@@ -87,25 +87,25 @@ public class CommerceOrderAttachmentIndexerTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
 
-		_accountEntryA = CommerceAccountTestUtil.addPersonAccountEntry(
+		_accountEntry1 = CommerceAccountTestUtil.addPersonAccountEntry(
 			_user.getUserId(), serviceContext);
 
-		_commerceOrderA = _commerceOrderLocalService.addCommerceOrder(
+		_commerceOrder1 = _commerceOrderLocalService.addCommerceOrder(
 			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
-			_accountEntryA.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+			_accountEntry1.getAccountEntryId(), _commerceCurrency.getCode(), 0);
 
-		_attachmentA1 = _addCommerceOrderAttachment(_commerceOrderA, false);
-		_attachmentA2 = _addCommerceOrderAttachment(_commerceOrderA, true);
+		_attachment1 = _addCommerceOrderAttachment(_commerceOrder1, false);
+		_attachment2 = _addCommerceOrderAttachment(_commerceOrder1, true);
 
-		_accountEntryB = CommerceAccountTestUtil.addPersonAccountEntry(
+		_accountEntry2 = CommerceAccountTestUtil.addPersonAccountEntry(
 			_user.getUserId(), serviceContext);
 
-		_commerceOrderB = _commerceOrderLocalService.addCommerceOrder(
+		_commerceOrder2 = _commerceOrderLocalService.addCommerceOrder(
 			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
-			_accountEntryB.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+			_accountEntry2.getAccountEntryId(), _commerceCurrency.getCode(), 0);
 
-		_attachmentB1 = _addCommerceOrderAttachment(_commerceOrderB, false);
-		_attachmentB2 = _addCommerceOrderAttachment(_commerceOrderB, true);
+		_attachment3 = _addCommerceOrderAttachment(_commerceOrder2, false);
+		_attachment4 = _addCommerceOrderAttachment(_commerceOrder2, true);
 
 		_indexer = _indexerRegistry.getIndexer(
 			CommerceOrderAttachment.class.getName());
@@ -122,61 +122,61 @@ public class CommerceOrderAttachmentIndexerTest {
 	public void testSearch() throws Exception {
 		_assertSearch(0L, TestPropsValues.getUserId());
 		_assertSearch(
-			_commerceOrderA.getCommerceOrderId(), TestPropsValues.getUserId(),
-			_attachmentA1, _attachmentA2);
+			_commerceOrder1.getCommerceOrderId(), TestPropsValues.getUserId(),
+			_attachment1, _attachment2);
 		_assertSearch(
-			_commerceOrderB.getCommerceOrderId(), TestPropsValues.getUserId(),
-			_attachmentB1, _attachmentB2);
+			_commerceOrder2.getCommerceOrderId(), TestPropsValues.getUserId(),
+			_attachment3, _attachment4);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_assertSearch(
-				_commerceOrderA.getCommerceOrderId(), _user.getUserId());
+				_commerceOrder1.getCommerceOrderId(), _user.getUserId());
 			_assertSearch(
-				_commerceOrderB.getCommerceOrderId(), _user.getUserId());
+				_commerceOrder2.getCommerceOrderId(), _user.getUserId());
 		}
 
 		_setResourcePermissions(
-			_accountEntryA, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+			_accountEntry1, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_assertSearch(
-				_commerceOrderA.getCommerceOrderId(), _user.getUserId(),
-				_attachmentA1);
+				_commerceOrder1.getCommerceOrderId(), _user.getUserId(),
+				_attachment1);
 			_assertSearch(
-				_commerceOrderB.getCommerceOrderId(), _user.getUserId());
+				_commerceOrder2.getCommerceOrderId(), _user.getUserId());
 		}
 
 		_setResourcePermissions(
-			_accountEntryA, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
+			_accountEntry1, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
 			CommerceOrderActionKeys.VIEW_RESTRICTED_COMMERCE_ORDER_ATTACHMENTS);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_assertSearch(
-				_commerceOrderA.getCommerceOrderId(), _user.getUserId(),
-				_attachmentA1, _attachmentA2);
+				_commerceOrder1.getCommerceOrderId(), _user.getUserId(),
+				_attachment1, _attachment2);
 			_assertSearch(
-				_commerceOrderB.getCommerceOrderId(), _user.getUserId());
+				_commerceOrder2.getCommerceOrderId(), _user.getUserId());
 		}
 
 		_setResourcePermissions(
-			_accountEntryB, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
+			_accountEntry2, CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS,
 			CommerceOrderActionKeys.VIEW_RESTRICTED_COMMERCE_ORDER_ATTACHMENTS);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
 			_assertSearch(
-				_commerceOrderA.getCommerceOrderId(), _user.getUserId(),
-				_attachmentA1, _attachmentA2);
+				_commerceOrder1.getCommerceOrderId(), _user.getUserId(),
+				_attachment1, _attachment2);
 			_assertSearch(
-				_commerceOrderB.getCommerceOrderId(), _user.getUserId(),
-				_attachmentB1, _attachmentB2);
+				_commerceOrder2.getCommerceOrderId(), _user.getUserId(),
+				_attachment3, _attachment4);
 		}
 	}
 
@@ -194,7 +194,7 @@ public class CommerceOrderAttachmentIndexerTest {
 
 	private void _assertSearch(
 			long commerceOrderId, long userId,
-			CommerceOrderAttachment... expectedCommerceOrderAttachments)
+			CommerceOrderAttachment... commerceOrderAttachments)
 		throws Exception {
 
 		SearchContext searchContext = new SearchContext();
@@ -212,7 +212,7 @@ public class CommerceOrderAttachmentIndexerTest {
 			Arrays.toString(hits.getDocs()),
 			new HashSet<>(
 				TransformUtil.transformToList(
-					expectedCommerceOrderAttachments,
+					commerceOrderAttachments,
 					CommerceOrderAttachment::getCommerceOrderAttachmentId)),
 			new HashSet<>(
 				TransformUtil.transformToList(
@@ -232,21 +232,20 @@ public class CommerceOrderAttachmentIndexerTest {
 			_role.getRoleId(), actionIds);
 	}
 
-	private AccountEntry _accountEntryA;
-	private AccountEntry _accountEntryB;
-	private CommerceOrderAttachment _attachmentA1;
-	private CommerceOrderAttachment _attachmentA2;
-	private CommerceOrderAttachment _attachmentB1;
-	private CommerceOrderAttachment _attachmentB2;
+	private AccountEntry _accountEntry1;
+	private AccountEntry _accountEntry2;
+	private CommerceOrderAttachment _attachment1;
+	private CommerceOrderAttachment _attachment2;
+	private CommerceOrderAttachment _attachment3;
+	private CommerceOrderAttachment _attachment4;
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
-	private CommerceOrder _commerceOrderA;
+	private CommerceOrder _commerceOrder1;
+	private CommerceOrder _commerceOrder2;
 
 	@Inject
 	private CommerceOrderAttachmentLocalService
 		_commerceOrderAttachmentLocalService;
-
-	private CommerceOrder _commerceOrderB;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;

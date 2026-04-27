@@ -20,8 +20,8 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {
 	JournalContentPage,
 	PageNode,
-	Widget,
 	createLayoutHierarchy,
+	flattenPageHierarchy,
 } from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
 import getRandomString from '../../../utils/getRandomString';
@@ -107,37 +107,9 @@ test(
 			},
 		];
 
-		type FlatPage = {
-			contentTitle: string;
-			friendlyUrlPath: string;
-			pageNumber: string;
-			title: string;
-			verify?: boolean;
-		};
-
-		const flattenPageHierarchy = (
-			nodes: Array<PageNode<{verify?: boolean}>>
-		): FlatPage[] => {
-			const result: FlatPage[] = [];
-			for (const node of nodes) {
-				const title = node.title!;
-				result.push({
-					contentTitle:
-						node.contentTitle ?? `Title-${node.pageNumber}`,
-					friendlyUrlPath: title.toLowerCase().replace(/\s+/g, '-'),
-					pageNumber: node.pageNumber,
-					title,
-					verify: node.verify,
-				});
-				if (node.children) {
-					result.push(...flattenPageHierarchy(node.children));
-				}
-			}
-
-			return result;
-		};
-
-		const flatPages = flattenPageHierarchy(PAGE_HIERARCHY);
+		const flatPages = flattenPageHierarchy<{verify?: boolean}>(
+			PAGE_HIERARCHY
+		);
 
 		let remoteSite: Site;
 		let site: Site;

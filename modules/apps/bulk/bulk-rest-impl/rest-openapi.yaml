@@ -41,6 +41,7 @@ components:
                     MoveObjectBulkSelectionAction: "#/components/schemas/MoveObjectBulkSelectionAction"
                     PermissionObjectBulkSelectionAction: "#/components/schemas/PermissionObjectBulkSelectionAction"
                     ResetPermissionObjectBulkSelectionAction: "#/components/schemas/ResetPermissionObjectBulkSelectionAction"
+                    RestoreObjectBulkSelectionAction: "#/components/schemas/RestoreObjectBulkSelectionAction"
                     StatusObjectBulkSelectionAction: "#/components/schemas/StatusObjectBulkSelectionAction"
                     UpdateObjectValuesBulkSelectionAction: "#/components/schemas/UpdateObjectValuesBulkSelectionAction"
                 propertyName: type
@@ -66,6 +67,7 @@ components:
                         -   MoveObjectBulkSelectionAction
                         -   PermissionObjectBulkSelectionAction
                         -   ResetPermissionObjectBulkSelectionAction
+                        -   RestoreObjectBulkSelectionAction
                         -   StatusObjectBulkSelectionAction
                         -   EditObjectCategoriesBulkSelectionAction
                         -   UpdateObjectValuesBulkSelectionAction
@@ -246,6 +248,9 @@ components:
                         roleKey:
                             type: string
         ResetPermissionObjectBulkSelectionAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+        RestoreObjectBulkSelectionAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
         Selection:

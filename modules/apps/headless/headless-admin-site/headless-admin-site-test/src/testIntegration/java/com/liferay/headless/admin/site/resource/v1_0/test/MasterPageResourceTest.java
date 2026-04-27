@@ -382,6 +382,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-86817")
 	public void testPutSiteMasterPage() throws Exception {
 		_testPutSiteMasterPage(randomMasterPage());
 

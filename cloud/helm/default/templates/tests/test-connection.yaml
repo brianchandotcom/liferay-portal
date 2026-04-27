@@ -36,5 +36,14 @@ spec:
                         done
             image: busybox:latest
             name: test-connection
+            securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                    drop:
+                        -   ALL
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                    type: RuntimeDefault
     restartPolicy: Never
     serviceAccountName: {{ include "liferay.serviceAccountName" . }}

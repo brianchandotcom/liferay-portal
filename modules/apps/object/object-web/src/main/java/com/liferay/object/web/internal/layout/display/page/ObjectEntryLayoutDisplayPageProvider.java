@@ -96,17 +96,15 @@ public class ObjectEntryLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
 		if (urlTitle.contains(StringPool.SLASH)) {
-			String[] urlNames = urlTitle.split(StringPool.SLASH);
+			String[] urlNames = urlTitle.split(StringPool.SLASH, 2);
 
-			if (urlNames.length > 1) {
-				Group group = _groupLocalService.fetchFriendlyURLGroup(
-					CompanyThreadLocal.getCompanyId(),
-					StringPool.SLASH + urlNames[0]);
+			Group group = _groupLocalService.fetchFriendlyURLGroup(
+				CompanyThreadLocal.getCompanyId(),
+				StringPool.SLASH + urlNames[0]);
 
-				if (group != null) {
-					return getLayoutDisplayPageObjectProvider(
-						group.getGroupId(), urlNames[1]);
-				}
+			if (group != null) {
+				return getLayoutDisplayPageObjectProvider(
+					group.getGroupId(), urlNames[1]);
 			}
 		}
 

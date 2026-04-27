@@ -453,13 +453,13 @@ public interface SegmentsExperienceLocalService
 		long groupId, long plid, boolean active);
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
 			boolean active)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<Locale, String> nameMap,
 			boolean active, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException;
@@ -479,11 +479,11 @@ public interface SegmentsExperienceLocalService
 		SegmentsExperience segmentsExperience);
 
 	public SegmentsExperience updateSegmentsExperienceActive(
-			long segmentsExperienceId, boolean active)
+			long userId, long segmentsExperienceId, boolean active)
 		throws PortalException;
 
 	public SegmentsExperience updateSegmentsExperiencePriority(
-			long segmentsExperienceId, int newPriority)
+			long userId, long segmentsExperienceId, int newPriority)
 		throws PortalException;
 
 	@Override
@@ -502,4 +502,4 @@ public interface SegmentsExperienceLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:539497979
+// LIFERAY-SERVICE-BUILDER-HASH:-1393386091

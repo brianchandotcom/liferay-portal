@@ -578,18 +578,18 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<java.util.Locale, String> nameMap,
 			boolean active)
 		throws PortalException {
 
 		return getService().updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryERC, segmentsEntryScopeERC,
-			nameMap, active);
+			userId, segmentsExperienceId, segmentsEntryERC,
+			segmentsEntryScopeERC, nameMap, active);
 	}
 
 	public static SegmentsExperience updateSegmentsExperience(
-			long segmentsExperienceId, String segmentsEntryERC,
+			long userId, long segmentsExperienceId, String segmentsEntryERC,
 			String segmentsEntryScopeERC, Map<java.util.Locale, String> nameMap,
 			boolean active,
 			com.liferay.portal.kernel.util.UnicodeProperties
@@ -597,8 +597,9 @@ public class SegmentsExperienceLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateSegmentsExperience(
-			segmentsExperienceId, segmentsEntryERC, segmentsEntryScopeERC,
-			nameMap, active, typeSettingsUnicodeProperties);
+			userId, segmentsExperienceId, segmentsEntryERC,
+			segmentsEntryScopeERC, nameMap, active,
+			typeSettingsUnicodeProperties);
 	}
 
 	/**
@@ -618,19 +619,19 @@ public class SegmentsExperienceLocalServiceUtil {
 	}
 
 	public static SegmentsExperience updateSegmentsExperienceActive(
-			long segmentsExperienceId, boolean active)
+			long userId, long segmentsExperienceId, boolean active)
 		throws PortalException {
 
 		return getService().updateSegmentsExperienceActive(
-			segmentsExperienceId, active);
+			userId, segmentsExperienceId, active);
 	}
 
 	public static SegmentsExperience updateSegmentsExperiencePriority(
-			long segmentsExperienceId, int newPriority)
+			long userId, long segmentsExperienceId, int newPriority)
 		throws PortalException {
 
 		return getService().updateSegmentsExperiencePriority(
-			segmentsExperienceId, newPriority);
+			userId, segmentsExperienceId, newPriority);
 	}
 
 	public static SegmentsExperienceLocalService getService() {
@@ -643,4 +644,4 @@ public class SegmentsExperienceLocalServiceUtil {
 			SegmentsExperienceLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1690534605
+// LIFERAY-SERVICE-BUILDER-HASH:-905342043

@@ -208,16 +208,11 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			return commerceShippingFixedOptionQualifier;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionQualifierException(sb.toString());
+		throw new NoSuchShippingFixedOptionQualifierException(
+			_collectionPersistenceFinderByCommerceShippingFixedOptionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceShippingFixedOptionId}));
 	}
 
 	/**
@@ -234,15 +229,10 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			OrderByComparator<CommerceShippingFixedOptionQualifier>
 				orderByComparator) {
 
-		List<CommerceShippingFixedOptionQualifier> list =
-			findByCommerceShippingFixedOptionId(
-				commerceShippingFixedOptionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceShippingFixedOptionId.
+			fetchFirst(
+				finderCache, new Object[] {commerceShippingFixedOptionId},
+				orderByComparator);
 	}
 
 	/**
@@ -254,14 +244,8 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	public void removeByCommerceShippingFixedOptionId(
 		long commerceShippingFixedOptionId) {
 
-		for (CommerceShippingFixedOptionQualifier
-				commerceShippingFixedOptionQualifier :
-					findByCommerceShippingFixedOptionId(
-						commerceShippingFixedOptionId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingFixedOptionQualifier);
-		}
+		_collectionPersistenceFinderByCommerceShippingFixedOptionId.remove(
+			finderCache, new Object[] {commerceShippingFixedOptionId});
 	}
 
 	/**
@@ -401,19 +385,10 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			return commerceShippingFixedOptionQualifier;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceShippingFixedOptionId=");
-		sb.append(commerceShippingFixedOptionId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionQualifierException(sb.toString());
+		throw new NoSuchShippingFixedOptionQualifierException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, commerceShippingFixedOptionId}));
 	}
 
 	/**
@@ -430,15 +405,10 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		OrderByComparator<CommerceShippingFixedOptionQualifier>
 			orderByComparator) {
 
-		List<CommerceShippingFixedOptionQualifier> list = findByC_C(
-			classNameId, commerceShippingFixedOptionId, 0, 1,
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache,
+			new Object[] {classNameId, commerceShippingFixedOptionId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -451,14 +421,9 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	public void removeByC_C(
 		long classNameId, long commerceShippingFixedOptionId) {
 
-		for (CommerceShippingFixedOptionQualifier
-				commerceShippingFixedOptionQualifier :
-					findByC_C(
-						classNameId, commerceShippingFixedOptionId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingFixedOptionQualifier);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache,
+			new Object[] {classNameId, commerceShippingFixedOptionId});
 	}
 
 	/**
@@ -500,27 +465,18 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 				classNameId, classPK, commerceShippingFixedOptionId);
 
 		if (commerceShippingFixedOptionQualifier == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", commerceShippingFixedOptionId=");
-			sb.append(commerceShippingFixedOptionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						classNameId, classPK, commerceShippingFixedOptionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchShippingFixedOptionQualifierException(
-				sb.toString());
+			throw new NoSuchShippingFixedOptionQualifierException(message);
 		}
 
 		return commerceShippingFixedOptionQualifier;
@@ -1450,4 +1406,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1104775808
+// LIFERAY-SERVICE-BUILDER-HASH:1978128000

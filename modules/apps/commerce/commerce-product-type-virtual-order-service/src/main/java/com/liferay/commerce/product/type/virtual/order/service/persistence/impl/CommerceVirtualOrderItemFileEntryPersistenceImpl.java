@@ -194,16 +194,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			return commerceVirtualOrderItemFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemFileEntryException(sb.toString());
+		throw new NoSuchVirtualOrderItemFileEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry>
 			orderByComparator) {
 
-		List<CommerceVirtualOrderItemFileEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -236,13 +223,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					findByUuid(
-						uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceVirtualOrderItemFileEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -278,23 +260,15 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (commerceVirtualOrderItemFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVirtualOrderItemFileEntryException(sb.toString());
+			throw new NoSuchVirtualOrderItemFileEntryException(message);
 		}
 
 		return commerceVirtualOrderItemFileEntry;
@@ -475,19 +449,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			return commerceVirtualOrderItemFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemFileEntryException(sb.toString());
+		throw new NoSuchVirtualOrderItemFileEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -504,14 +468,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry>
 			orderByComparator) {
 
-		List<CommerceVirtualOrderItemFileEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -522,14 +480,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					findByUuid_C(
-						uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(commerceVirtualOrderItemFileEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -664,16 +616,11 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			return commerceVirtualOrderItemFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceVirtualOrderItemId=");
-		sb.append(commerceVirtualOrderItemId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemFileEntryException(sb.toString());
+		throw new NoSuchVirtualOrderItemFileEntryException(
+			_collectionPersistenceFinderByCommerceVirtualOrderItemId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceVirtualOrderItemId}));
 	}
 
 	/**
@@ -690,15 +637,10 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			OrderByComparator<CommerceVirtualOrderItemFileEntry>
 				orderByComparator) {
 
-		List<CommerceVirtualOrderItemFileEntry> list =
-			findByCommerceVirtualOrderItemId(
-				commerceVirtualOrderItemId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceVirtualOrderItemId.
+			fetchFirst(
+				finderCache, new Object[] {commerceVirtualOrderItemId},
+				orderByComparator);
 	}
 
 	/**
@@ -710,14 +652,8 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	public void removeByCommerceVirtualOrderItemId(
 		long commerceVirtualOrderItemId) {
 
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					findByCommerceVirtualOrderItemId(
-						commerceVirtualOrderItemId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commerceVirtualOrderItemFileEntry);
-		}
+		_collectionPersistenceFinderByCommerceVirtualOrderItemId.remove(
+			finderCache, new Object[] {commerceVirtualOrderItemId});
 	}
 
 	/**
@@ -852,19 +788,10 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			return commerceVirtualOrderItemFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceVirtualOrderItemId=");
-		sb.append(commerceVirtualOrderItemId);
-
-		sb.append(", fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemFileEntryException(sb.toString());
+		throw new NoSuchVirtualOrderItemFileEntryException(
+			_collectionPersistenceFinderByC_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {commerceVirtualOrderItemId, fileEntryId}));
 	}
 
 	/**
@@ -881,14 +808,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		OrderByComparator<CommerceVirtualOrderItemFileEntry>
 			orderByComparator) {
 
-		List<CommerceVirtualOrderItemFileEntry> list = findByC_F(
-			commerceVirtualOrderItemId, fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_F.fetchFirst(
+			finderCache, new Object[] {commerceVirtualOrderItemId, fileEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -899,14 +821,9 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_F(long commerceVirtualOrderItemId, long fileEntryId) {
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					findByC_F(
-						commerceVirtualOrderItemId, fileEntryId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceVirtualOrderItemFileEntry);
-		}
+		_collectionPersistenceFinderByC_F.remove(
+			finderCache,
+			new Object[] {commerceVirtualOrderItemId, fileEntryId});
 	}
 
 	/**
@@ -1815,4 +1732,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-60834819
+// LIFERAY-SERVICE-BUILDER-HASH:825976489

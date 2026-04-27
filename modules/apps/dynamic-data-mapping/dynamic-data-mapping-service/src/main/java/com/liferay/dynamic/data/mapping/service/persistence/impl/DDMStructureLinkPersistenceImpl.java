@@ -202,16 +202,9 @@ public class DDMStructureLinkPersistenceImpl
 			return ddmStructureLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLinkException(sb.toString());
+		throw new NoSuchStructureLinkException(
+			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
 	}
 
 	/**
@@ -226,14 +219,8 @@ public class DDMStructureLinkPersistenceImpl
 		long structureId,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
 
-		List<DDMStructureLink> list = findByStructureId(
-			structureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureId.fetchFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -243,12 +230,8 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureId(long structureId) {
-		for (DDMStructureLink ddmStructureLink :
-				findByStructureId(
-					structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStructureLink);
-		}
+		_collectionPersistenceFinderByStructureId.remove(
+			finderCache, new Object[] {structureId});
 	}
 
 	/**
@@ -383,19 +366,9 @@ public class DDMStructureLinkPersistenceImpl
 			return ddmStructureLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLinkException(sb.toString());
+		throw new NoSuchStructureLinkException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -411,14 +384,9 @@ public class DDMStructureLinkPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<DDMStructureLink> orderByComparator) {
 
-		List<DDMStructureLink> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -429,13 +397,8 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (DDMStructureLink ddmStructureLink :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStructureLink);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -478,26 +441,16 @@ public class DDMStructureLinkPersistenceImpl
 			classNameId, classPK, structureId);
 
 		if (ddmStructureLink == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", structureId=");
-			sb.append(structureId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, structureId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStructureLinkException(sb.toString());
+			throw new NoSuchStructureLinkException(message);
 		}
 
 		return ddmStructureLink;
@@ -1541,4 +1494,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1984037503
+// LIFERAY-SERVICE-BUILDER-HASH:246641580

@@ -217,16 +217,9 @@ public class FragmentCollectionPersistenceImpl
 			return fragmentCollection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -240,14 +233,8 @@ public class FragmentCollectionPersistenceImpl
 	public FragmentCollection fetchByUuid_First(
 		String uuid, OrderByComparator<FragmentCollection> orderByComparator) {
 
-		List<FragmentCollection> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -257,11 +244,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (FragmentCollection fragmentCollection :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentCollection);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -300,23 +284,15 @@ public class FragmentCollectionPersistenceImpl
 		FragmentCollection fragmentCollection = fetchByUUID_G(uuid, groupId);
 
 		if (fragmentCollection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCollectionException(sb.toString());
+			throw new NoSuchCollectionException(message);
 		}
 
 		return fragmentCollection;
@@ -499,19 +475,9 @@ public class FragmentCollectionPersistenceImpl
 			return fragmentCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -527,14 +493,8 @@ public class FragmentCollectionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<FragmentCollection> orderByComparator) {
 
-		List<FragmentCollection> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -545,13 +505,8 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (FragmentCollection fragmentCollection :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentCollection);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1154,23 +1109,16 @@ public class FragmentCollectionPersistenceImpl
 			groupId, fragmentCollectionKey);
 
 		if (fragmentCollection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", fragmentCollectionKey=");
-			sb.append(fragmentCollectionKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_FCK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, fragmentCollectionKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCollectionException(sb.toString());
+			throw new NoSuchCollectionException(message);
 		}
 
 		return fragmentCollection;
@@ -3267,23 +3215,16 @@ public class FragmentCollectionPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (fragmentCollection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCollectionException(sb.toString());
+			throw new NoSuchCollectionException(message);
 		}
 
 		return fragmentCollection;
@@ -4597,4 +4538,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1261826409
+// LIFERAY-SERVICE-BUILDER-HASH:67860496

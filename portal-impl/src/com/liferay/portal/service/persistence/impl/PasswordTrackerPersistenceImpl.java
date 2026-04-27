@@ -177,16 +177,9 @@ public class PasswordTrackerPersistenceImpl
 			return passwordTracker;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordTrackerException(sb.toString());
+		throw new NoSuchPasswordTrackerException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -200,14 +193,9 @@ public class PasswordTrackerPersistenceImpl
 	public PasswordTracker fetchByUserId_First(
 		long userId, OrderByComparator<PasswordTracker> orderByComparator) {
 
-		List<PasswordTracker> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -217,12 +205,8 @@ public class PasswordTrackerPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (PasswordTracker passwordTracker :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(passwordTracker);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -854,4 +838,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1608789719
+// LIFERAY-SERVICE-BUILDER-HASH:1317170608

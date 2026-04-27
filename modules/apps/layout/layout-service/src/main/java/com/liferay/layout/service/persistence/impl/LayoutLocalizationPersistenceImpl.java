@@ -206,16 +206,9 @@ public class LayoutLocalizationPersistenceImpl
 			return layoutLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
+		throw new NoSuchLayoutLocalizationException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class LayoutLocalizationPersistenceImpl
 	public LayoutLocalization fetchByUuid_First(
 		String uuid, OrderByComparator<LayoutLocalization> orderByComparator) {
 
-		List<LayoutLocalization> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -246,11 +233,8 @@ public class LayoutLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LayoutLocalization layoutLocalization :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutLocalization);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -289,23 +273,15 @@ public class LayoutLocalizationPersistenceImpl
 		LayoutLocalization layoutLocalization = fetchByUUID_G(uuid, groupId);
 
 		if (layoutLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLayoutLocalizationException(sb.toString());
+			throw new NoSuchLayoutLocalizationException(message);
 		}
 
 		return layoutLocalization;
@@ -488,19 +464,9 @@ public class LayoutLocalizationPersistenceImpl
 			return layoutLocalization;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
+		throw new NoSuchLayoutLocalizationException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -516,14 +482,8 @@ public class LayoutLocalizationPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LayoutLocalization> orderByComparator) {
 
-		List<LayoutLocalization> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -534,13 +494,8 @@ public class LayoutLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LayoutLocalization layoutLocalization :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutLocalization);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -666,16 +621,9 @@ public class LayoutLocalizationPersistenceImpl
 			return layoutLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutLocalizationException(sb.toString());
+		throw new NoSuchLayoutLocalizationException(
+			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
 	}
 
 	/**
@@ -689,14 +637,8 @@ public class LayoutLocalizationPersistenceImpl
 	public LayoutLocalization fetchByPlid_First(
 		long plid, OrderByComparator<LayoutLocalization> orderByComparator) {
 
-		List<LayoutLocalization> list = findByPlid(
-			plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPlid.fetchFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -706,11 +648,8 @@ public class LayoutLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByPlid(long plid) {
-		for (LayoutLocalization layoutLocalization :
-				findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutLocalization);
-		}
+		_collectionPersistenceFinderByPlid.remove(
+			finderCache, new Object[] {plid});
 	}
 
 	/**
@@ -749,23 +688,15 @@ public class LayoutLocalizationPersistenceImpl
 		LayoutLocalization layoutLocalization = fetchByL_P(languageId, plid);
 
 		if (layoutLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("languageId=");
-			sb.append(languageId);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByL_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {languageId, plid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLayoutLocalizationException(sb.toString());
+			throw new NoSuchLayoutLocalizationException(message);
 		}
 
 		return layoutLocalization;
@@ -855,26 +786,16 @@ public class LayoutLocalizationPersistenceImpl
 			groupId, languageId, plid);
 
 		if (layoutLocalization == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_L_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, languageId, plid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLayoutLocalizationException(sb.toString());
+			throw new NoSuchLayoutLocalizationException(message);
 		}
 
 		return layoutLocalization;
@@ -2075,4 +1996,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1022930715
+// LIFERAY-SERVICE-BUILDER-HASH:-520346813

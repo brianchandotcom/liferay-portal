@@ -198,16 +198,11 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			return commerceShippingFixedOption;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionException(sb.toString());
+		throw new NoSuchShippingFixedOptionException(
+			_collectionPersistenceFinderByCommerceShippingMethodId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceShippingMethodId}));
 	}
 
 	/**
@@ -222,14 +217,10 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		long commerceShippingMethodId,
 		OrderByComparator<CommerceShippingFixedOption> orderByComparator) {
 
-		List<CommerceShippingFixedOption> list = findByCommerceShippingMethodId(
-			commerceShippingMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceShippingMethodId.
+			fetchFirst(
+				finderCache, new Object[] {commerceShippingMethodId},
+				orderByComparator);
 	}
 
 	/**
@@ -241,13 +232,8 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	public void removeByCommerceShippingMethodId(
 		long commerceShippingMethodId) {
 
-		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				findByCommerceShippingMethodId(
-					commerceShippingMethodId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingFixedOption);
-		}
+		_collectionPersistenceFinderByCommerceShippingMethodId.remove(
+			finderCache, new Object[] {commerceShippingMethodId});
 	}
 
 	/**
@@ -282,23 +268,15 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			companyId, key);
 
 		if (commerceShippingFixedOption == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchShippingFixedOptionException(sb.toString());
+			throw new NoSuchShippingFixedOptionException(message);
 		}
 
 		return commerceShippingFixedOption;
@@ -1116,4 +1094,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1581745168
+// LIFERAY-SERVICE-BUILDER-HASH:-545032094

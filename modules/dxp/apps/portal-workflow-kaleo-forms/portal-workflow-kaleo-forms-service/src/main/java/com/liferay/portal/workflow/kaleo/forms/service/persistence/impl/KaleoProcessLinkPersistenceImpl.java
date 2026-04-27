@@ -187,16 +187,9 @@ public class KaleoProcessLinkPersistenceImpl
 			return kaleoProcessLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoProcessId=");
-		sb.append(kaleoProcessId);
-
-		sb.append("}");
-
-		throw new NoSuchKaleoProcessLinkException(sb.toString());
+		throw new NoSuchKaleoProcessLinkException(
+			_collectionPersistenceFinderByKaleoProcessId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoProcessId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class KaleoProcessLinkPersistenceImpl
 		long kaleoProcessId,
 		OrderByComparator<KaleoProcessLink> orderByComparator) {
 
-		List<KaleoProcessLink> list = findByKaleoProcessId(
-			kaleoProcessId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoProcessId.fetchFirst(
+			finderCache, new Object[] {kaleoProcessId}, orderByComparator);
 	}
 
 	/**
@@ -228,13 +215,8 @@ public class KaleoProcessLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByKaleoProcessId(long kaleoProcessId) {
-		for (KaleoProcessLink kaleoProcessLink :
-				findByKaleoProcessId(
-					kaleoProcessId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kaleoProcessLink);
-		}
+		_collectionPersistenceFinderByKaleoProcessId.remove(
+			finderCache, new Object[] {kaleoProcessId});
 	}
 
 	/**
@@ -270,23 +252,16 @@ public class KaleoProcessLinkPersistenceImpl
 			kaleoProcessId, workflowTaskName);
 
 		if (kaleoProcessLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("kaleoProcessId=");
-			sb.append(kaleoProcessId);
-
-			sb.append(", workflowTaskName=");
-			sb.append(workflowTaskName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKPI_WTN.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoProcessId, workflowTaskName});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchKaleoProcessLinkException(sb.toString());
+			throw new NoSuchKaleoProcessLinkException(message);
 		}
 
 		return kaleoProcessLink;
@@ -1015,4 +990,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2047381492
+// LIFERAY-SERVICE-BUILDER-HASH:51150875

@@ -188,19 +188,9 @@ public class PortletItemPersistenceImpl
 			return portletItem;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletItemException(sb.toString());
+		throw new NoSuchPortletItemException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -216,14 +206,9 @@ public class PortletItemPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator) {
 
-		List<PortletItem> list = findByG_C(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -234,13 +219,9 @@ public class PortletItemPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long classNameId) {
-		for (PortletItem portletItem :
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(portletItem);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -377,22 +358,10 @@ public class PortletItemPersistenceImpl
 			return portletItem;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletItemException(sb.toString());
+		throw new NoSuchPortletItemException(
+			_collectionPersistenceFinderByG_P_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, portletId, classNameId}));
 	}
 
 	/**
@@ -409,14 +378,9 @@ public class PortletItemPersistenceImpl
 		long groupId, String portletId, long classNameId,
 		OrderByComparator<PortletItem> orderByComparator) {
 
-		List<PortletItem> list = findByG_P_C(
-			groupId, portletId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, portletId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -430,13 +394,9 @@ public class PortletItemPersistenceImpl
 	public void removeByG_P_C(
 		long groupId, String portletId, long classNameId) {
 
-		for (PortletItem portletItem :
-				findByG_P_C(
-					groupId, portletId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portletItem);
-		}
+		_collectionPersistenceFinderByG_P_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, portletId, classNameId});
 	}
 
 	/**
@@ -1386,4 +1346,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1088560885
+// LIFERAY-SERVICE-BUILDER-HASH:-1045704074

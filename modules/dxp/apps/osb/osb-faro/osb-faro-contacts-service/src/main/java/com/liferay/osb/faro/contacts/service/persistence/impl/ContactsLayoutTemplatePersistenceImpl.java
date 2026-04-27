@@ -187,16 +187,9 @@ public class ContactsLayoutTemplatePersistenceImpl
 			return contactsLayoutTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContactsLayoutTemplateException(sb.toString());
+		throw new NoSuchContactsLayoutTemplateException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 		long groupId,
 		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
 
-		List<ContactsLayoutTemplate> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -228,12 +215,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (ContactsLayoutTemplate contactsLayoutTemplate :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(contactsLayoutTemplate);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -357,19 +340,9 @@ public class ContactsLayoutTemplatePersistenceImpl
 			return contactsLayoutTemplate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchContactsLayoutTemplateException(sb.toString());
+		throw new NoSuchContactsLayoutTemplateException(
+			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
 	}
 
 	/**
@@ -385,14 +358,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 		long groupId, int type,
 		OrderByComparator<ContactsLayoutTemplate> orderByComparator) {
 
-		List<ContactsLayoutTemplate> list = findByG_T(
-			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T.fetchFirst(
+			finderCache, new Object[] {groupId, type}, orderByComparator);
 	}
 
 	/**
@@ -403,13 +370,8 @@ public class ContactsLayoutTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByG_T(long groupId, int type) {
-		for (ContactsLayoutTemplate contactsLayoutTemplate :
-				findByG_T(
-					groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(contactsLayoutTemplate);
-		}
+		_collectionPersistenceFinderByG_T.remove(
+			finderCache, new Object[] {groupId, type});
 	}
 
 	/**
@@ -1123,4 +1085,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2008042979
+// LIFERAY-SERVICE-BUILDER-HASH:1035521809

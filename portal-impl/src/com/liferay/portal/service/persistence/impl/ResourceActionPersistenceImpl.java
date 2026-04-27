@@ -172,16 +172,9 @@ public class ResourceActionPersistenceImpl
 			return resourceAction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchResourceActionException(sb.toString());
+		throw new NoSuchResourceActionException(
+			_collectionPersistenceFinderByName.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
 	}
 
 	/**
@@ -195,13 +188,9 @@ public class ResourceActionPersistenceImpl
 	public ResourceAction fetchByName_First(
 		String name, OrderByComparator<ResourceAction> orderByComparator) {
 
-		List<ResourceAction> list = findByName(name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByName.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name},
+			orderByComparator);
 	}
 
 	/**
@@ -211,11 +200,8 @@ public class ResourceActionPersistenceImpl
 	 */
 	@Override
 	public void removeByName(String name) {
-		for (ResourceAction resourceAction :
-				findByName(name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(resourceAction);
-		}
+		_collectionPersistenceFinderByName.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
 	/**
@@ -249,23 +235,15 @@ public class ResourceActionPersistenceImpl
 		ResourceAction resourceAction = fetchByN_A(name, actionId);
 
 		if (resourceAction == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append(", actionId=");
-			sb.append(actionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByN_A.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name, actionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchResourceActionException(sb.toString());
+			throw new NoSuchResourceActionException(message);
 		}
 
 		return resourceAction;
@@ -944,4 +922,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:866004706
+// LIFERAY-SERVICE-BUILDER-HASH:1084535898

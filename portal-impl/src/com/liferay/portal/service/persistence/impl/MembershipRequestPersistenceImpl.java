@@ -179,16 +179,9 @@ public class MembershipRequestPersistenceImpl
 			return membershipRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
+		throw new NoSuchMembershipRequestException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -202,14 +195,9 @@ public class MembershipRequestPersistenceImpl
 	public MembershipRequest fetchByGroupId_First(
 		long groupId, OrderByComparator<MembershipRequest> orderByComparator) {
 
-		List<MembershipRequest> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -219,12 +207,8 @@ public class MembershipRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (MembershipRequest membershipRequest :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(membershipRequest);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -341,16 +325,9 @@ public class MembershipRequestPersistenceImpl
 			return membershipRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
+		throw new NoSuchMembershipRequestException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -364,14 +341,9 @@ public class MembershipRequestPersistenceImpl
 	public MembershipRequest fetchByUserId_First(
 		long userId, OrderByComparator<MembershipRequest> orderByComparator) {
 
-		List<MembershipRequest> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -381,12 +353,8 @@ public class MembershipRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (MembershipRequest membershipRequest :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(membershipRequest);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -511,19 +479,9 @@ public class MembershipRequestPersistenceImpl
 			return membershipRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", statusId=");
-		sb.append(statusId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
+		throw new NoSuchMembershipRequestException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, statusId}));
 	}
 
 	/**
@@ -539,14 +497,9 @@ public class MembershipRequestPersistenceImpl
 		long groupId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator) {
 
-		List<MembershipRequest> list = findByG_S(
-			groupId, statusId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, statusId},
+			orderByComparator);
 	}
 
 	/**
@@ -557,13 +510,8 @@ public class MembershipRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, long statusId) {
-		for (MembershipRequest membershipRequest :
-				findByG_S(
-					groupId, statusId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(membershipRequest);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, statusId});
 	}
 
 	/**
@@ -698,22 +646,10 @@ public class MembershipRequestPersistenceImpl
 			return membershipRequest;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", statusId=");
-		sb.append(statusId);
-
-		sb.append("}");
-
-		throw new NoSuchMembershipRequestException(sb.toString());
+		throw new NoSuchMembershipRequestException(
+			_collectionPersistenceFinderByG_U_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, statusId}));
 	}
 
 	/**
@@ -730,14 +666,9 @@ public class MembershipRequestPersistenceImpl
 		long groupId, long userId, long statusId,
 		OrderByComparator<MembershipRequest> orderByComparator) {
 
-		List<MembershipRequest> list = findByG_U_S(
-			groupId, userId, statusId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, statusId}, orderByComparator);
 	}
 
 	/**
@@ -749,13 +680,9 @@ public class MembershipRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_S(long groupId, long userId, long statusId) {
-		for (MembershipRequest membershipRequest :
-				findByG_U_S(
-					groupId, userId, statusId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(membershipRequest);
-		}
+		_collectionPersistenceFinderByG_U_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, statusId});
 	}
 
 	/**
@@ -1483,4 +1410,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2010506006
+// LIFERAY-SERVICE-BUILDER-HASH:926241996

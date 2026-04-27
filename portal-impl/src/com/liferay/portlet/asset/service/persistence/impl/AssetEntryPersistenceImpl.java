@@ -198,16 +198,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -221,13 +214,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -237,12 +226,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (AssetEntry assetEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -370,16 +355,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -393,14 +371,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -410,12 +383,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AssetEntry assetEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -541,16 +510,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("visible=");
-		sb.append(visible);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByVisible.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {visible}));
 	}
 
 	/**
@@ -564,13 +526,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByVisible_First(
 		boolean visible, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByVisible(visible, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByVisible.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {visible},
+			orderByComparator);
 	}
 
 	/**
@@ -580,12 +538,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByVisible(boolean visible) {
-		for (AssetEntry assetEntry :
-				findByVisible(
-					visible, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByVisible.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {visible});
 	}
 
 	/**
@@ -714,16 +668,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("publishDate=");
-		sb.append(publishDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByPublishDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {publishDate}));
 	}
 
 	/**
@@ -737,14 +684,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByPublishDate_First(
 		Date publishDate, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByPublishDate(
-			publishDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPublishDate.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {publishDate},
+			orderByComparator);
 	}
 
 	/**
@@ -754,12 +696,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByPublishDate(Date publishDate) {
-		for (AssetEntry assetEntry :
-				findByPublishDate(
-					publishDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByPublishDate.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {publishDate});
 	}
 
 	/**
@@ -889,16 +827,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByExpirationDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -912,14 +843,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByExpirationDate_First(
 		Date expirationDate, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByExpirationDate.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate},
+			orderByComparator);
 	}
 
 	/**
@@ -929,13 +855,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByExpirationDate(Date expirationDate) {
-		for (AssetEntry assetEntry :
-				findByExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByExpirationDate.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate});
 	}
 
 	/**
@@ -1065,16 +986,9 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutUuid=");
-		sb.append(layoutUuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByLayoutUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {layoutUuid}));
 	}
 
 	/**
@@ -1088,14 +1002,9 @@ public class AssetEntryPersistenceImpl
 	public AssetEntry fetchByLayoutUuid_First(
 		String layoutUuid, OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByLayoutUuid(
-			layoutUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLayoutUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -1105,12 +1014,8 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLayoutUuid(String layoutUuid) {
-		for (AssetEntry assetEntry :
-				findByLayoutUuid(
-					layoutUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByLayoutUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutUuid});
 	}
 
 	/**
@@ -1148,23 +1053,16 @@ public class AssetEntryPersistenceImpl
 		AssetEntry assetEntry = fetchByG_CU(groupId, classUuid);
 
 		if (assetEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", classUuid=");
-			sb.append(classUuid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_CU.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, classUuid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return assetEntry;
@@ -1350,19 +1248,10 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -1378,14 +1267,9 @@ public class AssetEntryPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByC_CN(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CN.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -1396,13 +1280,9 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_CN(long companyId, long classNameId) {
-		for (AssetEntry assetEntry :
-				findByC_CN(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByC_CN.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1442,23 +1322,16 @@ public class AssetEntryPersistenceImpl
 		AssetEntry assetEntry = fetchByC_C(classNameId, classPK);
 
 		if (assetEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return assetEntry;
@@ -1652,22 +1525,10 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", visible=");
-		sb.append(visible);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_C_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, visible}));
 	}
 
 	/**
@@ -1684,14 +1545,9 @@ public class AssetEntryPersistenceImpl
 		long groupId, long classNameId, boolean visible,
 		OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByG_C_V(
-			groupId, classNameId, visible, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_V.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, visible}, orderByComparator);
 	}
 
 	/**
@@ -1703,13 +1559,9 @@ public class AssetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_V(long groupId, long classNameId, boolean visible) {
-		for (AssetEntry assetEntry :
-				findByG_C_V(
-					groupId, classNameId, visible, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByG_C_V.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, visible});
 	}
 
 	/**
@@ -1869,25 +1721,12 @@ public class AssetEntryPersistenceImpl
 			return assetEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", publishDate=");
-		sb.append(publishDate);
-
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_C_P_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, classNameId, publishDate, expirationDate
+				}));
 	}
 
 	/**
@@ -1905,15 +1744,10 @@ public class AssetEntryPersistenceImpl
 		long groupId, long classNameId, Date publishDate, Date expirationDate,
 		OrderByComparator<AssetEntry> orderByComparator) {
 
-		List<AssetEntry> list = findByG_C_P_E(
-			groupId, classNameId, publishDate, expirationDate, 0, 1,
+		return _collectionPersistenceFinderByG_C_P_E.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, publishDate, expirationDate},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1928,13 +1762,9 @@ public class AssetEntryPersistenceImpl
 	public void removeByG_C_P_E(
 		long groupId, long classNameId, Date publishDate, Date expirationDate) {
 
-		for (AssetEntry assetEntry :
-				findByG_C_P_E(
-					groupId, classNameId, publishDate, expirationDate,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetEntry);
-		}
+		_collectionPersistenceFinderByG_C_P_E.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, publishDate, expirationDate});
 	}
 
 	/**
@@ -3525,4 +3355,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1377382648
+// LIFERAY-SERVICE-BUILDER-HASH:950223812

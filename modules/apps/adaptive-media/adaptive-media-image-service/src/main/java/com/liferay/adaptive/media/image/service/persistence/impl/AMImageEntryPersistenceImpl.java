@@ -202,16 +202,9 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -225,13 +218,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByUuid_First(
 		String uuid, OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +229,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AMImageEntry amImageEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -284,23 +269,15 @@ public class AMImageEntryPersistenceImpl
 		AMImageEntry amImageEntry = fetchByUUID_G(uuid, groupId);
 
 		if (amImageEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAMImageEntryException(sb.toString());
+			throw new NoSuchAMImageEntryException(message);
 		}
 
 		return amImageEntry;
@@ -483,19 +460,9 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -511,14 +478,8 @@ public class AMImageEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -529,13 +490,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AMImageEntry amImageEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -662,16 +618,9 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -685,14 +634,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -702,12 +645,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (AMImageEntry amImageEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -835,16 +774,9 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -858,14 +790,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -875,12 +801,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AMImageEntry amImageEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1012,16 +934,11 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("configurationUuid=");
-		sb.append(configurationUuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByConfigurationUuid.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {configurationUuid}));
 	}
 
 	/**
@@ -1036,14 +953,8 @@ public class AMImageEntryPersistenceImpl
 		String configurationUuid,
 		OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByConfigurationUuid(
-			configurationUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByConfigurationUuid.fetchFirst(
+			finderCache, new Object[] {configurationUuid}, orderByComparator);
 	}
 
 	/**
@@ -1053,13 +964,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByConfigurationUuid(String configurationUuid) {
-		for (AMImageEntry amImageEntry :
-				findByConfigurationUuid(
-					configurationUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByConfigurationUuid.remove(
+			finderCache, new Object[] {configurationUuid});
 	}
 
 	/**
@@ -1189,16 +1095,9 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileVersionId=");
-		sb.append(fileVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByFileVersionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileVersionId}));
 	}
 
 	/**
@@ -1212,14 +1111,8 @@ public class AMImageEntryPersistenceImpl
 	public AMImageEntry fetchByFileVersionId_First(
 		long fileVersionId, OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByFileVersionId(
-			fileVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileVersionId.fetchFirst(
+			finderCache, new Object[] {fileVersionId}, orderByComparator);
 	}
 
 	/**
@@ -1229,13 +1122,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByFileVersionId(long fileVersionId) {
-		for (AMImageEntry amImageEntry :
-				findByFileVersionId(
-					fileVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByFileVersionId.remove(
+			finderCache, new Object[] {fileVersionId});
 	}
 
 	/**
@@ -1373,19 +1261,10 @@ public class AMImageEntryPersistenceImpl
 			return amImageEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", configurationUuid=");
-		sb.append(configurationUuid);
-
-		sb.append("}");
-
-		throw new NoSuchAMImageEntryException(sb.toString());
+		throw new NoSuchAMImageEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, configurationUuid}));
 	}
 
 	/**
@@ -1401,14 +1280,9 @@ public class AMImageEntryPersistenceImpl
 		long companyId, String configurationUuid,
 		OrderByComparator<AMImageEntry> orderByComparator) {
 
-		List<AMImageEntry> list = findByC_C(
-			companyId, configurationUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, configurationUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -1419,13 +1293,8 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, String configurationUuid) {
-		for (AMImageEntry amImageEntry :
-				findByC_C(
-					companyId, configurationUuid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(amImageEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, configurationUuid});
 	}
 
 	/**
@@ -1465,23 +1334,16 @@ public class AMImageEntryPersistenceImpl
 			configurationUuid, fileVersionId);
 
 		if (amImageEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("configurationUuid=");
-			sb.append(configurationUuid);
-
-			sb.append(", fileVersionId=");
-			sb.append(fileVersionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_F.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {configurationUuid, fileVersionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAMImageEntryException(sb.toString());
+			throw new NoSuchAMImageEntryException(message);
 		}
 
 		return amImageEntry;
@@ -2722,4 +2584,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654666685
+// LIFERAY-SERVICE-BUILDER-HASH:2100168742

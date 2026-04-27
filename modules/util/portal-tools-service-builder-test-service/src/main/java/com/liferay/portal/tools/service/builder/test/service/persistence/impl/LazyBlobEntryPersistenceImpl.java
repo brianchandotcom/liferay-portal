@@ -175,16 +175,9 @@ public class LazyBlobEntryPersistenceImpl
 			return lazyBlobEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLazyBlobEntryException(sb.toString());
+		throw new NoSuchLazyBlobEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -198,13 +191,8 @@ public class LazyBlobEntryPersistenceImpl
 	public LazyBlobEntry fetchByUuid_First(
 		String uuid, OrderByComparator<LazyBlobEntry> orderByComparator) {
 
-		List<LazyBlobEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -214,11 +202,8 @@ public class LazyBlobEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LazyBlobEntry lazyBlobEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lazyBlobEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -252,23 +237,15 @@ public class LazyBlobEntryPersistenceImpl
 		LazyBlobEntry lazyBlobEntry = fetchByUUID_G(uuid, groupId);
 
 		if (lazyBlobEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLazyBlobEntryException(sb.toString());
+			throw new NoSuchLazyBlobEntryException(message);
 		}
 
 		return lazyBlobEntry;
@@ -979,4 +956,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:300336334
+// LIFERAY-SERVICE-BUILDER-HASH:618463834

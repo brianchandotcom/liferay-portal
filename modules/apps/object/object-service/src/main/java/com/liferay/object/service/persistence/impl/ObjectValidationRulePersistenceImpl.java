@@ -199,16 +199,9 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,14 +216,8 @@ public class ObjectValidationRulePersistenceImpl
 		String uuid,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -240,11 +227,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectValidationRule objectValidationRule :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -371,19 +355,9 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -399,14 +373,8 @@ public class ObjectValidationRulePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -417,13 +385,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectValidationRule objectValidationRule :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -547,16 +510,11 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByObjectDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId}));
 	}
 
 	/**
@@ -571,14 +529,8 @@ public class ObjectValidationRulePersistenceImpl
 		long objectDefinitionId,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByObjectDefinitionId(
-			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectDefinitionId.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -588,13 +540,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByObjectDefinitionId(long objectDefinitionId) {
-		for (ObjectValidationRule objectValidationRule :
-				findByObjectDefinitionId(
-					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByObjectDefinitionId.remove(
+			finderCache, new Object[] {objectDefinitionId});
 	}
 
 	/**
@@ -722,19 +669,10 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByODI_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, active}));
 	}
 
 	/**
@@ -750,14 +688,9 @@ public class ObjectValidationRulePersistenceImpl
 		long objectDefinitionId, boolean active,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByODI_A(
-			objectDefinitionId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_A.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -768,13 +701,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByODI_A(long objectDefinitionId, boolean active) {
-		for (ObjectValidationRule objectValidationRule :
-				findByODI_A(
-					objectDefinitionId, active, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByODI_A.remove(
+			finderCache, new Object[] {objectDefinitionId, active});
 	}
 
 	/**
@@ -903,19 +831,10 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", engine=");
-		sb.append(engine);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByODI_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, engine}));
 	}
 
 	/**
@@ -931,14 +850,9 @@ public class ObjectValidationRulePersistenceImpl
 		long objectDefinitionId, String engine,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByODI_E(
-			objectDefinitionId, engine, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_E.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, engine},
+			orderByComparator);
 	}
 
 	/**
@@ -949,13 +863,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByODI_E(long objectDefinitionId, String engine) {
-		for (ObjectValidationRule objectValidationRule :
-				findByODI_E(
-					objectDefinitionId, engine, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByODI_E.remove(
+			finderCache, new Object[] {objectDefinitionId, engine});
 	}
 
 	/**
@@ -1085,19 +994,10 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", outputType=");
-		sb.append(outputType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByODI_O.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, outputType}));
 	}
 
 	/**
@@ -1113,14 +1013,9 @@ public class ObjectValidationRulePersistenceImpl
 		long objectDefinitionId, String outputType,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByODI_O(
-			objectDefinitionId, outputType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_O.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, outputType},
+			orderByComparator);
 	}
 
 	/**
@@ -1131,13 +1026,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByODI_O(long objectDefinitionId, String outputType) {
-		for (ObjectValidationRule objectValidationRule :
-				findByODI_O(
-					objectDefinitionId, outputType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByODI_O.remove(
+			finderCache, new Object[] {objectDefinitionId, outputType});
 	}
 
 	/**
@@ -1262,19 +1152,9 @@ public class ObjectValidationRulePersistenceImpl
 			return objectValidationRule;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append(", engine=");
-		sb.append(engine);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleException(sb.toString());
+		throw new NoSuchObjectValidationRuleException(
+			_collectionPersistenceFinderByA_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active, engine}));
 	}
 
 	/**
@@ -1290,14 +1170,8 @@ public class ObjectValidationRulePersistenceImpl
 		boolean active, String engine,
 		OrderByComparator<ObjectValidationRule> orderByComparator) {
 
-		List<ObjectValidationRule> list = findByA_E(
-			active, engine, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByA_E.fetchFirst(
+			finderCache, new Object[] {active, engine}, orderByComparator);
 	}
 
 	/**
@@ -1308,13 +1182,8 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Override
 	public void removeByA_E(boolean active, String engine) {
-		for (ObjectValidationRule objectValidationRule :
-				findByA_E(
-					active, engine, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectValidationRule);
-		}
+		_collectionPersistenceFinderByA_E.remove(
+			finderCache, new Object[] {active, engine});
 	}
 
 	/**
@@ -1353,26 +1222,18 @@ public class ObjectValidationRulePersistenceImpl
 			externalReferenceCode, companyId, objectDefinitionId);
 
 		if (objectValidationRule == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append(", objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C_ODI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						externalReferenceCode, companyId, objectDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectValidationRuleException(sb.toString());
+			throw new NoSuchObjectValidationRuleException(message);
 		}
 
 		return objectValidationRule;
@@ -2430,4 +2291,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:713414851
+// LIFERAY-SERVICE-BUILDER-HASH:-5827463

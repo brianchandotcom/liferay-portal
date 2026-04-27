@@ -193,16 +193,10 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			return commerceInventoryBookedQuantity;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
+		throw new NoSuchInventoryBookedQuantityException(
+			_collectionPersistenceFinderByLtExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -217,14 +211,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		Date expirationDate,
 		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
 
-		List<CommerceInventoryBookedQuantity> list = findByLtExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtExpirationDate.fetchFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -234,13 +222,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	 */
 	@Override
 	public void removeByLtExpirationDate(Date expirationDate) {
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				findByLtExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceInventoryBookedQuantity);
-		}
+		_collectionPersistenceFinderByLtExpirationDate.remove(
+			finderCache, new Object[] {expirationDate});
 	}
 
 	/**
@@ -359,16 +342,9 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			return commerceInventoryBookedQuantity;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
+		throw new NoSuchInventoryBookedQuantityException(
+			_collectionPersistenceFinderBySku.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sku}));
 	}
 
 	/**
@@ -383,14 +359,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		String sku,
 		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
 
-		List<CommerceInventoryBookedQuantity> list = findBySku(
-			sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySku.fetchFirst(
+			finderCache, new Object[] {sku}, orderByComparator);
 	}
 
 	/**
@@ -400,11 +370,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	 */
 	@Override
 	public void removeBySku(String sku) {
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				findBySku(sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryBookedQuantity);
-		}
+		_collectionPersistenceFinderBySku.remove(
+			finderCache, new Object[] {sku});
 	}
 
 	/**
@@ -541,22 +508,10 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			return commerceInventoryBookedQuantity;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryBookedQuantityException(sb.toString());
+		throw new NoSuchInventoryBookedQuantityException(
+			_collectionPersistenceFinderByC_S_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, sku, unitOfMeasureKey}));
 	}
 
 	/**
@@ -573,14 +528,9 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		long companyId, String sku, String unitOfMeasureKey,
 		OrderByComparator<CommerceInventoryBookedQuantity> orderByComparator) {
 
-		List<CommerceInventoryBookedQuantity> list = findByC_S_U(
-			companyId, sku, unitOfMeasureKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S_U.fetchFirst(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey},
+			orderByComparator);
 	}
 
 	/**
@@ -594,13 +544,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	public void removeByC_S_U(
 		long companyId, String sku, String unitOfMeasureKey) {
 
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				findByC_S_U(
-					companyId, sku, unitOfMeasureKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryBookedQuantity);
-		}
+		_collectionPersistenceFinderByC_S_U.remove(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
 
 	/**
@@ -1407,4 +1352,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-700305711
+// LIFERAY-SERVICE-BUILDER-HASH:620266579

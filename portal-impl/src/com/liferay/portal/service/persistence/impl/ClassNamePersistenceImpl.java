@@ -85,20 +85,15 @@ public class ClassNamePersistenceImpl
 		ClassName className = fetchByValue(value);
 
 		if (className == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("value=");
-			sb.append(value);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByValue.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {value});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchClassNameException(sb.toString());
+			throw new NoSuchClassNameException(message);
 		}
 
 		return className;
@@ -724,4 +719,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-639336439
+// LIFERAY-SERVICE-BUILDER-HASH:-490123660

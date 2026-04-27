@@ -200,16 +200,9 @@ public class TrashEntryPersistenceImpl
 			return trashEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -223,13 +216,8 @@ public class TrashEntryPersistenceImpl
 	public TrashEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<TrashEntry> orderByComparator) {
 
-		List<TrashEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -239,12 +227,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (TrashEntry trashEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(trashEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -372,16 +356,9 @@ public class TrashEntryPersistenceImpl
 			return trashEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -395,14 +372,8 @@ public class TrashEntryPersistenceImpl
 	public TrashEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<TrashEntry> orderByComparator) {
 
-		List<TrashEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -412,12 +383,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (TrashEntry trashEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(trashEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -551,19 +518,9 @@ public class TrashEntryPersistenceImpl
 			return trashEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LtCD.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, createDate}));
 	}
 
 	/**
@@ -579,14 +536,8 @@ public class TrashEntryPersistenceImpl
 		long groupId, Date createDate,
 		OrderByComparator<TrashEntry> orderByComparator) {
 
-		List<TrashEntry> list = findByG_LtCD(
-			groupId, createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LtCD.fetchFirst(
+			finderCache, new Object[] {groupId, createDate}, orderByComparator);
 	}
 
 	/**
@@ -597,13 +548,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LtCD(long groupId, Date createDate) {
-		for (TrashEntry trashEntry :
-				findByG_LtCD(
-					groupId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(trashEntry);
-		}
+		_collectionPersistenceFinderByG_LtCD.remove(
+			finderCache, new Object[] {groupId, createDate});
 	}
 
 	/**
@@ -739,19 +685,9 @@ public class TrashEntryPersistenceImpl
 			return trashEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -767,14 +703,9 @@ public class TrashEntryPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<TrashEntry> orderByComparator) {
 
-		List<TrashEntry> list = findByG_CN(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_CN.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -785,13 +716,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_CN(long groupId, long classNameId) {
-		for (TrashEntry trashEntry :
-				findByG_CN(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(trashEntry);
-		}
+		_collectionPersistenceFinderByG_CN.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -927,19 +853,10 @@ public class TrashEntryPersistenceImpl
 			return trashEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -955,14 +872,9 @@ public class TrashEntryPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<TrashEntry> orderByComparator) {
 
-		List<TrashEntry> list = findByC_CN(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CN.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -973,13 +885,8 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_CN(long companyId, long classNameId) {
-		for (TrashEntry trashEntry :
-				findByC_CN(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(trashEntry);
-		}
+		_collectionPersistenceFinderByC_CN.remove(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1019,23 +926,16 @@ public class TrashEntryPersistenceImpl
 		TrashEntry trashEntry = fetchByCN_CPK(classNameId, classPK);
 
 		if (trashEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return trashEntry;
@@ -2149,4 +2049,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:741869252
+// LIFERAY-SERVICE-BUILDER-HASH:906613539

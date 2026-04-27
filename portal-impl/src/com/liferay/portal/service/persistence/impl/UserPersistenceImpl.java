@@ -212,16 +212,9 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -235,13 +228,9 @@ public class UserPersistenceImpl
 	public User fetchByUuid_First(
 		String uuid, OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -251,11 +240,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (User user :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -389,19 +375,9 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -417,14 +393,9 @@ public class UserPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -435,13 +406,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (User user :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -771,20 +737,15 @@ public class UserPersistenceImpl
 		User user = fetchByContactId(contactId);
 
 		if (user == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("contactId=");
-			sb.append(contactId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByContactId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {contactId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return user;
@@ -952,16 +913,9 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("emailAddress=");
-		sb.append(emailAddress);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByEmailAddress.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {emailAddress}));
 	}
 
 	/**
@@ -975,14 +929,9 @@ public class UserPersistenceImpl
 	public User fetchByEmailAddress_First(
 		String emailAddress, OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByEmailAddress(
-			emailAddress, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByEmailAddress.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {emailAddress},
+			orderByComparator);
 	}
 
 	/**
@@ -992,12 +941,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByEmailAddress(String emailAddress) {
-		for (User user :
-				findByEmailAddress(
-					emailAddress, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByEmailAddress.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {emailAddress});
 	}
 
 	/**
@@ -1122,16 +1067,9 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portraitId=");
-		sb.append(portraitId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByPortraitId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portraitId}));
 	}
 
 	/**
@@ -1145,13 +1083,9 @@ public class UserPersistenceImpl
 	public User fetchByPortraitId_First(
 		long portraitId, OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByPortraitId(portraitId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPortraitId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {portraitId},
+			orderByComparator);
 	}
 
 	/**
@@ -1161,12 +1095,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByPortraitId(long portraitId) {
-		for (User user :
-				findByPortraitId(
-					portraitId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByPortraitId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {portraitId});
 	}
 
 	/**
@@ -1517,23 +1447,15 @@ public class UserPersistenceImpl
 		User user = fetchByC_U(companyId, userId);
 
 		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_U.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return user;
@@ -2329,23 +2251,16 @@ public class UserPersistenceImpl
 		User user = fetchByC_SN(companyId, screenName);
 
 		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", screenName=");
-			sb.append(screenName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_SN.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, screenName});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return user;
@@ -2433,23 +2348,16 @@ public class UserPersistenceImpl
 		User user = fetchByC_EA(companyId, emailAddress);
 
 		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", emailAddress=");
-			sb.append(emailAddress);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_EA.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, emailAddress});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return user;
@@ -2634,19 +2542,10 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", facebookId=");
-		sb.append(facebookId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByC_FID.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, facebookId}));
 	}
 
 	/**
@@ -2662,14 +2561,9 @@ public class UserPersistenceImpl
 		long companyId, long facebookId,
 		OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByC_FID(
-			companyId, facebookId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_FID.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, facebookId}, orderByComparator);
 	}
 
 	/**
@@ -2680,13 +2574,9 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByC_FID(long companyId, long facebookId) {
-		for (User user :
-				findByC_FID(
-					companyId, facebookId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByC_FID.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, facebookId});
 	}
 
 	/**
@@ -2817,19 +2707,9 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
 	}
 
 	/**
@@ -2844,13 +2724,9 @@ public class UserPersistenceImpl
 	public User fetchByC_T_First(
 		long companyId, int type, OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByC_T(companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -2861,13 +2737,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, int type) {
-		for (User user :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
 	/**
@@ -3746,22 +3617,10 @@ public class UserPersistenceImpl
 			return user;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByC_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, type, status}));
 	}
 
 	/**
@@ -3778,14 +3637,9 @@ public class UserPersistenceImpl
 		long companyId, int type, int status,
 		OrderByComparator<User> orderByComparator) {
 
-		List<User> list = findByC_T_S(
-			companyId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, status}, orderByComparator);
 	}
 
 	/**
@@ -3797,13 +3651,9 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T_S(long companyId, int type, int status) {
-		for (User user :
-				findByC_T_S(
-					companyId, type, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(user);
-		}
+		_collectionPersistenceFinderByC_T_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, status});
 	}
 
 	/**
@@ -3844,23 +3694,16 @@ public class UserPersistenceImpl
 		User user = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return user;
@@ -7066,4 +6909,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:116807910
+// LIFERAY-SERVICE-BUILDER-HASH:199693202

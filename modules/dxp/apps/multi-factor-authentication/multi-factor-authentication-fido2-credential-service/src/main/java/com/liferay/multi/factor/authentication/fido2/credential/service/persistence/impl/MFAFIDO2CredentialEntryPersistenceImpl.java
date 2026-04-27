@@ -188,16 +188,9 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return mfaFIDO2CredentialEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchMFAFIDO2CredentialEntryException(sb.toString());
+		throw new NoSuchMFAFIDO2CredentialEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		long userId,
 		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
 
-		List<MFAFIDO2CredentialEntry> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -229,12 +216,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mfaFIDO2CredentialEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -357,16 +340,11 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			return mfaFIDO2CredentialEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("credentialKeyHash=");
-		sb.append(credentialKeyHash);
-
-		sb.append("}");
-
-		throw new NoSuchMFAFIDO2CredentialEntryException(sb.toString());
+		throw new NoSuchMFAFIDO2CredentialEntryException(
+			_collectionPersistenceFinderByCredentialKeyHash.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {credentialKeyHash}));
 	}
 
 	/**
@@ -381,14 +359,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		long credentialKeyHash,
 		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
 
-		List<MFAFIDO2CredentialEntry> list = findByCredentialKeyHash(
-			credentialKeyHash, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCredentialKeyHash.fetchFirst(
+			finderCache, new Object[] {credentialKeyHash}, orderByComparator);
 	}
 
 	/**
@@ -398,13 +370,8 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCredentialKeyHash(long credentialKeyHash) {
-		for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry :
-				findByCredentialKeyHash(
-					credentialKeyHash, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mfaFIDO2CredentialEntry);
-		}
+		_collectionPersistenceFinderByCredentialKeyHash.remove(
+			finderCache, new Object[] {credentialKeyHash});
 	}
 
 	/**
@@ -440,23 +407,16 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			userId, credentialKeyHash);
 
 		if (mfaFIDO2CredentialEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", credentialKeyHash=");
-			sb.append(credentialKeyHash);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, credentialKeyHash});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMFAFIDO2CredentialEntryException(sb.toString());
+			throw new NoSuchMFAFIDO2CredentialEntryException(message);
 		}
 
 		return mfaFIDO2CredentialEntry;
@@ -1270,4 +1230,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:371102410
+// LIFERAY-SERVICE-BUILDER-HASH:182789990

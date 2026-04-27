@@ -219,16 +219,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("resourcePrimKey=");
-		sb.append(resourcePrimKey);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByResourcePrimKey.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {resourcePrimKey}));
 	}
 
 	/**
@@ -242,14 +235,8 @@ public class KBArticlePersistenceImpl
 	public KBArticle fetchByResourcePrimKey_First(
 		long resourcePrimKey, OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByResourcePrimKey(
-			resourcePrimKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByResourcePrimKey.fetchFirst(
+			finderCache, new Object[] {resourcePrimKey}, orderByComparator);
 	}
 
 	/**
@@ -259,13 +246,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByResourcePrimKey(long resourcePrimKey) {
-		for (KBArticle kbArticle :
-				findByResourcePrimKey(
-					resourcePrimKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByResourcePrimKey.remove(
+			finderCache, new Object[] {resourcePrimKey});
 	}
 
 	/**
@@ -389,16 +371,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -412,13 +387,8 @@ public class KBArticlePersistenceImpl
 	public KBArticle fetchByUuid_First(
 		String uuid, OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -428,11 +398,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (KBArticle kbArticle :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -470,23 +437,15 @@ public class KBArticlePersistenceImpl
 		KBArticle kbArticle = fetchByUUID_G(uuid, groupId);
 
 		if (kbArticle == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchArticleException(sb.toString());
+			throw new NoSuchArticleException(message);
 		}
 
 		return kbArticle;
@@ -669,19 +628,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -697,14 +646,8 @@ public class KBArticlePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -715,13 +658,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (KBArticle kbArticle :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -858,19 +796,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("resourcePrimKey=");
-		sb.append(resourcePrimKey);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByR_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {resourcePrimKey, groupId}));
 	}
 
 	/**
@@ -886,14 +815,9 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByR_G(
-			resourcePrimKey, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_G.fetchFirst(
+			finderCache, new Object[] {resourcePrimKey, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1051,13 +975,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByR_G(long resourcePrimKey, long groupId) {
-		for (KBArticle kbArticle :
-				findByR_G(
-					resourcePrimKey, groupId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByR_G.remove(
+			finderCache, new Object[] {resourcePrimKey, groupId});
 	}
 
 	/**
@@ -1163,23 +1082,16 @@ public class KBArticlePersistenceImpl
 		KBArticle kbArticle = fetchByR_V(resourcePrimKey, version);
 
 		if (kbArticle == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("resourcePrimKey=");
-			sb.append(resourcePrimKey);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByR_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {resourcePrimKey, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchArticleException(sb.toString());
+			throw new NoSuchArticleException(message);
 		}
 
 		return kbArticle;
@@ -3257,19 +3169,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_ERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, externalReferenceCode}));
 	}
 
 	/**
@@ -3285,14 +3188,9 @@ public class KBArticlePersistenceImpl
 		long groupId, String externalReferenceCode,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_ERC(
-			groupId, externalReferenceCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_ERC.fetchFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode},
+			orderByComparator);
 	}
 
 	/**
@@ -3466,13 +3364,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_ERC(long groupId, String externalReferenceCode) {
-		for (KBArticle kbArticle :
-				findByG_ERC(
-					groupId, externalReferenceCode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_ERC.remove(
+			finderCache, new Object[] {groupId, externalReferenceCode});
 	}
 
 	/**
@@ -3691,19 +3584,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, latest}));
 	}
 
 	/**
@@ -3719,14 +3602,8 @@ public class KBArticlePersistenceImpl
 		long groupId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_L(
-			groupId, latest, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_L.fetchFirst(
+			finderCache, new Object[] {groupId, latest}, orderByComparator);
 	}
 
 	/**
@@ -3882,13 +3759,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_L(long groupId, boolean latest) {
-		for (KBArticle kbArticle :
-				findByG_L(
-					groupId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_L.remove(
+			finderCache, new Object[] {groupId, latest});
 	}
 
 	/**
@@ -4090,19 +3962,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", main=");
-		sb.append(main);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_M.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, main}));
 	}
 
 	/**
@@ -4118,14 +3980,8 @@ public class KBArticlePersistenceImpl
 		long groupId, boolean main,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_M(
-			groupId, main, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_M.fetchFirst(
+			finderCache, new Object[] {groupId, main}, orderByComparator);
 	}
 
 	/**
@@ -4281,13 +4137,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_M(long groupId, boolean main) {
-		for (KBArticle kbArticle :
-				findByG_M(
-					groupId, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_M.remove(
+			finderCache, new Object[] {groupId, main});
 	}
 
 	/**
@@ -4489,19 +4340,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -4517,14 +4358,8 @@ public class KBArticlePersistenceImpl
 		long groupId, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -4680,13 +4515,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (KBArticle kbArticle :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -4889,19 +4719,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, latest}));
 	}
 
 	/**
@@ -4917,14 +4737,8 @@ public class KBArticlePersistenceImpl
 		long companyId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByC_L(
-			companyId, latest, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_L.fetchFirst(
+			finderCache, new Object[] {companyId, latest}, orderByComparator);
 	}
 
 	/**
@@ -4935,13 +4749,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByC_L(long companyId, boolean latest) {
-		for (KBArticle kbArticle :
-				findByC_L(
-					companyId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByC_L.remove(
+			finderCache, new Object[] {companyId, latest});
 	}
 
 	/**
@@ -5076,19 +4885,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", main=");
-		sb.append(main);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByC_M.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, main}));
 	}
 
 	/**
@@ -5104,14 +4903,8 @@ public class KBArticlePersistenceImpl
 		long companyId, boolean main,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByC_M(
-			companyId, main, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_M.fetchFirst(
+			finderCache, new Object[] {companyId, main}, orderByComparator);
 	}
 
 	/**
@@ -5122,13 +4915,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByC_M(long companyId, boolean main) {
-		for (KBArticle kbArticle :
-				findByC_M(
-					companyId, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByC_M.remove(
+			finderCache, new Object[] {companyId, main});
 	}
 
 	/**
@@ -5264,19 +5052,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -5292,14 +5070,8 @@ public class KBArticlePersistenceImpl
 		long companyId, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByC_S(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -5310,13 +5082,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (KBArticle kbArticle :
-				findByC_S(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByC_S.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -7329,19 +7096,9 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -7357,14 +7114,8 @@ public class KBArticlePersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -7375,13 +7126,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (KBArticle kbArticle :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -7422,26 +7168,16 @@ public class KBArticlePersistenceImpl
 		KBArticle kbArticle = fetchByR_G_V(resourcePrimKey, groupId, version);
 
 		if (kbArticle == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("resourcePrimKey=");
-			sb.append(resourcePrimKey);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByR_G_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {resourcePrimKey, groupId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchArticleException(sb.toString());
+			throw new NoSuchArticleException(message);
 		}
 
 		return kbArticle;
@@ -11114,22 +10850,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("resourcePrimKey=");
-		sb.append(resourcePrimKey);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByR_G_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {resourcePrimKey, groupId, status}));
 	}
 
 	/**
@@ -11146,14 +10870,9 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByR_G_NotS(
-			resourcePrimKey, groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_G_NotS.fetchFirst(
+			finderCache, new Object[] {resourcePrimKey, groupId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -11325,13 +11044,8 @@ public class KBArticlePersistenceImpl
 	public void removeByR_G_NotS(
 		long resourcePrimKey, long groupId, int status) {
 
-		for (KBArticle kbArticle :
-				findByR_G_NotS(
-					resourcePrimKey, groupId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByR_G_NotS.remove(
+			finderCache, new Object[] {resourcePrimKey, groupId, status});
 	}
 
 	/**
@@ -12773,26 +12487,16 @@ public class KBArticlePersistenceImpl
 			groupId, externalReferenceCode, version);
 
 		if (kbArticle == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_ERC_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, externalReferenceCode, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchArticleException(sb.toString());
+			throw new NoSuchArticleException(message);
 		}
 
 		return kbArticle;
@@ -13001,22 +12705,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_ERC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, externalReferenceCode, status}));
 	}
 
 	/**
@@ -13033,14 +12725,9 @@ public class KBArticlePersistenceImpl
 		long groupId, String externalReferenceCode, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_ERC_S(
-			groupId, externalReferenceCode, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_ERC_S.fetchFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode, status},
+			orderByComparator);
 	}
 
 	/**
@@ -13226,13 +12913,8 @@ public class KBArticlePersistenceImpl
 	public void removeByG_ERC_S(
 		long groupId, String externalReferenceCode, int status) {
 
-		for (KBArticle kbArticle :
-				findByG_ERC_S(
-					groupId, externalReferenceCode, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_ERC_S.remove(
+			finderCache, new Object[] {groupId, externalReferenceCode, status});
 	}
 
 	/**
@@ -16986,22 +16668,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", kbFolderId=");
-		sb.append(kbFolderId);
-
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_KBFI_UT.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, kbFolderId, urlTitle}));
 	}
 
 	/**
@@ -17018,14 +16688,9 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, String urlTitle,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_KBFI_UT(
-			groupId, kbFolderId, urlTitle, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_KBFI_UT.fetchFirst(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -17209,13 +16874,8 @@ public class KBArticlePersistenceImpl
 	public void removeByG_KBFI_UT(
 		long groupId, long kbFolderId, String urlTitle) {
 
-		for (KBArticle kbArticle :
-				findByG_KBFI_UT(
-					groupId, kbFolderId, urlTitle, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_KBFI_UT.remove(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle});
 	}
 
 	/**
@@ -17456,22 +17116,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", kbFolderId=");
-		sb.append(kbFolderId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_KBFI_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, kbFolderId, latest}));
 	}
 
 	/**
@@ -17488,14 +17136,9 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, boolean latest,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_KBFI_L(
-			groupId, kbFolderId, latest, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_KBFI_L.fetchFirst(
+			finderCache, new Object[] {groupId, kbFolderId, latest},
+			orderByComparator);
 	}
 
 	/**
@@ -17666,13 +17309,8 @@ public class KBArticlePersistenceImpl
 	public void removeByG_KBFI_L(
 		long groupId, long kbFolderId, boolean latest) {
 
-		for (KBArticle kbArticle :
-				findByG_KBFI_L(
-					groupId, kbFolderId, latest, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_KBFI_L.remove(
+			finderCache, new Object[] {groupId, kbFolderId, latest});
 	}
 
 	/**
@@ -17895,22 +17533,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", kbFolderId=");
-		sb.append(kbFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_KBFI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, kbFolderId, status}));
 	}
 
 	/**
@@ -17927,14 +17553,9 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_KBFI_S(
-			groupId, kbFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_KBFI_S.fetchFirst(
+			finderCache, new Object[] {groupId, kbFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -18103,13 +17724,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_KBFI_S(long groupId, long kbFolderId, int status) {
-		for (KBArticle kbArticle :
-				findByG_KBFI_S(
-					groupId, kbFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_KBFI_S.remove(
+			finderCache, new Object[] {groupId, kbFolderId, status});
 	}
 
 	/**
@@ -22134,22 +21750,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_L_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, latest, status}));
 	}
 
 	/**
@@ -22166,14 +21770,9 @@ public class KBArticlePersistenceImpl
 		long groupId, boolean latest, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_L_NotS(
-			groupId, latest, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_L_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -22341,13 +21940,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_L_NotS(long groupId, boolean latest, int status) {
-		for (KBArticle kbArticle :
-				findByG_L_NotS(
-					groupId, latest, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_L_NotS.remove(
+			finderCache, new Object[] {groupId, latest, status});
 	}
 
 	/**
@@ -22566,22 +22160,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", main=");
-		sb.append(main);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_M_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, main, status}));
 	}
 
 	/**
@@ -22598,14 +22180,9 @@ public class KBArticlePersistenceImpl
 		long groupId, boolean main, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_M_NotS(
-			groupId, main, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_M_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, main, status},
+			orderByComparator);
 	}
 
 	/**
@@ -22772,13 +22349,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByG_M_NotS(long groupId, boolean main, int status) {
-		for (KBArticle kbArticle :
-				findByG_M_NotS(
-					groupId, main, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_M_NotS.remove(
+			finderCache, new Object[] {groupId, main, status});
 	}
 
 	/**
@@ -22997,22 +22569,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByC_L_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, latest, status}));
 	}
 
 	/**
@@ -23029,14 +22589,9 @@ public class KBArticlePersistenceImpl
 		long companyId, boolean latest, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByC_L_NotS(
-			companyId, latest, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_L_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -23048,13 +22603,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByC_L_NotS(long companyId, boolean latest, int status) {
-		for (KBArticle kbArticle :
-				findByC_L_NotS(
-					companyId, latest, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByC_L_NotS.remove(
+			finderCache, new Object[] {companyId, latest, status});
 	}
 
 	/**
@@ -23198,22 +22748,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", main=");
-		sb.append(main);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByC_M_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, main, status}));
 	}
 
 	/**
@@ -23230,14 +22768,9 @@ public class KBArticlePersistenceImpl
 		long companyId, boolean main, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByC_M_NotS(
-			companyId, main, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_M_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, main, status},
+			orderByComparator);
 	}
 
 	/**
@@ -23249,13 +22782,8 @@ public class KBArticlePersistenceImpl
 	 */
 	@Override
 	public void removeByC_M_NotS(long companyId, boolean main, int status) {
-		for (KBArticle kbArticle :
-				findByC_M_NotS(
-					companyId, main, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByC_M_NotS.remove(
+			finderCache, new Object[] {companyId, main, status});
 	}
 
 	/**
@@ -33443,25 +32971,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", kbFolderId=");
-		sb.append(kbFolderId);
-
-		sb.append(", urlTitle=");
-		sb.append(urlTitle);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_KBFI_UT_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, kbFolderId, urlTitle, status}));
 	}
 
 	/**
@@ -33479,14 +32992,9 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, String urlTitle, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_KBFI_UT_NotS(
-			groupId, kbFolderId, urlTitle, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_KBFI_UT_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -33680,13 +33188,8 @@ public class KBArticlePersistenceImpl
 	public void removeByG_KBFI_UT_NotS(
 		long groupId, long kbFolderId, String urlTitle, int status) {
 
-		for (KBArticle kbArticle :
-				findByG_KBFI_UT_NotS(
-					groupId, kbFolderId, urlTitle, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_KBFI_UT_NotS.remove(
+			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status});
 	}
 
 	/**
@@ -33944,25 +33447,10 @@ public class KBArticlePersistenceImpl
 			return kbArticle;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", kbFolderId=");
-		sb.append(kbFolderId);
-
-		sb.append(", latest=");
-		sb.append(latest);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchArticleException(sb.toString());
+		throw new NoSuchArticleException(
+			_collectionPersistenceFinderByG_KBFI_L_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, kbFolderId, latest, status}));
 	}
 
 	/**
@@ -33980,14 +33468,9 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, boolean latest, int status,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_KBFI_L_NotS(
-			groupId, kbFolderId, latest, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_KBFI_L_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, kbFolderId, latest, status},
+			orderByComparator);
 	}
 
 	/**
@@ -34168,13 +33651,8 @@ public class KBArticlePersistenceImpl
 	public void removeByG_KBFI_L_NotS(
 		long groupId, long kbFolderId, boolean latest, int status) {
 
-		for (KBArticle kbArticle :
-				findByG_KBFI_L_NotS(
-					groupId, kbFolderId, latest, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbArticle);
-		}
+		_collectionPersistenceFinderByG_KBFI_L_NotS.remove(
+			finderCache, new Object[] {groupId, kbFolderId, latest, status});
 	}
 
 	/**
@@ -39603,4 +39081,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-499629087
+// LIFERAY-SERVICE-BUILDER-HASH:1108056143

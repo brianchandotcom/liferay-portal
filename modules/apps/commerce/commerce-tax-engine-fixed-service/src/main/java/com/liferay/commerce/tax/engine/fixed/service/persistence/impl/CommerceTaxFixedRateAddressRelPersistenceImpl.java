@@ -194,16 +194,11 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			return commerceTaxFixedRateAddressRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
+		throw new NoSuchTaxFixedRateAddressRelException(
+			_collectionPersistenceFinderByCommerceTaxMethodId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceTaxMethodId}));
 	}
 
 	/**
@@ -218,14 +213,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		long commerceTaxMethodId,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		List<CommerceTaxFixedRateAddressRel> list = findByCommerceTaxMethodId(
-			commerceTaxMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceTaxMethodId.fetchFirst(
+			finderCache, new Object[] {commerceTaxMethodId}, orderByComparator);
 	}
 
 	/**
@@ -235,13 +224,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceTaxMethodId(long commerceTaxMethodId) {
-		for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-				findByCommerceTaxMethodId(
-					commerceTaxMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTaxFixedRateAddressRel);
-		}
+		_collectionPersistenceFinderByCommerceTaxMethodId.remove(
+			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
 	/**
@@ -363,16 +347,9 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			return commerceTaxFixedRateAddressRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPTaxCategoryId=");
-		sb.append(CPTaxCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
+		throw new NoSuchTaxFixedRateAddressRelException(
+			_collectionPersistenceFinderByCPTaxCategoryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPTaxCategoryId}));
 	}
 
 	/**
@@ -387,14 +364,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		long CPTaxCategoryId,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		List<CommerceTaxFixedRateAddressRel> list = findByCPTaxCategoryId(
-			CPTaxCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPTaxCategoryId.fetchFirst(
+			finderCache, new Object[] {CPTaxCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -404,13 +375,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCPTaxCategoryId(long CPTaxCategoryId) {
-		for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-				findByCPTaxCategoryId(
-					CPTaxCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTaxFixedRateAddressRel);
-		}
+		_collectionPersistenceFinderByCPTaxCategoryId.remove(
+			finderCache, new Object[] {CPTaxCategoryId});
 	}
 
 	/**
@@ -531,16 +497,9 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			return commerceTaxFixedRateAddressRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxFixedRateAddressRelException(sb.toString());
+		throw new NoSuchTaxFixedRateAddressRelException(
+			_collectionPersistenceFinderByCountryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId}));
 	}
 
 	/**
@@ -555,14 +514,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		long countryId,
 		OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator) {
 
-		List<CommerceTaxFixedRateAddressRel> list = findByCountryId(
-			countryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCountryId.fetchFirst(
+			finderCache, new Object[] {countryId}, orderByComparator);
 	}
 
 	/**
@@ -572,12 +525,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCountryId(long countryId) {
-		for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-				findByCountryId(
-					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceTaxFixedRateAddressRel);
-		}
+		_collectionPersistenceFinderByCountryId.remove(
+			finderCache, new Object[] {countryId});
 	}
 
 	/**
@@ -1372,4 +1321,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-259568505
+// LIFERAY-SERVICE-BUILDER-HASH:278932718

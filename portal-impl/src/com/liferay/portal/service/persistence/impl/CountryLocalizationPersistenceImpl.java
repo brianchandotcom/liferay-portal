@@ -192,16 +192,9 @@ public class CountryLocalizationPersistenceImpl
 			return countryLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchCountryLocalizationException(sb.toString());
+		throw new NoSuchCountryLocalizationException(
+			_collectionPersistenceFinderByCountryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId}));
 	}
 
 	/**
@@ -216,14 +209,9 @@ public class CountryLocalizationPersistenceImpl
 		long countryId,
 		OrderByComparator<CountryLocalization> orderByComparator) {
 
-		List<CountryLocalization> list = findByCountryId(
-			countryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCountryId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId},
+			orderByComparator);
 	}
 
 	/**
@@ -233,12 +221,8 @@ public class CountryLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByCountryId(long countryId) {
-		for (CountryLocalization countryLocalization :
-				findByCountryId(
-					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(countryLocalization);
-		}
+		_collectionPersistenceFinderByCountryId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
 	/**
@@ -279,23 +263,17 @@ public class CountryLocalizationPersistenceImpl
 			countryId, languageId);
 
 		if (countryLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("countryId=");
-			sb.append(countryId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCountryId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {countryId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCountryLocalizationException(sb.toString());
+			throw new NoSuchCountryLocalizationException(message);
 		}
 
 		return countryLocalization;
@@ -1277,4 +1255,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1747932889
+// LIFERAY-SERVICE-BUILDER-HASH:-267979028

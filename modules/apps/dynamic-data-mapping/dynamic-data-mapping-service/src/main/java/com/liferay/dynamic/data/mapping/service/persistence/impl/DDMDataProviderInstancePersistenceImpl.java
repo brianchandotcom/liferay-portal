@@ -211,16 +211,9 @@ public class DDMDataProviderInstancePersistenceImpl
 			return ddmDataProviderInstance;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
+		throw new NoSuchDataProviderInstanceException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -235,14 +228,8 @@ public class DDMDataProviderInstancePersistenceImpl
 		String uuid,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
 
-		List<DDMDataProviderInstance> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -252,11 +239,8 @@ public class DDMDataProviderInstancePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDMDataProviderInstance ddmDataProviderInstance :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmDataProviderInstance);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -296,23 +280,15 @@ public class DDMDataProviderInstancePersistenceImpl
 			uuid, groupId);
 
 		if (ddmDataProviderInstance == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDataProviderInstanceException(sb.toString());
+			throw new NoSuchDataProviderInstanceException(message);
 		}
 
 		return ddmDataProviderInstance;
@@ -498,19 +474,9 @@ public class DDMDataProviderInstancePersistenceImpl
 			return ddmDataProviderInstance;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
+		throw new NoSuchDataProviderInstanceException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -526,14 +492,8 @@ public class DDMDataProviderInstancePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
 
-		List<DDMDataProviderInstance> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -544,13 +504,8 @@ public class DDMDataProviderInstancePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDMDataProviderInstance ddmDataProviderInstance :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmDataProviderInstance);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1672,16 +1627,9 @@ public class DDMDataProviderInstancePersistenceImpl
 			return ddmDataProviderInstance;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceException(sb.toString());
+		throw new NoSuchDataProviderInstanceException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1696,14 +1644,8 @@ public class DDMDataProviderInstancePersistenceImpl
 		long companyId,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
 
-		List<DDMDataProviderInstance> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1713,12 +1655,8 @@ public class DDMDataProviderInstancePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DDMDataProviderInstance ddmDataProviderInstance :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmDataProviderInstance);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -2877,4 +2815,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292107122
+// LIFERAY-SERVICE-BUILDER-HASH:-141720531

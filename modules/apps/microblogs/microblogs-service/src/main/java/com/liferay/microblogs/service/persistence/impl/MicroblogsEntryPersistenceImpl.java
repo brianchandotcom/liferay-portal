@@ -197,16 +197,9 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -220,14 +213,8 @@ public class MicroblogsEntryPersistenceImpl
 	public MicroblogsEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -379,12 +366,8 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (MicroblogsEntry microblogsEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -559,16 +542,9 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -582,14 +558,8 @@ public class MicroblogsEntryPersistenceImpl
 	public MicroblogsEntry fetchByUserId_First(
 		long userId, OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -741,12 +711,8 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (MicroblogsEntry microblogsEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -929,19 +895,9 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByU_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type}));
 	}
 
 	/**
@@ -957,14 +913,8 @@ public class MicroblogsEntryPersistenceImpl
 		long userId, int type,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByU_T(
-			userId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_T.fetchFirst(
+			finderCache, new Object[] {userId, type}, orderByComparator);
 	}
 
 	/**
@@ -1124,12 +1074,8 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByU_T(long userId, int type) {
-		for (MicroblogsEntry microblogsEntry :
-				findByU_T(
-					userId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByU_T.remove(
+			finderCache, new Object[] {userId, type});
 	}
 
 	/**
@@ -2400,19 +2346,10 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("creatorClassNameId=");
-		sb.append(creatorClassNameId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCCNI_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {creatorClassNameId, type}));
 	}
 
 	/**
@@ -2428,14 +2365,9 @@ public class MicroblogsEntryPersistenceImpl
 		long creatorClassNameId, int type,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByCCNI_T(
-			creatorClassNameId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCCNI_T.fetchFirst(
+			finderCache, new Object[] {creatorClassNameId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -2599,13 +2531,8 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCCNI_T(long creatorClassNameId, int type) {
-		for (MicroblogsEntry microblogsEntry :
-				findByCCNI_T(
-					creatorClassNameId, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByCCNI_T.remove(
+			finderCache, new Object[] {creatorClassNameId, type});
 	}
 
 	/**
@@ -2802,19 +2729,10 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", parentMicroblogsEntryId=");
-		sb.append(parentMicroblogsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByT_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {type, parentMicroblogsEntryId}));
 	}
 
 	/**
@@ -2830,14 +2748,9 @@ public class MicroblogsEntryPersistenceImpl
 		int type, long parentMicroblogsEntryId,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByT_P(
-			type, parentMicroblogsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_P.fetchFirst(
+			finderCache, new Object[] {type, parentMicroblogsEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -3001,13 +2914,8 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByT_P(int type, long parentMicroblogsEntryId) {
-		for (MicroblogsEntry microblogsEntry :
-				findByT_P(
-					type, parentMicroblogsEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByT_P.remove(
+			finderCache, new Object[] {type, parentMicroblogsEntryId});
 	}
 
 	/**
@@ -4366,22 +4274,10 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", creatorClassNameId=");
-		sb.append(creatorClassNameId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_CCNI_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, creatorClassNameId, type}));
 	}
 
 	/**
@@ -4398,14 +4294,9 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, int type,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByC_CCNI_T(
-			companyId, creatorClassNameId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CCNI_T.fetchFirst(
+			finderCache, new Object[] {companyId, creatorClassNameId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -4581,13 +4472,8 @@ public class MicroblogsEntryPersistenceImpl
 	public void removeByC_CCNI_T(
 		long companyId, long creatorClassNameId, int type) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByC_CCNI_T(
-					companyId, creatorClassNameId, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByC_CCNI_T.remove(
+			finderCache, new Object[] {companyId, creatorClassNameId, type});
 	}
 
 	/**
@@ -7219,25 +7105,10 @@ public class MicroblogsEntryPersistenceImpl
 			return microblogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", createDate=");
-		sb.append(createDate);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", socialRelationType=");
-		sb.append(socialRelationType);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByU_C_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, createDate, type, socialRelationType}));
 	}
 
 	/**
@@ -7255,15 +7126,10 @@ public class MicroblogsEntryPersistenceImpl
 		long userId, Date createDate, int type, int socialRelationType,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByU_C_T_S(
-			userId, createDate, type, socialRelationType, 0, 1,
+		return _collectionPersistenceFinderByU_C_T_S.fetchFirst(
+			finderCache,
+			new Object[] {userId, createDate, type, socialRelationType},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -7460,13 +7326,9 @@ public class MicroblogsEntryPersistenceImpl
 	public void removeByU_C_T_S(
 		long userId, Date createDate, int type, int socialRelationType) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByU_C_T_S(
-					userId, createDate, type, socialRelationType,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByU_C_T_S.remove(
+			finderCache,
+			new Object[] {userId, createDate, type, socialRelationType});
 	}
 
 	/**
@@ -8636,4 +8498,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2052125291
+// LIFERAY-SERVICE-BUILDER-HASH:297850781

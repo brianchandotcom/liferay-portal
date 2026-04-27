@@ -199,16 +199,9 @@ public class ExpandoColumnPersistenceImpl
 			return expandoColumn;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchColumnException(sb.toString());
+		throw new NoSuchColumnException(
+			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
 	}
 
 	/**
@@ -222,14 +215,9 @@ public class ExpandoColumnPersistenceImpl
 	public ExpandoColumn fetchByTableId_First(
 		long tableId, OrderByComparator<ExpandoColumn> orderByComparator) {
 
-		List<ExpandoColumn> list = findByTableId(
-			tableId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTableId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -380,12 +368,8 @@ public class ExpandoColumnPersistenceImpl
 	 */
 	@Override
 	public void removeByTableId(long tableId) {
-		for (ExpandoColumn expandoColumn :
-				findByTableId(
-					tableId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoColumn);
-		}
+		_collectionPersistenceFinderByTableId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
 	/**
@@ -2178,4 +2162,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-424160067
+// LIFERAY-SERVICE-BUILDER-HASH:355408035

@@ -206,16 +206,9 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -229,13 +222,8 @@ public class BookmarksFolderPersistenceImpl
 	public BookmarksFolder fetchByUuid_First(
 		String uuid, OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -245,11 +233,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (BookmarksFolder bookmarksFolder :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -288,23 +273,15 @@ public class BookmarksFolderPersistenceImpl
 		BookmarksFolder bookmarksFolder = fetchByUUID_G(uuid, groupId);
 
 		if (bookmarksFolder == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFolderException(sb.toString());
+			throw new NoSuchFolderException(message);
 		}
 
 		return bookmarksFolder;
@@ -487,19 +464,9 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -515,14 +482,8 @@ public class BookmarksFolderPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -533,13 +494,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (BookmarksFolder bookmarksFolder :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -668,16 +624,9 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -691,14 +640,8 @@ public class BookmarksFolderPersistenceImpl
 	public BookmarksFolder fetchByGroupId_First(
 		long groupId, OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -851,12 +794,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (BookmarksFolder bookmarksFolder :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1045,16 +984,9 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1068,14 +1000,8 @@ public class BookmarksFolderPersistenceImpl
 	public BookmarksFolder fetchByCompanyId_First(
 		long companyId, OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1085,12 +1011,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BookmarksFolder bookmarksFolder :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1226,19 +1148,10 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentFolderId}));
 	}
 
 	/**
@@ -1254,14 +1167,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByG_P(
-			groupId, parentFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, parentFolderId},
+			orderByComparator);
 	}
 
 	/**
@@ -1426,13 +1334,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long parentFolderId) {
-		for (BookmarksFolder bookmarksFolder :
-				findByG_P(
-					groupId, parentFolderId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, parentFolderId});
 	}
 
 	/**
@@ -1636,19 +1539,9 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -1664,14 +1557,8 @@ public class BookmarksFolderPersistenceImpl
 		long companyId, int status,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByC_NotS(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1682,13 +1569,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByC_NotS(long companyId, int status) {
-		for (BookmarksFolder bookmarksFolder :
-				findByC_NotS(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByC_NotS.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -1833,22 +1715,10 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByG_P_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentFolderId, status}));
 	}
 
 	/**
@@ -1865,14 +1735,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId, int status,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByG_P_S(
-			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_S.fetchFirst(
+			finderCache, new Object[] {groupId, parentFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2046,13 +1911,8 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_S(long groupId, long parentFolderId, int status) {
-		for (BookmarksFolder bookmarksFolder :
-				findByG_P_S(
-					groupId, parentFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByG_P_S.remove(
+			finderCache, new Object[] {groupId, parentFolderId, status});
 	}
 
 	/**
@@ -2277,22 +2137,10 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByG_P_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentFolderId, status}));
 	}
 
 	/**
@@ -2309,14 +2157,9 @@ public class BookmarksFolderPersistenceImpl
 		long groupId, long parentFolderId, int status,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByG_P_NotS(
-			groupId, parentFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, parentFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2492,13 +2335,8 @@ public class BookmarksFolderPersistenceImpl
 	public void removeByG_P_NotS(
 		long groupId, long parentFolderId, int status) {
 
-		for (BookmarksFolder bookmarksFolder :
-				findByG_P_NotS(
-					groupId, parentFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByG_P_NotS.remove(
+			finderCache, new Object[] {groupId, parentFolderId, status});
 	}
 
 	/**
@@ -2732,25 +2570,10 @@ public class BookmarksFolderPersistenceImpl
 			return bookmarksFolder;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("folderId>");
-		sb.append(folderId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentFolderId=");
-		sb.append(parentFolderId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByGtF_C_P_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {folderId, companyId, parentFolderId, status}));
 	}
 
 	/**
@@ -2768,15 +2591,10 @@ public class BookmarksFolderPersistenceImpl
 		long folderId, long companyId, long parentFolderId, int status,
 		OrderByComparator<BookmarksFolder> orderByComparator) {
 
-		List<BookmarksFolder> list = findByGtF_C_P_NotS(
-			folderId, companyId, parentFolderId, status, 0, 1,
+		return _collectionPersistenceFinderByGtF_C_P_NotS.fetchFirst(
+			finderCache,
+			new Object[] {folderId, companyId, parentFolderId, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2791,13 +2609,9 @@ public class BookmarksFolderPersistenceImpl
 	public void removeByGtF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status) {
 
-		for (BookmarksFolder bookmarksFolder :
-				findByGtF_C_P_NotS(
-					folderId, companyId, parentFolderId, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksFolder);
-		}
+		_collectionPersistenceFinderByGtF_C_P_NotS.remove(
+			finderCache,
+			new Object[] {folderId, companyId, parentFolderId, status});
 	}
 
 	/**
@@ -4095,4 +3909,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1874144364
+// LIFERAY-SERVICE-BUILDER-HASH:284621464

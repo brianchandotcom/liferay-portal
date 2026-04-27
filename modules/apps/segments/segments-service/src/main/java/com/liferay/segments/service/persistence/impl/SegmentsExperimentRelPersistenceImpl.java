@@ -209,16 +209,11 @@ public class SegmentsExperimentRelPersistenceImpl
 			return segmentsExperimentRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperimentId=");
-		sb.append(segmentsExperimentId);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentRelException(sb.toString());
+		throw new NoSuchExperimentRelException(
+			_collectionPersistenceFinderBySegmentsExperimentId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsExperimentId}));
 	}
 
 	/**
@@ -233,14 +228,9 @@ public class SegmentsExperimentRelPersistenceImpl
 		long segmentsExperimentId,
 		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
 
-		List<SegmentsExperimentRel> list = findBySegmentsExperimentId(
-			segmentsExperimentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsExperimentId.fetchFirst(
+			finderCache, new Object[] {segmentsExperimentId},
+			orderByComparator);
 	}
 
 	/**
@@ -250,13 +240,8 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsExperimentId(long segmentsExperimentId) {
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				findBySegmentsExperimentId(
-					segmentsExperimentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperimentRel);
-		}
+		_collectionPersistenceFinderBySegmentsExperimentId.remove(
+			finderCache, new Object[] {segmentsExperimentId});
 	}
 
 	/**
@@ -390,16 +375,11 @@ public class SegmentsExperimentRelPersistenceImpl
 			return segmentsExperimentRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append("}");
-
-		throw new NoSuchExperimentRelException(sb.toString());
+		throw new NoSuchExperimentRelException(
+			_collectionPersistenceFinderBySegmentsExperienceId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsExperienceId}));
 	}
 
 	/**
@@ -414,14 +394,9 @@ public class SegmentsExperimentRelPersistenceImpl
 		long segmentsExperienceId,
 		OrderByComparator<SegmentsExperimentRel> orderByComparator) {
 
-		List<SegmentsExperimentRel> list = findBySegmentsExperienceId(
-			segmentsExperienceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsExperienceId.fetchFirst(
+			finderCache, new Object[] {segmentsExperienceId},
+			orderByComparator);
 	}
 
 	/**
@@ -431,13 +406,8 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsExperienceId(long segmentsExperienceId) {
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				findBySegmentsExperienceId(
-					segmentsExperienceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperimentRel);
-		}
+		_collectionPersistenceFinderBySegmentsExperienceId.remove(
+			finderCache, new Object[] {segmentsExperienceId});
 	}
 
 	/**
@@ -478,23 +448,16 @@ public class SegmentsExperimentRelPersistenceImpl
 			segmentsExperimentId, segmentsExperienceId);
 
 		if (segmentsExperimentRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("segmentsExperimentId=");
-			sb.append(segmentsExperimentId);
-
-			sb.append(", segmentsExperienceId=");
-			sb.append(segmentsExperienceId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsExperimentId, segmentsExperienceId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExperimentRelException(sb.toString());
+			throw new NoSuchExperimentRelException(message);
 		}
 
 		return segmentsExperimentRel;
@@ -1597,4 +1560,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1423689131
+// LIFERAY-SERVICE-BUILDER-HASH:-2027750678

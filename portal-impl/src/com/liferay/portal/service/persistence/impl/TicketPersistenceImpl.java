@@ -92,20 +92,15 @@ public class TicketPersistenceImpl
 		Ticket ticket = fetchByKey(key);
 
 		if (ticket == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTicketException(sb.toString());
+			throw new NoSuchTicketException(message);
 		}
 
 		return ticket;
@@ -280,22 +275,10 @@ public class TicketPersistenceImpl
 			return ticket;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
+		throw new NoSuchTicketException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -312,14 +295,9 @@ public class TicketPersistenceImpl
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<Ticket> orderByComparator) {
 
-		List<Ticket> list = findByC_C_C(
-			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -331,13 +309,9 @@ public class TicketPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
-		for (Ticket ticket :
-				findByC_C_C(
-					companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ticket);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -471,22 +445,10 @@ public class TicketPersistenceImpl
 			return ticket;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
+		throw new NoSuchTicketException(
+			_collectionPersistenceFinderByC_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, type}));
 	}
 
 	/**
@@ -503,14 +465,9 @@ public class TicketPersistenceImpl
 		long classNameId, long classPK, int type,
 		OrderByComparator<Ticket> orderByComparator) {
 
-		List<Ticket> list = findByC_C_T(
-			classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type}, orderByComparator);
 	}
 
 	/**
@@ -522,13 +479,9 @@ public class TicketPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_T(long classNameId, long classPK, int type) {
-		for (Ticket ticket :
-				findByC_C_T(
-					classNameId, classPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ticket);
-		}
+		_collectionPersistenceFinderByC_C_T.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type});
 	}
 
 	/**
@@ -673,25 +626,10 @@ public class TicketPersistenceImpl
 			return ticket;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchTicketException(sb.toString());
+		throw new NoSuchTicketException(
+			_collectionPersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK, type}));
 	}
 
 	/**
@@ -709,14 +647,10 @@ public class TicketPersistenceImpl
 		long companyId, long classNameId, long classPK, int type,
 		OrderByComparator<Ticket> orderByComparator) {
 
-		List<Ticket> list = findByC_C_C_T(
-			companyId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -731,13 +665,9 @@ public class TicketPersistenceImpl
 	public void removeByC_C_C_T(
 		long companyId, long classNameId, long classPK, int type) {
 
-		for (Ticket ticket :
-				findByC_C_C_T(
-					companyId, classNameId, classPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ticket);
-		}
+		_collectionPersistenceFinderByC_C_C_T.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, type});
 	}
 
 	/**
@@ -1477,4 +1407,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:459127729
+// LIFERAY-SERVICE-BUILDER-HASH:673964652

@@ -87,20 +87,15 @@ public class NullConvertibleEntryPersistenceImpl
 		NullConvertibleEntry nullConvertibleEntry = fetchByName(name);
 
 		if (nullConvertibleEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNullConvertibleEntryException(sb.toString());
+			throw new NoSuchNullConvertibleEntryException(message);
 		}
 
 		return nullConvertibleEntry;
@@ -756,4 +751,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1958118480
+// LIFERAY-SERVICE-BUILDER-HASH:104182807

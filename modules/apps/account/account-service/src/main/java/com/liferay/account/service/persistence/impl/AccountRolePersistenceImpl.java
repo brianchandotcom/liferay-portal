@@ -198,16 +198,9 @@ public class AccountRolePersistenceImpl
 			return accountRole;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -221,14 +214,8 @@ public class AccountRolePersistenceImpl
 	public AccountRole fetchByCompanyId_First(
 		long companyId, OrderByComparator<AccountRole> orderByComparator) {
 
-		List<AccountRole> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -377,12 +364,8 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AccountRole accountRole :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(accountRole);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1433,20 +1416,15 @@ public class AccountRolePersistenceImpl
 		AccountRole accountRole = fetchByRoleId(roleId);
 
 		if (accountRole == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("roleId=");
-			sb.append(roleId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByRoleId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRoleException(sb.toString());
+			throw new NoSuchRoleException(message);
 		}
 
 		return accountRole;
@@ -2561,23 +2539,16 @@ public class AccountRolePersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (accountRole == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRoleException(sb.toString());
+			throw new NoSuchRoleException(message);
 		}
 
 		return accountRole;
@@ -3445,4 +3416,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1690912974
+// LIFERAY-SERVICE-BUILDER-HASH:-1449566502

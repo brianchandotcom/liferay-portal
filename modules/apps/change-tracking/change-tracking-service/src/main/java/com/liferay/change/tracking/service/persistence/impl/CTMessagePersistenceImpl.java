@@ -184,16 +184,9 @@ public class CTMessagePersistenceImpl
 			return ctMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -207,14 +200,8 @@ public class CTMessagePersistenceImpl
 	public CTMessage fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTMessage> orderByComparator) {
 
-		List<CTMessage> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -224,13 +211,8 @@ public class CTMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTMessage ctMessage :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctMessage);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -855,4 +837,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-437674339
+// LIFERAY-SERVICE-BUILDER-HASH:-1790301268

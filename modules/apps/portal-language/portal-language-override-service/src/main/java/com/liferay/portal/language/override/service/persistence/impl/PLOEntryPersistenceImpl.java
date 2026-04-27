@@ -192,16 +192,9 @@ public class PLOEntryPersistenceImpl
 			return ploEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
+		throw new NoSuchPLOEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -215,14 +208,8 @@ public class PLOEntryPersistenceImpl
 	public PLOEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<PLOEntry> orderByComparator) {
 
-		List<PLOEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -232,12 +219,8 @@ public class PLOEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (PLOEntry ploEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ploEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -359,19 +342,9 @@ public class PLOEntryPersistenceImpl
 			return ploEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
+		throw new NoSuchPLOEntryException(
+			_collectionPersistenceFinderByC_K.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key}));
 	}
 
 	/**
@@ -387,14 +360,8 @@ public class PLOEntryPersistenceImpl
 		long companyId, String key,
 		OrderByComparator<PLOEntry> orderByComparator) {
 
-		List<PLOEntry> list = findByC_K(
-			companyId, key, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_K.fetchFirst(
+			finderCache, new Object[] {companyId, key}, orderByComparator);
 	}
 
 	/**
@@ -405,13 +372,8 @@ public class PLOEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_K(long companyId, String key) {
-		for (PLOEntry ploEntry :
-				findByC_K(
-					companyId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ploEntry);
-		}
+		_collectionPersistenceFinderByC_K.remove(
+			finderCache, new Object[] {companyId, key});
 	}
 
 	/**
@@ -536,19 +498,10 @@ public class PLOEntryPersistenceImpl
 			return ploEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", languageId=");
-		sb.append(languageId);
-
-		sb.append("}");
-
-		throw new NoSuchPLOEntryException(sb.toString());
+		throw new NoSuchPLOEntryException(
+			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, languageId}));
 	}
 
 	/**
@@ -564,14 +517,9 @@ public class PLOEntryPersistenceImpl
 		long companyId, String languageId,
 		OrderByComparator<PLOEntry> orderByComparator) {
 
-		List<PLOEntry> list = findByC_L(
-			companyId, languageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_L.fetchFirst(
+			finderCache, new Object[] {companyId, languageId},
+			orderByComparator);
 	}
 
 	/**
@@ -582,13 +530,8 @@ public class PLOEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_L(long companyId, String languageId) {
-		for (PLOEntry ploEntry :
-				findByC_L(
-					companyId, languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ploEntry);
-		}
+		_collectionPersistenceFinderByC_L.remove(
+			finderCache, new Object[] {companyId, languageId});
 	}
 
 	/**
@@ -623,26 +566,16 @@ public class PLOEntryPersistenceImpl
 		PLOEntry ploEntry = fetchByC_K_L(companyId, key, languageId);
 
 		if (ploEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K_L.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, key, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPLOEntryException(sb.toString());
+			throw new NoSuchPLOEntryException(message);
 		}
 
 		return ploEntry;
@@ -1487,4 +1420,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-772888639
+// LIFERAY-SERVICE-BUILDER-HASH:-1465605612

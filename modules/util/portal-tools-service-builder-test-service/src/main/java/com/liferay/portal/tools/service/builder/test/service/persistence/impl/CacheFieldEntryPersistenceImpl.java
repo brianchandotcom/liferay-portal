@@ -173,16 +173,9 @@ public class CacheFieldEntryPersistenceImpl
 			return cacheFieldEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCacheFieldEntryException(sb.toString());
+		throw new NoSuchCacheFieldEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -196,14 +189,8 @@ public class CacheFieldEntryPersistenceImpl
 	public CacheFieldEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<CacheFieldEntry> orderByComparator) {
 
-		List<CacheFieldEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -213,12 +200,8 @@ public class CacheFieldEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CacheFieldEntry cacheFieldEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cacheFieldEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -835,4 +818,4 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:911477729
+// LIFERAY-SERVICE-BUILDER-HASH:-1824120196

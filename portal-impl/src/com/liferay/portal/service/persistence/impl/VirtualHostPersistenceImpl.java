@@ -193,16 +193,9 @@ public class VirtualHostPersistenceImpl
 			return virtualHost;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualHostException(sb.toString());
+		throw new NoSuchVirtualHostException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -216,14 +209,9 @@ public class VirtualHostPersistenceImpl
 	public VirtualHost fetchByCompanyId_First(
 		long companyId, OrderByComparator<VirtualHost> orderByComparator) {
 
-		List<VirtualHost> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -233,12 +221,8 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (VirtualHost virtualHost :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(virtualHost);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -276,20 +260,15 @@ public class VirtualHostPersistenceImpl
 		VirtualHost virtualHost = fetchByHostname(hostname);
 
 		if (virtualHost == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("hostname=");
-			sb.append(hostname);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByHostname.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {hostname});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVirtualHostException(sb.toString());
+			throw new NoSuchVirtualHostException(message);
 		}
 
 		return virtualHost;
@@ -470,19 +449,10 @@ public class VirtualHostPersistenceImpl
 			return virtualHost;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", layoutSetId=");
-		sb.append(layoutSetId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualHostException(sb.toString());
+		throw new NoSuchVirtualHostException(
+			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, layoutSetId}));
 	}
 
 	/**
@@ -498,14 +468,9 @@ public class VirtualHostPersistenceImpl
 		long companyId, long layoutSetId,
 		OrderByComparator<VirtualHost> orderByComparator) {
 
-		List<VirtualHost> list = findByC_L(
-			companyId, layoutSetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_L.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetId}, orderByComparator);
 	}
 
 	/**
@@ -516,13 +481,9 @@ public class VirtualHostPersistenceImpl
 	 */
 	@Override
 	public void removeByC_L(long companyId, long layoutSetId) {
-		for (VirtualHost virtualHost :
-				findByC_L(
-					companyId, layoutSetId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(virtualHost);
-		}
+		_collectionPersistenceFinderByC_L.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetId});
 	}
 
 	/**
@@ -2120,4 +2081,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1472505479
+// LIFERAY-SERVICE-BUILDER-HASH:-1764223006

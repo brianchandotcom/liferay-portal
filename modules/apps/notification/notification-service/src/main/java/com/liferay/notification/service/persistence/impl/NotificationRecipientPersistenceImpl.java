@@ -192,16 +192,9 @@ public class NotificationRecipientPersistenceImpl
 			return notificationRecipient;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientException(sb.toString());
+		throw new NoSuchNotificationRecipientException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class NotificationRecipientPersistenceImpl
 		String uuid,
 		OrderByComparator<NotificationRecipient> orderByComparator) {
 
-		List<NotificationRecipient> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class NotificationRecipientPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (NotificationRecipient notificationRecipient :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationRecipient);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -364,19 +348,9 @@ public class NotificationRecipientPersistenceImpl
 			return notificationRecipient;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationRecipientException(sb.toString());
+		throw new NoSuchNotificationRecipientException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -392,14 +366,8 @@ public class NotificationRecipientPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<NotificationRecipient> orderByComparator) {
 
-		List<NotificationRecipient> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -410,13 +378,8 @@ public class NotificationRecipientPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (NotificationRecipient notificationRecipient :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(notificationRecipient);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -450,20 +413,15 @@ public class NotificationRecipientPersistenceImpl
 		NotificationRecipient notificationRecipient = fetchByClassPK(classPK);
 
 		if (notificationRecipient == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByClassPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationRecipientException(sb.toString());
+			throw new NoSuchNotificationRecipientException(message);
 		}
 
 		return notificationRecipient;
@@ -1281,4 +1239,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:362137466
+// LIFERAY-SERVICE-BUILDER-HASH:1267944735

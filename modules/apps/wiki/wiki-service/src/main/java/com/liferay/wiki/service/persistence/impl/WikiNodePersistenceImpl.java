@@ -211,16 +211,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -234,13 +227,8 @@ public class WikiNodePersistenceImpl
 	public WikiNode fetchByUuid_First(
 		String uuid, OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -250,11 +238,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WikiNode wikiNode :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -292,23 +277,15 @@ public class WikiNodePersistenceImpl
 		WikiNode wikiNode = fetchByUUID_G(uuid, groupId);
 
 		if (wikiNode == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNodeException(sb.toString());
+			throw new NoSuchNodeException(message);
 		}
 
 		return wikiNode;
@@ -490,19 +467,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -518,14 +485,8 @@ public class WikiNodePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -536,13 +497,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WikiNode wikiNode :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -667,16 +623,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -690,13 +639,8 @@ public class WikiNodePersistenceImpl
 	public WikiNode fetchByGroupId_First(
 		long groupId, OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -844,12 +788,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (WikiNode wikiNode :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1033,16 +973,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1056,14 +989,8 @@ public class WikiNodePersistenceImpl
 	public WikiNode fetchByCompanyId_First(
 		long companyId, OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1073,12 +1000,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (WikiNode wikiNode :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1116,23 +1039,15 @@ public class WikiNodePersistenceImpl
 		WikiNode wikiNode = fetchByG_N(groupId, name);
 
 		if (wikiNode == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNodeException(sb.toString());
+			throw new NoSuchNodeException(message);
 		}
 
 		return wikiNode;
@@ -1313,19 +1228,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -1341,14 +1246,8 @@ public class WikiNodePersistenceImpl
 		long groupId, int status,
 		OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1504,13 +1403,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (WikiNode wikiNode :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -1712,19 +1606,9 @@ public class WikiNodePersistenceImpl
 			return wikiNode;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -1740,14 +1624,8 @@ public class WikiNodePersistenceImpl
 		long companyId, int status,
 		OrderByComparator<WikiNode> orderByComparator) {
 
-		List<WikiNode> list = findByC_S(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1758,13 +1636,8 @@ public class WikiNodePersistenceImpl
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (WikiNode wikiNode :
-				findByC_S(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(wikiNode);
-		}
+		_collectionPersistenceFinderByC_S.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -1803,23 +1676,16 @@ public class WikiNodePersistenceImpl
 		WikiNode wikiNode = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (wikiNode == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNodeException(sb.toString());
+			throw new NoSuchNodeException(message);
 		}
 
 		return wikiNode;
@@ -3138,4 +3004,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1760329646
+// LIFERAY-SERVICE-BUILDER-HASH:61025149

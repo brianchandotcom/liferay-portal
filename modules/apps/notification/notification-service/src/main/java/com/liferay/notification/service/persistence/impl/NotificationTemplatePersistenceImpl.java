@@ -203,16 +203,9 @@ public class NotificationTemplatePersistenceImpl
 			return notificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class NotificationTemplatePersistenceImpl
 		String uuid,
 		OrderByComparator<NotificationTemplate> orderByComparator) {
 
-		List<NotificationTemplate> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -399,11 +386,8 @@ public class NotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (NotificationTemplate notificationTemplate :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -606,19 +590,9 @@ public class NotificationTemplatePersistenceImpl
 			return notificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -634,14 +608,8 @@ public class NotificationTemplatePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<NotificationTemplate> orderByComparator) {
 
-		List<NotificationTemplate> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -816,13 +784,8 @@ public class NotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (NotificationTemplate notificationTemplate :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(notificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1027,16 +990,9 @@ public class NotificationTemplatePersistenceImpl
 			return notificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1051,14 +1007,8 @@ public class NotificationTemplatePersistenceImpl
 		long companyId,
 		OrderByComparator<NotificationTemplate> orderByComparator) {
 
-		List<NotificationTemplate> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1210,12 +1160,8 @@ public class NotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (NotificationTemplate notificationTemplate :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationTemplate);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1312,23 +1258,16 @@ public class NotificationTemplatePersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (notificationTemplate == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationTemplateException(sb.toString());
+			throw new NoSuchNotificationTemplateException(message);
 		}
 
 		return notificationTemplate;
@@ -2280,4 +2219,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1966542655
+// LIFERAY-SERVICE-BUILDER-HASH:-1024031264

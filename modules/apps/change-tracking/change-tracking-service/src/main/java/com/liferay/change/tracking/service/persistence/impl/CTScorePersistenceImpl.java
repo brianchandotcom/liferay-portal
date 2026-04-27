@@ -98,20 +98,15 @@ public class CTScorePersistenceImpl
 		CTScore ctScore = fetchByCtCollectionId(ctCollectionId);
 
 		if (ctScore == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ctCollectionId=");
-			sb.append(ctCollectionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchScoreException(sb.toString());
+			throw new NoSuchScoreException(message);
 		}
 
 		return ctScore;
@@ -771,4 +766,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-168417944
+// LIFERAY-SERVICE-BUILDER-HASH:-640872711

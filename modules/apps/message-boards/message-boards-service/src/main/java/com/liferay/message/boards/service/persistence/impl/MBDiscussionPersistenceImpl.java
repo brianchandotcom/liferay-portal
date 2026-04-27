@@ -202,16 +202,9 @@ public class MBDiscussionPersistenceImpl
 			return mbDiscussion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDiscussionException(sb.toString());
+		throw new NoSuchDiscussionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -225,13 +218,8 @@ public class MBDiscussionPersistenceImpl
 	public MBDiscussion fetchByUuid_First(
 		String uuid, OrderByComparator<MBDiscussion> orderByComparator) {
 
-		List<MBDiscussion> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +229,8 @@ public class MBDiscussionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBDiscussion mbDiscussion :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbDiscussion);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -284,23 +269,15 @@ public class MBDiscussionPersistenceImpl
 		MBDiscussion mbDiscussion = fetchByUUID_G(uuid, groupId);
 
 		if (mbDiscussion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDiscussionException(sb.toString());
+			throw new NoSuchDiscussionException(message);
 		}
 
 		return mbDiscussion;
@@ -483,19 +460,9 @@ public class MBDiscussionPersistenceImpl
 			return mbDiscussion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDiscussionException(sb.toString());
+		throw new NoSuchDiscussionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -511,14 +478,8 @@ public class MBDiscussionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBDiscussion> orderByComparator) {
 
-		List<MBDiscussion> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -529,13 +490,8 @@ public class MBDiscussionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBDiscussion mbDiscussion :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbDiscussion);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -574,20 +530,15 @@ public class MBDiscussionPersistenceImpl
 		MBDiscussion mbDiscussion = fetchByThreadId(threadId);
 
 		if (mbDiscussion == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("threadId=");
-			sb.append(threadId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByThreadId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDiscussionException(sb.toString());
+			throw new NoSuchDiscussionException(message);
 		}
 
 		return mbDiscussion;
@@ -667,23 +618,16 @@ public class MBDiscussionPersistenceImpl
 		MBDiscussion mbDiscussion = fetchByC_C(classNameId, classPK);
 
 		if (mbDiscussion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDiscussionException(sb.toString());
+			throw new NoSuchDiscussionException(message);
 		}
 
 		return mbDiscussion;
@@ -1806,4 +1750,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1292044724
+// LIFERAY-SERVICE-BUILDER-HASH:721766619

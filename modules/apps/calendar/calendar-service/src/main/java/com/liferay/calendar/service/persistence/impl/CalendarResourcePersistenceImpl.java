@@ -209,16 +209,9 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -232,13 +225,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource fetchByUuid_First(
 		String uuid, OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -248,11 +236,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CalendarResource calendarResource :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +276,15 @@ public class CalendarResourcePersistenceImpl
 		CalendarResource calendarResource = fetchByUUID_G(uuid, groupId);
 
 		if (calendarResource == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchResourceException(sb.toString());
+			throw new NoSuchResourceException(message);
 		}
 
 		return calendarResource;
@@ -490,19 +467,9 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -518,14 +485,8 @@ public class CalendarResourcePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -536,13 +497,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CalendarResource calendarResource :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -671,16 +627,9 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -694,14 +643,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource fetchByGroupId_First(
 		long groupId, OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -854,12 +797,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CalendarResource calendarResource :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1047,16 +986,9 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
 	}
 
 	/**
@@ -1070,14 +1002,8 @@ public class CalendarResourcePersistenceImpl
 	public CalendarResource fetchByActive_First(
 		boolean active, OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByActive(
-			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByActive.fetchFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -1087,12 +1013,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByActive(boolean active) {
-		for (CalendarResource calendarResource :
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByActive.remove(
+			finderCache, new Object[] {active});
 	}
 
 	/**
@@ -2408,19 +2330,9 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, active}));
 	}
 
 	/**
@@ -2436,14 +2348,8 @@ public class CalendarResourcePersistenceImpl
 		long groupId, boolean active,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByG_A(
-			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A.fetchFirst(
+			finderCache, new Object[] {groupId, active}, orderByComparator);
 	}
 
 	/**
@@ -2606,13 +2512,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByG_A(long groupId, boolean active) {
-		for (CalendarResource calendarResource :
-				findByG_A(
-					groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByG_A.remove(
+			finderCache, new Object[] {groupId, active});
 	}
 
 	/**
@@ -2721,23 +2622,16 @@ public class CalendarResourcePersistenceImpl
 		CalendarResource calendarResource = fetchByC_C(classNameId, classPK);
 
 		if (calendarResource == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchResourceException(sb.toString());
+			throw new NoSuchResourceException(message);
 		}
 
 		return calendarResource;
@@ -2928,22 +2822,10 @@ public class CalendarResourcePersistenceImpl
 			return calendarResource;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", codeLIKE");
-		sb.append(code);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchResourceException(sb.toString());
+		throw new NoSuchResourceException(
+			_collectionPersistenceFinderByC_LikeC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, code, active}));
 	}
 
 	/**
@@ -2960,14 +2842,9 @@ public class CalendarResourcePersistenceImpl
 		long companyId, String code, boolean active,
 		OrderByComparator<CalendarResource> orderByComparator) {
 
-		List<CalendarResource> list = findByC_LikeC_A(
-			companyId, code, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LikeC_A.fetchFirst(
+			finderCache, new Object[] {companyId, code, active},
+			orderByComparator);
 	}
 
 	/**
@@ -2979,13 +2856,8 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByC_LikeC_A(long companyId, String code, boolean active) {
-		for (CalendarResource calendarResource :
-				findByC_LikeC_A(
-					companyId, code, active, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(calendarResource);
-		}
+		_collectionPersistenceFinderByC_LikeC_A.remove(
+			finderCache, new Object[] {companyId, code, active});
 	}
 
 	/**
@@ -4231,4 +4103,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-330778602
+// LIFERAY-SERVICE-BUILDER-HASH:821017275

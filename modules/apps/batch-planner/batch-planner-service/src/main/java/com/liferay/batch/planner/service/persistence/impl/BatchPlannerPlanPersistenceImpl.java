@@ -194,16 +194,9 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -217,14 +210,8 @@ public class BatchPlannerPlanPersistenceImpl
 	public BatchPlannerPlan fetchByCompanyId_First(
 		long companyId, OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -376,12 +363,8 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -566,19 +549,9 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -594,14 +567,8 @@ public class BatchPlannerPlanPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -761,13 +728,8 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -961,19 +923,9 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", export=");
-		sb.append(export);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByC_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, export}));
 	}
 
 	/**
@@ -989,14 +941,8 @@ public class BatchPlannerPlanPersistenceImpl
 		long companyId, boolean export,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByC_E(
-			companyId, export, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_E.fetchFirst(
+			finderCache, new Object[] {companyId, export}, orderByComparator);
 	}
 
 	/**
@@ -1158,13 +1104,8 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Override
 	public void removeByC_E(long companyId, boolean export) {
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByC_E(
-					companyId, export, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByC_E.remove(
+			finderCache, new Object[] {companyId, export});
 	}
 
 	/**
@@ -1357,19 +1298,9 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
 	}
 
 	/**
@@ -1385,14 +1316,8 @@ public class BatchPlannerPlanPersistenceImpl
 		long companyId, String name,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByC_N(
-			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N.fetchFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -1565,13 +1490,8 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N(long companyId, String name) {
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByC_N(
-					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByC_N.remove(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -1781,19 +1701,9 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", template=");
-		sb.append(template);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, template}));
 	}
 
 	/**
@@ -1809,14 +1719,8 @@ public class BatchPlannerPlanPersistenceImpl
 		long companyId, boolean template,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByC_T(
-			companyId, template, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			finderCache, new Object[] {companyId, template}, orderByComparator);
 	}
 
 	/**
@@ -1979,13 +1883,8 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, boolean template) {
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByC_T(
-					companyId, template, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			finderCache, new Object[] {companyId, template});
 	}
 
 	/**
@@ -2187,22 +2086,10 @@ public class BatchPlannerPlanPersistenceImpl
 			return batchPlannerPlan;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", export=");
-		sb.append(export);
-
-		sb.append(", template=");
-		sb.append(template);
-
-		sb.append("}");
-
-		throw new NoSuchPlanException(sb.toString());
+		throw new NoSuchPlanException(
+			_collectionPersistenceFinderByC_E_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, export, template}));
 	}
 
 	/**
@@ -2219,14 +2106,9 @@ public class BatchPlannerPlanPersistenceImpl
 		long companyId, boolean export, boolean template,
 		OrderByComparator<BatchPlannerPlan> orderByComparator) {
 
-		List<BatchPlannerPlan> list = findByC_E_T(
-			companyId, export, template, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_E_T.fetchFirst(
+			finderCache, new Object[] {companyId, export, template},
+			orderByComparator);
 	}
 
 	/**
@@ -2400,13 +2282,8 @@ public class BatchPlannerPlanPersistenceImpl
 	public void removeByC_E_T(
 		long companyId, boolean export, boolean template) {
 
-		for (BatchPlannerPlan batchPlannerPlan :
-				findByC_E_T(
-					companyId, export, template, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(batchPlannerPlan);
-		}
+		_collectionPersistenceFinderByC_E_T.remove(
+			finderCache, new Object[] {companyId, export, template});
 	}
 
 	/**
@@ -3355,4 +3232,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-723212565
+// LIFERAY-SERVICE-BUILDER-HASH:6216216

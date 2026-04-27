@@ -208,19 +208,10 @@ public class DLContentPersistenceImpl
 			return dlContent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId}));
 	}
 
 	/**
@@ -236,14 +227,9 @@ public class DLContentPersistenceImpl
 		long companyId, long repositoryId,
 		OrderByComparator<DLContent> orderByComparator) {
 
-		List<DLContent> list = findByC_R(
-			companyId, repositoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R.fetchFirst(
+			finderCache, new Object[] {companyId, repositoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -254,13 +240,8 @@ public class DLContentPersistenceImpl
 	 */
 	@Override
 	public void removeByC_R(long companyId, long repositoryId) {
-		for (DLContent dlContent :
-				findByC_R(
-					companyId, repositoryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dlContent);
-		}
+		_collectionPersistenceFinderByC_R.remove(
+			finderCache, new Object[] {companyId, repositoryId});
 	}
 
 	/**
@@ -404,22 +385,10 @@ public class DLContentPersistenceImpl
 			return dlContent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId, path}));
 	}
 
 	/**
@@ -436,14 +405,9 @@ public class DLContentPersistenceImpl
 		long companyId, long repositoryId, String path,
 		OrderByComparator<DLContent> orderByComparator) {
 
-		List<DLContent> list = findByC_R_P(
-			companyId, repositoryId, path, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R_P.fetchFirst(
+			finderCache, new Object[] {companyId, repositoryId, path},
+			orderByComparator);
 	}
 
 	/**
@@ -455,13 +419,8 @@ public class DLContentPersistenceImpl
 	 */
 	@Override
 	public void removeByC_R_P(long companyId, long repositoryId, String path) {
-		for (DLContent dlContent :
-				findByC_R_P(
-					companyId, repositoryId, path, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dlContent);
-		}
+		_collectionPersistenceFinderByC_R_P.remove(
+			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
 	/**
@@ -605,22 +564,10 @@ public class DLContentPersistenceImpl
 			return dlContent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", pathLIKE");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R_LikeP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId, path}));
 	}
 
 	/**
@@ -637,14 +584,9 @@ public class DLContentPersistenceImpl
 		long companyId, long repositoryId, String path,
 		OrderByComparator<DLContent> orderByComparator) {
 
-		List<DLContent> list = findByC_R_LikeP(
-			companyId, repositoryId, path, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R_LikeP.fetchFirst(
+			finderCache, new Object[] {companyId, repositoryId, path},
+			orderByComparator);
 	}
 
 	/**
@@ -658,13 +600,8 @@ public class DLContentPersistenceImpl
 	public void removeByC_R_LikeP(
 		long companyId, long repositoryId, String path) {
 
-		for (DLContent dlContent :
-				findByC_R_LikeP(
-					companyId, repositoryId, path, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dlContent);
-		}
+		_collectionPersistenceFinderByC_R_LikeP.remove(
+			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
 	/**
@@ -711,29 +648,16 @@ public class DLContentPersistenceImpl
 			companyId, repositoryId, path, version);
 
 		if (dlContent == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", repositoryId=");
-			sb.append(repositoryId);
-
-			sb.append(", path=");
-			sb.append(path);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_R_P_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, repositoryId, path, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchContentException(sb.toString());
+			throw new NoSuchContentException(message);
 		}
 
 		return dlContent;
@@ -1834,4 +1758,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1454715427
+// LIFERAY-SERVICE-BUILDER-HASH:1844723542

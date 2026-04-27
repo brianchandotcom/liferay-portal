@@ -176,16 +176,9 @@ public class LVEntryLocalizationPersistenceImpl
 			return lvEntryLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("lvEntryId=");
-		sb.append(lvEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryLocalizationException(sb.toString());
+		throw new NoSuchLVEntryLocalizationException(
+			_collectionPersistenceFinderByLvEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {lvEntryId}));
 	}
 
 	/**
@@ -200,14 +193,8 @@ public class LVEntryLocalizationPersistenceImpl
 		long lvEntryId,
 		OrderByComparator<LVEntryLocalization> orderByComparator) {
 
-		List<LVEntryLocalization> list = findByLvEntryId(
-			lvEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLvEntryId.fetchFirst(
+			finderCache, new Object[] {lvEntryId}, orderByComparator);
 	}
 
 	/**
@@ -217,12 +204,8 @@ public class LVEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByLvEntryId(long lvEntryId) {
-		for (LVEntryLocalization lvEntryLocalization :
-				findByLvEntryId(
-					lvEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lvEntryLocalization);
-		}
+		_collectionPersistenceFinderByLvEntryId.remove(
+			finderCache, new Object[] {lvEntryId});
 	}
 
 	/**
@@ -258,23 +241,17 @@ public class LVEntryLocalizationPersistenceImpl
 			lvEntryId, languageId);
 
 		if (lvEntryLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("lvEntryId=");
-			sb.append(lvEntryId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByLvEntryId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {lvEntryId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLVEntryLocalizationException(sb.toString());
+			throw new NoSuchLVEntryLocalizationException(message);
 		}
 
 		return lvEntryLocalization;
@@ -359,20 +336,15 @@ public class LVEntryLocalizationPersistenceImpl
 		LVEntryLocalization lvEntryLocalization = fetchByHeadId(headId);
 
 		if (lvEntryLocalization == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("headId=");
-			sb.append(headId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLVEntryLocalizationException(sb.toString());
+			throw new NoSuchLVEntryLocalizationException(message);
 		}
 
 		return lvEntryLocalization;
@@ -1096,4 +1068,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-90508319
+// LIFERAY-SERVICE-BUILDER-HASH:1871385383

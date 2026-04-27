@@ -192,16 +192,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		String uuid,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -272,23 +256,15 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (workflowMetricsSLADefinition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSLADefinitionException(sb.toString());
+			throw new NoSuchSLADefinitionException(message);
 		}
 
 		return workflowMetricsSLADefinition;
@@ -467,19 +443,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -495,14 +461,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -513,13 +473,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -556,23 +511,16 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			fetchByWMSLAD_A(workflowMetricsSLADefinitionId, active);
 
 		if (workflowMetricsSLADefinition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("workflowMetricsSLADefinitionId=");
-			sb.append(workflowMetricsSLADefinitionId);
-
-			sb.append(", active=");
-			sb.append(active);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByWMSLAD_A.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {workflowMetricsSLADefinitionId, active});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSLADefinitionException(sb.toString());
+			throw new NoSuchSLADefinitionException(message);
 		}
 
 		return workflowMetricsSLADefinition;
@@ -755,19 +703,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -783,14 +721,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, int status,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByC_S(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -801,13 +733,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByC_S(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByC_S.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -941,22 +868,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", processId=");
-		sb.append(processId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByC_A_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, processId}));
 	}
 
 	/**
@@ -973,14 +888,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, boolean active, long processId,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByC_A_P(
-			companyId, active, processId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_P.fetchFirst(
+			finderCache, new Object[] {companyId, active, processId},
+			orderByComparator);
 	}
 
 	/**
@@ -992,13 +902,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A_P(long companyId, boolean active, long processId) {
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByC_A_P(
-					companyId, active, processId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByC_A_P.remove(
+			finderCache, new Object[] {companyId, active, processId});
 	}
 
 	/**
@@ -1144,25 +1049,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", processId=");
-		sb.append(processId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByC_A_N_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, name, processId}));
 	}
 
 	/**
@@ -1180,14 +1070,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, boolean active, String name, long processId,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByC_A_N_P(
-			companyId, active, name, processId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_N_P.fetchFirst(
+			finderCache, new Object[] {companyId, active, name, processId},
+			orderByComparator);
 	}
 
 	/**
@@ -1202,13 +1087,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	public void removeByC_A_N_P(
 		long companyId, boolean active, String name, long processId) {
 
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByC_A_N_P(
-					companyId, active, name, processId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByC_A_N_P.remove(
+			finderCache, new Object[] {companyId, active, name, processId});
 	}
 
 	/**
@@ -1357,25 +1237,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", processId=");
-		sb.append(processId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByC_A_P_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, processId, status}));
 	}
 
 	/**
@@ -1393,14 +1258,9 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, boolean active, long processId, int status,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByC_A_P_S(
-			companyId, active, processId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_P_S.fetchFirst(
+			finderCache, new Object[] {companyId, active, processId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1415,13 +1275,8 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	public void removeByC_A_P_S(
 		long companyId, boolean active, long processId, int status) {
 
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByC_A_P_S(
-					companyId, active, processId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByC_A_P_S.remove(
+			finderCache, new Object[] {companyId, active, processId, status});
 	}
 
 	/**
@@ -1579,28 +1434,12 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			return workflowMetricsSLADefinition;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", processId=");
-		sb.append(processId);
-
-		sb.append(", processVersion!=");
-		sb.append(processVersion);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionException(sb.toString());
+		throw new NoSuchSLADefinitionException(
+			_collectionPersistenceFinderByC_A_P_NotPV_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					companyId, active, processId, processVersion, status
+				}));
 	}
 
 	/**
@@ -1620,15 +1459,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		int status,
 		OrderByComparator<WorkflowMetricsSLADefinition> orderByComparator) {
 
-		List<WorkflowMetricsSLADefinition> list = findByC_A_P_NotPV_S(
-			companyId, active, processId, processVersion, status, 0, 1,
+		return _collectionPersistenceFinderByC_A_P_NotPV_S.fetchFirst(
+			finderCache,
+			new Object[] {companyId, active, processId, processVersion, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1645,13 +1479,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		long companyId, boolean active, long processId, String processVersion,
 		int status) {
 
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				findByC_A_P_NotPV_S(
-					companyId, active, processId, processVersion, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinition);
-		}
+		_collectionPersistenceFinderByC_A_P_NotPV_S.remove(
+			finderCache,
+			new Object[] {
+				companyId, active, processId, processVersion, status
+			});
 	}
 
 	/**
@@ -2754,4 +2586,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2106251816
+// LIFERAY-SERVICE-BUILDER-HASH:589782883

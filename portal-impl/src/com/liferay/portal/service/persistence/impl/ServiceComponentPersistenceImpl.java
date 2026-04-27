@@ -179,16 +179,9 @@ public class ServiceComponentPersistenceImpl
 			return serviceComponent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("buildNamespace=");
-		sb.append(buildNamespace);
-
-		sb.append("}");
-
-		throw new NoSuchServiceComponentException(sb.toString());
+		throw new NoSuchServiceComponentException(
+			_collectionPersistenceFinderByBuildNamespace.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {buildNamespace}));
 	}
 
 	/**
@@ -203,14 +196,9 @@ public class ServiceComponentPersistenceImpl
 		String buildNamespace,
 		OrderByComparator<ServiceComponent> orderByComparator) {
 
-		List<ServiceComponent> list = findByBuildNamespace(
-			buildNamespace, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBuildNamespace.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {buildNamespace},
+			orderByComparator);
 	}
 
 	/**
@@ -220,13 +208,8 @@ public class ServiceComponentPersistenceImpl
 	 */
 	@Override
 	public void removeByBuildNamespace(String buildNamespace) {
-		for (ServiceComponent serviceComponent :
-				findByBuildNamespace(
-					buildNamespace, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(serviceComponent);
-		}
+		_collectionPersistenceFinderByBuildNamespace.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {buildNamespace});
 	}
 
 	/**
@@ -262,23 +245,16 @@ public class ServiceComponentPersistenceImpl
 			buildNamespace, buildNumber);
 
 		if (serviceComponent == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("buildNamespace=");
-			sb.append(buildNamespace);
-
-			sb.append(", buildNumber=");
-			sb.append(buildNumber);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByBNS_BNU.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {buildNamespace, buildNumber});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchServiceComponentException(sb.toString());
+			throw new NoSuchServiceComponentException(message);
 		}
 
 		return serviceComponent;
@@ -987,4 +963,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1255726361
+// LIFERAY-SERVICE-BUILDER-HASH:-1798283912

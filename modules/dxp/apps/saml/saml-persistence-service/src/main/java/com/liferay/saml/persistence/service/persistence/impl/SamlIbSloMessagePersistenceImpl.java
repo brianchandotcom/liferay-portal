@@ -104,20 +104,17 @@ public class SamlIbSloMessagePersistenceImpl
 			samlIdpSessionIndex);
 
 		if (samlIbSloMessage == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("samlIdpSessionIndex=");
-			sb.append(samlIdpSessionIndex);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderBySamlIdpSessionIndex.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {samlIdpSessionIndex});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIbSloMessageException(sb.toString());
+			throw new NoSuchIbSloMessageException(message);
 		}
 
 		return samlIbSloMessage;
@@ -818,4 +815,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1085603241
+// LIFERAY-SERVICE-BUILDER-HASH:535416686

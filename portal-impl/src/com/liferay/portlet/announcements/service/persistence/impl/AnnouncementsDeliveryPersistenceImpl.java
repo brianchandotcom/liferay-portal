@@ -193,16 +193,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			return announcementsDelivery;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDeliveryException(sb.toString());
+		throw new NoSuchDeliveryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -217,14 +210,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 		long companyId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 
-		List<AnnouncementsDelivery> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -234,12 +222,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AnnouncementsDelivery announcementsDelivery :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(announcementsDelivery);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -367,16 +351,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 			return announcementsDelivery;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchDeliveryException(sb.toString());
+		throw new NoSuchDeliveryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -391,14 +368,9 @@ public class AnnouncementsDeliveryPersistenceImpl
 		long userId,
 		OrderByComparator<AnnouncementsDelivery> orderByComparator) {
 
-		List<AnnouncementsDelivery> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -408,12 +380,8 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (AnnouncementsDelivery announcementsDelivery :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(announcementsDelivery);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -452,23 +420,15 @@ public class AnnouncementsDeliveryPersistenceImpl
 		AnnouncementsDelivery announcementsDelivery = fetchByU_T(userId, type);
 
 		if (announcementsDelivery == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDeliveryException(sb.toString());
+			throw new NoSuchDeliveryException(message);
 		}
 
 		return announcementsDelivery;
@@ -1501,4 +1461,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1594629214
+// LIFERAY-SERVICE-BUILDER-HASH:1483314799

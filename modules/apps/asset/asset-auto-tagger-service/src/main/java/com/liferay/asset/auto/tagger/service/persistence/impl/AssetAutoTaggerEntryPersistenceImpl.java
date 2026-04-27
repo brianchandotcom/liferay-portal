@@ -205,16 +205,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			return assetAutoTaggerEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetEntryId=");
-		sb.append(assetEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByAssetEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetEntryId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		long assetEntryId,
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
 
-		List<AssetAutoTaggerEntry> list = findByAssetEntryId(
-			assetEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAssetEntryId.fetchFirst(
+			finderCache, new Object[] {assetEntryId}, orderByComparator);
 	}
 
 	/**
@@ -246,12 +233,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByAssetEntryId(long assetEntryId) {
-		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-				findByAssetEntryId(
-					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetAutoTaggerEntry);
-		}
+		_collectionPersistenceFinderByAssetEntryId.remove(
+			finderCache, new Object[] {assetEntryId});
 	}
 
 	/**
@@ -381,16 +364,9 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			return assetAutoTaggerEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetTagId=");
-		sb.append(assetTagId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByAssetTagId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetTagId}));
 	}
 
 	/**
@@ -405,14 +381,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		long assetTagId,
 		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
 
-		List<AssetAutoTaggerEntry> list = findByAssetTagId(
-			assetTagId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAssetTagId.fetchFirst(
+			finderCache, new Object[] {assetTagId}, orderByComparator);
 	}
 
 	/**
@@ -422,12 +392,8 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByAssetTagId(long assetTagId) {
-		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-				findByAssetTagId(
-					assetTagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetAutoTaggerEntry);
-		}
+		_collectionPersistenceFinderByAssetTagId.remove(
+			finderCache, new Object[] {assetTagId});
 	}
 
 	/**
@@ -467,23 +433,16 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			assetEntryId, assetTagId);
 
 		if (assetAutoTaggerEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("assetEntryId=");
-			sb.append(assetEntryId);
-
-			sb.append(", assetTagId=");
-			sb.append(assetTagId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_A.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {assetEntryId, assetTagId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return assetAutoTaggerEntry;
@@ -1563,4 +1522,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292080298
+// LIFERAY-SERVICE-BUILDER-HASH:773501524

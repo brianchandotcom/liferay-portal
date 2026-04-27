@@ -189,16 +189,9 @@ public class SamlIdpSpConnectionPersistenceImpl
 			return samlIdpSpConnection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSpConnectionException(sb.toString());
+		throw new NoSuchIdpSpConnectionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class SamlIdpSpConnectionPersistenceImpl
 		long companyId,
 		OrderByComparator<SamlIdpSpConnection> orderByComparator) {
 
-		List<SamlIdpSpConnection> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -230,12 +217,8 @@ public class SamlIdpSpConnectionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SamlIdpSpConnection samlIdpSpConnection :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(samlIdpSpConnection);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -271,23 +254,16 @@ public class SamlIdpSpConnectionPersistenceImpl
 			companyId, samlSpEntityId);
 
 		if (samlIdpSpConnection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", samlSpEntityId=");
-			sb.append(samlSpEntityId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_SSEI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, samlSpEntityId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIdpSpConnectionException(sb.toString());
+			throw new NoSuchIdpSpConnectionException(message);
 		}
 
 		return samlIdpSpConnection;
@@ -1050,4 +1026,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:578432444
+// LIFERAY-SERVICE-BUILDER-HASH:169225614

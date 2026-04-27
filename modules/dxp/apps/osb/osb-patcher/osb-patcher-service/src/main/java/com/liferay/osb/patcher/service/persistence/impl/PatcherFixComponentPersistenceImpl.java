@@ -102,20 +102,15 @@ public class PatcherFixComponentPersistenceImpl
 		PatcherFixComponent patcherFixComponent = fetchByName(name);
 
 		if (patcherFixComponent == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherFixComponentException(sb.toString());
+			throw new NoSuchPatcherFixComponentException(message);
 		}
 
 		return patcherFixComponent;
@@ -822,4 +817,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1287146727
+// LIFERAY-SERVICE-BUILDER-HASH:609284320

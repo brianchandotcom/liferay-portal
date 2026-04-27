@@ -189,16 +189,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -212,13 +205,8 @@ public class CommerceWishListPersistenceImpl
 	public CommerceWishList fetchByUuid_First(
 		String uuid, OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -228,11 +216,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceWishList commerceWishList :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -266,23 +251,15 @@ public class CommerceWishListPersistenceImpl
 		CommerceWishList commerceWishList = fetchByUUID_G(uuid, groupId);
 
 		if (commerceWishList == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchWishListException(sb.toString());
+			throw new NoSuchWishListException(message);
 		}
 
 		return commerceWishList;
@@ -455,19 +432,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -483,14 +450,8 @@ public class CommerceWishListPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -501,13 +462,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceWishList commerceWishList :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -626,16 +582,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -649,14 +598,8 @@ public class CommerceWishListPersistenceImpl
 	public CommerceWishList fetchByGroupId_First(
 		long groupId, OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -666,12 +609,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CommerceWishList commerceWishList :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -788,16 +727,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -811,14 +743,8 @@ public class CommerceWishListPersistenceImpl
 	public CommerceWishList fetchByUserId_First(
 		long userId, OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -828,12 +754,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (CommerceWishList commerceWishList :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -957,19 +879,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -985,14 +897,8 @@ public class CommerceWishListPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1003,13 +909,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (CommerceWishList commerceWishList :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			finderCache, new Object[] {groupId, userId});
 	}
 
 	/**
@@ -1134,19 +1035,9 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByU_LtC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, createDate}));
 	}
 
 	/**
@@ -1162,14 +1053,8 @@ public class CommerceWishListPersistenceImpl
 		long userId, Date createDate,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByU_LtC(
-			userId, createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_LtC.fetchFirst(
+			finderCache, new Object[] {userId, createDate}, orderByComparator);
 	}
 
 	/**
@@ -1180,13 +1065,8 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Override
 	public void removeByU_LtC(long userId, Date createDate) {
-		for (CommerceWishList commerceWishList :
-				findByU_LtC(
-					userId, createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByU_LtC.remove(
+			finderCache, new Object[] {userId, createDate});
 	}
 
 	/**
@@ -1322,22 +1202,10 @@ public class CommerceWishListPersistenceImpl
 			return commerceWishList;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", defaultWishList=");
-		sb.append(defaultWishList);
-
-		sb.append("}");
-
-		throw new NoSuchWishListException(sb.toString());
+		throw new NoSuchWishListException(
+			_collectionPersistenceFinderByG_U_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, defaultWishList}));
 	}
 
 	/**
@@ -1354,14 +1222,9 @@ public class CommerceWishListPersistenceImpl
 		long groupId, long userId, boolean defaultWishList,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
-		List<CommerceWishList> list = findByG_U_D(
-			groupId, userId, defaultWishList, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_D.fetchFirst(
+			finderCache, new Object[] {groupId, userId, defaultWishList},
+			orderByComparator);
 	}
 
 	/**
@@ -1375,13 +1238,8 @@ public class CommerceWishListPersistenceImpl
 	public void removeByG_U_D(
 		long groupId, long userId, boolean defaultWishList) {
 
-		for (CommerceWishList commerceWishList :
-				findByG_U_D(
-					groupId, userId, defaultWishList, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishList);
-		}
+		_collectionPersistenceFinderByG_U_D.remove(
+			finderCache, new Object[] {groupId, userId, defaultWishList});
 	}
 
 	/**
@@ -2296,4 +2154,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1733543978
+// LIFERAY-SERVICE-BUILDER-HASH:-46164255

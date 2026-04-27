@@ -188,16 +188,9 @@ public class BigDecimalEntryPersistenceImpl
 			return bigDecimalEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue=");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
+		throw new NoSuchBigDecimalEntryException(
+			_collectionPersistenceFinderByBigDecimalValue.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {bigDecimalValue}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
 
-		List<BigDecimalEntry> list = findByBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBigDecimalValue.fetchFirst(
+			finderCache, new Object[] {bigDecimalValue}, orderByComparator);
 	}
 
 	/**
@@ -229,13 +216,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bigDecimalEntry);
-		}
+		_collectionPersistenceFinderByBigDecimalValue.remove(
+			finderCache, new Object[] {bigDecimalValue});
 	}
 
 	/**
@@ -356,16 +338,10 @@ public class BigDecimalEntryPersistenceImpl
 			return bigDecimalEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue>");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
+		throw new NoSuchBigDecimalEntryException(
+			_collectionPersistenceFinderByGtBigDecimalValue.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {bigDecimalValue}));
 	}
 
 	/**
@@ -380,14 +356,8 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
 
-		List<BigDecimalEntry> list = findByGtBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGtBigDecimalValue.fetchFirst(
+			finderCache, new Object[] {bigDecimalValue}, orderByComparator);
 	}
 
 	/**
@@ -397,13 +367,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGtBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByGtBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bigDecimalEntry);
-		}
+		_collectionPersistenceFinderByGtBigDecimalValue.remove(
+			finderCache, new Object[] {bigDecimalValue});
 	}
 
 	/**
@@ -524,16 +489,10 @@ public class BigDecimalEntryPersistenceImpl
 			return bigDecimalEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bigDecimalValue<");
-		sb.append(bigDecimalValue);
-
-		sb.append("}");
-
-		throw new NoSuchBigDecimalEntryException(sb.toString());
+		throw new NoSuchBigDecimalEntryException(
+			_collectionPersistenceFinderByLtBigDecimalValue.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {bigDecimalValue}));
 	}
 
 	/**
@@ -548,14 +507,8 @@ public class BigDecimalEntryPersistenceImpl
 		BigDecimal bigDecimalValue,
 		OrderByComparator<BigDecimalEntry> orderByComparator) {
 
-		List<BigDecimalEntry> list = findByLtBigDecimalValue(
-			bigDecimalValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtBigDecimalValue.fetchFirst(
+			finderCache, new Object[] {bigDecimalValue}, orderByComparator);
 	}
 
 	/**
@@ -565,13 +518,8 @@ public class BigDecimalEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtBigDecimalValue(BigDecimal bigDecimalValue) {
-		for (BigDecimalEntry bigDecimalEntry :
-				findByLtBigDecimalValue(
-					bigDecimalValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bigDecimalEntry);
-		}
+		_collectionPersistenceFinderByLtBigDecimalValue.remove(
+			finderCache, new Object[] {bigDecimalValue});
 	}
 
 	/**
@@ -1592,4 +1540,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1497071219
+// LIFERAY-SERVICE-BUILDER-HASH:-68541673

@@ -101,23 +101,16 @@ public class FaroProjectUsagePersistenceImpl
 			faroProjectId, usageTime);
 
 		if (faroProjectUsage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("faroProjectId=");
-			sb.append(faroProjectId);
-
-			sb.append(", usageTime=");
-			sb.append(usageTime);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByF_U.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {faroProjectId, usageTime});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroProjectUsageException(sb.toString());
+			throw new NoSuchFaroProjectUsageException(message);
 		}
 
 		return faroProjectUsage;
@@ -807,4 +800,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1256421154
+// LIFERAY-SERVICE-BUILDER-HASH:1904252589

@@ -177,16 +177,9 @@ public class PortalPreferencesPersistenceImpl
 			return portalPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
+		throw new NoSuchPreferencesException(
+			_collectionPersistenceFinderByOwnerType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerType}));
 	}
 
 	/**
@@ -200,14 +193,9 @@ public class PortalPreferencesPersistenceImpl
 	public PortalPreferences fetchByOwnerType_First(
 		int ownerType, OrderByComparator<PortalPreferences> orderByComparator) {
 
-		List<PortalPreferences> list = findByOwnerType(
-			ownerType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOwnerType.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerType},
+			orderByComparator);
 	}
 
 	/**
@@ -217,12 +205,8 @@ public class PortalPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByOwnerType(int ownerType) {
-		for (PortalPreferences portalPreferences :
-				findByOwnerType(
-					ownerType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(portalPreferences);
-		}
+		_collectionPersistenceFinderByOwnerType.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerType});
 	}
 
 	/**
@@ -256,23 +240,16 @@ public class PortalPreferencesPersistenceImpl
 		PortalPreferences portalPreferences = fetchByO_O(ownerId, ownerType);
 
 		if (portalPreferences == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ownerId=");
-			sb.append(ownerId);
-
-			sb.append(", ownerType=");
-			sb.append(ownerType);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByO_O.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {ownerId, ownerType});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPreferencesException(sb.toString());
+			throw new NoSuchPreferencesException(message);
 		}
 
 		return portalPreferences;
@@ -969,4 +946,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1645224930
+// LIFERAY-SERVICE-BUILDER-HASH:1219811562

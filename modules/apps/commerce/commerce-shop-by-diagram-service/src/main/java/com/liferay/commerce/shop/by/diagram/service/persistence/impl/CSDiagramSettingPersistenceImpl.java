@@ -203,16 +203,9 @@ public class CSDiagramSettingPersistenceImpl
 			return csDiagramSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramSettingException(sb.toString());
+		throw new NoSuchCSDiagramSettingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -226,13 +219,8 @@ public class CSDiagramSettingPersistenceImpl
 	public CSDiagramSetting fetchByUuid_First(
 		String uuid, OrderByComparator<CSDiagramSetting> orderByComparator) {
 
-		List<CSDiagramSetting> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -242,11 +230,8 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CSDiagramSetting csDiagramSetting :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(csDiagramSetting);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -381,19 +366,9 @@ public class CSDiagramSettingPersistenceImpl
 			return csDiagramSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramSettingException(sb.toString());
+		throw new NoSuchCSDiagramSettingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -409,14 +384,8 @@ public class CSDiagramSettingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CSDiagramSetting> orderByComparator) {
 
-		List<CSDiagramSetting> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -427,13 +396,8 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CSDiagramSetting csDiagramSetting :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(csDiagramSetting);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -473,20 +437,15 @@ public class CSDiagramSettingPersistenceImpl
 			CPDefinitionId);
 
 		if (csDiagramSetting == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCSDiagramSettingException(sb.toString());
+			throw new NoSuchCSDiagramSettingException(message);
 		}
 
 		return csDiagramSetting;
@@ -1565,4 +1524,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-466584939
+// LIFERAY-SERVICE-BUILDER-HASH:-542555142

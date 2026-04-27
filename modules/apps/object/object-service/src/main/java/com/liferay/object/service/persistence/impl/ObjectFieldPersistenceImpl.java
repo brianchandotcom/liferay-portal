@@ -194,16 +194,9 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -217,13 +210,8 @@ public class ObjectFieldPersistenceImpl
 	public ObjectField fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +221,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectField objectField :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -362,19 +347,9 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -390,14 +365,8 @@ public class ObjectFieldPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -408,13 +377,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectField objectField :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -533,16 +497,9 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -556,14 +513,8 @@ public class ObjectFieldPersistenceImpl
 	public ObjectField fetchByCompanyId_First(
 		long companyId, OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -573,12 +524,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (ObjectField objectField :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -701,16 +648,11 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByListTypeDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {listTypeDefinitionId}));
 	}
 
 	/**
@@ -725,14 +667,9 @@ public class ObjectFieldPersistenceImpl
 		long listTypeDefinitionId,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByListTypeDefinitionId(
-			listTypeDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByListTypeDefinitionId.fetchFirst(
+			finderCache, new Object[] {listTypeDefinitionId},
+			orderByComparator);
 	}
 
 	/**
@@ -742,13 +679,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByListTypeDefinitionId(long listTypeDefinitionId) {
-		for (ObjectField objectField :
-				findByListTypeDefinitionId(
-					listTypeDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByListTypeDefinitionId.remove(
+			finderCache, new Object[] {listTypeDefinitionId});
 	}
 
 	/**
@@ -868,16 +800,11 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByObjectDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId}));
 	}
 
 	/**
@@ -892,14 +819,8 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByObjectDefinitionId(
-			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectDefinitionId.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -909,13 +830,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectDefinitionId(long objectDefinitionId) {
-		for (ObjectField objectField :
-				findByObjectDefinitionId(
-					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByObjectDefinitionId.remove(
+			finderCache, new Object[] {objectDefinitionId});
 	}
 
 	/**
@@ -1040,19 +956,9 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -1068,14 +974,8 @@ public class ObjectFieldPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1086,13 +986,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (ObjectField objectField :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -1219,19 +1114,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", businessType=");
-		sb.append(businessType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByC_BT.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, businessType}));
 	}
 
 	/**
@@ -1247,14 +1133,9 @@ public class ObjectFieldPersistenceImpl
 		long companyId, String businessType,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByC_BT(
-			companyId, businessType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_BT.fetchFirst(
+			finderCache, new Object[] {companyId, businessType},
+			orderByComparator);
 	}
 
 	/**
@@ -1265,13 +1146,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByC_BT(long companyId, String businessType) {
-		for (ObjectField objectField :
-				findByC_BT(
-					companyId, businessType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByC_BT.remove(
+			finderCache, new Object[] {companyId, businessType});
 	}
 
 	/**
@@ -1400,19 +1276,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append(", state=");
-		sb.append(state);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByLTDI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {listTypeDefinitionId, state}));
 	}
 
 	/**
@@ -1428,14 +1295,9 @@ public class ObjectFieldPersistenceImpl
 		long listTypeDefinitionId, boolean state,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByLTDI_S(
-			listTypeDefinitionId, state, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLTDI_S.fetchFirst(
+			finderCache, new Object[] {listTypeDefinitionId, state},
+			orderByComparator);
 	}
 
 	/**
@@ -1446,13 +1308,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByLTDI_S(long listTypeDefinitionId, boolean state) {
-		for (ObjectField objectField :
-				findByLTDI_S(
-					listTypeDefinitionId, state, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByLTDI_S.remove(
+			finderCache, new Object[] {listTypeDefinitionId, state});
 	}
 
 	/**
@@ -1582,19 +1439,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", businessType=");
-		sb.append(businessType);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_BT.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, businessType}));
 	}
 
 	/**
@@ -1610,14 +1458,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, String businessType,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_BT(
-			objectDefinitionId, businessType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_BT.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, businessType},
+			orderByComparator);
 	}
 
 	/**
@@ -1628,13 +1471,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByODI_BT(long objectDefinitionId, String businessType) {
-		for (ObjectField objectField :
-				findByODI_BT(
-					objectDefinitionId, businessType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_BT.remove(
+			finderCache, new Object[] {objectDefinitionId, businessType});
 	}
 
 	/**
@@ -1764,19 +1602,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", dbTableName=");
-		sb.append(dbTableName);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_DTN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, dbTableName}));
 	}
 
 	/**
@@ -1792,14 +1621,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, String dbTableName,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_DTN(
-			objectDefinitionId, dbTableName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_DTN.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, dbTableName},
+			orderByComparator);
 	}
 
 	/**
@@ -1810,13 +1634,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByODI_DTN(long objectDefinitionId, String dbTableName) {
-		for (ObjectField objectField :
-				findByODI_DTN(
-					objectDefinitionId, dbTableName, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_DTN.remove(
+			finderCache, new Object[] {objectDefinitionId, dbTableName});
 	}
 
 	/**
@@ -1945,19 +1764,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", indexed=");
-		sb.append(indexed);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_I.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, indexed}));
 	}
 
 	/**
@@ -1973,14 +1783,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, boolean indexed,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_I(
-			objectDefinitionId, indexed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_I.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, indexed},
+			orderByComparator);
 	}
 
 	/**
@@ -1991,13 +1796,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByODI_I(long objectDefinitionId, boolean indexed) {
-		for (ObjectField objectField :
-				findByODI_I(
-					objectDefinitionId, indexed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_I.remove(
+			finderCache, new Object[] {objectDefinitionId, indexed});
 	}
 
 	/**
@@ -2126,19 +1926,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", localized=");
-		sb.append(localized);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, localized}));
 	}
 
 	/**
@@ -2154,14 +1945,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, boolean localized,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_L(
-			objectDefinitionId, localized, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_L.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, localized},
+			orderByComparator);
 	}
 
 	/**
@@ -2172,13 +1958,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByODI_L(long objectDefinitionId, boolean localized) {
-		for (ObjectField objectField :
-				findByODI_L(
-					objectDefinitionId, localized, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_L.remove(
+			finderCache, new Object[] {objectDefinitionId, localized});
 	}
 
 	/**
@@ -2213,23 +1994,16 @@ public class ObjectFieldPersistenceImpl
 		ObjectField objectField = fetchByODI_N(objectDefinitionId, name);
 
 		if (objectField == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByODI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectFieldException(sb.toString());
+			throw new NoSuchObjectFieldException(message);
 		}
 
 		return objectField;
@@ -2406,19 +2180,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, system}));
 	}
 
 	/**
@@ -2434,14 +2199,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, boolean system,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_S(
-			objectDefinitionId, system, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_S.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, system},
+			orderByComparator);
 	}
 
 	/**
@@ -2452,13 +2212,8 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByODI_S(long objectDefinitionId, boolean system) {
-		for (ObjectField objectField :
-				findByODI_S(
-					objectDefinitionId, system, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_S.remove(
+			finderCache, new Object[] {objectDefinitionId, system});
 	}
 
 	/**
@@ -2497,26 +2252,18 @@ public class ObjectFieldPersistenceImpl
 			externalReferenceCode, companyId, objectDefinitionId);
 
 		if (objectField == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append(", objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C_ODI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						externalReferenceCode, companyId, objectDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectFieldException(sb.toString());
+			throw new NoSuchObjectFieldException(message);
 		}
 
 		return objectField;
@@ -2718,22 +2465,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", dbType=");
-		sb.append(dbType);
-
-		sb.append(", indexed=");
-		sb.append(indexed);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_DBT_I.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, dbType, indexed}));
 	}
 
 	/**
@@ -2750,14 +2485,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, String dbType, boolean indexed,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_DBT_I(
-			objectDefinitionId, dbType, indexed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_DBT_I.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, dbType, indexed},
+			orderByComparator);
 	}
 
 	/**
@@ -2771,13 +2501,8 @@ public class ObjectFieldPersistenceImpl
 	public void removeByODI_DBT_I(
 		long objectDefinitionId, String dbType, boolean indexed) {
 
-		for (ObjectField objectField :
-				findByODI_DBT_I(
-					objectDefinitionId, dbType, indexed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_DBT_I.remove(
+			finderCache, new Object[] {objectDefinitionId, dbType, indexed});
 	}
 
 	/**
@@ -2917,22 +2642,10 @@ public class ObjectFieldPersistenceImpl
 			return objectField;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", localized=");
-		sb.append(localized);
-
-		sb.append(", system=");
-		sb.append(system);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFieldException(sb.toString());
+		throw new NoSuchObjectFieldException(
+			_collectionPersistenceFinderByODI_L_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectDefinitionId, localized, system}));
 	}
 
 	/**
@@ -2949,14 +2662,9 @@ public class ObjectFieldPersistenceImpl
 		long objectDefinitionId, boolean localized, boolean system,
 		OrderByComparator<ObjectField> orderByComparator) {
 
-		List<ObjectField> list = findByODI_L_S(
-			objectDefinitionId, localized, system, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByODI_L_S.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId, localized, system},
+			orderByComparator);
 	}
 
 	/**
@@ -2970,13 +2678,8 @@ public class ObjectFieldPersistenceImpl
 	public void removeByODI_L_S(
 		long objectDefinitionId, boolean localized, boolean system) {
 
-		for (ObjectField objectField :
-				findByODI_L_S(
-					objectDefinitionId, localized, system, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectField);
-		}
+		_collectionPersistenceFinderByODI_L_S.remove(
+			finderCache, new Object[] {objectDefinitionId, localized, system});
 	}
 
 	/**
@@ -4237,4 +3940,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-415955027
+// LIFERAY-SERVICE-BUILDER-HASH:721649920

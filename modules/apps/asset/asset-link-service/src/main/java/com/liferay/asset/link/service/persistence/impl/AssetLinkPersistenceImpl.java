@@ -201,16 +201,9 @@ public class AssetLinkPersistenceImpl
 			return assetLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
+		throw new NoSuchLinkException(
+			_collectionPersistenceFinderByEntryId1.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId1}));
 	}
 
 	/**
@@ -224,14 +217,8 @@ public class AssetLinkPersistenceImpl
 	public AssetLink fetchByEntryId1_First(
 		long entryId1, OrderByComparator<AssetLink> orderByComparator) {
 
-		List<AssetLink> list = findByEntryId1(
-			entryId1, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByEntryId1.fetchFirst(
+			finderCache, new Object[] {entryId1}, orderByComparator);
 	}
 
 	/**
@@ -241,12 +228,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByEntryId1(long entryId1) {
-		for (AssetLink assetLink :
-				findByEntryId1(
-					entryId1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetLink);
-		}
+		_collectionPersistenceFinderByEntryId1.remove(
+			finderCache, new Object[] {entryId1});
 	}
 
 	/**
@@ -372,16 +355,9 @@ public class AssetLinkPersistenceImpl
 			return assetLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId2=");
-		sb.append(entryId2);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
+		throw new NoSuchLinkException(
+			_collectionPersistenceFinderByEntryId2.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId2}));
 	}
 
 	/**
@@ -395,14 +371,8 @@ public class AssetLinkPersistenceImpl
 	public AssetLink fetchByEntryId2_First(
 		long entryId2, OrderByComparator<AssetLink> orderByComparator) {
 
-		List<AssetLink> list = findByEntryId2(
-			entryId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByEntryId2.fetchFirst(
+			finderCache, new Object[] {entryId2}, orderByComparator);
 	}
 
 	/**
@@ -412,12 +382,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByEntryId2(long entryId2) {
-		for (AssetLink assetLink :
-				findByEntryId2(
-					entryId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetLink);
-		}
+		_collectionPersistenceFinderByEntryId2.remove(
+			finderCache, new Object[] {entryId2});
 	}
 
 	/**
@@ -552,19 +518,9 @@ public class AssetLinkPersistenceImpl
 			return assetLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append(", entryId2=");
-		sb.append(entryId2);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
+		throw new NoSuchLinkException(
+			_collectionPersistenceFinderByE_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId1, entryId2}));
 	}
 
 	/**
@@ -580,14 +536,8 @@ public class AssetLinkPersistenceImpl
 		long entryId1, long entryId2,
 		OrderByComparator<AssetLink> orderByComparator) {
 
-		List<AssetLink> list = findByE_E(
-			entryId1, entryId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByE_E.fetchFirst(
+			finderCache, new Object[] {entryId1, entryId2}, orderByComparator);
 	}
 
 	/**
@@ -598,13 +548,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByE_E(long entryId1, long entryId2) {
-		for (AssetLink assetLink :
-				findByE_E(
-					entryId1, entryId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetLink);
-		}
+		_collectionPersistenceFinderByE_E.remove(
+			finderCache, new Object[] {entryId1, entryId2});
 	}
 
 	/**
@@ -739,19 +684,9 @@ public class AssetLinkPersistenceImpl
 			return assetLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId1=");
-		sb.append(entryId1);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
+		throw new NoSuchLinkException(
+			_collectionPersistenceFinderByE1_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId1, type}));
 	}
 
 	/**
@@ -767,14 +702,8 @@ public class AssetLinkPersistenceImpl
 		long entryId1, int type,
 		OrderByComparator<AssetLink> orderByComparator) {
 
-		List<AssetLink> list = findByE1_T(
-			entryId1, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByE1_T.fetchFirst(
+			finderCache, new Object[] {entryId1, type}, orderByComparator);
 	}
 
 	/**
@@ -785,13 +714,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByE1_T(long entryId1, int type) {
-		for (AssetLink assetLink :
-				findByE1_T(
-					entryId1, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetLink);
-		}
+		_collectionPersistenceFinderByE1_T.remove(
+			finderCache, new Object[] {entryId1, type});
 	}
 
 	/**
@@ -926,19 +850,9 @@ public class AssetLinkPersistenceImpl
 			return assetLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId2=");
-		sb.append(entryId2);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchLinkException(sb.toString());
+		throw new NoSuchLinkException(
+			_collectionPersistenceFinderByE2_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId2, type}));
 	}
 
 	/**
@@ -954,14 +868,8 @@ public class AssetLinkPersistenceImpl
 		long entryId2, int type,
 		OrderByComparator<AssetLink> orderByComparator) {
 
-		List<AssetLink> list = findByE2_T(
-			entryId2, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByE2_T.fetchFirst(
+			finderCache, new Object[] {entryId2, type}, orderByComparator);
 	}
 
 	/**
@@ -972,13 +880,8 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByE2_T(long entryId2, int type) {
-		for (AssetLink assetLink :
-				findByE2_T(
-					entryId2, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetLink);
-		}
+		_collectionPersistenceFinderByE2_T.remove(
+			finderCache, new Object[] {entryId2, type});
 	}
 
 	/**
@@ -1018,26 +921,16 @@ public class AssetLinkPersistenceImpl
 		AssetLink assetLink = fetchByE_E_T(entryId1, entryId2, type);
 
 		if (assetLink == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("entryId1=");
-			sb.append(entryId1);
-
-			sb.append(", entryId2=");
-			sb.append(entryId2);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByE_E_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {entryId1, entryId2, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLinkException(sb.toString());
+			throw new NoSuchLinkException(message);
 		}
 
 		return assetLink;
@@ -2173,4 +2066,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:787870099
+// LIFERAY-SERVICE-BUILDER-HASH:-2118843614

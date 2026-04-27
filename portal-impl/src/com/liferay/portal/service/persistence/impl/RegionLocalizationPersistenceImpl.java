@@ -192,16 +192,9 @@ public class RegionLocalizationPersistenceImpl
 			return regionLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("regionId=");
-		sb.append(regionId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionLocalizationException(sb.toString());
+		throw new NoSuchRegionLocalizationException(
+			_collectionPersistenceFinderByRegionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {regionId}));
 	}
 
 	/**
@@ -216,14 +209,9 @@ public class RegionLocalizationPersistenceImpl
 		long regionId,
 		OrderByComparator<RegionLocalization> orderByComparator) {
 
-		List<RegionLocalization> list = findByRegionId(
-			regionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRegionId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {regionId},
+			orderByComparator);
 	}
 
 	/**
@@ -233,12 +221,8 @@ public class RegionLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByRegionId(long regionId) {
-		for (RegionLocalization regionLocalization :
-				findByRegionId(
-					regionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(regionLocalization);
-		}
+		_collectionPersistenceFinderByRegionId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {regionId});
 	}
 
 	/**
@@ -279,23 +263,17 @@ public class RegionLocalizationPersistenceImpl
 			regionId, languageId);
 
 		if (regionLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("regionId=");
-			sb.append(regionId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByRegionId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {regionId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRegionLocalizationException(sb.toString());
+			throw new NoSuchRegionLocalizationException(message);
 		}
 
 		return regionLocalization;
@@ -1275,4 +1253,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1343186429
+// LIFERAY-SERVICE-BUILDER-HASH:998013816

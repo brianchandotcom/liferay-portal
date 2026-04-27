@@ -187,16 +187,9 @@ public class CTPreferencesPersistenceImpl
 			return ctPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
+		throw new NoSuchPreferencesException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class CTPreferencesPersistenceImpl
 		long ctCollectionId,
 		OrderByComparator<CTPreferences> orderByComparator) {
 
-		List<CTPreferences> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -228,13 +215,8 @@ public class CTPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTPreferences ctPreferences :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctPreferences);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -357,16 +339,11 @@ public class CTPreferencesPersistenceImpl
 			return ctPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("previousCtCollectionId=");
-		sb.append(previousCtCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchPreferencesException(sb.toString());
+		throw new NoSuchPreferencesException(
+			_collectionPersistenceFinderByPreviousCtCollectionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {previousCtCollectionId}));
 	}
 
 	/**
@@ -381,14 +358,9 @@ public class CTPreferencesPersistenceImpl
 		long previousCtCollectionId,
 		OrderByComparator<CTPreferences> orderByComparator) {
 
-		List<CTPreferences> list = findByPreviousCtCollectionId(
-			previousCtCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPreviousCtCollectionId.fetchFirst(
+			finderCache, new Object[] {previousCtCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -398,13 +370,8 @@ public class CTPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByPreviousCtCollectionId(long previousCtCollectionId) {
-		for (CTPreferences ctPreferences :
-				findByPreviousCtCollectionId(
-					previousCtCollectionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctPreferences);
-		}
+		_collectionPersistenceFinderByPreviousCtCollectionId.remove(
+			finderCache, new Object[] {previousCtCollectionId});
 	}
 
 	/**
@@ -438,23 +405,15 @@ public class CTPreferencesPersistenceImpl
 		CTPreferences ctPreferences = fetchByC_U(companyId, userId);
 
 		if (ctPreferences == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_U.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPreferencesException(sb.toString());
+			throw new NoSuchPreferencesException(message);
 		}
 
 		return ctPreferences;
@@ -1203,4 +1162,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:118796603
+// LIFERAY-SERVICE-BUILDER-HASH:1956557339

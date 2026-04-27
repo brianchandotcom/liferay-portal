@@ -187,16 +187,9 @@ public class ContactsCardTemplatePersistenceImpl
 			return contactsCardTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContactsCardTemplateException(sb.toString());
+		throw new NoSuchContactsCardTemplateException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class ContactsCardTemplatePersistenceImpl
 		long groupId,
 		OrderByComparator<ContactsCardTemplate> orderByComparator) {
 
-		List<ContactsCardTemplate> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -228,12 +215,8 @@ public class ContactsCardTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (ContactsCardTemplate contactsCardTemplate :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(contactsCardTemplate);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -903,4 +886,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1175279947
+// LIFERAY-SERVICE-BUILDER-HASH:1092515340

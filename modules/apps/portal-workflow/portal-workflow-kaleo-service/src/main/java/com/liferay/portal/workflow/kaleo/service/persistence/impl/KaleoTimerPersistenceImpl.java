@@ -211,19 +211,10 @@ public class KaleoTimerPersistenceImpl
 			return kaleoTimer;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchTimerException(sb.toString());
+		throw new NoSuchTimerException(
+			_collectionPersistenceFinderByKCN_KCPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoClassPK}));
 	}
 
 	/**
@@ -239,14 +230,9 @@ public class KaleoTimerPersistenceImpl
 		String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoTimer> orderByComparator) {
 
-		List<KaleoTimer> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKCN_KCPK.fetchFirst(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -257,13 +243,8 @@ public class KaleoTimerPersistenceImpl
 	 */
 	@Override
 	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
-		for (KaleoTimer kaleoTimer :
-				findByKCN_KCPK(
-					kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoTimer);
-		}
+		_collectionPersistenceFinderByKCN_KCPK.remove(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
 	/**
@@ -411,22 +392,11 @@ public class KaleoTimerPersistenceImpl
 			return kaleoTimer;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", blocking=");
-		sb.append(blocking);
-
-		sb.append("}");
-
-		throw new NoSuchTimerException(sb.toString());
+		throw new NoSuchTimerException(
+			_collectionPersistenceFinderByKCN_KCPK_Blocking.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoClassName, kaleoClassPK, blocking}));
 	}
 
 	/**
@@ -443,14 +413,9 @@ public class KaleoTimerPersistenceImpl
 		String kaleoClassName, long kaleoClassPK, boolean blocking,
 		OrderByComparator<KaleoTimer> orderByComparator) {
 
-		List<KaleoTimer> list = findByKCN_KCPK_Blocking(
-			kaleoClassName, kaleoClassPK, blocking, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKCN_KCPK_Blocking.fetchFirst(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK, blocking},
+			orderByComparator);
 	}
 
 	/**
@@ -464,13 +429,8 @@ public class KaleoTimerPersistenceImpl
 	public void removeByKCN_KCPK_Blocking(
 		String kaleoClassName, long kaleoClassPK, boolean blocking) {
 
-		for (KaleoTimer kaleoTimer :
-				findByKCN_KCPK_Blocking(
-					kaleoClassName, kaleoClassPK, blocking, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoTimer);
-		}
+		_collectionPersistenceFinderByKCN_KCPK_Blocking.remove(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK, blocking});
 	}
 
 	/**
@@ -1448,4 +1408,4 @@ public class KaleoTimerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-684987455
+// LIFERAY-SERVICE-BUILDER-HASH:-238912824

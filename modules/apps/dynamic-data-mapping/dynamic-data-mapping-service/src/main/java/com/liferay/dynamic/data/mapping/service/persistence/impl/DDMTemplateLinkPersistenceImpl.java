@@ -202,16 +202,9 @@ public class DDMTemplateLinkPersistenceImpl
 			return ddmTemplateLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateId=");
-		sb.append(templateId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateLinkException(sb.toString());
+		throw new NoSuchTemplateLinkException(
+			_collectionPersistenceFinderByTemplateId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {templateId}));
 	}
 
 	/**
@@ -225,14 +218,8 @@ public class DDMTemplateLinkPersistenceImpl
 	public DDMTemplateLink fetchByTemplateId_First(
 		long templateId, OrderByComparator<DDMTemplateLink> orderByComparator) {
 
-		List<DDMTemplateLink> list = findByTemplateId(
-			templateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTemplateId.fetchFirst(
+			finderCache, new Object[] {templateId}, orderByComparator);
 	}
 
 	/**
@@ -242,12 +229,8 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByTemplateId(long templateId) {
-		for (DDMTemplateLink ddmTemplateLink :
-				findByTemplateId(
-					templateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmTemplateLink);
-		}
+		_collectionPersistenceFinderByTemplateId.remove(
+			finderCache, new Object[] {templateId});
 	}
 
 	/**
@@ -286,23 +269,16 @@ public class DDMTemplateLinkPersistenceImpl
 		DDMTemplateLink ddmTemplateLink = fetchByC_C(classNameId, classPK);
 
 		if (ddmTemplateLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTemplateLinkException(sb.toString());
+			throw new NoSuchTemplateLinkException(message);
 		}
 
 		return ddmTemplateLink;
@@ -1295,4 +1271,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:914486427
+// LIFERAY-SERVICE-BUILDER-HASH:-444933485

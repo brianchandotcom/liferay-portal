@@ -196,16 +196,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			return workflowMetricsSLADefinitionVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
+		throw new NoSuchSLADefinitionVersionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -221,14 +214,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
 			orderByComparator) {
 
-		List<WorkflowMetricsSLADefinitionVersion> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -238,13 +225,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion :
-					findByUuid(
-						uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinitionVersion);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -280,23 +262,15 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			workflowMetricsSLADefinitionVersion = fetchByUUID_G(uuid, groupId);
 
 		if (workflowMetricsSLADefinitionVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSLADefinitionVersionException(sb.toString());
+			throw new NoSuchSLADefinitionVersionException(message);
 		}
 
 		return workflowMetricsSLADefinitionVersion;
@@ -479,19 +453,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			return workflowMetricsSLADefinitionVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
+		throw new NoSuchSLADefinitionVersionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -508,14 +472,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		OrderByComparator<WorkflowMetricsSLADefinitionVersion>
 			orderByComparator) {
 
-		List<WorkflowMetricsSLADefinitionVersion> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -526,14 +484,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion :
-					findByUuid_C(
-						uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(workflowMetricsSLADefinitionVersion);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -672,16 +624,11 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			return workflowMetricsSLADefinitionVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("workflowMetricsSLADefinitionId=");
-		sb.append(workflowMetricsSLADefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchSLADefinitionVersionException(sb.toString());
+		throw new NoSuchSLADefinitionVersionException(
+			_collectionPersistenceFinderByWorkflowMetricsSLADefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {workflowMetricsSLADefinitionId}));
 	}
 
 	/**
@@ -698,15 +645,10 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			OrderByComparator<WorkflowMetricsSLADefinitionVersion>
 				orderByComparator) {
 
-		List<WorkflowMetricsSLADefinitionVersion> list =
-			findByWorkflowMetricsSLADefinitionId(
-				workflowMetricsSLADefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByWorkflowMetricsSLADefinitionId.
+			fetchFirst(
+				finderCache, new Object[] {workflowMetricsSLADefinitionId},
+				orderByComparator);
 	}
 
 	/**
@@ -718,14 +660,8 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	public void removeByWorkflowMetricsSLADefinitionId(
 		long workflowMetricsSLADefinitionId) {
 
-		for (WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion :
-					findByWorkflowMetricsSLADefinitionId(
-						workflowMetricsSLADefinitionId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(workflowMetricsSLADefinitionVersion);
-		}
+		_collectionPersistenceFinderByWorkflowMetricsSLADefinitionId.remove(
+			finderCache, new Object[] {workflowMetricsSLADefinitionId});
 	}
 
 	/**
@@ -764,23 +700,16 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				version, workflowMetricsSLADefinitionId);
 
 		if (workflowMetricsSLADefinitionVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("version=");
-			sb.append(version);
-
-			sb.append(", workflowMetricsSLADefinitionId=");
-			sb.append(workflowMetricsSLADefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByV_WMSLAD.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {version, workflowMetricsSLADefinitionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSLADefinitionVersionException(sb.toString());
+			throw new NoSuchSLADefinitionVersionException(message);
 		}
 
 		return workflowMetricsSLADefinitionVersion;
@@ -1765,4 +1694,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1585841027
+// LIFERAY-SERVICE-BUILDER-HASH:1068320495

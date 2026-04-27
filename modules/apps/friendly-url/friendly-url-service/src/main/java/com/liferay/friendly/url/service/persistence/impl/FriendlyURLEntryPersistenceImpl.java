@@ -204,16 +204,9 @@ public class FriendlyURLEntryPersistenceImpl
 			return friendlyURLEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
+		throw new NoSuchFriendlyURLEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -227,13 +220,8 @@ public class FriendlyURLEntryPersistenceImpl
 	public FriendlyURLEntry fetchByUuid_First(
 		String uuid, OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		List<FriendlyURLEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -243,11 +231,8 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (FriendlyURLEntry friendlyURLEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(friendlyURLEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -286,23 +271,15 @@ public class FriendlyURLEntryPersistenceImpl
 		FriendlyURLEntry friendlyURLEntry = fetchByUUID_G(uuid, groupId);
 
 		if (friendlyURLEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFriendlyURLEntryException(sb.toString());
+			throw new NoSuchFriendlyURLEntryException(message);
 		}
 
 		return friendlyURLEntry;
@@ -485,19 +462,9 @@ public class FriendlyURLEntryPersistenceImpl
 			return friendlyURLEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
+		throw new NoSuchFriendlyURLEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -513,14 +480,8 @@ public class FriendlyURLEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		List<FriendlyURLEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -531,13 +492,8 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (FriendlyURLEntry friendlyURLEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(friendlyURLEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -673,19 +629,9 @@ public class FriendlyURLEntryPersistenceImpl
 			return friendlyURLEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
+		throw new NoSuchFriendlyURLEntryException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -701,14 +647,9 @@ public class FriendlyURLEntryPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		List<FriendlyURLEntry> list = findByG_C(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -719,13 +660,8 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long classNameId) {
-		for (FriendlyURLEntry friendlyURLEntry :
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(friendlyURLEntry);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -861,19 +797,10 @@ public class FriendlyURLEntryPersistenceImpl
 			return friendlyURLEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
+		throw new NoSuchFriendlyURLEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -889,14 +816,9 @@ public class FriendlyURLEntryPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		List<FriendlyURLEntry> list = findByC_C(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -907,13 +829,8 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long classNameId) {
-		for (FriendlyURLEntry friendlyURLEntry :
-				findByC_C(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(friendlyURLEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1057,22 +974,10 @@ public class FriendlyURLEntryPersistenceImpl
 			return friendlyURLEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchFriendlyURLEntryException(sb.toString());
+		throw new NoSuchFriendlyURLEntryException(
+			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK}));
 	}
 
 	/**
@@ -1089,14 +994,9 @@ public class FriendlyURLEntryPersistenceImpl
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<FriendlyURLEntry> orderByComparator) {
 
-		List<FriendlyURLEntry> list = findByG_C_C(
-			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1108,13 +1008,8 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
-		for (FriendlyURLEntry friendlyURLEntry :
-				findByG_C_C(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(friendlyURLEntry);
-		}
+		_collectionPersistenceFinderByG_C_C.remove(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -2256,4 +2151,4 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1604860147
+// LIFERAY-SERVICE-BUILDER-HASH:-401262191

@@ -214,16 +214,9 @@ public class TemplateEntryPersistenceImpl
 			return templateEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
+		throw new NoSuchTemplateEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,13 +230,8 @@ public class TemplateEntryPersistenceImpl
 	public TemplateEntry fetchByUuid_First(
 		String uuid, OrderByComparator<TemplateEntry> orderByComparator) {
 
-		List<TemplateEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -253,11 +241,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (TemplateEntry templateEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(templateEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -296,23 +281,15 @@ public class TemplateEntryPersistenceImpl
 		TemplateEntry templateEntry = fetchByUUID_G(uuid, groupId);
 
 		if (templateEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTemplateEntryException(sb.toString());
+			throw new NoSuchTemplateEntryException(message);
 		}
 
 		return templateEntry;
@@ -495,19 +472,9 @@ public class TemplateEntryPersistenceImpl
 			return templateEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
+		throw new NoSuchTemplateEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -523,14 +490,8 @@ public class TemplateEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<TemplateEntry> orderByComparator) {
 
-		List<TemplateEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -541,13 +502,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (TemplateEntry templateEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(templateEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1144,20 +1100,15 @@ public class TemplateEntryPersistenceImpl
 		TemplateEntry templateEntry = fetchByDDMTemplateId(ddmTemplateId);
 
 		if (templateEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ddmTemplateId=");
-			sb.append(ddmTemplateId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByDDMTemplateId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ddmTemplateId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTemplateEntryException(sb.toString());
+			throw new NoSuchTemplateEntryException(message);
 		}
 
 		return templateEntry;
@@ -1339,19 +1290,10 @@ public class TemplateEntryPersistenceImpl
 			return templateEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", infoItemClassName=");
-		sb.append(infoItemClassName);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateEntryException(sb.toString());
+		throw new NoSuchTemplateEntryException(
+			_collectionPersistenceFinderByG_IICN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, infoItemClassName}));
 	}
 
 	/**
@@ -1367,14 +1309,9 @@ public class TemplateEntryPersistenceImpl
 		long groupId, String infoItemClassName,
 		OrderByComparator<TemplateEntry> orderByComparator) {
 
-		List<TemplateEntry> list = findByG_IICN(
-			groupId, infoItemClassName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_IICN.fetchFirst(
+			finderCache, new Object[] {groupId, infoItemClassName},
+			orderByComparator);
 	}
 
 	/**
@@ -1385,13 +1322,8 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_IICN(long groupId, String infoItemClassName) {
-		for (TemplateEntry templateEntry :
-				findByG_IICN(
-					groupId, infoItemClassName, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(templateEntry);
-		}
+		_collectionPersistenceFinderByG_IICN.remove(
+			finderCache, new Object[] {groupId, infoItemClassName});
 	}
 
 	/**
@@ -2252,23 +2184,16 @@ public class TemplateEntryPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (templateEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTemplateEntryException(sb.toString());
+			throw new NoSuchTemplateEntryException(message);
 		}
 
 		return templateEntry;
@@ -3568,4 +3493,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2050917904
+// LIFERAY-SERVICE-BUILDER-HASH:2033087994

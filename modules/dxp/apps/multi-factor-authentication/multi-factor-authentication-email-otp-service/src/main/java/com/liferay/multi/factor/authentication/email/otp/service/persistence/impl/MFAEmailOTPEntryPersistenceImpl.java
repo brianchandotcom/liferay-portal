@@ -102,20 +102,15 @@ public class MFAEmailOTPEntryPersistenceImpl
 		MFAEmailOTPEntry mfaEmailOTPEntry = fetchByUserId(userId);
 
 		if (mfaEmailOTPEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return mfaEmailOTPEntry;
@@ -812,4 +807,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:986925438
+// LIFERAY-SERVICE-BUILDER-HASH:-1883277331

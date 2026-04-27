@@ -214,16 +214,9 @@ public class CSDiagramEntryPersistenceImpl
 			return csDiagramEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
+		throw new NoSuchCSDiagramEntryException(
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -238,14 +231,8 @@ public class CSDiagramEntryPersistenceImpl
 		long CPDefinitionId,
 		OrderByComparator<CSDiagramEntry> orderByComparator) {
 
-		List<CSDiagramEntry> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -255,13 +242,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CSDiagramEntry csDiagramEntry :
-				findByCPDefinitionId(
-					CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(csDiagramEntry);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -391,16 +373,9 @@ public class CSDiagramEntryPersistenceImpl
 			return csDiagramEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
+		throw new NoSuchCSDiagramEntryException(
+			_collectionPersistenceFinderByCPInstanceId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId}));
 	}
 
 	/**
@@ -415,14 +390,8 @@ public class CSDiagramEntryPersistenceImpl
 		long CPInstanceId,
 		OrderByComparator<CSDiagramEntry> orderByComparator) {
 
-		List<CSDiagramEntry> list = findByCPInstanceId(
-			CPInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPInstanceId.fetchFirst(
+			finderCache, new Object[] {CPInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -432,12 +401,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCPInstanceId(long CPInstanceId) {
-		for (CSDiagramEntry csDiagramEntry :
-				findByCPInstanceId(
-					CPInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(csDiagramEntry);
-		}
+		_collectionPersistenceFinderByCPInstanceId.remove(
+			finderCache, new Object[] {CPInstanceId});
 	}
 
 	/**
@@ -567,16 +532,9 @@ public class CSDiagramEntryPersistenceImpl
 			return csDiagramEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramEntryException(sb.toString());
+		throw new NoSuchCSDiagramEntryException(
+			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
 	}
 
 	/**
@@ -590,14 +548,8 @@ public class CSDiagramEntryPersistenceImpl
 	public CSDiagramEntry fetchByCProductId_First(
 		long CProductId, OrderByComparator<CSDiagramEntry> orderByComparator) {
 
-		List<CSDiagramEntry> list = findByCProductId(
-			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCProductId.fetchFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -607,12 +559,8 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCProductId(long CProductId) {
-		for (CSDiagramEntry csDiagramEntry :
-				findByCProductId(
-					CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(csDiagramEntry);
-		}
+		_collectionPersistenceFinderByCProductId.remove(
+			finderCache, new Object[] {CProductId});
 	}
 
 	/**
@@ -651,23 +599,16 @@ public class CSDiagramEntryPersistenceImpl
 		CSDiagramEntry csDiagramEntry = fetchByCPDI_S(CPDefinitionId, sequence);
 
 		if (csDiagramEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append(", sequence=");
-			sb.append(sequence);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCPDI_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPDefinitionId, sequence});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCSDiagramEntryException(sb.toString());
+			throw new NoSuchCSDiagramEntryException(message);
 		}
 
 		return csDiagramEntry;
@@ -757,23 +698,16 @@ public class CSDiagramEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (csDiagramEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCSDiagramEntryException(sb.toString());
+			throw new NoSuchCSDiagramEntryException(message);
 		}
 
 		return csDiagramEntry;
@@ -1965,4 +1899,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-410739985
+// LIFERAY-SERVICE-BUILDER-HASH:-1913923991

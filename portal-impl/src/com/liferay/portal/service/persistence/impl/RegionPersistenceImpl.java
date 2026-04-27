@@ -193,16 +193,9 @@ public class RegionPersistenceImpl
 			return region;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
+		throw new NoSuchRegionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,13 +209,9 @@ public class RegionPersistenceImpl
 	public Region fetchByUuid_First(
 		String uuid, OrderByComparator<Region> orderByComparator) {
 
-		List<Region> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -232,11 +221,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Region region :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(region);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -370,19 +356,9 @@ public class RegionPersistenceImpl
 			return region;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
+		throw new NoSuchRegionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -398,14 +374,9 @@ public class RegionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Region> orderByComparator) {
 
-		List<Region> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -416,13 +387,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Region region :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(region);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -548,16 +514,9 @@ public class RegionPersistenceImpl
 			return region;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
+		throw new NoSuchRegionException(
+			_collectionPersistenceFinderByCountryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId}));
 	}
 
 	/**
@@ -571,13 +530,9 @@ public class RegionPersistenceImpl
 	public Region fetchByCountryId_First(
 		long countryId, OrderByComparator<Region> orderByComparator) {
 
-		List<Region> list = findByCountryId(countryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCountryId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId},
+			orderByComparator);
 	}
 
 	/**
@@ -587,12 +542,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public void removeByCountryId(long countryId) {
-		for (Region region :
-				findByCountryId(
-					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(region);
-		}
+		_collectionPersistenceFinderByCountryId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
 	/**
@@ -715,16 +666,9 @@ public class RegionPersistenceImpl
 			return region;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
+		throw new NoSuchRegionException(
+			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
 	}
 
 	/**
@@ -738,13 +682,9 @@ public class RegionPersistenceImpl
 	public Region fetchByActive_First(
 		boolean active, OrderByComparator<Region> orderByComparator) {
 
-		List<Region> list = findByActive(active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByActive.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {active},
+			orderByComparator);
 	}
 
 	/**
@@ -754,12 +694,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public void removeByActive(boolean active) {
-		for (Region region :
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(region);
-		}
+		_collectionPersistenceFinderByActive.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
 	/**
@@ -893,19 +829,9 @@ public class RegionPersistenceImpl
 			return region;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchRegionException(sb.toString());
+		throw new NoSuchRegionException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId, active}));
 	}
 
 	/**
@@ -921,14 +847,9 @@ public class RegionPersistenceImpl
 		long countryId, boolean active,
 		OrderByComparator<Region> orderByComparator) {
 
-		List<Region> list = findByC_A(
-			countryId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -939,13 +860,8 @@ public class RegionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long countryId, boolean active) {
-		for (Region region :
-				findByC_A(
-					countryId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(region);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {countryId, active});
 	}
 
 	/**
@@ -985,23 +901,16 @@ public class RegionPersistenceImpl
 		Region region = fetchByC_R(countryId, regionCode);
 
 		if (region == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("countryId=");
-			sb.append(countryId);
-
-			sb.append(", regionCode=");
-			sb.append(regionCode);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_R.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {countryId, regionCode});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRegionException(sb.toString());
+			throw new NoSuchRegionException(message);
 		}
 
 		return region;
@@ -2109,4 +2018,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1741348195
+// LIFERAY-SERVICE-BUILDER-HASH:-1508090477

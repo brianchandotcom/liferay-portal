@@ -191,16 +191,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -214,13 +207,9 @@ public class SocialRequestPersistenceImpl
 	public SocialRequest fetchByUuid_First(
 		String uuid, OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -230,11 +219,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SocialRequest socialRequest :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -273,23 +259,15 @@ public class SocialRequestPersistenceImpl
 		SocialRequest socialRequest = fetchByUUID_G(uuid, groupId);
 
 		if (socialRequest == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRequestException(sb.toString());
+			throw new NoSuchRequestException(message);
 		}
 
 		return socialRequest;
@@ -474,19 +452,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -502,14 +470,9 @@ public class SocialRequestPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -520,13 +483,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SocialRequest socialRequest :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -656,16 +614,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -679,14 +630,9 @@ public class SocialRequestPersistenceImpl
 	public SocialRequest fetchByCompanyId_First(
 		long companyId, OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -696,12 +642,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SocialRequest socialRequest :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -826,16 +768,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -849,14 +784,9 @@ public class SocialRequestPersistenceImpl
 	public SocialRequest fetchByUserId_First(
 		long userId, OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -866,12 +796,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SocialRequest socialRequest :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -1001,16 +927,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByReceiverUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {receiverUserId}));
 	}
 
 	/**
@@ -1025,14 +944,9 @@ public class SocialRequestPersistenceImpl
 		long receiverUserId,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByReceiverUserId(
-			receiverUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByReceiverUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {receiverUserId},
+			orderByComparator);
 	}
 
 	/**
@@ -1042,13 +956,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByReceiverUserId(long receiverUserId) {
-		for (SocialRequest socialRequest :
-				findByReceiverUserId(
-					receiverUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByReceiverUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {receiverUserId});
 	}
 
 	/**
@@ -1183,19 +1092,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByU_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, status}));
 	}
 
 	/**
@@ -1211,14 +1110,9 @@ public class SocialRequestPersistenceImpl
 		long userId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByU_S(
-			userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1229,13 +1123,8 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByU_S(long userId, int status) {
-		for (SocialRequest socialRequest :
-				findByU_S(
-					userId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByU_S.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, status});
 	}
 
 	/**
@@ -1373,19 +1262,9 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1401,14 +1280,9 @@ public class SocialRequestPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1419,13 +1293,9 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (SocialRequest socialRequest :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1563,19 +1433,10 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByR_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {receiverUserId, status}));
 	}
 
 	/**
@@ -1591,14 +1452,9 @@ public class SocialRequestPersistenceImpl
 		long receiverUserId, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByR_S(
-			receiverUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {receiverUserId, status}, orderByComparator);
 	}
 
 	/**
@@ -1609,13 +1465,9 @@ public class SocialRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByR_S(long receiverUserId, int status) {
-		for (SocialRequest socialRequest :
-				findByR_S(
-					receiverUserId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByR_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {receiverUserId, status});
 	}
 
 	/**
@@ -1662,32 +1514,18 @@ public class SocialRequestPersistenceImpl
 			userId, classNameId, classPK, type, receiverUserId);
 
 		if (socialRequest == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append(", receiverUserId=");
-			sb.append(receiverUserId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_C_C_T_R.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						userId, classNameId, classPK, type, receiverUserId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRequestException(sb.toString());
+			throw new NoSuchRequestException(message);
 		}
 
 		return socialRequest;
@@ -1921,28 +1759,10 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByU_C_C_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, classNameId, classPK, type, status}));
 	}
 
 	/**
@@ -1961,15 +1781,10 @@ public class SocialRequestPersistenceImpl
 		long userId, long classNameId, long classPK, int type, int status,
 		OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByU_C_C_T_S(
-			userId, classNameId, classPK, type, status, 0, 1,
+		return _collectionPersistenceFinderByU_C_C_T_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, classNameId, classPK, type, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1985,13 +1800,9 @@ public class SocialRequestPersistenceImpl
 	public void removeByU_C_C_T_S(
 		long userId, long classNameId, long classPK, int type, int status) {
 
-		for (SocialRequest socialRequest :
-				findByU_C_C_T_S(
-					userId, classNameId, classPK, type, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByU_C_C_T_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, classNameId, classPK, type, status});
 	}
 
 	/**
@@ -2162,28 +1973,12 @@ public class SocialRequestPersistenceImpl
 			return socialRequest;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRequestException(sb.toString());
+		throw new NoSuchRequestException(
+			_collectionPersistenceFinderByC_C_T_R_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					classNameId, classPK, type, receiverUserId, status
+				}));
 	}
 
 	/**
@@ -2202,15 +1997,10 @@ public class SocialRequestPersistenceImpl
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status, OrderByComparator<SocialRequest> orderByComparator) {
 
-		List<SocialRequest> list = findByC_C_T_R_S(
-			classNameId, classPK, type, receiverUserId, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_T_R_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type, receiverUserId, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2227,13 +2017,9 @@ public class SocialRequestPersistenceImpl
 		long classNameId, long classPK, int type, long receiverUserId,
 		int status) {
 
-		for (SocialRequest socialRequest :
-				findByC_C_T_R_S(
-					classNameId, classPK, type, receiverUserId, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRequest);
-		}
+		_collectionPersistenceFinderByC_C_T_R_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, type, receiverUserId, status});
 	}
 
 	/**
@@ -3559,4 +3345,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-363494645
+// LIFERAY-SERVICE-BUILDER-HASH:1038956997

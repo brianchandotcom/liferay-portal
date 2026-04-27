@@ -194,16 +194,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			return commerceNotificationAttachment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
+		throw new NoSuchNotificationAttachmentException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -218,14 +211,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceNotificationAttachment> orderByComparator) {
 
-		List<CommerceNotificationAttachment> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -235,11 +222,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationAttachment);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -275,23 +259,15 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (commerceNotificationAttachment == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationAttachmentException(sb.toString());
+			throw new NoSuchNotificationAttachmentException(message);
 		}
 
 		return commerceNotificationAttachment;
@@ -470,19 +446,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			return commerceNotificationAttachment;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
+		throw new NoSuchNotificationAttachmentException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -498,14 +464,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceNotificationAttachment> orderByComparator) {
 
-		List<CommerceNotificationAttachment> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -516,13 +476,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceNotificationAttachment);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -659,16 +614,11 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			return commerceNotificationAttachment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceNotificationQueueEntryId=");
-		sb.append(commerceNotificationQueueEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationAttachmentException(sb.toString());
+		throw new NoSuchNotificationAttachmentException(
+			_collectionPersistenceFinderByCommerceNotificationQueueEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceNotificationQueueEntryId}));
 	}
 
 	/**
@@ -685,15 +635,10 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			OrderByComparator<CommerceNotificationAttachment>
 				orderByComparator) {
 
-		List<CommerceNotificationAttachment> list =
-			findByCommerceNotificationQueueEntryId(
-				commerceNotificationQueueEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceNotificationQueueEntryId.
+			fetchFirst(
+				finderCache, new Object[] {commerceNotificationQueueEntryId},
+				orderByComparator);
 	}
 
 	/**
@@ -705,13 +650,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	public void removeByCommerceNotificationQueueEntryId(
 		long commerceNotificationQueueEntryId) {
 
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				findByCommerceNotificationQueueEntryId(
-					commerceNotificationQueueEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationAttachment);
-		}
+		_collectionPersistenceFinderByCommerceNotificationQueueEntryId.remove(
+			finderCache, new Object[] {commerceNotificationQueueEntryId});
 	}
 
 	/**
@@ -1576,4 +1516,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:866623207
+// LIFERAY-SERVICE-BUILDER-HASH:905511543

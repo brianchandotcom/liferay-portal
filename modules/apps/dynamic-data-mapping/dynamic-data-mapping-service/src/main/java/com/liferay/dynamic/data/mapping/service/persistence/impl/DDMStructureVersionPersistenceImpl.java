@@ -206,16 +206,9 @@ public class DDMStructureVersionPersistenceImpl
 			return ddmStructureVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureVersionException(sb.toString());
+		throw new NoSuchStructureVersionException(
+			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class DDMStructureVersionPersistenceImpl
 		long structureId,
 		OrderByComparator<DDMStructureVersion> orderByComparator) {
 
-		List<DDMStructureVersion> list = findByStructureId(
-			structureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureId.fetchFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -247,12 +234,8 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureId(long structureId) {
-		for (DDMStructureVersion ddmStructureVersion :
-				findByStructureId(
-					structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStructureVersion);
-		}
+		_collectionPersistenceFinderByStructureId.remove(
+			finderCache, new Object[] {structureId});
 	}
 
 	/**
@@ -292,23 +275,16 @@ public class DDMStructureVersionPersistenceImpl
 			structureId, version);
 
 		if (ddmStructureVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("structureId=");
-			sb.append(structureId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {structureId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStructureVersionException(sb.toString());
+			throw new NoSuchStructureVersionException(message);
 		}
 
 		return ddmStructureVersion;
@@ -493,19 +469,9 @@ public class DDMStructureVersionPersistenceImpl
 			return ddmStructureVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchStructureVersionException(sb.toString());
+		throw new NoSuchStructureVersionException(
+			_collectionPersistenceFinderByS_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId, status}));
 	}
 
 	/**
@@ -521,14 +487,8 @@ public class DDMStructureVersionPersistenceImpl
 		long structureId, int status,
 		OrderByComparator<DDMStructureVersion> orderByComparator) {
 
-		List<DDMStructureVersion> list = findByS_S(
-			structureId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_S.fetchFirst(
+			finderCache, new Object[] {structureId, status}, orderByComparator);
 	}
 
 	/**
@@ -539,13 +499,8 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByS_S(long structureId, int status) {
-		for (DDMStructureVersion ddmStructureVersion :
-				findByS_S(
-					structureId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStructureVersion);
-		}
+		_collectionPersistenceFinderByS_S.remove(
+			finderCache, new Object[] {structureId, status});
 	}
 
 	/**
@@ -1592,4 +1547,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1073704690
+// LIFERAY-SERVICE-BUILDER-HASH:-646862396

@@ -199,16 +199,9 @@ public class PatcherAccountPersistenceImpl
 			return patcherAccount;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherAccountException(sb.toString());
+		throw new NoSuchPatcherAccountException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -222,14 +215,8 @@ public class PatcherAccountPersistenceImpl
 	public PatcherAccount fetchByCompanyId_First(
 		long companyId, OrderByComparator<PatcherAccount> orderByComparator) {
 
-		List<PatcherAccount> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -380,12 +367,8 @@ public class PatcherAccountPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (PatcherAccount patcherAccount :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherAccount);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -478,20 +461,17 @@ public class PatcherAccountPersistenceImpl
 			accountEntryCode);
 
 		if (patcherAccount == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("accountEntryCode=");
-			sb.append(accountEntryCode);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByAccountEntryCode.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {accountEntryCode});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherAccountException(sb.toString());
+			throw new NoSuchPatcherAccountException(message);
 		}
 
 		return patcherAccount;
@@ -663,19 +643,10 @@ public class PatcherAccountPersistenceImpl
 			return patcherAccount;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", accountEntryCodeLIKE");
-		sb.append(accountEntryCode);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherAccountException(sb.toString());
+		throw new NoSuchPatcherAccountException(
+			_collectionPersistenceFinderByC_LikeA.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, accountEntryCode}));
 	}
 
 	/**
@@ -691,14 +662,9 @@ public class PatcherAccountPersistenceImpl
 		long companyId, String accountEntryCode,
 		OrderByComparator<PatcherAccount> orderByComparator) {
 
-		List<PatcherAccount> list = findByC_LikeA(
-			companyId, accountEntryCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LikeA.fetchFirst(
+			finderCache, new Object[] {companyId, accountEntryCode},
+			orderByComparator);
 	}
 
 	/**
@@ -875,13 +841,8 @@ public class PatcherAccountPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LikeA(long companyId, String accountEntryCode) {
-		for (PatcherAccount patcherAccount :
-				findByC_LikeA(
-					companyId, accountEntryCode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherAccount);
-		}
+		_collectionPersistenceFinderByC_LikeA.remove(
+			finderCache, new Object[] {companyId, accountEntryCode});
 	}
 
 	/**
@@ -2047,4 +2008,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:87728441
+// LIFERAY-SERVICE-BUILDER-HASH:-656008216

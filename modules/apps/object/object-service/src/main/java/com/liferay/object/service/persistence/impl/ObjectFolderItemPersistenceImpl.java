@@ -189,16 +189,9 @@ public class ObjectFolderItemPersistenceImpl
 			return objectFolderItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
+		throw new NoSuchObjectFolderItemException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -212,13 +205,8 @@ public class ObjectFolderItemPersistenceImpl
 	public ObjectFolderItem fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectFolderItem> orderByComparator) {
 
-		List<ObjectFolderItem> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -228,11 +216,8 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectFolderItem objectFolderItem :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectFolderItem);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -357,19 +342,9 @@ public class ObjectFolderItemPersistenceImpl
 			return objectFolderItem;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
+		throw new NoSuchObjectFolderItemException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -385,14 +360,8 @@ public class ObjectFolderItemPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectFolderItem> orderByComparator) {
 
-		List<ObjectFolderItem> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -403,13 +372,8 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectFolderItem objectFolderItem :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectFolderItem);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -532,16 +496,11 @@ public class ObjectFolderItemPersistenceImpl
 			return objectFolderItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
+		throw new NoSuchObjectFolderItemException(
+			_collectionPersistenceFinderByObjectDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId}));
 	}
 
 	/**
@@ -556,14 +515,8 @@ public class ObjectFolderItemPersistenceImpl
 		long objectDefinitionId,
 		OrderByComparator<ObjectFolderItem> orderByComparator) {
 
-		List<ObjectFolderItem> list = findByObjectDefinitionId(
-			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectDefinitionId.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -573,13 +526,8 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectDefinitionId(long objectDefinitionId) {
-		for (ObjectFolderItem objectFolderItem :
-				findByObjectDefinitionId(
-					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectFolderItem);
-		}
+		_collectionPersistenceFinderByObjectDefinitionId.remove(
+			finderCache, new Object[] {objectDefinitionId});
 	}
 
 	/**
@@ -699,16 +647,9 @@ public class ObjectFolderItemPersistenceImpl
 			return objectFolderItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFolderId=");
-		sb.append(objectFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFolderItemException(sb.toString());
+		throw new NoSuchObjectFolderItemException(
+			_collectionPersistenceFinderByObjectFolderId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFolderId}));
 	}
 
 	/**
@@ -723,14 +664,8 @@ public class ObjectFolderItemPersistenceImpl
 		long objectFolderId,
 		OrderByComparator<ObjectFolderItem> orderByComparator) {
 
-		List<ObjectFolderItem> list = findByObjectFolderId(
-			objectFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectFolderId.fetchFirst(
+			finderCache, new Object[] {objectFolderId}, orderByComparator);
 	}
 
 	/**
@@ -740,13 +675,8 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectFolderId(long objectFolderId) {
-		for (ObjectFolderItem objectFolderItem :
-				findByObjectFolderId(
-					objectFolderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectFolderItem);
-		}
+		_collectionPersistenceFinderByObjectFolderId.remove(
+			finderCache, new Object[] {objectFolderId});
 	}
 
 	/**
@@ -782,23 +712,16 @@ public class ObjectFolderItemPersistenceImpl
 			objectDefinitionId, objectFolderId);
 
 		if (objectFolderItem == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append(", objectFolderId=");
-			sb.append(objectFolderId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByODI_OFI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId, objectFolderId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectFolderItemException(sb.toString());
+			throw new NoSuchObjectFolderItemException(message);
 		}
 
 		return objectFolderItem;
@@ -1668,4 +1591,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-675831845
+// LIFERAY-SERVICE-BUILDER-HASH:-859433886

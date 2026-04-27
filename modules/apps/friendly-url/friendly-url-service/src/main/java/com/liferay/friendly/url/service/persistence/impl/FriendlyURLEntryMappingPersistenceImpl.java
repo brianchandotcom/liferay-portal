@@ -111,23 +111,16 @@ public class FriendlyURLEntryMappingPersistenceImpl
 			classNameId, classPK);
 
 		if (friendlyURLEntryMapping == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFriendlyURLEntryMappingException(sb.toString());
+			throw new NoSuchFriendlyURLEntryMappingException(message);
 		}
 
 		return friendlyURLEntryMapping;
@@ -1124,4 +1117,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:713067472
+// LIFERAY-SERVICE-BUILDER-HASH:-406357649

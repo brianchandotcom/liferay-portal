@@ -188,16 +188,9 @@ public class ChangesetEntryPersistenceImpl
 			return changesetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class ChangesetEntryPersistenceImpl
 	public ChangesetEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<ChangesetEntry> orderByComparator) {
 
-		List<ChangesetEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -228,12 +215,8 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (ChangesetEntry changesetEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(changesetEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -351,16 +334,9 @@ public class ChangesetEntryPersistenceImpl
 			return changesetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -374,14 +350,8 @@ public class ChangesetEntryPersistenceImpl
 	public ChangesetEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<ChangesetEntry> orderByComparator) {
 
-		List<ChangesetEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -391,12 +361,8 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (ChangesetEntry changesetEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(changesetEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -519,16 +485,11 @@ public class ChangesetEntryPersistenceImpl
 			return changesetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("changesetCollectionId=");
-		sb.append(changesetCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByChangesetCollectionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {changesetCollectionId}));
 	}
 
 	/**
@@ -543,14 +504,9 @@ public class ChangesetEntryPersistenceImpl
 		long changesetCollectionId,
 		OrderByComparator<ChangesetEntry> orderByComparator) {
 
-		List<ChangesetEntry> list = findByChangesetCollectionId(
-			changesetCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByChangesetCollectionId.fetchFirst(
+			finderCache, new Object[] {changesetCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -560,13 +516,8 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByChangesetCollectionId(long changesetCollectionId) {
-		for (ChangesetEntry changesetEntry :
-				findByChangesetCollectionId(
-					changesetCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(changesetEntry);
-		}
+		_collectionPersistenceFinderByChangesetCollectionId.remove(
+			finderCache, new Object[] {changesetCollectionId});
 	}
 
 	/**
@@ -691,19 +642,9 @@ public class ChangesetEntryPersistenceImpl
 			return changesetEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -719,14 +660,9 @@ public class ChangesetEntryPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<ChangesetEntry> orderByComparator) {
 
-		List<ChangesetEntry> list = findByG_C(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -737,13 +673,8 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long classNameId) {
-		for (ChangesetEntry changesetEntry :
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(changesetEntry);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -873,19 +804,10 @@ public class ChangesetEntryPersistenceImpl
 			return changesetEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("changesetCollectionId=");
-		sb.append(changesetCollectionId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {changesetCollectionId, classNameId}));
 	}
 
 	/**
@@ -901,14 +823,9 @@ public class ChangesetEntryPersistenceImpl
 		long changesetCollectionId, long classNameId,
 		OrderByComparator<ChangesetEntry> orderByComparator) {
 
-		List<ChangesetEntry> list = findByC_C(
-			changesetCollectionId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {changesetCollectionId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -919,13 +836,8 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long changesetCollectionId, long classNameId) {
-		for (ChangesetEntry changesetEntry :
-				findByC_C(
-					changesetCollectionId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(changesetEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {changesetCollectionId, classNameId});
 	}
 
 	/**
@@ -964,26 +876,19 @@ public class ChangesetEntryPersistenceImpl
 			changesetCollectionId, classExternalReferenceCode, classNameId);
 
 		if (changesetEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("changesetCollectionId=");
-			sb.append(changesetCollectionId);
-
-			sb.append(", classExternalReferenceCode=");
-			sb.append(classExternalReferenceCode);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_CERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						changesetCollectionId, classExternalReferenceCode,
+						classNameId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return changesetEntry;
@@ -1091,26 +996,16 @@ public class ChangesetEntryPersistenceImpl
 			changesetCollectionId, classNameId, classPK);
 
 		if (changesetEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("changesetCollectionId=");
-			sb.append(changesetCollectionId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {changesetCollectionId, classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return changesetEntry;
@@ -2045,4 +1940,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2041138385
+// LIFERAY-SERVICE-BUILDER-HASH:146815961

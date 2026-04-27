@@ -104,20 +104,17 @@ public class PatcherTicketHintPersistenceImpl
 			patcherProductVersionId);
 
 		if (patcherTicketHint == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("patcherProductVersionId=");
-			sb.append(patcherProductVersionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByPatcherProductVersionId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {patcherProductVersionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherTicketHintException(sb.toString());
+			throw new NoSuchPatcherTicketHintException(message);
 		}
 
 		return patcherTicketHint;
@@ -834,4 +831,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:706521074
+// LIFERAY-SERVICE-BUILDER-HASH:381360485

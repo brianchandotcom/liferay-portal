@@ -218,16 +218,11 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			return commercePricingClassCPDefinitionRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePricingClassId=");
-		sb.append(commercePricingClassId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassCPDefinitionRelException(sb.toString());
+		throw new NoSuchPricingClassCPDefinitionRelException(
+			_collectionPersistenceFinderByCommercePricingClassId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commercePricingClassId}));
 	}
 
 	/**
@@ -244,15 +239,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			OrderByComparator<CommercePricingClassCPDefinitionRel>
 				orderByComparator) {
 
-		List<CommercePricingClassCPDefinitionRel> list =
-			findByCommercePricingClassId(
-				commercePricingClassId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommercePricingClassId.fetchFirst(
+			finderCache, new Object[] {commercePricingClassId},
+			orderByComparator);
 	}
 
 	/**
@@ -262,14 +251,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommercePricingClassId(long commercePricingClassId) {
-		for (CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel :
-					findByCommercePricingClassId(
-						commercePricingClassId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commercePricingClassCPDefinitionRel);
-		}
+		_collectionPersistenceFinderByCommercePricingClassId.remove(
+			finderCache, new Object[] {commercePricingClassId});
 	}
 
 	/**
@@ -405,16 +388,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			return commercePricingClassCPDefinitionRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchPricingClassCPDefinitionRelException(sb.toString());
+		throw new NoSuchPricingClassCPDefinitionRelException(
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -430,14 +406,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		OrderByComparator<CommercePricingClassCPDefinitionRel>
 			orderByComparator) {
 
-		List<CommercePricingClassCPDefinitionRel> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -447,14 +417,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel :
-					findByCPDefinitionId(
-						CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(commercePricingClassCPDefinitionRel);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -496,23 +460,16 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 				commercePricingClassId, CPDefinitionId);
 
 		if (commercePricingClassCPDefinitionRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commercePricingClassId=");
-			sb.append(commercePricingClassId);
-
-			sb.append(", CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commercePricingClassId, CPDefinitionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPricingClassCPDefinitionRelException(sb.toString());
+			throw new NoSuchPricingClassCPDefinitionRelException(message);
 		}
 
 		return commercePricingClassCPDefinitionRel;
@@ -1708,4 +1665,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-681810699
+// LIFERAY-SERVICE-BUILDER-HASH:-832494934

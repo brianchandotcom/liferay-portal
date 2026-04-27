@@ -201,16 +201,9 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,13 +217,8 @@ public class AccountGroupPersistenceImpl
 	public AccountGroup fetchByUuid_First(
 		String uuid, OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -394,11 +382,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AccountGroup accountGroup :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -598,19 +583,9 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -626,14 +601,8 @@ public class AccountGroupPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -805,13 +774,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AccountGroup accountGroup :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1980,16 +1944,9 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -2003,14 +1960,8 @@ public class AccountGroupPersistenceImpl
 	public AccountGroup fetchByCompanyId_First(
 		long companyId, OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -2161,12 +2112,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AccountGroup accountGroup :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -2354,19 +2301,10 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", defaultAccountGroup=");
-		sb.append(defaultAccountGroup);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByC_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, defaultAccountGroup}));
 	}
 
 	/**
@@ -2382,14 +2320,9 @@ public class AccountGroupPersistenceImpl
 		long companyId, boolean defaultAccountGroup,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByC_D(
-			companyId, defaultAccountGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_D.fetchFirst(
+			finderCache, new Object[] {companyId, defaultAccountGroup},
+			orderByComparator);
 	}
 
 	/**
@@ -2553,13 +2486,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByC_D(long companyId, boolean defaultAccountGroup) {
-		for (AccountGroup accountGroup :
-				findByC_D(
-					companyId, defaultAccountGroup, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByC_D.remove(
+			finderCache, new Object[] {companyId, defaultAccountGroup});
 	}
 
 	/**
@@ -3323,19 +3251,9 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
 	}
 
 	/**
@@ -3351,14 +3269,8 @@ public class AccountGroupPersistenceImpl
 		long companyId, String type,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByC_T(
-			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -3530,13 +3442,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, String type) {
-		for (AccountGroup accountGroup :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			finderCache, new Object[] {companyId, type});
 	}
 
 	/**
@@ -3656,23 +3563,16 @@ public class AccountGroupPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (accountGroup == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchGroupException(sb.toString());
+			throw new NoSuchGroupException(message);
 		}
 
 		return accountGroup;
@@ -4686,4 +4586,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-711381743
+// LIFERAY-SERVICE-BUILDER-HASH:250038445

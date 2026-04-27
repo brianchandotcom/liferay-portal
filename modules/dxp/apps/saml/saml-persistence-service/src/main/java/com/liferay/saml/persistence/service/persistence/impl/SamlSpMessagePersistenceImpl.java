@@ -189,16 +189,10 @@ public class SamlSpMessagePersistenceImpl
 			return samlSpMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchSpMessageException(sb.toString());
+		throw new NoSuchSpMessageException(
+			_collectionPersistenceFinderByLtExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -213,14 +207,8 @@ public class SamlSpMessagePersistenceImpl
 		Date expirationDate,
 		OrderByComparator<SamlSpMessage> orderByComparator) {
 
-		List<SamlSpMessage> list = findByLtExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtExpirationDate.fetchFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -230,13 +218,8 @@ public class SamlSpMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByLtExpirationDate(Date expirationDate) {
-		for (SamlSpMessage samlSpMessage :
-				findByLtExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(samlSpMessage);
-		}
+		_collectionPersistenceFinderByLtExpirationDate.remove(
+			finderCache, new Object[] {expirationDate});
 	}
 
 	/**
@@ -272,23 +255,16 @@ public class SamlSpMessagePersistenceImpl
 			samlIdpEntityId, samlIdpResponseKey);
 
 		if (samlSpMessage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("samlIdpEntityId=");
-			sb.append(samlIdpEntityId);
-
-			sb.append(", samlIdpResponseKey=");
-			sb.append(samlIdpResponseKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderBySIEI_SIRK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {samlIdpEntityId, samlIdpResponseKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSpMessageException(sb.toString());
+			throw new NoSuchSpMessageException(message);
 		}
 
 		return samlSpMessage;
@@ -1021,4 +997,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:883597485
+// LIFERAY-SERVICE-BUILDER-HASH:1722051104

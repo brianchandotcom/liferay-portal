@@ -192,16 +192,9 @@ public class ExpandoRowPersistenceImpl
 			return expandoRow;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchRowException(sb.toString());
+		throw new NoSuchRowException(
+			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
 	}
 
 	/**
@@ -215,13 +208,9 @@ public class ExpandoRowPersistenceImpl
 	public ExpandoRow fetchByTableId_First(
 		long tableId, OrderByComparator<ExpandoRow> orderByComparator) {
 
-		List<ExpandoRow> list = findByTableId(tableId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTableId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -231,12 +220,8 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public void removeByTableId(long tableId) {
-		for (ExpandoRow expandoRow :
-				findByTableId(
-					tableId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoRow);
-		}
+		_collectionPersistenceFinderByTableId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
 	/**
@@ -362,16 +347,9 @@ public class ExpandoRowPersistenceImpl
 			return expandoRow;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRowException(sb.toString());
+		throw new NoSuchRowException(
+			_collectionPersistenceFinderByClassPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK}));
 	}
 
 	/**
@@ -385,13 +363,9 @@ public class ExpandoRowPersistenceImpl
 	public ExpandoRow fetchByClassPK_First(
 		long classPK, OrderByComparator<ExpandoRow> orderByComparator) {
 
-		List<ExpandoRow> list = findByClassPK(classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByClassPK.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -401,12 +375,8 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public void removeByClassPK(long classPK) {
-		for (ExpandoRow expandoRow :
-				findByClassPK(
-					classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoRow);
-		}
+		_collectionPersistenceFinderByClassPK.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {classPK});
 	}
 
 	/**
@@ -444,23 +414,15 @@ public class ExpandoRowPersistenceImpl
 		ExpandoRow expandoRow = fetchByT_C(tableId, classPK);
 
 		if (expandoRow == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("tableId=");
-			sb.append(tableId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByT_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRowException(sb.toString());
+			throw new NoSuchRowException(message);
 		}
 
 		return expandoRow;
@@ -1454,4 +1416,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-937348966
+// LIFERAY-SERVICE-BUILDER-HASH:490525575

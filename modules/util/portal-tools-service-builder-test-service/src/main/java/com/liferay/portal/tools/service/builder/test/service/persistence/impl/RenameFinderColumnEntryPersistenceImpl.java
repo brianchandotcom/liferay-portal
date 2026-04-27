@@ -89,20 +89,15 @@ public class RenameFinderColumnEntryPersistenceImpl
 			columnToRename);
 
 		if (renameFinderColumnEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("columnToRename=");
-			sb.append(columnToRename);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByColumnToRename.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnToRename});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRenameFinderColumnEntryException(sb.toString());
+			throw new NoSuchRenameFinderColumnEntryException(message);
 		}
 
 		return renameFinderColumnEntry;
@@ -784,4 +779,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:580376919
+// LIFERAY-SERVICE-BUILDER-HASH:477702958

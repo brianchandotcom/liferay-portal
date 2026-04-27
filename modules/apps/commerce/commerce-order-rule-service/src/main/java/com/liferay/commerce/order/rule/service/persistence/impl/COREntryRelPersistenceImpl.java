@@ -188,16 +188,9 @@ public class COREntryRelPersistenceImpl
 			return corEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("COREntryId=");
-		sb.append(COREntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryRelException(sb.toString());
+		throw new NoSuchCOREntryRelException(
+			_collectionPersistenceFinderByCOREntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {COREntryId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class COREntryRelPersistenceImpl
 	public COREntryRel fetchByCOREntryId_First(
 		long COREntryId, OrderByComparator<COREntryRel> orderByComparator) {
 
-		List<COREntryRel> list = findByCOREntryId(
-			COREntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCOREntryId.fetchFirst(
+			finderCache, new Object[] {COREntryId}, orderByComparator);
 	}
 
 	/**
@@ -228,12 +215,8 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCOREntryId(long COREntryId) {
-		for (COREntryRel corEntryRel :
-				findByCOREntryId(
-					COREntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(corEntryRel);
-		}
+		_collectionPersistenceFinderByCOREntryId.remove(
+			finderCache, new Object[] {COREntryId});
 	}
 
 	/**
@@ -359,19 +342,10 @@ public class COREntryRelPersistenceImpl
 			return corEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", COREntryId=");
-		sb.append(COREntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryRelException(sb.toString());
+		throw new NoSuchCOREntryRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, COREntryId}));
 	}
 
 	/**
@@ -387,14 +361,9 @@ public class COREntryRelPersistenceImpl
 		long classNameId, long COREntryId,
 		OrderByComparator<COREntryRel> orderByComparator) {
 
-		List<COREntryRel> list = findByC_C(
-			classNameId, COREntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, COREntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -405,13 +374,8 @@ public class COREntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long COREntryId) {
-		for (COREntryRel corEntryRel :
-				findByC_C(
-					classNameId, COREntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(corEntryRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, COREntryId});
 	}
 
 	/**
@@ -449,26 +413,16 @@ public class COREntryRelPersistenceImpl
 			classNameId, classPK, COREntryId);
 
 		if (corEntryRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", COREntryId=");
-			sb.append(COREntryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, COREntryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCOREntryRelException(sb.toString());
+			throw new NoSuchCOREntryRelException(message);
 		}
 
 		return corEntryRel;
@@ -1251,4 +1205,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-332626923
+// LIFERAY-SERVICE-BUILDER-HASH:-1443949921

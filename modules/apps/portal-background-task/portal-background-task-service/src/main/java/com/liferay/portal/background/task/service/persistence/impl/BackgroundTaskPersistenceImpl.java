@@ -191,16 +191,9 @@ public class BackgroundTaskPersistenceImpl
 			return backgroundTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
+		throw new NoSuchBackgroundTaskException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -214,14 +207,8 @@ public class BackgroundTaskPersistenceImpl
 	public BackgroundTask fetchByGroupId_First(
 		long groupId, OrderByComparator<BackgroundTask> orderByComparator) {
 
-		List<BackgroundTask> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -231,12 +218,8 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (BackgroundTask backgroundTask :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(backgroundTask);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -354,16 +337,9 @@ public class BackgroundTaskPersistenceImpl
 			return backgroundTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
+		throw new NoSuchBackgroundTaskException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -377,14 +353,8 @@ public class BackgroundTaskPersistenceImpl
 	public BackgroundTask fetchByCompanyId_First(
 		long companyId, OrderByComparator<BackgroundTask> orderByComparator) {
 
-		List<BackgroundTask> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -394,12 +364,8 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BackgroundTask backgroundTask :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(backgroundTask);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -518,16 +484,9 @@ public class BackgroundTaskPersistenceImpl
 			return backgroundTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("completed=");
-		sb.append(completed);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
+		throw new NoSuchBackgroundTaskException(
+			_collectionPersistenceFinderByCompleted.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {completed}));
 	}
 
 	/**
@@ -542,14 +501,8 @@ public class BackgroundTaskPersistenceImpl
 		boolean completed,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		List<BackgroundTask> list = findByCompleted(
-			completed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompleted.fetchFirst(
+			finderCache, new Object[] {completed}, orderByComparator);
 	}
 
 	/**
@@ -559,12 +512,8 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByCompleted(boolean completed) {
-		for (BackgroundTask backgroundTask :
-				findByCompleted(
-					completed, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(backgroundTask);
-		}
+		_collectionPersistenceFinderByCompleted.remove(
+			finderCache, new Object[] {completed});
 	}
 
 	/**
@@ -679,16 +628,9 @@ public class BackgroundTaskPersistenceImpl
 			return backgroundTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
+		throw new NoSuchBackgroundTaskException(
+			_collectionPersistenceFinderByStatus.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {status}));
 	}
 
 	/**
@@ -702,14 +644,8 @@ public class BackgroundTaskPersistenceImpl
 	public BackgroundTask fetchByStatus_First(
 		int status, OrderByComparator<BackgroundTask> orderByComparator) {
 
-		List<BackgroundTask> list = findByStatus(
-			status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStatus.fetchFirst(
+			finderCache, new Object[] {status}, orderByComparator);
 	}
 
 	/**
@@ -719,12 +655,8 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByStatus(int status) {
-		for (BackgroundTask backgroundTask :
-				findByStatus(
-					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(backgroundTask);
-		}
+		_collectionPersistenceFinderByStatus.remove(
+			finderCache, new Object[] {status});
 	}
 
 	/**
@@ -1559,19 +1491,9 @@ public class BackgroundTaskPersistenceImpl
 			return backgroundTask;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBackgroundTaskException(sb.toString());
+		throw new NoSuchBackgroundTaskException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -1587,14 +1509,8 @@ public class BackgroundTaskPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		List<BackgroundTask> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1605,13 +1521,8 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (BackgroundTask backgroundTask :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(backgroundTask);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -6410,4 +6321,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1579133666
+// LIFERAY-SERVICE-BUILDER-HASH:1053527990

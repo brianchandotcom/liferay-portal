@@ -214,16 +214,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,14 +230,8 @@ public class FragmentEntryLinkPersistenceImpl
 	public FragmentEntryLink fetchByUuid_First(
 		String uuid, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -254,11 +241,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -297,23 +281,15 @@ public class FragmentEntryLinkPersistenceImpl
 		FragmentEntryLink fragmentEntryLink = fetchByUUID_G(uuid, groupId);
 
 		if (fragmentEntryLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryLinkException(sb.toString());
+			throw new NoSuchEntryLinkException(message);
 		}
 
 		return fragmentEntryLink;
@@ -496,19 +472,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -524,14 +490,8 @@ public class FragmentEntryLinkPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -542,13 +502,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -678,16 +633,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -701,14 +649,8 @@ public class FragmentEntryLinkPersistenceImpl
 	public FragmentEntryLink fetchByGroupId_First(
 		long groupId, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -718,12 +660,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -853,16 +791,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rendererKey=");
-		sb.append(rendererKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByRendererKey.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {rendererKey}));
 	}
 
 	/**
@@ -877,14 +808,8 @@ public class FragmentEntryLinkPersistenceImpl
 		String rendererKey,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByRendererKey(
-			rendererKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRendererKey.fetchFirst(
+			finderCache, new Object[] {rendererKey}, orderByComparator);
 	}
 
 	/**
@@ -894,12 +819,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByRendererKey(String rendererKey) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByRendererKey(
-					rendererKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByRendererKey.remove(
+			finderCache, new Object[] {rendererKey});
 	}
 
 	/**
@@ -1024,16 +945,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -1047,14 +961,8 @@ public class FragmentEntryLinkPersistenceImpl
 	public FragmentEntryLink fetchByType_First(
 		int type, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByType(
-			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -1064,11 +972,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByType(int type) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByType.remove(
+			finderCache, new Object[] {type});
 	}
 
 	/**
@@ -1202,19 +1107,9 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, plid}));
 	}
 
 	/**
@@ -1230,14 +1125,8 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long plid,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_P(
-			groupId, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, plid}, orderByComparator);
 	}
 
 	/**
@@ -1248,13 +1137,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long plid) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_P(
-					groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, plid});
 	}
 
 	/**
@@ -2080,19 +1964,10 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByFEERC_FESERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {fragmentEntryERC, fragmentEntryScopeERC}));
 	}
 
 	/**
@@ -2108,14 +1983,9 @@ public class FragmentEntryLinkPersistenceImpl
 		String fragmentEntryERC, String fragmentEntryScopeERC,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFEERC_FESERC.fetchFirst(
+			finderCache, new Object[] {fragmentEntryERC, fragmentEntryScopeERC},
+			orderByComparator);
 	}
 
 	/**
@@ -2128,13 +1998,9 @@ public class FragmentEntryLinkPersistenceImpl
 	public void removeByFEERC_FESERC(
 		String fragmentEntryERC, String fragmentEntryScopeERC) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByFEERC_FESERC(
-					fragmentEntryERC, fragmentEntryScopeERC, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByFEERC_FESERC.remove(
+			finderCache,
+			new Object[] {fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
 	/**
@@ -2285,22 +2151,10 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", originalFragmentEntryLinkERC=");
-		sb.append(originalFragmentEntryLinkERC);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_OFELERC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, originalFragmentEntryLinkERC, plid}));
 	}
 
 	/**
@@ -2317,15 +2171,10 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String originalFragmentEntryLinkERC, long plid,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_OFELERC_P(
-			groupId, originalFragmentEntryLinkERC, plid, 0, 1,
+		return _collectionPersistenceFinderByG_OFELERC_P.fetchFirst(
+			finderCache,
+			new Object[] {groupId, originalFragmentEntryLinkERC, plid},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2339,13 +2188,9 @@ public class FragmentEntryLinkPersistenceImpl
 	public void removeByG_OFELERC_P(
 		long groupId, String originalFragmentEntryLinkERC, long plid) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_OFELERC_P(
-					groupId, originalFragmentEntryLinkERC, plid,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_OFELERC_P.remove(
+			finderCache,
+			new Object[] {groupId, originalFragmentEntryLinkERC, plid});
 	}
 
 	/**
@@ -2500,22 +2345,12 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_FEERC_FESERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, fragmentEntryERC, fragmentEntryScopeERC
+				}));
 	}
 
 	/**
@@ -2532,15 +2367,10 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, 0, 1,
+		return _collectionPersistenceFinderByG_FEERC_FESERC.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentEntryERC, fragmentEntryScopeERC},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2554,13 +2384,9 @@ public class FragmentEntryLinkPersistenceImpl
 	public void removeByG_FEERC_FESERC(
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_FEERC_FESERC(
-					groupId, fragmentEntryERC, fragmentEntryScopeERC,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_FEERC_FESERC.remove(
+			finderCache,
+			new Object[] {groupId, fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
 	/**
@@ -3392,22 +3218,10 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK}));
 	}
 
 	/**
@@ -3424,14 +3238,9 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_C_C(
-			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -3443,13 +3252,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_C_C(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_C_C.remove(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -3593,22 +3397,10 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_P_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, plid, deleted}));
 	}
 
 	/**
@@ -3625,14 +3417,9 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long plid, boolean deleted,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_P_D(
-			groupId, plid, deleted, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_D.fetchFirst(
+			finderCache, new Object[] {groupId, plid, deleted},
+			orderByComparator);
 	}
 
 	/**
@@ -3644,13 +3431,8 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_D(long groupId, long plid, boolean deleted) {
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_P_D(
-					groupId, plid, deleted, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_P_D.remove(
+			finderCache, new Object[] {groupId, plid, deleted});
 	}
 
 	/**
@@ -3804,22 +3586,12 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByFEERC_FESERC_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					fragmentEntryERC, fragmentEntryScopeERC, deleted
+				}));
 	}
 
 	/**
@@ -3836,15 +3608,10 @@ public class FragmentEntryLinkPersistenceImpl
 		String fragmentEntryERC, String fragmentEntryScopeERC, boolean deleted,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByFEERC_FESERC_D(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted, 0, 1,
+		return _collectionPersistenceFinderByFEERC_FESERC_D.fetchFirst(
+			finderCache,
+			new Object[] {fragmentEntryERC, fragmentEntryScopeERC, deleted},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3859,13 +3626,9 @@ public class FragmentEntryLinkPersistenceImpl
 		String fragmentEntryERC, String fragmentEntryScopeERC,
 		boolean deleted) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByFEERC_FESERC_D(
-					fragmentEntryERC, fragmentEntryScopeERC, deleted,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByFEERC_FESERC_D.remove(
+			finderCache,
+			new Object[] {fragmentEntryERC, fragmentEntryScopeERC, deleted});
 	}
 
 	/**
@@ -4034,25 +3797,14 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_FEERC_FESERC_C.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentEntryERC, fragmentEntryScopeERC,
+						classNameId
+					}));
 	}
 
 	/**
@@ -4071,15 +3823,12 @@ public class FragmentEntryLinkPersistenceImpl
 		long classNameId,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_FEERC_FESERC_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId, 0, 1,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_C.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4095,13 +3844,11 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		long classNameId) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_FEERC_FESERC_C(
-					groupId, fragmentEntryERC, fragmentEntryScopeERC,
-					classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_FEERC_FESERC_C.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId
+			});
 	}
 
 	/**
@@ -4270,25 +4017,13 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_FEERC_FESERC_P.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentEntryERC, fragmentEntryScopeERC, plid
+					}));
 	}
 
 	/**
@@ -4306,15 +4041,12 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		long plid, OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_FEERC_FESERC_P(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid, 0, 1,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_P.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, plid
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4330,13 +4062,11 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		long plid) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_FEERC_FESERC_P(
-					groupId, fragmentEntryERC, fragmentEntryScopeERC, plid,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_FEERC_FESERC_P.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, plid
+			});
 	}
 
 	/**
@@ -4505,25 +4235,14 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_FEERC_FESERC_D.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentEntryERC, fragmentEntryScopeERC,
+						deleted
+					}));
 	}
 
 	/**
@@ -4542,15 +4261,12 @@ public class FragmentEntryLinkPersistenceImpl
 		boolean deleted,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_FEERC_FESERC_D(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted, 0, 1,
+		return _collectionPersistenceFinderByG_FEERC_FESERC_D.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4566,13 +4282,11 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		boolean deleted) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_FEERC_FESERC_D(
-					groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_FEERC_FESERC_D.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted
+			});
 	}
 
 	/**
@@ -4741,25 +4455,12 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_S_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, segmentsExperienceId, classNameId, classPK
+				}));
 	}
 
 	/**
@@ -4777,15 +4478,10 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long segmentsExperienceId, long classNameId, long classPK,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_S_C_C(
-			groupId, segmentsExperienceId, classNameId, classPK, 0, 1,
+		return _collectionPersistenceFinderByG_S_C_C.fetchFirst(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, classNameId, classPK},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4801,13 +4497,9 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long segmentsExperienceId, long classNameId,
 		long classPK) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_S_C_C(
-					groupId, segmentsExperienceId, classNameId, classPK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_S_C_C.remove(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, classNameId, classPK});
 	}
 
 	/**
@@ -5700,25 +5392,12 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", rendererKey=");
-		sb.append(rendererKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_S_P_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, segmentsExperienceId, plid, rendererKey
+				}));
 	}
 
 	/**
@@ -5736,15 +5415,10 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long segmentsExperienceId, long plid, String rendererKey,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_S_P_R(
-			groupId, segmentsExperienceId, plid, rendererKey, 0, 1,
+		return _collectionPersistenceFinderByG_S_P_R.fetchFirst(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, plid, rendererKey},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -5760,13 +5434,9 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, long segmentsExperienceId, long plid,
 		String rendererKey) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_S_P_R(
-					groupId, segmentsExperienceId, plid, rendererKey,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_S_P_R.remove(
+			finderCache,
+			new Object[] {groupId, segmentsExperienceId, plid, rendererKey});
 	}
 
 	/**
@@ -5941,28 +5611,14 @@ public class FragmentEntryLinkPersistenceImpl
 			return fragmentEntryLink;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryERC=");
-		sb.append(fragmentEntryERC);
-
-		sb.append(", fragmentEntryScopeERC=");
-		sb.append(fragmentEntryScopeERC);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryLinkException(sb.toString());
+		throw new NoSuchEntryLinkException(
+			_collectionPersistenceFinderByG_FEERC_FESERC_C_C.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentEntryERC, fragmentEntryScopeERC,
+						classNameId, classPK
+					}));
 	}
 
 	/**
@@ -5982,15 +5638,13 @@ public class FragmentEntryLinkPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<FragmentEntryLink> orderByComparator) {
 
-		List<FragmentEntryLink> list = findByG_FEERC_FESERC_C_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FEERC_FESERC_C_C.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
+				classPK
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -6007,14 +5661,12 @@ public class FragmentEntryLinkPersistenceImpl
 		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
 		long classNameId, long classPK) {
 
-		for (FragmentEntryLink fragmentEntryLink :
-				findByG_FEERC_FESERC_C_C(
-					groupId, fragmentEntryERC, fragmentEntryScopeERC,
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryLink);
-		}
+		_collectionPersistenceFinderByG_FEERC_FESERC_C_C.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
+				classPK
+			});
 	}
 
 	/**
@@ -6066,23 +5718,16 @@ public class FragmentEntryLinkPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (fragmentEntryLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryLinkException(sb.toString());
+			throw new NoSuchEntryLinkException(message);
 		}
 
 		return fragmentEntryLink;
@@ -8171,4 +7816,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1858806667
+// LIFERAY-SERVICE-BUILDER-HASH:-1463199189

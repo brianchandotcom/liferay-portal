@@ -195,16 +195,11 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 			return batchEngineImportTaskError;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("batchEngineImportTaskId=");
-		sb.append(batchEngineImportTaskId);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskErrorException(sb.toString());
+		throw new NoSuchImportTaskErrorException(
+			_collectionPersistenceFinderByBatchEngineImportTaskId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {batchEngineImportTaskId}));
 	}
 
 	/**
@@ -219,14 +214,9 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 		long batchEngineImportTaskId,
 		OrderByComparator<BatchEngineImportTaskError> orderByComparator) {
 
-		List<BatchEngineImportTaskError> list = findByBatchEngineImportTaskId(
-			batchEngineImportTaskId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBatchEngineImportTaskId.fetchFirst(
+			finderCache, new Object[] {batchEngineImportTaskId},
+			orderByComparator);
 	}
 
 	/**
@@ -236,13 +226,8 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	 */
 	@Override
 	public void removeByBatchEngineImportTaskId(long batchEngineImportTaskId) {
-		for (BatchEngineImportTaskError batchEngineImportTaskError :
-				findByBatchEngineImportTaskId(
-					batchEngineImportTaskId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(batchEngineImportTaskError);
-		}
+		_collectionPersistenceFinderByBatchEngineImportTaskId.remove(
+			finderCache, new Object[] {batchEngineImportTaskId});
 	}
 
 	/**
@@ -951,4 +936,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1758331924
+// LIFERAY-SERVICE-BUILDER-HASH:-122127935

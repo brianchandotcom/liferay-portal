@@ -203,16 +203,9 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -226,14 +219,8 @@ public class SubscriptionPersistenceImpl
 	public Subscription fetchByGroupId_First(
 		long groupId, OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -243,12 +230,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (Subscription subscription :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -373,16 +356,9 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -396,13 +372,8 @@ public class SubscriptionPersistenceImpl
 	public Subscription fetchByUserId_First(
 		long userId, OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -412,12 +383,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (Subscription subscription :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -551,19 +518,9 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -579,14 +536,8 @@ public class SubscriptionPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -597,13 +548,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (Subscription subscription :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			finderCache, new Object[] {groupId, userId});
 	}
 
 	/**
@@ -739,19 +685,10 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -767,14 +704,9 @@ public class SubscriptionPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByC_C(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -785,13 +717,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long classNameId) {
-		for (Subscription subscription :
-				findByC_C(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -927,19 +854,9 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByU_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, classNameId}));
 	}
 
 	/**
@@ -955,14 +872,8 @@ public class SubscriptionPersistenceImpl
 		long userId, long classNameId,
 		OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByU_C(
-			userId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C.fetchFirst(
+			finderCache, new Object[] {userId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -973,13 +884,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByU_C(long userId, long classNameId) {
-		for (Subscription subscription :
-				findByU_C(
-					userId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByU_C.remove(
+			finderCache, new Object[] {userId, classNameId});
 	}
 
 	/**
@@ -1124,22 +1030,10 @@ public class SubscriptionPersistenceImpl
 			return subscription;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSubscriptionException(sb.toString());
+		throw new NoSuchSubscriptionException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -1156,14 +1050,9 @@ public class SubscriptionPersistenceImpl
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<Subscription> orderByComparator) {
 
-		List<Subscription> list = findByC_C_C(
-			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1175,13 +1064,8 @@ public class SubscriptionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
-		for (Subscription subscription :
-				findByC_C_C(
-					companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(subscription);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			finderCache, new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -2963,4 +2847,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-443124396
+// LIFERAY-SERVICE-BUILDER-HASH:1515446536

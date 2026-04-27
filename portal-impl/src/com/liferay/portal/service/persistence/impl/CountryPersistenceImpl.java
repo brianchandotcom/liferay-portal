@@ -197,16 +197,9 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -220,13 +213,9 @@ public class CountryPersistenceImpl
 	public Country fetchByUuid_First(
 		String uuid, OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -384,11 +373,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Country country :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -598,19 +584,9 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -626,14 +602,9 @@ public class CountryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -801,13 +772,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Country country :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1016,16 +982,9 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1039,14 +998,9 @@ public class CountryPersistenceImpl
 	public Country fetchByCompanyId_First(
 		long companyId, OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1193,12 +1147,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (Country country :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1380,16 +1330,9 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
 	}
 
 	/**
@@ -1403,13 +1346,9 @@ public class CountryPersistenceImpl
 	public Country fetchByActive_First(
 		boolean active, OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByActive(active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByActive.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {active},
+			orderByComparator);
 	}
 
 	/**
@@ -1556,12 +1495,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public void removeByActive(boolean active) {
-		for (Country country :
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByActive.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
 	/**
@@ -1658,23 +1593,15 @@ public class CountryPersistenceImpl
 		Country country = fetchByC_A2(companyId, a2);
 
 		if (country == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", a2=");
-			sb.append(a2);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_A2.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, a2});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCountryException(sb.toString());
+			throw new NoSuchCountryException(message);
 		}
 
 		return country;
@@ -1761,23 +1688,15 @@ public class CountryPersistenceImpl
 		Country country = fetchByC_A3(companyId, a3);
 
 		if (country == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", a3=");
-			sb.append(a3);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_A3.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, a3});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCountryException(sb.toString());
+			throw new NoSuchCountryException(message);
 		}
 
 		return country;
@@ -1961,19 +1880,9 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_Active.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
 	}
 
 	/**
@@ -1989,14 +1898,9 @@ public class CountryPersistenceImpl
 		long companyId, boolean active,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_Active(
-			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_Active.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -2152,13 +2056,8 @@ public class CountryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_Active(long companyId, boolean active) {
-		for (Country country :
-				findByC_Active(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_Active.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active});
 	}
 
 	/**
@@ -2265,23 +2164,15 @@ public class CountryPersistenceImpl
 		Country country = fetchByC_Name(companyId, name);
 
 		if (country == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_Name.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCountryException(sb.toString());
+			throw new NoSuchCountryException(message);
 		}
 
 		return country;
@@ -2368,23 +2259,15 @@ public class CountryPersistenceImpl
 		Country country = fetchByC_Number(companyId, number);
 
 		if (country == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", number=");
-			sb.append(number);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_Number.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, number});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCountryException(sb.toString());
+			throw new NoSuchCountryException(message);
 		}
 
 		return country;
@@ -2579,22 +2462,10 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", billingAllowed=");
-		sb.append(billingAllowed);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_A_B.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, billingAllowed}));
 	}
 
 	/**
@@ -2611,14 +2482,10 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, boolean billingAllowed,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_A_B(
-			companyId, active, billingAllowed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_B.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed},
+			orderByComparator);
 	}
 
 	/**
@@ -2790,13 +2657,9 @@ public class CountryPersistenceImpl
 	public void removeByC_A_B(
 		long companyId, boolean active, boolean billingAllowed) {
 
-		for (Country country :
-				findByC_A_B(
-					companyId, active, billingAllowed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_A_B.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, billingAllowed});
 	}
 
 	/**
@@ -3026,22 +2889,10 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", shippingAllowed=");
-		sb.append(shippingAllowed);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_A_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, shippingAllowed}));
 	}
 
 	/**
@@ -3058,14 +2909,10 @@ public class CountryPersistenceImpl
 		long companyId, boolean active, boolean shippingAllowed,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_A_S(
-			companyId, active, shippingAllowed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed},
+			orderByComparator);
 	}
 
 	/**
@@ -3237,13 +3084,9 @@ public class CountryPersistenceImpl
 	public void removeByC_A_S(
 		long companyId, boolean active, boolean shippingAllowed) {
 
-		for (Country country :
-				findByC_A_S(
-					companyId, active, shippingAllowed, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_A_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, active, shippingAllowed});
 	}
 
 	/**
@@ -3485,25 +3328,12 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", billingAllowed=");
-		sb.append(billingAllowed);
-
-		sb.append(", groupFilterEnabled=");
-		sb.append(groupFilterEnabled);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_A_B_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					countryId, active, billingAllowed, groupFilterEnabled
+				}));
 	}
 
 	/**
@@ -3522,15 +3352,12 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_A_B_G(
-			countryId, active, billingAllowed, groupFilterEnabled, 0, 1,
+		return _collectionPersistenceFinderByC_A_B_G.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3714,13 +3541,11 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled) {
 
-		for (Country country :
-				findByC_A_B_G(
-					countryId, active, billingAllowed, groupFilterEnabled,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_A_B_G.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled
+			});
 	}
 
 	/**
@@ -3976,25 +3801,12 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", groupFilterEnabled=");
-		sb.append(groupFilterEnabled);
-
-		sb.append(", shippingAllowed=");
-		sb.append(shippingAllowed);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_A_G_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					countryId, active, groupFilterEnabled, shippingAllowed
+				}));
 	}
 
 	/**
@@ -4012,15 +3824,12 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed, OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_A_G_S(
-			countryId, active, groupFilterEnabled, shippingAllowed, 0, 1,
+		return _collectionPersistenceFinderByC_A_G_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4204,13 +4013,11 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed) {
 
-		for (Country country :
-				findByC_A_G_S(
-					countryId, active, groupFilterEnabled, shippingAllowed,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_A_G_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, groupFilterEnabled, shippingAllowed
+			});
 	}
 
 	/**
@@ -4473,28 +4280,13 @@ public class CountryPersistenceImpl
 			return country;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", billingAllowed=");
-		sb.append(billingAllowed);
-
-		sb.append(", groupFilterEnabled=");
-		sb.append(groupFilterEnabled);
-
-		sb.append(", shippingAllowed=");
-		sb.append(shippingAllowed);
-
-		sb.append("}");
-
-		throw new NoSuchCountryException(sb.toString());
+		throw new NoSuchCountryException(
+			_collectionPersistenceFinderByC_A_B_G_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					countryId, active, billingAllowed, groupFilterEnabled,
+					shippingAllowed
+				}));
 	}
 
 	/**
@@ -4514,15 +4306,13 @@ public class CountryPersistenceImpl
 		boolean groupFilterEnabled, boolean shippingAllowed,
 		OrderByComparator<Country> orderByComparator) {
 
-		List<Country> list = findByC_A_B_G_S(
-			countryId, active, billingAllowed, groupFilterEnabled,
-			shippingAllowed, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_B_G_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled,
+				shippingAllowed
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -4716,14 +4506,12 @@ public class CountryPersistenceImpl
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled, boolean shippingAllowed) {
 
-		for (Country country :
-				findByC_A_B_G_S(
-					countryId, active, billingAllowed, groupFilterEnabled,
-					shippingAllowed, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(country);
-		}
+		_collectionPersistenceFinderByC_A_B_G_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				countryId, active, billingAllowed, groupFilterEnabled,
+				shippingAllowed
+			});
 	}
 
 	/**
@@ -6270,4 +6058,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2066515850
+// LIFERAY-SERVICE-BUILDER-HASH:670028955

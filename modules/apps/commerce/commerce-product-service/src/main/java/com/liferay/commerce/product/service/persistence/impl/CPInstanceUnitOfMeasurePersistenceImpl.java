@@ -206,16 +206,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		String uuid,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -388,19 +372,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -416,14 +390,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -434,13 +402,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -571,16 +534,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByCPInstanceId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId}));
 	}
 
 	/**
@@ -595,14 +551,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		long CPInstanceId,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByCPInstanceId(
-			CPInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPInstanceId.fetchFirst(
+			finderCache, new Object[] {CPInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -612,12 +562,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByCPInstanceId(long CPInstanceId) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByCPInstanceId(
-					CPInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByCPInstanceId.remove(
+			finderCache, new Object[] {CPInstanceId});
 	}
 
 	/**
@@ -751,19 +697,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, sku}));
 	}
 
 	/**
@@ -779,14 +715,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		long companyId, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByC_S(
-			companyId, sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S.fetchFirst(
+			finderCache, new Object[] {companyId, sku}, orderByComparator);
 	}
 
 	/**
@@ -797,13 +727,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByC_S(long companyId, String sku) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByC_S(
-					companyId, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByC_S.remove(
+			finderCache, new Object[] {companyId, sku});
 	}
 
 	/**
@@ -941,19 +866,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId, active}));
 	}
 
 	/**
@@ -969,14 +884,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		long CPInstanceId, boolean active,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByC_A(
-			CPInstanceId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {CPInstanceId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -987,13 +897,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long CPInstanceId, boolean active) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByC_A(
-					CPInstanceId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {CPInstanceId, active});
 	}
 
 	/**
@@ -1034,23 +939,15 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			CPInstanceId, key);
 
 		if (cpInstanceUnitOfMeasure == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPInstanceId=");
-			sb.append(CPInstanceId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+			throw new NoSuchCPInstanceUnitOfMeasureException(message);
 		}
 
 		return cpInstanceUnitOfMeasure;
@@ -1236,19 +1133,10 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceId=");
-		sb.append(CPInstanceId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPInstanceId, primary}));
 	}
 
 	/**
@@ -1264,14 +1152,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		long CPInstanceId, boolean primary,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByC_P(
-			CPInstanceId, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P.fetchFirst(
+			finderCache, new Object[] {CPInstanceId, primary},
+			orderByComparator);
 	}
 
 	/**
@@ -1282,13 +1165,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByC_P(long CPInstanceId, boolean primary) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByC_P(
-					CPInstanceId, primary, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByC_P.remove(
+			finderCache, new Object[] {CPInstanceId, primary});
 	}
 
 	/**
@@ -1431,22 +1309,9 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			return cpInstanceUnitOfMeasure;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", sku=");
-		sb.append(sku);
-
-		sb.append("}");
-
-		throw new NoSuchCPInstanceUnitOfMeasureException(sb.toString());
+		throw new NoSuchCPInstanceUnitOfMeasureException(
+			_collectionPersistenceFinderByC_K_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key, sku}));
 	}
 
 	/**
@@ -1463,14 +1328,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 		long companyId, String key, String sku,
 		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
 
-		List<CPInstanceUnitOfMeasure> list = findByC_K_S(
-			companyId, key, sku, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_K_S.fetchFirst(
+			finderCache, new Object[] {companyId, key, sku}, orderByComparator);
 	}
 
 	/**
@@ -1482,13 +1341,8 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Override
 	public void removeByC_K_S(long companyId, String key, String sku) {
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				findByC_K_S(
-					companyId, key, sku, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpInstanceUnitOfMeasure);
-		}
+		_collectionPersistenceFinderByC_K_S.remove(
+			finderCache, new Object[] {companyId, key, sku});
 	}
 
 	/**
@@ -2755,4 +2609,4 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:744108969
+// LIFERAY-SERVICE-BUILDER-HASH:717673906

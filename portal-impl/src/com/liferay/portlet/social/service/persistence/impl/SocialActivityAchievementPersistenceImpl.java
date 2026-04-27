@@ -192,16 +192,9 @@ public class SocialActivityAchievementPersistenceImpl
 			return socialActivityAchievement;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
+		throw new NoSuchActivityAchievementException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -216,14 +209,9 @@ public class SocialActivityAchievementPersistenceImpl
 		long groupId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		List<SocialActivityAchievement> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -233,12 +221,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SocialActivityAchievement socialActivityAchievement :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialActivityAchievement);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -375,19 +359,9 @@ public class SocialActivityAchievementPersistenceImpl
 			return socialActivityAchievement;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
+		throw new NoSuchActivityAchievementException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -403,14 +377,9 @@ public class SocialActivityAchievementPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		List<SocialActivityAchievement> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId},
+			orderByComparator);
 	}
 
 	/**
@@ -421,13 +390,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (SocialActivityAchievement socialActivityAchievement :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialActivityAchievement);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId});
 	}
 
 	/**
@@ -565,19 +529,9 @@ public class SocialActivityAchievementPersistenceImpl
 			return socialActivityAchievement;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
+		throw new NoSuchActivityAchievementException(
+			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
 	}
 
 	/**
@@ -593,14 +547,9 @@ public class SocialActivityAchievementPersistenceImpl
 		long groupId, String name,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		List<SocialActivityAchievement> list = findByG_N(
-			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_N.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -611,13 +560,8 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public void removeByG_N(long groupId, String name) {
-		for (SocialActivityAchievement socialActivityAchievement :
-				findByG_N(
-					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialActivityAchievement);
-		}
+		_collectionPersistenceFinderByG_N.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
 	/**
@@ -756,19 +700,10 @@ public class SocialActivityAchievementPersistenceImpl
 			return socialActivityAchievement;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", firstInGroup=");
-		sb.append(firstInGroup);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
+		throw new NoSuchActivityAchievementException(
+			_collectionPersistenceFinderByG_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, firstInGroup}));
 	}
 
 	/**
@@ -784,14 +719,9 @@ public class SocialActivityAchievementPersistenceImpl
 		long groupId, boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		List<SocialActivityAchievement> list = findByG_F(
-			groupId, firstInGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_F.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, firstInGroup}, orderByComparator);
 	}
 
 	/**
@@ -802,13 +732,9 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public void removeByG_F(long groupId, boolean firstInGroup) {
-		for (SocialActivityAchievement socialActivityAchievement :
-				findByG_F(
-					groupId, firstInGroup, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialActivityAchievement);
-		}
+		_collectionPersistenceFinderByG_F.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, firstInGroup});
 	}
 
 	/**
@@ -852,26 +778,16 @@ public class SocialActivityAchievementPersistenceImpl
 			groupId, userId, name);
 
 		if (socialActivityAchievement == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", userId=");
-			sb.append(userId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_U_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, userId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchActivityAchievementException(sb.toString());
+			throw new NoSuchActivityAchievementException(message);
 		}
 
 		return socialActivityAchievement;
@@ -1074,22 +990,10 @@ public class SocialActivityAchievementPersistenceImpl
 			return socialActivityAchievement;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", firstInGroup=");
-		sb.append(firstInGroup);
-
-		sb.append("}");
-
-		throw new NoSuchActivityAchievementException(sb.toString());
+		throw new NoSuchActivityAchievementException(
+			_collectionPersistenceFinderByG_U_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, firstInGroup}));
 	}
 
 	/**
@@ -1106,14 +1010,9 @@ public class SocialActivityAchievementPersistenceImpl
 		long groupId, long userId, boolean firstInGroup,
 		OrderByComparator<SocialActivityAchievement> orderByComparator) {
 
-		List<SocialActivityAchievement> list = findByG_U_F(
-			groupId, userId, firstInGroup, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_F.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, firstInGroup}, orderByComparator);
 	}
 
 	/**
@@ -1125,13 +1024,9 @@ public class SocialActivityAchievementPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_F(long groupId, long userId, boolean firstInGroup) {
-		for (SocialActivityAchievement socialActivityAchievement :
-				findByG_U_F(
-					groupId, userId, firstInGroup, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(socialActivityAchievement);
-		}
+		_collectionPersistenceFinderByG_U_F.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, userId, firstInGroup});
 	}
 
 	/**
@@ -2242,4 +2137,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2020696239
+// LIFERAY-SERVICE-BUILDER-HASH:1345318168

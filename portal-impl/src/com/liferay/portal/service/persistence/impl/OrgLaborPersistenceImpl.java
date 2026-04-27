@@ -174,16 +174,9 @@ public class OrgLaborPersistenceImpl
 			return orgLabor;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("organizationId=");
-		sb.append(organizationId);
-
-		sb.append("}");
-
-		throw new NoSuchOrgLaborException(sb.toString());
+		throw new NoSuchOrgLaborException(
+			_collectionPersistenceFinderByOrganizationId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {organizationId}));
 	}
 
 	/**
@@ -197,14 +190,9 @@ public class OrgLaborPersistenceImpl
 	public OrgLabor fetchByOrganizationId_First(
 		long organizationId, OrderByComparator<OrgLabor> orderByComparator) {
 
-		List<OrgLabor> list = findByOrganizationId(
-			organizationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOrganizationId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {organizationId},
+			orderByComparator);
 	}
 
 	/**
@@ -214,13 +202,8 @@ public class OrgLaborPersistenceImpl
 	 */
 	@Override
 	public void removeByOrganizationId(long organizationId) {
-		for (OrgLabor orgLabor :
-				findByOrganizationId(
-					organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(orgLabor);
-		}
+		_collectionPersistenceFinderByOrganizationId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {organizationId});
 	}
 
 	/**
@@ -811,4 +794,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:776298130
+// LIFERAY-SERVICE-BUILDER-HASH:660038059

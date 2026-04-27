@@ -195,16 +195,9 @@ public class LaunchEntryPersistenceImpl
 			return launchEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchEntryException(sb.toString());
+		throw new NoSuchLaunchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -218,13 +211,8 @@ public class LaunchEntryPersistenceImpl
 	public LaunchEntry fetchByUuid_First(
 		String uuid, OrderByComparator<LaunchEntry> orderByComparator) {
 
-		List<LaunchEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -234,11 +222,8 @@ public class LaunchEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LaunchEntry launchEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(launchEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -363,19 +348,9 @@ public class LaunchEntryPersistenceImpl
 			return launchEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchEntryException(sb.toString());
+		throw new NoSuchLaunchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -391,14 +366,8 @@ public class LaunchEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LaunchEntry> orderByComparator) {
 
-		List<LaunchEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -409,13 +378,8 @@ public class LaunchEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LaunchEntry launchEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(launchEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -535,16 +499,9 @@ public class LaunchEntryPersistenceImpl
 			return launchEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("launchSetId=");
-		sb.append(launchSetId);
-
-		sb.append("}");
-
-		throw new NoSuchLaunchEntryException(sb.toString());
+		throw new NoSuchLaunchEntryException(
+			_collectionPersistenceFinderByLaunchSetId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {launchSetId}));
 	}
 
 	/**
@@ -558,14 +515,8 @@ public class LaunchEntryPersistenceImpl
 	public LaunchEntry fetchByLaunchSetId_First(
 		long launchSetId, OrderByComparator<LaunchEntry> orderByComparator) {
 
-		List<LaunchEntry> list = findByLaunchSetId(
-			launchSetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLaunchSetId.fetchFirst(
+			finderCache, new Object[] {launchSetId}, orderByComparator);
 	}
 
 	/**
@@ -575,12 +526,8 @@ public class LaunchEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLaunchSetId(long launchSetId) {
-		for (LaunchEntry launchEntry :
-				findByLaunchSetId(
-					launchSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(launchEntry);
-		}
+		_collectionPersistenceFinderByLaunchSetId.remove(
+			finderCache, new Object[] {launchSetId});
 	}
 
 	/**
@@ -617,26 +564,16 @@ public class LaunchEntryPersistenceImpl
 			classNameId, classPK, classVersion);
 
 		if (launchEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", classVersion=");
-			sb.append(classVersion);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, classVersion});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLaunchEntryException(sb.toString());
+			throw new NoSuchLaunchEntryException(message);
 		}
 
 		return launchEntry;
@@ -731,23 +668,16 @@ public class LaunchEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (launchEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLaunchEntryException(sb.toString());
+			throw new NoSuchLaunchEntryException(message);
 		}
 
 		return launchEntry;
@@ -1672,4 +1602,4 @@ public class LaunchEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1216951146
+// LIFERAY-SERVICE-BUILDER-HASH:1204191192

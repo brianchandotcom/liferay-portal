@@ -203,16 +203,9 @@ public class MBMailingListPersistenceImpl
 			return mbMailingList;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
+		throw new NoSuchMailingListException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -226,13 +219,8 @@ public class MBMailingListPersistenceImpl
 	public MBMailingList fetchByUuid_First(
 		String uuid, OrderByComparator<MBMailingList> orderByComparator) {
 
-		List<MBMailingList> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -242,11 +230,8 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBMailingList mbMailingList :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbMailingList);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -285,23 +270,15 @@ public class MBMailingListPersistenceImpl
 		MBMailingList mbMailingList = fetchByUUID_G(uuid, groupId);
 
 		if (mbMailingList == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMailingListException(sb.toString());
+			throw new NoSuchMailingListException(message);
 		}
 
 		return mbMailingList;
@@ -484,19 +461,9 @@ public class MBMailingListPersistenceImpl
 			return mbMailingList;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
+		throw new NoSuchMailingListException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -512,14 +479,8 @@ public class MBMailingListPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBMailingList> orderByComparator) {
 
-		List<MBMailingList> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -530,13 +491,8 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBMailingList mbMailingList :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMailingList);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -664,16 +620,9 @@ public class MBMailingListPersistenceImpl
 			return mbMailingList;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchMailingListException(sb.toString());
+		throw new NoSuchMailingListException(
+			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
 	}
 
 	/**
@@ -687,14 +636,8 @@ public class MBMailingListPersistenceImpl
 	public MBMailingList fetchByActive_First(
 		boolean active, OrderByComparator<MBMailingList> orderByComparator) {
 
-		List<MBMailingList> list = findByActive(
-			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByActive.fetchFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -704,12 +647,8 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Override
 	public void removeByActive(boolean active) {
-		for (MBMailingList mbMailingList :
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbMailingList);
-		}
+		_collectionPersistenceFinderByActive.remove(
+			finderCache, new Object[] {active});
 	}
 
 	/**
@@ -748,23 +687,16 @@ public class MBMailingListPersistenceImpl
 		MBMailingList mbMailingList = fetchByG_C(groupId, categoryId);
 
 		if (mbMailingList == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", categoryId=");
-			sb.append(categoryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, categoryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMailingListException(sb.toString());
+			throw new NoSuchMailingListException(message);
 		}
 
 		return mbMailingList;
@@ -1913,4 +1845,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:537456478
+// LIFERAY-SERVICE-BUILDER-HASH:-1446545913

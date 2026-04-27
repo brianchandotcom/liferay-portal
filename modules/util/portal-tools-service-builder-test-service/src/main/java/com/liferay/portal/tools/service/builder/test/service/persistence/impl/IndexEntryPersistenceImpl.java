@@ -196,16 +196,9 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByOwnerId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerId}));
 	}
 
 	/**
@@ -219,13 +212,8 @@ public class IndexEntryPersistenceImpl
 	public IndexEntry fetchByOwnerId_First(
 		long ownerId, OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByOwnerId(ownerId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOwnerId.fetchFirst(
+			finderCache, new Object[] {ownerId}, orderByComparator);
 	}
 
 	/**
@@ -235,12 +223,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByOwnerId(long ownerId) {
-		for (IndexEntry indexEntry :
-				findByOwnerId(
-					ownerId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByOwnerId.remove(
+			finderCache, new Object[] {ownerId});
 	}
 
 	/**
@@ -364,16 +348,9 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
 	}
 
 	/**
@@ -387,13 +364,8 @@ public class IndexEntryPersistenceImpl
 	public IndexEntry fetchByPlid_First(
 		long plid, OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByPlid(plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPlid.fetchFirst(
+			finderCache, new Object[] {plid}, orderByComparator);
 	}
 
 	/**
@@ -403,11 +375,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByPlid(long plid) {
-		for (IndexEntry indexEntry :
-				findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByPlid.remove(
+			finderCache, new Object[] {plid});
 	}
 
 	/**
@@ -535,16 +504,9 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
 	}
 
 	/**
@@ -558,14 +520,8 @@ public class IndexEntryPersistenceImpl
 	public IndexEntry fetchByPortletId_First(
 		String portletId, OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByPortletId(
-			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPortletId.fetchFirst(
+			finderCache, new Object[] {portletId}, orderByComparator);
 	}
 
 	/**
@@ -575,12 +531,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByPortletId(String portletId) {
-		for (IndexEntry indexEntry :
-				findByPortletId(
-					portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByPortletId.remove(
+			finderCache, new Object[] {portletId});
 	}
 
 	/**
@@ -715,19 +667,9 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByO_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerType, portletId}));
 	}
 
 	/**
@@ -743,14 +685,9 @@ public class IndexEntryPersistenceImpl
 		int ownerType, String portletId,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByO_P(
-			ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_P.fetchFirst(
+			finderCache, new Object[] {ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -761,13 +698,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByO_P(int ownerType, String portletId) {
-		for (IndexEntry indexEntry :
-				findByO_P(
-					ownerType, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByO_P.remove(
+			finderCache, new Object[] {ownerType, portletId});
 	}
 
 	/**
@@ -902,19 +834,9 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByP_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid, portletId}));
 	}
 
 	/**
@@ -930,14 +852,8 @@ public class IndexEntryPersistenceImpl
 		long plid, String portletId,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByP_P(
-			plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_P.fetchFirst(
+			finderCache, new Object[] {plid, portletId}, orderByComparator);
 	}
 
 	/**
@@ -948,13 +864,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByP_P(long plid, String portletId) {
-		for (IndexEntry indexEntry :
-				findByP_P(
-					plid, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByP_P.remove(
+			finderCache, new Object[] {plid, portletId});
 	}
 
 	/**
@@ -1098,22 +1009,10 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByO_O_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerId, ownerType, plid}));
 	}
 
 	/**
@@ -1130,14 +1029,9 @@ public class IndexEntryPersistenceImpl
 		long ownerId, int ownerType, long plid,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByO_O_P(
-			ownerId, ownerType, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_O_P.fetchFirst(
+			finderCache, new Object[] {ownerId, ownerType, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -1149,13 +1043,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByO_O_P(long ownerId, int ownerType, long plid) {
-		for (IndexEntry indexEntry :
-				findByO_O_P(
-					ownerId, ownerType, plid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByO_O_P.remove(
+			finderCache, new Object[] {ownerId, ownerType, plid});
 	}
 
 	/**
@@ -1300,22 +1189,10 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByO_O_PI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerId, ownerType, portletId}));
 	}
 
 	/**
@@ -1332,14 +1209,9 @@ public class IndexEntryPersistenceImpl
 		long ownerId, int ownerType, String portletId,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByO_O_PI(
-			ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_O_PI.fetchFirst(
+			finderCache, new Object[] {ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -1351,13 +1223,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByO_O_PI(long ownerId, int ownerType, String portletId) {
-		for (IndexEntry indexEntry :
-				findByO_O_PI(
-					ownerId, ownerType, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByO_O_PI.remove(
+			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -1502,22 +1369,10 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByO_P_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerType, plid, portletId}));
 	}
 
 	/**
@@ -1534,14 +1389,9 @@ public class IndexEntryPersistenceImpl
 		int ownerType, long plid, String portletId,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByO_P_P(
-			ownerType, plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_P_P.fetchFirst(
+			finderCache, new Object[] {ownerType, plid, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -1553,13 +1403,8 @@ public class IndexEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByO_P_P(int ownerType, long plid, String portletId) {
-		for (IndexEntry indexEntry :
-				findByO_P_P(
-					ownerType, plid, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByO_P_P.remove(
+			finderCache, new Object[] {ownerType, plid, portletId});
 	}
 
 	/**
@@ -1712,25 +1557,10 @@ public class IndexEntryPersistenceImpl
 			return indexEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchIndexEntryException(sb.toString());
+		throw new NoSuchIndexEntryException(
+			_collectionPersistenceFinderByC_O_O_LikeP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, ownerId, ownerType, portletId}));
 	}
 
 	/**
@@ -1748,14 +1578,10 @@ public class IndexEntryPersistenceImpl
 		long companyId, long ownerId, int ownerType, String portletId,
 		OrderByComparator<IndexEntry> orderByComparator) {
 
-		List<IndexEntry> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_O_O_LikeP.fetchFirst(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -1770,13 +1596,9 @@ public class IndexEntryPersistenceImpl
 	public void removeByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId) {
 
-		for (IndexEntry indexEntry :
-				findByC_O_O_LikeP(
-					companyId, ownerId, ownerType, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(indexEntry);
-		}
+		_collectionPersistenceFinderByC_O_O_LikeP.remove(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -1825,29 +1647,16 @@ public class IndexEntryPersistenceImpl
 			ownerId, ownerType, plid, portletId);
 
 		if (indexEntry == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ownerId=");
-			sb.append(ownerId);
-
-			sb.append(", ownerType=");
-			sb.append(ownerType);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByO_O_P_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {ownerId, ownerType, plid, portletId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIndexEntryException(sb.toString());
+			throw new NoSuchIndexEntryException(message);
 		}
 
 		return indexEntry;
@@ -1949,23 +1758,16 @@ public class IndexEntryPersistenceImpl
 		IndexEntry indexEntry = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (indexEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIndexEntryException(sb.toString());
+			throw new NoSuchIndexEntryException(message);
 		}
 
 		return indexEntry;
@@ -3307,4 +3109,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:77092892
+// LIFERAY-SERVICE-BUILDER-HASH:-382426501

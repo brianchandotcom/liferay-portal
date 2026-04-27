@@ -209,19 +209,10 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 			return layoutSEOEntryCustomMetaTag;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", layoutSEOEntryId=");
-		sb.append(layoutSEOEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryCustomMetaTagException(sb.toString());
+		throw new NoSuchEntryCustomMetaTagException(
+			_collectionPersistenceFinderByG_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, layoutSEOEntryId}));
 	}
 
 	/**
@@ -237,14 +228,9 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 		long groupId, long layoutSEOEntryId,
 		OrderByComparator<LayoutSEOEntryCustomMetaTag> orderByComparator) {
 
-		List<LayoutSEOEntryCustomMetaTag> list = findByG_L(
-			groupId, layoutSEOEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_L.fetchFirst(
+			finderCache, new Object[] {groupId, layoutSEOEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -255,13 +241,8 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	 */
 	@Override
 	public void removeByG_L(long groupId, long layoutSEOEntryId) {
-		for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag :
-				findByG_L(
-					groupId, layoutSEOEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(layoutSEOEntryCustomMetaTag);
-		}
+		_collectionPersistenceFinderByG_L.remove(
+			finderCache, new Object[] {groupId, layoutSEOEntryId});
 	}
 
 	/**
@@ -1224,4 +1205,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1427899048
+// LIFERAY-SERVICE-BUILDER-HASH:1202445561

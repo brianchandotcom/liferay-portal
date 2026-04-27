@@ -186,16 +186,11 @@ public class PatcherFixRelPersistenceImpl
 			return patcherFixRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("childPatcherFixId=");
-		sb.append(childPatcherFixId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixRelException(sb.toString());
+		throw new NoSuchPatcherFixRelException(
+			_collectionPersistenceFinderByChildPatcherFixId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {childPatcherFixId}));
 	}
 
 	/**
@@ -210,14 +205,8 @@ public class PatcherFixRelPersistenceImpl
 		long childPatcherFixId,
 		OrderByComparator<PatcherFixRel> orderByComparator) {
 
-		List<PatcherFixRel> list = findByChildPatcherFixId(
-			childPatcherFixId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByChildPatcherFixId.fetchFirst(
+			finderCache, new Object[] {childPatcherFixId}, orderByComparator);
 	}
 
 	/**
@@ -227,13 +216,8 @@ public class PatcherFixRelPersistenceImpl
 	 */
 	@Override
 	public void removeByChildPatcherFixId(long childPatcherFixId) {
-		for (PatcherFixRel patcherFixRel :
-				findByChildPatcherFixId(
-					childPatcherFixId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherFixRel);
-		}
+		_collectionPersistenceFinderByChildPatcherFixId.remove(
+			finderCache, new Object[] {childPatcherFixId});
 	}
 
 	/**
@@ -355,16 +339,11 @@ public class PatcherFixRelPersistenceImpl
 			return patcherFixRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentPatcherFixId=");
-		sb.append(parentPatcherFixId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixRelException(sb.toString());
+		throw new NoSuchPatcherFixRelException(
+			_collectionPersistenceFinderByParentPatcherFixId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {parentPatcherFixId}));
 	}
 
 	/**
@@ -379,14 +358,8 @@ public class PatcherFixRelPersistenceImpl
 		long parentPatcherFixId,
 		OrderByComparator<PatcherFixRel> orderByComparator) {
 
-		List<PatcherFixRel> list = findByParentPatcherFixId(
-			parentPatcherFixId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByParentPatcherFixId.fetchFirst(
+			finderCache, new Object[] {parentPatcherFixId}, orderByComparator);
 	}
 
 	/**
@@ -396,13 +369,8 @@ public class PatcherFixRelPersistenceImpl
 	 */
 	@Override
 	public void removeByParentPatcherFixId(long parentPatcherFixId) {
-		for (PatcherFixRel patcherFixRel :
-				findByParentPatcherFixId(
-					parentPatcherFixId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherFixRel);
-		}
+		_collectionPersistenceFinderByParentPatcherFixId.remove(
+			finderCache, new Object[] {parentPatcherFixId});
 	}
 
 	/**
@@ -1065,4 +1033,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-686585420
+// LIFERAY-SERVICE-BUILDER-HASH:-529075400

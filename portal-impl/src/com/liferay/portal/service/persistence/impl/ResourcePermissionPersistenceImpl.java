@@ -194,16 +194,9 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByName.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
 	}
 
 	/**
@@ -217,14 +210,9 @@ public class ResourcePermissionPersistenceImpl
 	public ResourcePermission fetchByName_First(
 		String name, OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByName(
-			name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByName.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name},
+			orderByComparator);
 	}
 
 	/**
@@ -234,11 +222,8 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByName(String name) {
-		for (ResourcePermission resourcePermission :
-				findByName(name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByName.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
 	/**
@@ -922,16 +907,9 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByRoleId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId}));
 	}
 
 	/**
@@ -945,14 +923,9 @@ public class ResourcePermissionPersistenceImpl
 	public ResourcePermission fetchByRoleId_First(
 		long roleId, OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByRoleId(
-			roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRoleId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId},
+			orderByComparator);
 	}
 
 	/**
@@ -962,12 +935,8 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByRoleId(long roleId) {
-		for (ResourcePermission resourcePermission :
-				findByRoleId(
-					roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByRoleId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
 	/**
@@ -1104,19 +1073,9 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primKeyLIKE");
-		sb.append(primKey);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByC_LikeP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, primKey}));
 	}
 
 	/**
@@ -1132,14 +1091,9 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByC_LikeP(
-			companyId, primKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LikeP.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, primKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1150,13 +1104,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LikeP(long companyId, String primKey) {
-		for (ResourcePermission resourcePermission :
-				findByC_LikeP(
-					companyId, primKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByC_LikeP.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, primKey});
 	}
 
 	/**
@@ -1301,22 +1251,10 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByC_N_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, name, scope}));
 	}
 
 	/**
@@ -1333,14 +1271,9 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByC_N_S(
-			companyId, name, scope, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope}, orderByComparator);
 	}
 
 	/**
@@ -1352,13 +1285,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N_S(long companyId, String name, int scope) {
-		for (ResourcePermission resourcePermission :
-				findByC_N_S(
-					companyId, name, scope, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByC_N_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope});
 	}
 
 	/**
@@ -1505,22 +1434,10 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append(", primKey=");
-		sb.append(primKey);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByC_S_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, scope, primKey}));
 	}
 
 	/**
@@ -1537,14 +1454,9 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, int scope, String primKey,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByC_S_P(
-			companyId, scope, primKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, scope, primKey}, orderByComparator);
 	}
 
 	/**
@@ -1556,13 +1468,9 @@ public class ResourcePermissionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_S_P(long companyId, int scope, String primKey) {
-		for (ResourcePermission resourcePermission :
-				findByC_S_P(
-					companyId, scope, primKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByC_S_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, scope, primKey});
 	}
 
 	/**
@@ -2541,25 +2449,10 @@ public class ResourcePermissionPersistenceImpl
 			return resourcePermission;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", scope=");
-		sb.append(scope);
-
-		sb.append(", roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchResourcePermissionException(sb.toString());
+		throw new NoSuchResourcePermissionException(
+			_collectionPersistenceFinderByC_N_S_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, name, scope, roleId}));
 	}
 
 	/**
@@ -2577,14 +2470,9 @@ public class ResourcePermissionPersistenceImpl
 		long companyId, String name, int scope, long roleId,
 		OrderByComparator<ResourcePermission> orderByComparator) {
 
-		List<ResourcePermission> list = findByC_N_S_R(
-			companyId, name, scope, roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N_S_R.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, roleId}, orderByComparator);
 	}
 
 	/**
@@ -2599,13 +2487,9 @@ public class ResourcePermissionPersistenceImpl
 	public void removeByC_N_S_R(
 		long companyId, String name, int scope, long roleId) {
 
-		for (ResourcePermission resourcePermission :
-				findByC_N_S_R(
-					companyId, name, scope, roleId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(resourcePermission);
-		}
+		_collectionPersistenceFinderByC_N_S_R.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, name, scope, roleId});
 	}
 
 	/**
@@ -5605,4 +5489,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:995856396
+// LIFERAY-SERVICE-BUILDER-HASH:904762682

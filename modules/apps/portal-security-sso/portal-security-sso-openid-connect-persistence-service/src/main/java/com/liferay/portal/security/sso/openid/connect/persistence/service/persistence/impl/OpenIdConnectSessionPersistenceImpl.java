@@ -188,16 +188,9 @@ public class OpenIdConnectSessionPersistenceImpl
 			return openIdConnectSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
+		throw new NoSuchSessionException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class OpenIdConnectSessionPersistenceImpl
 		long userId,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		List<OpenIdConnectSession> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -229,12 +216,8 @@ public class OpenIdConnectSessionPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (OpenIdConnectSession openIdConnectSession :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(openIdConnectSession);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -360,16 +343,11 @@ public class OpenIdConnectSessionPersistenceImpl
 			return openIdConnectSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accessTokenExpirationDate<");
-		sb.append(accessTokenExpirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
+		throw new NoSuchSessionException(
+			_collectionPersistenceFinderByLtAccessTokenExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {accessTokenExpirationDate}));
 	}
 
 	/**
@@ -384,14 +362,10 @@ public class OpenIdConnectSessionPersistenceImpl
 		Date accessTokenExpirationDate,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		List<OpenIdConnectSession> list = findByLtAccessTokenExpirationDate(
-			accessTokenExpirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtAccessTokenExpirationDate.
+			fetchFirst(
+				finderCache, new Object[] {accessTokenExpirationDate},
+				orderByComparator);
 	}
 
 	/**
@@ -403,13 +377,8 @@ public class OpenIdConnectSessionPersistenceImpl
 	public void removeByLtAccessTokenExpirationDate(
 		Date accessTokenExpirationDate) {
 
-		for (OpenIdConnectSession openIdConnectSession :
-				findByLtAccessTokenExpirationDate(
-					accessTokenExpirationDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(openIdConnectSession);
-		}
+		_collectionPersistenceFinderByLtAccessTokenExpirationDate.remove(
+			finderCache, new Object[] {accessTokenExpirationDate});
 	}
 
 	/**
@@ -445,23 +414,15 @@ public class OpenIdConnectSessionPersistenceImpl
 		OpenIdConnectSession openIdConnectSession = fetchByU_I(userId, issuer);
 
 		if (openIdConnectSession == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", issuer=");
-			sb.append(issuer);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_I.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, issuer});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSessionException(sb.toString());
+			throw new NoSuchSessionException(message);
 		}
 
 		return openIdConnectSession;
@@ -544,23 +505,15 @@ public class OpenIdConnectSessionPersistenceImpl
 			issuer, sessionId);
 
 		if (openIdConnectSession == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("issuer=");
-			sb.append(issuer);
-
-			sb.append(", sessionId=");
-			sb.append(sessionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByI_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {issuer, sessionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSessionException(sb.toString());
+			throw new NoSuchSessionException(message);
 		}
 
 		return openIdConnectSession;
@@ -748,22 +701,10 @@ public class OpenIdConnectSessionPersistenceImpl
 			return openIdConnectSession;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", authServerWellKnownURI=");
-		sb.append(authServerWellKnownURI);
-
-		sb.append(", clientId=");
-		sb.append(clientId);
-
-		sb.append("}");
-
-		throw new NoSuchSessionException(sb.toString());
+		throw new NoSuchSessionException(
+			_collectionPersistenceFinderByC_A_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, authServerWellKnownURI, clientId}));
 	}
 
 	/**
@@ -780,15 +721,10 @@ public class OpenIdConnectSessionPersistenceImpl
 		long companyId, String authServerWellKnownURI, String clientId,
 		OrderByComparator<OpenIdConnectSession> orderByComparator) {
 
-		List<OpenIdConnectSession> list = findByC_A_C(
-			companyId, authServerWellKnownURI, clientId, 0, 1,
+		return _collectionPersistenceFinderByC_A_C.fetchFirst(
+			finderCache,
+			new Object[] {companyId, authServerWellKnownURI, clientId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -802,13 +738,9 @@ public class OpenIdConnectSessionPersistenceImpl
 	public void removeByC_A_C(
 		long companyId, String authServerWellKnownURI, String clientId) {
 
-		for (OpenIdConnectSession openIdConnectSession :
-				findByC_A_C(
-					companyId, authServerWellKnownURI, clientId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(openIdConnectSession);
-		}
+		_collectionPersistenceFinderByC_A_C.remove(
+			finderCache,
+			new Object[] {companyId, authServerWellKnownURI, clientId});
 	}
 
 	/**
@@ -850,26 +782,16 @@ public class OpenIdConnectSessionPersistenceImpl
 			userId, authServerWellKnownURI, clientId);
 
 		if (openIdConnectSession == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", authServerWellKnownURI=");
-			sb.append(authServerWellKnownURI);
-
-			sb.append(", clientId=");
-			sb.append(clientId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_A_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, authServerWellKnownURI, clientId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSessionException(sb.toString());
+			throw new NoSuchSessionException(message);
 		}
 
 		return openIdConnectSession;
@@ -1784,4 +1706,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:668150672
+// LIFERAY-SERVICE-BUILDER-HASH:221858194

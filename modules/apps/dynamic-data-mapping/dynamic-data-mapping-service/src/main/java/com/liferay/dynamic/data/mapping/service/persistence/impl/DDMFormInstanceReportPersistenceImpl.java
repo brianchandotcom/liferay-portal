@@ -114,20 +114,15 @@ public class DDMFormInstanceReportPersistenceImpl
 			formInstanceId);
 
 		if (ddmFormInstanceReport == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("formInstanceId=");
-			sb.append(formInstanceId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByFormInstanceId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {formInstanceId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFormInstanceReportException(sb.toString());
+			throw new NoSuchFormInstanceReportException(message);
 		}
 
 		return ddmFormInstanceReport;
@@ -1147,4 +1142,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1483864710
+// LIFERAY-SERVICE-BUILDER-HASH:-501135487

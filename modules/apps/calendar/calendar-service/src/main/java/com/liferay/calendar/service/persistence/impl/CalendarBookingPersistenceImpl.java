@@ -214,16 +214,9 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,13 +230,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByUuid_First(
 		String uuid, OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -253,11 +241,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CalendarBooking calendarBooking :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -296,23 +281,15 @@ public class CalendarBookingPersistenceImpl
 		CalendarBooking calendarBooking = fetchByUUID_G(uuid, groupId);
 
 		if (calendarBooking == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBookingException(sb.toString());
+			throw new NoSuchBookingException(message);
 		}
 
 		return calendarBooking;
@@ -495,19 +472,9 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -523,14 +490,8 @@ public class CalendarBookingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -541,13 +502,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CalendarBooking calendarBooking :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -678,16 +634,9 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarId=");
-		sb.append(calendarId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByCalendarId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {calendarId}));
 	}
 
 	/**
@@ -701,14 +650,8 @@ public class CalendarBookingPersistenceImpl
 	public CalendarBooking fetchByCalendarId_First(
 		long calendarId, OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByCalendarId(
-			calendarId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCalendarId.fetchFirst(
+			finderCache, new Object[] {calendarId}, orderByComparator);
 	}
 
 	/**
@@ -718,12 +661,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByCalendarId(long calendarId) {
-		for (CalendarBooking calendarBooking :
-				findByCalendarId(
-					calendarId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByCalendarId.remove(
+			finderCache, new Object[] {calendarId});
 	}
 
 	/**
@@ -855,16 +794,11 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByCalendarResourceId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {calendarResourceId}));
 	}
 
 	/**
@@ -879,14 +813,8 @@ public class CalendarBookingPersistenceImpl
 		long calendarResourceId,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByCalendarResourceId(
-			calendarResourceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCalendarResourceId.fetchFirst(
+			finderCache, new Object[] {calendarResourceId}, orderByComparator);
 	}
 
 	/**
@@ -896,13 +824,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByCalendarResourceId(long calendarResourceId) {
-		for (CalendarBooking calendarBooking :
-				findByCalendarResourceId(
-					calendarResourceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByCalendarResourceId.remove(
+			finderCache, new Object[] {calendarResourceId});
 	}
 
 	/**
@@ -1037,16 +960,11 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCalendarBookingId=");
-		sb.append(parentCalendarBookingId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByParentCalendarBookingId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {parentCalendarBookingId}));
 	}
 
 	/**
@@ -1061,14 +979,9 @@ public class CalendarBookingPersistenceImpl
 		long parentCalendarBookingId,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByParentCalendarBookingId(
-			parentCalendarBookingId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByParentCalendarBookingId.fetchFirst(
+			finderCache, new Object[] {parentCalendarBookingId},
+			orderByComparator);
 	}
 
 	/**
@@ -1078,13 +991,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByParentCalendarBookingId(long parentCalendarBookingId) {
-		for (CalendarBooking calendarBooking :
-				findByParentCalendarBookingId(
-					parentCalendarBookingId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByParentCalendarBookingId.remove(
+			finderCache, new Object[] {parentCalendarBookingId});
 	}
 
 	/**
@@ -1222,16 +1130,11 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recurringCalendarBookingId=");
-		sb.append(recurringCalendarBookingId);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByRecurringCalendarBookingId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {recurringCalendarBookingId}));
 	}
 
 	/**
@@ -1246,14 +1149,10 @@ public class CalendarBookingPersistenceImpl
 		long recurringCalendarBookingId,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByRecurringCalendarBookingId(
-			recurringCalendarBookingId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRecurringCalendarBookingId.
+			fetchFirst(
+				finderCache, new Object[] {recurringCalendarBookingId},
+				orderByComparator);
 	}
 
 	/**
@@ -1265,13 +1164,8 @@ public class CalendarBookingPersistenceImpl
 	public void removeByRecurringCalendarBookingId(
 		long recurringCalendarBookingId) {
 
-		for (CalendarBooking calendarBooking :
-				findByRecurringCalendarBookingId(
-					recurringCalendarBookingId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByRecurringCalendarBookingId.remove(
+			finderCache, new Object[] {recurringCalendarBookingId});
 	}
 
 	/**
@@ -1314,23 +1208,16 @@ public class CalendarBookingPersistenceImpl
 			calendarId, parentCalendarBookingId);
 
 		if (calendarBooking == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("calendarId=");
-			sb.append(calendarId);
-
-			sb.append(", parentCalendarBookingId=");
-			sb.append(parentCalendarBookingId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {calendarId, parentCalendarBookingId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBookingException(sb.toString());
+			throw new NoSuchBookingException(message);
 		}
 
 		return calendarBooking;
@@ -1422,23 +1309,16 @@ public class CalendarBookingPersistenceImpl
 		CalendarBooking calendarBooking = fetchByC_V(calendarId, vEventUid);
 
 		if (calendarBooking == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("calendarId=");
-			sb.append(calendarId);
-
-			sb.append(", vEventUid=");
-			sb.append(vEventUid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {calendarId, vEventUid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBookingException(sb.toString());
+			throw new NoSuchBookingException(message);
 		}
 
 		return calendarBooking;
@@ -2238,19 +2118,10 @@ public class CalendarBookingPersistenceImpl
 			return calendarBooking;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCalendarBookingId=");
-		sb.append(parentCalendarBookingId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchBookingException(sb.toString());
+		throw new NoSuchBookingException(
+			_collectionPersistenceFinderByP_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {parentCalendarBookingId, status}));
 	}
 
 	/**
@@ -2266,14 +2137,9 @@ public class CalendarBookingPersistenceImpl
 		long parentCalendarBookingId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator) {
 
-		List<CalendarBooking> list = findByP_S(
-			parentCalendarBookingId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_S.fetchFirst(
+			finderCache, new Object[] {parentCalendarBookingId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2284,13 +2150,8 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Override
 	public void removeByP_S(long parentCalendarBookingId, int status) {
-		for (CalendarBooking calendarBooking :
-				findByP_S(
-					parentCalendarBookingId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(calendarBooking);
-		}
+		_collectionPersistenceFinderByP_S.remove(
+			finderCache, new Object[] {parentCalendarBookingId, status});
 	}
 
 	/**
@@ -2332,23 +2193,16 @@ public class CalendarBookingPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (calendarBooking == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBookingException(sb.toString());
+			throw new NoSuchBookingException(message);
 		}
 
 		return calendarBooking;
@@ -3803,4 +3657,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2093940762
+// LIFERAY-SERVICE-BUILDER-HASH:684067845

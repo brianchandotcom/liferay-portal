@@ -103,20 +103,15 @@ public class SamlIdpSsoSessionPersistenceImpl
 		SamlIdpSsoSession samlIdpSsoSession = fetchByUserId(userId);
 
 		if (samlIdpSsoSession == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIdpSsoSessionException(sb.toString());
+			throw new NoSuchIdpSsoSessionException(message);
 		}
 
 		return samlIdpSsoSession;
@@ -279,16 +274,9 @@ public class SamlIdpSsoSessionPersistenceImpl
 			return samlIdpSsoSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSsoSessionException(sb.toString());
+		throw new NoSuchIdpSsoSessionException(
+			_collectionPersistenceFinderByLtCreateDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createDate}));
 	}
 
 	/**
@@ -303,14 +291,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 		Date createDate,
 		OrderByComparator<SamlIdpSsoSession> orderByComparator) {
 
-		List<SamlIdpSsoSession> list = findByLtCreateDate(
-			createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtCreateDate.fetchFirst(
+			finderCache, new Object[] {createDate}, orderByComparator);
 	}
 
 	/**
@@ -320,12 +302,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 */
 	@Override
 	public void removeByLtCreateDate(Date createDate) {
-		for (SamlIdpSsoSession samlIdpSsoSession :
-				findByLtCreateDate(
-					createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(samlIdpSsoSession);
-		}
+		_collectionPersistenceFinderByLtCreateDate.remove(
+			finderCache, new Object[] {createDate});
 	}
 
 	/**
@@ -360,20 +338,17 @@ public class SamlIdpSsoSessionPersistenceImpl
 			samlIdpSsoSessionKey);
 
 		if (samlIdpSsoSession == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("samlIdpSsoSessionKey=");
-			sb.append(samlIdpSsoSessionKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderBySamlIdpSsoSessionKey.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {samlIdpSsoSessionKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchIdpSsoSessionException(sb.toString());
+			throw new NoSuchIdpSsoSessionException(message);
 		}
 
 		return samlIdpSsoSession;
@@ -1136,4 +1111,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-258034940
+// LIFERAY-SERVICE-BUILDER-HASH:2094660200

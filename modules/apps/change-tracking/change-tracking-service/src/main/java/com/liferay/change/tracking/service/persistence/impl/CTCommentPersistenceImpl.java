@@ -187,16 +187,9 @@ public class CTCommentPersistenceImpl
 			return ctComment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -210,14 +203,8 @@ public class CTCommentPersistenceImpl
 	public CTComment fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTComment> orderByComparator) {
 
-		List<CTComment> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -227,13 +214,8 @@ public class CTCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTComment ctComment :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctComment);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -349,16 +331,9 @@ public class CTCommentPersistenceImpl
 			return ctComment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctEntryId=");
-		sb.append(ctEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByCtEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctEntryId}));
 	}
 
 	/**
@@ -372,14 +347,8 @@ public class CTCommentPersistenceImpl
 	public CTComment fetchByCtEntryId_First(
 		long ctEntryId, OrderByComparator<CTComment> orderByComparator) {
 
-		List<CTComment> list = findByCtEntryId(
-			ctEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtEntryId.fetchFirst(
+			finderCache, new Object[] {ctEntryId}, orderByComparator);
 	}
 
 	/**
@@ -389,12 +358,8 @@ public class CTCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByCtEntryId(long ctEntryId) {
-		for (CTComment ctComment :
-				findByCtEntryId(
-					ctEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctComment);
-		}
+		_collectionPersistenceFinderByCtEntryId.remove(
+			finderCache, new Object[] {ctEntryId});
 	}
 
 	/**
@@ -1071,4 +1036,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-379863441
+// LIFERAY-SERVICE-BUILDER-HASH:-1013498297

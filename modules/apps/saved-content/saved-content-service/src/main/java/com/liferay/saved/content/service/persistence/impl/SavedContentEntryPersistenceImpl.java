@@ -208,16 +208,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -231,14 +224,8 @@ public class SavedContentEntryPersistenceImpl
 	public SavedContentEntry fetchByUuid_First(
 		String uuid, OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -248,11 +235,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SavedContentEntry savedContentEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +275,15 @@ public class SavedContentEntryPersistenceImpl
 		SavedContentEntry savedContentEntry = fetchByUUID_G(uuid, groupId);
 
 		if (savedContentEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSavedContentEntryException(sb.toString());
+			throw new NoSuchSavedContentEntryException(message);
 		}
 
 		return savedContentEntry;
@@ -490,19 +466,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -518,14 +484,8 @@ public class SavedContentEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -536,13 +496,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SavedContentEntry savedContentEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -672,16 +627,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -695,14 +643,8 @@ public class SavedContentEntryPersistenceImpl
 	public SavedContentEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -855,12 +797,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SavedContentEntry savedContentEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1048,16 +986,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -1071,14 +1002,8 @@ public class SavedContentEntryPersistenceImpl
 	public SavedContentEntry fetchByUserId_First(
 		long userId, OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -1088,12 +1013,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SavedContentEntry savedContentEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -1227,19 +1148,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -1255,14 +1166,8 @@ public class SavedContentEntryPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1423,13 +1328,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (SavedContentEntry savedContentEntry :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			finderCache, new Object[] {groupId, userId});
 	}
 
 	/**
@@ -1634,19 +1534,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByG_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -1662,14 +1552,9 @@ public class SavedContentEntryPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByG_CN(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_CN.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -1833,13 +1718,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_CN(long groupId, long classNameId) {
-		for (SavedContentEntry savedContentEntry :
-				findByG_CN(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByG_CN.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -2044,19 +1924,9 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByU_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, classNameId}));
 	}
 
 	/**
@@ -2072,14 +1942,8 @@ public class SavedContentEntryPersistenceImpl
 		long userId, long classNameId,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByU_C(
-			userId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C.fetchFirst(
+			finderCache, new Object[] {userId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -2090,13 +1954,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByU_C(long userId, long classNameId) {
-		for (SavedContentEntry savedContentEntry :
-				findByU_C(
-					userId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByU_C.remove(
+			finderCache, new Object[] {userId, classNameId});
 	}
 
 	/**
@@ -2240,22 +2099,10 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK}));
 	}
 
 	/**
@@ -2272,14 +2119,9 @@ public class SavedContentEntryPersistenceImpl
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByG_C_C(
-			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -2453,13 +2295,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
-		for (SavedContentEntry savedContentEntry :
-				findByG_C_C(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByG_C_C.remove(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -2684,22 +2521,10 @@ public class SavedContentEntryPersistenceImpl
 			return savedContentEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSavedContentEntryException(sb.toString());
+		throw new NoSuchSavedContentEntryException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -2716,14 +2541,9 @@ public class SavedContentEntryPersistenceImpl
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<SavedContentEntry> orderByComparator) {
 
-		List<SavedContentEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -2735,13 +2555,8 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
-		for (SavedContentEntry savedContentEntry :
-				findByC_C_C(
-					companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(savedContentEntry);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			finderCache, new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -2786,29 +2601,16 @@ public class SavedContentEntryPersistenceImpl
 			groupId, userId, classNameId, classPK);
 
 		if (savedContentEntry == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", userId=");
-			sb.append(userId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_U_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, userId, classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSavedContentEntryException(sb.toString());
+			throw new NoSuchSavedContentEntryException(message);
 		}
 
 		return savedContentEntry;
@@ -4908,4 +4710,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-472451555
+// LIFERAY-SERVICE-BUILDER-HASH:765849643

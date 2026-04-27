@@ -195,16 +195,9 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -218,13 +211,8 @@ public class ObjectActionPersistenceImpl
 	public ObjectAction fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -234,11 +222,8 @@ public class ObjectActionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectAction objectAction :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -363,19 +348,9 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -391,14 +366,8 @@ public class ObjectActionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -409,13 +378,8 @@ public class ObjectActionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectAction objectAction :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -538,16 +502,11 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByObjectDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId}));
 	}
 
 	/**
@@ -562,14 +521,8 @@ public class ObjectActionPersistenceImpl
 		long objectDefinitionId,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByObjectDefinitionId(
-			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectDefinitionId.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -579,13 +532,8 @@ public class ObjectActionPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectDefinitionId(long objectDefinitionId) {
-		for (ObjectAction objectAction :
-				findByObjectDefinitionId(
-					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByObjectDefinitionId.remove(
+			finderCache, new Object[] {objectDefinitionId});
 	}
 
 	/**
@@ -619,23 +567,16 @@ public class ObjectActionPersistenceImpl
 		ObjectAction objectAction = fetchByODI_N(objectDefinitionId, name);
 
 		if (objectAction == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByODI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectActionException(sb.toString());
+			throw new NoSuchObjectActionException(message);
 		}
 
 		return objectAction;
@@ -813,19 +754,10 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append(", objectActionExecutorKey=");
-		sb.append(objectActionExecutorKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByA_OAEK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {active, objectActionExecutorKey}));
 	}
 
 	/**
@@ -841,14 +773,9 @@ public class ObjectActionPersistenceImpl
 		boolean active, String objectActionExecutorKey,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByA_OAEK(
-			active, objectActionExecutorKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByA_OAEK.fetchFirst(
+			finderCache, new Object[] {active, objectActionExecutorKey},
+			orderByComparator);
 	}
 
 	/**
@@ -859,13 +786,8 @@ public class ObjectActionPersistenceImpl
 	 */
 	@Override
 	public void removeByA_OAEK(boolean active, String objectActionExecutorKey) {
-		for (ObjectAction objectAction :
-				findByA_OAEK(
-					active, objectActionExecutorKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByA_OAEK.remove(
+			finderCache, new Object[] {active, objectActionExecutorKey});
 	}
 
 	/**
@@ -904,26 +826,18 @@ public class ObjectActionPersistenceImpl
 			externalReferenceCode, companyId, objectDefinitionId);
 
 		if (objectAction == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append(", objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C_ODI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						externalReferenceCode, companyId, objectDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectActionException(sb.toString());
+			throw new NoSuchObjectActionException(message);
 		}
 
 		return objectAction;
@@ -1126,22 +1040,10 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", objectActionTriggerKey=");
-		sb.append(objectActionTriggerKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByC_A_OATK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, objectActionTriggerKey}));
 	}
 
 	/**
@@ -1158,14 +1060,10 @@ public class ObjectActionPersistenceImpl
 		long companyId, boolean active, String objectActionTriggerKey,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByC_A_OATK(
-			companyId, active, objectActionTriggerKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_OATK.fetchFirst(
+			finderCache,
+			new Object[] {companyId, active, objectActionTriggerKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1179,13 +1077,9 @@ public class ObjectActionPersistenceImpl
 	public void removeByC_A_OATK(
 		long companyId, boolean active, String objectActionTriggerKey) {
 
-		for (ObjectAction objectAction :
-				findByC_A_OATK(
-					companyId, active, objectActionTriggerKey,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByC_A_OATK.remove(
+			finderCache,
+			new Object[] {companyId, active, objectActionTriggerKey});
 	}
 
 	/**
@@ -1331,22 +1225,12 @@ public class ObjectActionPersistenceImpl
 			return objectAction;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", objectActionTriggerKey=");
-		sb.append(objectActionTriggerKey);
-
-		sb.append("}");
-
-		throw new NoSuchObjectActionException(sb.toString());
+		throw new NoSuchObjectActionException(
+			_collectionPersistenceFinderByO_A_OATK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					objectDefinitionId, active, objectActionTriggerKey
+				}));
 	}
 
 	/**
@@ -1363,15 +1247,10 @@ public class ObjectActionPersistenceImpl
 		long objectDefinitionId, boolean active, String objectActionTriggerKey,
 		OrderByComparator<ObjectAction> orderByComparator) {
 
-		List<ObjectAction> list = findByO_A_OATK(
-			objectDefinitionId, active, objectActionTriggerKey, 0, 1,
+		return _collectionPersistenceFinderByO_A_OATK.fetchFirst(
+			finderCache,
+			new Object[] {objectDefinitionId, active, objectActionTriggerKey},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1386,13 +1265,9 @@ public class ObjectActionPersistenceImpl
 		long objectDefinitionId, boolean active,
 		String objectActionTriggerKey) {
 
-		for (ObjectAction objectAction :
-				findByO_A_OATK(
-					objectDefinitionId, active, objectActionTriggerKey,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectAction);
-		}
+		_collectionPersistenceFinderByO_A_OATK.remove(
+			finderCache,
+			new Object[] {objectDefinitionId, active, objectActionTriggerKey});
 	}
 
 	/**
@@ -1437,29 +1312,18 @@ public class ObjectActionPersistenceImpl
 			objectDefinitionId, active, name, objectActionTriggerKey);
 
 		if (objectAction == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append(", active=");
-			sb.append(active);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", objectActionTriggerKey=");
-			sb.append(objectActionTriggerKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByODI_A_N_OATK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						objectDefinitionId, active, name, objectActionTriggerKey
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectActionException(sb.toString());
+			throw new NoSuchObjectActionException(message);
 		}
 
 		return objectAction;
@@ -2568,4 +2432,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2089347086
+// LIFERAY-SERVICE-BUILDER-HASH:96719797

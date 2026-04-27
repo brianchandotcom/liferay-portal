@@ -212,16 +212,9 @@ public class UserGroupPersistenceImpl
 			return userGroup;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		throw new NoSuchUserGroupException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -235,13 +228,9 @@ public class UserGroupPersistenceImpl
 	public UserGroup fetchByUuid_First(
 		String uuid, OrderByComparator<UserGroup> orderByComparator) {
 
-		List<UserGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -399,11 +388,8 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (UserGroup userGroup :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userGroup);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -614,19 +600,9 @@ public class UserGroupPersistenceImpl
 			return userGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		throw new NoSuchUserGroupException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -642,14 +618,9 @@ public class UserGroupPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<UserGroup> orderByComparator) {
 
-		List<UserGroup> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -817,13 +788,8 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (UserGroup userGroup :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userGroup);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1034,16 +1000,9 @@ public class UserGroupPersistenceImpl
 			return userGroup;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		throw new NoSuchUserGroupException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1057,14 +1016,9 @@ public class UserGroupPersistenceImpl
 	public UserGroup fetchByCompanyId_First(
 		long companyId, OrderByComparator<UserGroup> orderByComparator) {
 
-		List<UserGroup> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1211,12 +1165,8 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (UserGroup userGroup :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userGroup);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1412,19 +1362,10 @@ public class UserGroupPersistenceImpl
 			return userGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentUserGroupId=");
-		sb.append(parentUserGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		throw new NoSuchUserGroupException(
+			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, parentUserGroupId}));
 	}
 
 	/**
@@ -1440,14 +1381,9 @@ public class UserGroupPersistenceImpl
 		long companyId, long parentUserGroupId,
 		OrderByComparator<UserGroup> orderByComparator) {
 
-		List<UserGroup> list = findByC_P(
-			companyId, parentUserGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentUserGroupId}, orderByComparator);
 	}
 
 	/**
@@ -1606,13 +1542,9 @@ public class UserGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByC_P(long companyId, long parentUserGroupId) {
-		for (UserGroup userGroup :
-				findByC_P(
-					companyId, parentUserGroupId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userGroup);
-		}
+		_collectionPersistenceFinderByC_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, parentUserGroupId});
 	}
 
 	/**
@@ -2609,22 +2541,10 @@ public class UserGroupPersistenceImpl
 			return userGroup;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userGroupId>");
-		sb.append(userGroupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentUserGroupId=");
-		sb.append(parentUserGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchUserGroupException(sb.toString());
+		throw new NoSuchUserGroupException(
+			_collectionPersistenceFinderByGtU_C_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userGroupId, companyId, parentUserGroupId}));
 	}
 
 	/**
@@ -2641,14 +2561,10 @@ public class UserGroupPersistenceImpl
 		long userGroupId, long companyId, long parentUserGroupId,
 		OrderByComparator<UserGroup> orderByComparator) {
 
-		List<UserGroup> list = findByGtU_C_P(
-			userGroupId, companyId, parentUserGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGtU_C_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userGroupId, companyId, parentUserGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -2820,13 +2736,9 @@ public class UserGroupPersistenceImpl
 	public void removeByGtU_C_P(
 		long userGroupId, long companyId, long parentUserGroupId) {
 
-		for (UserGroup userGroup :
-				findByGtU_C_P(
-					userGroupId, companyId, parentUserGroupId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userGroup);
-		}
+		_collectionPersistenceFinderByGtU_C_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userGroupId, companyId, parentUserGroupId});
 	}
 
 	/**
@@ -2947,23 +2859,16 @@ public class UserGroupPersistenceImpl
 		UserGroup userGroup = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (userGroup == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserGroupException(sb.toString());
+			throw new NoSuchUserGroupException(message);
 		}
 
 		return userGroup;
@@ -5214,4 +5119,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1751567997
+// LIFERAY-SERVICE-BUILDER-HASH:-1223564361

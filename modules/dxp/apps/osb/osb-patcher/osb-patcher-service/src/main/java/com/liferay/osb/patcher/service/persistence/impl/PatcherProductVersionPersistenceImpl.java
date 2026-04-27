@@ -196,16 +196,11 @@ public class PatcherProductVersionPersistenceImpl
 			return patcherProductVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fixDeliveryMethod=");
-		sb.append(fixDeliveryMethod);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProductVersionException(sb.toString());
+		throw new NoSuchPatcherProductVersionException(
+			_collectionPersistenceFinderByFixDeliveryMethod.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fixDeliveryMethod}));
 	}
 
 	/**
@@ -220,14 +215,8 @@ public class PatcherProductVersionPersistenceImpl
 		int fixDeliveryMethod,
 		OrderByComparator<PatcherProductVersion> orderByComparator) {
 
-		List<PatcherProductVersion> list = findByFixDeliveryMethod(
-			fixDeliveryMethod, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFixDeliveryMethod.fetchFirst(
+			finderCache, new Object[] {fixDeliveryMethod}, orderByComparator);
 	}
 
 	/**
@@ -384,13 +373,8 @@ public class PatcherProductVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByFixDeliveryMethod(int fixDeliveryMethod) {
-		for (PatcherProductVersion patcherProductVersion :
-				findByFixDeliveryMethod(
-					fixDeliveryMethod, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherProductVersion);
-		}
+		_collectionPersistenceFinderByFixDeliveryMethod.remove(
+			finderCache, new Object[] {fixDeliveryMethod});
 	}
 
 	/**
@@ -485,20 +469,15 @@ public class PatcherProductVersionPersistenceImpl
 		PatcherProductVersion patcherProductVersion = fetchByName(name);
 
 		if (patcherProductVersion == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherProductVersionException(sb.toString());
+			throw new NoSuchPatcherProductVersionException(message);
 		}
 
 		return patcherProductVersion;
@@ -1281,4 +1260,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-731092705
+// LIFERAY-SERVICE-BUILDER-HASH:-273888189

@@ -206,16 +206,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			return ddmDataProviderInstanceLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dataProviderInstanceId=");
-		sb.append(dataProviderInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceLinkException(sb.toString());
+		throw new NoSuchDataProviderInstanceLinkException(
+			_collectionPersistenceFinderByDataProviderInstanceId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {dataProviderInstanceId}));
 	}
 
 	/**
@@ -230,14 +225,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		long dataProviderInstanceId,
 		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
 
-		List<DDMDataProviderInstanceLink> list = findByDataProviderInstanceId(
-			dataProviderInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDataProviderInstanceId.fetchFirst(
+			finderCache, new Object[] {dataProviderInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -247,13 +237,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByDataProviderInstanceId(long dataProviderInstanceId) {
-		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-				findByDataProviderInstanceId(
-					dataProviderInstanceId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmDataProviderInstanceLink);
-		}
+		_collectionPersistenceFinderByDataProviderInstanceId.remove(
+			finderCache, new Object[] {dataProviderInstanceId});
 	}
 
 	/**
@@ -385,16 +370,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			return ddmDataProviderInstanceLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataProviderInstanceLinkException(sb.toString());
+		throw new NoSuchDataProviderInstanceLinkException(
+			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
 	}
 
 	/**
@@ -409,14 +387,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		long structureId,
 		OrderByComparator<DDMDataProviderInstanceLink> orderByComparator) {
 
-		List<DDMDataProviderInstanceLink> list = findByStructureId(
-			structureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureId.fetchFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -426,12 +398,8 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureId(long structureId) {
-		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-				findByStructureId(
-					structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmDataProviderInstanceLink);
-		}
+		_collectionPersistenceFinderByStructureId.remove(
+			finderCache, new Object[] {structureId});
 	}
 
 	/**
@@ -472,23 +440,16 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			dataProviderInstanceId, structureId);
 
 		if (ddmDataProviderInstanceLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("dataProviderInstanceId=");
-			sb.append(dataProviderInstanceId);
-
-			sb.append(", structureId=");
-			sb.append(structureId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByD_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {dataProviderInstanceId, structureId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDataProviderInstanceLinkException(sb.toString());
+			throw new NoSuchDataProviderInstanceLinkException(message);
 		}
 
 		return ddmDataProviderInstanceLink;
@@ -1580,4 +1541,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2080674723
+// LIFERAY-SERVICE-BUILDER-HASH:606286227

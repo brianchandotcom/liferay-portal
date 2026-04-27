@@ -204,16 +204,9 @@ public class KaleoDefinitionVersionPersistenceImpl
 			return kaleoDefinitionVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionVersionException(sb.toString());
+		throw new NoSuchDefinitionVersionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -228,14 +221,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 		long companyId,
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
 
-		List<KaleoDefinitionVersion> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -245,12 +232,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KaleoDefinitionVersion kaleoDefinitionVersion :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoDefinitionVersion);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -384,19 +367,9 @@ public class KaleoDefinitionVersionPersistenceImpl
 			return kaleoDefinitionVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchDefinitionVersionException(sb.toString());
+		throw new NoSuchDefinitionVersionException(
+			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
 	}
 
 	/**
@@ -412,14 +385,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 		long companyId, String name,
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator) {
 
-		List<KaleoDefinitionVersion> list = findByC_N(
-			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N.fetchFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -430,13 +397,8 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N(long companyId, String name) {
-		for (KaleoDefinitionVersion kaleoDefinitionVersion :
-				findByC_N(
-					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kaleoDefinitionVersion);
-		}
+		_collectionPersistenceFinderByC_N.remove(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -479,26 +441,16 @@ public class KaleoDefinitionVersionPersistenceImpl
 			companyId, name, version);
 
 		if (kaleoDefinitionVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, name, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDefinitionVersionException(sb.toString());
+			throw new NoSuchDefinitionVersionException(message);
 		}
 
 		return kaleoDefinitionVersion;
@@ -1633,4 +1585,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1707173929
+// LIFERAY-SERVICE-BUILDER-HASH:-445164111

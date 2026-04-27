@@ -206,16 +206,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public DepotEntryGroupRel fetchByUuid_First(
 		String uuid, OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -246,11 +233,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -289,23 +273,15 @@ public class DepotEntryGroupRelPersistenceImpl
 		DepotEntryGroupRel depotEntryGroupRel = fetchByUUID_G(uuid, groupId);
 
 		if (depotEntryGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryGroupRelException(sb.toString());
+			throw new NoSuchEntryGroupRelException(message);
 		}
 
 		return depotEntryGroupRel;
@@ -488,19 +464,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -516,14 +482,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -534,13 +494,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -671,16 +626,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByDepotEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {depotEntryId}));
 	}
 
 	/**
@@ -695,14 +643,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		long depotEntryId,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByDepotEntryId(
-			depotEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDepotEntryId.fetchFirst(
+			finderCache, new Object[] {depotEntryId}, orderByComparator);
 	}
 
 	/**
@@ -712,12 +654,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByDepotEntryId(long depotEntryId) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByDepotEntryId(
-					depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByDepotEntryId.remove(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	/**
@@ -846,16 +784,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByToGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toGroupId}));
 	}
 
 	/**
@@ -870,14 +801,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		long toGroupId,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByToGroupId(
-			toGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByToGroupId.fetchFirst(
+			finderCache, new Object[] {toGroupId}, orderByComparator);
 	}
 
 	/**
@@ -887,12 +812,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByToGroupId(long toGroupId) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByToGroupId(
-					toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByToGroupId.remove(
+			finderCache, new Object[] {toGroupId});
 	}
 
 	/**
@@ -1032,19 +953,10 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ddmStructuresAvailable=");
-		sb.append(ddmStructuresAvailable);
-
-		sb.append(", toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByDDMSA_TGI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ddmStructuresAvailable, toGroupId}));
 	}
 
 	/**
@@ -1060,14 +972,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		boolean ddmStructuresAvailable, long toGroupId,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByDDMSA_TGI(
-			ddmStructuresAvailable, toGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDDMSA_TGI.fetchFirst(
+			finderCache, new Object[] {ddmStructuresAvailable, toGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1080,13 +987,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public void removeByDDMSA_TGI(
 		boolean ddmStructuresAvailable, long toGroupId) {
 
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByDDMSA_TGI(
-					ddmStructuresAvailable, toGroupId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByDDMSA_TGI.remove(
+			finderCache, new Object[] {ddmStructuresAvailable, toGroupId});
 	}
 
 	/**
@@ -1129,23 +1031,16 @@ public class DepotEntryGroupRelPersistenceImpl
 			depotEntryId, toGroupId);
 
 		if (depotEntryGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("depotEntryId=");
-			sb.append(depotEntryId);
-
-			sb.append(", toGroupId=");
-			sb.append(toGroupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByD_TGI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {depotEntryId, toGroupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryGroupRelException(sb.toString());
+			throw new NoSuchEntryGroupRelException(message);
 		}
 
 		return depotEntryGroupRel;
@@ -1332,19 +1227,10 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("searchable=");
-		sb.append(searchable);
-
-		sb.append(", toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByS_TGI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {searchable, toGroupId}));
 	}
 
 	/**
@@ -1360,14 +1246,9 @@ public class DepotEntryGroupRelPersistenceImpl
 		boolean searchable, long toGroupId,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByS_TGI(
-			searchable, toGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_TGI.fetchFirst(
+			finderCache, new Object[] {searchable, toGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -1378,13 +1259,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByS_TGI(boolean searchable, long toGroupId) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByS_TGI(
-					searchable, toGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByS_TGI.remove(
+			finderCache, new Object[] {searchable, toGroupId});
 	}
 
 	/**
@@ -1520,19 +1396,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			return depotEntryGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toGroupId=");
-		sb.append(toGroupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryGroupRelException(sb.toString());
+		throw new NoSuchEntryGroupRelException(
+			_collectionPersistenceFinderByTGI_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toGroupId, type}));
 	}
 
 	/**
@@ -1548,14 +1414,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		long toGroupId, int type,
 		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
 
-		List<DepotEntryGroupRel> list = findByTGI_T(
-			toGroupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTGI_T.fetchFirst(
+			finderCache, new Object[] {toGroupId, type}, orderByComparator);
 	}
 
 	/**
@@ -1566,13 +1426,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByTGI_T(long toGroupId, int type) {
-		for (DepotEntryGroupRel depotEntryGroupRel :
-				findByTGI_T(
-					toGroupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(depotEntryGroupRel);
-		}
+		_collectionPersistenceFinderByTGI_T.remove(
+			finderCache, new Object[] {toGroupId, type});
 	}
 
 	/**
@@ -2818,4 +2673,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:834704874
+// LIFERAY-SERVICE-BUILDER-HASH:-1152437614

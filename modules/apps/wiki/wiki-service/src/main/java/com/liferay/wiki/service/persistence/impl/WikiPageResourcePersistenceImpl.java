@@ -200,16 +200,9 @@ public class WikiPageResourcePersistenceImpl
 			return wikiPageResource;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPageResourceException(sb.toString());
+		throw new NoSuchPageResourceException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,13 +216,8 @@ public class WikiPageResourcePersistenceImpl
 	public WikiPageResource fetchByUuid_First(
 		String uuid, OrderByComparator<WikiPageResource> orderByComparator) {
 
-		List<WikiPageResource> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -239,11 +227,8 @@ public class WikiPageResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WikiPageResource wikiPageResource :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(wikiPageResource);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -282,23 +267,15 @@ public class WikiPageResourcePersistenceImpl
 		WikiPageResource wikiPageResource = fetchByUUID_G(uuid, groupId);
 
 		if (wikiPageResource == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageResourceException(sb.toString());
+			throw new NoSuchPageResourceException(message);
 		}
 
 		return wikiPageResource;
@@ -481,19 +458,9 @@ public class WikiPageResourcePersistenceImpl
 			return wikiPageResource;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPageResourceException(sb.toString());
+		throw new NoSuchPageResourceException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -509,14 +476,8 @@ public class WikiPageResourcePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<WikiPageResource> orderByComparator) {
 
-		List<WikiPageResource> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -527,13 +488,8 @@ public class WikiPageResourcePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WikiPageResource wikiPageResource :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(wikiPageResource);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -573,23 +529,15 @@ public class WikiPageResourcePersistenceImpl
 		WikiPageResource wikiPageResource = fetchByN_T(nodeId, title);
 
 		if (wikiPageResource == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("nodeId=");
-			sb.append(nodeId);
-
-			sb.append(", title=");
-			sb.append(title);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByN_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, title});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageResourceException(sb.toString());
+			throw new NoSuchPageResourceException(message);
 		}
 
 		return wikiPageResource;
@@ -1669,4 +1617,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1247129115
+// LIFERAY-SERVICE-BUILDER-HASH:-301643053

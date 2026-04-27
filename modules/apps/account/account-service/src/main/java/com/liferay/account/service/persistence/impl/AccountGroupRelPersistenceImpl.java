@@ -190,16 +190,9 @@ public class AccountGroupRelPersistenceImpl
 			return accountGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
+		throw new NoSuchGroupRelException(
+			_collectionPersistenceFinderByAccountGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountGroupId}));
 	}
 
 	/**
@@ -214,14 +207,8 @@ public class AccountGroupRelPersistenceImpl
 		long accountGroupId,
 		OrderByComparator<AccountGroupRel> orderByComparator) {
 
-		List<AccountGroupRel> list = findByAccountGroupId(
-			accountGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAccountGroupId.fetchFirst(
+			finderCache, new Object[] {accountGroupId}, orderByComparator);
 	}
 
 	/**
@@ -231,13 +218,8 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountGroupId(long accountGroupId) {
-		for (AccountGroupRel accountGroupRel :
-				findByAccountGroupId(
-					accountGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountGroupRel);
-		}
+		_collectionPersistenceFinderByAccountGroupId.remove(
+			finderCache, new Object[] {accountGroupId});
 	}
 
 	/**
@@ -365,19 +347,10 @@ public class AccountGroupRelPersistenceImpl
 			return accountGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountGroupId=");
-		sb.append(accountGroupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
+		throw new NoSuchGroupRelException(
+			_collectionPersistenceFinderByA_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {accountGroupId, classNameId}));
 	}
 
 	/**
@@ -393,14 +366,9 @@ public class AccountGroupRelPersistenceImpl
 		long accountGroupId, long classNameId,
 		OrderByComparator<AccountGroupRel> orderByComparator) {
 
-		List<AccountGroupRel> list = findByA_C(
-			accountGroupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByA_C.fetchFirst(
+			finderCache, new Object[] {accountGroupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -411,13 +379,8 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByA_C(long accountGroupId, long classNameId) {
-		for (AccountGroupRel accountGroupRel :
-				findByA_C(
-					accountGroupId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(accountGroupRel);
-		}
+		_collectionPersistenceFinderByA_C.remove(
+			finderCache, new Object[] {accountGroupId, classNameId});
 	}
 
 	/**
@@ -543,19 +506,9 @@ public class AccountGroupRelPersistenceImpl
 			return accountGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchGroupRelException(sb.toString());
+		throw new NoSuchGroupRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -571,14 +524,9 @@ public class AccountGroupRelPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<AccountGroupRel> orderByComparator) {
 
-		List<AccountGroupRel> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -589,13 +537,8 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (AccountGroupRel accountGroupRel :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountGroupRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -633,26 +576,16 @@ public class AccountGroupRelPersistenceImpl
 			accountGroupId, classNameId, classPK);
 
 		if (accountGroupRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("accountGroupId=");
-			sb.append(accountGroupId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {accountGroupId, classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchGroupRelException(sb.toString());
+			throw new NoSuchGroupRelException(message);
 		}
 
 		return accountGroupRel;
@@ -1480,4 +1413,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:608324851
+// LIFERAY-SERVICE-BUILDER-HASH:413534540

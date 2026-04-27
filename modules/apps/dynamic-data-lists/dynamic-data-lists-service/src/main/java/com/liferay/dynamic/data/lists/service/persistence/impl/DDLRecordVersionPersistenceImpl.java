@@ -204,16 +204,9 @@ public class DDLRecordVersionPersistenceImpl
 			return ddlRecordVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordId=");
-		sb.append(recordId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordVersionException(sb.toString());
+		throw new NoSuchRecordVersionException(
+			_collectionPersistenceFinderByRecordId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordId}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class DDLRecordVersionPersistenceImpl
 	public DDLRecordVersion fetchByRecordId_First(
 		long recordId, OrderByComparator<DDLRecordVersion> orderByComparator) {
 
-		List<DDLRecordVersion> list = findByRecordId(
-			recordId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRecordId.fetchFirst(
+			finderCache, new Object[] {recordId}, orderByComparator);
 	}
 
 	/**
@@ -244,12 +231,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByRecordId(long recordId) {
-		for (DDLRecordVersion ddlRecordVersion :
-				findByRecordId(
-					recordId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordVersion);
-		}
+		_collectionPersistenceFinderByRecordId.remove(
+			finderCache, new Object[] {recordId});
 	}
 
 	/**
@@ -387,19 +370,10 @@ public class DDLRecordVersionPersistenceImpl
 			return ddlRecordVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", recordSetVersion=");
-		sb.append(recordSetVersion);
-
-		sb.append("}");
-
-		throw new NoSuchRecordVersionException(sb.toString());
+		throw new NoSuchRecordVersionException(
+			_collectionPersistenceFinderByR_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {recordSetId, recordSetVersion}));
 	}
 
 	/**
@@ -415,14 +389,9 @@ public class DDLRecordVersionPersistenceImpl
 		long recordSetId, String recordSetVersion,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
 
-		List<DDLRecordVersion> list = findByR_R(
-			recordSetId, recordSetVersion, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_R.fetchFirst(
+			finderCache, new Object[] {recordSetId, recordSetVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -433,13 +402,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByR_R(long recordSetId, String recordSetVersion) {
-		for (DDLRecordVersion ddlRecordVersion :
-				findByR_R(
-					recordSetId, recordSetVersion, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordVersion);
-		}
+		_collectionPersistenceFinderByR_R.remove(
+			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
 	/**
@@ -479,23 +443,15 @@ public class DDLRecordVersionPersistenceImpl
 		DDLRecordVersion ddlRecordVersion = fetchByR_V(recordId, version);
 
 		if (ddlRecordVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("recordId=");
-			sb.append(recordId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByR_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecordVersionException(sb.toString());
+			throw new NoSuchRecordVersionException(message);
 		}
 
 		return ddlRecordVersion;
@@ -677,19 +633,9 @@ public class DDLRecordVersionPersistenceImpl
 			return ddlRecordVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordId=");
-		sb.append(recordId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRecordVersionException(sb.toString());
+		throw new NoSuchRecordVersionException(
+			_collectionPersistenceFinderByR_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordId, status}));
 	}
 
 	/**
@@ -705,14 +651,8 @@ public class DDLRecordVersionPersistenceImpl
 		long recordId, int status,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
 
-		List<DDLRecordVersion> list = findByR_S(
-			recordId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_S.fetchFirst(
+			finderCache, new Object[] {recordId, status}, orderByComparator);
 	}
 
 	/**
@@ -723,13 +663,8 @@ public class DDLRecordVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByR_S(long recordId, int status) {
-		for (DDLRecordVersion ddlRecordVersion :
-				findByR_S(
-					recordId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecordVersion);
-		}
+		_collectionPersistenceFinderByR_S.remove(
+			finderCache, new Object[] {recordId, status});
 	}
 
 	/**
@@ -884,25 +819,10 @@ public class DDLRecordVersionPersistenceImpl
 			return ddlRecordVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", recordSetVersion=");
-		sb.append(recordSetVersion);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRecordVersionException(sb.toString());
+		throw new NoSuchRecordVersionException(
+			_collectionPersistenceFinderByU_R_R_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, recordSetId, recordSetVersion, status}));
 	}
 
 	/**
@@ -920,15 +840,10 @@ public class DDLRecordVersionPersistenceImpl
 		long userId, long recordSetId, String recordSetVersion, int status,
 		OrderByComparator<DDLRecordVersion> orderByComparator) {
 
-		List<DDLRecordVersion> list = findByU_R_R_S(
-			userId, recordSetId, recordSetVersion, status, 0, 1,
+		return _collectionPersistenceFinderByU_R_R_S.fetchFirst(
+			finderCache,
+			new Object[] {userId, recordSetId, recordSetVersion, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -943,13 +858,9 @@ public class DDLRecordVersionPersistenceImpl
 	public void removeByU_R_R_S(
 		long userId, long recordSetId, String recordSetVersion, int status) {
 
-		for (DDLRecordVersion ddlRecordVersion :
-				findByU_R_R_S(
-					userId, recordSetId, recordSetVersion, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordVersion);
-		}
+		_collectionPersistenceFinderByU_R_R_S.remove(
+			finderCache,
+			new Object[] {userId, recordSetId, recordSetVersion, status});
 	}
 
 	/**
@@ -2047,4 +1958,4 @@ public class DDLRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2120536044
+// LIFERAY-SERVICE-BUILDER-HASH:818810813

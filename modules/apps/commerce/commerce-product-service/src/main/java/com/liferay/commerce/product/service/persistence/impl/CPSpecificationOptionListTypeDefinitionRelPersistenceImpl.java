@@ -220,17 +220,11 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			return cpSpecificationOptionListTypeDefinitionRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
 		throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-			sb.toString());
+			_collectionPersistenceFinderByCPSpecificationOptionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPSpecificationOptionId}));
 	}
 
 	/**
@@ -247,15 +241,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
 				orderByComparator) {
 
-		List<CPSpecificationOptionListTypeDefinitionRel> list =
-			findByCPSpecificationOptionId(
-				CPSpecificationOptionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPSpecificationOptionId.fetchFirst(
+			finderCache, new Object[] {CPSpecificationOptionId},
+			orderByComparator);
 	}
 
 	/**
@@ -265,14 +253,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCPSpecificationOptionId(long CPSpecificationOptionId) {
-		for (CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel :
-					findByCPSpecificationOptionId(
-						CPSpecificationOptionId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(cpSpecificationOptionListTypeDefinitionRel);
-		}
+		_collectionPersistenceFinderByCPSpecificationOptionId.remove(
+			finderCache, new Object[] {CPSpecificationOptionId});
 	}
 
 	/**
@@ -415,17 +397,11 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			return cpSpecificationOptionListTypeDefinitionRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("listTypeDefinitionId=");
-		sb.append(listTypeDefinitionId);
-
-		sb.append("}");
-
 		throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-			sb.toString());
+			_collectionPersistenceFinderByListTypeDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {listTypeDefinitionId}));
 	}
 
 	/**
@@ -442,15 +418,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
 				orderByComparator) {
 
-		List<CPSpecificationOptionListTypeDefinitionRel> list =
-			findByListTypeDefinitionId(
-				listTypeDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByListTypeDefinitionId.fetchFirst(
+			finderCache, new Object[] {listTypeDefinitionId},
+			orderByComparator);
 	}
 
 	/**
@@ -460,14 +430,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Override
 	public void removeByListTypeDefinitionId(long listTypeDefinitionId) {
-		for (CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel :
-					findByListTypeDefinitionId(
-						listTypeDefinitionId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(cpSpecificationOptionListTypeDefinitionRel);
-		}
+		_collectionPersistenceFinderByListTypeDefinitionId.remove(
+			finderCache, new Object[] {listTypeDefinitionId});
 	}
 
 	/**
@@ -509,24 +473,19 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				CPSpecificationOptionId, listTypeDefinitionId);
 
 		if (cpSpecificationOptionListTypeDefinitionRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPSpecificationOptionId=");
-			sb.append(CPSpecificationOptionId);
-
-			sb.append(", listTypeDefinitionId=");
-			sb.append(listTypeDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_L.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						CPSpecificationOptionId, listTypeDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-				sb.toString());
+				message);
 		}
 
 		return cpSpecificationOptionListTypeDefinitionRel;
@@ -1721,4 +1680,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-820284180
+// LIFERAY-SERVICE-BUILDER-HASH:-1831556349

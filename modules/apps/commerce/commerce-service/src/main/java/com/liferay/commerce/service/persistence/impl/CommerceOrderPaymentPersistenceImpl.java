@@ -191,16 +191,9 @@ public class CommerceOrderPaymentPersistenceImpl
 			return commerceOrderPayment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderId=");
-		sb.append(commerceOrderId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderPaymentException(sb.toString());
+		throw new NoSuchOrderPaymentException(
+			_collectionPersistenceFinderByCommerceOrderId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {commerceOrderId}));
 	}
 
 	/**
@@ -215,14 +208,8 @@ public class CommerceOrderPaymentPersistenceImpl
 		long commerceOrderId,
 		OrderByComparator<CommerceOrderPayment> orderByComparator) {
 
-		List<CommerceOrderPayment> list = findByCommerceOrderId(
-			commerceOrderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceOrderId.fetchFirst(
+			finderCache, new Object[] {commerceOrderId}, orderByComparator);
 	}
 
 	/**
@@ -232,13 +219,8 @@ public class CommerceOrderPaymentPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceOrderId(long commerceOrderId) {
-		for (CommerceOrderPayment commerceOrderPayment :
-				findByCommerceOrderId(
-					commerceOrderId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceOrderPayment);
-		}
+		_collectionPersistenceFinderByCommerceOrderId.remove(
+			finderCache, new Object[] {commerceOrderId});
 	}
 
 	/**
@@ -919,4 +901,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1550125503
+// LIFERAY-SERVICE-BUILDER-HASH:594710960

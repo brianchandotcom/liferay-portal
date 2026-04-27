@@ -200,16 +200,9 @@ public class OAuth2ApplicationPersistenceImpl
 			return oAuth2Application;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
+		throw new NoSuchOAuth2ApplicationException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,14 +216,8 @@ public class OAuth2ApplicationPersistenceImpl
 	public OAuth2Application fetchByUuid_First(
 		String uuid, OrderByComparator<OAuth2Application> orderByComparator) {
 
-		List<OAuth2Application> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -395,11 +382,8 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (OAuth2Application oAuth2Application :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Application);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -599,19 +583,9 @@ public class OAuth2ApplicationPersistenceImpl
 			return oAuth2Application;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
+		throw new NoSuchOAuth2ApplicationException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -627,14 +601,8 @@ public class OAuth2ApplicationPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		List<OAuth2Application> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -809,13 +777,8 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (OAuth2Application oAuth2Application :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(oAuth2Application);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1019,16 +982,9 @@ public class OAuth2ApplicationPersistenceImpl
 			return oAuth2Application;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
+		throw new NoSuchOAuth2ApplicationException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1043,14 +999,8 @@ public class OAuth2ApplicationPersistenceImpl
 		long companyId,
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		List<OAuth2Application> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1202,12 +1152,8 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (OAuth2Application oAuth2Application :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Application);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1301,23 +1247,16 @@ public class OAuth2ApplicationPersistenceImpl
 		OAuth2Application oAuth2Application = fetchByC_C(companyId, clientId);
 
 		if (oAuth2Application == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", clientId=");
-			sb.append(clientId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, clientId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuth2ApplicationException(sb.toString());
+			throw new NoSuchOAuth2ApplicationException(message);
 		}
 
 		return oAuth2Application;
@@ -1493,19 +1432,10 @@ public class OAuth2ApplicationPersistenceImpl
 			return oAuth2Application;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", clientProfile=");
-		sb.append(clientProfile);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationException(sb.toString());
+		throw new NoSuchOAuth2ApplicationException(
+			_collectionPersistenceFinderByC_CP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, clientProfile}));
 	}
 
 	/**
@@ -1521,14 +1451,9 @@ public class OAuth2ApplicationPersistenceImpl
 		long companyId, int clientProfile,
 		OrderByComparator<OAuth2Application> orderByComparator) {
 
-		List<OAuth2Application> list = findByC_CP(
-			companyId, clientProfile, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CP.fetchFirst(
+			finderCache, new Object[] {companyId, clientProfile},
+			orderByComparator);
 	}
 
 	/**
@@ -1692,13 +1617,8 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_CP(long companyId, int clientProfile) {
-		for (OAuth2Application oAuth2Application :
-				findByC_CP(
-					companyId, clientProfile, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Application);
-		}
+		_collectionPersistenceFinderByC_CP.remove(
+			finderCache, new Object[] {companyId, clientProfile});
 	}
 
 	/**
@@ -1803,23 +1723,16 @@ public class OAuth2ApplicationPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (oAuth2Application == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuth2ApplicationException(sb.toString());
+			throw new NoSuchOAuth2ApplicationException(message);
 		}
 
 		return oAuth2Application;
@@ -2818,4 +2731,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2132352255
+// LIFERAY-SERVICE-BUILDER-HASH:-1724858644

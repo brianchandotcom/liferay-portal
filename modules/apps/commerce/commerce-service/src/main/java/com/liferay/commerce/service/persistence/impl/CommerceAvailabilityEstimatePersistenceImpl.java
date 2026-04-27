@@ -195,16 +195,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			return commerceAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
+		throw new NoSuchAvailabilityEstimateException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
 
-		List<CommerceAvailabilityEstimate> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -394,11 +381,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -602,19 +586,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			return commerceAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
+		throw new NoSuchAvailabilityEstimateException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -630,14 +604,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
 
-		List<CommerceAvailabilityEstimate> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -815,13 +783,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1026,16 +989,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			return commerceAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAvailabilityEstimateException(sb.toString());
+		throw new NoSuchAvailabilityEstimateException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1050,14 +1006,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		long companyId,
 		OrderByComparator<CommerceAvailabilityEstimate> orderByComparator) {
 
-		List<CommerceAvailabilityEstimate> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1214,12 +1164,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -2112,4 +2058,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-629364320
+// LIFERAY-SERVICE-BUILDER-HASH:-1369878077

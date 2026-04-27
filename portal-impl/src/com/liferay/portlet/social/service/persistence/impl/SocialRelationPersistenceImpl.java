@@ -191,16 +191,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -214,13 +207,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation fetchByUuid_First(
 		String uuid, OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -230,11 +219,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SocialRelation socialRelation :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -370,19 +356,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -398,14 +374,9 @@ public class SocialRelationPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -416,13 +387,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SocialRelation socialRelation :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -552,16 +518,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -575,14 +534,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation fetchByCompanyId_First(
 		long companyId, OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -592,12 +546,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SocialRelation socialRelation :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -725,16 +675,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByUserId1.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1}));
 	}
 
 	/**
@@ -748,14 +691,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation fetchByUserId1_First(
 		long userId1, OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByUserId1(
-			userId1, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId1.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1},
+			orderByComparator);
 	}
 
 	/**
@@ -765,12 +703,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId1(long userId1) {
-		for (SocialRelation socialRelation :
-				findByUserId1(
-					userId1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByUserId1.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1});
 	}
 
 	/**
@@ -898,16 +832,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId2=");
-		sb.append(userId2);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByUserId2.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId2}));
 	}
 
 	/**
@@ -921,14 +848,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation fetchByUserId2_First(
 		long userId2, OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByUserId2(
-			userId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId2.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2},
+			orderByComparator);
 	}
 
 	/**
@@ -938,12 +860,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId2(long userId2) {
-		for (SocialRelation socialRelation :
-				findByUserId2(
-					userId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByUserId2.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2});
 	}
 
 	/**
@@ -1068,16 +986,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -1091,13 +1002,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation fetchByType_First(
 		int type, OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByType(type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -1107,11 +1014,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByType(int type) {
-		for (SocialRelation socialRelation :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByType.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
 	/**
@@ -1246,19 +1150,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
 	}
 
 	/**
@@ -1274,14 +1168,9 @@ public class SocialRelationPersistenceImpl
 		long companyId, int type,
 		OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByC_T(
-			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1292,13 +1181,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, int type) {
-		for (SocialRelation socialRelation :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
 	/**
@@ -1436,19 +1320,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append(", userId2=");
-		sb.append(userId2);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByU1_U2.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1, userId2}));
 	}
 
 	/**
@@ -1464,14 +1338,9 @@ public class SocialRelationPersistenceImpl
 		long userId1, long userId2,
 		OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByU1_U2(
-			userId1, userId2, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU1_U2.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, userId2},
+			orderByComparator);
 	}
 
 	/**
@@ -1482,13 +1351,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByU1_U2(long userId1, long userId2) {
-		for (SocialRelation socialRelation :
-				findByU1_U2(
-					userId1, userId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByU1_U2.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, userId2});
 	}
 
 	/**
@@ -1624,19 +1488,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId1=");
-		sb.append(userId1);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByU1_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1, type}));
 	}
 
 	/**
@@ -1652,14 +1506,9 @@ public class SocialRelationPersistenceImpl
 		long userId1, int type,
 		OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByU1_T(
-			userId1, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU1_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1670,13 +1519,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByU1_T(long userId1, int type) {
-		for (SocialRelation socialRelation :
-				findByU1_T(
-					userId1, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByU1_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, type});
 	}
 
 	/**
@@ -1811,19 +1655,9 @@ public class SocialRelationPersistenceImpl
 			return socialRelation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId2=");
-		sb.append(userId2);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRelationException(sb.toString());
+		throw new NoSuchRelationException(
+			_collectionPersistenceFinderByU2_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId2, type}));
 	}
 
 	/**
@@ -1839,14 +1673,9 @@ public class SocialRelationPersistenceImpl
 		long userId2, int type,
 		OrderByComparator<SocialRelation> orderByComparator) {
 
-		List<SocialRelation> list = findByU2_T(
-			userId2, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU2_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1857,13 +1686,8 @@ public class SocialRelationPersistenceImpl
 	 */
 	@Override
 	public void removeByU2_T(long userId2, int type) {
-		for (SocialRelation socialRelation :
-				findByU2_T(
-					userId2, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialRelation);
-		}
+		_collectionPersistenceFinderByU2_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2, type});
 	}
 
 	/**
@@ -1904,26 +1728,16 @@ public class SocialRelationPersistenceImpl
 		SocialRelation socialRelation = fetchByU1_U2_T(userId1, userId2, type);
 
 		if (socialRelation == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId1=");
-			sb.append(userId1);
-
-			sb.append(", userId2=");
-			sb.append(userId2);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU1_U2_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId1, userId2, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRelationException(sb.toString());
+			throw new NoSuchRelationException(message);
 		}
 
 		return socialRelation;
@@ -3185,4 +2999,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2085115160
+// LIFERAY-SERVICE-BUILDER-HASH:1918030846

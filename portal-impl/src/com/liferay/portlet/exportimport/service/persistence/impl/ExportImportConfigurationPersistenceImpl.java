@@ -181,16 +181,9 @@ public class ExportImportConfigurationPersistenceImpl
 			return exportImportConfiguration;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
+		throw new NoSuchConfigurationException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -205,14 +198,9 @@ public class ExportImportConfigurationPersistenceImpl
 		long groupId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
-		List<ExportImportConfiguration> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -222,12 +210,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (ExportImportConfiguration exportImportConfiguration :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(exportImportConfiguration);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -346,16 +330,9 @@ public class ExportImportConfigurationPersistenceImpl
 			return exportImportConfiguration;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
+		throw new NoSuchConfigurationException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -370,14 +347,9 @@ public class ExportImportConfigurationPersistenceImpl
 		long companyId,
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
-		List<ExportImportConfiguration> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -387,12 +359,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (ExportImportConfiguration exportImportConfiguration :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(exportImportConfiguration);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -516,19 +484,9 @@ public class ExportImportConfigurationPersistenceImpl
 			return exportImportConfiguration;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
+		throw new NoSuchConfigurationException(
+			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, type}));
 	}
 
 	/**
@@ -544,14 +502,9 @@ public class ExportImportConfigurationPersistenceImpl
 		long groupId, int type,
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
-		List<ExportImportConfiguration> list = findByG_T(
-			groupId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -562,13 +515,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T(long groupId, int type) {
-		for (ExportImportConfiguration exportImportConfiguration :
-				findByG_T(
-					groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(exportImportConfiguration);
-		}
+		_collectionPersistenceFinderByG_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, type});
 	}
 
 	/**
@@ -693,19 +641,9 @@ public class ExportImportConfigurationPersistenceImpl
 			return exportImportConfiguration;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
+		throw new NoSuchConfigurationException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -721,14 +659,9 @@ public class ExportImportConfigurationPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
-		List<ExportImportConfiguration> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -739,13 +672,8 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (ExportImportConfiguration exportImportConfiguration :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(exportImportConfiguration);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, status});
 	}
 
 	/**
@@ -879,22 +807,10 @@ public class ExportImportConfigurationPersistenceImpl
 			return exportImportConfiguration;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchConfigurationException(sb.toString());
+		throw new NoSuchConfigurationException(
+			_collectionPersistenceFinderByG_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, type, status}));
 	}
 
 	/**
@@ -911,14 +827,9 @@ public class ExportImportConfigurationPersistenceImpl
 		long groupId, int type, int status,
 		OrderByComparator<ExportImportConfiguration> orderByComparator) {
 
-		List<ExportImportConfiguration> list = findByG_T_S(
-			groupId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, type, status}, orderByComparator);
 	}
 
 	/**
@@ -930,13 +841,9 @@ public class ExportImportConfigurationPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T_S(long groupId, int type, int status) {
-		for (ExportImportConfiguration exportImportConfiguration :
-				findByG_T_S(
-					groupId, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(exportImportConfiguration);
-		}
+		_collectionPersistenceFinderByG_T_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, type, status});
 	}
 
 	/**
@@ -1762,4 +1669,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1006532141
+// LIFERAY-SERVICE-BUILDER-HASH:-927611503

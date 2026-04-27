@@ -193,16 +193,11 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			return notificationTemplateAttachment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationTemplateId=");
-		sb.append(notificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateAttachmentException(sb.toString());
+		throw new NoSuchNotificationTemplateAttachmentException(
+			_collectionPersistenceFinderByNotificationTemplateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {notificationTemplateId}));
 	}
 
 	/**
@@ -217,15 +212,9 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		long notificationTemplateId,
 		OrderByComparator<NotificationTemplateAttachment> orderByComparator) {
 
-		List<NotificationTemplateAttachment> list =
-			findByNotificationTemplateId(
-				notificationTemplateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByNotificationTemplateId.fetchFirst(
+			finderCache, new Object[] {notificationTemplateId},
+			orderByComparator);
 	}
 
 	/**
@@ -235,13 +224,8 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Override
 	public void removeByNotificationTemplateId(long notificationTemplateId) {
-		for (NotificationTemplateAttachment notificationTemplateAttachment :
-				findByNotificationTemplateId(
-					notificationTemplateId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(notificationTemplateAttachment);
-		}
+		_collectionPersistenceFinderByNotificationTemplateId.remove(
+			finderCache, new Object[] {notificationTemplateId});
 	}
 
 	/**
@@ -277,24 +261,16 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			fetchByNTI_OFI(notificationTemplateId, objectFieldId);
 
 		if (notificationTemplateAttachment == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("notificationTemplateId=");
-			sb.append(notificationTemplateId);
-
-			sb.append(", objectFieldId=");
-			sb.append(objectFieldId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByNTI_OFI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {notificationTemplateId, objectFieldId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationTemplateAttachmentException(
-				sb.toString());
+			throw new NoSuchNotificationTemplateAttachmentException(message);
 		}
 
 		return notificationTemplateAttachment;
@@ -1101,4 +1077,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1250545951
+// LIFERAY-SERVICE-BUILDER-HASH:-1647685387

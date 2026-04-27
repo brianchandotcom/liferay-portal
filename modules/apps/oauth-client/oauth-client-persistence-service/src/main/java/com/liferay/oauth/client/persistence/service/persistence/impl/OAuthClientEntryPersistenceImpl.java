@@ -200,16 +200,9 @@ public class OAuthClientEntryPersistenceImpl
 			return oAuthClientEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientEntryException(sb.toString());
+		throw new NoSuchOAuthClientEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,13 +216,8 @@ public class OAuthClientEntryPersistenceImpl
 	public OAuthClientEntry fetchByUuid_First(
 		String uuid, OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		List<OAuthClientEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -394,11 +382,8 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (OAuthClientEntry oAuthClientEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -598,19 +583,9 @@ public class OAuthClientEntryPersistenceImpl
 			return oAuthClientEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientEntryException(sb.toString());
+		throw new NoSuchOAuthClientEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -626,14 +601,8 @@ public class OAuthClientEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		List<OAuthClientEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -808,13 +777,8 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (OAuthClientEntry oAuthClientEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(oAuthClientEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1018,16 +982,9 @@ public class OAuthClientEntryPersistenceImpl
 			return oAuthClientEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientEntryException(sb.toString());
+		throw new NoSuchOAuthClientEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1041,14 +998,8 @@ public class OAuthClientEntryPersistenceImpl
 	public OAuthClientEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		List<OAuthClientEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1200,12 +1151,8 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (OAuthClientEntry oAuthClientEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1382,16 +1329,9 @@ public class OAuthClientEntryPersistenceImpl
 			return oAuthClientEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientEntryException(sb.toString());
+		throw new NoSuchOAuthClientEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -1405,14 +1345,8 @@ public class OAuthClientEntryPersistenceImpl
 	public OAuthClientEntry fetchByUserId_First(
 		long userId, OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		List<OAuthClientEntry> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -1564,12 +1498,8 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (OAuthClientEntry oAuthClientEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -1757,19 +1687,10 @@ public class OAuthClientEntryPersistenceImpl
 			return oAuthClientEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", authServerWellKnownURI=");
-		sb.append(authServerWellKnownURI);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientEntryException(sb.toString());
+		throw new NoSuchOAuthClientEntryException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, authServerWellKnownURI}));
 	}
 
 	/**
@@ -1785,14 +1706,9 @@ public class OAuthClientEntryPersistenceImpl
 		long companyId, String authServerWellKnownURI,
 		OrderByComparator<OAuthClientEntry> orderByComparator) {
 
-		List<OAuthClientEntry> list = findByC_A(
-			companyId, authServerWellKnownURI, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, authServerWellKnownURI},
+			orderByComparator);
 	}
 
 	/**
@@ -1971,13 +1887,8 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, String authServerWellKnownURI) {
-		for (OAuthClientEntry oAuthClientEntry :
-				findByC_A(
-					companyId, authServerWellKnownURI, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientEntry);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, authServerWellKnownURI});
 	}
 
 	/**
@@ -2099,26 +2010,16 @@ public class OAuthClientEntryPersistenceImpl
 			companyId, authServerWellKnownURI, clientId);
 
 		if (oAuthClientEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", authServerWellKnownURI=");
-			sb.append(authServerWellKnownURI);
-
-			sb.append(", clientId=");
-			sb.append(clientId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_A_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, authServerWellKnownURI, clientId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientEntryException(sb.toString());
+			throw new NoSuchOAuthClientEntryException(message);
 		}
 
 		return oAuthClientEntry;
@@ -2216,23 +2117,16 @@ public class OAuthClientEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (oAuthClientEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientEntryException(sb.toString());
+			throw new NoSuchOAuthClientEntryException(message);
 		}
 
 		return oAuthClientEntry;
@@ -3259,4 +3153,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:794775992
+// LIFERAY-SERVICE-BUILDER-HASH:-1369253840

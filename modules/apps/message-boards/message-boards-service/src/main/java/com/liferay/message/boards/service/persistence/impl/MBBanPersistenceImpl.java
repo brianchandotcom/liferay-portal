@@ -200,16 +200,9 @@ public class MBBanPersistenceImpl
 			return mbBan;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
+		throw new NoSuchBanException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,13 +216,8 @@ public class MBBanPersistenceImpl
 	public MBBan fetchByUuid_First(
 		String uuid, OrderByComparator<MBBan> orderByComparator) {
 
-		List<MBBan> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -239,11 +227,8 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBBan mbBan :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbBan);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -281,23 +266,15 @@ public class MBBanPersistenceImpl
 		MBBan mbBan = fetchByUUID_G(uuid, groupId);
 
 		if (mbBan == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBanException(sb.toString());
+			throw new NoSuchBanException(message);
 		}
 
 		return mbBan;
@@ -478,19 +455,9 @@ public class MBBanPersistenceImpl
 			return mbBan;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
+		throw new NoSuchBanException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -506,14 +473,8 @@ public class MBBanPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBBan> orderByComparator) {
 
-		List<MBBan> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -524,13 +485,8 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBBan mbBan :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbBan);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -655,16 +611,9 @@ public class MBBanPersistenceImpl
 			return mbBan;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
+		throw new NoSuchBanException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -678,13 +627,8 @@ public class MBBanPersistenceImpl
 	public MBBan fetchByGroupId_First(
 		long groupId, OrderByComparator<MBBan> orderByComparator) {
 
-		List<MBBan> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -694,12 +638,8 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (MBBan mbBan :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbBan);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -822,16 +762,9 @@ public class MBBanPersistenceImpl
 			return mbBan;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
+		throw new NoSuchBanException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -845,13 +778,8 @@ public class MBBanPersistenceImpl
 	public MBBan fetchByUserId_First(
 		long userId, OrderByComparator<MBBan> orderByComparator) {
 
-		List<MBBan> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -861,12 +789,8 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (MBBan mbBan :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbBan);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -990,16 +914,9 @@ public class MBBanPersistenceImpl
 			return mbBan;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("banUserId=");
-		sb.append(banUserId);
-
-		sb.append("}");
-
-		throw new NoSuchBanException(sb.toString());
+		throw new NoSuchBanException(
+			_collectionPersistenceFinderByBanUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {banUserId}));
 	}
 
 	/**
@@ -1013,13 +930,8 @@ public class MBBanPersistenceImpl
 	public MBBan fetchByBanUserId_First(
 		long banUserId, OrderByComparator<MBBan> orderByComparator) {
 
-		List<MBBan> list = findByBanUserId(banUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBanUserId.fetchFirst(
+			finderCache, new Object[] {banUserId}, orderByComparator);
 	}
 
 	/**
@@ -1029,12 +941,8 @@ public class MBBanPersistenceImpl
 	 */
 	@Override
 	public void removeByBanUserId(long banUserId) {
-		for (MBBan mbBan :
-				findByBanUserId(
-					banUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbBan);
-		}
+		_collectionPersistenceFinderByBanUserId.remove(
+			finderCache, new Object[] {banUserId});
 	}
 
 	/**
@@ -1072,23 +980,16 @@ public class MBBanPersistenceImpl
 		MBBan mbBan = fetchByG_B(groupId, banUserId);
 
 		if (mbBan == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", banUserId=");
-			sb.append(banUserId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_B.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, banUserId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBanException(sb.toString());
+			throw new NoSuchBanException(message);
 		}
 
 		return mbBan;
@@ -2239,4 +2140,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:269511828
+// LIFERAY-SERVICE-BUILDER-HASH:-816569278

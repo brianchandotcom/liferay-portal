@@ -207,16 +207,9 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,13 +223,9 @@ public class AssetCategoryPersistenceImpl
 	public AssetCategory fetchByUuid_First(
 		String uuid, OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -246,11 +235,8 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AssetCategory assetCategory :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -289,23 +275,15 @@ public class AssetCategoryPersistenceImpl
 		AssetCategory assetCategory = fetchByUUID_G(uuid, groupId);
 
 		if (assetCategory == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCategoryException(sb.toString());
+			throw new NoSuchCategoryException(message);
 		}
 
 		return assetCategory;
@@ -490,19 +468,9 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -518,14 +486,9 @@ public class AssetCategoryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -536,13 +499,8 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AssetCategory assetCategory :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -670,16 +628,9 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -693,14 +644,9 @@ public class AssetCategoryPersistenceImpl
 	public AssetCategory fetchByGroupId_First(
 		long groupId, OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -852,12 +798,8 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (AssetCategory assetCategory :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -1048,16 +990,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByParentCategoryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {parentCategoryId}));
 	}
 
 	/**
@@ -1072,14 +1008,9 @@ public class AssetCategoryPersistenceImpl
 		long parentCategoryId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByParentCategoryId(
-			parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByParentCategoryId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {parentCategoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -1089,13 +1020,8 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByParentCategoryId(long parentCategoryId) {
-		for (AssetCategory assetCategory :
-				findByParentCategoryId(
-					parentCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByParentCategoryId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {parentCategoryId});
 	}
 
 	/**
@@ -1226,16 +1152,9 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByVocabularyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {vocabularyId}));
 	}
 
 	/**
@@ -1249,14 +1168,9 @@ public class AssetCategoryPersistenceImpl
 	public AssetCategory fetchByVocabularyId_First(
 		long vocabularyId, OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByVocabularyId(
-			vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByVocabularyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1266,12 +1180,8 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByVocabularyId(long vocabularyId) {
-		for (AssetCategory assetCategory :
-				findByVocabularyId(
-					vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByVocabularyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
 	}
 
 	/**
@@ -1408,19 +1318,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentCategoryId}));
 	}
 
 	/**
@@ -1436,14 +1337,9 @@ public class AssetCategoryPersistenceImpl
 		long groupId, long parentCategoryId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByG_P(
-			groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -1607,13 +1503,9 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long parentCategoryId) {
-		for (AssetCategory assetCategory :
-				findByG_P(
-					groupId, parentCategoryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentCategoryId});
 	}
 
 	/**
@@ -2957,19 +2849,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByP_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {parentCategoryId, name}));
 	}
 
 	/**
@@ -2985,14 +2868,9 @@ public class AssetCategoryPersistenceImpl
 		long parentCategoryId, String name,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByP_N(
-			parentCategoryId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_N.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {parentCategoryId, name}, orderByComparator);
 	}
 
 	/**
@@ -3003,13 +2881,9 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByP_N(long parentCategoryId, String name) {
-		for (AssetCategory assetCategory :
-				findByP_N(
-					parentCategoryId, name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByP_N.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {parentCategoryId, name});
 	}
 
 	/**
@@ -3151,19 +3025,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByP_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {parentCategoryId, vocabularyId}));
 	}
 
 	/**
@@ -3179,14 +3044,9 @@ public class AssetCategoryPersistenceImpl
 		long parentCategoryId, long vocabularyId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByP_V(
-			parentCategoryId, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_V.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {parentCategoryId, vocabularyId}, orderByComparator);
 	}
 
 	/**
@@ -3197,13 +3057,9 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByP_V(long parentCategoryId, long vocabularyId) {
-		for (AssetCategory assetCategory :
-				findByP_V(
-					parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByP_V.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {parentCategoryId, vocabularyId});
 	}
 
 	/**
@@ -3341,19 +3197,9 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByN_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name, vocabularyId}));
 	}
 
 	/**
@@ -3369,14 +3215,9 @@ public class AssetCategoryPersistenceImpl
 		String name, long vocabularyId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByN_V(
-			name, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByN_V.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name, vocabularyId},
+			orderByComparator);
 	}
 
 	/**
@@ -3387,13 +3228,9 @@ public class AssetCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByN_V(String name, long vocabularyId) {
-		for (AssetCategory assetCategory :
-				findByN_V(
-					name, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByN_V.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {name, vocabularyId});
 	}
 
 	/**
@@ -3542,22 +3379,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentCategoryId=");
-		sb.append(parentCategoryId);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByG_P_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentCategoryId, vocabularyId}));
 	}
 
 	/**
@@ -3574,14 +3399,10 @@ public class AssetCategoryPersistenceImpl
 		long groupId, long parentCategoryId, long vocabularyId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByG_P_V(
-			groupId, parentCategoryId, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_V.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentCategoryId, vocabularyId},
+			orderByComparator);
 	}
 
 	/**
@@ -3758,13 +3579,9 @@ public class AssetCategoryPersistenceImpl
 	public void removeByG_P_V(
 		long groupId, long parentCategoryId, long vocabularyId) {
 
-		for (AssetCategory assetCategory :
-				findByG_P_V(
-					groupId, parentCategoryId, vocabularyId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByG_P_V.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, parentCategoryId, vocabularyId});
 	}
 
 	/**
@@ -3993,22 +3810,10 @@ public class AssetCategoryPersistenceImpl
 			return assetCategory;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", treePathLIKE");
-		sb.append(treePath);
-
-		sb.append(", vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchCategoryException(sb.toString());
+		throw new NoSuchCategoryException(
+			_collectionPersistenceFinderByG_LikeT_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, treePath, vocabularyId}));
 	}
 
 	/**
@@ -4025,14 +3830,9 @@ public class AssetCategoryPersistenceImpl
 		long groupId, String treePath, long vocabularyId,
 		OrderByComparator<AssetCategory> orderByComparator) {
 
-		List<AssetCategory> list = findByG_LikeT_V(
-			groupId, treePath, vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LikeT_V.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, treePath, vocabularyId}, orderByComparator);
 	}
 
 	/**
@@ -4220,13 +4020,9 @@ public class AssetCategoryPersistenceImpl
 	public void removeByG_LikeT_V(
 		long groupId, String treePath, long vocabularyId) {
 
-		for (AssetCategory assetCategory :
-				findByG_LikeT_V(
-					groupId, treePath, vocabularyId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(assetCategory);
-		}
+		_collectionPersistenceFinderByG_LikeT_V.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, treePath, vocabularyId});
 	}
 
 	/**
@@ -5693,26 +5489,16 @@ public class AssetCategoryPersistenceImpl
 			parentCategoryId, name, vocabularyId);
 
 		if (assetCategory == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("parentCategoryId=");
-			sb.append(parentCategoryId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", vocabularyId=");
-			sb.append(vocabularyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByP_N_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {parentCategoryId, name, vocabularyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCategoryException(sb.toString());
+			throw new NoSuchCategoryException(message);
 		}
 
 		return assetCategory;
@@ -5814,23 +5600,16 @@ public class AssetCategoryPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (assetCategory == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCategoryException(sb.toString());
+			throw new NoSuchCategoryException(message);
 		}
 
 		return assetCategory;
@@ -7363,4 +7142,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:514329150
+// LIFERAY-SERVICE-BUILDER-HASH:-1117810473

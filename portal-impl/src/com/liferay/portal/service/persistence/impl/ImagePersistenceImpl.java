@@ -187,16 +187,9 @@ public class ImagePersistenceImpl
 			return image;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("size<");
-		sb.append(size);
-
-		sb.append("}");
-
-		throw new NoSuchImageException(sb.toString());
+		throw new NoSuchImageException(
+			_collectionPersistenceFinderByLtSize.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {size}));
 	}
 
 	/**
@@ -210,13 +203,9 @@ public class ImagePersistenceImpl
 	public Image fetchByLtSize_First(
 		int size, OrderByComparator<Image> orderByComparator) {
 
-		List<Image> list = findByLtSize(size, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtSize.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {size},
+			orderByComparator);
 	}
 
 	/**
@@ -226,12 +215,8 @@ public class ImagePersistenceImpl
 	 */
 	@Override
 	public void removeByLtSize(int size) {
-		for (Image image :
-				findByLtSize(
-					size, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(image);
-		}
+		_collectionPersistenceFinderByLtSize.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {size});
 	}
 
 	/**
@@ -1092,4 +1077,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1233879260
+// LIFERAY-SERVICE-BUILDER-HASH:-1720462882

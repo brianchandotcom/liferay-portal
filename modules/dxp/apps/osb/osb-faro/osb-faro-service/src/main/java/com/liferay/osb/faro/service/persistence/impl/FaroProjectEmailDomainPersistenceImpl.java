@@ -185,16 +185,9 @@ public class FaroProjectEmailDomainPersistenceImpl
 			return faroProjectEmailDomain;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectEmailDomainException(sb.toString());
+		throw new NoSuchFaroProjectEmailDomainException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -209,14 +202,8 @@ public class FaroProjectEmailDomainPersistenceImpl
 		long groupId,
 		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
 
-		List<FaroProjectEmailDomain> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -226,12 +213,8 @@ public class FaroProjectEmailDomainPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FaroProjectEmailDomain faroProjectEmailDomain :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroProjectEmailDomain);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -353,16 +336,9 @@ public class FaroProjectEmailDomainPersistenceImpl
 			return faroProjectEmailDomain;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("faroProjectId=");
-		sb.append(faroProjectId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectEmailDomainException(sb.toString());
+		throw new NoSuchFaroProjectEmailDomainException(
+			_collectionPersistenceFinderByFaroProjectId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {faroProjectId}));
 	}
 
 	/**
@@ -377,14 +353,8 @@ public class FaroProjectEmailDomainPersistenceImpl
 		long faroProjectId,
 		OrderByComparator<FaroProjectEmailDomain> orderByComparator) {
 
-		List<FaroProjectEmailDomain> list = findByFaroProjectId(
-			faroProjectId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFaroProjectId.fetchFirst(
+			finderCache, new Object[] {faroProjectId}, orderByComparator);
 	}
 
 	/**
@@ -394,13 +364,8 @@ public class FaroProjectEmailDomainPersistenceImpl
 	 */
 	@Override
 	public void removeByFaroProjectId(long faroProjectId) {
-		for (FaroProjectEmailDomain faroProjectEmailDomain :
-				findByFaroProjectId(
-					faroProjectId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroProjectEmailDomain);
-		}
+		_collectionPersistenceFinderByFaroProjectId.remove(
+			finderCache, new Object[] {faroProjectId});
 	}
 
 	/**
@@ -1097,4 +1062,4 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2128189629
+// LIFERAY-SERVICE-BUILDER-HASH:244375997

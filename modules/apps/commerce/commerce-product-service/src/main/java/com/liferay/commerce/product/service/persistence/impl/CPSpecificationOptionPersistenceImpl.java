@@ -217,16 +217,9 @@ public class CPSpecificationOptionPersistenceImpl
 			return cpSpecificationOption;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
+		throw new NoSuchCPSpecificationOptionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -241,14 +234,8 @@ public class CPSpecificationOptionPersistenceImpl
 		String uuid,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
-		List<CPSpecificationOption> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -414,11 +401,8 @@ public class CPSpecificationOptionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPSpecificationOption cpSpecificationOption :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpSpecificationOption);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -632,19 +616,9 @@ public class CPSpecificationOptionPersistenceImpl
 			return cpSpecificationOption;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
+		throw new NoSuchCPSpecificationOptionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -660,14 +634,8 @@ public class CPSpecificationOptionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
-		List<CPSpecificationOption> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -843,13 +811,8 @@ public class CPSpecificationOptionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPSpecificationOption cpSpecificationOption :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpSpecificationOption);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1064,16 +1027,9 @@ public class CPSpecificationOptionPersistenceImpl
 			return cpSpecificationOption;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
+		throw new NoSuchCPSpecificationOptionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1088,14 +1044,8 @@ public class CPSpecificationOptionPersistenceImpl
 		long companyId,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
-		List<CPSpecificationOption> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1248,12 +1198,8 @@ public class CPSpecificationOptionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CPSpecificationOption cpSpecificationOption :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpSpecificationOption);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1447,16 +1393,11 @@ public class CPSpecificationOptionPersistenceImpl
 			return cpSpecificationOption;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPSpecificationOptionException(sb.toString());
+		throw new NoSuchCPSpecificationOptionException(
+			_collectionPersistenceFinderByCPOptionCategoryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPOptionCategoryId}));
 	}
 
 	/**
@@ -1471,14 +1412,8 @@ public class CPSpecificationOptionPersistenceImpl
 		long CPOptionCategoryId,
 		OrderByComparator<CPSpecificationOption> orderByComparator) {
 
-		List<CPSpecificationOption> list = findByCPOptionCategoryId(
-			CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPOptionCategoryId.fetchFirst(
+			finderCache, new Object[] {CPOptionCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -1635,13 +1570,8 @@ public class CPSpecificationOptionPersistenceImpl
 	 */
 	@Override
 	public void removeByCPOptionCategoryId(long CPOptionCategoryId) {
-		for (CPSpecificationOption cpSpecificationOption :
-				findByCPOptionCategoryId(
-					CPOptionCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpSpecificationOption);
-		}
+		_collectionPersistenceFinderByCPOptionCategoryId.remove(
+			finderCache, new Object[] {CPOptionCategoryId});
 	}
 
 	/**
@@ -1743,23 +1673,15 @@ public class CPSpecificationOptionPersistenceImpl
 			companyId, key);
 
 		if (cpSpecificationOption == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPSpecificationOptionException(sb.toString());
+			throw new NoSuchCPSpecificationOptionException(message);
 		}
 
 		return cpSpecificationOption;
@@ -1848,23 +1770,16 @@ public class CPSpecificationOptionPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (cpSpecificationOption == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPSpecificationOptionException(sb.toString());
+			throw new NoSuchCPSpecificationOptionException(message);
 		}
 
 		return cpSpecificationOption;
@@ -3181,4 +3096,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-974682280
+// LIFERAY-SERVICE-BUILDER-HASH:190278975

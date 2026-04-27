@@ -205,16 +205,9 @@ public class SegmentsEntryRolePersistenceImpl
 			return segmentsEntryRole;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRoleException(sb.toString());
+		throw new NoSuchEntryRoleException(
+			_collectionPersistenceFinderBySegmentsEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {segmentsEntryId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class SegmentsEntryRolePersistenceImpl
 		long segmentsEntryId,
 		OrderByComparator<SegmentsEntryRole> orderByComparator) {
 
-		List<SegmentsEntryRole> list = findBySegmentsEntryId(
-			segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsEntryId.fetchFirst(
+			finderCache, new Object[] {segmentsEntryId}, orderByComparator);
 	}
 
 	/**
@@ -246,13 +233,8 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsEntryId(long segmentsEntryId) {
-		for (SegmentsEntryRole segmentsEntryRole :
-				findBySegmentsEntryId(
-					segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntryRole);
-		}
+		_collectionPersistenceFinderBySegmentsEntryId.remove(
+			finderCache, new Object[] {segmentsEntryId});
 	}
 
 	/**
@@ -379,16 +361,9 @@ public class SegmentsEntryRolePersistenceImpl
 			return segmentsEntryRole;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRoleException(sb.toString());
+		throw new NoSuchEntryRoleException(
+			_collectionPersistenceFinderByRoleId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId}));
 	}
 
 	/**
@@ -402,14 +377,8 @@ public class SegmentsEntryRolePersistenceImpl
 	public SegmentsEntryRole fetchByRoleId_First(
 		long roleId, OrderByComparator<SegmentsEntryRole> orderByComparator) {
 
-		List<SegmentsEntryRole> list = findByRoleId(
-			roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRoleId.fetchFirst(
+			finderCache, new Object[] {roleId}, orderByComparator);
 	}
 
 	/**
@@ -419,12 +388,8 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Override
 	public void removeByRoleId(long roleId) {
-		for (SegmentsEntryRole segmentsEntryRole :
-				findByRoleId(
-					roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsEntryRole);
-		}
+		_collectionPersistenceFinderByRoleId.remove(
+			finderCache, new Object[] {roleId});
 	}
 
 	/**
@@ -464,23 +429,16 @@ public class SegmentsEntryRolePersistenceImpl
 			segmentsEntryId, roleId);
 
 		if (segmentsEntryRole == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("segmentsEntryId=");
-			sb.append(segmentsEntryId);
-
-			sb.append(", roleId=");
-			sb.append(roleId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_R.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsEntryId, roleId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryRoleException(sb.toString());
+			throw new NoSuchEntryRoleException(message);
 		}
 
 		return segmentsEntryRole;
@@ -1544,4 +1502,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-692464621
+// LIFERAY-SERVICE-BUILDER-HASH:746670956

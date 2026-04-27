@@ -203,16 +203,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -226,13 +219,8 @@ public class CPDefinitionLinkPersistenceImpl
 	public CPDefinitionLink fetchByUuid_First(
 		String uuid, OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -242,11 +230,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -285,23 +270,15 @@ public class CPDefinitionLinkPersistenceImpl
 		CPDefinitionLink cpDefinitionLink = fetchByUUID_G(uuid, groupId);
 
 		if (cpDefinitionLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDefinitionLinkException(sb.toString());
+			throw new NoSuchCPDefinitionLinkException(message);
 		}
 
 		return cpDefinitionLink;
@@ -484,19 +461,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -512,14 +479,8 @@ public class CPDefinitionLinkPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -530,13 +491,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -667,16 +623,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -691,14 +640,8 @@ public class CPDefinitionLinkPersistenceImpl
 		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -708,13 +651,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCPDefinitionId(
-					CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -844,16 +782,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
 	}
 
 	/**
@@ -868,14 +799,8 @@ public class CPDefinitionLinkPersistenceImpl
 		long CProductId,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCProductId(
-			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCProductId.fetchFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -885,12 +810,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCProductId(long CProductId) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCProductId(
-					CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCProductId.remove(
+			finderCache, new Object[] {CProductId});
 	}
 
 	/**
@@ -1027,19 +948,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCPD_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId, type}));
 	}
 
 	/**
@@ -1055,14 +966,9 @@ public class CPDefinitionLinkPersistenceImpl
 		long CPDefinitionId, String type,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCPD_T(
-			CPDefinitionId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPD_T.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1073,13 +979,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCPD_T(long CPDefinitionId, String type) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCPD_T(
-					CPDefinitionId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCPD_T.remove(
+			finderCache, new Object[] {CPDefinitionId, type});
 	}
 
 	/**
@@ -1215,19 +1116,10 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCPD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPDefinitionId, status}));
 	}
 
 	/**
@@ -1243,14 +1135,9 @@ public class CPDefinitionLinkPersistenceImpl
 		long CPDefinitionId, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCPD_S(
-			CPDefinitionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPD_S.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1261,13 +1148,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCPD_S(long CPDefinitionId, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCPD_S(
-					CPDefinitionId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCPD_S.remove(
+			finderCache, new Object[] {CPDefinitionId, status});
 	}
 
 	/**
@@ -1403,19 +1285,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCP_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId, type}));
 	}
 
 	/**
@@ -1431,14 +1303,8 @@ public class CPDefinitionLinkPersistenceImpl
 		long CProductId, String type,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCP_T(
-			CProductId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCP_T.fetchFirst(
+			finderCache, new Object[] {CProductId, type}, orderByComparator);
 	}
 
 	/**
@@ -1449,13 +1315,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCP_T(long CProductId, String type) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCP_T(
-					CProductId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCP_T.remove(
+			finderCache, new Object[] {CProductId, type});
 	}
 
 	/**
@@ -1591,19 +1452,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCP_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId, status}));
 	}
 
 	/**
@@ -1619,14 +1470,8 @@ public class CPDefinitionLinkPersistenceImpl
 		long CProductId, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCP_S(
-			CProductId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCP_S.fetchFirst(
+			finderCache, new Object[] {CProductId, status}, orderByComparator);
 	}
 
 	/**
@@ -1637,13 +1482,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCP_S(long CProductId, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCP_S(
-					CProductId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCP_S.remove(
+			finderCache, new Object[] {CProductId, status});
 	}
 
 	/**
@@ -1778,19 +1618,9 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -1806,14 +1636,8 @@ public class CPDefinitionLinkPersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1824,13 +1648,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -1965,19 +1784,10 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {expirationDate, status}));
 	}
 
 	/**
@@ -1993,14 +1803,9 @@ public class CPDefinitionLinkPersistenceImpl
 		Date expirationDate, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByLtE_S(
-			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtE_S.fetchFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2011,13 +1816,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByLtE_S(Date expirationDate, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByLtE_S(
-					expirationDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByLtE_S.remove(
+			finderCache, new Object[] {expirationDate, status});
 	}
 
 	/**
@@ -2060,26 +1860,16 @@ public class CPDefinitionLinkPersistenceImpl
 			CPDefinitionId, CProductId, type);
 
 		if (cpDefinitionLink == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append(", CProductId=");
-			sb.append(CProductId);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPDefinitionId, CProductId, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDefinitionLinkException(sb.toString());
+			throw new NoSuchCPDefinitionLinkException(message);
 		}
 
 		return cpDefinitionLink;
@@ -2280,22 +2070,10 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCPD_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPDefinitionId, type, status}));
 	}
 
 	/**
@@ -2312,14 +2090,9 @@ public class CPDefinitionLinkPersistenceImpl
 		long CPDefinitionId, String type, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCPD_T_S(
-			CPDefinitionId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPD_T_S.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2331,13 +2104,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCPD_T_S(long CPDefinitionId, String type, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCPD_T_S(
-					CPDefinitionId, type, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCPD_T_S.remove(
+			finderCache, new Object[] {CPDefinitionId, type, status});
 	}
 
 	/**
@@ -2482,22 +2250,10 @@ public class CPDefinitionLinkPersistenceImpl
 			return cpDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLinkException(sb.toString());
+		throw new NoSuchCPDefinitionLinkException(
+			_collectionPersistenceFinderByCP_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CProductId, type, status}));
 	}
 
 	/**
@@ -2514,14 +2270,9 @@ public class CPDefinitionLinkPersistenceImpl
 		long CProductId, String type, int status,
 		OrderByComparator<CPDefinitionLink> orderByComparator) {
 
-		List<CPDefinitionLink> list = findByCP_T_S(
-			CProductId, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCP_T_S.fetchFirst(
+			finderCache, new Object[] {CProductId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2533,13 +2284,8 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCP_T_S(long CProductId, String type, int status) {
-		for (CPDefinitionLink cpDefinitionLink :
-				findByCP_T_S(
-					CProductId, type, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionLink);
-		}
+		_collectionPersistenceFinderByCP_T_S.remove(
+			finderCache, new Object[] {CProductId, type, status});
 	}
 
 	/**
@@ -3952,4 +3698,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-870981615
+// LIFERAY-SERVICE-BUILDER-HASH:-101699525

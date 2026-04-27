@@ -197,16 +197,9 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -220,13 +213,8 @@ public class CommerceCurrencyPersistenceImpl
 	public CommerceCurrency fetchByUuid_First(
 		String uuid, OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -236,11 +224,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceCurrency commerceCurrency :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -365,19 +350,9 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -393,14 +368,8 @@ public class CommerceCurrencyPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -411,13 +380,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceCurrency commerceCurrency :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -537,16 +501,9 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -560,14 +517,8 @@ public class CommerceCurrencyPersistenceImpl
 	public CommerceCurrency fetchByCompanyId_First(
 		long companyId, OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -577,12 +528,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CommerceCurrency commerceCurrency :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -616,23 +563,15 @@ public class CommerceCurrencyPersistenceImpl
 		CommerceCurrency commerceCurrency = fetchByC_C(companyId, code);
 
 		if (commerceCurrency == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", code=");
-			sb.append(code);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, code});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCurrencyException(sb.toString());
+			throw new NoSuchCurrencyException(message);
 		}
 
 		return commerceCurrency;
@@ -805,19 +744,9 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, primary}));
 	}
 
 	/**
@@ -833,14 +762,8 @@ public class CommerceCurrencyPersistenceImpl
 		long companyId, boolean primary,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByC_P(
-			companyId, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P.fetchFirst(
+			finderCache, new Object[] {companyId, primary}, orderByComparator);
 	}
 
 	/**
@@ -851,13 +774,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByC_P(long companyId, boolean primary) {
-		for (CommerceCurrency commerceCurrency :
-				findByC_P(
-					companyId, primary, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByC_P.remove(
+			finderCache, new Object[] {companyId, primary});
 	}
 
 	/**
@@ -983,19 +901,9 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
 	}
 
 	/**
@@ -1011,14 +919,8 @@ public class CommerceCurrencyPersistenceImpl
 		long companyId, boolean active,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByC_A(
-			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -1029,13 +931,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, boolean active) {
-		for (CommerceCurrency commerceCurrency :
-				findByC_A(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, active});
 	}
 
 	/**
@@ -1169,22 +1066,10 @@ public class CommerceCurrencyPersistenceImpl
 			return commerceCurrency;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCurrencyException(sb.toString());
+		throw new NoSuchCurrencyException(
+			_collectionPersistenceFinderByC_P_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, primary, active}));
 	}
 
 	/**
@@ -1201,14 +1086,9 @@ public class CommerceCurrencyPersistenceImpl
 		long companyId, boolean primary, boolean active,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		List<CommerceCurrency> list = findByC_P_A(
-			companyId, primary, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P_A.fetchFirst(
+			finderCache, new Object[] {companyId, primary, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1220,13 +1100,8 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Override
 	public void removeByC_P_A(long companyId, boolean primary, boolean active) {
-		for (CommerceCurrency commerceCurrency :
-				findByC_P_A(
-					companyId, primary, active, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceCurrency);
-		}
+		_collectionPersistenceFinderByC_P_A.remove(
+			finderCache, new Object[] {companyId, primary, active});
 	}
 
 	/**
@@ -1264,23 +1139,16 @@ public class CommerceCurrencyPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (commerceCurrency == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCurrencyException(sb.toString());
+			throw new NoSuchCurrencyException(message);
 		}
 
 		return commerceCurrency;
@@ -2320,4 +2188,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:850948140
+// LIFERAY-SERVICE-BUILDER-HASH:545388552

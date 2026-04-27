@@ -105,20 +105,15 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			fetchByFileEntryId(fileEntryId);
 
 		if (dlOpenerFileEntryReference == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("fileEntryId=");
-			sb.append(fileEntryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryReferenceException(sb.toString());
+			throw new NoSuchFileEntryReferenceException(message);
 		}
 
 		return dlOpenerFileEntryReference;
@@ -199,23 +194,16 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			referenceType, fileEntryId);
 
 		if (dlOpenerFileEntryReference == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("referenceType=");
-			sb.append(referenceType);
-
-			sb.append(", fileEntryId=");
-			sb.append(fileEntryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByR_F.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {referenceType, fileEntryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryReferenceException(sb.toString());
+			throw new NoSuchFileEntryReferenceException(message);
 		}
 
 		return dlOpenerFileEntryReference;
@@ -1018,4 +1006,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:608357698
+// LIFERAY-SERVICE-BUILDER-HASH:934730459

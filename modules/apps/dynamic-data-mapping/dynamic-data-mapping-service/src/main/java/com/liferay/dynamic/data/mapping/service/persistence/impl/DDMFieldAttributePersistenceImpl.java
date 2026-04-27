@@ -205,16 +205,9 @@ public class DDMFieldAttributePersistenceImpl
 			return ddmFieldAttribute;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
+		throw new NoSuchFieldAttributeException(
+			_collectionPersistenceFinderByStorageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {storageId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class DDMFieldAttributePersistenceImpl
 		long storageId,
 		OrderByComparator<DDMFieldAttribute> orderByComparator) {
 
-		List<DDMFieldAttribute> list = findByStorageId(
-			storageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStorageId.fetchFirst(
+			finderCache, new Object[] {storageId}, orderByComparator);
 	}
 
 	/**
@@ -246,12 +233,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public void removeByStorageId(long storageId) {
-		for (DDMFieldAttribute ddmFieldAttribute :
-				findByStorageId(
-					storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFieldAttribute);
-		}
+		_collectionPersistenceFinderByStorageId.remove(
+			finderCache, new Object[] {storageId});
 	}
 
 	/**
@@ -389,19 +372,10 @@ public class DDMFieldAttributePersistenceImpl
 			return ddmFieldAttribute;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append(", attributeName=");
-		sb.append(attributeName);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
+		throw new NoSuchFieldAttributeException(
+			_collectionPersistenceFinderByS_AN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {storageId, attributeName}));
 	}
 
 	/**
@@ -417,14 +391,9 @@ public class DDMFieldAttributePersistenceImpl
 		long storageId, String attributeName,
 		OrderByComparator<DDMFieldAttribute> orderByComparator) {
 
-		List<DDMFieldAttribute> list = findByS_AN(
-			storageId, attributeName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_AN.fetchFirst(
+			finderCache, new Object[] {storageId, attributeName},
+			orderByComparator);
 	}
 
 	/**
@@ -435,13 +404,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public void removeByS_AN(long storageId, String attributeName) {
-		for (DDMFieldAttribute ddmFieldAttribute :
-				findByS_AN(
-					storageId, attributeName, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFieldAttribute);
-		}
+		_collectionPersistenceFinderByS_AN.remove(
+			finderCache, new Object[] {storageId, attributeName});
 	}
 
 	/**
@@ -1264,19 +1228,10 @@ public class DDMFieldAttributePersistenceImpl
 			return ddmFieldAttribute;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("attributeName=");
-		sb.append(attributeName);
-
-		sb.append(", smallAttributeValue=");
-		sb.append(smallAttributeValue);
-
-		sb.append("}");
-
-		throw new NoSuchFieldAttributeException(sb.toString());
+		throw new NoSuchFieldAttributeException(
+			_collectionPersistenceFinderByAN_SAV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {attributeName, smallAttributeValue}));
 	}
 
 	/**
@@ -1292,14 +1247,9 @@ public class DDMFieldAttributePersistenceImpl
 		String attributeName, String smallAttributeValue,
 		OrderByComparator<DDMFieldAttribute> orderByComparator) {
 
-		List<DDMFieldAttribute> list = findByAN_SAV(
-			attributeName, smallAttributeValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAN_SAV.fetchFirst(
+			finderCache, new Object[] {attributeName, smallAttributeValue},
+			orderByComparator);
 	}
 
 	/**
@@ -1312,13 +1262,8 @@ public class DDMFieldAttributePersistenceImpl
 	public void removeByAN_SAV(
 		String attributeName, String smallAttributeValue) {
 
-		for (DDMFieldAttribute ddmFieldAttribute :
-				findByAN_SAV(
-					attributeName, smallAttributeValue, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFieldAttribute);
-		}
+		_collectionPersistenceFinderByAN_SAV.remove(
+			finderCache, new Object[] {attributeName, smallAttributeValue});
 	}
 
 	/**
@@ -1361,26 +1306,16 @@ public class DDMFieldAttributePersistenceImpl
 			fieldId, attributeName, languageId);
 
 		if (ddmFieldAttribute == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("fieldId=");
-			sb.append(fieldId);
-
-			sb.append(", attributeName=");
-			sb.append(attributeName);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByF_AN_L.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fieldId, attributeName, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFieldAttributeException(sb.toString());
+			throw new NoSuchFieldAttributeException(message);
 		}
 
 		return ddmFieldAttribute;
@@ -2497,4 +2432,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1558709735
+// LIFERAY-SERVICE-BUILDER-HASH:1723644239

@@ -187,16 +187,9 @@ public class ObjectFilterPersistenceImpl
 			return objectFilter;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
+		throw new NoSuchObjectFilterException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -210,13 +203,8 @@ public class ObjectFilterPersistenceImpl
 	public ObjectFilter fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectFilter> orderByComparator) {
 
-		List<ObjectFilter> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -226,11 +214,8 @@ public class ObjectFilterPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectFilter objectFilter :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectFilter);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -355,19 +340,9 @@ public class ObjectFilterPersistenceImpl
 			return objectFilter;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
+		throw new NoSuchObjectFilterException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -383,14 +358,8 @@ public class ObjectFilterPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectFilter> orderByComparator) {
 
-		List<ObjectFilter> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -401,13 +370,8 @@ public class ObjectFilterPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectFilter objectFilter :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectFilter);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -528,16 +492,9 @@ public class ObjectFilterPersistenceImpl
 			return objectFilter;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectFieldId=");
-		sb.append(objectFieldId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectFilterException(sb.toString());
+		throw new NoSuchObjectFilterException(
+			_collectionPersistenceFinderByObjectFieldId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFieldId}));
 	}
 
 	/**
@@ -551,14 +508,8 @@ public class ObjectFilterPersistenceImpl
 	public ObjectFilter fetchByObjectFieldId_First(
 		long objectFieldId, OrderByComparator<ObjectFilter> orderByComparator) {
 
-		List<ObjectFilter> list = findByObjectFieldId(
-			objectFieldId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectFieldId.fetchFirst(
+			finderCache, new Object[] {objectFieldId}, orderByComparator);
 	}
 
 	/**
@@ -568,13 +519,8 @@ public class ObjectFilterPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectFieldId(long objectFieldId) {
-		for (ObjectFilter objectFilter :
-				findByObjectFieldId(
-					objectFieldId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectFilter);
-		}
+		_collectionPersistenceFinderByObjectFieldId.remove(
+			finderCache, new Object[] {objectFieldId});
 	}
 
 	/**
@@ -1312,4 +1258,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1201288216
+// LIFERAY-SERVICE-BUILDER-HASH:-1382192159

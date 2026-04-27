@@ -178,16 +178,9 @@ public class PluginSettingPersistenceImpl
 			return pluginSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPluginSettingException(sb.toString());
+		throw new NoSuchPluginSettingException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -201,14 +194,9 @@ public class PluginSettingPersistenceImpl
 	public PluginSetting fetchByCompanyId_First(
 		long companyId, OrderByComparator<PluginSetting> orderByComparator) {
 
-		List<PluginSetting> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -218,12 +206,8 @@ public class PluginSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (PluginSetting pluginSetting :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(pluginSetting);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -260,26 +244,16 @@ public class PluginSettingPersistenceImpl
 			companyId, pluginId, pluginType);
 
 		if (pluginSetting == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", pluginId=");
-			sb.append(pluginId);
-
-			sb.append(", pluginType=");
-			sb.append(pluginType);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_P_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, pluginId, pluginType});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPluginSettingException(sb.toString());
+			throw new NoSuchPluginSettingException(message);
 		}
 
 		return pluginSetting;
@@ -996,4 +970,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2022681876
+// LIFERAY-SERVICE-BUILDER-HASH:846447192

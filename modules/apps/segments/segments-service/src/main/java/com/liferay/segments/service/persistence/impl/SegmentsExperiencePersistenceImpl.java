@@ -219,16 +219,9 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -242,14 +235,8 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience fetchByUuid_First(
 		String uuid, OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -259,11 +246,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SegmentsExperience segmentsExperience :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -302,23 +286,15 @@ public class SegmentsExperiencePersistenceImpl
 		SegmentsExperience segmentsExperience = fetchByUUID_G(uuid, groupId);
 
 		if (segmentsExperience == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExperienceException(sb.toString());
+			throw new NoSuchExperienceException(message);
 		}
 
 		return segmentsExperience;
@@ -501,19 +477,9 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -529,14 +495,8 @@ public class SegmentsExperiencePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -547,13 +507,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SegmentsExperience segmentsExperience :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -683,16 +638,9 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -706,14 +654,8 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience fetchByGroupId_First(
 		long groupId, OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -866,12 +808,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SegmentsExperience segmentsExperience :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1066,19 +1004,9 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, plid}));
 	}
 
 	/**
@@ -1094,14 +1022,8 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, long plid,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_P(
-			groupId, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, plid}, orderByComparator);
 	}
 
 	/**
@@ -1262,13 +1184,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long plid) {
-		for (SegmentsExperience segmentsExperience :
-				findByG_P(
-					groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, plid});
 	}
 
 	/**
@@ -2557,19 +2474,10 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryERC=");
-		sb.append(segmentsEntryERC);
-
-		sb.append(", segmentsEntryScopeERC=");
-		sb.append(segmentsEntryScopeERC);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderBySEERC_SESERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {segmentsEntryERC, segmentsEntryScopeERC}));
 	}
 
 	/**
@@ -2585,14 +2493,9 @@ public class SegmentsExperiencePersistenceImpl
 		String segmentsEntryERC, String segmentsEntryScopeERC,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findBySEERC_SESERC(
-			segmentsEntryERC, segmentsEntryScopeERC, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySEERC_SESERC.fetchFirst(
+			finderCache, new Object[] {segmentsEntryERC, segmentsEntryScopeERC},
+			orderByComparator);
 	}
 
 	/**
@@ -2605,13 +2508,9 @@ public class SegmentsExperiencePersistenceImpl
 	public void removeBySEERC_SESERC(
 		String segmentsEntryERC, String segmentsEntryScopeERC) {
 
-		for (SegmentsExperience segmentsExperience :
-				findBySEERC_SESERC(
-					segmentsEntryERC, segmentsEntryScopeERC, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderBySEERC_SESERC.remove(
+			finderCache,
+			new Object[] {segmentsEntryERC, segmentsEntryScopeERC});
 	}
 
 	/**
@@ -2765,22 +2664,12 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsEntryERC=");
-		sb.append(segmentsEntryERC);
-
-		sb.append(", segmentsEntryScopeERC=");
-		sb.append(segmentsEntryScopeERC);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_SEERC_SESERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, segmentsEntryERC, segmentsEntryScopeERC
+				}));
 	}
 
 	/**
@@ -2797,15 +2686,10 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_SEERC_SESERC(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, 0, 1,
+		return _collectionPersistenceFinderByG_SEERC_SESERC.fetchFirst(
+			finderCache,
+			new Object[] {groupId, segmentsEntryERC, segmentsEntryScopeERC},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3009,13 +2893,9 @@ public class SegmentsExperiencePersistenceImpl
 	public void removeByG_SEERC_SESERC(
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC) {
 
-		for (SegmentsExperience segmentsExperience :
-				findByG_SEERC_SESERC(
-					groupId, segmentsEntryERC, segmentsEntryScopeERC,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_SEERC_SESERC.remove(
+			finderCache,
+			new Object[] {groupId, segmentsEntryERC, segmentsEntryScopeERC});
 	}
 
 	/**
@@ -3179,26 +3059,16 @@ public class SegmentsExperiencePersistenceImpl
 			groupId, segmentsExperienceKey, plid);
 
 		if (segmentsExperience == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", segmentsExperienceKey=");
-			sb.append(segmentsExperienceKey);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_SEK_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, segmentsExperienceKey, plid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExperienceException(sb.toString());
+			throw new NoSuchExperienceException(message);
 		}
 
 		return segmentsExperience;
@@ -3300,26 +3170,16 @@ public class SegmentsExperiencePersistenceImpl
 			groupId, plid, priority);
 
 		if (segmentsExperience == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append(", priority=");
-			sb.append(priority);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_P_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, plid, priority});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExperienceException(sb.toString());
+			throw new NoSuchExperienceException(message);
 		}
 
 		return segmentsExperience;
@@ -3518,22 +3378,10 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", priority>");
-		sb.append(priority);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_P_GtP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, plid, priority}));
 	}
 
 	/**
@@ -3550,14 +3398,9 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, long plid, int priority,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_P_GtP(
-			groupId, plid, priority, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_GtP.fetchFirst(
+			finderCache, new Object[] {groupId, plid, priority},
+			orderByComparator);
 	}
 
 	/**
@@ -3730,13 +3573,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_GtP(long groupId, long plid, int priority) {
-		for (SegmentsExperience segmentsExperience :
-				findByG_P_GtP(
-					groupId, plid, priority, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_P_GtP.remove(
+			finderCache, new Object[] {groupId, plid, priority});
 	}
 
 	/**
@@ -3957,22 +3795,10 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", priority<");
-		sb.append(priority);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_P_LtP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, plid, priority}));
 	}
 
 	/**
@@ -3989,14 +3815,9 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, long plid, int priority,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_P_LtP(
-			groupId, plid, priority, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_LtP.fetchFirst(
+			finderCache, new Object[] {groupId, plid, priority},
+			orderByComparator);
 	}
 
 	/**
@@ -4169,13 +3990,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_LtP(long groupId, long plid, int priority) {
-		for (SegmentsExperience segmentsExperience :
-				findByG_P_LtP(
-					groupId, plid, priority, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_P_LtP.remove(
+			finderCache, new Object[] {groupId, plid, priority});
 	}
 
 	/**
@@ -4396,22 +4212,10 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_P_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, plid, active}));
 	}
 
 	/**
@@ -4428,14 +4232,9 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, long plid, boolean active,
 		OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_P_A(
-			groupId, plid, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_A.fetchFirst(
+			finderCache, new Object[] {groupId, plid, active},
+			orderByComparator);
 	}
 
 	/**
@@ -4607,13 +4406,8 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_A(long groupId, long plid, boolean active) {
-		for (SegmentsExperience segmentsExperience :
-				findByG_P_A(
-					groupId, plid, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_P_A.remove(
+			finderCache, new Object[] {groupId, plid, active});
 	}
 
 	/**
@@ -4851,25 +4645,13 @@ public class SegmentsExperiencePersistenceImpl
 			return segmentsExperience;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", segmentsEntryERC=");
-		sb.append(segmentsEntryERC);
-
-		sb.append(", segmentsEntryScopeERC=");
-		sb.append(segmentsEntryScopeERC);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchExperienceException(sb.toString());
+		throw new NoSuchExperienceException(
+			_collectionPersistenceFinderByG_SEERC_SESERC_P.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
+					}));
 	}
 
 	/**
@@ -4887,15 +4669,12 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		long plid, OrderByComparator<SegmentsExperience> orderByComparator) {
 
-		List<SegmentsExperience> list = findByG_SEERC_SESERC_P(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid, 0, 1,
+		return _collectionPersistenceFinderByG_SEERC_SESERC_P.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -5110,13 +4889,11 @@ public class SegmentsExperiencePersistenceImpl
 		long groupId, String segmentsEntryERC, String segmentsEntryScopeERC,
 		long plid) {
 
-		for (SegmentsExperience segmentsExperience :
-				findByG_SEERC_SESERC_P(
-					groupId, segmentsEntryERC, segmentsEntryScopeERC, plid,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsExperience);
-		}
+		_collectionPersistenceFinderByG_SEERC_SESERC_P.remove(
+			finderCache,
+			new Object[] {
+				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
+			});
 	}
 
 	/**
@@ -6921,23 +6698,16 @@ public class SegmentsExperiencePersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (segmentsExperience == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExperienceException(sb.toString());
+			throw new NoSuchExperienceException(message);
 		}
 
 		return segmentsExperience;
@@ -8657,4 +8427,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-654990458
+// LIFERAY-SERVICE-BUILDER-HASH:-1986783571

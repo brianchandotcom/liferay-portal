@@ -199,16 +199,9 @@ public class RedirectEntryPersistenceImpl
 			return redirectEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,13 +215,8 @@ public class RedirectEntryPersistenceImpl
 	public RedirectEntry fetchByUuid_First(
 		String uuid, OrderByComparator<RedirectEntry> orderByComparator) {
 
-		List<RedirectEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -238,11 +226,8 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (RedirectEntry redirectEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(redirectEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -276,23 +261,15 @@ public class RedirectEntryPersistenceImpl
 		RedirectEntry redirectEntry = fetchByUUID_G(uuid, groupId);
 
 		if (redirectEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return redirectEntry;
@@ -465,19 +442,9 @@ public class RedirectEntryPersistenceImpl
 			return redirectEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -493,14 +460,8 @@ public class RedirectEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<RedirectEntry> orderByComparator) {
 
-		List<RedirectEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -511,13 +472,8 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (RedirectEntry redirectEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(redirectEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -634,16 +590,9 @@ public class RedirectEntryPersistenceImpl
 			return redirectEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -657,14 +606,8 @@ public class RedirectEntryPersistenceImpl
 	public RedirectEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<RedirectEntry> orderByComparator) {
 
-		List<RedirectEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -816,12 +759,8 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (RedirectEntry redirectEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(redirectEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1007,19 +946,10 @@ public class RedirectEntryPersistenceImpl
 			return redirectEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", destinationURL=");
-		sb.append(destinationURL);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, destinationURL}));
 	}
 
 	/**
@@ -1035,14 +965,9 @@ public class RedirectEntryPersistenceImpl
 		long groupId, String destinationURL,
 		OrderByComparator<RedirectEntry> orderByComparator) {
 
-		List<RedirectEntry> list = findByG_D(
-			groupId, destinationURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D.fetchFirst(
+			finderCache, new Object[] {groupId, destinationURL},
+			orderByComparator);
 	}
 
 	/**
@@ -1219,13 +1144,8 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_D(long groupId, String destinationURL) {
-		for (RedirectEntry redirectEntry :
-				findByG_D(
-					groupId, destinationURL, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(redirectEntry);
-		}
+		_collectionPersistenceFinderByG_D.remove(
+			finderCache, new Object[] {groupId, destinationURL});
 	}
 
 	/**
@@ -1345,23 +1265,16 @@ public class RedirectEntryPersistenceImpl
 		RedirectEntry redirectEntry = fetchByG_S(groupId, sourceURL);
 
 		if (redirectEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", sourceURL=");
-			sb.append(sourceURL);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, sourceURL});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return redirectEntry;
@@ -2299,4 +2212,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405075865
+// LIFERAY-SERVICE-BUILDER-HASH:228184937

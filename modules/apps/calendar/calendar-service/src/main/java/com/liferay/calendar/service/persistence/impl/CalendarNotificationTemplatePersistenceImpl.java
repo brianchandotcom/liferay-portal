@@ -206,16 +206,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			return calendarNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 		String uuid,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
 
-		List<CalendarNotificationTemplate> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CalendarNotificationTemplate calendarNotificationTemplate :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarNotificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +275,15 @@ public class CalendarNotificationTemplatePersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (calendarNotificationTemplate == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationTemplateException(sb.toString());
+			throw new NoSuchNotificationTemplateException(message);
 		}
 
 		return calendarNotificationTemplate;
@@ -496,19 +472,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			return calendarNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -524,14 +490,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
 
-		List<CalendarNotificationTemplate> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -542,13 +502,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CalendarNotificationTemplate calendarNotificationTemplate :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendarNotificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -681,16 +636,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			return calendarNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("calendarId=");
-		sb.append(calendarId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByCalendarId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {calendarId}));
 	}
 
 	/**
@@ -705,14 +653,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 		long calendarId,
 		OrderByComparator<CalendarNotificationTemplate> orderByComparator) {
 
-		List<CalendarNotificationTemplate> list = findByCalendarId(
-			calendarId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCalendarId.fetchFirst(
+			finderCache, new Object[] {calendarId}, orderByComparator);
 	}
 
 	/**
@@ -722,12 +664,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByCalendarId(long calendarId) {
-		for (CalendarNotificationTemplate calendarNotificationTemplate :
-				findByCalendarId(
-					calendarId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendarNotificationTemplate);
-		}
+		_collectionPersistenceFinderByCalendarId.remove(
+			finderCache, new Object[] {calendarId});
 	}
 
 	/**
@@ -771,26 +709,18 @@ public class CalendarNotificationTemplatePersistenceImpl
 				calendarId, notificationType, notificationTemplateType);
 
 		if (calendarNotificationTemplate == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("calendarId=");
-			sb.append(calendarId);
-
-			sb.append(", notificationType=");
-			sb.append(notificationType);
-
-			sb.append(", notificationTemplateType=");
-			sb.append(notificationTemplateType);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_NT_NTT.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						calendarId, notificationType, notificationTemplateType
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationTemplateException(sb.toString());
+			throw new NoSuchNotificationTemplateException(message);
 		}
 
 		return calendarNotificationTemplate;
@@ -2047,4 +1977,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:532890415
+// LIFERAY-SERVICE-BUILDER-HASH:-1282645732

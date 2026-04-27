@@ -192,16 +192,9 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			return cpdVirtualSettingFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+		throw new NoSuchCPDVirtualSettingFileEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		String uuid,
 		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
 
-		List<CPDVirtualSettingFileEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpdVirtualSettingFileEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -272,23 +256,15 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			uuid, groupId);
 
 		if (cpdVirtualSettingFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+			throw new NoSuchCPDVirtualSettingFileEntryException(message);
 		}
 
 		return cpdVirtualSettingFileEntry;
@@ -464,19 +440,9 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			return cpdVirtualSettingFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+		throw new NoSuchCPDVirtualSettingFileEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -492,14 +458,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
 
-		List<CPDVirtualSettingFileEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -510,13 +470,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpdVirtualSettingFileEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -644,16 +599,11 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			return cpdVirtualSettingFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionVirtualSettingId=");
-		sb.append(CPDefinitionVirtualSettingId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+		throw new NoSuchCPDVirtualSettingFileEntryException(
+			_collectionPersistenceFinderByCPDefinitionVirtualSettingId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPDefinitionVirtualSettingId}));
 	}
 
 	/**
@@ -668,15 +618,10 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		long CPDefinitionVirtualSettingId,
 		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
 
-		List<CPDVirtualSettingFileEntry> list =
-			findByCPDefinitionVirtualSettingId(
-				CPDefinitionVirtualSettingId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionVirtualSettingId.
+			fetchFirst(
+				finderCache, new Object[] {CPDefinitionVirtualSettingId},
+				orderByComparator);
 	}
 
 	/**
@@ -688,13 +633,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	public void removeByCPDefinitionVirtualSettingId(
 		long CPDefinitionVirtualSettingId) {
 
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				findByCPDefinitionVirtualSettingId(
-					CPDefinitionVirtualSettingId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpdVirtualSettingFileEntry);
-		}
+		_collectionPersistenceFinderByCPDefinitionVirtualSettingId.remove(
+			finderCache, new Object[] {CPDefinitionVirtualSettingId});
 	}
 
 	/**
@@ -818,16 +758,9 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			return cpdVirtualSettingFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDVirtualSettingFileEntryException(sb.toString());
+		throw new NoSuchCPDVirtualSettingFileEntryException(
+			_collectionPersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId}));
 	}
 
 	/**
@@ -842,14 +775,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		long fileEntryId,
 		OrderByComparator<CPDVirtualSettingFileEntry> orderByComparator) {
 
-		List<CPDVirtualSettingFileEntry> list = findByFileEntryId(
-			fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileEntryId.fetchFirst(
+			finderCache, new Object[] {fileEntryId}, orderByComparator);
 	}
 
 	/**
@@ -859,12 +786,8 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByFileEntryId(long fileEntryId) {
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				findByFileEntryId(
-					fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpdVirtualSettingFileEntry);
-		}
+		_collectionPersistenceFinderByFileEntryId.remove(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	/**
@@ -1748,4 +1671,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1536626400
+// LIFERAY-SERVICE-BUILDER-HASH:916321093

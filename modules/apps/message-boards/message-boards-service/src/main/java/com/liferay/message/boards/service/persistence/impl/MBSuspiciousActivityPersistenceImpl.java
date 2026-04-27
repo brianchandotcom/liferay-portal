@@ -206,16 +206,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			return mbSuspiciousActivity;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSuspiciousActivityException(sb.toString());
+		throw new NoSuchSuspiciousActivityException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		String uuid,
 		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
 
-		List<MBSuspiciousActivity> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBSuspiciousActivity mbSuspiciousActivity :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbSuspiciousActivity);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +275,15 @@ public class MBSuspiciousActivityPersistenceImpl
 			uuid, groupId);
 
 		if (mbSuspiciousActivity == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSuspiciousActivityException(sb.toString());
+			throw new NoSuchSuspiciousActivityException(message);
 		}
 
 		return mbSuspiciousActivity;
@@ -492,19 +468,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			return mbSuspiciousActivity;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSuspiciousActivityException(sb.toString());
+		throw new NoSuchSuspiciousActivityException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -520,14 +486,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
 
-		List<MBSuspiciousActivity> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -538,13 +498,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBSuspiciousActivity mbSuspiciousActivity :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbSuspiciousActivity);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -674,16 +629,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			return mbSuspiciousActivity;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("messageId=");
-		sb.append(messageId);
-
-		sb.append("}");
-
-		throw new NoSuchSuspiciousActivityException(sb.toString());
+		throw new NoSuchSuspiciousActivityException(
+			_collectionPersistenceFinderByMessageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {messageId}));
 	}
 
 	/**
@@ -698,14 +646,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		long messageId,
 		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
 
-		List<MBSuspiciousActivity> list = findByMessageId(
-			messageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByMessageId.fetchFirst(
+			finderCache, new Object[] {messageId}, orderByComparator);
 	}
 
 	/**
@@ -715,12 +657,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public void removeByMessageId(long messageId) {
-		for (MBSuspiciousActivity mbSuspiciousActivity :
-				findByMessageId(
-					messageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbSuspiciousActivity);
-		}
+		_collectionPersistenceFinderByMessageId.remove(
+			finderCache, new Object[] {messageId});
 	}
 
 	/**
@@ -849,16 +787,9 @@ public class MBSuspiciousActivityPersistenceImpl
 			return mbSuspiciousActivity;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append("}");
-
-		throw new NoSuchSuspiciousActivityException(sb.toString());
+		throw new NoSuchSuspiciousActivityException(
+			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
 	}
 
 	/**
@@ -873,14 +804,8 @@ public class MBSuspiciousActivityPersistenceImpl
 		long threadId,
 		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
 
-		List<MBSuspiciousActivity> list = findByThreadId(
-			threadId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByThreadId.fetchFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -890,12 +815,8 @@ public class MBSuspiciousActivityPersistenceImpl
 	 */
 	@Override
 	public void removeByThreadId(long threadId) {
-		for (MBSuspiciousActivity mbSuspiciousActivity :
-				findByThreadId(
-					threadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbSuspiciousActivity);
-		}
+		_collectionPersistenceFinderByThreadId.remove(
+			finderCache, new Object[] {threadId});
 	}
 
 	/**
@@ -935,23 +856,15 @@ public class MBSuspiciousActivityPersistenceImpl
 			userId, messageId);
 
 		if (mbSuspiciousActivity == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", messageId=");
-			sb.append(messageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_M.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, messageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSuspiciousActivityException(sb.toString());
+			throw new NoSuchSuspiciousActivityException(message);
 		}
 
 		return mbSuspiciousActivity;
@@ -1040,23 +953,15 @@ public class MBSuspiciousActivityPersistenceImpl
 			userId, threadId);
 
 		if (mbSuspiciousActivity == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", threadId=");
-			sb.append(threadId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, threadId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSuspiciousActivityException(sb.toString());
+			throw new NoSuchSuspiciousActivityException(message);
 		}
 
 		return mbSuspiciousActivity;
@@ -2286,4 +2191,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1409214323
+// LIFERAY-SERVICE-BUILDER-HASH:-1811241382

@@ -91,20 +91,15 @@ public class CompanyPersistenceImpl
 		Company company = fetchByWebId(webId);
 
 		if (company == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("webId=");
-			sb.append(webId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByWebId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {webId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCompanyException(sb.toString());
+			throw new NoSuchCompanyException(message);
 		}
 
 		return company;
@@ -258,16 +253,9 @@ public class CompanyPersistenceImpl
 			return company;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("logoId=");
-		sb.append(logoId);
-
-		sb.append("}");
-
-		throw new NoSuchCompanyException(sb.toString());
+		throw new NoSuchCompanyException(
+			_collectionPersistenceFinderByLogoId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {logoId}));
 	}
 
 	/**
@@ -281,13 +269,9 @@ public class CompanyPersistenceImpl
 	public Company fetchByLogoId_First(
 		long logoId, OrderByComparator<Company> orderByComparator) {
 
-		List<Company> list = findByLogoId(logoId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLogoId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {logoId},
+			orderByComparator);
 	}
 
 	/**
@@ -297,12 +281,8 @@ public class CompanyPersistenceImpl
 	 */
 	@Override
 	public void removeByLogoId(long logoId) {
-		for (Company company :
-				findByLogoId(
-					logoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(company);
-		}
+		_collectionPersistenceFinderByLogoId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {logoId});
 	}
 
 	/**
@@ -965,4 +945,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471573087
+// LIFERAY-SERVICE-BUILDER-HASH:-1907594973

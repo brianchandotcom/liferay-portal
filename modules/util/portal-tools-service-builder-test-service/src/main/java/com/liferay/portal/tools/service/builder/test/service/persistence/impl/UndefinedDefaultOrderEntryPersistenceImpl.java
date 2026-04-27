@@ -93,20 +93,15 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			name);
 
 		if (undefinedDefaultOrderEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUndefinedDefaultOrderEntryException(sb.toString());
+			throw new NoSuchUndefinedDefaultOrderEntryException(message);
 		}
 
 		return undefinedDefaultOrderEntry;
@@ -270,16 +265,9 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			return undefinedDefaultOrderEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchUndefinedDefaultOrderEntryException(sb.toString());
+		throw new NoSuchUndefinedDefaultOrderEntryException(
+			_collectionPersistenceFinderByName_Collection.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
 	}
 
 	/**
@@ -294,14 +282,8 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 		String name,
 		OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator) {
 
-		List<UndefinedDefaultOrderEntry> list = findByName_Collection(
-			name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByName_Collection.fetchFirst(
+			finderCache, new Object[] {name}, orderByComparator);
 	}
 
 	/**
@@ -311,12 +293,8 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByName_Collection(String name) {
-		for (UndefinedDefaultOrderEntry undefinedDefaultOrderEntry :
-				findByName_Collection(
-					name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(undefinedDefaultOrderEntry);
-		}
+		_collectionPersistenceFinderByName_Collection.remove(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -1011,4 +989,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:939217034
+// LIFERAY-SERVICE-BUILDER-HASH:-762351891

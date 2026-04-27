@@ -198,16 +198,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return commerceNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,14 +215,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
-		List<CommerceNotificationTemplate> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -239,11 +226,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -278,23 +262,15 @@ public class CommerceNotificationTemplatePersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (commerceNotificationTemplate == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotificationTemplateException(sb.toString());
+			throw new NoSuchNotificationTemplateException(message);
 		}
 
 		return commerceNotificationTemplate;
@@ -473,19 +449,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return commerceNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -501,14 +467,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
-		List<CommerceNotificationTemplate> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -519,13 +479,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceNotificationTemplate);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -645,16 +600,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return commerceNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -669,14 +617,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 		long groupId,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
-		List<CommerceNotificationTemplate> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -834,12 +776,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationTemplate);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1026,19 +964,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return commerceNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", enabled=");
-		sb.append(enabled);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByG_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, enabled}));
 	}
 
 	/**
@@ -1054,14 +982,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 		long groupId, boolean enabled,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
-		List<CommerceNotificationTemplate> list = findByG_E(
-			groupId, enabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_E.fetchFirst(
+			finderCache, new Object[] {groupId, enabled}, orderByComparator);
 	}
 
 	/**
@@ -1227,13 +1149,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByG_E(long groupId, boolean enabled) {
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				findByG_E(
-					groupId, enabled, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceNotificationTemplate);
-		}
+		_collectionPersistenceFinderByG_E.remove(
+			finderCache, new Object[] {groupId, enabled});
 	}
 
 	/**
@@ -1435,22 +1352,10 @@ public class CommerceNotificationTemplatePersistenceImpl
 			return commerceNotificationTemplate;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", enabled=");
-		sb.append(enabled);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationTemplateException(sb.toString());
+		throw new NoSuchNotificationTemplateException(
+			_collectionPersistenceFinderByG_T_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, type, enabled}));
 	}
 
 	/**
@@ -1467,14 +1372,9 @@ public class CommerceNotificationTemplatePersistenceImpl
 		long groupId, String type, boolean enabled,
 		OrderByComparator<CommerceNotificationTemplate> orderByComparator) {
 
-		List<CommerceNotificationTemplate> list = findByG_T_E(
-			groupId, type, enabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T_E.fetchFirst(
+			finderCache, new Object[] {groupId, type, enabled},
+			orderByComparator);
 	}
 
 	/**
@@ -1662,13 +1562,8 @@ public class CommerceNotificationTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByG_T_E(long groupId, String type, boolean enabled) {
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				findByG_T_E(
-					groupId, type, enabled, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationTemplate);
-		}
+		_collectionPersistenceFinderByG_T_E.remove(
+			finderCache, new Object[] {groupId, type, enabled});
 	}
 
 	/**
@@ -2719,4 +2614,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1474398578
+// LIFERAY-SERVICE-BUILDER-HASH:-500120167

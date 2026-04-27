@@ -200,16 +200,9 @@ public class BatchEngineImportTaskPersistenceImpl
 			return batchEngineImportTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskException(sb.toString());
+		throw new NoSuchImportTaskException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,14 +217,8 @@ public class BatchEngineImportTaskPersistenceImpl
 		String uuid,
 		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineImportTask> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +228,8 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (BatchEngineImportTask batchEngineImportTask :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(batchEngineImportTask);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -372,19 +356,9 @@ public class BatchEngineImportTaskPersistenceImpl
 			return batchEngineImportTask;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskException(sb.toString());
+		throw new NoSuchImportTaskException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -400,14 +374,8 @@ public class BatchEngineImportTaskPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineImportTask> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -418,13 +386,8 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (BatchEngineImportTask batchEngineImportTask :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchEngineImportTask);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -544,16 +507,9 @@ public class BatchEngineImportTaskPersistenceImpl
 			return batchEngineImportTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskException(sb.toString());
+		throw new NoSuchImportTaskException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -568,14 +524,8 @@ public class BatchEngineImportTaskPersistenceImpl
 		long companyId,
 		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineImportTask> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -585,12 +535,8 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BatchEngineImportTask batchEngineImportTask :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(batchEngineImportTask);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -712,16 +658,9 @@ public class BatchEngineImportTaskPersistenceImpl
 			return batchEngineImportTask;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("executeStatus=");
-		sb.append(executeStatus);
-
-		sb.append("}");
-
-		throw new NoSuchImportTaskException(sb.toString());
+		throw new NoSuchImportTaskException(
+			_collectionPersistenceFinderByExecuteStatus.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {executeStatus}));
 	}
 
 	/**
@@ -736,14 +675,8 @@ public class BatchEngineImportTaskPersistenceImpl
 		String executeStatus,
 		OrderByComparator<BatchEngineImportTask> orderByComparator) {
 
-		List<BatchEngineImportTask> list = findByExecuteStatus(
-			executeStatus, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByExecuteStatus.fetchFirst(
+			finderCache, new Object[] {executeStatus}, orderByComparator);
 	}
 
 	/**
@@ -753,13 +686,8 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Override
 	public void removeByExecuteStatus(String executeStatus) {
-		for (BatchEngineImportTask batchEngineImportTask :
-				findByExecuteStatus(
-					executeStatus, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchEngineImportTask);
-		}
+		_collectionPersistenceFinderByExecuteStatus.remove(
+			finderCache, new Object[] {executeStatus});
 	}
 
 	/**
@@ -795,23 +723,16 @@ public class BatchEngineImportTaskPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (batchEngineImportTask == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchImportTaskException(sb.toString());
+			throw new NoSuchImportTaskException(message);
 		}
 
 		return batchEngineImportTask;
@@ -1786,4 +1707,4 @@ public class BatchEngineImportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:51524393
+// LIFERAY-SERVICE-BUILDER-HASH:-917915047

@@ -199,16 +199,9 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,13 +215,8 @@ public class COREntryPersistenceImpl
 	public COREntry fetchByUuid_First(
 		String uuid, OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -386,11 +374,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (COREntry corEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -589,19 +574,9 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -617,14 +592,8 @@ public class COREntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -792,13 +761,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (COREntry corEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1006,19 +970,9 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
 	}
 
 	/**
@@ -1034,14 +988,8 @@ public class COREntryPersistenceImpl
 		long companyId, boolean active,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByC_A(
-			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -1196,13 +1144,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, boolean active) {
-		for (COREntry corEntry :
-				findByC_A(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, active});
 	}
 
 	/**
@@ -1393,19 +1336,9 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByC_LikeType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
 	}
 
 	/**
@@ -1421,14 +1354,8 @@ public class COREntryPersistenceImpl
 		long companyId, String type,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByC_LikeType(
-			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LikeType.fetchFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -1597,13 +1524,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LikeType(long companyId, String type) {
-		for (COREntry corEntry :
-				findByC_LikeType(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByC_LikeType.remove(
+			finderCache, new Object[] {companyId, type});
 	}
 
 	/**
@@ -1810,19 +1732,9 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -1838,14 +1750,8 @@ public class COREntryPersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -2012,13 +1918,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (COREntry corEntry :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -2223,19 +2124,10 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {expirationDate, status}));
 	}
 
 	/**
@@ -2251,14 +2143,9 @@ public class COREntryPersistenceImpl
 		Date expirationDate, int status,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByLtE_S(
-			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtE_S.fetchFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2425,13 +2312,8 @@ public class COREntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtE_S(Date expirationDate, int status) {
-		for (COREntry corEntry :
-				findByLtE_S(
-					expirationDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByLtE_S.remove(
+			finderCache, new Object[] {expirationDate, status});
 	}
 
 	/**
@@ -2644,22 +2526,10 @@ public class COREntryPersistenceImpl
 			return corEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", typeLIKE");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchCOREntryException(sb.toString());
+		throw new NoSuchCOREntryException(
+			_collectionPersistenceFinderByC_A_LikeType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, type}));
 	}
 
 	/**
@@ -2676,14 +2546,9 @@ public class COREntryPersistenceImpl
 		long companyId, boolean active, String type,
 		OrderByComparator<COREntry> orderByComparator) {
 
-		List<COREntry> list = findByC_A_LikeType(
-			companyId, active, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A_LikeType.fetchFirst(
+			finderCache, new Object[] {companyId, active, type},
+			orderByComparator);
 	}
 
 	/**
@@ -2866,13 +2731,8 @@ public class COREntryPersistenceImpl
 	public void removeByC_A_LikeType(
 		long companyId, boolean active, String type) {
 
-		for (COREntry corEntry :
-				findByC_A_LikeType(
-					companyId, active, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(corEntry);
-		}
+		_collectionPersistenceFinderByC_A_LikeType.remove(
+			finderCache, new Object[] {companyId, active, type});
 	}
 
 	/**
@@ -3003,23 +2863,16 @@ public class COREntryPersistenceImpl
 		COREntry corEntry = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (corEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCOREntryException(sb.toString());
+			throw new NoSuchCOREntryException(message);
 		}
 
 		return corEntry;
@@ -4033,4 +3886,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:862333050
+// LIFERAY-SERVICE-BUILDER-HASH:952394686

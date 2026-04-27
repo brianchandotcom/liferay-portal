@@ -202,16 +202,9 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -225,13 +218,8 @@ public class DispatchTriggerPersistenceImpl
 	public DispatchTrigger fetchByUuid_First(
 		String uuid, OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -396,11 +384,8 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DispatchTrigger dispatchTrigger :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -600,19 +585,9 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -628,14 +603,8 @@ public class DispatchTriggerPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -810,13 +779,8 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DispatchTrigger dispatchTrigger :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1020,16 +984,9 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1043,14 +1000,8 @@ public class DispatchTriggerPersistenceImpl
 	public DispatchTrigger fetchByCompanyId_First(
 		long companyId, OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1202,12 +1153,8 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DispatchTrigger dispatchTrigger :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1384,16 +1331,9 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByActive.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {active}));
 	}
 
 	/**
@@ -1407,14 +1347,8 @@ public class DispatchTriggerPersistenceImpl
 	public DispatchTrigger fetchByActive_First(
 		boolean active, OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByActive(
-			active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByActive.fetchFirst(
+			finderCache, new Object[] {active}, orderByComparator);
 	}
 
 	/**
@@ -1566,12 +1500,8 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public void removeByActive(boolean active) {
-		for (DispatchTrigger dispatchTrigger :
-				findByActive(
-					active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByActive.remove(
+			finderCache, new Object[] {active});
 	}
 
 	/**
@@ -1755,19 +1685,9 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -1783,14 +1703,8 @@ public class DispatchTriggerPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1950,13 +1864,8 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (DispatchTrigger dispatchTrigger :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -2155,19 +2064,10 @@ public class DispatchTriggerPersistenceImpl
 			return dispatchTrigger;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", dispatchTaskExecutorType=");
-		sb.append(dispatchTaskExecutorType);
-
-		sb.append("}");
-
-		throw new NoSuchTriggerException(sb.toString());
+		throw new NoSuchTriggerException(
+			_collectionPersistenceFinderByC_DTET.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, dispatchTaskExecutorType}));
 	}
 
 	/**
@@ -2183,14 +2083,9 @@ public class DispatchTriggerPersistenceImpl
 		long companyId, String dispatchTaskExecutorType,
 		OrderByComparator<DispatchTrigger> orderByComparator) {
 
-		List<DispatchTrigger> list = findByC_DTET(
-			companyId, dispatchTaskExecutorType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_DTET.fetchFirst(
+			finderCache, new Object[] {companyId, dispatchTaskExecutorType},
+			orderByComparator);
 	}
 
 	/**
@@ -2372,13 +2267,8 @@ public class DispatchTriggerPersistenceImpl
 	public void removeByC_DTET(
 		long companyId, String dispatchTaskExecutorType) {
 
-		for (DispatchTrigger dispatchTrigger :
-				findByC_DTET(
-					companyId, dispatchTaskExecutorType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchTrigger);
-		}
+		_collectionPersistenceFinderByC_DTET.remove(
+			finderCache, new Object[] {companyId, dispatchTaskExecutorType});
 	}
 
 	/**
@@ -2502,23 +2392,15 @@ public class DispatchTriggerPersistenceImpl
 		DispatchTrigger dispatchTrigger = fetchByC_N(companyId, name);
 
 		if (dispatchTrigger == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTriggerException(sb.toString());
+			throw new NoSuchTriggerException(message);
 		}
 
 		return dispatchTrigger;
@@ -3674,23 +3556,16 @@ public class DispatchTriggerPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (dispatchTrigger == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTriggerException(sb.toString());
+			throw new NoSuchTriggerException(message);
 		}
 
 		return dispatchTrigger;
@@ -4763,4 +4638,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1105169064
+// LIFERAY-SERVICE-BUILDER-HASH:-21787909

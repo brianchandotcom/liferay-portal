@@ -206,16 +206,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return layoutPageTemplateStructureRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
+		throw new NoSuchPageTemplateStructureRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		String uuid,
 		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
 
-		List<LayoutPageTemplateStructureRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPageTemplateStructureRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -292,23 +276,15 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			fetchByUUID_G(uuid, groupId);
 
 		if (layoutPageTemplateStructureRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageTemplateStructureRelException(sb.toString());
+			throw new NoSuchPageTemplateStructureRelException(message);
 		}
 
 		return layoutPageTemplateStructureRel;
@@ -497,19 +473,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return layoutPageTemplateStructureRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
+		throw new NoSuchPageTemplateStructureRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -525,14 +491,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
 
-		List<LayoutPageTemplateStructureRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -543,13 +503,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutPageTemplateStructureRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -695,16 +650,11 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return layoutPageTemplateStructureRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutPageTemplateStructureId=");
-		sb.append(layoutPageTemplateStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
+		throw new NoSuchPageTemplateStructureRelException(
+			_collectionPersistenceFinderByLayoutPageTemplateStructureId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {layoutPageTemplateStructureId}));
 	}
 
 	/**
@@ -721,15 +671,10 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			OrderByComparator<LayoutPageTemplateStructureRel>
 				orderByComparator) {
 
-		List<LayoutPageTemplateStructureRel> list =
-			findByLayoutPageTemplateStructureId(
-				layoutPageTemplateStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLayoutPageTemplateStructureId.
+			fetchFirst(
+				finderCache, new Object[] {layoutPageTemplateStructureId},
+				orderByComparator);
 	}
 
 	/**
@@ -741,13 +686,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	public void removeByLayoutPageTemplateStructureId(
 		long layoutPageTemplateStructureId) {
 
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				findByLayoutPageTemplateStructureId(
-					layoutPageTemplateStructureId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPageTemplateStructureRel);
-		}
+		_collectionPersistenceFinderByLayoutPageTemplateStructureId.remove(
+			finderCache, new Object[] {layoutPageTemplateStructureId});
 	}
 
 	/**
@@ -884,16 +824,11 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			return layoutPageTemplateStructureRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsExperienceId=");
-		sb.append(segmentsExperienceId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureRelException(sb.toString());
+		throw new NoSuchPageTemplateStructureRelException(
+			_collectionPersistenceFinderBySegmentsExperienceId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsExperienceId}));
 	}
 
 	/**
@@ -908,14 +843,9 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		long segmentsExperienceId,
 		OrderByComparator<LayoutPageTemplateStructureRel> orderByComparator) {
 
-		List<LayoutPageTemplateStructureRel> list = findBySegmentsExperienceId(
-			segmentsExperienceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsExperienceId.fetchFirst(
+			finderCache, new Object[] {segmentsExperienceId},
+			orderByComparator);
 	}
 
 	/**
@@ -925,13 +855,8 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsExperienceId(long segmentsExperienceId) {
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				findBySegmentsExperienceId(
-					segmentsExperienceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutPageTemplateStructureRel);
-		}
+		_collectionPersistenceFinderBySegmentsExperienceId.remove(
+			finderCache, new Object[] {segmentsExperienceId});
 	}
 
 	/**
@@ -972,23 +897,18 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			fetchByL_S(layoutPageTemplateStructureId, segmentsExperienceId);
 
 		if (layoutPageTemplateStructureRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("layoutPageTemplateStructureId=");
-			sb.append(layoutPageTemplateStructureId);
-
-			sb.append(", segmentsExperienceId=");
-			sb.append(segmentsExperienceId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByL_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						layoutPageTemplateStructureId, segmentsExperienceId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageTemplateStructureRelException(sb.toString());
+			throw new NoSuchPageTemplateStructureRelException(message);
 		}
 
 		return layoutPageTemplateStructureRel;
@@ -2300,4 +2220,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:712866566
+// LIFERAY-SERVICE-BUILDER-HASH:-1409674228

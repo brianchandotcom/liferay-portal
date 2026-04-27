@@ -216,16 +216,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -239,13 +232,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry fetchByUuid_First(
 		String uuid, OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -255,11 +243,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (BlogsEntry blogsEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -298,23 +283,15 @@ public class BlogsEntryPersistenceImpl
 		BlogsEntry blogsEntry = fetchByUUID_G(uuid, groupId);
 
 		if (blogsEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return blogsEntry;
@@ -497,19 +474,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -525,14 +492,8 @@ public class BlogsEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -543,13 +504,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (BlogsEntry blogsEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -676,16 +632,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -699,13 +648,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -853,12 +797,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (BlogsEntry blogsEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1045,16 +985,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1068,14 +1001,8 @@ public class BlogsEntryPersistenceImpl
 	public BlogsEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1085,12 +1012,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BlogsEntry blogsEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1128,23 +1051,15 @@ public class BlogsEntryPersistenceImpl
 		BlogsEntry blogsEntry = fetchByG_UT(groupId, urlTitle);
 
 		if (blogsEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", urlTitle=");
-			sb.append(urlTitle);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_UT.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, urlTitle});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return blogsEntry;
@@ -1326,19 +1241,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LtD.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, displayDate}));
 	}
 
 	/**
@@ -1354,14 +1259,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_LtD(
-			groupId, displayDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LtD.fetchFirst(
+			finderCache, new Object[] {groupId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -1529,13 +1429,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LtD(long groupId, Date displayDate) {
-		for (BlogsEntry blogsEntry :
-				findByG_LtD(
-					groupId, displayDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_LtD.remove(
+			finderCache, new Object[] {groupId, displayDate});
 	}
 
 	/**
@@ -1751,19 +1646,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -1779,14 +1664,8 @@ public class BlogsEntryPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1942,13 +1821,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -2150,19 +2024,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -2178,14 +2042,8 @@ public class BlogsEntryPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_NotS(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -2341,13 +2199,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_NotS(long groupId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_NotS(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_NotS.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -2550,19 +2403,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -2578,14 +2421,8 @@ public class BlogsEntryPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -2596,13 +2433,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (BlogsEntry blogsEntry :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -2737,19 +2569,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_LtD.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, displayDate}));
 	}
 
 	/**
@@ -2765,14 +2588,9 @@ public class BlogsEntryPersistenceImpl
 		long companyId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_LtD(
-			companyId, displayDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LtD.fetchFirst(
+			finderCache, new Object[] {companyId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -2783,13 +2601,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LtD(long companyId, Date displayDate) {
-		for (BlogsEntry blogsEntry :
-				findByC_LtD(
-					companyId, displayDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_LtD.remove(
+			finderCache, new Object[] {companyId, displayDate});
 	}
 
 	/**
@@ -2925,19 +2738,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -2953,14 +2756,8 @@ public class BlogsEntryPersistenceImpl
 		long companyId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_S(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_S.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -2971,13 +2768,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_S(long companyId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByC_S(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_S.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -3112,19 +2904,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -3140,14 +2922,8 @@ public class BlogsEntryPersistenceImpl
 		long companyId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_NotS(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -3158,13 +2934,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_NotS(long companyId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByC_NotS(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_NotS.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -3299,19 +3070,9 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -3327,14 +3088,8 @@ public class BlogsEntryPersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -3345,13 +3100,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -3494,22 +3244,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_LtD.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, displayDate}));
 	}
 
 	/**
@@ -3526,14 +3264,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, long userId, Date displayDate,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_U_LtD(
-			groupId, userId, displayDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_LtD.fetchFirst(
+			finderCache, new Object[] {groupId, userId, displayDate},
+			orderByComparator);
 	}
 
 	/**
@@ -3713,13 +3446,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_LtD(long groupId, long userId, Date displayDate) {
-		for (BlogsEntry blogsEntry :
-				findByG_U_LtD(
-					groupId, userId, displayDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_U_LtD.remove(
+			finderCache, new Object[] {groupId, userId, displayDate});
 	}
 
 	/**
@@ -5081,22 +4809,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, status}));
 	}
 
 	/**
@@ -5113,14 +4829,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, long userId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_U_NotS(
-			groupId, userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5288,13 +4999,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_NotS(long groupId, long userId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_U_NotS(
-					groupId, userId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_U_NotS.remove(
+			finderCache, new Object[] {groupId, userId, status});
 	}
 
 	/**
@@ -5515,22 +5221,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", displayDate=");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, displayDate, status}));
 	}
 
 	/**
@@ -5547,14 +5241,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_D_S(
-			groupId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D_S.fetchFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5734,13 +5423,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_D_S(long groupId, Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_D_S(
-					groupId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_D_S.remove(
+			finderCache, new Object[] {groupId, displayDate, status});
 	}
 
 	/**
@@ -5974,22 +5658,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", displayDate>");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_GtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, displayDate, status}));
 	}
 
 	/**
@@ -6006,14 +5678,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_GtD_S(
-			groupId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_GtD_S.fetchFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -6193,13 +5860,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_GtD_S(long groupId, Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_GtD_S(
-					groupId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_GtD_S.remove(
+			finderCache, new Object[] {groupId, displayDate, status});
 	}
 
 	/**
@@ -6435,22 +6097,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, displayDate, status}));
 	}
 
 	/**
@@ -6467,14 +6117,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_LtD_S(
-			groupId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LtD_S.fetchFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -6654,13 +6299,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LtD_S(long groupId, Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_LtD_S(
-					groupId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_LtD_S.remove(
+			finderCache, new Object[] {groupId, displayDate, status});
 	}
 
 	/**
@@ -6896,22 +6536,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LtD_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, displayDate, status}));
 	}
 
 	/**
@@ -6928,14 +6556,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_LtD_NotS(
-			groupId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LtD_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7115,13 +6738,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LtD_NotS(long groupId, Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByG_LtD_NotS(
-					groupId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_LtD_NotS.remove(
+			finderCache, new Object[] {groupId, displayDate, status});
 	}
 
 	/**
@@ -7358,22 +6976,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_U_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, userId, status}));
 	}
 
 	/**
@@ -7390,14 +6996,9 @@ public class BlogsEntryPersistenceImpl
 		long companyId, long userId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_U_S(
-			companyId, userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U_S.fetchFirst(
+			finderCache, new Object[] {companyId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7409,13 +7010,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U_S(long companyId, long userId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByC_U_S(
-					companyId, userId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_U_S.remove(
+			finderCache, new Object[] {companyId, userId, status});
 	}
 
 	/**
@@ -7559,22 +7155,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_U_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, userId, status}));
 	}
 
 	/**
@@ -7591,14 +7175,9 @@ public class BlogsEntryPersistenceImpl
 		long companyId, long userId, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_U_NotS(
-			companyId, userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7610,13 +7189,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U_NotS(long companyId, long userId, int status) {
-		for (BlogsEntry blogsEntry :
-				findByC_U_NotS(
-					companyId, userId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_U_NotS.remove(
+			finderCache, new Object[] {companyId, userId, status});
 	}
 
 	/**
@@ -7761,22 +7335,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_LtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, displayDate, status}));
 	}
 
 	/**
@@ -7793,14 +7355,9 @@ public class BlogsEntryPersistenceImpl
 		long companyId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_LtD_S(
-			companyId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LtD_S.fetchFirst(
+			finderCache, new Object[] {companyId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7812,13 +7369,8 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LtD_S(long companyId, Date displayDate, int status) {
-		for (BlogsEntry blogsEntry :
-				findByC_LtD_S(
-					companyId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_LtD_S.remove(
+			finderCache, new Object[] {companyId, displayDate, status});
 	}
 
 	/**
@@ -7964,22 +7516,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_LtD_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, displayDate, status}));
 	}
 
 	/**
@@ -7996,14 +7536,9 @@ public class BlogsEntryPersistenceImpl
 		long companyId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByC_LtD_NotS(
-			companyId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LtD_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -8017,13 +7552,8 @@ public class BlogsEntryPersistenceImpl
 	public void removeByC_LtD_NotS(
 		long companyId, Date displayDate, int status) {
 
-		for (BlogsEntry blogsEntry :
-				findByC_LtD_NotS(
-					companyId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByC_LtD_NotS.remove(
+			finderCache, new Object[] {companyId, displayDate, status});
 	}
 
 	/**
@@ -8176,25 +7706,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_LtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, displayDate, status}));
 	}
 
 	/**
@@ -8212,14 +7727,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_U_LtD_S(
-			groupId, userId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_LtD_S.fetchFirst(
+			finderCache, new Object[] {groupId, userId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -8411,13 +7921,8 @@ public class BlogsEntryPersistenceImpl
 	public void removeByG_U_LtD_S(
 		long groupId, long userId, Date displayDate, int status) {
 
-		for (BlogsEntry blogsEntry :
-				findByG_U_LtD_S(
-					groupId, userId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_U_LtD_S.remove(
+			finderCache, new Object[] {groupId, userId, displayDate, status});
 	}
 
 	/**
@@ -8674,25 +8179,10 @@ public class BlogsEntryPersistenceImpl
 			return blogsEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_LtD_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, displayDate, status}));
 	}
 
 	/**
@@ -8710,14 +8200,9 @@ public class BlogsEntryPersistenceImpl
 		long groupId, long userId, Date displayDate, int status,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		List<BlogsEntry> list = findByG_U_LtD_NotS(
-			groupId, userId, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_LtD_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, userId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -8909,13 +8394,8 @@ public class BlogsEntryPersistenceImpl
 	public void removeByG_U_LtD_NotS(
 		long groupId, long userId, Date displayDate, int status) {
 
-		for (BlogsEntry blogsEntry :
-				findByG_U_LtD_NotS(
-					groupId, userId, displayDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(blogsEntry);
-		}
+		_collectionPersistenceFinderByG_U_LtD_NotS.remove(
+			finderCache, new Object[] {groupId, userId, displayDate, status});
 	}
 
 	/**
@@ -9059,23 +8539,16 @@ public class BlogsEntryPersistenceImpl
 		BlogsEntry blogsEntry = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (blogsEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return blogsEntry;
@@ -11073,4 +10546,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1908860561
+// LIFERAY-SERVICE-BUILDER-HASH:-464151192

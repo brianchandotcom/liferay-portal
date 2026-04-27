@@ -202,16 +202,9 @@ public class DepotAppCustomizationPersistenceImpl
 			return depotAppCustomization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchAppCustomizationException(sb.toString());
+		throw new NoSuchAppCustomizationException(
+			_collectionPersistenceFinderByDepotEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {depotEntryId}));
 	}
 
 	/**
@@ -226,14 +219,8 @@ public class DepotAppCustomizationPersistenceImpl
 		long depotEntryId,
 		OrderByComparator<DepotAppCustomization> orderByComparator) {
 
-		List<DepotAppCustomization> list = findByDepotEntryId(
-			depotEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDepotEntryId.fetchFirst(
+			finderCache, new Object[] {depotEntryId}, orderByComparator);
 	}
 
 	/**
@@ -243,12 +230,8 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Override
 	public void removeByDepotEntryId(long depotEntryId) {
-		for (DepotAppCustomization depotAppCustomization :
-				findByDepotEntryId(
-					depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotAppCustomization);
-		}
+		_collectionPersistenceFinderByDepotEntryId.remove(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	/**
@@ -288,23 +271,16 @@ public class DepotAppCustomizationPersistenceImpl
 			depotEntryId, enabled);
 
 		if (depotAppCustomization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("depotEntryId=");
-			sb.append(depotEntryId);
-
-			sb.append(", enabled=");
-			sb.append(enabled);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByD_E.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {depotEntryId, enabled});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAppCustomizationException(sb.toString());
+			throw new NoSuchAppCustomizationException(message);
 		}
 
 		return depotAppCustomization;
@@ -396,23 +372,16 @@ public class DepotAppCustomizationPersistenceImpl
 			depotEntryId, portletId);
 
 		if (depotAppCustomization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("depotEntryId=");
-			sb.append(depotEntryId);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByD_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {depotEntryId, portletId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAppCustomizationException(sb.toString());
+			throw new NoSuchAppCustomizationException(message);
 		}
 
 		return depotAppCustomization;
@@ -1472,4 +1441,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1817595078
+// LIFERAY-SERVICE-BUILDER-HASH:1548078802

@@ -182,16 +182,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -205,13 +198,8 @@ public class FaroUserPersistenceImpl
 	public FaroUser fetchByGroupId_First(
 		long groupId, OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -221,12 +209,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FaroUser faroUser :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -344,16 +328,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("liveUserId=");
-		sb.append(liveUserId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByLiveUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {liveUserId}));
 	}
 
 	/**
@@ -367,14 +344,8 @@ public class FaroUserPersistenceImpl
 	public FaroUser fetchByLiveUserId_First(
 		long liveUserId, OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByLiveUserId(
-			liveUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLiveUserId.fetchFirst(
+			finderCache, new Object[] {liveUserId}, orderByComparator);
 	}
 
 	/**
@@ -384,12 +355,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByLiveUserId(long liveUserId) {
-		for (FaroUser faroUser :
-				findByLiveUserId(
-					liveUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByLiveUserId.remove(
+			finderCache, new Object[] {liveUserId});
 	}
 
 	/**
@@ -419,20 +386,15 @@ public class FaroUserPersistenceImpl
 		FaroUser faroUser = fetchByKey(key);
 
 		if (faroUser == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroUserException(sb.toString());
+			throw new NoSuchFaroUserException(message);
 		}
 
 		return faroUser;
@@ -505,23 +467,16 @@ public class FaroUserPersistenceImpl
 		FaroUser faroUser = fetchByG_L(groupId, liveUserId);
 
 		if (faroUser == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", liveUserId=");
-			sb.append(liveUserId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_L.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, liveUserId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroUserException(sb.toString());
+			throw new NoSuchFaroUserException(message);
 		}
 
 		return faroUser;
@@ -692,19 +647,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", roleId=");
-		sb.append(roleId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByG_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, roleId}));
 	}
 
 	/**
@@ -720,14 +665,8 @@ public class FaroUserPersistenceImpl
 		long groupId, long roleId,
 		OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByG_R(
-			groupId, roleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_R.fetchFirst(
+			finderCache, new Object[] {groupId, roleId}, orderByComparator);
 	}
 
 	/**
@@ -738,13 +677,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByG_R(long groupId, long roleId) {
-		for (FaroUser faroUser :
-				findByG_R(
-					groupId, roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByG_R.remove(
+			finderCache, new Object[] {groupId, roleId});
 	}
 
 	/**
@@ -778,23 +712,16 @@ public class FaroUserPersistenceImpl
 		FaroUser faroUser = fetchByG_E(groupId, emailAddress);
 
 		if (faroUser == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", emailAddress=");
-			sb.append(emailAddress);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_E.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, emailAddress});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroUserException(sb.toString());
+			throw new NoSuchFaroUserException(message);
 		}
 
 		return faroUser;
@@ -965,19 +892,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -993,14 +910,8 @@ public class FaroUserPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1011,13 +922,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (FaroUser faroUser :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -1142,19 +1048,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("liveUserId=");
-		sb.append(liveUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByL_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {liveUserId, status}));
 	}
 
 	/**
@@ -1170,14 +1066,8 @@ public class FaroUserPersistenceImpl
 		long liveUserId, int status,
 		OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByL_S(
-			liveUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByL_S.fetchFirst(
+			finderCache, new Object[] {liveUserId, status}, orderByComparator);
 	}
 
 	/**
@@ -1188,13 +1078,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByL_S(long liveUserId, int status) {
-		for (FaroUser faroUser :
-				findByL_S(
-					liveUserId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByL_S.remove(
+			finderCache, new Object[] {liveUserId, status});
 	}
 
 	/**
@@ -1319,19 +1204,9 @@ public class FaroUserPersistenceImpl
 			return faroUser;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("emailAddress=");
-		sb.append(emailAddress);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFaroUserException(sb.toString());
+		throw new NoSuchFaroUserException(
+			_collectionPersistenceFinderByE_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {emailAddress, status}));
 	}
 
 	/**
@@ -1347,14 +1222,9 @@ public class FaroUserPersistenceImpl
 		String emailAddress, int status,
 		OrderByComparator<FaroUser> orderByComparator) {
 
-		List<FaroUser> list = findByE_S(
-			emailAddress, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByE_S.fetchFirst(
+			finderCache, new Object[] {emailAddress, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1365,13 +1235,8 @@ public class FaroUserPersistenceImpl
 	 */
 	@Override
 	public void removeByE_S(String emailAddress, int status) {
-		for (FaroUser faroUser :
-				findByE_S(
-					emailAddress, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroUser);
-		}
+		_collectionPersistenceFinderByE_S.remove(
+			finderCache, new Object[] {emailAddress, status});
 	}
 
 	/**
@@ -2237,4 +2102,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1286183100
+// LIFERAY-SERVICE-BUILDER-HASH:-1306260675

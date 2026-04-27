@@ -199,16 +199,9 @@ public class SXPBlueprintPersistenceImpl
 			return sxpBlueprint;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchSXPBlueprintException(sb.toString());
+		throw new NoSuchSXPBlueprintException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,13 +215,8 @@ public class SXPBlueprintPersistenceImpl
 	public SXPBlueprint fetchByUuid_First(
 		String uuid, OrderByComparator<SXPBlueprint> orderByComparator) {
 
-		List<SXPBlueprint> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -392,11 +380,8 @@ public class SXPBlueprintPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SXPBlueprint sxpBlueprint :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sxpBlueprint);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -596,19 +581,9 @@ public class SXPBlueprintPersistenceImpl
 			return sxpBlueprint;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSXPBlueprintException(sb.toString());
+		throw new NoSuchSXPBlueprintException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -624,14 +599,8 @@ public class SXPBlueprintPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SXPBlueprint> orderByComparator) {
 
-		List<SXPBlueprint> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -803,13 +772,8 @@ public class SXPBlueprintPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SXPBlueprint sxpBlueprint :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sxpBlueprint);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1011,16 +975,9 @@ public class SXPBlueprintPersistenceImpl
 			return sxpBlueprint;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchSXPBlueprintException(sb.toString());
+		throw new NoSuchSXPBlueprintException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1034,14 +991,8 @@ public class SXPBlueprintPersistenceImpl
 	public SXPBlueprint fetchByCompanyId_First(
 		long companyId, OrderByComparator<SXPBlueprint> orderByComparator) {
 
-		List<SXPBlueprint> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1192,12 +1143,8 @@ public class SXPBlueprintPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SXPBlueprint sxpBlueprint :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sxpBlueprint);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1292,23 +1239,16 @@ public class SXPBlueprintPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (sxpBlueprint == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSXPBlueprintException(sb.toString());
+			throw new NoSuchSXPBlueprintException(message);
 		}
 
 		return sxpBlueprint;
@@ -2247,4 +2187,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1860686916
+// LIFERAY-SERVICE-BUILDER-HASH:314689529

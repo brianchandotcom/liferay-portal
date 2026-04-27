@@ -196,16 +196,9 @@ public class CTSParentPersistenceImpl
 			return ctsParent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSParentException(sb.toString());
+		throw new NoSuchCTSParentException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class CTSParentPersistenceImpl
 	public CTSParent fetchByCompanyId_First(
 		long companyId, OrderByComparator<CTSParent> orderByComparator) {
 
-		List<CTSParent> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -236,12 +223,8 @@ public class CTSParentPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTSParent ctsParent :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctsParent);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -377,19 +360,10 @@ public class CTSParentPersistenceImpl
 			return ctsParent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ctsGrandParentId=");
-		sb.append(ctsGrandParentId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSParentException(sb.toString());
+		throw new NoSuchCTSParentException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, ctsGrandParentId}));
 	}
 
 	/**
@@ -405,14 +379,9 @@ public class CTSParentPersistenceImpl
 		long companyId, long ctsGrandParentId,
 		OrderByComparator<CTSParent> orderByComparator) {
 
-		List<CTSParent> list = findByC_C(
-			companyId, ctsGrandParentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, ctsGrandParentId},
+			orderByComparator);
 	}
 
 	/**
@@ -423,13 +392,8 @@ public class CTSParentPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long ctsGrandParentId) {
-		for (CTSParent ctsParent :
-				findByC_C(
-					companyId, ctsGrandParentId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsParent);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, ctsGrandParentId});
 	}
 
 	/**
@@ -1341,4 +1305,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1229740088
+// LIFERAY-SERVICE-BUILDER-HASH:182235890

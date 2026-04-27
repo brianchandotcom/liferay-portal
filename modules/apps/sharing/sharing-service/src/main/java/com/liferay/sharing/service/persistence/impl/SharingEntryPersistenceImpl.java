@@ -1891,13 +1891,14 @@ public class SharingEntryPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByTUG_TU_C_C;
+	private FinderPath _finderPathFetchByTT_TUG_TU_C_C;
 	private UniquePersistenceFinder<SharingEntry>
-		_uniquePersistenceFinderByTUG_TU_C_C;
+		_uniquePersistenceFinderByTT_TUG_TU_C_C;
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1906,19 +1907,23 @@ public class SharingEntryPersistenceImpl
 	 * @throws NoSuchEntryException if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry findByTUG_TU_C_C(
-			long toUserGroupId, long toUserId, long classNameId, long classPK)
+	public SharingEntry findByTT_TUG_TU_C_C(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
 		throws NoSuchEntryException {
 
-		SharingEntry sharingEntry = fetchByTUG_TU_C_C(
-			toUserGroupId, toUserId, classNameId, classPK);
+		SharingEntry sharingEntry = fetchByTT_TUG_TU_C_C(
+			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(12);
 
 			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			sb.append("toUserGroupId=");
+			sb.append("toTicketId=");
+			sb.append(toTicketId);
+
+			sb.append(", toUserGroupId=");
 			sb.append(toUserGroupId);
 
 			sb.append(", toUserId=");
@@ -1943,8 +1948,9 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1952,16 +1958,18 @@ public class SharingEntryPersistenceImpl
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry fetchByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK) {
+	public SharingEntry fetchByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK) {
 
-		return fetchByTUG_TU_C_C(
-			toUserGroupId, toUserId, classNameId, classPK, true);
+		return fetchByTT_TUG_TU_C_C(
+			toTicketId, toUserGroupId, toUserId, classNameId, classPK, true);
 	}
 
 	/**
-	 * Returns the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1970,19 +1978,22 @@ public class SharingEntryPersistenceImpl
 	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
 	 */
 	@Override
-	public SharingEntry fetchByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK,
-		boolean useFinderCache) {
+	public SharingEntry fetchByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK, boolean useFinderCache) {
 
-		return _uniquePersistenceFinderByTUG_TU_C_C.fetch(
+		return _uniquePersistenceFinderByTT_TUG_TU_C_C.fetch(
 			finderCache,
-			new Object[] {toUserGroupId, toUserId, classNameId, classPK},
+			new Object[] {
+				toTicketId, toUserGroupId, toUserId, classNameId, classPK
+			},
 			useFinderCache);
 	}
 
 	/**
-	 * Removes the sharing entry where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes the sharing entry where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -1990,19 +2001,21 @@ public class SharingEntryPersistenceImpl
 	 * @return the sharing entry that was removed
 	 */
 	@Override
-	public SharingEntry removeByTUG_TU_C_C(
-			long toUserGroupId, long toUserId, long classNameId, long classPK)
+	public SharingEntry removeByTT_TUG_TU_C_C(
+			long toTicketId, long toUserGroupId, long toUserId,
+			long classNameId, long classPK)
 		throws NoSuchEntryException {
 
-		SharingEntry sharingEntry = findByTUG_TU_C_C(
-			toUserGroupId, toUserId, classNameId, classPK);
+		SharingEntry sharingEntry = findByTT_TUG_TU_C_C(
+			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
 
 		return remove(sharingEntry);
 	}
 
 	/**
-	 * Returns the number of sharing entries where toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of sharing entries where toTicketId = &#63; and toUserGroupId = &#63; and toUserId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
+	 * @param toTicketId the to ticket ID
 	 * @param toUserGroupId the to user group ID
 	 * @param toUserId the to user ID
 	 * @param classNameId the class name ID
@@ -2010,12 +2023,15 @@ public class SharingEntryPersistenceImpl
 	 * @return the number of matching sharing entries
 	 */
 	@Override
-	public int countByTUG_TU_C_C(
-		long toUserGroupId, long toUserId, long classNameId, long classPK) {
+	public int countByTT_TUG_TU_C_C(
+		long toTicketId, long toUserGroupId, long toUserId, long classNameId,
+		long classPK) {
 
-		return _uniquePersistenceFinderByTUG_TU_C_C.count(
+		return _uniquePersistenceFinderByTT_TUG_TU_C_C.count(
 			finderCache,
-			new Object[] {toUserGroupId, toUserId, classNameId, classPK});
+			new Object[] {
+				toTicketId, toUserGroupId, toUserId, classNameId, classPK
+			});
 	}
 
 	private FinderPath _finderPathFetchByERC_G;
@@ -2152,10 +2168,11 @@ public class SharingEntryPersistenceImpl
 			sharingEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByTUG_TU_C_C,
+			_finderPathFetchByTT_TUG_TU_C_C,
 			new Object[] {
-				sharingEntry.getToUserGroupId(), sharingEntry.getToUserId(),
-				sharingEntry.getClassNameId(), sharingEntry.getClassPK()
+				sharingEntry.getToTicketId(), sharingEntry.getToUserGroupId(),
+				sharingEntry.getToUserId(), sharingEntry.getClassNameId(),
+				sharingEntry.getClassPK()
 			},
 			sharingEntry);
 
@@ -2247,6 +2264,7 @@ public class SharingEntryPersistenceImpl
 			_finderPathFetchByUUID_G, args, sharingEntryModelImpl);
 
 		args = new Object[] {
+			sharingEntryModelImpl.getToTicketId(),
 			sharingEntryModelImpl.getToUserGroupId(),
 			sharingEntryModelImpl.getToUserId(),
 			sharingEntryModelImpl.getClassNameId(),
@@ -2254,7 +2272,7 @@ public class SharingEntryPersistenceImpl
 		};
 
 		finderCache.putResult(
-			_finderPathFetchByTUG_TU_C_C, args, sharingEntryModelImpl);
+			_finderPathFetchByTT_TUG_TU_C_C, args, sharingEntryModelImpl);
 
 		args = new Object[] {
 			sharingEntryModelImpl.getExternalReferenceCode(),
@@ -3102,19 +3120,24 @@ public class SharingEntryPersistenceImpl
 				"sharingEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getClassPK));
 
-		_finderPathFetchByTUG_TU_C_C = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByTUG_TU_C_C",
+		_finderPathFetchByTT_TUG_TU_C_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByTT_TUG_TU_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {
-				"toUserGroupId", "toUserId", "classNameId", "classPK"
+				"toTicketId", "toUserGroupId", "toUserId", "classNameId",
+				"classPK"
 			},
 			true);
 
-		_uniquePersistenceFinderByTUG_TU_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByTUG_TU_C_C, _SQL_SELECT_SHARINGENTRY_WHERE,
+		_uniquePersistenceFinderByTT_TUG_TU_C_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByTT_TUG_TU_C_C,
+			_SQL_SELECT_SHARINGENTRY_WHERE,
+			new FinderColumn<>(
+				"sharingEntry.", "toTicketId", FinderColumn.Type.LONG, "=",
+				true, false, SharingEntry::getToTicketId),
 			new FinderColumn<>(
 				"sharingEntry.", "toUserGroupId", FinderColumn.Type.LONG, "=",
 				true, false, SharingEntry::getToUserGroupId),
@@ -3217,4 +3240,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1483171300
+// LIFERAY-SERVICE-BUILDER-HASH:-451204515

@@ -31,7 +31,7 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		_size = size;
 		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 
-		_nonlocalizedContentSB = new StringBundler((size * 2) - 1);
+		_nonlocalizedContentSB = new StringBundler(size);
 	}
 
 	public void append(String value) {
@@ -44,6 +44,18 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 
 	public void append(String languageId, String value) {
 		_append(_getLocalizedContentSB(languageId), value);
+	}
+
+	public void append(String s1, String s2, String s3) {
+		_append(_nonlocalizedContentSB, s1, s2, s3);
+
+		for (StringBundler localizedContentSB : _localizedContentSBs.values()) {
+			_append(localizedContentSB, s1, s2, s3);
+		}
+	}
+
+	public void append(String languageId, String s1, String s2, String s3) {
+		_append(_getLocalizedContentSB(languageId), s1, s2, s3);
 	}
 
 	public void contribute(Document document) {
@@ -116,6 +128,20 @@ public class TextEmbeddingContentHelper<T extends BaseModel<T>> {
 		}
 
 		sb.append(value);
+	}
+
+	private void _append(StringBundler sb, String s1, String s2, String s3) {
+		if (sb == null) {
+			return;
+		}
+
+		if (sb.length() > 0) {
+			sb.append(_delimiter);
+		}
+
+		sb.append(s1);
+		sb.append(s2);
+		sb.append(s3);
 	}
 
 	private StringBundler _getLocalizedContentSB(String languageId) {

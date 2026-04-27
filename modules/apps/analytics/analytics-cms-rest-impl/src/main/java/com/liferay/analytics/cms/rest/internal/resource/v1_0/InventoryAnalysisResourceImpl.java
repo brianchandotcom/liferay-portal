@@ -49,6 +49,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -106,14 +107,16 @@ public class InventoryAnalysisResourceImpl
 					inventoryAnalysisItem.setCount(() -> (Long)object[0]);
 					inventoryAnalysisItem.setKey(() -> (String)object[1]);
 					inventoryAnalysisItem.setTitle(
-						() -> GetterUtil.get(
-							_localization.getLocalization(
-								(String)object[2],
-								contextAcceptLanguage.getPreferredLocale(
-								).toString()),
-							LanguageUtil.get(
-								contextAcceptLanguage.getPreferredLocale(),
-								"unknown")));
+						() -> {
+							Locale preferredLocale =
+								contextAcceptLanguage.getPreferredLocale();
+
+							return GetterUtil.get(
+								_localization.getLocalization(
+									(String)object[2],
+									preferredLocale.toString()),
+								LanguageUtil.get(preferredLocale, "unknown"));
+						});
 
 					return inventoryAnalysisItem;
 				},

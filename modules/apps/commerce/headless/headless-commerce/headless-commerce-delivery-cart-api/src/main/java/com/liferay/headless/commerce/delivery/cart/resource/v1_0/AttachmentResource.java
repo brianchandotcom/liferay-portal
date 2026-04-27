@@ -57,11 +57,17 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Page<Attachment> getCartAttachmentsPage(
-			Long cartId, Pagination pagination)
+			Long cartId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<Attachment> getCartByExternalReferenceCodeAttachmentsPage(
-			String externalReferenceCode, Pagination pagination)
+			String externalReferenceCode, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Attachment postCartAttachmentByBase64(
@@ -69,8 +75,10 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Response postCartAttachmentsPageExportBatch(
-			Long cartId, String callbackURL, String contentType,
-			String fieldNames)
+			Long cartId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Attachment postCartByExternalReferenceCodeAttachmentByBase64(
@@ -173,4 +181,4 @@ public interface AttachmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2028821693
+// LIFERAY-REST-BUILDER-HASH:648794869

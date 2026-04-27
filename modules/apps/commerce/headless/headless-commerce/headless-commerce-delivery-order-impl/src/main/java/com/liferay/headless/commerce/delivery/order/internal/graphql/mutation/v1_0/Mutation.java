@@ -156,6 +156,9 @@ public class Mutation {
 	@GraphQLField
 	public Response createPlacedOrderAttachmentsPageExportBatch(
 			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -166,7 +169,10 @@ public class Mutation {
 			this::_populateResourceContext,
 			attachmentResource ->
 				attachmentResource.postPlacedOrderAttachmentsPageExportBatch(
-					placedOrderId, callbackURL, contentType, fieldNames));
+					placedOrderId, search,
+					_filterBiFunction.apply(attachmentResource, filterString),
+					_sortsBiFunction.apply(attachmentResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -561,4 +567,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1655118628
+// LIFERAY-REST-BUILDER-HASH:-2004402137

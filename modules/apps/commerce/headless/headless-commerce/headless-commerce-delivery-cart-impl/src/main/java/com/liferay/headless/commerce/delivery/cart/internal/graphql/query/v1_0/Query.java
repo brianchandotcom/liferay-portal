@@ -196,13 +196,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartAttachments(cartId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartAttachments(cartId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage cartAttachments(
 			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -210,19 +213,25 @@ public class Query {
 			this::_populateResourceContext,
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.getCartAttachmentsPage(
-					cartId, Pagination.of(page, pageSize))));
+					cartId, search,
+					_filterBiFunction.apply(attachmentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(attachmentResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeAttachments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeAttachments(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage cartByExternalReferenceCodeAttachments(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -231,7 +240,12 @@ public class Query {
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.
 					getCartByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode, Pagination.of(page, pageSize))));
+						externalReferenceCode, search,
+						_filterBiFunction.apply(
+							attachmentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							attachmentResource, sortsString))));
 	}
 
 	/**
@@ -1103,8 +1117,11 @@ public class Query {
 
 		@GraphQLField
 		public AttachmentPage byExternalReferenceCodeAttachments(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1113,8 +1130,12 @@ public class Query {
 				attachmentResource -> new AttachmentPage(
 					attachmentResource.
 						getCartByExternalReferenceCodeAttachmentsPage(
-							_cart.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
+							_cart.getExternalReferenceCode(), search,
+							_filterBiFunction.apply(
+								attachmentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								attachmentResource, sortsString))));
 		}
 
 		private Cart _cart;
@@ -1850,4 +1871,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-321895331
+// LIFERAY-REST-BUILDER-HASH:-1800550898

@@ -67,6 +67,48 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public Double getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Double priority) {
+		this.priority = priority;
+	}
+
+	public void setPriority(
+		UnsafeSupplier<Double, Exception> priorityUnsafeSupplier) {
+
+		try {
+			priority = priorityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double priority;
+
+	public Boolean getRestricted() {
+		return restricted;
+	}
+
+	public void setRestricted(Boolean restricted) {
+		this.restricted = restricted;
+	}
+
+	public void setRestricted(
+		UnsafeSupplier<Boolean, Exception> restrictedUnsafeSupplier) {
+
+		try {
+			restricted = restrictedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean restricted;
+
 	public String getTitle() {
 		return title;
 	}
@@ -87,6 +129,25 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 	}
 
 	protected String title;
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String type;
 
 	@Override
 	public AttachmentBase64 clone() throws CloneNotSupportedException {
@@ -120,4 +181,4 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1069192060
+// LIFERAY-REST-BUILDER-HASH:-1630253830

@@ -6,6 +6,7 @@
 import {IBulkActionItem} from '@liferay/frontend-data-set-web';
 
 const BULK_ACTION_PERMISSION_KEYS: Record<string, string> = {
+	'assign-default-workflow': 'update',
 	'copy-to': 'update',
 	'default-permissions': 'permissions',
 	'delete': 'delete',

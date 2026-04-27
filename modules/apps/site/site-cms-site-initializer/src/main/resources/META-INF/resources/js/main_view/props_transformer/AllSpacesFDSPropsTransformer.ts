@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {
+	IBulkActionItem,
+	IInternalRenderer,
+} from '@liferay/frontend-data-set-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
 import {openCMSModal} from '../../common/utils/openCMSModal';
@@ -20,23 +23,27 @@ import manageMembersAction, {
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
+import transformFDSBulkActions from './utils/transformFDSBulkActions';
 
 const ACTIONS = {};
 const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
 
 export default function AllSpacesFDSPropsTransformer({
 	additionalProps,
+	bulkActions = [],
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
 	additionalProps: any;
+	bulkActions: Array<IBulkActionItem>;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
 }) {
 	return {
 		...otherProps,
+		bulkActions: transformFDSBulkActions(bulkActions),
 		creationMenu: {
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(

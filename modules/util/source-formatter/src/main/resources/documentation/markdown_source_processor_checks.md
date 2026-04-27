@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+EmbeddedJSONCheck | [Styling](styling_checks.md#styling-checks) | Ensures consistent formatting for embedded JSON. |
 MarkdownBreakingChangesAmendmentsFileCheck | [Styling](styling_checks.md#styling-checks) | Checks that breaking changes amendments should contain the schematized breaking changes in `BREAKING_CHANGES_AMENDMENTS.md` file. |
 MarkdownEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines. |
 MarkdownFileExtensionCheck | [Styling](styling_checks.md#styling-checks) | Finds `markdown` files with `.markdown` extension (use `.md`). |

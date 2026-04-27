@@ -2704,6 +2704,10 @@ public class ObjectEntryLocalServiceImpl
 				friendlyURL = friendlyURL.replaceAll("/+", StringPool.SLASH);
 			}
 
+			if (Validator.isNull(friendlyURL)) {
+				continue;
+			}
+
 			urlTitleMap.put(
 				entry.getKey(),
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(

@@ -1697,11 +1697,19 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_getImportLayoutPageTemplateEntry(
 				file, groupId, status, layoutsImportStrategy);
 
-		return ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
-			new long[] {
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-			});
+		ServiceContextThreadLocal.pushServiceContext(
+			_getServiceContext(_group1, TestPropsValues.getUserId()));
+
+		try {
+			return ReflectionTestUtil.invoke(
+				_mvcResourceCommand, "getFile", new Class<?>[] {long[].class},
+				new long[] {
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+				});
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	private void _populateZipWriter(

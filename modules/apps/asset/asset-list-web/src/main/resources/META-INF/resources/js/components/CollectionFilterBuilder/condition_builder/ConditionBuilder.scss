@@ -1,0 +1,29 @@
+.condition-builder {
+	&__conjunction {
+		align-items: center;
+		display: flex;
+		gap: 8px;
+		margin-bottom: 12px;
+	}
+
+	&__conditions {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__row {
+		align-items: center;
+		display: flex;
+		gap: 8px;
+
+		select {
+			min-width: 150px;
+		}
+	}
+
+	&__value-input {
+		flex-grow: 1;
+		min-width: 120px;
+	}
+}

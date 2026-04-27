@@ -10340,6 +10340,48 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="rest-builder-and-service-builder">
+		<run-batch-test>
+			<test-action>
+				<if>
+					<available file="modules/util/portal-tools-service-builder" />
+					<then>
+						<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
+
+				<exec executable="git">
+					<arg value="add" />
+					<arg value="--all" />
+				</exec>
+
+				<execute-ant-target-build-services ant.target.file="portal-impl/build.xml" ant.target.name="build-services" />
+
+				<if>
+					<available file="modules/util/portal-tools-rest-builder" />
+					<then>
+						<gradle-execute dir="modules/util/portal-tools-rest-builder" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
+
+				<exec executable="git">
+					<arg value="add" />
+					<arg value="--all" />
+				</exec>
+
+				<execute-ant-target-build-services ant.target.file="portal-impl/build.xml" ant.target.name="build-rests" />
+			</test-action>
+
+			<test-set-up>
+				<setup-test-environment />
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="semantic-versioning">
 		<run-batch-test>
 			<test-action>

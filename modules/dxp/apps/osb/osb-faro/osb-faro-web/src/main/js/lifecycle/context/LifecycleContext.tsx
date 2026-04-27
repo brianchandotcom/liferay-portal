@@ -1,6 +1,7 @@
 import React, {
 	createContext,
 	ReactNode,
+	useCallback,
 	useContext,
 	useMemo,
 	useState
@@ -51,15 +52,22 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 		[filterValues]
 	);
 
-	const updateFilters = (newValues: Partial<ILifecycleFilterValues>) =>
-		setFilterValues(prev => ({...prev, ...newValues}));
+	const updateFilters = useCallback(
+		(newValues: Partial<ILifecycleFilterValues>) =>
+			setFilterValues(prev => ({...prev, ...newValues})),
+		[]
+	);
 
-	const resetFilters = () => setFilterValues(initialValues);
+	const resetFilters = useCallback(() => setFilterValues(initialValues), []);
+
+	const value = useMemo(() => ({filters, resetFilters, updateFilters}), [
+		filters,
+		resetFilters,
+		updateFilters
+	]);
 
 	return (
-		<LifecycleContext.Provider
-			value={{filters, resetFilters, updateFilters}}
-		>
+		<LifecycleContext.Provider value={value}>
 			{children}
 		</LifecycleContext.Provider>
 	);

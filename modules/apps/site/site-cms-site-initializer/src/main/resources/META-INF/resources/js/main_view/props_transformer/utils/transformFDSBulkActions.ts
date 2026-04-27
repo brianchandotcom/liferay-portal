@@ -5,13 +5,30 @@
 
 import {IBulkActionItem} from '@liferay/frontend-data-set-web';
 
+const BULK_ACTION_PERMISSION_KEYS: Record<string, string> = {
+	'copy-to': 'update',
+	'default-permissions': 'permissions',
+	'delete': 'delete',
+	'download': 'download',
+	'edit-categories': 'edit-categories',
+	'edit-default-permissions-by-role': 'permissions',
+	'edit-permissions-by-role': 'permissions',
+	'edit-tags': 'edit-tags',
+	'expire': 'expire',
+	'export-for-translation': 'get',
+	'move-to': 'update',
+	'permissions': 'permissions',
+	'reset-to-default-permissions': 'permissions',
+};
+
 export default function transformFDSBulkActions(
 	bulkActions: Array<IBulkActionItem>
 ): Array<IBulkActionItem> {
 	return bulkActions.map((action: IBulkActionItem) => {
 		const key = action?.data?.id as string;
+		const permissionKey = key && BULK_ACTION_PERMISSION_KEYS[key];
 
-		if (!key || key !== 'delete') {
+		if (!permissionKey) {
 			return action;
 		}
 
@@ -24,7 +41,7 @@ export default function transformFDSBulkActions(
 			} = {}): boolean => {
 				return (
 					selectedItems?.every(
-						(item: any) => item?.actions?.['delete']
+						(item: any) => item?.actions?.[permissionKey]
 					) ?? false
 				);
 			},

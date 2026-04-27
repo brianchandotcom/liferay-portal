@@ -183,7 +183,7 @@
 			<finder-column name="parentPatcherBuildId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="PatcherFix" remote-service="false">
+	<entity local-service="true" name="PatcherFix" remote-service="true">
 
 		<!-- PK fields -->
 

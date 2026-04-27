@@ -303,11 +303,12 @@ const CodeMirrorEditor = ({
 			};
 
 			codeMirror.on('change', (cm) => {
-				if (Liferay.FeatureFlags['LPD-40535']) {
+				if (!Liferay.FeatureFlags['LPD-40535']) {
 					codeMirror.operation(() => {
 						updateWarningsInGutter();
 					});
 				}
+
 				onChange(cm.getValue());
 			});
 

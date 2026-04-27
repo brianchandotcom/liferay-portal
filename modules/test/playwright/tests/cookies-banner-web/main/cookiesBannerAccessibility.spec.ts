@@ -13,10 +13,7 @@ import {
 	updateConsentManagerConfiguration,
 } from './utils/consentManagerConfigurationHelper';
 
-export const test = mergeTests(
-	loginTest(),
-	systemSettingsPageTest
-);
+export const test = mergeTests(loginTest(), systemSettingsPageTest);
 
 test.afterEach(async ({systemSettingsPage}) => {
 	await test.step('Reset Consent Manager Configuration', async () => {

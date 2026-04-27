@@ -19,6 +19,6 @@ export async function fetchOverviewMetrics({
 			...(industry && {industry})
 		},
 		method: 'GET',
-		path: `contacts/${groupId}/account_lifecycle/${lifecycleId}/overview`
+		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/overview`
 	});
 }

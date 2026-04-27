@@ -41,7 +41,7 @@ interface StatusLabelProps {
 }
 
 const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
-	if (label === 'expired' && expirationDate) {
+	if (label === ASSET_STATUS.EXPIRED && expirationDate) {
 		const formattedDate = formatExpirationDate(expirationDate);
 		const formattedDateLong = formatExpirationDateLong(expirationDate);
 

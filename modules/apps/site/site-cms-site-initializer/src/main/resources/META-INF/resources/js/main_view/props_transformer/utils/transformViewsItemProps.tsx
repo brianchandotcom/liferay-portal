@@ -205,7 +205,7 @@ const getLabels = (item: any, props: Card) => {
 	}
 
 	if (
-		item.embedded?.status?.label === 'expired' &&
+		item.embedded?.status?.label === ASSET_STATUS.EXPIRED &&
 		item.embedded?.expirationDate
 	) {
 		const formattedDate = formatExpirationDate(

@@ -225,6 +225,8 @@ const assertRichTextContent = async (content, expected, newTabPage) => {
 		)
 		.first();
 
+	await sourceButton.click();
+
 	await expect(input).toHaveValue(expected);
 
 	await newTabPage.close();

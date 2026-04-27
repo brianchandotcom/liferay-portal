@@ -4247,6 +4247,9 @@ public class RenderLayoutStructureTagTest {
 			Layout layout, MockHttpServletRequest mockHttpServletRequest)
 		throws Exception {
 
+		_serviceContext.setRequest(mockHttpServletRequest);
+		_serviceContext.setScopeGroupId(layout.getGroupId());
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 

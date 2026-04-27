@@ -38,6 +38,10 @@ export function NewImport({
 						fileSelector: undefined,
 						name: '',
 					}}
+					isStepValid={(values) =>
+						values.fileSelector instanceof File &&
+						!!values.name.trim()
+					}
 					title={Liferay.Language.get('setup')}
 				>
 					<FileSelectionStep />

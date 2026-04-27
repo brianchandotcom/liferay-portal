@@ -5,8 +5,6 @@
 
 package com.liferay.portal.vulcan.jaxrs.exception.mapper;
 
-import com.liferay.petra.string.StringUtil;
-
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
@@ -32,13 +30,7 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 		String type = problem.getType();
 
 		if (type != null) {
-			String[] segments = type.split("\\.");
-
-			String exceptionType = segments[segments.length - 1];
-
-			if (exceptionType != null) {
-				problem.setType(StringUtil.replace(exceptionType, '$', '.'));
-			}
+			problem.setType(ExceptionMapperUtil.getExceptionType(type));
 		}
 
 		return Response.status(

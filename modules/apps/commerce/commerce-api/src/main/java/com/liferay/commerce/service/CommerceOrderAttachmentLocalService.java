@@ -70,6 +70,7 @@ public interface CommerceOrderAttachmentLocalService
 	public CommerceOrderAttachment addCommerceOrderAttachment(
 		CommerceOrderAttachment commerceOrderAttachment);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderAttachment addCommerceOrderAttachment(
 			String externalReferenceCode, long userId, long commerceOrderId,
 			double priority, boolean restricted, String title, String type,
@@ -364,10 +365,11 @@ public interface CommerceOrderAttachmentLocalService
 	public CommerceOrderAttachment updateCommerceOrderAttachment(
 		CommerceOrderAttachment commerceOrderAttachment);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderAttachment updateCommerceOrderAttachment(
 			long commerceOrderAttachmentId, double priority, boolean restricted,
 			String title, String type)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980935286
+// LIFERAY-SERVICE-BUILDER-HASH:358636286

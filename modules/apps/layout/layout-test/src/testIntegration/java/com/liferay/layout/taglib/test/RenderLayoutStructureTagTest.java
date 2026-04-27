@@ -575,19 +575,10 @@ public class RenderLayoutStructureTagTest {
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
 			infoItemDetailsProvider.getInfoItemDetails(objectEntry));
 
-		_serviceContext.setRequest(mockHttpServletRequest);
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
-		try {
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, mockHttpServletRequest);
-
-			content = mockHttpServletResponse.getContentAsString();
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		content = mockHttpServletResponse.getContentAsString();
 
 		for (String value : expectedList) {
 			Assert.assertTrue(content, content.contains(value));
@@ -824,24 +815,15 @@ public class RenderLayoutStructureTagTest {
 			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
 			infoItemDetailsProvider.getInfoItemDetails(objectEntry));
 
-		_serviceContext.setRequest(mockHttpServletRequest);
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		String content = mockHttpServletResponse.getContentAsString();
 
-		try {
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, mockHttpServletRequest);
-
-			String content = mockHttpServletResponse.getContentAsString();
-
-			Assert.assertFalse(
-				StringBundler.concat(
-					"Content contains: '", xssScript, "', value: ", content),
-				content.contains(xssScript));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		Assert.assertFalse(
+			StringBundler.concat(
+				"Content contains: '", xssScript, "', value: ", content),
+			content.contains(xssScript));
 	}
 
 	@Test
@@ -884,21 +866,12 @@ public class RenderLayoutStructureTagTest {
 				).build(),
 				null);
 
-		_serviceContext.setRequest(mockHttpServletRequest);
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		String content = mockHttpServletResponse.getContentAsString();
 
-		try {
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, mockHttpServletRequest);
-
-			String content = mockHttpServletResponse.getContentAsString();
-
-			Assert.assertFalse(content.contains(xssScript));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		Assert.assertFalse(content.contains(xssScript));
 	}
 
 	@Test
@@ -2999,38 +2972,29 @@ public class RenderLayoutStructureTagTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(layout);
 
-		_serviceContext.setRequest(mockHttpServletRequest);
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
 
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		String content = mockHttpServletResponse.getContentAsString();
 
-		try {
-			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
-				layout, mockHttpServletRequest);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			String content = mockHttpServletResponse.getContentAsString();
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)mockHttpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Assert.assertTrue(
-				content,
-				content.contains(
-					StringBundler.concat(
-						"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
-						"class=\"w-100\" data-lfr-editable-id=",
-						"\"image-square\" data-lfr-editable-type=\"image\" ",
-						"src=\"",
-						HtmlUtil.escape(
-							_dlURLHelper.getPreviewURL(
-								fileEntry, fileEntry.getFileVersion(),
-								themeDisplay, StringPool.BLANK)),
-						"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
-						"\"")));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		Assert.assertTrue(
+			content,
+			content.contains(
+				StringBundler.concat(
+					"<a href=\"https://www.liferay.com/\"><img alt=\"\" ",
+					"class=\"w-100\" data-lfr-editable-id=",
+					"\"image-square\" data-lfr-editable-type=\"image\" ",
+					"src=\"",
+					HtmlUtil.escape(
+						_dlURLHelper.getPreviewURL(
+							fileEntry, fileEntry.getFileVersion(), themeDisplay,
+							StringPool.BLANK)),
+					"\" data-fileentryid=\"", fileEntry.getFileEntryId(),
+					"\"")));
 	}
 
 	@Test

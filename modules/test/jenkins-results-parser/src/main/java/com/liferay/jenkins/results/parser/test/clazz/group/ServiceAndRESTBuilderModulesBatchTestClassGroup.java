@@ -34,10 +34,6 @@ public class ServiceAndRESTBuilderModulesBatchTestClassGroup
 
 	@Override
 	protected void setTestClasses() throws IOException {
-		if (!isUnifiedBuilderSupported()) {
-			return;
-		}
-
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 

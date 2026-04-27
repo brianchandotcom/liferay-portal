@@ -5,11 +5,13 @@
 
 import '@testing-library/jest-dom';
 
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
+import {
+	MS_PER_DAY,
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import {transformItemCardView} from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/utils/transformViewsItemProps';
 
 const NOW = new Date('2026-04-21T10:00:00Z');
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 const callTransform = (item: any, props: any) =>
 	transformItemCardView(item, undefined, undefined, {}, {}, props);

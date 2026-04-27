@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EXPIRING_SOON_THRESHOLD_DAYS} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
+import {
+	EXPIRING_SOON_THRESHOLD_DAYS,
+	MS_PER_DAY,
+} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import {
 	formatExpirationDate,
 	formatExpirationDateLong,
@@ -11,7 +14,6 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/common/utils/expirationStatus';
 
 const NOW = new Date('2026-04-21T10:00:00Z');
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 describe('expirationStatus', () => {
 	describe('isExpiringSoon', () => {

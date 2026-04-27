@@ -8,9 +8,9 @@ import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import StatusLabel from '../../../../src/main/resources/META-INF/resources/js/common/components/StatusLabel';
+import {MS_PER_DAY} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 
 const NOW = new Date('2026-04-21T10:00:00Z');
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
 describe('StatusLabel', () => {
 	it.each([

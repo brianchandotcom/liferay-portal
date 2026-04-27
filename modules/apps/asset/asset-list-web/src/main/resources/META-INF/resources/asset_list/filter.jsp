@@ -41,6 +41,27 @@
 	<div id="<portlet:namespace />ConditionForm"></div>
 
 	<div>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-74731") %>'>
+				<react:component
+					module="{CollectionFilterBuilder} from asset-list-web"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"properties", new ArrayList<>()
+						).build()
+					%>'
+				/>
+			</c:when>
+			<c:otherwise>
+
+				<!-- TO-DO: Move AssetFilterBuilder here -->
+			</c:otherwise>
+		</c:choose>
+	</div>
+
+	<div>
 		<react:component
 			module="{AssetFilterBuilder} from asset-list-web"
 			props='<%=

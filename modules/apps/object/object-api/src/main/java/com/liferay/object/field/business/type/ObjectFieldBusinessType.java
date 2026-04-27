@@ -199,6 +199,13 @@ public interface ObjectFieldBusinessType {
 		throws PortalException {
 	}
 
+	public default Serializable processValue(
+			ObjectField objectField, Serializable value)
+		throws PortalException {
+
+		return value;
+	}
+
 	public default void validateObjectFieldSettings(
 			ObjectField objectField,
 			List<ObjectFieldSetting> objectFieldSettings)

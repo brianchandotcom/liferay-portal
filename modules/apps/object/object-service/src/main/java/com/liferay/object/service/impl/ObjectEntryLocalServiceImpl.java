@@ -7870,8 +7870,17 @@ public class ObjectEntryLocalServiceImpl
 				defaultLanguageId, existingValues, objectField, partialUpdate,
 				serviceContext, status, validationErrors, values);
 
+			ObjectFieldBusinessType objectFieldBusinessType =
+				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+					objectField.getBusinessType());
+
 			if (!objectField.isLocalized() &&
 				(values.get(objectField.getName()) != null)) {
+
+				values.put(
+					objectField.getName(),
+					objectFieldBusinessType.processValue(
+						objectField, values.get(objectField.getName())));
 
 				_validateValues(
 					dlFileEntriesMap, existingValues, groupId, guestUser,
@@ -7890,6 +7899,10 @@ public class ObjectEntryLocalServiceImpl
 
 			for (Map.Entry<String, Serializable> entry :
 					localizedValues.entrySet()) {
+
+				entry.setValue(
+					objectFieldBusinessType.processValue(
+						objectField, entry.getValue()));
 
 				_validateValues(
 					dlFileEntriesMap, existingValues, groupId, guestUser,

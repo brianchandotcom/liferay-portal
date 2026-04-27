@@ -3684,9 +3684,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_testCopyObjectEntryGroup(
 			depotEntry.getGroupId(), objectDefinitionSetting);
-		_testCopyObjectEntryWithAttachmentField(
+		_testCopyObjectEntryWithAttachmentObjectField(
 			depotEntry.getGroupId(), objectEntryFolder1);
-		_testCopyObjectEntryWithRelatedEntries(
+		_testCopyObjectEntryWithRelatedObjectEntries(
 			depotEntry.getGroupId(), objectEntryFolder1);
 	}
 
@@ -11466,14 +11466,14 @@ public class DefaultObjectEntryManagerImplTest
 			String.valueOf(objectEntry3.getObjectEntryFolderId()));
 	}
 
-	private void _testCopyObjectEntryWithAttachmentField(
+	private void _testCopyObjectEntryWithAttachmentObjectField(
 			BiConsumer<Long, Long> fileEntryIdAssertionBiConsumer, long groupId,
 			ObjectDefinition objectDefinition,
 			ObjectEntryFolder objectEntryFolder, String objectFieldName)
 		throws Exception {
 
-		com.liferay.portal.kernel.repository.model.FileEntry tempFileEntry =
-			TempFileEntryUtil.addTempFileEntry(
+		com.liferay.portal.kernel.repository.model.FileEntry
+			serviceBuilderFileEntry = TempFileEntryUtil.addTempFileEntry(
 				groupId, adminUser.getUserId(), objectDefinition.getPortletId(),
 				TempFileEntryUtil.getTempFileName(
 					RandomTestUtil.randomString() + ".txt"),
@@ -11487,7 +11487,8 @@ public class DefaultObjectEntryManagerImplTest
 					objectEntryFolderId =
 						objectEntryFolder.getObjectEntryFolderId();
 					properties = HashMapBuilder.<String, Object>put(
-						objectFieldName, tempFileEntry.getFileEntryId()
+						objectFieldName,
+						serviceBuilderFileEntry.getFileEntryId()
 					).build();
 				}
 			},
@@ -11514,7 +11515,7 @@ public class DefaultObjectEntryManagerImplTest
 			originalFileEntryId, copiedFileEntryId);
 	}
 
-	private void _testCopyObjectEntryWithAttachmentField(
+	private void _testCopyObjectEntryWithAttachmentObjectField(
 			long groupId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
@@ -11615,7 +11616,7 @@ public class DefaultObjectEntryManagerImplTest
 
 			// showFilesInLibrary is false
 
-			_testCopyObjectEntryWithAttachmentField(
+			_testCopyObjectEntryWithAttachmentObjectField(
 				(originalFileEntryId, copiedFileEntryId) ->
 					Assert.assertNotEquals(
 						(long)originalFileEntryId, (long)copiedFileEntryId),
@@ -11624,7 +11625,7 @@ public class DefaultObjectEntryManagerImplTest
 
 			// showFilesInLibrary is true
 
-			_testCopyObjectEntryWithAttachmentField(
+			_testCopyObjectEntryWithAttachmentObjectField(
 				(originalFileEntryId, copiedFileEntryId) -> Assert.assertEquals(
 					(long)originalFileEntryId, (long)copiedFileEntryId),
 				groupId, objectDefinition, objectEntryFolder,
@@ -11636,7 +11637,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
-	private void _testCopyObjectEntryWithRelatedEntries(
+	private void _testCopyObjectEntryWithRelatedObjectEntries(
 			long groupId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 

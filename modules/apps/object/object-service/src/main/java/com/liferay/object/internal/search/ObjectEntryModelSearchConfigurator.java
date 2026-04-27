@@ -204,21 +204,6 @@ public class ObjectEntryModelSearchConfigurator
 		return objectDefinitionsMap;
 	}
 
-	private Map<Long, ObjectDefinition> _preLoadObjectDefinitions() {
-		Map<Long, ObjectDefinition> objectDefinitionsMap =
-			ReindexCacheThreadLocal.getGlobalReindexCache(
-				() -> -1,
-				ObjectEntryModelSearchConfigurator.class.getName() +
-					"#ObjectDefinitions",
-				count -> _loadObjectDefinitionsMap());
-
-		if (objectDefinitionsMap == null) {
-			objectDefinitionsMap = _loadObjectDefinitionsMap();
-		}
-
-		return objectDefinitionsMap;
-	}
-
 	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
@@ -268,7 +253,7 @@ public class ObjectEntryModelSearchConfigurator
 						objectDefinitionsMapReference.get();
 
 					if (objectDefinitionsMap == null) {
-						objectDefinitionsMap = _preLoadObjectDefinitions();
+						objectDefinitionsMap = _loadObjectDefinitionsMap();
 
 						objectDefinitionsMapReference.set(objectDefinitionsMap);
 					}

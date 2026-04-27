@@ -160,4 +160,22 @@ describe('NewImport', () => {
 
 		expect(nameInput).toHaveValue('');
 	});
+
+	it('does not auto-fill the Name when the user clears a name they typed before uploading the file', async () => {
+		renderComponent();
+
+		const nameInput = screen.getByLabelText(/^name/i) as HTMLInputElement;
+
+		await user.type(nameInput, 'My custom import');
+
+		await uploadFile('site.lar');
+
+		await waitFor(() => {
+			expect(nameInput).toHaveValue('My custom import');
+		});
+
+		await user.clear(nameInput);
+
+		expect(nameInput).toHaveValue('');
+	});
 });

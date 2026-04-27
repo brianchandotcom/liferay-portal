@@ -989,4 +989,4 @@ public interface DiscountChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:784126802
+// LIFERAY-REST-BUILDER-HASH:-1703561753

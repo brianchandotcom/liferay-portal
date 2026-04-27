@@ -727,4 +727,4 @@ public class StructuredContentFolderSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-996469084
+// LIFERAY-REST-BUILDER-HASH:-1933857873

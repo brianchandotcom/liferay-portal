@@ -837,4 +837,4 @@ public interface ContentTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-215392182
+// LIFERAY-REST-BUILDER-HASH:462594031

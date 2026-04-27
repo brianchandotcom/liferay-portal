@@ -281,4 +281,4 @@ public class AvailabilityEstimateSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1038521301
+// LIFERAY-REST-BUILDER-HASH:175900321

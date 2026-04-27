@@ -193,4 +193,4 @@ public class CompanyTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1275617564
+// LIFERAY-REST-BUILDER-HASH:35975977

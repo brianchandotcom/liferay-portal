@@ -97,4 +97,4 @@ public class Origin implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1586512743
+// LIFERAY-REST-BUILDER-HASH:416797556

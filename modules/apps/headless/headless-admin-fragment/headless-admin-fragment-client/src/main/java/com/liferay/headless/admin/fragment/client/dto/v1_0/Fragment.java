@@ -370,4 +370,4 @@ public class Fragment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2037471374
+// LIFERAY-REST-BUILDER-HASH:280628122

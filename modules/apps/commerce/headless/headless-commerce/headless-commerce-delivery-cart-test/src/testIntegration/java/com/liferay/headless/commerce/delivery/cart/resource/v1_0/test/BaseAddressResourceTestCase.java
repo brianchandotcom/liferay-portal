@@ -2476,4 +2476,4 @@ public abstract class BaseAddressResourceTestCase {
 			AddressResource _addressResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1952921879
+// LIFERAY-REST-BUILDER-HASH:-1201142119

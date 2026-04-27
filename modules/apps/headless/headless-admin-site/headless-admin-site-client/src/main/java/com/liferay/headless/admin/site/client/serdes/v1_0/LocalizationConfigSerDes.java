@@ -255,4 +255,4 @@ public class LocalizationConfigSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:341915501
+// LIFERAY-REST-BUILDER-HASH:-479800957

@@ -116,4 +116,4 @@ public class ContactUserGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1358381453
+// LIFERAY-REST-BUILDER-HASH:-1351532221

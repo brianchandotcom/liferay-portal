@@ -1004,4 +1004,4 @@ public abstract class BaseSchemaResourceTestCase {
 	private com.liferay.scim.rest.resource.v1_0.SchemaResource _schemaResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-288750267
+// LIFERAY-REST-BUILDER-HASH:-1197511196

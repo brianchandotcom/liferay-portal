@@ -1839,4 +1839,4 @@ public interface TestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-826106989
+// LIFERAY-REST-BUILDER-HASH:-956455216

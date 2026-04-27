@@ -204,4 +204,4 @@ public class ObjectStateTransitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1577167066
+// LIFERAY-REST-BUILDER-HASH:1756404136

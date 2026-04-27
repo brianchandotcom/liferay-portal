@@ -1770,4 +1770,4 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 		LogFactoryUtil.getLog(BaseDocumentMetadataSetResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1420841731
+// LIFERAY-REST-BUILDER-HASH:-2011635696

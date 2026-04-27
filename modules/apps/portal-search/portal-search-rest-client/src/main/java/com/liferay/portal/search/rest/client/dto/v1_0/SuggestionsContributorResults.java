@@ -124,4 +124,4 @@ public class SuggestionsContributorResults implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-691159782
+// LIFERAY-REST-BUILDER-HASH:205025205

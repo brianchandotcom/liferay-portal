@@ -245,4 +245,4 @@ public class SearchResponse implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1973644528
+// LIFERAY-REST-BUILDER-HASH:1052423858

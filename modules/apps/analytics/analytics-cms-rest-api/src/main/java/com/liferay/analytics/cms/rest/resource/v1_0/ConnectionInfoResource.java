@@ -132,4 +132,4 @@ public interface ConnectionInfoResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-654649021
+// LIFERAY-REST-BUILDER-HASH:-220249341

@@ -141,4 +141,4 @@ public class RecommendationItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-658143511
+// LIFERAY-REST-BUILDER-HASH:-448445657

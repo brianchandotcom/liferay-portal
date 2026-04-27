@@ -1641,4 +1641,4 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			DisplayPageTemplateResource _displayPageTemplateResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1802370784
+// LIFERAY-REST-BUILDER-HASH:262249917

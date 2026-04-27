@@ -472,4 +472,4 @@ public class DocumentFolder implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1163185883
+// LIFERAY-REST-BUILDER-HASH:162946408

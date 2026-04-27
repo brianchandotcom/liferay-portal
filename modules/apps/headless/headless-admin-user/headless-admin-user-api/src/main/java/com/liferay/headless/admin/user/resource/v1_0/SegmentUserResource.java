@@ -145,4 +145,4 @@ public interface SegmentUserResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1906334601
+// LIFERAY-REST-BUILDER-HASH:-1606434521

@@ -342,4 +342,4 @@ public class DSRecipientViewDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:543362479
+// LIFERAY-REST-BUILDER-HASH:-105657580

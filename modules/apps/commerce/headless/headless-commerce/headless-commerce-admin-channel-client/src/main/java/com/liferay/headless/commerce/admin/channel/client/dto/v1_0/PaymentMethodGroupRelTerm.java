@@ -191,4 +191,4 @@ public class PaymentMethodGroupRelTerm implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:896541838
+// LIFERAY-REST-BUILDER-HASH:1890862773

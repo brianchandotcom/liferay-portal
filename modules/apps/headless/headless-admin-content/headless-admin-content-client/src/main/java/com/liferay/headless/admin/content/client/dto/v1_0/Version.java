@@ -99,4 +99,4 @@ public class Version implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1752116442
+// LIFERAY-REST-BUILDER-HASH:-1442666047

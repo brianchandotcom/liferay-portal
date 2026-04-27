@@ -591,4 +591,4 @@ public abstract class BaseInventoryAnalysisResourceImpl
 		LogFactoryUtil.getLog(BaseInventoryAnalysisResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:300396481
+// LIFERAY-REST-BUILDER-HASH:-1872374413

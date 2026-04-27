@@ -214,4 +214,4 @@ public class DiscountChannel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1003116235
+// LIFERAY-REST-BUILDER-HASH:1074923524

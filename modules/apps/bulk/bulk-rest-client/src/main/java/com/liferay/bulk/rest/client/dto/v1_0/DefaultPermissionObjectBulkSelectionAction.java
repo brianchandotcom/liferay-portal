@@ -149,4 +149,4 @@ public class DefaultPermissionObjectBulkSelectionAction
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:998008961
+// LIFERAY-REST-BUILDER-HASH:-2011245702

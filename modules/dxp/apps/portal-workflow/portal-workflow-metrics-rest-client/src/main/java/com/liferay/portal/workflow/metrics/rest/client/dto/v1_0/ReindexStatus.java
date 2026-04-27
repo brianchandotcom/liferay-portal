@@ -97,4 +97,4 @@ public class ReindexStatus implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:187574744
+// LIFERAY-REST-BUILDER-HASH:66460076

@@ -271,4 +271,4 @@ public interface AccountGroupResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1176421615
+// LIFERAY-REST-BUILDER-HASH:59840616

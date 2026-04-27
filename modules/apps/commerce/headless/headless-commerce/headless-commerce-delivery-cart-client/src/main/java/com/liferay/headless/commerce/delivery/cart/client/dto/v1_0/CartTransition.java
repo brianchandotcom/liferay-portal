@@ -200,4 +200,4 @@ public class CartTransition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1238740351
+// LIFERAY-REST-BUILDER-HASH:-1248590538

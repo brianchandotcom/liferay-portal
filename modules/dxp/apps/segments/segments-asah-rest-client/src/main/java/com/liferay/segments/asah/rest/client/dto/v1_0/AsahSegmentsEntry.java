@@ -137,4 +137,4 @@ public class AsahSegmentsEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-397489301
+// LIFERAY-REST-BUILDER-HASH:-563085732

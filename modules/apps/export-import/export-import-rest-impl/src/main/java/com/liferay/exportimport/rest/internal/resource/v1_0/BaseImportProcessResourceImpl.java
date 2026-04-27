@@ -1383,4 +1383,4 @@ public abstract class BaseImportProcessResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:202696410
+// LIFERAY-REST-BUILDER-HASH:724458024

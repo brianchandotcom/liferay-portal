@@ -235,4 +235,4 @@ public class ScopedTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2050449838
+// LIFERAY-REST-BUILDER-HASH:-1062752420

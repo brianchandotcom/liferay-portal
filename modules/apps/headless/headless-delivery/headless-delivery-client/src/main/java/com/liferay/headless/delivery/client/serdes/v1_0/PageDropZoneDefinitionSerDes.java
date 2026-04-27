@@ -212,4 +212,4 @@ public class PageDropZoneDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:60733910
+// LIFERAY-REST-BUILDER-HASH:-835360012

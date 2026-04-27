@@ -2037,4 +2037,4 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		PriceModifierProductResource _priceModifierProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:678292992
+// LIFERAY-REST-BUILDER-HASH:251520103

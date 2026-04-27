@@ -217,4 +217,4 @@ public class AccountAddressChannel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:254331370
+// LIFERAY-REST-BUILDER-HASH:-75000341

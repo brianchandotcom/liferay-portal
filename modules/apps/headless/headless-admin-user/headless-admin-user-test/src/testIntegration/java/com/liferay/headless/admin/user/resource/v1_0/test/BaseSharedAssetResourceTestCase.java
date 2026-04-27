@@ -2305,4 +2305,4 @@ public abstract class BaseSharedAssetResourceTestCase {
 		_sharedAssetResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-50591478
+// LIFERAY-REST-BUILDER-HASH:683037754

@@ -1162,4 +1162,4 @@ public abstract class BaseCartTransitionResourceTestCase {
 		CartTransitionResource _cartTransitionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1739753574
+// LIFERAY-REST-BUILDER-HASH:1043045231

@@ -141,4 +141,4 @@ public interface AddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-574418861
+// LIFERAY-REST-BUILDER-HASH:-12280069

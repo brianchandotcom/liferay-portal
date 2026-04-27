@@ -1554,4 +1554,4 @@ public interface SpecificationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-881425919
+// LIFERAY-REST-BUILDER-HASH:-91385051

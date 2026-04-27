@@ -118,4 +118,4 @@ public class BackgroundImage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:465044040
+// LIFERAY-REST-BUILDER-HASH:-2012379926

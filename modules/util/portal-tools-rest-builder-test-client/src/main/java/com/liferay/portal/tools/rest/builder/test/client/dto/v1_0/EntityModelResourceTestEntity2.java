@@ -99,4 +99,4 @@ public class EntityModelResourceTestEntity2 implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1133539465
+// LIFERAY-REST-BUILDER-HASH:-1396379

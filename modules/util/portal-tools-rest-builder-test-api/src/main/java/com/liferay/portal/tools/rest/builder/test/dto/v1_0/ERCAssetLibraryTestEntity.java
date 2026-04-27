@@ -547,4 +547,4 @@ public class ERCAssetLibraryTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:314250512
+// LIFERAY-REST-BUILDER-HASH:-1330174770

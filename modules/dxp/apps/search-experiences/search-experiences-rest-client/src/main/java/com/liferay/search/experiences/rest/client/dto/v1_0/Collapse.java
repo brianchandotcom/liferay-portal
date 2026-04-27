@@ -124,4 +124,4 @@ public class Collapse implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2066102266
+// LIFERAY-REST-BUILDER-HASH:1527346295

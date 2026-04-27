@@ -119,4 +119,4 @@ public class ContextReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:435404197
+// LIFERAY-REST-BUILDER-HASH:449180458

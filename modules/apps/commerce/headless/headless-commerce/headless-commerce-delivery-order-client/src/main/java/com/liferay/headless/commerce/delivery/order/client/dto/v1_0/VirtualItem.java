@@ -118,4 +118,4 @@ public class VirtualItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-298165656
+// LIFERAY-REST-BUILDER-HASH:1105626456

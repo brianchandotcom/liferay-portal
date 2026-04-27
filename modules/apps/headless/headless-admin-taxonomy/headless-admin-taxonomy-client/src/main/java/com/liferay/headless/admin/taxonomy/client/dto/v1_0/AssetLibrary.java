@@ -160,4 +160,4 @@ public class AssetLibrary implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:99055715
+// LIFERAY-REST-BUILDER-HASH:2116721120

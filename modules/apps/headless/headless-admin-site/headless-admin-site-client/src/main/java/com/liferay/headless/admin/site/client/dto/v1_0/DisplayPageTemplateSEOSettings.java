@@ -148,4 +148,4 @@ public class DisplayPageTemplateSEOSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1059232241
+// LIFERAY-REST-BUILDER-HASH:-1616952224

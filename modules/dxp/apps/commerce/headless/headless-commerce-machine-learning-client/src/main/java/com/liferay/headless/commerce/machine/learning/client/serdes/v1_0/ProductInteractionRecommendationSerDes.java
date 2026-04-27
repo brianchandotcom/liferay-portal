@@ -380,4 +380,4 @@ public class ProductInteractionRecommendationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1224502114
+// LIFERAY-REST-BUILDER-HASH:1529686114

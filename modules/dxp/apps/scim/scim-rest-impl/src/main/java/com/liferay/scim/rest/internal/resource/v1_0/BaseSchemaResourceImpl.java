@@ -535,4 +535,4 @@ public abstract class BaseSchemaResourceImpl implements SchemaResource {
 		LogFactoryUtil.getLog(BaseSchemaResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-356505367
+// LIFERAY-REST-BUILDER-HASH:2002460947

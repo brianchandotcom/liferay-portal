@@ -209,4 +209,4 @@ public class KeywordQueryContributorSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:833984319
+// LIFERAY-REST-BUILDER-HASH:1353407003

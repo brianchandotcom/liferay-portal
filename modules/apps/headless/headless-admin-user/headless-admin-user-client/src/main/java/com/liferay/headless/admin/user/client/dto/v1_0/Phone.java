@@ -181,4 +181,4 @@ public class Phone implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1345496860
+// LIFERAY-REST-BUILDER-HASH:2104458947

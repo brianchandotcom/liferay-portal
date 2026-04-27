@@ -379,4 +379,4 @@ public interface ReindexStatusResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1397844646
+// LIFERAY-REST-BUILDER-HASH:215726483

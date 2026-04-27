@@ -1272,4 +1272,4 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-955653146
+// LIFERAY-REST-BUILDER-HASH:-1478401884

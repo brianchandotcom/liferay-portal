@@ -308,4 +308,4 @@ public class ExportTask implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:95286783
+// LIFERAY-REST-BUILDER-HASH:-1979327173

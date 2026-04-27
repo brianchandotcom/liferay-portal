@@ -886,4 +886,4 @@ public abstract class BaseProductResourceImpl
 		LogFactoryUtil.getLog(BaseProductResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1942092781
+// LIFERAY-REST-BUILDER-HASH:-817678212

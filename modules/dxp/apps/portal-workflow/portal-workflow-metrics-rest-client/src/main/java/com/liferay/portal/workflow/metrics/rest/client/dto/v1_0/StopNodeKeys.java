@@ -99,4 +99,4 @@ public class StopNodeKeys implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:966549505
+// LIFERAY-REST-BUILDER-HASH:-520886879

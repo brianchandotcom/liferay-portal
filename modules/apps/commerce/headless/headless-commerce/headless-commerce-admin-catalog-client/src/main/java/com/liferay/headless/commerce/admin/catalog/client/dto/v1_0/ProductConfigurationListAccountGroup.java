@@ -230,4 +230,4 @@ public class ProductConfigurationListAccountGroup
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1757430508
+// LIFERAY-REST-BUILDER-HASH:-227652331

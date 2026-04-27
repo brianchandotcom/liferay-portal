@@ -359,4 +359,4 @@ public class Price implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:812028057
+// LIFERAY-REST-BUILDER-HASH:-1242511118

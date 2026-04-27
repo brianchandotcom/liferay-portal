@@ -179,4 +179,4 @@ public class Field implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1181119773
+// LIFERAY-REST-BUILDER-HASH:-1602632888

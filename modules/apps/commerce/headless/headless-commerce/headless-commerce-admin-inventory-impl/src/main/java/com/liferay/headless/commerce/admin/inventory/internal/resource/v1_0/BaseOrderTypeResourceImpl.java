@@ -518,4 +518,4 @@ public abstract class BaseOrderTypeResourceImpl implements OrderTypeResource {
 		LogFactoryUtil.getLog(BaseOrderTypeResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:940934470
+// LIFERAY-REST-BUILDER-HASH:-435010556

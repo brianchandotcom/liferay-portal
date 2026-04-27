@@ -78,4 +78,4 @@ public class DataSourceToken implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1948906589
+// LIFERAY-REST-BUILDER-HASH:851775451

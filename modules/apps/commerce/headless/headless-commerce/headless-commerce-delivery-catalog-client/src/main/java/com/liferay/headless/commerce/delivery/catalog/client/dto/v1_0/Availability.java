@@ -122,4 +122,4 @@ public class Availability implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-490983402
+// LIFERAY-REST-BUILDER-HASH:191982861

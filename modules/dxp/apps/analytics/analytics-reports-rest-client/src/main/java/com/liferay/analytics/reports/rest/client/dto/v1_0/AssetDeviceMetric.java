@@ -78,4 +78,4 @@ public class AssetDeviceMetric implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:862445409
+// LIFERAY-REST-BUILDER-HASH:1354343325

@@ -116,4 +116,4 @@ public class Operation implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:359180778
+// LIFERAY-REST-BUILDER-HASH:-211762495

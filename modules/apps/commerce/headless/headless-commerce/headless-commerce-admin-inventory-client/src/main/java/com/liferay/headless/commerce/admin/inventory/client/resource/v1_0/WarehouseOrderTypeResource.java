@@ -996,4 +996,4 @@ public interface WarehouseOrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1218158452
+// LIFERAY-REST-BUILDER-HASH:636694499

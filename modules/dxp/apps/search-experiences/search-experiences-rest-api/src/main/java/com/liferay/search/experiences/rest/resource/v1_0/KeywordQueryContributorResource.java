@@ -148,4 +148,4 @@ public interface KeywordQueryContributorResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-257733417
+// LIFERAY-REST-BUILDER-HASH:464627139

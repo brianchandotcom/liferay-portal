@@ -80,4 +80,4 @@ public class DefaultFragmentReference
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1369157166
+// LIFERAY-REST-BUILDER-HASH:1059392991

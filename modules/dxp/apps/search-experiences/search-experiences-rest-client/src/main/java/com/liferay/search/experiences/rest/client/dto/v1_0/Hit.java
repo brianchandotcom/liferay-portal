@@ -160,4 +160,4 @@ public class Hit implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1128590025
+// LIFERAY-REST-BUILDER-HASH:-1919069654

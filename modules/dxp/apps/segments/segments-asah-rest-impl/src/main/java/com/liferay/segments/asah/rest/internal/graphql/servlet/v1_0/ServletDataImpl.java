@@ -145,4 +145,4 @@ public class ServletDataImpl implements ServletData {
 		_statusResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1134005989
+// LIFERAY-REST-BUILDER-HASH:-1362832505

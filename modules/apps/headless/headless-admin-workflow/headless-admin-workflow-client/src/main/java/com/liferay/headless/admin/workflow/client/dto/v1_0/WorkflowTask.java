@@ -438,4 +438,4 @@ public class WorkflowTask implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1779524316
+// LIFERAY-REST-BUILDER-HASH:-1033475492

@@ -149,4 +149,4 @@ public class CollectionDisplayViewport implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1078616064
+// LIFERAY-REST-BUILDER-HASH:-942373949

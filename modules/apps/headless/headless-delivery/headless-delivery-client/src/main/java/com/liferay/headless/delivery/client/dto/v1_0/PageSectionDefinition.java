@@ -358,4 +358,4 @@ public class PageSectionDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1288467944
+// LIFERAY-REST-BUILDER-HASH:1797079701

@@ -206,4 +206,4 @@ public class SkuUnitOfMeasure implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:223504412
+// LIFERAY-REST-BUILDER-HASH:-174445386

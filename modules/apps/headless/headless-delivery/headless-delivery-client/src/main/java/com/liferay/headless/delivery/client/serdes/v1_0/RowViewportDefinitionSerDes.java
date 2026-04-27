@@ -263,4 +263,4 @@ public class RowViewportDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2074327321
+// LIFERAY-REST-BUILDER-HASH:-47668671

@@ -151,4 +151,4 @@ public interface SamlProviderResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:870686094
+// LIFERAY-REST-BUILDER-HASH:276510964

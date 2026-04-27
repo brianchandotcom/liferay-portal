@@ -654,4 +654,4 @@ public class PriceEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:909540290
+// LIFERAY-REST-BUILDER-HASH:-446646082

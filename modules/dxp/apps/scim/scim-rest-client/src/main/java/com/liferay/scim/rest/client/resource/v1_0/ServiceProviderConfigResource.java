@@ -256,4 +256,4 @@ public interface ServiceProviderConfigResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1199155255
+// LIFERAY-REST-BUILDER-HASH:-1037688806

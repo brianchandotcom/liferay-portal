@@ -300,4 +300,4 @@ public class MultipartTestEntitySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:918080335
+// LIFERAY-REST-BUILDER-HASH:-1640294715

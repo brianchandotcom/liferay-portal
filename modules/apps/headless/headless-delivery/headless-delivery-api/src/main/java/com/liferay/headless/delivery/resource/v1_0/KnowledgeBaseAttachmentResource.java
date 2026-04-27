@@ -188,4 +188,4 @@ public interface KnowledgeBaseAttachmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1844441574
+// LIFERAY-REST-BUILDER-HASH:-1555028376

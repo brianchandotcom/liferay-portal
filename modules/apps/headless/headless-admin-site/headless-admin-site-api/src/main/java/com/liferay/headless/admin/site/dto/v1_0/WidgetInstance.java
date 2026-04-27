@@ -423,4 +423,4 @@ public class WidgetInstance implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:701149891
+// LIFERAY-REST-BUILDER-HASH:2079738478

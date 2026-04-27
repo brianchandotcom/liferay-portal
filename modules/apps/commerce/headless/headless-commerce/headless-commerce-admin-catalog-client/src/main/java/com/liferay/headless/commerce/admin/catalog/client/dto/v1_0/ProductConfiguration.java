@@ -602,4 +602,4 @@ public class ProductConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1633533369
+// LIFERAY-REST-BUILDER-HASH:1385255731

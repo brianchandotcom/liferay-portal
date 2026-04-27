@@ -266,4 +266,4 @@ public class ProductOptionValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2027381443
+// LIFERAY-REST-BUILDER-HASH:-1113958152

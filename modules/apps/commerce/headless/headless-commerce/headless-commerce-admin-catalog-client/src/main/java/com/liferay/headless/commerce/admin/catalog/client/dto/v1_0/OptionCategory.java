@@ -181,4 +181,4 @@ public class OptionCategory implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1178284423
+// LIFERAY-REST-BUILDER-HASH:735957354

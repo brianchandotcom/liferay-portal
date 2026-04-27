@@ -225,4 +225,4 @@ public class FormRecord implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-863646536
+// LIFERAY-REST-BUILDER-HASH:-100367671

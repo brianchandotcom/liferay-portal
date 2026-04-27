@@ -710,4 +710,4 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:527866547
+// LIFERAY-REST-BUILDER-HASH:828726345

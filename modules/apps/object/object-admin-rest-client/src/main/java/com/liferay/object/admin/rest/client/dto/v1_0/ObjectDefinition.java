@@ -1122,4 +1122,4 @@ public class ObjectDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2104552871
+// LIFERAY-REST-BUILDER-HASH:-746860302

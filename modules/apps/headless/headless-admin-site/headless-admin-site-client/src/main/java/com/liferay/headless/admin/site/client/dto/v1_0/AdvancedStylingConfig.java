@@ -100,4 +100,4 @@ public class AdvancedStylingConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-751739528
+// LIFERAY-REST-BUILDER-HASH:-306936405

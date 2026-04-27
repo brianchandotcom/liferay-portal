@@ -280,4 +280,4 @@ public interface ObjectEntryTopPagesResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-139870029
+// LIFERAY-REST-BUILDER-HASH:1792027034

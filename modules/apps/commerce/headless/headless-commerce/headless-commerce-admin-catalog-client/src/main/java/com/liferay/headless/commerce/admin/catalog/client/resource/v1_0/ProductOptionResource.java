@@ -1092,4 +1092,4 @@ public interface ProductOptionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2088316000
+// LIFERAY-REST-BUILDER-HASH:715369666

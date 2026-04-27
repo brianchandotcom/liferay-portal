@@ -240,4 +240,4 @@ public class DefaultProductDisplayPageSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-79485890
+// LIFERAY-REST-BUILDER-HASH:60110319

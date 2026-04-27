@@ -977,4 +977,4 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 			FieldMappingInfoResource _fieldMappingInfoResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1641199330
+// LIFERAY-REST-BUILDER-HASH:-792085635

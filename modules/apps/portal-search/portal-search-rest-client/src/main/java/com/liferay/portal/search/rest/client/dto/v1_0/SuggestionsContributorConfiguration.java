@@ -145,4 +145,4 @@ public class SuggestionsContributorConfiguration
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-995652689
+// LIFERAY-REST-BUILDER-HASH:-902033252

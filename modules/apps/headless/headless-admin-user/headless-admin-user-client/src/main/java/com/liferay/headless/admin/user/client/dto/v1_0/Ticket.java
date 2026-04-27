@@ -138,4 +138,4 @@ public class Ticket implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:738046613
+// LIFERAY-REST-BUILDER-HASH:1008861534

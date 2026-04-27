@@ -2326,4 +2326,4 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		AdminAccountGroupResource _adminAccountGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1145935687
+// LIFERAY-REST-BUILDER-HASH:1718154270

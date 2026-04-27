@@ -180,4 +180,4 @@ public class Group implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1559948848
+// LIFERAY-REST-BUILDER-HASH:1188164802

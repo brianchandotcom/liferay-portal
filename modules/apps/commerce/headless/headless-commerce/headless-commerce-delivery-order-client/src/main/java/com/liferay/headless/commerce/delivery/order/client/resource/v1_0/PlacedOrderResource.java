@@ -1434,4 +1434,4 @@ public interface PlacedOrderResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:896514880
+// LIFERAY-REST-BUILDER-HASH:-1041420473

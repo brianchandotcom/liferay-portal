@@ -899,4 +899,4 @@ public interface ProductVirtualSettingsFileEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2087725577
+// LIFERAY-REST-BUILDER-HASH:167135437

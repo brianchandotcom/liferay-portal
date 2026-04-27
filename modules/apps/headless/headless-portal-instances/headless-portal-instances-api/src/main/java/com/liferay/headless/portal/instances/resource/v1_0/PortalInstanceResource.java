@@ -151,4 +151,4 @@ public interface PortalInstanceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1808584028
+// LIFERAY-REST-BUILDER-HASH:-1561391421

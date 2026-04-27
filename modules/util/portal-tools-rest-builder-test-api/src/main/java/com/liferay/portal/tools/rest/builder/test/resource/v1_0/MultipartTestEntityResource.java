@@ -180,4 +180,4 @@ public interface MultipartTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1538360859
+// LIFERAY-REST-BUILDER-HASH:1949339668

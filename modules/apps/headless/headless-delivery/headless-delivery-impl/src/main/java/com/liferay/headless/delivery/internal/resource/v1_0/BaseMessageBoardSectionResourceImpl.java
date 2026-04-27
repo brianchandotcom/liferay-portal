@@ -2184,4 +2184,4 @@ public abstract class BaseMessageBoardSectionResourceImpl
 		LogFactoryUtil.getLog(BaseMessageBoardSectionResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-781179641
+// LIFERAY-REST-BUILDER-HASH:-1728785549

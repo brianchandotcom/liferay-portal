@@ -116,4 +116,4 @@ public class FieldMappingInfo implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-207281176
+// LIFERAY-REST-BUILDER-HASH:663535642

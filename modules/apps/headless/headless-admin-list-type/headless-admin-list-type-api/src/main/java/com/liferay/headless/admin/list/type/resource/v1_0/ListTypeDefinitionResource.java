@@ -195,4 +195,4 @@ public interface ListTypeDefinitionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:868109396
+// LIFERAY-REST-BUILDER-HASH:2043829234

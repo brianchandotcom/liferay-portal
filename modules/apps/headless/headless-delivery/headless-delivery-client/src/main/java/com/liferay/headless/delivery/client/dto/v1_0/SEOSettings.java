@@ -298,4 +298,4 @@ public class SEOSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:727222746
+// LIFERAY-REST-BUILDER-HASH:222000230

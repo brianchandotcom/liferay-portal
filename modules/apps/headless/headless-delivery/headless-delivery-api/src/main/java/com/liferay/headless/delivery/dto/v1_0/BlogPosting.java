@@ -1713,4 +1713,4 @@ public class BlogPosting implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2145154844
+// LIFERAY-REST-BUILDER-HASH:-761042006

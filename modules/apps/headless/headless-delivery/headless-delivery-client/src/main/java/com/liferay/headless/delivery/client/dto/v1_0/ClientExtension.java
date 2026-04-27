@@ -122,4 +122,4 @@ public class ClientExtension implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1078792563
+// LIFERAY-REST-BUILDER-HASH:-1361666396

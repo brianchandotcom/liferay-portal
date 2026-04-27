@@ -216,4 +216,4 @@ public class AgentInstance implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1848395225
+// LIFERAY-REST-BUILDER-HASH:-716583452

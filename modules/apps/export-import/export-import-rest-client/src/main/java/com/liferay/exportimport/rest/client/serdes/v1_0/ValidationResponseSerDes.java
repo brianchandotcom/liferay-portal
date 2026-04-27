@@ -269,4 +269,4 @@ public class ValidationResponseSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1995535090
+// LIFERAY-REST-BUILDER-HASH:-368250005

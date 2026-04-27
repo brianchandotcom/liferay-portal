@@ -271,4 +271,4 @@ public class NotificationActionInteractionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:704040834
+// LIFERAY-REST-BUILDER-HASH:-579064822

@@ -95,4 +95,4 @@ public class Variable implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2120033186
+// LIFERAY-REST-BUILDER-HASH:-343345293

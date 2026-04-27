@@ -2600,4 +2600,4 @@ public abstract class BaseCommentResourceImpl
 		LogFactoryUtil.getLog(BaseCommentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:357231450
+// LIFERAY-REST-BUILDER-HASH:-907126445

@@ -253,4 +253,4 @@ public class FragmentImageClassPKReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2072904312
+// LIFERAY-REST-BUILDER-HASH:974522133

@@ -224,4 +224,4 @@ public class ConnectedSite implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:562393865
+// LIFERAY-REST-BUILDER-HASH:1122600106

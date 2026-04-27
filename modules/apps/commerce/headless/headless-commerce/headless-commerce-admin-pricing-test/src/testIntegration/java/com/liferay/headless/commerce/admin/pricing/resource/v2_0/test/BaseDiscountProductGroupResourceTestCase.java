@@ -2029,4 +2029,4 @@ public abstract class BaseDiscountProductGroupResourceTestCase {
 		DiscountProductGroupResource _discountProductGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1223933768
+// LIFERAY-REST-BUILDER-HASH:1815874237

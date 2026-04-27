@@ -131,4 +131,4 @@ public interface FieldSummaryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1379628482
+// LIFERAY-REST-BUILDER-HASH:887385883

@@ -225,4 +225,4 @@ public interface PostalAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1219125946
+// LIFERAY-REST-BUILDER-HASH:-1499706383

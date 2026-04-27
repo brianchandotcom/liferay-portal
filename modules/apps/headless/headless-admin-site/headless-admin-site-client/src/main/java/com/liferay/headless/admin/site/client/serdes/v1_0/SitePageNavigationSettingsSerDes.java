@@ -275,4 +275,4 @@ public class SitePageNavigationSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2017514438
+// LIFERAY-REST-BUILDER-HASH:26824206

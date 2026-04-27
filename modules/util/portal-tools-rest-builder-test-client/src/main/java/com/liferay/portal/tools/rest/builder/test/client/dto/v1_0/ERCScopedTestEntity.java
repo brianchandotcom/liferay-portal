@@ -242,4 +242,4 @@ public class ERCScopedTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2006291532
+// LIFERAY-REST-BUILDER-HASH:-1109471832

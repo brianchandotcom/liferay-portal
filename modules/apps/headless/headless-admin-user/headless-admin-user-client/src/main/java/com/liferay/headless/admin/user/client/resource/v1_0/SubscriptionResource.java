@@ -506,4 +506,4 @@ public interface SubscriptionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1662946187
+// LIFERAY-REST-BUILDER-HASH:214665400

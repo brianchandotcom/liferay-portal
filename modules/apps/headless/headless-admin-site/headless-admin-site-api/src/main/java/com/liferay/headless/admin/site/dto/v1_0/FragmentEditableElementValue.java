@@ -329,4 +329,4 @@ public abstract class FragmentEditableElementValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-195052108
+// LIFERAY-REST-BUILDER-HASH:-159428927

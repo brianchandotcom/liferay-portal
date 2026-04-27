@@ -2662,4 +2662,4 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-342874517
+// LIFERAY-REST-BUILDER-HASH:933368539

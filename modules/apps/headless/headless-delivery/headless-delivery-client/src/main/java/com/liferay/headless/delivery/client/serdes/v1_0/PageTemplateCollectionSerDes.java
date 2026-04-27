@@ -399,4 +399,4 @@ public class PageTemplateCollectionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1715682114
+// LIFERAY-REST-BUILDER-HASH:717368874

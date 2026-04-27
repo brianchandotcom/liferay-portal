@@ -791,4 +791,4 @@ public class PlacedOrderItemShipmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:283281279
+// LIFERAY-REST-BUILDER-HASH:1728631147

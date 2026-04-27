@@ -83,4 +83,4 @@ public class TextFragmentInlineValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-955822132
+// LIFERAY-REST-BUILDER-HASH:-448367444

@@ -1324,4 +1324,4 @@ public interface ERCAssetLibraryTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1606801571
+// LIFERAY-REST-BUILDER-HASH:635046010

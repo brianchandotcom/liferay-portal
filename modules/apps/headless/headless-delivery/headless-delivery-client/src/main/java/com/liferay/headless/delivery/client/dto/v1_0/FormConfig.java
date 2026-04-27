@@ -208,4 +208,4 @@ public class FormConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1210010717
+// LIFERAY-REST-BUILDER-HASH:404144128

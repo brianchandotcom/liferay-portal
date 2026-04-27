@@ -1248,4 +1248,4 @@ public abstract class BaseNodeMetricResourceTestCase {
 			NodeMetricResource _nodeMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:969752089
+// LIFERAY-REST-BUILDER-HASH:869283290

@@ -3524,4 +3524,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-597232368
+// LIFERAY-REST-BUILDER-HASH:-793636741

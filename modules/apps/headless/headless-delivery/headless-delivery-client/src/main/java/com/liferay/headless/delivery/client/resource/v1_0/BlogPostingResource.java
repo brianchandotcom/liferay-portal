@@ -3087,4 +3087,4 @@ public interface BlogPostingResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:580996527
+// LIFERAY-REST-BUILDER-HASH:-1375512765

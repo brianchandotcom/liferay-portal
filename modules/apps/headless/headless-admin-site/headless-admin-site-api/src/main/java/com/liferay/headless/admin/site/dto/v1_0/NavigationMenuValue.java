@@ -311,4 +311,4 @@ public abstract class NavigationMenuValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1528741309
+// LIFERAY-REST-BUILDER-HASH:1250969232

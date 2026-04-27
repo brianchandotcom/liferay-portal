@@ -204,4 +204,4 @@ public class ParameterConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1534480166
+// LIFERAY-REST-BUILDER-HASH:-71003101

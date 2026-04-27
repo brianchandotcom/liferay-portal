@@ -858,4 +858,4 @@ public class Site implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1054780634
+// LIFERAY-REST-BUILDER-HASH:1854504143

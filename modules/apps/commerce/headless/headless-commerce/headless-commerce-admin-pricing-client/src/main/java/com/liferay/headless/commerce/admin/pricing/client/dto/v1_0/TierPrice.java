@@ -230,4 +230,4 @@ public class TierPrice implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:181427447
+// LIFERAY-REST-BUILDER-HASH:-5729589

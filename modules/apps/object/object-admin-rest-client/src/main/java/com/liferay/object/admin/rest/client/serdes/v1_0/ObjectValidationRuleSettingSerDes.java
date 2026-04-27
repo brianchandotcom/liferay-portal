@@ -246,4 +246,4 @@ public class ObjectValidationRuleSettingSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:400614979
+// LIFERAY-REST-BUILDER-HASH:2021116602

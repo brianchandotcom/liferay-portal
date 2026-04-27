@@ -245,4 +245,4 @@ public class Process implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-280557252
+// LIFERAY-REST-BUILDER-HASH:-1523199930

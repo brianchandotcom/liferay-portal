@@ -874,4 +874,4 @@ public class PageFragmentInstanceDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:460501816
+// LIFERAY-REST-BUILDER-HASH:334106802

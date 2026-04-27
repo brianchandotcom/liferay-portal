@@ -331,4 +331,4 @@ public class MoveObjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:435473818
+// LIFERAY-REST-BUILDER-HASH:-4427823

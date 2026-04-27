@@ -267,4 +267,4 @@ public class Role implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1768150702
+// LIFERAY-REST-BUILDER-HASH:-1888618248

@@ -119,4 +119,4 @@ public class ProductGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1984014406
+// LIFERAY-REST-BUILDER-HASH:-675813986

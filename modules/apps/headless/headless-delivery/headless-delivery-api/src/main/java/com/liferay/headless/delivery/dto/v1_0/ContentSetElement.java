@@ -474,4 +474,4 @@ public class ContentSetElement implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:306482267
+// LIFERAY-REST-BUILDER-HASH:950470817

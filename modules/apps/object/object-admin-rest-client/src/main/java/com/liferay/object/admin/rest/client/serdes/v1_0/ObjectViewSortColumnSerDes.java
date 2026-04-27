@@ -291,4 +291,4 @@ public class ObjectViewSortColumnSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-168616009
+// LIFERAY-REST-BUILDER-HASH:-1580686856

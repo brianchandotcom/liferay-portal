@@ -188,4 +188,4 @@ public class ShippingFixedOptionTerm implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1512840282
+// LIFERAY-REST-BUILDER-HASH:1127770567

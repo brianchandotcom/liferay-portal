@@ -377,4 +377,4 @@ public class AttachmentBase64 implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1475161807
+// LIFERAY-REST-BUILDER-HASH:-398012961

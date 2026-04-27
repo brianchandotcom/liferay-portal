@@ -1564,4 +1564,4 @@ public abstract class BaseShipmentResourceImpl
 		LogFactoryUtil.getLog(BaseShipmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1814176697
+// LIFERAY-REST-BUILDER-HASH:1289850270

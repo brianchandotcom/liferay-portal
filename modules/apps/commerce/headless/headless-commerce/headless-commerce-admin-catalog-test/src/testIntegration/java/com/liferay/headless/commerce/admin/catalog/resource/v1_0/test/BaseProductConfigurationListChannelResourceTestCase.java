@@ -2189,4 +2189,4 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 			_productConfigurationListChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1312221072
+// LIFERAY-REST-BUILDER-HASH:-1477582634

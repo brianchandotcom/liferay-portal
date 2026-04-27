@@ -2236,4 +2236,4 @@ public abstract class BaseBulkActionResourceTestCase {
 		_bulkActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-399286127
+// LIFERAY-REST-BUILDER-HASH:-1341992760

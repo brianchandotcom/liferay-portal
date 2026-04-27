@@ -868,4 +868,4 @@ public interface DefaultCategoryDisplayPageResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-133755602
+// LIFERAY-REST-BUILDER-HASH:-2001624486

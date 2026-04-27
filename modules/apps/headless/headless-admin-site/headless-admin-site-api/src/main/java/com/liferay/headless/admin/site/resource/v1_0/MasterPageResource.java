@@ -205,4 +205,4 @@ public interface MasterPageResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-487290515
+// LIFERAY-REST-BUILDER-HASH:-304266357

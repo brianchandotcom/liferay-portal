@@ -77,4 +77,4 @@ public class AggregationConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:621493975
+// LIFERAY-REST-BUILDER-HASH:-465549097

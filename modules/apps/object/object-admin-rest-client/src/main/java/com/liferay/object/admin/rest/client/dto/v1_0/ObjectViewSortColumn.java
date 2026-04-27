@@ -181,4 +181,4 @@ public class ObjectViewSortColumn implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:536248186
+// LIFERAY-REST-BUILDER-HASH:498417595

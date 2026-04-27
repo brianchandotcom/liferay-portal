@@ -99,4 +99,4 @@ public class GenericError implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1559208515
+// LIFERAY-REST-BUILDER-HASH:-477379595

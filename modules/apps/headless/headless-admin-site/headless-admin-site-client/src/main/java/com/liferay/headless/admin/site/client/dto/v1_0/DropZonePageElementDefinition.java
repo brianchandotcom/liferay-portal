@@ -109,4 +109,4 @@ public class DropZonePageElementDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1648825160
+// LIFERAY-REST-BUILDER-HASH:1086118801

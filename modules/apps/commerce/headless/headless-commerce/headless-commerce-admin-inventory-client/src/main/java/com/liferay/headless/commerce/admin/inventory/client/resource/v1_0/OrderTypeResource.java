@@ -267,4 +267,4 @@ public interface OrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-117254199
+// LIFERAY-REST-BUILDER-HASH:1486862948

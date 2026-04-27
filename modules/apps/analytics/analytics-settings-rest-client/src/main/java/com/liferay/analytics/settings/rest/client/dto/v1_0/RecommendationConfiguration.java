@@ -113,4 +113,4 @@ public class RecommendationConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1224882500
+// LIFERAY-REST-BUILDER-HASH:35069090

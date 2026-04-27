@@ -157,4 +157,4 @@ public class Index implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1828298676
+// LIFERAY-REST-BUILDER-HASH:-815340027

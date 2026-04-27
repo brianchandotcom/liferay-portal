@@ -320,4 +320,4 @@ public class MultiValuedAttributeSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:135233289
+// LIFERAY-REST-BUILDER-HASH:-610253077

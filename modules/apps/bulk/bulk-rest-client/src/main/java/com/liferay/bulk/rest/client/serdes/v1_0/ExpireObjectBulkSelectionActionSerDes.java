@@ -304,4 +304,4 @@ public class ExpireObjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-83129559
+// LIFERAY-REST-BUILDER-HASH:-607037650

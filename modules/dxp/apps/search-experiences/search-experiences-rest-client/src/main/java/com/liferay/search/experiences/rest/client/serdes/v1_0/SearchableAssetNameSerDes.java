@@ -207,4 +207,4 @@ public class SearchableAssetNameSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-558167469
+// LIFERAY-REST-BUILDER-HASH:-1099207380

@@ -808,4 +808,4 @@ public class Layout implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1502355887
+// LIFERAY-REST-BUILDER-HASH:-1948672346

@@ -120,4 +120,4 @@ public class ValidationResponse implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-202788602
+// LIFERAY-REST-BUILDER-HASH:-399038227

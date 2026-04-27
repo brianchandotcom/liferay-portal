@@ -743,4 +743,4 @@ public class PriceList implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1022102998
+// LIFERAY-REST-BUILDER-HASH:-68599748

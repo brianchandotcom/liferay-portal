@@ -184,4 +184,4 @@ public class ProductContentRecommendation implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1009744976
+// LIFERAY-REST-BUILDER-HASH:968646877

@@ -393,4 +393,4 @@ public class Form implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-416075236
+// LIFERAY-REST-BUILDER-HASH:1754775558

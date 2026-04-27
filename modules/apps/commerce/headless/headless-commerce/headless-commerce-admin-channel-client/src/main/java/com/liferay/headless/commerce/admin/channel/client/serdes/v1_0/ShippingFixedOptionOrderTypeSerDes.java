@@ -417,4 +417,4 @@ public class ShippingFixedOptionOrderTypeSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1592611058
+// LIFERAY-REST-BUILDER-HASH:-981722659

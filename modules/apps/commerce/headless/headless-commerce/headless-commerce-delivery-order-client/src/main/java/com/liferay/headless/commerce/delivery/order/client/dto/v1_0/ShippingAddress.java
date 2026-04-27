@@ -343,4 +343,4 @@ public class ShippingAddress implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1145588652
+// LIFERAY-REST-BUILDER-HASH:-819038344

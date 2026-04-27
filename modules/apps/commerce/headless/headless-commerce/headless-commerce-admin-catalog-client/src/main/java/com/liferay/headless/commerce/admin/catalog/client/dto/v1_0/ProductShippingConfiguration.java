@@ -232,4 +232,4 @@ public class ProductShippingConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-339433615
+// LIFERAY-REST-BUILDER-HASH:3035322

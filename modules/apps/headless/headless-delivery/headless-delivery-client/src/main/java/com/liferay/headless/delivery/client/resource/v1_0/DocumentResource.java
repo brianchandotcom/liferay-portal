@@ -4722,4 +4722,4 @@ public interface DocumentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-110047475
+// LIFERAY-REST-BUILDER-HASH:171310647

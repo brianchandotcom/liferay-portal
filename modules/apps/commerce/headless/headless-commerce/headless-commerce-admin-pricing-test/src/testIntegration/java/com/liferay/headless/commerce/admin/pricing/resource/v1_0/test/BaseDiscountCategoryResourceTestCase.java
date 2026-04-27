@@ -1634,4 +1634,4 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		DiscountCategoryResource _discountCategoryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:793802747
+// LIFERAY-REST-BUILDER-HASH:989952879

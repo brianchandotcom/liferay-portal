@@ -410,4 +410,4 @@ public class Image implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1265584858
+// LIFERAY-REST-BUILDER-HASH:1402813984

@@ -572,4 +572,4 @@ public class MappedProduct implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1688651648
+// LIFERAY-REST-BUILDER-HASH:-1164900410

@@ -319,4 +319,4 @@ public class TextFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:574241938
+// LIFERAY-REST-BUILDER-HASH:1266806245

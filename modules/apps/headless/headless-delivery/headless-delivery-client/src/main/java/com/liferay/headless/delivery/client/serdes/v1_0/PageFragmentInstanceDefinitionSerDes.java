@@ -653,4 +653,4 @@ public class PageFragmentInstanceDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1777359389
+// LIFERAY-REST-BUILDER-HASH:1440269548

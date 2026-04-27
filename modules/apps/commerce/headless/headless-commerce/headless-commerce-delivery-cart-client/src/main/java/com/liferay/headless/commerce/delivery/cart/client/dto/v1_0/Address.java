@@ -467,4 +467,4 @@ public class Address implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1575245114
+// LIFERAY-REST-BUILDER-HASH:1323311664

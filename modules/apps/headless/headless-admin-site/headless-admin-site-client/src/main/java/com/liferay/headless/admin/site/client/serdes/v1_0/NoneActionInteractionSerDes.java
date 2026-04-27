@@ -231,4 +231,4 @@ public class NoneActionInteractionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1157385952
+// LIFERAY-REST-BUILDER-HASH:488411243

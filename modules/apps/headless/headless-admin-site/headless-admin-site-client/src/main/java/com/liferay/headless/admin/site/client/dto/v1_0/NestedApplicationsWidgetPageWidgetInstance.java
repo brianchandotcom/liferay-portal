@@ -89,4 +89,4 @@ public class NestedApplicationsWidgetPageWidgetInstance
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1682324067
+// LIFERAY-REST-BUILDER-HASH:198622228

@@ -219,4 +219,4 @@ public interface DocumentMetadataSetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1800501064
+// LIFERAY-REST-BUILDER-HASH:-1290806560

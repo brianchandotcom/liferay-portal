@@ -867,4 +867,4 @@ public abstract class BaseOverviewResourceTestCase {
 		_overviewResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1140896900
+// LIFERAY-REST-BUILDER-HASH:1825759876

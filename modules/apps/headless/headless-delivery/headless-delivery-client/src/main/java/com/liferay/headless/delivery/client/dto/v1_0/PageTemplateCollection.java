@@ -200,4 +200,4 @@ public class PageTemplateCollection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1422474267
+// LIFERAY-REST-BUILDER-HASH:-1485934938

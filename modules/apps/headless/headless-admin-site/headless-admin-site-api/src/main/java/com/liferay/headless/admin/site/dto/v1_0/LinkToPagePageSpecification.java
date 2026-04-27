@@ -263,4 +263,4 @@ public class LinkToPagePageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1346371403
+// LIFERAY-REST-BUILDER-HASH:-264684164

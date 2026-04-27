@@ -389,4 +389,4 @@ public class LinkToPagePageSpecificationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-975070440
+// LIFERAY-REST-BUILDER-HASH:1411551617

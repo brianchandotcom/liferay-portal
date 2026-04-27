@@ -205,4 +205,4 @@ public class HighlightConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:29937428
+// LIFERAY-REST-BUILDER-HASH:-143110701

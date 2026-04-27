@@ -99,4 +99,4 @@ public class ClassPKReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1459526676
+// LIFERAY-REST-BUILDER-HASH:1254661557

@@ -533,4 +533,4 @@ public class ContainerPageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-291636815
+// LIFERAY-REST-BUILDER-HASH:-302760848

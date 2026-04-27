@@ -1330,4 +1330,4 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:911374327
+// LIFERAY-REST-BUILDER-HASH:-1151979505

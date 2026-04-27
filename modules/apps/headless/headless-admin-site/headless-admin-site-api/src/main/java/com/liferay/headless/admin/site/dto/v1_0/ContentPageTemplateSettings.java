@@ -191,4 +191,4 @@ public class ContentPageTemplateSettings
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1273988615
+// LIFERAY-REST-BUILDER-HASH:-57463822

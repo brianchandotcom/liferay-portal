@@ -211,4 +211,4 @@ public class FormStepPageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1859212178
+// LIFERAY-REST-BUILDER-HASH:-2013879911

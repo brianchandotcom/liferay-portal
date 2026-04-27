@@ -246,4 +246,4 @@ public class AccountCategoryForecast implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-241200497
+// LIFERAY-REST-BUILDER-HASH:376391801

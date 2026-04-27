@@ -349,4 +349,4 @@ public class WikiNode implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1792141256
+// LIFERAY-REST-BUILDER-HASH:590683090

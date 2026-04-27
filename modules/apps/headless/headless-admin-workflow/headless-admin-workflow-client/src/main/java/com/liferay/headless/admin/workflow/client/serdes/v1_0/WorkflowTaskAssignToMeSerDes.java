@@ -278,4 +278,4 @@ public class WorkflowTaskAssignToMeSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-350364768
+// LIFERAY-REST-BUILDER-HASH:-852644879

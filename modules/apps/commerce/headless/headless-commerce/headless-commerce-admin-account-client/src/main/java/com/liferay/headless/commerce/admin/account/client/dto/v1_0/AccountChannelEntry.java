@@ -279,4 +279,4 @@ public class AccountChannelEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2110602704
+// LIFERAY-REST-BUILDER-HASH:-291725923

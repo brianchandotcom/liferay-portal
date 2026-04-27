@@ -99,4 +99,4 @@ public class StartNodeKeys implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:332233627
+// LIFERAY-REST-BUILDER-HASH:-396695609

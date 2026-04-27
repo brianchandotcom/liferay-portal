@@ -396,4 +396,4 @@ public class ObjectAction implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:307797117
+// LIFERAY-REST-BUILDER-HASH:956790037

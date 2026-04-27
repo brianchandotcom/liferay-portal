@@ -249,4 +249,4 @@ public class PageTemplateSet implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-242540323
+// LIFERAY-REST-BUILDER-HASH:1888733512

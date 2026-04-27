@@ -1391,4 +1391,4 @@ public abstract class BaseWorkflowDefinitionResourceImpl
 		LogFactoryUtil.getLog(BaseWorkflowDefinitionResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1031106309
+// LIFERAY-REST-BUILDER-HASH:-968012697

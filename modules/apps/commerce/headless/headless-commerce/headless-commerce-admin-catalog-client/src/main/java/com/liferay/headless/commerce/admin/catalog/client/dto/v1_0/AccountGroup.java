@@ -95,4 +95,4 @@ public class AccountGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2086709040
+// LIFERAY-REST-BUILDER-HASH:1630896416

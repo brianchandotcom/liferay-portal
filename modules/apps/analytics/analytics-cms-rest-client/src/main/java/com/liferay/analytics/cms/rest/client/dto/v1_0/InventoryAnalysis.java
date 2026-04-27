@@ -127,4 +127,4 @@ public class InventoryAnalysis implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:522734191
+// LIFERAY-REST-BUILDER-HASH:-2129888430

@@ -134,4 +134,4 @@ public interface AssetDeviceMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2062394371
+// LIFERAY-REST-BUILDER-HASH:1600205885

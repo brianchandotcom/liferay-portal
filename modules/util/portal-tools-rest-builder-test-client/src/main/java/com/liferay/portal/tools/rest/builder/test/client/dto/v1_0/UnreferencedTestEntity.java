@@ -119,4 +119,4 @@ public class UnreferencedTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1198177164
+// LIFERAY-REST-BUILDER-HASH:968909114

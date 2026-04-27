@@ -376,4 +376,4 @@ public interface FilterResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-923728351
+// LIFERAY-REST-BUILDER-HASH:733572798

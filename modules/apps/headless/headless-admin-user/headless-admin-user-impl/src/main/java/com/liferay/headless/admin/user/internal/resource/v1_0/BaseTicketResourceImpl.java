@@ -554,4 +554,4 @@ public abstract class BaseTicketResourceImpl implements TicketResource {
 		LogFactoryUtil.getLog(BaseTicketResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1225723651
+// LIFERAY-REST-BUILDER-HASH:-1684375199

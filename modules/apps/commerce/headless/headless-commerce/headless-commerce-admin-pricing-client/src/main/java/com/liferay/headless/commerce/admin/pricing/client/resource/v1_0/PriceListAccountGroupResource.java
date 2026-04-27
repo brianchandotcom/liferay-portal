@@ -972,4 +972,4 @@ public interface PriceListAccountGroupResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1853285933
+// LIFERAY-REST-BUILDER-HASH:1502220194

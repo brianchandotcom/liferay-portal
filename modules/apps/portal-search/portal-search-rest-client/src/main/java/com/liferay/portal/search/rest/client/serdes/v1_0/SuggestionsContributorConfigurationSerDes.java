@@ -323,4 +323,4 @@ public class SuggestionsContributorConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1195940655
+// LIFERAY-REST-BUILDER-HASH:1963059784

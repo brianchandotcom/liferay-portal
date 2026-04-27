@@ -116,4 +116,4 @@ public class PaymentMethod implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1130367516
+// LIFERAY-REST-BUILDER-HASH:-1939522587

@@ -124,4 +124,4 @@ public class KeywordBulkSelection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1653052918
+// LIFERAY-REST-BUILDER-HASH:1443014884

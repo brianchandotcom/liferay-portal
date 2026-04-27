@@ -159,4 +159,4 @@ public interface DiagramResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:233862635
+// LIFERAY-REST-BUILDER-HASH:611586770

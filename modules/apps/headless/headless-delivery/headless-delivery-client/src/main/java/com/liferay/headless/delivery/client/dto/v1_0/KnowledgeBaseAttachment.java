@@ -224,4 +224,4 @@ public class KnowledgeBaseAttachment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1340436700
+// LIFERAY-REST-BUILDER-HASH:429436413

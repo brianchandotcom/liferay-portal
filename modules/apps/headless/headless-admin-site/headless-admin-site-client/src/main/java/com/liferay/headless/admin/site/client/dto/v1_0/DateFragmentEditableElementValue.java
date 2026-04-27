@@ -105,4 +105,4 @@ public class DateFragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:263443212
+// LIFERAY-REST-BUILDER-HASH:-2004714502

@@ -233,4 +233,4 @@ public class IndexConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1361779910
+// LIFERAY-REST-BUILDER-HASH:907752726

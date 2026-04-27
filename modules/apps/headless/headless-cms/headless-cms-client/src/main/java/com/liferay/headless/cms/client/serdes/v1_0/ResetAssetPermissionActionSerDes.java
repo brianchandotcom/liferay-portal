@@ -270,4 +270,4 @@ public class ResetAssetPermissionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1168921605
+// LIFERAY-REST-BUILDER-HASH:1896034265

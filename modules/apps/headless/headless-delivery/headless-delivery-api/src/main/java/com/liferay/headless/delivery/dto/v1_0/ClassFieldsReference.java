@@ -308,4 +308,4 @@ public class ClassFieldsReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-735743949
+// LIFERAY-REST-BUILDER-HASH:-726498643

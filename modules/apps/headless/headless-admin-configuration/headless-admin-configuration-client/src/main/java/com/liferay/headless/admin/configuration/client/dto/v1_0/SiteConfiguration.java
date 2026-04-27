@@ -101,4 +101,4 @@ public class SiteConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:495788812
+// LIFERAY-REST-BUILDER-HASH:1805722560

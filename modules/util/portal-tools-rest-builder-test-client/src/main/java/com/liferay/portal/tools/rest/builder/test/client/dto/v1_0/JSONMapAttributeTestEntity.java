@@ -146,4 +146,4 @@ public class JSONMapAttributeTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1292297486
+// LIFERAY-REST-BUILDER-HASH:2066636218

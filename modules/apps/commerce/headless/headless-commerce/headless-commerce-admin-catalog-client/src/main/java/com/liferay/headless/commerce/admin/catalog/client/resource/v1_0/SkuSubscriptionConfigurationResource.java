@@ -389,4 +389,4 @@ public interface SkuSubscriptionConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2049960059
+// LIFERAY-REST-BUILDER-HASH:1493054515

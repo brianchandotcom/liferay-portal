@@ -177,4 +177,4 @@ public class DSRecipient implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1600274033
+// LIFERAY-REST-BUILDER-HASH:-999273626

@@ -1128,4 +1128,4 @@ public abstract class BaseSLAResultResourceTestCase {
 			_slaResultResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:729070795
+// LIFERAY-REST-BUILDER-HASH:-1479282247

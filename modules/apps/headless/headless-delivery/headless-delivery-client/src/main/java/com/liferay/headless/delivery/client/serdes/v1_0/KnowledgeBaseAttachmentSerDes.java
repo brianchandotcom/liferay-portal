@@ -428,4 +428,4 @@ public class KnowledgeBaseAttachmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1336916367
+// LIFERAY-REST-BUILDER-HASH:-1822315626

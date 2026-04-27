@@ -151,4 +151,4 @@ public interface DataDefinitionFieldLinkResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1139973320
+// LIFERAY-REST-BUILDER-HASH:-429849631

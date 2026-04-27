@@ -147,4 +147,4 @@ public interface ProductTaxConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-896076358
+// LIFERAY-REST-BUILDER-HASH:-1321205318

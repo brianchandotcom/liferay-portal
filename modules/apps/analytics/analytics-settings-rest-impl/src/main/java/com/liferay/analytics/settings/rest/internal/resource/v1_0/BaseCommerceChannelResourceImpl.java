@@ -546,4 +546,4 @@ public abstract class BaseCommerceChannelResourceImpl
 		LogFactoryUtil.getLog(BaseCommerceChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:577335908
+// LIFERAY-REST-BUILDER-HASH:-838741007

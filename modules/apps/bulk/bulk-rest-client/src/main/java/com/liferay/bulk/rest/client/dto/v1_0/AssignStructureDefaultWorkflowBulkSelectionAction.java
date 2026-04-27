@@ -91,4 +91,4 @@ public class AssignStructureDefaultWorkflowBulkSelectionAction
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:49252120
+// LIFERAY-REST-BUILDER-HASH:-1756585934

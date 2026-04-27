@@ -194,4 +194,4 @@ public interface ListTypeEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-384208544
+// LIFERAY-REST-BUILDER-HASH:-595565241

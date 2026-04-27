@@ -76,4 +76,4 @@ public class ValidationRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1749714368
+// LIFERAY-REST-BUILDER-HASH:717875603

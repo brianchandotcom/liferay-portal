@@ -222,4 +222,4 @@ public class FragmentSet implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:875590571
+// LIFERAY-REST-BUILDER-HASH:267314961

@@ -1988,4 +1988,4 @@ public abstract class BasePlacedOrderCommentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:787551060
+// LIFERAY-REST-BUILDER-HASH:-2002185298

@@ -628,4 +628,4 @@ public interface LanguageResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:159880725
+// LIFERAY-REST-BUILDER-HASH:-782757103

@@ -695,4 +695,4 @@ public class CartItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-224705199
+// LIFERAY-REST-BUILDER-HASH:-1317852100

@@ -187,4 +187,4 @@ public abstract class BulkAction implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1503687640
+// LIFERAY-REST-BUILDER-HASH:68152823

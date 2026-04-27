@@ -169,4 +169,4 @@ public interface FormRecordResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:985408093
+// LIFERAY-REST-BUILDER-HASH:1325397571

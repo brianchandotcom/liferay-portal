@@ -411,4 +411,4 @@ public class WorkflowLog implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1731494240
+// LIFERAY-REST-BUILDER-HASH:1899822076

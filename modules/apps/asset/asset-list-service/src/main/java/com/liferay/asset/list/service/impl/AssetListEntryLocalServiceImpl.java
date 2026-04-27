@@ -191,7 +191,7 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setUserId(user.getUserId());
 		assetListEntry.setUserName(user.getFullName());
 
-		_setAssetListEntryKey(
+		_updateAssetListEntryKey(
 			assetListEntry,
 			GetterUtil.getString(
 				serviceContext.getAttribute("assetListEntryKey")),
@@ -491,7 +491,7 @@ public class AssetListEntryLocalServiceImpl
 
 		_validateTitle(assetListEntry.getGroupId(), title);
 
-		_setAssetListEntryKey(
+		_updateAssetListEntryKey(
 			assetListEntry, assetListEntryKey, assetListEntry.getGroupId(),
 			title);
 
@@ -830,7 +830,7 @@ public class AssetListEntryLocalServiceImpl
 		return false;
 	}
 
-	private void _setAssetListEntryKey(
+	private void _updateAssetListEntryKey(
 		AssetListEntry assetListEntry, String assetListEntryKey, long groupId,
 		String title) {
 

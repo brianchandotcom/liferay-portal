@@ -6,9 +6,10 @@
 import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import React from 'react';
+
 import {TriggerLabel} from './ConditionBuilder';
 
-import type {ValueInputRenderer} from './types';
+import type {GenericProperty} from './types';
 
 /**
  * Standard value input renderer for the common PropertyTypes.
@@ -17,12 +18,12 @@ import type {ValueInputRenderer} from './types';
  * Consumers that require async data loading (e.g. Objects picklist/relationship
  * entries) should provide their own renderValueInput instead.
  */
-export const DefaultValueInput: ValueInputRenderer = (
-	property,
-	_operator,
-	value,
-	onChange
-) => {
+export function DefaultValueInput(
+	property: GenericProperty,
+	_operator: string,
+	value: string | undefined,
+	onChange: (value: string) => void
+): React.ReactNode {
 	const {options, type} = property;
 
 	if (type === 'boolean') {
@@ -65,7 +66,7 @@ export const DefaultValueInput: ValueInputRenderer = (
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
 				className="form-control-sm"
-				onChange={(e) => onChange(e.target.value)}
+				onChange={(event) => onChange(event.target.value)}
 				placeholder={Liferay.Language.get('enter-value')}
 				type="number"
 				value={value ?? ''}
@@ -78,7 +79,7 @@ export const DefaultValueInput: ValueInputRenderer = (
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
 				className="form-control-sm"
-				onChange={(e) => onChange(e.target.value)}
+				onChange={(event) => onChange(event.target.value)}
 				type={type === 'date-time' ? 'datetime-local' : 'date'}
 				value={value ?? ''}
 			/>
@@ -89,10 +90,10 @@ export const DefaultValueInput: ValueInputRenderer = (
 		<ClayInput
 			aria-label={Liferay.Language.get('value')}
 			className="form-control-sm"
-			onChange={(e) => onChange(e.target.value)}
+			onChange={(event) => onChange(event.target.value)}
 			placeholder={Liferay.Language.get('enter-value')}
 			type="text"
 			value={value ?? ''}
 		/>
 	);
-};
+}

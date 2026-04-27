@@ -3,10 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {generateConditionId, ConditionBuilder} from './condition_builder/ConditionBuilder';
-import {DefaultValueInput} from './condition_builder/DefaultValueInput';
 import React, {useState} from 'react';
 
+import {
+	ConditionBuilder,
+	generateConditionId,
+} from './condition_builder/ConditionBuilder';
+import {DefaultValueInput} from './condition_builder/DefaultValueInput';
 import {getCollectionOperators} from './operators';
 
 /**
@@ -48,8 +51,8 @@ export default function CollectionFilterBuilder({
 	return (
 		<>
 			<ConditionBuilder
-				conditions={conditions}
 				conditionType={conditionType}
+				conditions={conditions}
 				getOperators={getCollectionOperators}
 				onChange={handleChange}
 				properties={properties}

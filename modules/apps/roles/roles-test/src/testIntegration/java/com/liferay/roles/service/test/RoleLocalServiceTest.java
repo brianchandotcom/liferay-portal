@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -821,6 +822,23 @@ public class RoleLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED, role.getStatus());
 		}
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-83058")
+	public void testUpdateRoleWithProtectedName() throws Exception {
+		Role cmsAdministratorRole = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		Role role = _roleLocalService.updateRole(
+			cmsAdministratorRole.getExternalReferenceCode(),
+			cmsAdministratorRole.getRoleId(), RandomTestUtil.randomString(),
+			cmsAdministratorRole.getTitleMap(),
+			cmsAdministratorRole.getDescriptionMap(),
+			cmsAdministratorRole.getSubtype(), null);
+
+		Assert.assertEquals(cmsAdministratorRole.getName(), role.getName());
 	}
 
 	protected void assertGetTeamRoleMap(

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
@@ -39,6 +40,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@FeatureFlag("LPD-6252")
 @RunWith(Arquillian.class)
 public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 
@@ -96,12 +98,22 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {
+			"commerceOrderId", "dateCreated", "dateModified", "type"
+		};
+	}
+
+	@Override
 	protected Attachment randomAttachment() throws Exception {
 		return new Attachment() {
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				priority = RandomTestUtil.nextDouble();
+				restricted = RandomTestUtil.randomBoolean();
 				title = RandomTestUtil.randomString() + ".jpg";
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -221,7 +233,10 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 						AttachmentResourceTest.class,
 						"dependencies/image.jpg"));
 				externalReferenceCode = attachment1.getExternalReferenceCode();
+				priority = attachment1.getPriority();
+				restricted = attachment1.getRestricted();
 				title = attachment1.getTitle();
+				type = attachment1.getType();
 			}
 		};
 	}

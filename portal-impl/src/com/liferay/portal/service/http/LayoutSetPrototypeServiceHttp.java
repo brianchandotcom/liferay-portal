@@ -335,11 +335,11 @@ public class LayoutSetPrototypeServiceHttp {
 
 	public static java.util.List
 		<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
-				HttpPrincipal httpPrincipal, long companyId, Boolean active,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.portal.kernel.model.LayoutSetPrototype>
-						orderByComparator)
-			throws com.liferay.portal.kernel.exception.PortalException {
+			HttpPrincipal httpPrincipal, long companyId, Boolean active,
+			int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.portal.kernel.model.LayoutSetPrototype>
+					orderByComparator) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -347,7 +347,7 @@ public class LayoutSetPrototypeServiceHttp {
 				_searchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, active, orderByComparator);
+				methodKey, companyId, active, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -355,13 +355,6 @@ public class LayoutSetPrototypeServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -380,11 +373,11 @@ public class LayoutSetPrototypeServiceHttp {
 
 	public static java.util.List
 		<com.liferay.portal.kernel.model.LayoutSetPrototype> search(
-			HttpPrincipal httpPrincipal, long companyId, Boolean active,
-			int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.portal.kernel.model.LayoutSetPrototype>
-					orderByComparator) {
+				HttpPrincipal httpPrincipal, long companyId, Boolean active,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.LayoutSetPrototype>
+						orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -392,7 +385,7 @@ public class LayoutSetPrototypeServiceHttp {
 				_searchParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, active, start, end, orderByComparator);
+				methodKey, companyId, active, orderByComparator);
 
 			Object returnObj = null;
 
@@ -400,6 +393,13 @@ public class LayoutSetPrototypeServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -565,11 +565,11 @@ public class LayoutSetPrototypeServiceHttp {
 	private static final Class<?>[] _getLayoutSetPrototypesParameterTypes6 =
 		new Class[] {long.class};
 	private static final Class<?>[] _searchParameterTypes7 = new Class[] {
-		long.class, Boolean.class,
+		long.class, Boolean.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
 	private static final Class<?>[] _searchParameterTypes8 = new Class[] {
-		long.class, Boolean.class, int.class, int.class,
+		long.class, Boolean.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
 	private static final Class<?>[] _searchCountParameterTypes9 = new Class[] {
@@ -585,4 +585,4 @@ public class LayoutSetPrototypeServiceHttp {
 		new Class[] {long.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2138032268
+// LIFERAY-SERVICE-BUILDER-HASH:-956962188

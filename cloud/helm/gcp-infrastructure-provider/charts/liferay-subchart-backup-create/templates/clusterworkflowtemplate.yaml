@@ -79,6 +79,6 @@ spec:
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- tpl (.Files.Get "scripts/wait-backup-ready.sh") . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/wait-for-backup.sh") . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}

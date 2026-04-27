@@ -2292,3 +2292,37 @@ test(
 		}).toPass();
 	}
 );
+
+test(
+	'Cannot edit the key of the CMS Administrator role',
+	{tag: ['@LPD-83058']},
+	async ({apiHelpers, rolePage, rolesPage}) => {
+		const roleName = 'CMS Administrator';
+
+		const existingRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(roleName);
+
+		if (!existingRole) {
+			await apiHelpers.headlessAdminUser.postRole({
+				name: roleName,
+				roleType: 'regular',
+			});
+		}
+
+		await rolesPage.goto();
+
+		await rolesPage.rolesTable.search(roleName);
+		await (await rolesPage.rolesTable.cellLink(roleName)).click();
+
+		const disabledKeyField = rolePage.page.locator(
+			'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_viewNameField'
+		);
+
+		await expect(disabledKeyField).toBeVisible();
+		await expect(disabledKeyField).toBeDisabled();
+		await expect(disabledKeyField).toHaveValue(roleName);
+
+		await expect(rolePage.keyInput).toBeHidden();
+		await expect(rolePage.keyInput).toHaveValue(roleName);
+	}
+);

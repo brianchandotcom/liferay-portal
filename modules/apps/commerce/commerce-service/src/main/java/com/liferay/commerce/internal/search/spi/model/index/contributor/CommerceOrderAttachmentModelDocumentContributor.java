@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,7 +51,8 @@ public class CommerceOrderAttachmentModelDocumentContributor
 			"restricted",
 			String.valueOf(commerceOrderAttachment.isRestricted()));
 		document.addText("title", commerceOrderAttachment.getTitle());
-		document.addKeyword("type", commerceOrderAttachment.getType());
+		document.addKeyword(
+			"type", StringUtil.toLowerCase(commerceOrderAttachment.getType()));
 
 		try {
 			CommerceOrder commerceOrder =

@@ -261,9 +261,9 @@ public class CommerceOrderAttachmentLocalServiceTest {
 				priority, true, title, type);
 
 		Assert.assertEquals(priority, commerceOrderAttachment.getPriority(), 0);
+		Assert.assertTrue(commerceOrderAttachment.isRestricted());
 		Assert.assertEquals(title, commerceOrderAttachment.getTitle());
 		Assert.assertEquals(type, commerceOrderAttachment.getType());
-		Assert.assertTrue(commerceOrderAttachment.isRestricted());
 	}
 
 	private CommerceOrderAttachment _addCommerceOrderAttachment(

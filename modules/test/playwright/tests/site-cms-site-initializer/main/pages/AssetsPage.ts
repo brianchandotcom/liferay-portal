@@ -20,6 +20,7 @@ interface ExecItemActionArgs {
 		| 'Download'
 		| 'Edit'
 		| 'Expire'
+		| 'Export for Translation'
 		| 'Share'
 		| 'Show Details'
 		| 'View'
@@ -176,14 +177,16 @@ export class AssetsPage {
 	}
 
 	async exportForTranslation(
-		targetLanguage: string,
-		isBulk: boolean
+		isBulk: boolean,
+		targetLanguages: string[]
 	): Promise<string> {
-		const targetLanguageCheckbox = this.page
-			.locator('.modal')
-			.getByLabel(targetLanguage);
+		for (const targetLanguage of targetLanguages) {
+			const targetLanguageCheckbox = this.page
+				.locator('.modal')
+				.getByLabel(targetLanguage);
 
-		await targetLanguageCheckbox.check();
+			await targetLanguageCheckbox.check();
+		}
 
 		const downloadPromise = this.page.waitForEvent('download');
 

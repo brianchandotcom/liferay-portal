@@ -75,8 +75,13 @@ public class TestClassFactory {
 				batchTestClassGroup, testClassFile, antTargetName);
 		}
 
-		return new ServiceBuilderAntTargetTestClass(
-			batchTestClassGroup, testClassFile, antTargetName);
+		if (Objects.equals(antTargetName, "build-services")) {
+			return new ServiceBuilderAntTargetTestClass(
+				batchTestClassGroup, testClassFile, antTargetName);
+		}
+
+		throw new IllegalArgumentException(
+			"Unsupported ant target name: " + antTargetName);
 	}
 
 	public static TestClass newTestClass(

@@ -43,7 +43,7 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 		},
 		{
 			description: Liferay.Language.get(
-				'customers-showing-a-drop-in-product-usage-or-warning-signs-of-churn.-requires-immediate-intervention.'
+				'accounts-with-decreasing-product-usage-or-signs-of-churn-risk.-action-is-required'
 			),
 			metric: atRiskAccounts,
 			title: Liferay.Language.get('at-risk-accounts')

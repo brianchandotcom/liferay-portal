@@ -76,21 +76,16 @@ test(
 			orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
 		});
 
-		const attachmentTitle = getRandomString();
+		const attachmentTitle = `${getRandomString()}.png`;
 
 		await apiHelpers.headlessCommerceAdminOrderAttachment.postOrderAttachment(
+			order.id,
 			{
-				attachment: {
-					fileBase64:
-						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-					name: 'invoice.png',
-				},
-				attachmentType: {key: 'invoice'},
+				attachment:
+					'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
 				priority: 1,
-				r_accountToCommerceOrderAttachments_accountEntryId: account.id,
-				r_commerceOrderToCommerceOrderAttachments_commerceOrderId:
-					order.id,
 				title: attachmentTitle,
+				type: 'invoice',
 			}
 		);
 
@@ -119,6 +114,6 @@ test(
 			page.getByText(attachmentTitle, {exact: true})
 		).toBeVisible();
 		await expect(page.getByText('png', {exact: true})).toBeVisible();
-		await expect(page.getByText('Invoice', {exact: true})).toBeVisible();
+		await expect(page.getByText('invoice', {exact: true})).toBeVisible();
 	}
 );

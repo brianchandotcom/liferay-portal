@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+    overlay-sync.sh: |
+{{ .Files.Get "scripts/overlay-sync.sh" | nindent 8 }}
+kind: ConfigMap
+metadata:
+    name: liferay-init-scripts-default
+    namespace: {{ include "liferay.namespace" . }}

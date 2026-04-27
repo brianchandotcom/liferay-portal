@@ -27,6 +27,7 @@ spec:
         metadata:
             annotations:
                 checksum/config: {{ include (print .root.Template.BasePath "/configmap.yaml") .root | sha256sum }}
+                checksum/init-scripts: {{ include (print .root.Template.BasePath "/liferay-init-scripts-cm.yaml") .root | sha256sum }}
                 {{- with .statefulset.annotations }}
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
@@ -157,11 +158,6 @@ spec:
             volumes:
                 {{- with .statefulset.volumes }}
                 {{- toYaml . | nindent 16 }}
-                {{- end }}
-                {{- if and .statefulset.overlay .statefulset.overlay.enabled }}
-                -   name: {{ .statefulset.overlay.bucketName }}
-                    persistentVolumeClaim:
-                        claimName: {{ .statefulset.overlay.bucketName }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customVolumes }}
                 {{- toYaml $v | nindent 16 }}

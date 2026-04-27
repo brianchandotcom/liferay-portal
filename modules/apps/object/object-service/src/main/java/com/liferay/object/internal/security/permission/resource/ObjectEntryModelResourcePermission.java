@@ -147,8 +147,6 @@ public class ObjectEntryModelResourcePermission
 			objectEntry = rootObjectEntry;
 		}
 
-		User user = permissionChecker.getUser();
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectEntry.getObjectDefinitionId());
@@ -160,6 +158,8 @@ public class ObjectEntryModelResourcePermission
 
 			return contains(permissionChecker, objectEntry, "DOWNLOAD_FILE");
 		}
+
+		User user = permissionChecker.getUser();
 
 		if (_hasAssigneeUpdatePermission(
 				actionId, objectDefinition, objectEntry, user)) {

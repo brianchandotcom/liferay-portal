@@ -64,12 +64,11 @@ public class ImportProcessResourceTest
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		_testPostScopeScopeKeyValidateSuccess(testGroup);
+		_testPostScopeScopeKeyValidateError(companyGroup, testGroup);
+		_testPostScopeScopeKeyValidateError(testGroup, companyGroup);
 		_testPostScopeScopeKeyValidateSuccess(companyGroup);
 
-		_testPostScopeScopeKeyValidateError(testGroup, companyGroup);
-		_testPostScopeScopeKeyValidateError(companyGroup, testGroup);
-
+		_testPostScopeScopeKeyValidateSuccess(testGroup);
 		_testPostScopeScopeKeyValidateWithInvalidScope();
 	}
 

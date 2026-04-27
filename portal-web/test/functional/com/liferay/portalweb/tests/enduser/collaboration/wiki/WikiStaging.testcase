@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "This test covers LPS-95501. It asserts added wiki attachment file can be viewed after publishing."
+	@description = "This test also covers LPS-95501 and LPS-73992. It asserts that an added wiki attachment file can be viewed and a removed wiki attachment file or a deleted page can not be viewed in the live site after publishing."
 	@priority = 4
 	@refactordone
 	test CanPublishWikiPageLifecycleToLive {
@@ -146,7 +146,7 @@ definition {
 		WikiPage.viewNoPagePG(wikiPageTitle = "Wiki Page Title");
 	}
 
-	@description = "This ensures that the added front page can be viewed in the live site after publishing."
+	@description = "This test also covers LPS-95709. It ensures that an added front page and an added attachment can be viewed in the live site after publishing."
 	@priority = 4
 	@refactordone
 	test CanViewFrontPageAndAttachmentAfterPublishing {

@@ -182,7 +182,7 @@ definition {
 			value1 = "The URL title is already in use. Please enter a unique URL title.");
 	}
 
-	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
+	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history, and an old friendlyURL can be removed or restored from the history."
 	@priority = 5
 	test CanViewRestoreAndRemoveOldFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");

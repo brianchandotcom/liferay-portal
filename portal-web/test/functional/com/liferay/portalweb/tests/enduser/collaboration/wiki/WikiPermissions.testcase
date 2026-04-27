@@ -38,7 +38,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a regular role with permissions can edit a wiki node."
+	@description = "This ensures that a regular role with permissions can edit and delete a wiki node."
 	@priority = 4
 	@refactordone
 	test CanEditAndDeleteWikiNodeWithPermissions {
@@ -98,7 +98,7 @@ definition {
 		WikiNode.viewNoCP(wikiNodeName = "Wiki Node Name Edit");
 	}
 
-	@description = "This ensures that a regular role with permissions can edit a wiki page."
+	@description = "This ensures that a regular role with permissions can edit and delete a wiki page."
 	@priority = 4
 	@refactordone
 	test CanEditAndDeleteWikiPageWithPermissions {

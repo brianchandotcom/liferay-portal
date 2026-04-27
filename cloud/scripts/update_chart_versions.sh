@@ -46,7 +46,7 @@ function _check_chart_yaml {
 
 	if [[ "${commit_count}" -gt 0 ]]
 	then
-		git rev-list --oneline "${git_blame_sha}..HEAD" -- "${helm_dir}"
+		git --no-pager log --date=short --format="%h %ad %an %s" "${git_blame_sha}..HEAD" -- "${helm_dir}"
 
 		echo "The version in ${helm_chart_yaml} is outdated." >&2
 		echo "" >&2

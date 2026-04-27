@@ -138,7 +138,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</liferay-ui:error>
 
 				<c:choose>
-					<c:when test="<%= (role != null) && role.isSystem() %>">
+					<c:when test="<%= (role != null) && (role.isProtected() || role.isSystem()) %>">
 						<aui:input disabled="<%= true %>" helpMessage="key-field-help" label="key" name="viewNameField" type="text" value="<%= roleName %>" />
 						<aui:input name="name" type="hidden" value="<%= roleName %>" />
 					</c:when>

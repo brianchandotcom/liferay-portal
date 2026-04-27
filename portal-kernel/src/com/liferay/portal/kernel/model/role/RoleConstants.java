@@ -8,7 +8,9 @@ package com.liferay.portal.kernel.model.role;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -60,6 +62,8 @@ public class RoleConstants {
 		"Portal Content Reviewer";
 
 	public static final String POWER_USER = "Power User";
+
+	public static final String[] PROTECTED_ROLES = {CMS_ADMINISTRATOR};
 
 	public static final String PUBLICATIONS_ADMIN = "Publications Admin";
 
@@ -181,6 +185,14 @@ public class RoleConstants {
 		}
 
 		return TYPE_REGULAR_LABEL;
+	}
+
+	public static boolean isProtected(String roleName) {
+		if (Validator.isNull(roleName)) {
+			return false;
+		}
+
+		return ArrayUtil.contains(PROTECTED_ROLES, roleName);
 	}
 
 	public static String toSystemRoleExternalReferenceCode(String roleName) {

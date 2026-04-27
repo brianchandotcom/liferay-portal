@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {
+	IBulkActionItem,
+	IInternalRenderer,
+} from '@liferay/frontend-data-set-web';
 
 import StatusLabel from '../../common/components/StatusLabel';
 import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
@@ -18,15 +21,19 @@ import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import StructureScopeRenderer from './cell_renderers/StructureScopeRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
+import transformFDSBulkActions from './utils/transformFDSBulkActions';
 
 export default function StructuresFDSPropsTransformer({
+	bulkActions = [],
 	...otherProps
 }: {
 	apiURL: string;
+	bulkActions: Array<IBulkActionItem>;
 	otherProps: any;
 }) {
 	return {
 		...otherProps,
+		bulkActions: transformFDSBulkActions(bulkActions),
 		customRenderers: {
 			tableCell: [
 				{

@@ -181,9 +181,9 @@ public class CTServiceRegistry {
 				CTService<?> ctService = bundleContext.getService(
 					serviceReference);
 
-				emitter.emit(
-					ctService.getModelClass(
-					).getName());
+				Class<?> modelClass = ctService.getModelClass();
+
+				emitter.emit(modelClass.getName());
 
 				bundleContext.ungetService(serviceReference);
 			});

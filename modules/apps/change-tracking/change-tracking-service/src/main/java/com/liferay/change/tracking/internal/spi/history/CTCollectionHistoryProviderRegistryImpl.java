@@ -58,9 +58,10 @@ public class CTCollectionHistoryProviderRegistryImpl
 					bundleContext.getService(serviceReference);
 
 				try {
-					emitter.emit(
-						ctCollectionHistoryProvider.getModelClass(
-						).getName());
+					Class<?> modelClass =
+						ctCollectionHistoryProvider.getModelClass();
+
+					emitter.emit(modelClass.getName());
 				}
 				finally {
 					bundleContext.ungetService(serviceReference);

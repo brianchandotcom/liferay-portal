@@ -20,6 +20,7 @@ import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
+import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
 import com.liferay.layout.util.CheckNoninstanceablePortletThreadLocal;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -784,6 +785,10 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	private void _checkUnlockedLayout(long plid, long userId)
 		throws PortalException {
+
+		if (!CheckUnlockedLayoutThreadLocal.isCheckUnlockedLayout()) {
+			return;
+		}
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 

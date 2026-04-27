@@ -670,4 +670,4 @@ public class PatcherFixLocalServiceUtil {
 			PatcherFixLocalServiceUtil.class, PatcherFixLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:354958771
+// LIFERAY-SERVICE-BUILDER-HASH:-1162849163

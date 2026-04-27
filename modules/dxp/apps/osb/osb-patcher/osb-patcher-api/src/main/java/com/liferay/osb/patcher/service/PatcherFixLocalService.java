@@ -474,4 +474,4 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1127782650
+// LIFERAY-SERVICE-BUILDER-HASH:-1587164210

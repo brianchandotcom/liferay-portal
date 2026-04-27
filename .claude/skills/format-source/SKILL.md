@@ -38,3 +38,362 @@ Skip generated files. The automatic formatter already does this via `BaseSourceP
 These files are overwritten on the next build, so manual edits are lost and only pollute the diff.
 
 ## Rules
+
+### Rule 1: Chained Method Call Ordering
+
+**Why:** Consistent method order in chained calls makes it easier to scan for a specific call and reduces churn when new methods are added to the chain.
+
+**Examples:**
+
+```diff
+ Foo foo = builder.start(
+ 	arg
+-).gamma(
+-	gammaArg
+ ).alpha(
+ 	alphaArg
+ ).beta(
+ 	betaArg
++).gamma(
++	gammaArg
+ ).build();
+```
+
+### Rule 2: Method Parameter Ordering
+
+**Why:** Consistent parameter order makes call sites easier to scan and reduces churn when new parameters are added.
+
+**Examples:**
+
+```diff
+ private void process(
+-	String charlie, long alpha, String beta,
++	long alpha, String beta, String charlie,
+ 	Object delta) {
+```
+
+### Rule 3: Sequential Assertion Ordering
+
+**Why:** Consistent assertion order makes test failures easier to locate and reduces churn when new cases are added.
+
+**Examples:**
+
+```diff
+ Assert.assertEquals(1L, map.get("apple"));
+-Assert.assertEquals(3L, map.get("cherry"));
+ Assert.assertEquals(2L, map.get("banana"));
++Assert.assertEquals(3L, map.get("cherry"));
+```
+
+### Rule 4: Local Variable Declaration Ordering
+
+**Why:** Consistent declaration order makes it easier to find a variable and reduces churn when new locals are added.
+
+**Examples:**
+
+```diff
+-Map<X, Y> beta = new HashMap<>();
+-
+ boolean alpha = check();
++Map<X, Y> beta = new HashMap<>();
+```
+
+### Rule 5: Variable Name Type Suffix
+
+**Why:** A type suffix makes the variable's type readable at the use site and prevents a generic local from shadowing a same-named string key, field, or call argument in scope.
+
+**Examples:**
+
+Strings and other reference types like `Date`, `JSONObject` get a type suffix.
+
+```diff
+-String foo = result.toString();
++String fooString = result.toString();
+```
+
+`int`, `long`, `boolean` keep descriptive names without a type suffix.
+
+```diff
+-int countInt = items.size();
+-long timeLong = System.currentTimeMillis();
+-boolean enabledBoolean = config.isEnabled();
++int count = items.size();
++long time = System.currentTimeMillis();
++boolean enabled = config.isEnabled();
+```
+
+Lists prefer a plural name; the `List` suffix is acceptable when no natural plural exists.
+
+```diff
+-List<Item> itemList = repository.findAll();
++List<Item> items = repository.findAll();
+```
+
+Maps prefer a descriptive name; the `Map` suffix is acceptable when no natural descriptor exists.
+
+```diff
+-Map<String, Item> itemMap = loadIndex();
++Map<String, Item> itemsByKey = loadIndex();
+```
+
+### Rule 6: Acronym Capitalization in Identifiers
+
+**Why:** Treating acronyms as fully uppercase tokens keeps method, field, and variable names visually consistent with the surrounding API and avoids drift between camelCase and CamelCase variants for the same concept.
+
+**Examples:**
+
+```diff
+-public String getUrl() {
++public String getURL() {
+ 	return _url;
+ }
+```
+
+```diff
+-foo.getHtmlContent();
+-bar.parseXmlString();
++foo.getHTMLContent();
++bar.parseXMLString();
+```
+
+### Rule 7: Quote Literal Tokens in Messages
+
+**Why:** Wrapping literal identifiers, header values, content types, and similar tokens in double quotes inside log and exception messages separates the literal from the surrounding prose, so a reader can tell at a glance which words come from the data and which from the sentence.
+
+**Examples:**
+
+```diff
+ throw new IllegalArgumentException(
+-	"Request body has no application/json content");
++	"Request body has no \"application/json\" content");
+```
+
+```diff
+-_log.warn("Missing header X-Custom-Header for request");
++_log.warn("Missing header \"X-Custom-Header\" for request");
+```
+
+Use escaped double quotes, not single quotes, to wrap the token.
+
+```diff
+-throw new IllegalArgumentException("Missing 'paths' object");
++throw new IllegalArgumentException("Missing \"paths\" object");
+```
+
+### Rule 8: Generic Index Variable Name
+
+**Why:** When a method scope holds a single `int` index returned from `indexOf` or similar, naming it plainly `index` is shorter than a qualified name and matches the dominant convention; reuse the same `index` slot for sequential lookups in the same scope rather than introducing parallel qualified names.
+
+**Examples:**
+
+```diff
+-int spaceIndex = endpoint.indexOf(' ');
++int index = endpoint.indexOf(' ');
+
+-String prefix = endpoint.substring(0, spaceIndex);
+-String suffix = endpoint.substring(spaceIndex + 1);
++String prefix = endpoint.substring(0, index);
++String suffix = endpoint.substring(index + 1);
+```
+
+When the value is reused for a second lookup in the same scope, reassign `index` rather than introducing a new variable.
+
+```diff
+-int firstSlashIndex = path.indexOf('/', 1);
+-int secondSlashIndex = path.indexOf('/', firstSlashIndex + 1);
++int index = path.indexOf('/', 1);
++index = path.indexOf('/', index + 1);
+```
+
+### Rule 9: Map Entry Loop Naming
+
+**Why:** Naming the loop variable `entry` and the extracted parts after the data they hold (typically `key`/`name` and `value`) keeps every map iteration readable in the same shape, regardless of the surrounding domain.
+
+**Examples:**
+
+```diff
+-for (Map.Entry<String, Object> argumentEntry : arguments.entrySet()) {
+-	String paramName = argumentEntry.getKey();
+-	Object paramValue = argumentEntry.getValue();
++for (Map.Entry<String, Object> entry : arguments.entrySet()) {
++	String name = entry.getKey();
++	Object value = entry.getValue();
+```
+
+### Rule 10: Test Method Predicate Phrasing
+
+**Why:** Phrasing the predicate clause of a test method as `<property>Is<state>` rather than `<subject>Has<state><property>` makes a sorted method list group together by the property under test, and reads as a complete subject-verb-complement sentence.
+
+**Examples:**
+
+```diff
+-public void testGetFooWhenBarHasNullBaz() throws Exception {
++public void testGetFooWhenBarBazIsNull() throws Exception {
+```
+
+```diff
+-public void testGetFooWhenBarHasValidBaz() throws Exception {
++public void testGetFooWhenBarBazIsValid() throws Exception {
+```
+
+### Rule 11: Drop Redundant Nonnull Assertion Before Specific Assertions
+
+**Why:** A subsequent assertion that calls a method on the same reference would already throw a `NullPointerException` if the value were null, so the explicit nonnull check adds noise without adding coverage.
+
+**Examples:**
+
+```diff
+ Foo foo = service.findFoo();
+
+-Assert.assertNotNull(foo);
+ Assert.assertEquals("expected", foo.getName());
+ Assert.assertEquals(1L, foo.getId());
+```
+
+### Rule 12: Inline Single-Use Local Variables
+
+**Why:** A local that is computed once and immediately handed to a single call site adds a name without adding meaning, so passing the expression directly removes a hop the reader otherwise has to follow.
+
+**Examples:**
+
+```diff
+-Foo foo = makeFoo(arg);
+-
+-bar.consume(foo);
++bar.consume(makeFoo(arg));
+```
+
+```diff
+-FooSchema fooSchema = computeSchema(args, root);
+-
+ return Bar.builder(
+ ).name(
+ 	"x"
+ ).inputSchema(
+-	fooSchema
++	computeSchema(args, root)
+ ).build();
+```
+
+### Rule 13: Drop Narrative Assertion Messages
+
+**Why:** A verbose explanatory message on `Assert.assertTrue` or `Assert.assertFalse` mostly restates what the predicate already shows; removing it lets the failing line and stack frame carry the diagnostic, and shortens the test.
+
+**Examples:**
+
+```diff
+-Assert.assertTrue(
+-	StringBundler.concat(
+-		"Lookup must use the entity's ", id,
+-		". Actual filter was: ", filterString),
+-	filterString.contains("(id=" + id + ")"));
++Assert.assertTrue(filterString.contains("(id=" + id + ")"));
+```
+
+### Rule 14: Declare Locals Next to First Use
+
+**Why:** Declaring a local right before the statement that consumes it keeps related lines together and removes the need to scan back to a top-of-method block to recall what each value means.
+
+**Examples:**
+
+```diff
+-long alpha = randomLong();
+-String beta = "https://example.com";
+-String gamma = randomString();
+-
+ Foo foo = Mockito.mock(Foo.class);
+
++long alpha = randomLong();
++
+ Mockito.when(
+ 	foo.getAlpha()
+ ).thenReturn(
+ 	alpha
+ );
+
++String beta = "https://example.com";
++
+ Mockito.when(
+ 	foo.getBeta()
+ ).thenReturn(
+ 	beta
+ );
+```
+
+### Rule 15: Avoid Unboxing in Assertion Comparisons
+
+**Why:** Calling `.longValue()`, `.intValue()`, or similar on the actual value forces a chain on the line being asserted; matching the boxed type on the expected side keeps the comparison readable on a single call.
+
+**Examples:**
+
+```diff
+-Assert.assertEquals(
+-	0L,
+-	threadLocal.getValue(
+-	).longValue());
++Assert.assertEquals(Long.valueOf(0), threadLocal.getValue());
+```
+
+### Rule 16: Keep Default Override Adjacent to Declaration
+
+**Why:** When a local is declared and then immediately patched if its initial value is null or otherwise unsuitable, keeping the `if` directly after the declaration treats the pair as one logical "compute alpha" step and avoids splitting it across an unrelated declaration block.
+
+**Examples:**
+
+```diff
+ String alpha = source.getAlpha();
++
++if (alpha == null) {
++	alpha = fallback.getAlpha();
++}
++
+ String beta = null;
+ String gamma = null;
+ Date delta = source.getDelta();
+-
+-if (alpha == null) {
+-	alpha = fallback.getAlpha();
+-}
+```
+
+### Rule 17: Sort Sequential Setter Calls on Same Object
+
+**Why:** When the same object is configured by a contiguous block of setter calls, ordering the calls alphabetically by method name (and then by argument) makes the configuration easier to scan and matches the convention used for assertions and declarations.
+
+**Examples:**
+
+```diff
+ Foo foo = new Foo();
+
+-foo.setGamma(gamma);
+ foo.setAlpha(alpha);
+ foo.setBeta(beta);
++foo.setGamma(gamma);
+```
+
+### Rule 18: Use Complete Sentences in User-Facing Messages
+
+**Why:** Status, error, and notification strings that omit the linking verb read as fragments and translate poorly; restoring the auxiliary (`is`, `are`, `was`, `were`) turns the message into a complete sentence and matches the dominant phrasing already used across language files, log statements, and shell echoes.
+
+**Examples:**
+
+The rule applies to language property values.
+
+```diff
+-foo-not-allowed=Foo not allowed.
++foo-is-not-allowed=Foo is not allowed.
+```
+
+It applies to shell script messages.
+
+```diff
+-		_log "Resource ${name} created successfully."
++		_log "Resource ${name} was created successfully."
+```
+
+It applies to workflow and other YAML scripted output.
+
+```diff
+-                        echo "No entries found for ${id}."
++                        echo "No entries were found for ${id}."
+```

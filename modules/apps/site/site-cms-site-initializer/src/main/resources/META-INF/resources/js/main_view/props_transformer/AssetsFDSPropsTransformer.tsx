@@ -299,7 +299,8 @@ export default function AssetsFDSPropsTransformer({
 						return (
 							<StatusLabel
 								expirationDate={
-									itemData?.embedded?.expirationDate
+									itemData?.embedded?.expirationDate ??
+									undefined
 								}
 								label={value?.label}
 							/>

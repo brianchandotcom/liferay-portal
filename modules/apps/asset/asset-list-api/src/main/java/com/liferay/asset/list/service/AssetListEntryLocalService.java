@@ -399,6 +399,10 @@ public interface AssetListEntryLocalService
 			long assetListEntryId, String title)
 		throws PortalException;
 
+	public AssetListEntry updateAssetListEntry(
+			long assetListEntryId, String title, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void updateAssetListEntryTypeSettings(
 			long companyId, long classNameId)
 		throws PortalException;
@@ -423,4 +427,4 @@ public interface AssetListEntryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1984741194
+// LIFERAY-SERVICE-BUILDER-HASH:-1944637580

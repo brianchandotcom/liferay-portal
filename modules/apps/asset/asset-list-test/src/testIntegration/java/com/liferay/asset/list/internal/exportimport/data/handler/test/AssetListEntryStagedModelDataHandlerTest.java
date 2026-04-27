@@ -66,9 +66,6 @@ public class AssetListEntryStagedModelDataHandlerTest
 		SegmentsEntry segmentsEntry = _addSegmentsEntryByFirstName(
 			user.getFirstName(), stagingGroup.getGroupId());
 
-		String segmentEntryExternalReferenceCode =
-			segmentsEntry.getExternalReferenceCode();
-
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			stagingGroup.getGroupId(), assetListEntry,
 			segmentsEntry.getSegmentsEntryId());
@@ -82,7 +79,8 @@ public class AssetListEntryStagedModelDataHandlerTest
 
 		Assert.assertNotNull(
 			_segmentsEntryLocalService.getSegmentsEntryByExternalReferenceCode(
-				segmentEntryExternalReferenceCode, liveGroup.getGroupId()));
+				segmentsEntry.getExternalReferenceCode(),
+				liveGroup.getGroupId()));
 
 		exportImportStagedModel(assetListEntry);
 
@@ -93,7 +91,8 @@ public class AssetListEntryStagedModelDataHandlerTest
 
 		Assert.assertNotNull(
 			_segmentsEntryLocalService.getSegmentsEntryByExternalReferenceCode(
-				segmentEntryExternalReferenceCode, liveGroup.getGroupId()));
+				segmentsEntry.getExternalReferenceCode(),
+				liveGroup.getGroupId()));
 	}
 
 	@Override
@@ -180,6 +179,12 @@ public class AssetListEntryStagedModelDataHandlerTest
 			assetListEntry.getExternalReferenceCode(),
 			importedAssetListEntry.getExternalReferenceCode());
 		Assert.assertEquals(
+			assetListEntry.getCreateDate(),
+			importedAssetListEntry.getCreateDate());
+		Assert.assertEquals(
+			assetListEntry.getModifiedDate(),
+			importedAssetListEntry.getModifiedDate());
+		Assert.assertEquals(
 			assetListEntry.getAssetListEntryKey(),
 			importedAssetListEntry.getAssetListEntryKey());
 		Assert.assertEquals(
@@ -188,12 +193,6 @@ public class AssetListEntryStagedModelDataHandlerTest
 		Assert.assertEquals(
 			assetListEntry.getAssetEntryType(),
 			importedAssetListEntry.getAssetEntryType());
-		Assert.assertEquals(
-			assetListEntry.getCreateDate(),
-			importedAssetListEntry.getCreateDate());
-		Assert.assertEquals(
-			assetListEntry.getModifiedDate(),
-			importedAssetListEntry.getModifiedDate());
 	}
 
 	@Inject

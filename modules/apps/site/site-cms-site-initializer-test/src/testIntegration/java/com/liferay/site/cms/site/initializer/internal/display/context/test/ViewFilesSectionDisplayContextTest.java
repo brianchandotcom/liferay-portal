@@ -119,6 +119,11 @@ public class ViewFilesSectionDisplayContextTest
 		return filesSectionDisplayContext;
 	}
 
+	@Override
+	protected boolean isFolderSearchEnabled() {
+		return true;
+	}
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewFilesJSPSectionFragmentRenderer"
 	)

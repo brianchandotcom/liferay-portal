@@ -125,7 +125,14 @@ public abstract class BaseSectionDisplayContextTestCase
 				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
-			"additionalAPIURLParameters", getAdditionalAPIURLParameters()
+			"additionalAPIURLParameters",
+			() -> {
+				if (isFolderSearchEnabled()) {
+					return getAdditionalAPIURLParameters();
+				}
+
+				return null;
+			}
 		).put(
 			"assetLibraries", _getDepotEntriesJSONArray()
 		).put(
@@ -718,6 +725,14 @@ public abstract class BaseSectionDisplayContextTestCase
 			"systemProperties.objectDefinitionBrief&sort=dateModified:desc");
 	}
 
+	protected List<FDSActionDropdownItem> getBulkActionDropdownItems()
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			getSectionDisplayContext(getMockHttpServletRequest()),
+			"getBulkActionDropdownItems", new Class<?>[0]);
+	}
+
 	protected String getCMSSectionFilterString(Object displayContext) {
 		return ReflectionTestUtil.invoke(
 			displayContext, "getCMSSectionFilterString", new Class<?>[0],
@@ -829,6 +844,10 @@ public abstract class BaseSectionDisplayContextTestCase
 	protected abstract Object getSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception;
+
+	protected boolean isFolderSearchEnabled() {
+		return false;
+	}
 
 	protected void setUser(User user) {
 		PermissionThreadLocal.setPermissionChecker(

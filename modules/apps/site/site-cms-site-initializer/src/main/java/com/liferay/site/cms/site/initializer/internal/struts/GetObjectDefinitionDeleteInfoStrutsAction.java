@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.struts;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -19,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +61,11 @@ public class GetObjectDefinitionDeleteInfoStrutsAction implements StrutsAction {
 						for (ObjectRelationship objectRelationship :
 								objectRelationships) {
 
-							if (objectRelationship.isEdge()) {
+							if (Objects.equals(
+									objectRelationship.getDeletionType(),
+									ObjectRelationshipConstants.
+										DELETION_TYPE_CASCADE)) {
+
 								return true;
 							}
 						}

@@ -7,6 +7,8 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringPool;
@@ -25,6 +27,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -93,6 +96,55 @@ public class ViewAllSectionDisplayContextTest
 		Assert.assertTrue(
 			additionalAPIURLParameters,
 			additionalAPIURLParameters.contains("&search=test-query"));
+	}
+
+	@Test
+	public void testGetBulkActionDropdownItems() throws Exception {
+		List<FDSActionDropdownItem> bulkActionDropdownItems =
+			getBulkActionDropdownItems();
+
+		Assert.assertEquals(
+			bulkActionDropdownItems.toString(), 13,
+			bulkActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"trash", "delete", "Delete", null, bulkActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"move-folder", "move-to", "Move To", null,
+			bulkActionDropdownItems.get(1));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy-to", "Copy To", null, bulkActionDropdownItems.get(2));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"time", "expire", "Expire", null, bulkActionDropdownItems.get(3));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"upload", "export-for-translation", "Export for Translation", null,
+			bulkActionDropdownItems.get(4));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"download", "download", "Download", null,
+			bulkActionDropdownItems.get(5));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "edit-categories", "Edit Categories", "post",
+			bulkActionDropdownItems.get(6));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"pencil", "edit-tags", "Edit Tags", "post",
+			bulkActionDropdownItems.get(7));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"semantic-search", "find-and-replace", "Find and Replace", null,
+			bulkActionDropdownItems.get(8));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "permissions", "Permissions", null,
+			bulkActionDropdownItems.get(9));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "edit-default-permissions-by-role",
+			"Edit Default Permissions by Role", null,
+			bulkActionDropdownItems.get(10));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "edit-permissions-by-role",
+			"Edit Permissions by Role", null, bulkActionDropdownItems.get(11));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "reset-to-default-permissions",
+			"Reset to Default Permissions", null,
+			bulkActionDropdownItems.get(12));
 	}
 
 	@Override

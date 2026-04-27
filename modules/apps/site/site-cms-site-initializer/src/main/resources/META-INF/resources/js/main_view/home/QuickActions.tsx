@@ -17,6 +17,7 @@ import '../../../css/home/QuickActions.scss';
 export type QuickActionAssetData = {
 	action: 'createAsset' | 'createVocabulary';
 	assetLibraries?: AssetLibrary[];
+	icon: string;
 	redirect: string;
 	title: string;
 };
@@ -57,8 +58,11 @@ export default function QuickActions({
 			</div>
 
 			<div className="row row-cols-lg-5 row-cols-md-3 row-cols-sm-1">
-				{quickActions.map((quickAction: any) => (
-					<div className="col d-flex pb-2" key={quickAction.href}>
+				{quickActions.map((quickAction: QuickActionAssetData) => (
+					<div
+						className="col d-flex pb-2"
+						key={`${quickAction.title}-${quickAction.redirect}`}
+					>
 						<button
 							className="btn flex-fill pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
 							onClick={(event) =>

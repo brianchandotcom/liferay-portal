@@ -256,7 +256,7 @@ test(
 	{tag: '@LPD-79453'},
 	async ({apiHelpers, designLibrariesPage, page}) => {
 		const designLibraryName = getRandomString();
-		const siteName = 'Liferay DXP';
+		const siteName = 'Liferay DXP Site';
 
 		const connectedSitesDialog = page.getByRole('dialog');
 

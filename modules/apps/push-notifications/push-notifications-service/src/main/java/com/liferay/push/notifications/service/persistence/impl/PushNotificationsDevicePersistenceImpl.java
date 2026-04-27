@@ -106,20 +106,15 @@ public class PushNotificationsDevicePersistenceImpl
 		PushNotificationsDevice pushNotificationsDevice = fetchByToken(token);
 
 		if (pushNotificationsDevice == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("token=");
-			sb.append(token);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByToken.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {token});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDeviceException(sb.toString());
+			throw new NoSuchDeviceException(message);
 		}
 
 		return pushNotificationsDevice;
@@ -1517,4 +1512,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528756788
+// LIFERAY-SERVICE-BUILDER-HASH:-708635286

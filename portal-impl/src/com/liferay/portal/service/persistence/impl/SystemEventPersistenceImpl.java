@@ -191,16 +191,9 @@ public class SystemEventPersistenceImpl
 			return systemEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
+		throw new NoSuchSystemEventException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -214,14 +207,9 @@ public class SystemEventPersistenceImpl
 	public SystemEvent fetchByGroupId_First(
 		long groupId, OrderByComparator<SystemEvent> orderByComparator) {
 
-		List<SystemEvent> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -231,12 +219,8 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SystemEvent systemEvent :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(systemEvent);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -373,19 +357,10 @@ public class SystemEventPersistenceImpl
 			return systemEvent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", systemEventSetKey=");
-		sb.append(systemEventSetKey);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
+		throw new NoSuchSystemEventException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, systemEventSetKey}));
 	}
 
 	/**
@@ -401,14 +376,9 @@ public class SystemEventPersistenceImpl
 		long groupId, long systemEventSetKey,
 		OrderByComparator<SystemEvent> orderByComparator) {
 
-		List<SystemEvent> list = findByG_S(
-			groupId, systemEventSetKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, systemEventSetKey}, orderByComparator);
 	}
 
 	/**
@@ -419,13 +389,9 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, long systemEventSetKey) {
-		for (SystemEvent systemEvent :
-				findByG_S(
-					groupId, systemEventSetKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(systemEvent);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, systemEventSetKey});
 	}
 
 	/**
@@ -571,22 +537,10 @@ public class SystemEventPersistenceImpl
 			return systemEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
+		throw new NoSuchSystemEventException(
+			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK}));
 	}
 
 	/**
@@ -603,14 +557,9 @@ public class SystemEventPersistenceImpl
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<SystemEvent> orderByComparator) {
 
-		List<SystemEvent> list = findByG_C_C(
-			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -622,13 +571,9 @@ public class SystemEventPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
-		for (SystemEvent systemEvent :
-				findByG_C_C(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(systemEvent);
-		}
+		_collectionPersistenceFinderByG_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -783,25 +728,10 @@ public class SystemEventPersistenceImpl
 			return systemEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchSystemEventException(sb.toString());
+		throw new NoSuchSystemEventException(
+			_collectionPersistenceFinderByG_C_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK, type}));
 	}
 
 	/**
@@ -819,14 +749,10 @@ public class SystemEventPersistenceImpl
 		long groupId, long classNameId, long classPK, int type,
 		OrderByComparator<SystemEvent> orderByComparator) {
 
-		List<SystemEvent> list = findByG_C_C_T(
-			groupId, classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -841,13 +767,9 @@ public class SystemEventPersistenceImpl
 	public void removeByG_C_C_T(
 		long groupId, long classNameId, long classPK, int type) {
 
-		for (SystemEvent systemEvent :
-				findByG_C_C_T(
-					groupId, classNameId, classPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(systemEvent);
-		}
+		_collectionPersistenceFinderByG_C_C_T.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, classPK, type});
 	}
 
 	/**
@@ -1858,4 +1780,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:14538171
+// LIFERAY-SERVICE-BUILDER-HASH:-1784643704

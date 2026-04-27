@@ -208,16 +208,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			return layoutClassedModelUsage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+		throw new NoSuchLayoutClassedModelUsageException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -232,14 +225,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 		String uuid,
 		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
-		List<LayoutClassedModelUsage> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -249,11 +236,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutClassedModelUsage);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -293,23 +277,15 @@ public class LayoutClassedModelUsagePersistenceImpl
 			uuid, groupId);
 
 		if (layoutClassedModelUsage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+			throw new NoSuchLayoutClassedModelUsageException(message);
 		}
 
 		return layoutClassedModelUsage;
@@ -495,19 +471,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 			return layoutClassedModelUsage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+		throw new NoSuchLayoutClassedModelUsageException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -523,14 +489,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LayoutClassedModelUsage> orderByComparator) {
 
-		List<LayoutClassedModelUsage> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -541,13 +501,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutClassedModelUsage);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -3533,38 +3488,20 @@ public class LayoutClassedModelUsagePersistenceImpl
 				containerKey, containerType, plid);
 
 		if (layoutClassedModelUsage == null) {
-			StringBundler sb = new StringBundler(16);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", classExternalReferenceCode=");
-			sb.append(classExternalReferenceCode);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", containerKey=");
-			sb.append(containerKey);
-
-			sb.append(", containerType=");
-			sb.append(containerType);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {
+							groupId, classExternalReferenceCode, classNameId,
+							classPK, containerKey, containerType, plid
+						});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLayoutClassedModelUsageException(sb.toString());
+			throw new NoSuchLayoutClassedModelUsageException(message);
 		}
 
 		return layoutClassedModelUsage;
@@ -5013,4 +4950,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-840899041
+// LIFERAY-SERVICE-BUILDER-HASH:-1426798266

@@ -200,16 +200,9 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			return commerceTaxCategoryMapping;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
+		throw new NoSuchTaxCategoryMappingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,14 +217,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
 
-		List<CommerceTaxCategoryMapping> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +228,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceTaxCategoryMapping commerceTaxCategoryMapping :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceTaxCategoryMapping);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -280,23 +264,15 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			uuid, groupId);
 
 		if (commerceTaxCategoryMapping == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTaxCategoryMappingException(sb.toString());
+			throw new NoSuchTaxCategoryMappingException(message);
 		}
 
 		return commerceTaxCategoryMapping;
@@ -472,19 +448,9 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			return commerceTaxCategoryMapping;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
+		throw new NoSuchTaxCategoryMappingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -500,14 +466,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
 
-		List<CommerceTaxCategoryMapping> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -518,13 +478,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceTaxCategoryMapping commerceTaxCategoryMapping :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTaxCategoryMapping);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -648,16 +603,11 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			return commerceTaxCategoryMapping;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTaxMethodId=");
-		sb.append(commerceTaxMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxCategoryMappingException(sb.toString());
+		throw new NoSuchTaxCategoryMappingException(
+			_collectionPersistenceFinderByCommerceTaxMethodId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceTaxMethodId}));
 	}
 
 	/**
@@ -672,14 +622,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		long commerceTaxMethodId,
 		OrderByComparator<CommerceTaxCategoryMapping> orderByComparator) {
 
-		List<CommerceTaxCategoryMapping> list = findByCommerceTaxMethodId(
-			commerceTaxMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceTaxMethodId.fetchFirst(
+			finderCache, new Object[] {commerceTaxMethodId}, orderByComparator);
 	}
 
 	/**
@@ -689,13 +633,8 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceTaxMethodId(long commerceTaxMethodId) {
-		for (CommerceTaxCategoryMapping commerceTaxCategoryMapping :
-				findByCommerceTaxMethodId(
-					commerceTaxMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTaxCategoryMapping);
-		}
+		_collectionPersistenceFinderByCommerceTaxMethodId.remove(
+			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
 	/**
@@ -731,23 +670,16 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			commerceTaxMethodId, CPTaxCategoryId);
 
 		if (commerceTaxCategoryMapping == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceTaxMethodId=");
-			sb.append(commerceTaxMethodId);
-
-			sb.append(", CPTaxCategoryId=");
-			sb.append(CPTaxCategoryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceTaxMethodId, CPTaxCategoryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTaxCategoryMappingException(sb.toString());
+			throw new NoSuchTaxCategoryMappingException(message);
 		}
 
 		return commerceTaxCategoryMapping;
@@ -837,23 +769,16 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (commerceTaxCategoryMapping == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTaxCategoryMappingException(sb.toString());
+			throw new NoSuchTaxCategoryMappingException(message);
 		}
 
 		return commerceTaxCategoryMapping;
@@ -1880,4 +1805,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:807388745
+// LIFERAY-SERVICE-BUILDER-HASH:612557702

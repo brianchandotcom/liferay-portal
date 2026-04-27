@@ -214,16 +214,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -238,14 +231,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 		String uuid,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -255,11 +242,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -299,23 +283,15 @@ public class CPAttachmentFileEntryPersistenceImpl
 			uuid, groupId);
 
 		if (cpAttachmentFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+			throw new NoSuchCPAttachmentFileEntryException(message);
 		}
 
 		return cpAttachmentFileEntry;
@@ -501,19 +477,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -529,14 +495,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -547,13 +507,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -684,16 +639,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId}));
 	}
 
 	/**
@@ -708,14 +656,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long fileEntryId,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByFileEntryId(
-			fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileEntryId.fetchFirst(
+			finderCache, new Object[] {fileEntryId}, orderByComparator);
 	}
 
 	/**
@@ -725,12 +667,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByFileEntryId(long fileEntryId) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByFileEntryId(
-					fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByFileEntryId.remove(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	/**
@@ -867,19 +805,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -895,14 +823,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -913,13 +836,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1056,19 +974,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -1084,14 +992,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1102,13 +1004,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -1253,22 +1150,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByG_C_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, fileEntryId}));
 	}
 
 	/**
@@ -1285,14 +1170,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long groupId, long classNameId, long fileEntryId,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByG_C_F(
-			groupId, classNameId, fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_F.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, fileEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -1306,13 +1186,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public void removeByG_C_F(
 		long groupId, long classNameId, long fileEntryId) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByG_C_F(
-					groupId, classNameId, fileEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByG_C_F.remove(
+			finderCache, new Object[] {groupId, classNameId, fileEntryId});
 	}
 
 	/**
@@ -1458,22 +1333,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, fileEntryId}));
 	}
 
 	/**
@@ -1490,14 +1353,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, long fileEntryId,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_F(
-			classNameId, classPK, fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_F.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, fileEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -1511,13 +1369,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public void removeByC_C_F(
 		long classNameId, long classPK, long fileEntryId) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_F(
-					classNameId, classPK, fileEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_F.remove(
+			finderCache, new Object[] {classNameId, classPK, fileEntryId});
 	}
 
 	/**
@@ -1662,22 +1515,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", cdnURL=");
-		sb.append(cdnURL);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, cdnURL}));
 	}
 
 	/**
@@ -1694,14 +1535,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, String cdnURL,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_C(
-			classNameId, classPK, cdnURL, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, cdnURL},
+			orderByComparator);
 	}
 
 	/**
@@ -1713,13 +1549,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long classNameId, long classPK, String cdnURL) {
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_C(
-					classNameId, classPK, cdnURL, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			finderCache, new Object[] {classNameId, classPK, cdnURL});
 	}
 
 	/**
@@ -1872,25 +1703,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_LtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, displayDate, status}));
 	}
 
 	/**
@@ -1908,14 +1724,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, Date displayDate, int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_LtD_S(
-			classNameId, classPK, displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_LtD_S.fetchFirst(
+			finderCache,
+			new Object[] {classNameId, classPK, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1930,13 +1742,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public void removeByC_C_LtD_S(
 		long classNameId, long classPK, Date displayDate, int status) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_LtD_S(
-					classNameId, classPK, displayDate, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_LtD_S.remove(
+			finderCache,
+			new Object[] {classNameId, classPK, displayDate, status});
 	}
 
 	/**
@@ -2093,25 +1901,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_T_ST.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, type, status}));
 	}
 
 	/**
@@ -2129,14 +1922,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, int type, int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_T_ST(
-			classNameId, classPK, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_T_ST.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2151,13 +1939,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public void removeByC_C_T_ST(
 		long classNameId, long classPK, int type, int status) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_T_ST(
-					classNameId, classPK, type, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_T_ST.remove(
+			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
 	/**
@@ -2312,25 +2095,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_T_NotST.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, type, status}));
 	}
 
 	/**
@@ -2348,14 +2116,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, int type, int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_T_NotST(
-			classNameId, classPK, type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_T_NotST.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2370,13 +2133,8 @@ public class CPAttachmentFileEntryPersistenceImpl
 	public void removeByC_C_T_NotST(
 		long classNameId, long classPK, int type, int status) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_T_NotST(
-					classNameId, classPK, type, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_T_NotST.remove(
+			finderCache, new Object[] {classNameId, classPK, type, status});
 	}
 
 	/**
@@ -2546,28 +2304,12 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", galleryEnabled=");
-		sb.append(galleryEnabled);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_G_T_ST.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					classNameId, classPK, galleryEnabled, type, status
+				}));
 	}
 
 	/**
@@ -2587,15 +2329,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_G_T_ST(
-			classNameId, classPK, galleryEnabled, type, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_G_T_ST.fetchFirst(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2612,13 +2349,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, boolean galleryEnabled, int type,
 		int status) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_G_T_ST(
-					classNameId, classPK, galleryEnabled, type, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_G_T_ST.remove(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
 	/**
@@ -2793,28 +2526,12 @@ public class CPAttachmentFileEntryPersistenceImpl
 			return cpAttachmentFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", galleryEnabled=");
-		sb.append(galleryEnabled);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+		throw new NoSuchCPAttachmentFileEntryException(
+			_collectionPersistenceFinderByC_C_G_T_NotST.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					classNameId, classPK, galleryEnabled, type, status
+				}));
 	}
 
 	/**
@@ -2834,15 +2551,10 @@ public class CPAttachmentFileEntryPersistenceImpl
 		int status,
 		OrderByComparator<CPAttachmentFileEntry> orderByComparator) {
 
-		List<CPAttachmentFileEntry> list = findByC_C_G_T_NotST(
-			classNameId, classPK, galleryEnabled, type, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_G_T_NotST.fetchFirst(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2859,13 +2571,9 @@ public class CPAttachmentFileEntryPersistenceImpl
 		long classNameId, long classPK, boolean galleryEnabled, int type,
 		int status) {
 
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				findByC_C_G_T_NotST(
-					classNameId, classPK, galleryEnabled, type, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpAttachmentFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_G_T_NotST.remove(
+			finderCache,
+			new Object[] {classNameId, classPK, galleryEnabled, type, status});
 	}
 
 	/**
@@ -2916,23 +2624,16 @@ public class CPAttachmentFileEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (cpAttachmentFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPAttachmentFileEntryException(sb.toString());
+			throw new NoSuchCPAttachmentFileEntryException(message);
 		}
 
 		return cpAttachmentFileEntry;
@@ -4640,4 +4341,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:6707585
+// LIFERAY-SERVICE-BUILDER-HASH:-1271001340

@@ -204,16 +204,9 @@ public class CSDiagramPinPersistenceImpl
 			return csDiagramPin;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCSDiagramPinException(sb.toString());
+		throw new NoSuchCSDiagramPinException(
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -228,14 +221,8 @@ public class CSDiagramPinPersistenceImpl
 		long CPDefinitionId,
 		OrderByComparator<CSDiagramPin> orderByComparator) {
 
-		List<CSDiagramPin> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -245,13 +232,8 @@ public class CSDiagramPinPersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CSDiagramPin csDiagramPin :
-				findByCPDefinitionId(
-					CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(csDiagramPin);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -1173,4 +1155,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:631377740
+// LIFERAY-SERVICE-BUILDER-HASH:-1210416711

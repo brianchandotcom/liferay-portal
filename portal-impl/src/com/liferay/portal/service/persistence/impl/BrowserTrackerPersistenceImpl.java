@@ -90,20 +90,15 @@ public class BrowserTrackerPersistenceImpl
 		BrowserTracker browserTracker = fetchByUserId(userId);
 
 		if (browserTracker == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchBrowserTrackerException(sb.toString());
+			throw new NoSuchBrowserTrackerException(message);
 		}
 
 		return browserTracker;
@@ -739,4 +734,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2037336002
+// LIFERAY-SERVICE-BUILDER-HASH:731978445

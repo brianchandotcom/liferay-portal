@@ -201,16 +201,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,13 +217,8 @@ public class DDLRecordPersistenceImpl
 	public DDLRecord fetchByUuid_First(
 		String uuid, OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -240,11 +228,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDLRecord ddlRecord :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -282,23 +267,15 @@ public class DDLRecordPersistenceImpl
 		DDLRecord ddlRecord = fetchByUUID_G(uuid, groupId);
 
 		if (ddlRecord == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecordException(sb.toString());
+			throw new NoSuchRecordException(message);
 		}
 
 		return ddlRecord;
@@ -481,19 +458,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -509,14 +476,8 @@ public class DDLRecordPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -527,13 +488,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDLRecord ddlRecord :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -660,16 +616,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -683,14 +632,8 @@ public class DDLRecordPersistenceImpl
 	public DDLRecord fetchByCompanyId_First(
 		long companyId, OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -700,12 +643,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DDLRecord ddlRecord :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -834,16 +773,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByRecordSetId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId}));
 	}
 
 	/**
@@ -857,14 +789,8 @@ public class DDLRecordPersistenceImpl
 	public DDLRecord fetchByRecordSetId_First(
 		long recordSetId, OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByRecordSetId(
-			recordSetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRecordSetId.fetchFirst(
+			finderCache, new Object[] {recordSetId}, orderByComparator);
 	}
 
 	/**
@@ -874,12 +800,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByRecordSetId(long recordSetId) {
-		for (DDLRecord ddlRecord :
-				findByRecordSetId(
-					recordSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByRecordSetId.remove(
+			finderCache, new Object[] {recordSetId});
 	}
 
 	/**
@@ -1014,19 +936,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByR_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId, userId}));
 	}
 
 	/**
@@ -1042,14 +954,8 @@ public class DDLRecordPersistenceImpl
 		long recordSetId, long userId,
 		OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByR_U(
-			recordSetId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_U.fetchFirst(
+			finderCache, new Object[] {recordSetId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1060,13 +966,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByR_U(long recordSetId, long userId) {
-		for (DDLRecord ddlRecord :
-				findByR_U(
-					recordSetId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByR_U.remove(
+			finderCache, new Object[] {recordSetId, userId});
 	}
 
 	/**
@@ -1205,19 +1106,10 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", recordSetVersion=");
-		sb.append(recordSetVersion);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByR_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {recordSetId, recordSetVersion}));
 	}
 
 	/**
@@ -1233,14 +1125,9 @@ public class DDLRecordPersistenceImpl
 		long recordSetId, String recordSetVersion,
 		OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByR_R(
-			recordSetId, recordSetVersion, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_R.fetchFirst(
+			finderCache, new Object[] {recordSetId, recordSetVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -1251,13 +1138,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByR_R(long recordSetId, String recordSetVersion) {
-		for (DDLRecord ddlRecord :
-				findByR_R(
-					recordSetId, recordSetVersion, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByR_R.remove(
+			finderCache, new Object[] {recordSetId, recordSetVersion});
 	}
 
 	/**
@@ -1393,19 +1275,9 @@ public class DDLRecordPersistenceImpl
 			return ddlRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchRecordException(sb.toString());
+		throw new NoSuchRecordException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {className, classPK}));
 	}
 
 	/**
@@ -1421,14 +1293,8 @@ public class DDLRecordPersistenceImpl
 		String className, long classPK,
 		OrderByComparator<DDLRecord> orderByComparator) {
 
-		List<DDLRecord> list = findByC_C(
-			className, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {className, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1439,13 +1305,8 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(String className, long classPK) {
-		for (DDLRecord ddlRecord :
-				findByC_C(
-					className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecord);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {className, classPK});
 	}
 
 	/**
@@ -2611,4 +2472,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1373720993
+// LIFERAY-SERVICE-BUILDER-HASH:812667170

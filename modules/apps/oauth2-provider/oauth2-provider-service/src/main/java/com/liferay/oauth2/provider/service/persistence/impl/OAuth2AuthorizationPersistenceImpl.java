@@ -195,16 +195,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			return oAuth2Authorization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+		throw new NoSuchOAuth2AuthorizationException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -218,14 +211,8 @@ public class OAuth2AuthorizationPersistenceImpl
 	public OAuth2Authorization fetchByUserId_First(
 		long userId, OrderByComparator<OAuth2Authorization> orderByComparator) {
 
-		List<OAuth2Authorization> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -235,12 +222,8 @@ public class OAuth2AuthorizationPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (OAuth2Authorization oAuth2Authorization :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Authorization);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -363,16 +346,11 @@ public class OAuth2AuthorizationPersistenceImpl
 			return oAuth2Authorization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+		throw new NoSuchOAuth2AuthorizationException(
+			_collectionPersistenceFinderByOAuth2ApplicationId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {oAuth2ApplicationId}));
 	}
 
 	/**
@@ -387,14 +365,8 @@ public class OAuth2AuthorizationPersistenceImpl
 		long oAuth2ApplicationId,
 		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
-		List<OAuth2Authorization> list = findByOAuth2ApplicationId(
-			oAuth2ApplicationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOAuth2ApplicationId.fetchFirst(
+			finderCache, new Object[] {oAuth2ApplicationId}, orderByComparator);
 	}
 
 	/**
@@ -404,13 +376,8 @@ public class OAuth2AuthorizationPersistenceImpl
 	 */
 	@Override
 	public void removeByOAuth2ApplicationId(long oAuth2ApplicationId) {
-		for (OAuth2Authorization oAuth2Authorization :
-				findByOAuth2ApplicationId(
-					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(oAuth2Authorization);
-		}
+		_collectionPersistenceFinderByOAuth2ApplicationId.remove(
+			finderCache, new Object[] {oAuth2ApplicationId});
 	}
 
 	/**
@@ -540,19 +507,10 @@ public class OAuth2AuthorizationPersistenceImpl
 			return oAuth2Authorization;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", accessTokenContentHash=");
-		sb.append(accessTokenContentHash);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+		throw new NoSuchOAuth2AuthorizationException(
+			_collectionPersistenceFinderByC_ATCH.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, accessTokenContentHash}));
 	}
 
 	/**
@@ -568,14 +526,9 @@ public class OAuth2AuthorizationPersistenceImpl
 		long companyId, long accessTokenContentHash,
 		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
-		List<OAuth2Authorization> list = findByC_ATCH(
-			companyId, accessTokenContentHash, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_ATCH.fetchFirst(
+			finderCache, new Object[] {companyId, accessTokenContentHash},
+			orderByComparator);
 	}
 
 	/**
@@ -586,13 +539,8 @@ public class OAuth2AuthorizationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_ATCH(long companyId, long accessTokenContentHash) {
-		for (OAuth2Authorization oAuth2Authorization :
-				findByC_ATCH(
-					companyId, accessTokenContentHash, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Authorization);
-		}
+		_collectionPersistenceFinderByC_ATCH.remove(
+			finderCache, new Object[] {companyId, accessTokenContentHash});
 	}
 
 	/**
@@ -723,19 +671,10 @@ public class OAuth2AuthorizationPersistenceImpl
 			return oAuth2Authorization;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", refreshTokenContentHash=");
-		sb.append(refreshTokenContentHash);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+		throw new NoSuchOAuth2AuthorizationException(
+			_collectionPersistenceFinderByC_RTCH.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, refreshTokenContentHash}));
 	}
 
 	/**
@@ -751,14 +690,9 @@ public class OAuth2AuthorizationPersistenceImpl
 		long companyId, long refreshTokenContentHash,
 		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
-		List<OAuth2Authorization> list = findByC_RTCH(
-			companyId, refreshTokenContentHash, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_RTCH.fetchFirst(
+			finderCache, new Object[] {companyId, refreshTokenContentHash},
+			orderByComparator);
 	}
 
 	/**
@@ -769,13 +703,8 @@ public class OAuth2AuthorizationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_RTCH(long companyId, long refreshTokenContentHash) {
-		for (OAuth2Authorization oAuth2Authorization :
-				findByC_RTCH(
-					companyId, refreshTokenContentHash, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Authorization);
-		}
+		_collectionPersistenceFinderByC_RTCH.remove(
+			finderCache, new Object[] {companyId, refreshTokenContentHash});
 	}
 
 	/**
@@ -917,22 +846,12 @@ public class OAuth2AuthorizationPersistenceImpl
 			return oAuth2Authorization;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append(", rememberDeviceContent=");
-		sb.append(rememberDeviceContent);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2AuthorizationException(sb.toString());
+		throw new NoSuchOAuth2AuthorizationException(
+			_collectionPersistenceFinderByU_O_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					userId, oAuth2ApplicationId, rememberDeviceContent
+				}));
 	}
 
 	/**
@@ -949,15 +868,10 @@ public class OAuth2AuthorizationPersistenceImpl
 		long userId, long oAuth2ApplicationId, String rememberDeviceContent,
 		OrderByComparator<OAuth2Authorization> orderByComparator) {
 
-		List<OAuth2Authorization> list = findByU_O_R(
-			userId, oAuth2ApplicationId, rememberDeviceContent, 0, 1,
+		return _collectionPersistenceFinderByU_O_R.fetchFirst(
+			finderCache,
+			new Object[] {userId, oAuth2ApplicationId, rememberDeviceContent},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -971,13 +885,9 @@ public class OAuth2AuthorizationPersistenceImpl
 	public void removeByU_O_R(
 		long userId, long oAuth2ApplicationId, String rememberDeviceContent) {
 
-		for (OAuth2Authorization oAuth2Authorization :
-				findByU_O_R(
-					userId, oAuth2ApplicationId, rememberDeviceContent,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2Authorization);
-		}
+		_collectionPersistenceFinderByU_O_R.remove(
+			finderCache,
+			new Object[] {userId, oAuth2ApplicationId, rememberDeviceContent});
 	}
 
 	/**
@@ -2171,4 +2081,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1321775150
+// LIFERAY-SERVICE-BUILDER-HASH:-36284531

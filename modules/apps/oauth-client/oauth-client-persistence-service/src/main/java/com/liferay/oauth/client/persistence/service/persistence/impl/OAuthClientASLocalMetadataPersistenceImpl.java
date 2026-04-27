@@ -203,16 +203,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			return oAuthClientASLocalMetadata;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		throw new NoSuchOAuthClientASLocalMetadataException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		String uuid,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
-		List<OAuthClientASLocalMetadata> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -400,11 +387,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientASLocalMetadata);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -608,19 +592,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			return oAuthClientASLocalMetadata;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		throw new NoSuchOAuthClientASLocalMetadataException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -636,14 +610,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
-		List<OAuthClientASLocalMetadata> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -819,13 +787,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(oAuthClientASLocalMetadata);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1030,16 +993,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			return oAuthClientASLocalMetadata;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		throw new NoSuchOAuthClientASLocalMetadataException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1054,14 +1010,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		long companyId,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
-		List<OAuthClientASLocalMetadata> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1216,12 +1166,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientASLocalMetadata);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1400,16 +1346,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			return oAuthClientASLocalMetadata;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		throw new NoSuchOAuthClientASLocalMetadataException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -1424,14 +1363,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		long userId,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
-		List<OAuthClientASLocalMetadata> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -1584,12 +1517,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientASLocalMetadata);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -1685,23 +1614,15 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			companyId, issuer);
 
 		if (oAuthClientASLocalMetadata == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", issuer=");
-			sb.append(issuer);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_I.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, issuer});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+			throw new NoSuchOAuthClientASLocalMetadataException(message);
 		}
 
 		return oAuthClientASLocalMetadata;
@@ -1882,19 +1803,10 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			return oAuthClientASLocalMetadata;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", localWellKnownEnabled=");
-		sb.append(localWellKnownEnabled);
-
-		sb.append("}");
-
-		throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+		throw new NoSuchOAuthClientASLocalMetadataException(
+			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, localWellKnownEnabled}));
 	}
 
 	/**
@@ -1910,14 +1822,9 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 		long companyId, boolean localWellKnownEnabled,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
-		List<OAuthClientASLocalMetadata> list = findByC_L(
-			companyId, localWellKnownEnabled, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_L.fetchFirst(
+			finderCache, new Object[] {companyId, localWellKnownEnabled},
+			orderByComparator);
 	}
 
 	/**
@@ -2084,13 +1991,8 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Override
 	public void removeByC_L(long companyId, boolean localWellKnownEnabled) {
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				findByC_L(
-					companyId, localWellKnownEnabled, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(oAuthClientASLocalMetadata);
-		}
+		_collectionPersistenceFinderByC_L.remove(
+			finderCache, new Object[] {companyId, localWellKnownEnabled});
 	}
 
 	/**
@@ -2196,23 +2098,16 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			companyId, localWellKnownURI);
 
 		if (oAuthClientASLocalMetadata == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", localWellKnownURI=");
-			sb.append(localWellKnownURI);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_LWKURI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, localWellKnownURI});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+			throw new NoSuchOAuthClientASLocalMetadataException(message);
 		}
 
 		return oAuthClientASLocalMetadata;
@@ -2301,23 +2196,16 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			companyId, oAuthASLocalWellKnownURI);
 
 		if (oAuthClientASLocalMetadata == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", oAuthASLocalWellKnownURI=");
-			sb.append(oAuthASLocalWellKnownURI);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_O.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, oAuthASLocalWellKnownURI});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+			throw new NoSuchOAuthClientASLocalMetadataException(message);
 		}
 
 		return oAuthClientASLocalMetadata;
@@ -2407,23 +2295,16 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (oAuthClientASLocalMetadata == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOAuthClientASLocalMetadataException(sb.toString());
+			throw new NoSuchOAuthClientASLocalMetadataException(message);
 		}
 
 		return oAuthClientASLocalMetadata;
@@ -3580,4 +3461,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:911328465
+// LIFERAY-SERVICE-BUILDER-HASH:-397223690

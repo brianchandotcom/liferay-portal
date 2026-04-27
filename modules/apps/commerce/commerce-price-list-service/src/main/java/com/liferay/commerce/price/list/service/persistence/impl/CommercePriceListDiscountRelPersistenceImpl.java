@@ -206,16 +206,9 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			return commercePriceListDiscountRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
+		throw new NoSuchPriceListDiscountRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 		String uuid,
 		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
 
-		List<CommercePriceListDiscountRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommercePriceListDiscountRel commercePriceListDiscountRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceListDiscountRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -388,19 +372,9 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			return commercePriceListDiscountRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
+		throw new NoSuchPriceListDiscountRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -416,14 +390,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
 
-		List<CommercePriceListDiscountRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -434,13 +402,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommercePriceListDiscountRel commercePriceListDiscountRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceListDiscountRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -574,16 +537,11 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			return commercePriceListDiscountRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceListDiscountRelException(sb.toString());
+		throw new NoSuchPriceListDiscountRelException(
+			_collectionPersistenceFinderByCommercePriceListId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commercePriceListId}));
 	}
 
 	/**
@@ -598,14 +556,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 		long commercePriceListId,
 		OrderByComparator<CommercePriceListDiscountRel> orderByComparator) {
 
-		List<CommercePriceListDiscountRel> list = findByCommercePriceListId(
-			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommercePriceListId.fetchFirst(
+			finderCache, new Object[] {commercePriceListId}, orderByComparator);
 	}
 
 	/**
@@ -615,13 +567,8 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommercePriceListId(long commercePriceListId) {
-		for (CommercePriceListDiscountRel commercePriceListDiscountRel :
-				findByCommercePriceListId(
-					commercePriceListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceListDiscountRel);
-		}
+		_collectionPersistenceFinderByCommercePriceListId.remove(
+			finderCache, new Object[] {commercePriceListId});
 	}
 
 	/**
@@ -662,23 +609,16 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			fetchByCDI_CPI(commerceDiscountId, commercePriceListId);
 
 		if (commercePriceListDiscountRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceDiscountId=");
-			sb.append(commerceDiscountId);
-
-			sb.append(", commercePriceListId=");
-			sb.append(commercePriceListId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCDI_CPI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceDiscountId, commercePriceListId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPriceListDiscountRelException(sb.toString());
+			throw new NoSuchPriceListDiscountRelException(message);
 		}
 
 		return commercePriceListDiscountRel;
@@ -1873,4 +1813,4 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1224680612
+// LIFERAY-SERVICE-BUILDER-HASH:-1770247151

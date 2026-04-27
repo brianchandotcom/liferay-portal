@@ -216,16 +216,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentEntryId=");
-		sb.append(fragmentEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByFragmentEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fragmentEntryId}));
 	}
 
 	/**
@@ -240,14 +233,8 @@ public class FragmentEntryVersionPersistenceImpl
 		long fragmentEntryId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByFragmentEntryId(
-			fragmentEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFragmentEntryId.fetchFirst(
+			finderCache, new Object[] {fragmentEntryId}, orderByComparator);
 	}
 
 	/**
@@ -257,13 +244,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByFragmentEntryId(long fragmentEntryId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByFragmentEntryId(
-					fragmentEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByFragmentEntryId.remove(
+			finderCache, new Object[] {fragmentEntryId});
 	}
 
 	/**
@@ -304,23 +286,17 @@ public class FragmentEntryVersionPersistenceImpl
 			fetchByFragmentEntryId_Version(fragmentEntryId, version);
 
 		if (fragmentEntryVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("fragmentEntryId=");
-			sb.append(fragmentEntryId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByFragmentEntryId_Version.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {fragmentEntryId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return fragmentEntryVersion;
@@ -503,16 +479,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -527,14 +496,8 @@ public class FragmentEntryVersionPersistenceImpl
 		String uuid,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -544,11 +507,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -685,19 +645,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, version}));
 	}
 
 	/**
@@ -713,14 +663,8 @@ public class FragmentEntryVersionPersistenceImpl
 		String uuid, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByUuid_Version(
-			uuid, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_Version.fetchFirst(
+			finderCache, new Object[] {uuid, version}, orderByComparator);
 	}
 
 	/**
@@ -731,13 +675,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_Version(String uuid, int version) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByUuid_Version(
-					uuid, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_Version.remove(
+			finderCache, new Object[] {uuid, version});
 	}
 
 	/**
@@ -872,19 +811,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
 	}
 
 	/**
@@ -900,14 +829,8 @@ public class FragmentEntryVersionPersistenceImpl
 		String uuid, long groupId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByUUID_G(
-			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUUID_G.fetchFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -918,13 +841,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUUID_G(String uuid, long groupId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByUUID_G(
-					uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByUUID_G.remove(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -967,26 +885,16 @@ public class FragmentEntryVersionPersistenceImpl
 			uuid, groupId, version);
 
 		if (fragmentEntryVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G_Version.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {uuid, groupId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return fragmentEntryVersion;
@@ -1180,19 +1088,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -1208,14 +1106,8 @@ public class FragmentEntryVersionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -1226,13 +1118,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1376,22 +1263,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_C_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {uuid, companyId, version}));
 	}
 
 	/**
@@ -1408,14 +1283,9 @@ public class FragmentEntryVersionPersistenceImpl
 		String uuid, long companyId, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByUuid_C_Version(
-			uuid, companyId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C_Version.fetchFirst(
+			finderCache, new Object[] {uuid, companyId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1429,13 +1299,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByUuid_C_Version(
 		String uuid, long companyId, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByUuid_C_Version(
-					uuid, companyId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C_Version.remove(
+			finderCache, new Object[] {uuid, companyId, version});
 	}
 
 	/**
@@ -1566,16 +1431,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -1590,14 +1448,8 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -1607,12 +1459,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1749,19 +1597,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByGroupId_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, version}));
 	}
 
 	/**
@@ -1777,14 +1615,8 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByGroupId_Version(
-			groupId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId_Version.fetchFirst(
+			finderCache, new Object[] {groupId, version}, orderByComparator);
 	}
 
 	/**
@@ -1795,13 +1627,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId_Version(long groupId, int version) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByGroupId_Version(
-					groupId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByGroupId_Version.remove(
+			finderCache, new Object[] {groupId, version});
 	}
 
 	/**
@@ -1936,16 +1763,11 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByFragmentCollectionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fragmentCollectionId}));
 	}
 
 	/**
@@ -1960,14 +1782,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long fragmentCollectionId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByFragmentCollectionId(
-			fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFragmentCollectionId.fetchFirst(
+			finderCache, new Object[] {fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1977,13 +1794,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByFragmentCollectionId(long fragmentCollectionId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByFragmentCollectionId(
-					fragmentCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByFragmentCollectionId.remove(
+			finderCache, new Object[] {fragmentCollectionId});
 	}
 
 	/**
@@ -2126,19 +1938,11 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByFragmentCollectionId_Version.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fragmentCollectionId, version}));
 	}
 
 	/**
@@ -2154,14 +1958,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long fragmentCollectionId, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByFragmentCollectionId_Version(
-			fragmentCollectionId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFragmentCollectionId_Version.
+			fetchFirst(
+				finderCache, new Object[] {fragmentCollectionId, version},
+				orderByComparator);
 	}
 
 	/**
@@ -2174,13 +1974,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByFragmentCollectionId_Version(
 		long fragmentCollectionId, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByFragmentCollectionId_Version(
-					fragmentCollectionId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByFragmentCollectionId_Version.remove(
+			finderCache, new Object[] {fragmentCollectionId, version});
 	}
 
 	/**
@@ -2309,16 +2104,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -2332,14 +2120,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public FragmentEntryVersion fetchByType_First(
 		int type, OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByType(
-			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -2349,11 +2131,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByType(int type) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByType.remove(
+			finderCache, new Object[] {type});
 	}
 
 	/**
@@ -2490,19 +2269,9 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByType_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, version}));
 	}
 
 	/**
@@ -2518,14 +2287,8 @@ public class FragmentEntryVersionPersistenceImpl
 		int type, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByType_Version(
-			type, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType_Version.fetchFirst(
+			finderCache, new Object[] {type, version}, orderByComparator);
 	}
 
 	/**
@@ -2536,13 +2299,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByType_Version(int type, int version) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByType_Version(
-					type, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByType_Version.remove(
+			finderCache, new Object[] {type, version});
 	}
 
 	/**
@@ -2681,19 +2439,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId}));
 	}
 
 	/**
@@ -2709,14 +2458,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI(
-			groupId, fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -2727,13 +2471,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_FCI(long groupId, long fragmentCollectionId) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI(
-					groupId, fragmentCollectionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId});
 	}
 
 	/**
@@ -2881,22 +2620,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, version}));
 	}
 
 	/**
@@ -2913,14 +2640,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_Version(
-			groupId, fragmentCollectionId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_Version.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2934,13 +2656,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_Version(
 		long groupId, long fragmentCollectionId, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_Version(
-					groupId, fragmentCollectionId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_Version.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, version});
 	}
 
 	/**
@@ -3083,19 +2800,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentEntryKey=");
-		sb.append(fragmentEntryKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FEK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentEntryKey}));
 	}
 
 	/**
@@ -3111,14 +2819,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, String fragmentEntryKey,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FEK(
-			groupId, fragmentEntryKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FEK.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -3129,13 +2832,8 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_FEK(long groupId, String fragmentEntryKey) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FEK(
-					groupId, fragmentEntryKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FEK.remove(
+			finderCache, new Object[] {groupId, fragmentEntryKey});
 	}
 
 	/**
@@ -3178,26 +2876,16 @@ public class FragmentEntryVersionPersistenceImpl
 			groupId, fragmentEntryKey, version);
 
 		if (fragmentEntryVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", fragmentEntryKey=");
-			sb.append(fragmentEntryKey);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_FEK_Version.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, fragmentEntryKey, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return fragmentEntryVersion;
@@ -3403,22 +3091,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_LikeN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, name}));
 	}
 
 	/**
@@ -3435,14 +3111,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_LikeN(
-			groupId, fragmentCollectionId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_LikeN.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -3456,13 +3127,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_LikeN(
-					groupId, fragmentCollectionId, name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name});
 	}
 
 	/**
@@ -3623,25 +3289,13 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_LikeN_Version.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentCollectionId, name, version
+					}));
 	}
 
 	/**
@@ -3659,15 +3313,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_LikeN_Version(
-			groupId, fragmentCollectionId, name, version, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_LikeN_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3682,13 +3331,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_LikeN_Version(
 		long groupId, long fragmentCollectionId, String name, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_LikeN_Version(
-					groupId, fragmentCollectionId, name, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN_Version.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, version});
 	}
 
 	/**
@@ -3839,22 +3484,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, type}));
 	}
 
 	/**
@@ -3871,14 +3504,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int type,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_T(
-			groupId, fragmentCollectionId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_T.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -3892,13 +3520,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_T(
 		long groupId, long fragmentCollectionId, int type) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_T(
-					groupId, fragmentCollectionId, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_T.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type});
 	}
 
 	/**
@@ -4059,25 +3682,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_T_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, type, version}));
 	}
 
 	/**
@@ -4095,15 +3703,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int type, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_T_Version(
-			groupId, fragmentCollectionId, type, version, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_T_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4118,13 +3721,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_T_Version(
 		long groupId, long fragmentCollectionId, int type, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_T_Version(
-					groupId, fragmentCollectionId, type, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_T_Version.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, version});
 	}
 
 	/**
@@ -4277,22 +3876,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, status}));
 	}
 
 	/**
@@ -4309,14 +3896,9 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int status,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_S(
-			groupId, fragmentCollectionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_S.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4330,13 +3912,8 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_S(
-					groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_S.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status});
 	}
 
 	/**
@@ -4497,25 +4074,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_S_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, status, version}));
 	}
 
 	/**
@@ -4533,15 +4095,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int status, int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_S_Version(
-			groupId, fragmentCollectionId, status, version, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_S_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4556,13 +4113,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_S_Version(
 		long groupId, long fragmentCollectionId, int status, int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_S_Version(
-					groupId, fragmentCollectionId, status, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_S_Version.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, version});
 	}
 
 	/**
@@ -4722,25 +4275,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_LikeN_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, name, status}));
 	}
 
 	/**
@@ -4758,15 +4296,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name, int status,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_LikeN_S(
-			groupId, fragmentCollectionId, name, status, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4781,13 +4314,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_LikeN_S(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_LikeN_S(
-					groupId, fragmentCollectionId, name, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN_S.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status});
 	}
 
 	/**
@@ -4959,28 +4488,13 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_LikeN_S_Version.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentCollectionId, name, status, version
+					}));
 	}
 
 	/**
@@ -5000,15 +4514,10 @@ public class FragmentEntryVersionPersistenceImpl
 		int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_LikeN_S_Version(
-			groupId, fragmentCollectionId, name, status, version, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -5025,13 +4534,11 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name, int status,
 		int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_LikeN_S_Version(
-					groupId, fragmentCollectionId, name, status, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN_S_Version.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentCollectionId, name, status, version
+			});
 	}
 
 	/**
@@ -5195,25 +4702,10 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, type, status}));
 	}
 
 	/**
@@ -5231,15 +4723,10 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int type, int status,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_T_S(
-			groupId, fragmentCollectionId, type, status, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_T_S.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -5254,13 +4741,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public void removeByG_FCI_T_S(
 		long groupId, long fragmentCollectionId, int type, int status) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_T_S(
-					groupId, fragmentCollectionId, type, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_T_S.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status});
 	}
 
 	/**
@@ -5432,28 +4915,13 @@ public class FragmentEntryVersionPersistenceImpl
 			return fragmentEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_FCI_T_S_Version.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, fragmentCollectionId, type, status, version
+					}));
 	}
 
 	/**
@@ -5473,15 +4941,10 @@ public class FragmentEntryVersionPersistenceImpl
 		int version,
 		OrderByComparator<FragmentEntryVersion> orderByComparator) {
 
-		List<FragmentEntryVersion> list = findByG_FCI_T_S_Version(
-			groupId, fragmentCollectionId, type, status, version, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_T_S_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -5498,13 +4961,11 @@ public class FragmentEntryVersionPersistenceImpl
 		long groupId, long fragmentCollectionId, int type, int status,
 		int version) {
 
-		for (FragmentEntryVersion fragmentEntryVersion :
-				findByG_FCI_T_S_Version(
-					groupId, fragmentCollectionId, type, status, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentEntryVersion);
-		}
+		_collectionPersistenceFinderByG_FCI_T_S_Version.remove(
+			finderCache,
+			new Object[] {
+				groupId, fragmentCollectionId, type, status, version
+			});
 	}
 
 	/**
@@ -7737,4 +7198,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:385193242
+// LIFERAY-SERVICE-BUILDER-HASH:79558193

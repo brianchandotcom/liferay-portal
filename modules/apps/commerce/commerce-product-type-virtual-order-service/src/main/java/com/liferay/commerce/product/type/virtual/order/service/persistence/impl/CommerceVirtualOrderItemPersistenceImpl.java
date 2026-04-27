@@ -192,16 +192,9 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			return commerceVirtualOrderItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemException(sb.toString());
+		throw new NoSuchVirtualOrderItemException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceVirtualOrderItem> orderByComparator) {
 
-		List<CommerceVirtualOrderItem> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceVirtualOrderItem commerceVirtualOrderItem :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceVirtualOrderItem);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -272,23 +256,15 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			uuid, groupId);
 
 		if (commerceVirtualOrderItem == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVirtualOrderItemException(sb.toString());
+			throw new NoSuchVirtualOrderItemException(message);
 		}
 
 		return commerceVirtualOrderItem;
@@ -464,19 +440,9 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			return commerceVirtualOrderItem;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVirtualOrderItemException(sb.toString());
+		throw new NoSuchVirtualOrderItemException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -492,14 +458,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceVirtualOrderItem> orderByComparator) {
 
-		List<CommerceVirtualOrderItem> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -510,13 +470,8 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceVirtualOrderItem commerceVirtualOrderItem :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceVirtualOrderItem);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -552,20 +507,17 @@ public class CommerceVirtualOrderItemPersistenceImpl
 			fetchByCommerceOrderItemId(commerceOrderItemId);
 
 		if (commerceVirtualOrderItem == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceOrderItemId=");
-			sb.append(commerceOrderItemId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCommerceOrderItemId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {commerceOrderItemId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVirtualOrderItemException(sb.toString());
+			throw new NoSuchVirtualOrderItemException(message);
 		}
 
 		return commerceVirtualOrderItem;
@@ -1430,4 +1382,4 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2089508014
+// LIFERAY-SERVICE-BUILDER-HASH:-1926334910

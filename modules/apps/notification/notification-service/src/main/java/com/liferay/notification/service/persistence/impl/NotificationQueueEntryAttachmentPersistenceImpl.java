@@ -201,17 +201,11 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 			return notificationQueueEntryAttachment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationQueueEntryId=");
-		sb.append(notificationQueueEntryId);
-
-		sb.append("}");
-
 		throw new NoSuchNotificationQueueEntryAttachmentException(
-			sb.toString());
+			_collectionPersistenceFinderByNotificationQueueEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {notificationQueueEntryId}));
 	}
 
 	/**
@@ -228,15 +222,10 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 			OrderByComparator<NotificationQueueEntryAttachment>
 				orderByComparator) {
 
-		List<NotificationQueueEntryAttachment> list =
-			findByNotificationQueueEntryId(
-				notificationQueueEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByNotificationQueueEntryId.
+			fetchFirst(
+				finderCache, new Object[] {notificationQueueEntryId},
+				orderByComparator);
 	}
 
 	/**
@@ -248,13 +237,8 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	public void removeByNotificationQueueEntryId(
 		long notificationQueueEntryId) {
 
-		for (NotificationQueueEntryAttachment notificationQueueEntryAttachment :
-				findByNotificationQueueEntryId(
-					notificationQueueEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(notificationQueueEntryAttachment);
-		}
+		_collectionPersistenceFinderByNotificationQueueEntryId.remove(
+			finderCache, new Object[] {notificationQueueEntryId});
 	}
 
 	/**
@@ -973,4 +957,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1204683759
+// LIFERAY-SERVICE-BUILDER-HASH:1323573246

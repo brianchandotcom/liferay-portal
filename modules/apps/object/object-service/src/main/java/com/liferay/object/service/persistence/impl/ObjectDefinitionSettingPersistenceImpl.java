@@ -192,16 +192,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			return objectDefinitionSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
+		throw new NoSuchObjectDefinitionSettingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 		String uuid,
 		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
 
-		List<ObjectDefinitionSetting> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectDefinitionSetting);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -364,19 +348,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			return objectDefinitionSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
+		throw new NoSuchObjectDefinitionSettingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -392,14 +366,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
 
-		List<ObjectDefinitionSetting> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -410,13 +378,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectDefinitionSetting);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -540,16 +503,11 @@ public class ObjectDefinitionSettingPersistenceImpl
 			return objectDefinitionSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectDefinitionId=");
-		sb.append(objectDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
+		throw new NoSuchObjectDefinitionSettingException(
+			_collectionPersistenceFinderByObjectDefinitionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId}));
 	}
 
 	/**
@@ -564,14 +522,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 		long objectDefinitionId,
 		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
 
-		List<ObjectDefinitionSetting> list = findByObjectDefinitionId(
-			objectDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectDefinitionId.fetchFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -581,13 +533,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectDefinitionId(long objectDefinitionId) {
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				findByObjectDefinitionId(
-					objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectDefinitionSetting);
-		}
+		_collectionPersistenceFinderByObjectDefinitionId.remove(
+			finderCache, new Object[] {objectDefinitionId});
 	}
 
 	/**
@@ -713,19 +660,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			return objectDefinitionSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
+		throw new NoSuchObjectDefinitionSettingException(
+			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
 	}
 
 	/**
@@ -741,14 +678,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 		long companyId, String name,
 		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
 
-		List<ObjectDefinitionSetting> list = findByC_N(
-			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N.fetchFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -759,13 +690,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N(long companyId, String name) {
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				findByC_N(
-					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectDefinitionSetting);
-		}
+		_collectionPersistenceFinderByC_N.remove(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -802,23 +728,16 @@ public class ObjectDefinitionSettingPersistenceImpl
 			objectDefinitionId, name);
 
 		if (objectDefinitionSetting == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectDefinitionId=");
-			sb.append(objectDefinitionId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByODI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectDefinitionId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectDefinitionSettingException(sb.toString());
+			throw new NoSuchObjectDefinitionSettingException(message);
 		}
 
 		return objectDefinitionSetting;
@@ -1003,22 +922,10 @@ public class ObjectDefinitionSettingPersistenceImpl
 			return objectDefinitionSetting;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", value=");
-		sb.append(value);
-
-		sb.append("}");
-
-		throw new NoSuchObjectDefinitionSettingException(sb.toString());
+		throw new NoSuchObjectDefinitionSettingException(
+			_collectionPersistenceFinderByC_N_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, name, value}));
 	}
 
 	/**
@@ -1035,14 +942,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 		long companyId, String name, String value,
 		OrderByComparator<ObjectDefinitionSetting> orderByComparator) {
 
-		List<ObjectDefinitionSetting> list = findByC_N_V(
-			companyId, name, value, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N_V.fetchFirst(
+			finderCache, new Object[] {companyId, name, value},
+			orderByComparator);
 	}
 
 	/**
@@ -1054,13 +956,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N_V(long companyId, String name, String value) {
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				findByC_N_V(
-					companyId, name, value, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectDefinitionSetting);
-		}
+		_collectionPersistenceFinderByC_N_V.remove(
+			finderCache, new Object[] {companyId, name, value});
 	}
 
 	/**
@@ -1957,4 +1854,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1935463271
+// LIFERAY-SERVICE-BUILDER-HASH:564694398

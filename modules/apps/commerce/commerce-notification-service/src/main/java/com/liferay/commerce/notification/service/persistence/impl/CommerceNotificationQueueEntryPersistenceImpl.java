@@ -192,16 +192,9 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return commerceNotificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		long groupId,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		List<CommerceNotificationQueueEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -233,12 +220,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationQueueEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -374,16 +357,11 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return commerceNotificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceNotificationTemplateId=");
-		sb.append(commerceNotificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByCommerceNotificationTemplateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceNotificationTemplateId}));
 	}
 
 	/**
@@ -400,15 +378,10 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			OrderByComparator<CommerceNotificationQueueEntry>
 				orderByComparator) {
 
-		List<CommerceNotificationQueueEntry> list =
-			findByCommerceNotificationTemplateId(
-				commerceNotificationTemplateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceNotificationTemplateId.
+			fetchFirst(
+				finderCache, new Object[] {commerceNotificationTemplateId},
+				orderByComparator);
 	}
 
 	/**
@@ -420,13 +393,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	public void removeByCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				findByCommerceNotificationTemplateId(
-					commerceNotificationTemplateId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationQueueEntry);
-		}
+		_collectionPersistenceFinderByCommerceNotificationTemplateId.remove(
+			finderCache, new Object[] {commerceNotificationTemplateId});
 	}
 
 	/**
@@ -546,16 +514,9 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return commerceNotificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sent=");
-		sb.append(sent);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderBySent.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sent}));
 	}
 
 	/**
@@ -570,14 +531,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		boolean sent,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		List<CommerceNotificationQueueEntry> list = findBySent(
-			sent, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySent.fetchFirst(
+			finderCache, new Object[] {sent}, orderByComparator);
 	}
 
 	/**
@@ -587,11 +542,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeBySent(boolean sent) {
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				findBySent(sent, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationQueueEntry);
-		}
+		_collectionPersistenceFinderBySent.remove(
+			finderCache, new Object[] {sent});
 	}
 
 	/**
@@ -711,16 +663,9 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return commerceNotificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sentDate<");
-		sb.append(sentDate);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByLtSentDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sentDate}));
 	}
 
 	/**
@@ -735,14 +680,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		Date sentDate,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		List<CommerceNotificationQueueEntry> list = findByLtSentDate(
-			sentDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtSentDate.fetchFirst(
+			finderCache, new Object[] {sentDate}, orderByComparator);
 	}
 
 	/**
@@ -752,12 +691,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtSentDate(Date sentDate) {
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				findByLtSentDate(
-					sentDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationQueueEntry);
-		}
+		_collectionPersistenceFinderByLtSentDate.remove(
+			finderCache, new Object[] {sentDate});
 	}
 
 	/**
@@ -901,25 +836,10 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			return commerceNotificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", sent=");
-		sb.append(sent);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByG_C_C_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK, sent}));
 	}
 
 	/**
@@ -937,14 +857,9 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		long groupId, long classNameId, long classPK, boolean sent,
 		OrderByComparator<CommerceNotificationQueueEntry> orderByComparator) {
 
-		List<CommerceNotificationQueueEntry> list = findByG_C_C_S(
-			groupId, classNameId, classPK, sent, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C_S.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK, sent},
+			orderByComparator);
 	}
 
 	/**
@@ -959,13 +874,8 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	public void removeByG_C_C_S(
 		long groupId, long classNameId, long classPK, boolean sent) {
 
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				findByG_C_C_S(
-					groupId, classNameId, classPK, sent, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationQueueEntry);
-		}
+		_collectionPersistenceFinderByG_C_C_S.remove(
+			finderCache, new Object[] {groupId, classNameId, classPK, sent});
 	}
 
 	/**
@@ -1851,4 +1761,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2091686532
+// LIFERAY-SERVICE-BUILDER-HASH:1595447897

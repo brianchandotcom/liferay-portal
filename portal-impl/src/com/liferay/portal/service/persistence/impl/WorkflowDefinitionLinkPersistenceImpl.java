@@ -205,16 +205,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -229,14 +222,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		String uuid,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -246,11 +234,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -290,23 +275,15 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			uuid, groupId);
 
 		if (workflowDefinitionLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+			throw new NoSuchWorkflowDefinitionLinkException(message);
 		}
 
 		return workflowDefinitionLink;
@@ -494,19 +471,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -522,14 +489,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -540,13 +502,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -677,16 +634,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -701,14 +651,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -718,12 +663,8 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -861,19 +802,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -889,14 +821,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByC_C(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -907,13 +834,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long classNameId) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByC_C(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1060,22 +983,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByG_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, companyId, classNameId}));
 	}
 
 	/**
@@ -1092,14 +1003,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByG_C_C(
-			groupId, companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -1111,13 +1017,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_C(long groupId, long companyId, long classNameId) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByG_C_C(
-					groupId, companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByG_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId});
 	}
 
 	/**
@@ -1264,22 +1166,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByG_C_CPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, companyId, classPK}));
 	}
 
 	/**
@@ -1296,14 +1186,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classPK,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByG_C_CPK(
-			groupId, companyId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_CPK.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1315,13 +1200,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_CPK(long groupId, long companyId, long classPK) {
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByG_C_CPK(
-					groupId, companyId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByG_C_CPK.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classPK});
 	}
 
 	/**
@@ -1479,22 +1360,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", workflowDefinitionName=");
-		sb.append(workflowDefinitionName);
-
-		sb.append(", workflowDefinitionVersion=");
-		sb.append(workflowDefinitionVersion);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByC_W_W.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					companyId, workflowDefinitionName, workflowDefinitionVersion
+				}));
 	}
 
 	/**
@@ -1512,15 +1383,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		int workflowDefinitionVersion,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByC_W_W(
-			companyId, workflowDefinitionName, workflowDefinitionVersion, 0, 1,
+		return _collectionPersistenceFinderByC_W_W.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, workflowDefinitionName, workflowDefinitionVersion
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1535,14 +1403,11 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long companyId, String workflowDefinitionName,
 		int workflowDefinitionVersion) {
 
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByC_W_W(
-					companyId, workflowDefinitionName,
-					workflowDefinitionVersion, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByC_W_W.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				companyId, workflowDefinitionName, workflowDefinitionVersion
+			});
 	}
 
 	/**
@@ -1702,25 +1567,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByG_C_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -1738,14 +1588,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByG_C_C_C(
-			groupId, companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1760,13 +1606,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public void removeByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK) {
 
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByG_C_C_C(
-					groupId, companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByG_C_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK});
 	}
 
 	/**
@@ -1934,28 +1776,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			return workflowDefinitionLink;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", typePK=");
-		sb.append(typePK);
-
-		sb.append("}");
-
-		throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+		throw new NoSuchWorkflowDefinitionLinkException(
+			_collectionPersistenceFinderByG_C_C_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, companyId, classNameId, classPK, typePK
+				}));
 	}
 
 	/**
@@ -1975,15 +1801,10 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long typePK,
 		OrderByComparator<WorkflowDefinitionLink> orderByComparator) {
 
-		List<WorkflowDefinitionLink> list = findByG_C_C_C_T(
-			groupId, companyId, classNameId, classPK, typePK, 0, 1,
+		return _collectionPersistenceFinderByG_C_C_C_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK, typePK},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2000,13 +1821,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK) {
 
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				findByG_C_C_C_T(
-					groupId, companyId, classNameId, classPK, typePK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(workflowDefinitionLink);
-		}
+		_collectionPersistenceFinderByG_C_C_C_T.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, companyId, classNameId, classPK, typePK});
 	}
 
 	/**
@@ -2057,23 +1874,16 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (workflowDefinitionLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchWorkflowDefinitionLinkException(sb.toString());
+			throw new NoSuchWorkflowDefinitionLinkException(message);
 		}
 
 		return workflowDefinitionLink;
@@ -3596,4 +3406,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-540497225
+// LIFERAY-SERVICE-BUILDER-HASH:-882863606

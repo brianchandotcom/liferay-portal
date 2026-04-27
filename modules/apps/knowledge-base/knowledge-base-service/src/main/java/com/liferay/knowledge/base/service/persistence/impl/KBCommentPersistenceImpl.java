@@ -204,16 +204,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -227,13 +220,8 @@ public class KBCommentPersistenceImpl
 	public KBComment fetchByUuid_First(
 		String uuid, OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -243,11 +231,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (KBComment kbComment :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -285,23 +270,15 @@ public class KBCommentPersistenceImpl
 		KBComment kbComment = fetchByUUID_G(uuid, groupId);
 
 		if (kbComment == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCommentException(sb.toString());
+			throw new NoSuchCommentException(message);
 		}
 
 		return kbComment;
@@ -484,19 +461,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -512,14 +479,8 @@ public class KBCommentPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -530,13 +491,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (KBComment kbComment :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -662,16 +618,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -685,13 +634,8 @@ public class KBCommentPersistenceImpl
 	public KBComment fetchByGroupId_First(
 		long groupId, OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -701,12 +645,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (KBComment kbComment :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -841,19 +781,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -869,14 +799,9 @@ public class KBCommentPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByG_C(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -887,13 +812,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long classNameId) {
-		for (KBComment kbComment :
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -1028,19 +948,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -1056,14 +966,8 @@ public class KBCommentPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1074,13 +978,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (KBComment kbComment :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -1216,19 +1115,9 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1244,14 +1133,9 @@ public class KBCommentPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1262,13 +1146,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (KBComment kbComment :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1412,22 +1291,10 @@ public class KBCommentPersistenceImpl
 			return kbComment;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommentException(sb.toString());
+		throw new NoSuchCommentException(
+			_collectionPersistenceFinderByU_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, classNameId, classPK}));
 	}
 
 	/**
@@ -1444,14 +1311,9 @@ public class KBCommentPersistenceImpl
 		long userId, long classNameId, long classPK,
 		OrderByComparator<KBComment> orderByComparator) {
 
-		List<KBComment> list = findByU_C_C(
-			userId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C_C.fetchFirst(
+			finderCache, new Object[] {userId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1463,13 +1325,8 @@ public class KBCommentPersistenceImpl
 	 */
 	@Override
 	public void removeByU_C_C(long userId, long classNameId, long classPK) {
-		for (KBComment kbComment :
-				findByU_C_C(
-					userId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbComment);
-		}
+		_collectionPersistenceFinderByU_C_C.remove(
+			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
 	/**
@@ -3332,4 +3189,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1161085995
+// LIFERAY-SERVICE-BUILDER-HASH:-2118001786

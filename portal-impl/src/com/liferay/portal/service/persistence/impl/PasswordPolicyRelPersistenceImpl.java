@@ -180,16 +180,10 @@ public class PasswordPolicyRelPersistenceImpl
 			return passwordPolicyRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("passwordPolicyId=");
-		sb.append(passwordPolicyId);
-
-		sb.append("}");
-
-		throw new NoSuchPasswordPolicyRelException(sb.toString());
+		throw new NoSuchPasswordPolicyRelException(
+			_collectionPersistenceFinderByPasswordPolicyId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {passwordPolicyId}));
 	}
 
 	/**
@@ -204,14 +198,9 @@ public class PasswordPolicyRelPersistenceImpl
 		long passwordPolicyId,
 		OrderByComparator<PasswordPolicyRel> orderByComparator) {
 
-		List<PasswordPolicyRel> list = findByPasswordPolicyId(
-			passwordPolicyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPasswordPolicyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {passwordPolicyId},
+			orderByComparator);
 	}
 
 	/**
@@ -221,13 +210,8 @@ public class PasswordPolicyRelPersistenceImpl
 	 */
 	@Override
 	public void removeByPasswordPolicyId(long passwordPolicyId) {
-		for (PasswordPolicyRel passwordPolicyRel :
-				findByPasswordPolicyId(
-					passwordPolicyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(passwordPolicyRel);
-		}
+		_collectionPersistenceFinderByPasswordPolicyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {passwordPolicyId});
 	}
 
 	/**
@@ -261,23 +245,16 @@ public class PasswordPolicyRelPersistenceImpl
 		PasswordPolicyRel passwordPolicyRel = fetchByC_C(classNameId, classPK);
 
 		if (passwordPolicyRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPasswordPolicyRelException(sb.toString());
+			throw new NoSuchPasswordPolicyRelException(message);
 		}
 
 		return passwordPolicyRel;
@@ -975,4 +952,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1121461023
+// LIFERAY-SERVICE-BUILDER-HASH:1863767565

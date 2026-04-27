@@ -201,16 +201,9 @@ public class CTCollectionPersistenceImpl
 			return ctCollection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,13 +217,8 @@ public class CTCollectionPersistenceImpl
 	public CTCollection fetchByUuid_First(
 		String uuid, OrderByComparator<CTCollection> orderByComparator) {
 
-		List<CTCollection> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -394,11 +382,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CTCollection ctCollection :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctCollection);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -598,19 +583,9 @@ public class CTCollectionPersistenceImpl
 			return ctCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -626,14 +601,8 @@ public class CTCollectionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CTCollection> orderByComparator) {
 
-		List<CTCollection> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -805,13 +774,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CTCollection ctCollection :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctCollection);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1013,16 +977,9 @@ public class CTCollectionPersistenceImpl
 			return ctCollection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1036,14 +993,8 @@ public class CTCollectionPersistenceImpl
 	public CTCollection fetchByCompanyId_First(
 		long companyId, OrderByComparator<CTCollection> orderByComparator) {
 
-		List<CTCollection> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1194,12 +1145,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTCollection ctCollection :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctCollection);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1383,19 +1330,9 @@ public class CTCollectionPersistenceImpl
 			return ctCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -1411,14 +1348,8 @@ public class CTCollectionPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<CTCollection> orderByComparator) {
 
-		List<CTCollection> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1577,13 +1508,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (CTCollection ctCollection :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctCollection);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -1779,19 +1705,10 @@ public class CTCollectionPersistenceImpl
 			return ctCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", schemaVersionId=");
-		sb.append(schemaVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByC_SVI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, schemaVersionId}));
 	}
 
 	/**
@@ -1807,14 +1724,9 @@ public class CTCollectionPersistenceImpl
 		long companyId, long schemaVersionId,
 		OrderByComparator<CTCollection> orderByComparator) {
 
-		List<CTCollection> list = findByC_SVI(
-			companyId, schemaVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_SVI.fetchFirst(
+			finderCache, new Object[] {companyId, schemaVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1977,13 +1889,8 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_SVI(long companyId, long schemaVersionId) {
-		for (CTCollection ctCollection :
-				findByC_SVI(
-					companyId, schemaVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctCollection);
-		}
+		_collectionPersistenceFinderByC_SVI.remove(
+			finderCache, new Object[] {companyId, schemaVersionId});
 	}
 
 	/**
@@ -3122,23 +3029,16 @@ public class CTCollectionPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (ctCollection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCollectionException(sb.toString());
+			throw new NoSuchCollectionException(message);
 		}
 
 		return ctCollection;
@@ -4137,4 +4037,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:37577443
+// LIFERAY-SERVICE-BUILDER-HASH:40017424

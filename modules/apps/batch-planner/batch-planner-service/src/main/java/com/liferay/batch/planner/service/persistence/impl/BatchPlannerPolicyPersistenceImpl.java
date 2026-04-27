@@ -192,16 +192,11 @@ public class BatchPlannerPolicyPersistenceImpl
 			return batchPlannerPolicy;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("batchPlannerPlanId=");
-		sb.append(batchPlannerPlanId);
-
-		sb.append("}");
-
-		throw new NoSuchPolicyException(sb.toString());
+		throw new NoSuchPolicyException(
+			_collectionPersistenceFinderByBatchPlannerPlanId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {batchPlannerPlanId}));
 	}
 
 	/**
@@ -216,14 +211,8 @@ public class BatchPlannerPolicyPersistenceImpl
 		long batchPlannerPlanId,
 		OrderByComparator<BatchPlannerPolicy> orderByComparator) {
 
-		List<BatchPlannerPolicy> list = findByBatchPlannerPlanId(
-			batchPlannerPlanId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBatchPlannerPlanId.fetchFirst(
+			finderCache, new Object[] {batchPlannerPlanId}, orderByComparator);
 	}
 
 	/**
@@ -233,13 +222,8 @@ public class BatchPlannerPolicyPersistenceImpl
 	 */
 	@Override
 	public void removeByBatchPlannerPlanId(long batchPlannerPlanId) {
-		for (BatchPlannerPolicy batchPlannerPolicy :
-				findByBatchPlannerPlanId(
-					batchPlannerPlanId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerPolicy);
-		}
+		_collectionPersistenceFinderByBatchPlannerPlanId.remove(
+			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
 	/**
@@ -274,23 +258,16 @@ public class BatchPlannerPolicyPersistenceImpl
 			batchPlannerPlanId, name);
 
 		if (batchPlannerPolicy == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("batchPlannerPlanId=");
-			sb.append(batchPlannerPlanId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByBPPI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {batchPlannerPlanId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPolicyException(sb.toString());
+			throw new NoSuchPolicyException(message);
 		}
 
 		return batchPlannerPolicy;
@@ -1054,4 +1031,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-450140584
+// LIFERAY-SERVICE-BUILDER-HASH:1265449969

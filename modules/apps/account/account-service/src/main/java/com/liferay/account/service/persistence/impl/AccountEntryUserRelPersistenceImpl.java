@@ -187,16 +187,9 @@ public class AccountEntryUserRelPersistenceImpl
 			return accountEntryUserRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUserRelException(sb.toString());
+		throw new NoSuchEntryUserRelException(
+			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
 	}
 
 	/**
@@ -211,14 +204,8 @@ public class AccountEntryUserRelPersistenceImpl
 		long accountEntryId,
 		OrderByComparator<AccountEntryUserRel> orderByComparator) {
 
-		List<AccountEntryUserRel> list = findByAccountEntryId(
-			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAccountEntryId.fetchFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -228,13 +215,8 @@ public class AccountEntryUserRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountEntryId(long accountEntryId) {
-		for (AccountEntryUserRel accountEntryUserRel :
-				findByAccountEntryId(
-					accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountEntryUserRel);
-		}
+		_collectionPersistenceFinderByAccountEntryId.remove(
+			finderCache, new Object[] {accountEntryId});
 	}
 
 	/**
@@ -354,16 +336,9 @@ public class AccountEntryUserRelPersistenceImpl
 			return accountEntryUserRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountUserId=");
-		sb.append(accountUserId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryUserRelException(sb.toString());
+		throw new NoSuchEntryUserRelException(
+			_collectionPersistenceFinderByAccountUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountUserId}));
 	}
 
 	/**
@@ -378,14 +353,8 @@ public class AccountEntryUserRelPersistenceImpl
 		long accountUserId,
 		OrderByComparator<AccountEntryUserRel> orderByComparator) {
 
-		List<AccountEntryUserRel> list = findByAccountUserId(
-			accountUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAccountUserId.fetchFirst(
+			finderCache, new Object[] {accountUserId}, orderByComparator);
 	}
 
 	/**
@@ -395,13 +364,8 @@ public class AccountEntryUserRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountUserId(long accountUserId) {
-		for (AccountEntryUserRel accountEntryUserRel :
-				findByAccountUserId(
-					accountUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountEntryUserRel);
-		}
+		_collectionPersistenceFinderByAccountUserId.remove(
+			finderCache, new Object[] {accountUserId});
 	}
 
 	/**
@@ -437,23 +401,16 @@ public class AccountEntryUserRelPersistenceImpl
 			accountEntryId, accountUserId);
 
 		if (accountEntryUserRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("accountEntryId=");
-			sb.append(accountEntryId);
-
-			sb.append(", accountUserId=");
-			sb.append(accountUserId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByAEI_AUI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {accountEntryId, accountUserId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryUserRelException(sb.toString());
+			throw new NoSuchEntryUserRelException(message);
 		}
 
 		return accountEntryUserRel;
@@ -1224,4 +1181,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1518490641
+// LIFERAY-SERVICE-BUILDER-HASH:-257954470

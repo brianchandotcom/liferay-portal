@@ -182,16 +182,9 @@ public class EntryPersistenceImpl
 			return entry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -205,13 +198,8 @@ public class EntryPersistenceImpl
 	public Entry fetchByUserId_First(
 		long userId, OrderByComparator<Entry> orderByComparator) {
 
-		List<Entry> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -221,12 +209,8 @@ public class EntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (Entry entry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(entry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -259,23 +243,16 @@ public class EntryPersistenceImpl
 		Entry entry = fetchByU_EA(userId, emailAddress);
 
 		if (entry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", emailAddress=");
-			sb.append(emailAddress);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_EA.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, emailAddress});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return entry;
@@ -991,4 +968,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2043021195
+// LIFERAY-SERVICE-BUILDER-HASH:-1183864171

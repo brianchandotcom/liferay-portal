@@ -206,16 +206,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			return layoutPageTemplateStructure;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureException(sb.toString());
+		throw new NoSuchPageTemplateStructureException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		String uuid,
 		OrderByComparator<LayoutPageTemplateStructure> orderByComparator) {
 
-		List<LayoutPageTemplateStructure> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LayoutPageTemplateStructure layoutPageTemplateStructure :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPageTemplateStructure);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +275,15 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			uuid, groupId);
 
 		if (layoutPageTemplateStructure == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageTemplateStructureException(sb.toString());
+			throw new NoSuchPageTemplateStructureException(message);
 		}
 
 		return layoutPageTemplateStructure;
@@ -495,19 +471,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			return layoutPageTemplateStructure;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureException(sb.toString());
+		throw new NoSuchPageTemplateStructureException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -523,14 +489,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LayoutPageTemplateStructure> orderByComparator) {
 
-		List<LayoutPageTemplateStructure> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -541,13 +501,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LayoutPageTemplateStructure layoutPageTemplateStructure :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutPageTemplateStructure);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -677,16 +632,9 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			return layoutPageTemplateStructure;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchPageTemplateStructureException(sb.toString());
+		throw new NoSuchPageTemplateStructureException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -701,14 +649,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 		long groupId,
 		OrderByComparator<LayoutPageTemplateStructure> orderByComparator) {
 
-		List<LayoutPageTemplateStructure> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -718,12 +660,8 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (LayoutPageTemplateStructure layoutPageTemplateStructure :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPageTemplateStructure);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -763,23 +701,15 @@ public class LayoutPageTemplateStructurePersistenceImpl
 			groupId, plid);
 
 		if (layoutPageTemplateStructure == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, plid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPageTemplateStructureException(sb.toString());
+			throw new NoSuchPageTemplateStructureException(message);
 		}
 
 		return layoutPageTemplateStructure;
@@ -1992,4 +1922,4 @@ public class LayoutPageTemplateStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-551461137
+// LIFERAY-SERVICE-BUILDER-HASH:-2049950291

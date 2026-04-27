@@ -188,16 +188,9 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			return sharepointOAuth2TokenEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuch2TokenEntryException(sb.toString());
+		throw new NoSuch2TokenEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		long userId,
 		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
 
-		List<SharepointOAuth2TokenEntry> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -229,12 +216,8 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sharepointOAuth2TokenEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -270,23 +253,16 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			userId, configurationPid);
 
 		if (sharepointOAuth2TokenEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", configurationPid=");
-			sb.append(configurationPid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, configurationPid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuch2TokenEntryException(sb.toString());
+			throw new NoSuch2TokenEntryException(message);
 		}
 
 		return sharepointOAuth2TokenEntry;
@@ -1072,4 +1048,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1390061068
+// LIFERAY-SERVICE-BUILDER-HASH:-1490427058

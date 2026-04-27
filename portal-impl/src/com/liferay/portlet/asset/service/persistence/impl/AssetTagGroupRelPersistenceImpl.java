@@ -191,16 +191,9 @@ public class AssetTagGroupRelPersistenceImpl
 			return assetTagGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchTagGroupRelException(sb.toString());
+		throw new NoSuchTagGroupRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -214,13 +207,9 @@ public class AssetTagGroupRelPersistenceImpl
 	public AssetTagGroupRel fetchByUuid_First(
 		String uuid, OrderByComparator<AssetTagGroupRel> orderByComparator) {
 
-		List<AssetTagGroupRel> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -230,11 +219,8 @@ public class AssetTagGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AssetTagGroupRel assetTagGroupRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetTagGroupRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -273,23 +259,15 @@ public class AssetTagGroupRelPersistenceImpl
 		AssetTagGroupRel assetTagGroupRel = fetchByUUID_G(uuid, groupId);
 
 		if (assetTagGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTagGroupRelException(sb.toString());
+			throw new NoSuchTagGroupRelException(message);
 		}
 
 		return assetTagGroupRel;
@@ -474,19 +452,9 @@ public class AssetTagGroupRelPersistenceImpl
 			return assetTagGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTagGroupRelException(sb.toString());
+		throw new NoSuchTagGroupRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -502,14 +470,9 @@ public class AssetTagGroupRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AssetTagGroupRel> orderByComparator) {
 
-		List<AssetTagGroupRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -520,13 +483,8 @@ public class AssetTagGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AssetTagGroupRel assetTagGroupRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetTagGroupRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -656,16 +614,9 @@ public class AssetTagGroupRelPersistenceImpl
 			return assetTagGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTagGroupRelException(sb.toString());
+		throw new NoSuchTagGroupRelException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -679,14 +630,9 @@ public class AssetTagGroupRelPersistenceImpl
 	public AssetTagGroupRel fetchByGroupId_First(
 		long groupId, OrderByComparator<AssetTagGroupRel> orderByComparator) {
 
-		List<AssetTagGroupRel> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -696,12 +642,8 @@ public class AssetTagGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (AssetTagGroupRel assetTagGroupRel :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetTagGroupRel);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -826,16 +768,9 @@ public class AssetTagGroupRelPersistenceImpl
 			return assetTagGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tagId=");
-		sb.append(tagId);
-
-		sb.append("}");
-
-		throw new NoSuchTagGroupRelException(sb.toString());
+		throw new NoSuchTagGroupRelException(
+			_collectionPersistenceFinderByTagId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tagId}));
 	}
 
 	/**
@@ -849,14 +784,9 @@ public class AssetTagGroupRelPersistenceImpl
 	public AssetTagGroupRel fetchByTagId_First(
 		long tagId, OrderByComparator<AssetTagGroupRel> orderByComparator) {
 
-		List<AssetTagGroupRel> list = findByTagId(
-			tagId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTagId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tagId},
+			orderByComparator);
 	}
 
 	/**
@@ -866,12 +796,8 @@ public class AssetTagGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByTagId(long tagId) {
-		for (AssetTagGroupRel assetTagGroupRel :
-				findByTagId(
-					tagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetTagGroupRel);
-		}
+		_collectionPersistenceFinderByTagId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tagId});
 	}
 
 	/**
@@ -910,23 +836,15 @@ public class AssetTagGroupRelPersistenceImpl
 		AssetTagGroupRel assetTagGroupRel = fetchByG_T(groupId, tagId);
 
 		if (assetTagGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", tagId=");
-			sb.append(tagId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, tagId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTagGroupRelException(sb.toString());
+			throw new NoSuchTagGroupRelException(message);
 		}
 
 		return assetTagGroupRel;
@@ -2024,4 +1942,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-100197821
+// LIFERAY-SERVICE-BUILDER-HASH:-1420736200

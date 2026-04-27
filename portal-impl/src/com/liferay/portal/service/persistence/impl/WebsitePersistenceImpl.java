@@ -185,16 +185,9 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -208,13 +201,9 @@ public class WebsitePersistenceImpl
 	public Website fetchByUuid_First(
 		String uuid, OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -224,11 +213,8 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Website website :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -352,19 +338,9 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -380,14 +356,9 @@ public class WebsitePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -398,13 +369,8 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Website website :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -519,16 +485,9 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -542,14 +501,9 @@ public class WebsitePersistenceImpl
 	public Website fetchByCompanyId_First(
 		long companyId, OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -559,12 +513,8 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (Website website :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -677,16 +627,9 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -700,13 +643,9 @@ public class WebsitePersistenceImpl
 	public Website fetchByUserId_First(
 		long userId, OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -716,12 +655,8 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (Website website :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -846,19 +781,10 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -874,14 +800,9 @@ public class WebsitePersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByC_C(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -892,13 +813,9 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long classNameId) {
-		for (Website website :
-				findByC_C(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1034,22 +951,10 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -1066,14 +971,9 @@ public class WebsitePersistenceImpl
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByC_C_C(
-			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1085,13 +985,9 @@ public class WebsitePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
-		for (Website website :
-				findByC_C_C(
-					companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -1236,25 +1132,10 @@ public class WebsitePersistenceImpl
 			return website;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", primary=");
-		sb.append(primary);
-
-		sb.append("}");
-
-		throw new NoSuchWebsiteException(sb.toString());
+		throw new NoSuchWebsiteException(
+			_collectionPersistenceFinderByC_C_C_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK, primary}));
 	}
 
 	/**
@@ -1272,14 +1153,10 @@ public class WebsitePersistenceImpl
 		long companyId, long classNameId, long classPK, boolean primary,
 		OrderByComparator<Website> orderByComparator) {
 
-		List<Website> list = findByC_C_C_P(
-			companyId, classNameId, classPK, primary, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary},
+			orderByComparator);
 	}
 
 	/**
@@ -1294,13 +1171,9 @@ public class WebsitePersistenceImpl
 	public void removeByC_C_C_P(
 		long companyId, long classNameId, long classPK, boolean primary) {
 
-		for (Website website :
-				findByC_C_C_P(
-					companyId, classNameId, classPK, primary, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(website);
-		}
+		_collectionPersistenceFinderByC_C_C_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, primary});
 	}
 
 	/**
@@ -1339,23 +1212,16 @@ public class WebsitePersistenceImpl
 		Website website = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (website == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchWebsiteException(sb.toString());
+			throw new NoSuchWebsiteException(message);
 		}
 
 		return website;
@@ -2343,4 +2209,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-598266924
+// LIFERAY-SERVICE-BUILDER-HASH:347122476

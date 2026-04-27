@@ -200,16 +200,9 @@ public class KaleoNodePersistenceImpl
 			return kaleoNode;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -223,14 +216,8 @@ public class KaleoNodePersistenceImpl
 	public KaleoNode fetchByCompanyId_First(
 		long companyId, OrderByComparator<KaleoNode> orderByComparator) {
 
-		List<KaleoNode> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -240,12 +227,8 @@ public class KaleoNodePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KaleoNode kaleoNode :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNode);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -380,16 +363,11 @@ public class KaleoNodePersistenceImpl
 			return kaleoNode;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByKaleoDefinitionVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoDefinitionVersionId}));
 	}
 
 	/**
@@ -404,14 +382,10 @@ public class KaleoNodePersistenceImpl
 		long kaleoDefinitionVersionId,
 		OrderByComparator<KaleoNode> orderByComparator) {
 
-		List<KaleoNode> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.
+			fetchFirst(
+				finderCache, new Object[] {kaleoDefinitionVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -423,13 +397,8 @@ public class KaleoNodePersistenceImpl
 	public void removeByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId) {
 
-		for (KaleoNode kaleoNode :
-				findByKaleoDefinitionVersionId(
-					kaleoDefinitionVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNode);
-		}
+		_collectionPersistenceFinderByKaleoDefinitionVersionId.remove(
+			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
 	/**
@@ -569,19 +538,10 @@ public class KaleoNodePersistenceImpl
 			return kaleoNode;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeException(sb.toString());
+		throw new NoSuchNodeException(
+			_collectionPersistenceFinderByC_KDVI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, kaleoDefinitionVersionId}));
 	}
 
 	/**
@@ -597,14 +557,9 @@ public class KaleoNodePersistenceImpl
 		long companyId, long kaleoDefinitionVersionId,
 		OrderByComparator<KaleoNode> orderByComparator) {
 
-		List<KaleoNode> list = findByC_KDVI(
-			companyId, kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_KDVI.fetchFirst(
+			finderCache, new Object[] {companyId, kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -615,13 +570,8 @@ public class KaleoNodePersistenceImpl
 	 */
 	@Override
 	public void removeByC_KDVI(long companyId, long kaleoDefinitionVersionId) {
-		for (KaleoNode kaleoNode :
-				findByC_KDVI(
-					companyId, kaleoDefinitionVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNode);
-		}
+		_collectionPersistenceFinderByC_KDVI.remove(
+			finderCache, new Object[] {companyId, kaleoDefinitionVersionId});
 	}
 
 	/**
@@ -1625,4 +1575,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2069090480
+// LIFERAY-SERVICE-BUILDER-HASH:813842383

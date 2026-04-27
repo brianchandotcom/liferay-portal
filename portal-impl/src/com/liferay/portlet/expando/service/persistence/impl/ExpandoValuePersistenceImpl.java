@@ -190,16 +190,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
 	}
 
 	/**
@@ -213,14 +206,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByTableId_First(
 		long tableId, OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByTableId(
-			tableId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTableId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -230,12 +218,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByTableId(long tableId) {
-		for (ExpandoValue expandoValue :
-				findByTableId(
-					tableId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByTableId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
 	/**
@@ -363,16 +347,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("columnId=");
-		sb.append(columnId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByColumnId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnId}));
 	}
 
 	/**
@@ -386,14 +363,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByColumnId_First(
 		long columnId, OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByColumnId(
-			columnId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByColumnId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId},
+			orderByComparator);
 	}
 
 	/**
@@ -403,12 +375,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByColumnId(long columnId) {
-		for (ExpandoValue expandoValue :
-				findByColumnId(
-					columnId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByColumnId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId});
 	}
 
 	/**
@@ -533,16 +501,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rowId=");
-		sb.append(rowId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByRowId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {rowId}));
 	}
 
 	/**
@@ -556,13 +517,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue fetchByRowId_First(
 		long rowId, OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByRowId(rowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRowId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {rowId},
+			orderByComparator);
 	}
 
 	/**
@@ -572,12 +529,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByRowId(long rowId) {
-		for (ExpandoValue expandoValue :
-				findByRowId(
-					rowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByRowId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {rowId});
 	}
 
 	/**
@@ -713,19 +666,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", columnId=");
-		sb.append(columnId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByT_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, columnId}));
 	}
 
 	/**
@@ -741,14 +684,9 @@ public class ExpandoValuePersistenceImpl
 		long tableId, long columnId,
 		OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByT_C(
-			tableId, columnId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId},
+			orderByComparator);
 	}
 
 	/**
@@ -759,13 +697,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByT_C(long tableId, long columnId) {
-		for (ExpandoValue expandoValue :
-				findByT_C(
-					tableId, columnId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByT_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId});
 	}
 
 	/**
@@ -901,19 +834,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", rowId=");
-		sb.append(rowId);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByT_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, rowId}));
 	}
 
 	/**
@@ -929,14 +852,9 @@ public class ExpandoValuePersistenceImpl
 		long tableId, long rowId,
 		OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByT_R(
-			tableId, rowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_R.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId},
+			orderByComparator);
 	}
 
 	/**
@@ -947,13 +865,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByT_R(long tableId, long rowId) {
-		for (ExpandoValue expandoValue :
-				findByT_R(
-					tableId, rowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByT_R.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId});
 	}
 
 	/**
@@ -1091,19 +1004,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByT_CPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, classPK}));
 	}
 
 	/**
@@ -1119,14 +1022,9 @@ public class ExpandoValuePersistenceImpl
 		long tableId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByT_CPK(
-			tableId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_CPK.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1137,13 +1035,8 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByT_CPK(long tableId, long classPK) {
-		for (ExpandoValue expandoValue :
-				findByT_CPK(
-					tableId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByT_CPK.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
 	/**
@@ -1183,23 +1076,15 @@ public class ExpandoValuePersistenceImpl
 		ExpandoValue expandoValue = fetchByC_R(columnId, rowId);
 
 		if (expandoValue == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("columnId=");
-			sb.append(columnId);
-
-			sb.append(", rowId=");
-			sb.append(rowId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_R.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnId, rowId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchValueException(sb.toString());
+			throw new NoSuchValueException(message);
 		}
 
 		return expandoValue;
@@ -1384,19 +1269,9 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1412,14 +1287,9 @@ public class ExpandoValuePersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -1430,13 +1300,9 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (ExpandoValue expandoValue :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1478,26 +1344,16 @@ public class ExpandoValuePersistenceImpl
 		ExpandoValue expandoValue = fetchByT_C_C(tableId, columnId, classPK);
 
 		if (expandoValue == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("tableId=");
-			sb.append(tableId);
-
-			sb.append(", columnId=");
-			sb.append(columnId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByT_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {tableId, columnId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchValueException(sb.toString());
+			throw new NoSuchValueException(message);
 		}
 
 		return expandoValue;
@@ -1697,22 +1553,10 @@ public class ExpandoValuePersistenceImpl
 			return expandoValue;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("tableId=");
-		sb.append(tableId);
-
-		sb.append(", columnId=");
-		sb.append(columnId);
-
-		sb.append(", data=");
-		sb.append(data);
-
-		sb.append("}");
-
-		throw new NoSuchValueException(sb.toString());
+		throw new NoSuchValueException(
+			_collectionPersistenceFinderByT_C_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {tableId, columnId, data}));
 	}
 
 	/**
@@ -1729,14 +1573,9 @@ public class ExpandoValuePersistenceImpl
 		long tableId, long columnId, String data,
 		OrderByComparator<ExpandoValue> orderByComparator) {
 
-		List<ExpandoValue> list = findByT_C_D(
-			tableId, columnId, data, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_C_D.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, data}, orderByComparator);
 	}
 
 	/**
@@ -1748,13 +1587,9 @@ public class ExpandoValuePersistenceImpl
 	 */
 	@Override
 	public void removeByT_C_D(long tableId, long columnId, String data) {
-		for (ExpandoValue expandoValue :
-				findByT_C_D(
-					tableId, columnId, data, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(expandoValue);
-		}
+		_collectionPersistenceFinderByT_C_D.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, data});
 	}
 
 	/**
@@ -2927,4 +2762,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1638077637
+// LIFERAY-SERVICE-BUILDER-HASH:1182761543

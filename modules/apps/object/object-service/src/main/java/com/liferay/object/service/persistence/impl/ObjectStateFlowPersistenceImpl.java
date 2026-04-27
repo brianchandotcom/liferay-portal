@@ -189,16 +189,9 @@ public class ObjectStateFlowPersistenceImpl
 			return objectStateFlow;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateFlowException(sb.toString());
+		throw new NoSuchObjectStateFlowException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -212,13 +205,8 @@ public class ObjectStateFlowPersistenceImpl
 	public ObjectStateFlow fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectStateFlow> orderByComparator) {
 
-		List<ObjectStateFlow> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -228,11 +216,8 @@ public class ObjectStateFlowPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectStateFlow objectStateFlow :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectStateFlow);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -357,19 +342,9 @@ public class ObjectStateFlowPersistenceImpl
 			return objectStateFlow;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateFlowException(sb.toString());
+		throw new NoSuchObjectStateFlowException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -385,14 +360,8 @@ public class ObjectStateFlowPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectStateFlow> orderByComparator) {
 
-		List<ObjectStateFlow> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -403,13 +372,8 @@ public class ObjectStateFlowPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectStateFlow objectStateFlow :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectStateFlow);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -443,20 +407,15 @@ public class ObjectStateFlowPersistenceImpl
 		ObjectStateFlow objectStateFlow = fetchByObjectFieldId(objectFieldId);
 
 		if (objectStateFlow == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectFieldId=");
-			sb.append(objectFieldId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByObjectFieldId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFieldId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectStateFlowException(sb.toString());
+			throw new NoSuchObjectStateFlowException(message);
 		}
 
 		return objectStateFlow;
@@ -1246,4 +1205,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2008073640
+// LIFERAY-SERVICE-BUILDER-HASH:-709500989

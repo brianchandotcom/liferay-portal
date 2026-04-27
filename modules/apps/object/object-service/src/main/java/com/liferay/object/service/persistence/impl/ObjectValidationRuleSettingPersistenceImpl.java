@@ -192,16 +192,9 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			return objectValidationRuleSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+		throw new NoSuchObjectValidationRuleSettingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		String uuid,
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
-		List<ObjectValidationRuleSetting> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRuleSetting);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -364,19 +348,9 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			return objectValidationRuleSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+		throw new NoSuchObjectValidationRuleSettingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -392,14 +366,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
-		List<ObjectValidationRuleSetting> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -410,13 +378,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectValidationRuleSetting);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -541,16 +504,11 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			return objectValidationRuleSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectValidationRuleId=");
-		sb.append(objectValidationRuleId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+		throw new NoSuchObjectValidationRuleSettingException(
+			_collectionPersistenceFinderByObjectValidationRuleId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectValidationRuleId}));
 	}
 
 	/**
@@ -565,14 +523,9 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		long objectValidationRuleId,
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
-		List<ObjectValidationRuleSetting> list = findByObjectValidationRuleId(
-			objectValidationRuleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectValidationRuleId.fetchFirst(
+			finderCache, new Object[] {objectValidationRuleId},
+			orderByComparator);
 	}
 
 	/**
@@ -582,13 +535,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectValidationRuleId(long objectValidationRuleId) {
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				findByObjectValidationRuleId(
-					objectValidationRuleId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRuleSetting);
-		}
+		_collectionPersistenceFinderByObjectValidationRuleId.remove(
+			finderCache, new Object[] {objectValidationRuleId});
 	}
 
 	/**
@@ -717,19 +665,10 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			return objectValidationRuleSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectValidationRuleId=");
-		sb.append(objectValidationRuleId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+		throw new NoSuchObjectValidationRuleSettingException(
+			_collectionPersistenceFinderByOVRI_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {objectValidationRuleId, name}));
 	}
 
 	/**
@@ -745,14 +684,9 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		long objectValidationRuleId, String name,
 		OrderByComparator<ObjectValidationRuleSetting> orderByComparator) {
 
-		List<ObjectValidationRuleSetting> list = findByOVRI_N(
-			objectValidationRuleId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOVRI_N.fetchFirst(
+			finderCache, new Object[] {objectValidationRuleId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -763,13 +697,8 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByOVRI_N(long objectValidationRuleId, String name) {
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				findByOVRI_N(
-					objectValidationRuleId, name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectValidationRuleSetting);
-		}
+		_collectionPersistenceFinderByOVRI_N.remove(
+			finderCache, new Object[] {objectValidationRuleId, name});
 	}
 
 	/**
@@ -805,23 +734,15 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			name, value);
 
 		if (objectValidationRuleSetting == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append(", value=");
-			sb.append(value);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByN_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name, value});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+			throw new NoSuchObjectValidationRuleSettingException(message);
 		}
 
 		return objectValidationRuleSetting;
@@ -907,26 +828,16 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			fetchByOVRI_N_V(objectValidationRuleId, name, value);
 
 		if (objectValidationRuleSetting == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("objectValidationRuleId=");
-			sb.append(objectValidationRuleId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", value=");
-			sb.append(value);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByOVRI_N_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectValidationRuleId, name, value});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectValidationRuleSettingException(sb.toString());
+			throw new NoSuchObjectValidationRuleSettingException(message);
 		}
 
 		return objectValidationRuleSetting;
@@ -1914,4 +1825,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-500322472
+// LIFERAY-SERVICE-BUILDER-HASH:-740255033

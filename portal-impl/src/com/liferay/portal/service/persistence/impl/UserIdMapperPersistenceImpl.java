@@ -175,16 +175,9 @@ public class UserIdMapperPersistenceImpl
 			return userIdMapper;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserIdMapperException(sb.toString());
+		throw new NoSuchUserIdMapperException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -198,13 +191,9 @@ public class UserIdMapperPersistenceImpl
 	public UserIdMapper fetchByUserId_First(
 		long userId, OrderByComparator<UserIdMapper> orderByComparator) {
 
-		List<UserIdMapper> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -214,12 +203,8 @@ public class UserIdMapperPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (UserIdMapper userIdMapper :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userIdMapper);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -252,23 +237,15 @@ public class UserIdMapperPersistenceImpl
 		UserIdMapper userIdMapper = fetchByU_T(userId, type);
 
 		if (userIdMapper == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserIdMapperException(sb.toString());
+			throw new NoSuchUserIdMapperException(message);
 		}
 
 		return userIdMapper;
@@ -350,23 +327,16 @@ public class UserIdMapperPersistenceImpl
 		UserIdMapper userIdMapper = fetchByT_E(type, externalUserId);
 
 		if (userIdMapper == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("type=");
-			sb.append(type);
-
-			sb.append(", externalUserId=");
-			sb.append(externalUserId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByT_E.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {type, externalUserId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserIdMapperException(sb.toString());
+			throw new NoSuchUserIdMapperException(message);
 		}
 
 		return userIdMapper;
@@ -1086,4 +1056,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:308596748
+// LIFERAY-SERVICE-BUILDER-HASH:-1100684906

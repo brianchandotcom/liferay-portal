@@ -195,16 +195,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			return commerceMLForecastAlertEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchMLForecastAlertEntryException(sb.toString());
+		throw new NoSuchMLForecastAlertEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
 
-		List<CommerceMLForecastAlertEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -236,11 +223,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -367,19 +351,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			return commerceMLForecastAlertEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMLForecastAlertEntryException(sb.toString());
+		throw new NoSuchMLForecastAlertEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -395,14 +369,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
 
-		List<CommerceMLForecastAlertEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -413,13 +381,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -457,26 +420,16 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			fetchByC_C_T(companyId, commerceAccountId, timestamp);
 
 		if (commerceMLForecastAlertEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", commerceAccountId=");
-			sb.append(commerceAccountId);
-
-			sb.append(", timestamp=");
-			sb.append(timestamp);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, commerceAccountId, timestamp});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMLForecastAlertEntryException(sb.toString());
+			throw new NoSuchMLForecastAlertEntryException(message);
 		}
 
 		return commerceMLForecastAlertEntry;
@@ -3529,4 +3482,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1132499976
+// LIFERAY-SERVICE-BUILDER-HASH:261944897

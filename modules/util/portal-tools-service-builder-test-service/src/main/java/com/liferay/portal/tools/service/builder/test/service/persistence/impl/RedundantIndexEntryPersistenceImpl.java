@@ -90,23 +90,15 @@ public class RedundantIndexEntryPersistenceImpl
 		RedundantIndexEntry redundantIndexEntry = fetchByC_N(companyId, name);
 
 		if (redundantIndexEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRedundantIndexEntryException(sb.toString());
+			throw new NoSuchRedundantIndexEntryException(message);
 		}
 
 		return redundantIndexEntry;
@@ -775,4 +767,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1995090561
+// LIFERAY-SERVICE-BUILDER-HASH:1566007671

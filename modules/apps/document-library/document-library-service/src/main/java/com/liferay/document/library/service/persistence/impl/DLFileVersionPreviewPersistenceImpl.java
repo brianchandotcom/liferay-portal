@@ -202,16 +202,9 @@ public class DLFileVersionPreviewPersistenceImpl
 			return dlFileVersionPreview;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryId=");
-		sb.append(fileEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionPreviewException(sb.toString());
+		throw new NoSuchFileVersionPreviewException(
+			_collectionPersistenceFinderByFileEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryId}));
 	}
 
 	/**
@@ -226,14 +219,8 @@ public class DLFileVersionPreviewPersistenceImpl
 		long fileEntryId,
 		OrderByComparator<DLFileVersionPreview> orderByComparator) {
 
-		List<DLFileVersionPreview> list = findByFileEntryId(
-			fileEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileEntryId.fetchFirst(
+			finderCache, new Object[] {fileEntryId}, orderByComparator);
 	}
 
 	/**
@@ -243,12 +230,8 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Override
 	public void removeByFileEntryId(long fileEntryId) {
-		for (DLFileVersionPreview dlFileVersionPreview :
-				findByFileEntryId(
-					fileEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileVersionPreview);
-		}
+		_collectionPersistenceFinderByFileEntryId.remove(
+			finderCache, new Object[] {fileEntryId});
 	}
 
 	/**
@@ -378,16 +361,9 @@ public class DLFileVersionPreviewPersistenceImpl
 			return dlFileVersionPreview;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileVersionId=");
-		sb.append(fileVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchFileVersionPreviewException(sb.toString());
+		throw new NoSuchFileVersionPreviewException(
+			_collectionPersistenceFinderByFileVersionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileVersionId}));
 	}
 
 	/**
@@ -402,14 +378,8 @@ public class DLFileVersionPreviewPersistenceImpl
 		long fileVersionId,
 		OrderByComparator<DLFileVersionPreview> orderByComparator) {
 
-		List<DLFileVersionPreview> list = findByFileVersionId(
-			fileVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileVersionId.fetchFirst(
+			finderCache, new Object[] {fileVersionId}, orderByComparator);
 	}
 
 	/**
@@ -419,13 +389,8 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Override
 	public void removeByFileVersionId(long fileVersionId) {
-		for (DLFileVersionPreview dlFileVersionPreview :
-				findByFileVersionId(
-					fileVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileVersionPreview);
-		}
+		_collectionPersistenceFinderByFileVersionId.remove(
+			finderCache, new Object[] {fileVersionId});
 	}
 
 	/**
@@ -465,23 +430,16 @@ public class DLFileVersionPreviewPersistenceImpl
 			fileEntryId, fileVersionId);
 
 		if (dlFileVersionPreview == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("fileEntryId=");
-			sb.append(fileEntryId);
-
-			sb.append(", fileVersionId=");
-			sb.append(fileVersionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByF_F.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fileEntryId, fileVersionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileVersionPreviewException(sb.toString());
+			throw new NoSuchFileVersionPreviewException(message);
 		}
 
 		return dlFileVersionPreview;
@@ -576,26 +534,16 @@ public class DLFileVersionPreviewPersistenceImpl
 			fileEntryId, fileVersionId, previewStatus);
 
 		if (dlFileVersionPreview == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("fileEntryId=");
-			sb.append(fileEntryId);
-
-			sb.append(", fileVersionId=");
-			sb.append(fileVersionId);
-
-			sb.append(", previewStatus=");
-			sb.append(previewStatus);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByF_F_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fileEntryId, fileVersionId, previewStatus});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileVersionPreviewException(sb.toString());
+			throw new NoSuchFileVersionPreviewException(message);
 		}
 
 		return dlFileVersionPreview;
@@ -1704,4 +1652,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1152503567
+// LIFERAY-SERVICE-BUILDER-HASH:205630360

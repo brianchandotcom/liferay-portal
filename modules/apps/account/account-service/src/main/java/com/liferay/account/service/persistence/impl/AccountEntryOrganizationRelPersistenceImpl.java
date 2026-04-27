@@ -189,16 +189,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			return accountEntryOrganizationRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryOrganizationRelException(sb.toString());
+		throw new NoSuchEntryOrganizationRelException(
+			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		long accountEntryId,
 		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
 
-		List<AccountEntryOrganizationRel> list = findByAccountEntryId(
-			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAccountEntryId.fetchFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -230,13 +217,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountEntryId(long accountEntryId) {
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				findByAccountEntryId(
-					accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountEntryOrganizationRel);
-		}
+		_collectionPersistenceFinderByAccountEntryId.remove(
+			finderCache, new Object[] {accountEntryId});
 	}
 
 	/**
@@ -358,16 +340,9 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			return accountEntryOrganizationRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("organizationId=");
-		sb.append(organizationId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryOrganizationRelException(sb.toString());
+		throw new NoSuchEntryOrganizationRelException(
+			_collectionPersistenceFinderByOrganizationId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {organizationId}));
 	}
 
 	/**
@@ -382,14 +357,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		long organizationId,
 		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
 
-		List<AccountEntryOrganizationRel> list = findByOrganizationId(
-			organizationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOrganizationId.fetchFirst(
+			finderCache, new Object[] {organizationId}, orderByComparator);
 	}
 
 	/**
@@ -399,13 +368,8 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Override
 	public void removeByOrganizationId(long organizationId) {
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				findByOrganizationId(
-					organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountEntryOrganizationRel);
-		}
+		_collectionPersistenceFinderByOrganizationId.remove(
+			finderCache, new Object[] {organizationId});
 	}
 
 	/**
@@ -441,23 +405,16 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			accountEntryId, organizationId);
 
 		if (accountEntryOrganizationRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("accountEntryId=");
-			sb.append(accountEntryId);
-
-			sb.append(", organizationId=");
-			sb.append(organizationId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_O.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {accountEntryId, organizationId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryOrganizationRelException(sb.toString());
+			throw new NoSuchEntryOrganizationRelException(message);
 		}
 
 		return accountEntryOrganizationRel;
@@ -1268,4 +1225,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1790927294
+// LIFERAY-SERVICE-BUILDER-HASH:1475432556

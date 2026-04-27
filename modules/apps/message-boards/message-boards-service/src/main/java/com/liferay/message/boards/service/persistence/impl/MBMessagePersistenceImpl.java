@@ -214,16 +214,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,13 +230,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage fetchByUuid_First(
 		String uuid, OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -253,11 +241,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBMessage mbMessage :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -295,23 +280,15 @@ public class MBMessagePersistenceImpl
 		MBMessage mbMessage = fetchByUUID_G(uuid, groupId);
 
 		if (mbMessage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMessageException(sb.toString());
+			throw new NoSuchMessageException(message);
 		}
 
 		return mbMessage;
@@ -494,19 +471,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -522,14 +489,8 @@ public class MBMessagePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -540,13 +501,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBMessage mbMessage :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1750,16 +1706,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
 	}
 
 	/**
@@ -1773,14 +1722,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage fetchByThreadId_First(
 		long threadId, OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByThreadId(
-			threadId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByThreadId.fetchFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -1790,12 +1733,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByThreadId(long threadId) {
-		for (MBMessage mbMessage :
-				findByThreadId(
-					threadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByThreadId.remove(
+			finderCache, new Object[] {threadId});
 	}
 
 	/**
@@ -2225,16 +2164,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentMessageId=");
-		sb.append(parentMessageId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByParentMessageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {parentMessageId}));
 	}
 
 	/**
@@ -2248,14 +2180,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage fetchByParentMessageId_First(
 		long parentMessageId, OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByParentMessageId(
-			parentMessageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByParentMessageId.fetchFirst(
+			finderCache, new Object[] {parentMessageId}, orderByComparator);
 	}
 
 	/**
@@ -2265,13 +2191,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByParentMessageId(long parentMessageId) {
-		for (MBMessage mbMessage :
-				findByParentMessageId(
-					parentMessageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByParentMessageId.remove(
+			finderCache, new Object[] {parentMessageId});
 	}
 
 	/**
@@ -2937,19 +2858,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, categoryId}));
 	}
 
 	/**
@@ -2965,14 +2876,8 @@ public class MBMessagePersistenceImpl
 		long groupId, long categoryId,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByG_C(
-			groupId, categoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId}, orderByComparator);
 	}
 
 	/**
@@ -3129,13 +3034,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long categoryId) {
-		for (MBMessage mbMessage :
-				findByG_C(
-					groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, categoryId});
 	}
 
 	/**
@@ -3241,23 +3141,16 @@ public class MBMessagePersistenceImpl
 		MBMessage mbMessage = fetchByG_US(groupId, urlSubject);
 
 		if (mbMessage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", urlSubject=");
-			sb.append(urlSubject);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_US.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, urlSubject});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMessageException(sb.toString());
+			throw new NoSuchMessageException(message);
 		}
 
 		return mbMessage;
@@ -4910,19 +4803,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -4938,14 +4821,9 @@ public class MBMessagePersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -4956,13 +4834,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (MBMessage mbMessage :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -5099,19 +4972,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append(", parentMessageId=");
-		sb.append(parentMessageId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByT_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {threadId, parentMessageId}));
 	}
 
 	/**
@@ -5127,14 +4991,9 @@ public class MBMessagePersistenceImpl
 		long threadId, long parentMessageId,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByT_P(
-			threadId, parentMessageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_P.fetchFirst(
+			finderCache, new Object[] {threadId, parentMessageId},
+			orderByComparator);
 	}
 
 	/**
@@ -5145,13 +5004,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByT_P(long threadId, long parentMessageId) {
-		for (MBMessage mbMessage :
-				findByT_P(
-					threadId, parentMessageId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByT_P.remove(
+			finderCache, new Object[] {threadId, parentMessageId});
 	}
 
 	/**
@@ -5286,19 +5140,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append(", answer=");
-		sb.append(answer);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByT_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, answer}));
 	}
 
 	/**
@@ -5314,14 +5158,8 @@ public class MBMessagePersistenceImpl
 		long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByT_A(
-			threadId, answer, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_A.fetchFirst(
+			finderCache, new Object[] {threadId, answer}, orderByComparator);
 	}
 
 	/**
@@ -5332,13 +5170,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByT_A(long threadId, boolean answer) {
-		for (MBMessage mbMessage :
-				findByT_A(
-					threadId, answer, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByT_A.remove(
+			finderCache, new Object[] {threadId, answer});
 	}
 
 	/**
@@ -5473,19 +5306,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, status}));
 	}
 
 	/**
@@ -5501,14 +5324,8 @@ public class MBMessagePersistenceImpl
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByT_S(
-			threadId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_S.fetchFirst(
+			finderCache, new Object[] {threadId, status}, orderByComparator);
 	}
 
 	/**
@@ -5519,13 +5336,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByT_S(long threadId, int status) {
-		for (MBMessage mbMessage :
-				findByT_S(
-					threadId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByT_S.remove(
+			finderCache, new Object[] {threadId, status});
 	}
 
 	/**
@@ -5660,19 +5472,9 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByT_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, status}));
 	}
 
 	/**
@@ -5688,14 +5490,8 @@ public class MBMessagePersistenceImpl
 		long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByT_NotS(
-			threadId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_NotS.fetchFirst(
+			finderCache, new Object[] {threadId, status}, orderByComparator);
 	}
 
 	/**
@@ -5706,13 +5502,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByT_NotS(long threadId, int status) {
-		for (MBMessage mbMessage :
-				findByT_NotS(
-					threadId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByT_NotS.remove(
+			finderCache, new Object[] {threadId, status});
 	}
 
 	/**
@@ -6175,19 +5966,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentMessageId=");
-		sb.append(parentMessageId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByP_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {parentMessageId, status}));
 	}
 
 	/**
@@ -6203,14 +5985,9 @@ public class MBMessagePersistenceImpl
 		long parentMessageId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByP_S(
-			parentMessageId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_S.fetchFirst(
+			finderCache, new Object[] {parentMessageId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -6221,13 +5998,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByP_S(long parentMessageId, int status) {
-		for (MBMessage mbMessage :
-				findByP_S(
-					parentMessageId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByP_S.remove(
+			finderCache, new Object[] {parentMessageId, status});
 	}
 
 	/**
@@ -6943,22 +6715,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", threadId=");
-		sb.append(threadId);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByG_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, threadId}));
 	}
 
 	/**
@@ -6975,14 +6735,9 @@ public class MBMessagePersistenceImpl
 		long groupId, long categoryId, long threadId,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByG_C_T(
-			groupId, categoryId, threadId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_T.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId},
+			orderByComparator);
 	}
 
 	/**
@@ -7151,13 +6906,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_T(long groupId, long categoryId, long threadId) {
-		for (MBMessage mbMessage :
-				findByG_C_T(
-					groupId, categoryId, threadId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByG_C_T.remove(
+			finderCache, new Object[] {groupId, categoryId, threadId});
 	}
 
 	/**
@@ -7380,22 +7130,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByG_C_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, status}));
 	}
 
 	/**
@@ -7412,14 +7150,9 @@ public class MBMessagePersistenceImpl
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByG_C_S(
-			groupId, categoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_S.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7587,13 +7320,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByG_C_S(long groupId, long categoryId, int status) {
-		for (MBMessage mbMessage :
-				findByG_C_S(
-					groupId, categoryId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByG_C_S.remove(
+			finderCache, new Object[] {groupId, categoryId, status});
 	}
 
 	/**
@@ -7814,22 +7542,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByU_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, classNameId, classPK}));
 	}
 
 	/**
@@ -7846,14 +7562,9 @@ public class MBMessagePersistenceImpl
 		long userId, long classNameId, long classPK,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByU_C_C(
-			userId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C_C.fetchFirst(
+			finderCache, new Object[] {userId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -7865,13 +7576,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByU_C_C(long userId, long classNameId, long classPK) {
-		for (MBMessage mbMessage :
-				findByU_C_C(
-					userId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByU_C_C.remove(
+			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
 	/**
@@ -8676,22 +8382,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, status}));
 	}
 
 	/**
@@ -8708,14 +8402,9 @@ public class MBMessagePersistenceImpl
 		long classNameId, long classPK, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByC_C_S(
-			classNameId, classPK, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_S.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, status},
+			orderByComparator);
 	}
 
 	/**
@@ -8727,13 +8416,8 @@ public class MBMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_S(long classNameId, long classPK, int status) {
-		for (MBMessage mbMessage :
-				findByC_C_S(
-					classNameId, classPK, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByC_C_S.remove(
+			finderCache, new Object[] {classNameId, classPK, status});
 	}
 
 	/**
@@ -8887,25 +8571,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", threadId=");
-		sb.append(threadId);
-
-		sb.append(", answer=");
-		sb.append(answer);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByG_C_T_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, threadId, answer}));
 	}
 
 	/**
@@ -8923,14 +8592,9 @@ public class MBMessagePersistenceImpl
 		long groupId, long categoryId, long threadId, boolean answer,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByG_C_T_A(
-			groupId, categoryId, threadId, answer, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_T_A.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId, answer},
+			orderByComparator);
 	}
 
 	/**
@@ -9111,13 +8775,8 @@ public class MBMessagePersistenceImpl
 	public void removeByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer) {
 
-		for (MBMessage mbMessage :
-				findByG_C_T_A(
-					groupId, categoryId, threadId, answer, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByG_C_T_A.remove(
+			finderCache, new Object[] {groupId, categoryId, threadId, answer});
 	}
 
 	/**
@@ -9361,25 +9020,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", threadId=");
-		sb.append(threadId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByG_C_T_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, threadId, status}));
 	}
 
 	/**
@@ -9397,14 +9041,9 @@ public class MBMessagePersistenceImpl
 		long groupId, long categoryId, long threadId, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByG_C_T_S(
-			groupId, categoryId, threadId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_T_S.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -9585,13 +9224,8 @@ public class MBMessagePersistenceImpl
 	public void removeByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status) {
 
-		for (MBMessage mbMessage :
-				findByG_C_T_S(
-					groupId, categoryId, threadId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByG_C_T_S.remove(
+			finderCache, new Object[] {groupId, categoryId, threadId, status});
 	}
 
 	/**
@@ -9835,25 +9469,10 @@ public class MBMessagePersistenceImpl
 			return mbMessage;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMessageException(sb.toString());
+		throw new NoSuchMessageException(
+			_collectionPersistenceFinderByU_C_C_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, classNameId, classPK, status}));
 	}
 
 	/**
@@ -9871,14 +9490,9 @@ public class MBMessagePersistenceImpl
 		long userId, long classNameId, long classPK, int status,
 		OrderByComparator<MBMessage> orderByComparator) {
 
-		List<MBMessage> list = findByU_C_C_S(
-			userId, classNameId, classPK, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C_C_S.fetchFirst(
+			finderCache, new Object[] {userId, classNameId, classPK, status},
+			orderByComparator);
 	}
 
 	/**
@@ -9893,13 +9507,8 @@ public class MBMessagePersistenceImpl
 	public void removeByU_C_C_S(
 		long userId, long classNameId, long classPK, int status) {
 
-		for (MBMessage mbMessage :
-				findByU_C_C_S(
-					userId, classNameId, classPK, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbMessage);
-		}
+		_collectionPersistenceFinderByU_C_C_S.remove(
+			finderCache, new Object[] {userId, classNameId, classPK, status});
 	}
 
 	/**
@@ -9943,23 +9552,16 @@ public class MBMessagePersistenceImpl
 		MBMessage mbMessage = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (mbMessage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMessageException(sb.toString());
+			throw new NoSuchMessageException(message);
 		}
 
 		return mbMessage;
@@ -12000,4 +11602,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1480950381
+// LIFERAY-SERVICE-BUILDER-HASH:-1433628033

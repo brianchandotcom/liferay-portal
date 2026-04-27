@@ -207,16 +207,9 @@ public class DDLRecordSetPersistenceImpl
 			return ddlRecordSet;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetException(sb.toString());
+		throw new NoSuchRecordSetException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,13 +223,8 @@ public class DDLRecordSetPersistenceImpl
 	public DDLRecordSet fetchByUuid_First(
 		String uuid, OrderByComparator<DDLRecordSet> orderByComparator) {
 
-		List<DDLRecordSet> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -246,11 +234,8 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDLRecordSet ddlRecordSet :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordSet);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -289,23 +274,15 @@ public class DDLRecordSetPersistenceImpl
 		DDLRecordSet ddlRecordSet = fetchByUUID_G(uuid, groupId);
 
 		if (ddlRecordSet == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecordSetException(sb.toString());
+			throw new NoSuchRecordSetException(message);
 		}
 
 		return ddlRecordSet;
@@ -488,19 +465,9 @@ public class DDLRecordSetPersistenceImpl
 			return ddlRecordSet;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetException(sb.toString());
+		throw new NoSuchRecordSetException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -516,14 +483,8 @@ public class DDLRecordSetPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDLRecordSet> orderByComparator) {
 
-		List<DDLRecordSet> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -534,13 +495,8 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDLRecordSet ddlRecordSet :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecordSet);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -2133,23 +2089,16 @@ public class DDLRecordSetPersistenceImpl
 		DDLRecordSet ddlRecordSet = fetchByG_R(groupId, recordSetKey);
 
 		if (ddlRecordSet == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", recordSetKey=");
-			sb.append(recordSetKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_R.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, recordSetKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecordSetException(sb.toString());
+			throw new NoSuchRecordSetException(message);
 		}
 
 		return ddlRecordSet;
@@ -3337,4 +3286,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:496416384
+// LIFERAY-SERVICE-BUILDER-HASH:1882611342

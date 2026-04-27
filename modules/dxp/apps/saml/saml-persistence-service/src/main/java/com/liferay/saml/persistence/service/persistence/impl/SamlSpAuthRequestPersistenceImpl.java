@@ -189,16 +189,9 @@ public class SamlSpAuthRequestPersistenceImpl
 			return samlSpAuthRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchSpAuthRequestException(sb.toString());
+		throw new NoSuchSpAuthRequestException(
+			_collectionPersistenceFinderByLtCreateDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createDate}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class SamlSpAuthRequestPersistenceImpl
 		Date createDate,
 		OrderByComparator<SamlSpAuthRequest> orderByComparator) {
 
-		List<SamlSpAuthRequest> list = findByLtCreateDate(
-			createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtCreateDate.fetchFirst(
+			finderCache, new Object[] {createDate}, orderByComparator);
 	}
 
 	/**
@@ -230,12 +217,8 @@ public class SamlSpAuthRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByLtCreateDate(Date createDate) {
-		for (SamlSpAuthRequest samlSpAuthRequest :
-				findByLtCreateDate(
-					createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(samlSpAuthRequest);
-		}
+		_collectionPersistenceFinderByLtCreateDate.remove(
+			finderCache, new Object[] {createDate});
 	}
 
 	/**
@@ -271,23 +254,16 @@ public class SamlSpAuthRequestPersistenceImpl
 			samlIdpEntityId, samlSpAuthRequestKey);
 
 		if (samlSpAuthRequest == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("samlIdpEntityId=");
-			sb.append(samlIdpEntityId);
-
-			sb.append(", samlSpAuthRequestKey=");
-			sb.append(samlSpAuthRequestKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderBySIEI_SSARK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {samlIdpEntityId, samlSpAuthRequestKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSpAuthRequestException(sb.toString());
+			throw new NoSuchSpAuthRequestException(message);
 		}
 
 		return samlSpAuthRequest;
@@ -1035,4 +1011,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1606982095
+// LIFERAY-SERVICE-BUILDER-HASH:-362825375

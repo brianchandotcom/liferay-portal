@@ -219,17 +219,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			return commerceNotificationTemplateCommerceAccountGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceNotificationTemplateId=");
-		sb.append(commerceNotificationTemplateId);
-
-		sb.append("}");
-
 		throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-			sb.toString());
+			_collectionPersistenceFinderByCommerceNotificationTemplateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceNotificationTemplateId}));
 	}
 
 	/**
@@ -247,15 +241,10 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				<CommerceNotificationTemplateCommerceAccountGroupRel>
 					orderByComparator) {
 
-		List<CommerceNotificationTemplateCommerceAccountGroupRel> list =
-			findByCommerceNotificationTemplateId(
-				commerceNotificationTemplateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceNotificationTemplateId.
+			fetchFirst(
+				finderCache, new Object[] {commerceNotificationTemplateId},
+				orderByComparator);
 	}
 
 	/**
@@ -267,14 +256,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	public void removeByCommerceNotificationTemplateId(
 		long commerceNotificationTemplateId) {
 
-		for (CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel :
-					findByCommerceNotificationTemplateId(
-						commerceNotificationTemplateId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationTemplateCommerceAccountGroupRel);
-		}
+		_collectionPersistenceFinderByCommerceNotificationTemplateId.remove(
+			finderCache, new Object[] {commerceNotificationTemplateId});
 	}
 
 	/**
@@ -412,17 +395,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			return commerceNotificationTemplateCommerceAccountGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAccountGroupId=");
-		sb.append(commerceAccountGroupId);
-
-		sb.append("}");
-
 		throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-			sb.toString());
+			_collectionPersistenceFinderByCommerceAccountGroupId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceAccountGroupId}));
 	}
 
 	/**
@@ -440,15 +417,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				<CommerceNotificationTemplateCommerceAccountGroupRel>
 					orderByComparator) {
 
-		List<CommerceNotificationTemplateCommerceAccountGroupRel> list =
-			findByCommerceAccountGroupId(
-				commerceAccountGroupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceAccountGroupId.fetchFirst(
+			finderCache, new Object[] {commerceAccountGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -458,14 +429,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceAccountGroupId(long commerceAccountGroupId) {
-		for (CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel :
-					findByCommerceAccountGroupId(
-						commerceAccountGroupId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commerceNotificationTemplateCommerceAccountGroupRel);
-		}
+		_collectionPersistenceFinderByCommerceAccountGroupId.remove(
+			finderCache, new Object[] {commerceAccountGroupId});
 	}
 
 	/**
@@ -503,24 +468,19 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				commerceNotificationTemplateId, commerceAccountGroupId);
 
 		if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceNotificationTemplateId=");
-			sb.append(commerceNotificationTemplateId);
-
-			sb.append(", commerceAccountGroupId=");
-			sb.append(commerceAccountGroupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						commerceNotificationTemplateId, commerceAccountGroupId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-				sb.toString());
+				message);
 		}
 
 		return commerceNotificationTemplateCommerceAccountGroupRel;
@@ -1484,4 +1444,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1038416425
+// LIFERAY-SERVICE-BUILDER-HASH:-1399333212

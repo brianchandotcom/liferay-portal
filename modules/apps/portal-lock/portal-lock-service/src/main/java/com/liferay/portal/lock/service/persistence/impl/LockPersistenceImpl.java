@@ -186,16 +186,9 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -209,13 +202,8 @@ public class LockPersistenceImpl
 	public Lock fetchByUuid_First(
 		String uuid, OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -225,11 +213,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Lock lock :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -352,19 +337,9 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -380,14 +355,8 @@ public class LockPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -398,13 +367,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Lock lock :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -519,16 +483,9 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByClassName.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {className}));
 	}
 
 	/**
@@ -542,13 +499,8 @@ public class LockPersistenceImpl
 	public Lock fetchByClassName_First(
 		String className, OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByClassName(className, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByClassName.fetchFirst(
+			finderCache, new Object[] {className}, orderByComparator);
 	}
 
 	/**
@@ -558,12 +510,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByClassName(String className) {
-		for (Lock lock :
-				findByClassName(
-					className, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByClassName.remove(
+			finderCache, new Object[] {className});
 	}
 
 	/**
@@ -680,16 +628,10 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByLtExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -703,14 +645,8 @@ public class LockPersistenceImpl
 	public Lock fetchByLtExpirationDate_First(
 		Date expirationDate, OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByLtExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtExpirationDate.fetchFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -720,13 +656,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByLtExpirationDate(Date expirationDate) {
-		for (Lock lock :
-				findByLtExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByLtExpirationDate.remove(
+			finderCache, new Object[] {expirationDate});
 	}
 
 	/**
@@ -848,19 +779,9 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, className}));
 	}
 
 	/**
@@ -876,14 +797,9 @@ public class LockPersistenceImpl
 		long companyId, String className,
 		OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByC_C(
-			companyId, className, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, className},
+			orderByComparator);
 	}
 
 	/**
@@ -894,13 +810,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, String className) {
-		for (Lock lock :
-				findByC_C(
-					companyId, className, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, className});
 	}
 
 	/**
@@ -934,23 +845,15 @@ public class LockPersistenceImpl
 		Lock lock = fetchByC_K(className, key);
 
 		if (lock == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("className=");
-			sb.append(className);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {className, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLockException(sb.toString());
+			throw new NoSuchLockException(message);
 		}
 
 		return lock;
@@ -1130,22 +1033,10 @@ public class LockPersistenceImpl
 			return lock;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", className=");
-		sb.append(className);
-
-		sb.append("}");
-
-		throw new NoSuchLockException(sb.toString());
+		throw new NoSuchLockException(
+			_collectionPersistenceFinderByC_U_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, userId, className}));
 	}
 
 	/**
@@ -1162,14 +1053,9 @@ public class LockPersistenceImpl
 		long companyId, long userId, String className,
 		OrderByComparator<Lock> orderByComparator) {
 
-		List<Lock> list = findByC_U_C(
-			companyId, userId, className, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U_C.fetchFirst(
+			finderCache, new Object[] {companyId, userId, className},
+			orderByComparator);
 	}
 
 	/**
@@ -1181,13 +1067,8 @@ public class LockPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U_C(long companyId, long userId, String className) {
-		for (Lock lock :
-				findByC_U_C(
-					companyId, userId, className, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(lock);
-		}
+		_collectionPersistenceFinderByC_U_C.remove(
+			finderCache, new Object[] {companyId, userId, className});
 	}
 
 	/**
@@ -2028,4 +1909,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1947717285
+// LIFERAY-SERVICE-BUILDER-HASH:-1676122354

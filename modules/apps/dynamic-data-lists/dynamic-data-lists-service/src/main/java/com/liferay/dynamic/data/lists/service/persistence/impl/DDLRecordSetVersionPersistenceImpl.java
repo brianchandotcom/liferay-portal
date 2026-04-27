@@ -206,16 +206,9 @@ public class DDLRecordSetVersionPersistenceImpl
 			return ddlRecordSetVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetVersionException(sb.toString());
+		throw new NoSuchRecordSetVersionException(
+			_collectionPersistenceFinderByRecordSetId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class DDLRecordSetVersionPersistenceImpl
 		long recordSetId,
 		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
 
-		List<DDLRecordSetVersion> list = findByRecordSetId(
-			recordSetId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRecordSetId.fetchFirst(
+			finderCache, new Object[] {recordSetId}, orderByComparator);
 	}
 
 	/**
@@ -247,12 +234,8 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByRecordSetId(long recordSetId) {
-		for (DDLRecordSetVersion ddlRecordSetVersion :
-				findByRecordSetId(
-					recordSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordSetVersion);
-		}
+		_collectionPersistenceFinderByRecordSetId.remove(
+			finderCache, new Object[] {recordSetId});
 	}
 
 	/**
@@ -292,23 +275,16 @@ public class DDLRecordSetVersionPersistenceImpl
 			recordSetId, version);
 
 		if (ddlRecordSetVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("recordSetId=");
-			sb.append(recordSetId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByRS_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {recordSetId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecordSetVersionException(sb.toString());
+			throw new NoSuchRecordSetVersionException(message);
 		}
 
 		return ddlRecordSetVersion;
@@ -493,19 +469,9 @@ public class DDLRecordSetVersionPersistenceImpl
 			return ddlRecordSetVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("recordSetId=");
-		sb.append(recordSetId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchRecordSetVersionException(sb.toString());
+		throw new NoSuchRecordSetVersionException(
+			_collectionPersistenceFinderByRS_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {recordSetId, status}));
 	}
 
 	/**
@@ -521,14 +487,8 @@ public class DDLRecordSetVersionPersistenceImpl
 		long recordSetId, int status,
 		OrderByComparator<DDLRecordSetVersion> orderByComparator) {
 
-		List<DDLRecordSetVersion> list = findByRS_S(
-			recordSetId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRS_S.fetchFirst(
+			finderCache, new Object[] {recordSetId, status}, orderByComparator);
 	}
 
 	/**
@@ -539,13 +499,8 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByRS_S(long recordSetId, int status) {
-		for (DDLRecordSetVersion ddlRecordSetVersion :
-				findByRS_S(
-					recordSetId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecordSetVersion);
-		}
+		_collectionPersistenceFinderByRS_S.remove(
+			finderCache, new Object[] {recordSetId, status});
 	}
 
 	/**
@@ -1577,4 +1532,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1078153094
+// LIFERAY-SERVICE-BUILDER-HASH:-1262788046

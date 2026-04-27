@@ -205,22 +205,10 @@ public class SamlPeerBindingPersistenceImpl
 			return samlPeerBinding;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append(", samlNameIdValue=");
-		sb.append(samlNameIdValue);
-
-		sb.append("}");
-
-		throw new NoSuchPeerBindingException(sb.toString());
+		throw new NoSuchPeerBindingException(
+			_collectionPersistenceFinderByC_D_SNIV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, deleted, samlNameIdValue}));
 	}
 
 	/**
@@ -237,14 +225,9 @@ public class SamlPeerBindingPersistenceImpl
 		long companyId, boolean deleted, String samlNameIdValue,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		List<SamlPeerBinding> list = findByC_D_SNIV(
-			companyId, deleted, samlNameIdValue, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_D_SNIV.fetchFirst(
+			finderCache, new Object[] {companyId, deleted, samlNameIdValue},
+			orderByComparator);
 	}
 
 	/**
@@ -258,13 +241,8 @@ public class SamlPeerBindingPersistenceImpl
 	public void removeByC_D_SNIV(
 		long companyId, boolean deleted, String samlNameIdValue) {
 
-		for (SamlPeerBinding samlPeerBinding :
-				findByC_D_SNIV(
-					companyId, deleted, samlNameIdValue, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(samlPeerBinding);
-		}
+		_collectionPersistenceFinderByC_D_SNIV.remove(
+			finderCache, new Object[] {companyId, deleted, samlNameIdValue});
 	}
 
 	/**
@@ -413,25 +391,10 @@ public class SamlPeerBindingPersistenceImpl
 			return samlPeerBinding;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", samlPeerEntityId=");
-		sb.append(samlPeerEntityId);
-
-		sb.append(", deleted=");
-		sb.append(deleted);
-
-		sb.append("}");
-
-		throw new NoSuchPeerBindingException(sb.toString());
+		throw new NoSuchPeerBindingException(
+			_collectionPersistenceFinderByC_U_SPEI_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, userId, samlPeerEntityId, deleted}));
 	}
 
 	/**
@@ -449,15 +412,10 @@ public class SamlPeerBindingPersistenceImpl
 		long companyId, long userId, String samlPeerEntityId, boolean deleted,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		List<SamlPeerBinding> list = findByC_U_SPEI_D(
-			companyId, userId, samlPeerEntityId, deleted, 0, 1,
+		return _collectionPersistenceFinderByC_U_SPEI_D.fetchFirst(
+			finderCache,
+			new Object[] {companyId, userId, samlPeerEntityId, deleted},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -472,13 +430,9 @@ public class SamlPeerBindingPersistenceImpl
 	public void removeByC_U_SPEI_D(
 		long companyId, long userId, String samlPeerEntityId, boolean deleted) {
 
-		for (SamlPeerBinding samlPeerBinding :
-				findByC_U_SPEI_D(
-					companyId, userId, samlPeerEntityId, deleted,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(samlPeerBinding);
-		}
+		_collectionPersistenceFinderByC_U_SPEI_D.remove(
+			finderCache,
+			new Object[] {companyId, userId, samlPeerEntityId, deleted});
 	}
 
 	/**
@@ -1200,4 +1154,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1994829248
+// LIFERAY-SERVICE-BUILDER-HASH:-1180934065

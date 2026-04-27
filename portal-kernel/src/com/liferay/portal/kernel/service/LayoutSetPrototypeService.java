@@ -107,4 +107,4 @@ public interface LayoutSetPrototypeService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:66517459
+// LIFERAY-SERVICE-BUILDER-HASH:-1672441712

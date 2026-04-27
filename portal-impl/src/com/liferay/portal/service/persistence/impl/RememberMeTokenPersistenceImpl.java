@@ -175,16 +175,9 @@ public class RememberMeTokenPersistenceImpl
 			return rememberMeToken;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRememberMeTokenException(sb.toString());
+		throw new NoSuchRememberMeTokenException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -198,14 +191,9 @@ public class RememberMeTokenPersistenceImpl
 	public RememberMeToken fetchByUserId_First(
 		long userId, OrderByComparator<RememberMeToken> orderByComparator) {
 
-		List<RememberMeToken> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -215,12 +203,8 @@ public class RememberMeTokenPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (RememberMeToken rememberMeToken :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(rememberMeToken);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -339,16 +323,10 @@ public class RememberMeTokenPersistenceImpl
 			return rememberMeToken;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchRememberMeTokenException(sb.toString());
+		throw new NoSuchRememberMeTokenException(
+			_collectionPersistenceFinderByLteExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -363,14 +341,9 @@ public class RememberMeTokenPersistenceImpl
 		Date expirationDate,
 		OrderByComparator<RememberMeToken> orderByComparator) {
 
-		List<RememberMeToken> list = findByLteExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLteExpirationDate.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate},
+			orderByComparator);
 	}
 
 	/**
@@ -380,13 +353,8 @@ public class RememberMeTokenPersistenceImpl
 	 */
 	@Override
 	public void removeByLteExpirationDate(Date expirationDate) {
-		for (RememberMeToken rememberMeToken :
-				findByLteExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(rememberMeToken);
-		}
+		_collectionPersistenceFinderByLteExpirationDate.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {expirationDate});
 	}
 
 	/**
@@ -1029,4 +997,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1806728915
+// LIFERAY-SERVICE-BUILDER-HASH:1523426964

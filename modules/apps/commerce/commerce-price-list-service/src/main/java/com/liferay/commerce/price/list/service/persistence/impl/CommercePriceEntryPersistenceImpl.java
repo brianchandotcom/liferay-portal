@@ -216,16 +216,9 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -239,14 +232,8 @@ public class CommercePriceEntryPersistenceImpl
 	public CommercePriceEntry fetchByUuid_First(
 		String uuid, OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -256,11 +243,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -395,19 +379,9 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -423,14 +397,8 @@ public class CommercePriceEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -441,13 +409,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -577,16 +540,9 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -601,14 +557,8 @@ public class CommercePriceEntryPersistenceImpl
 		long companyId,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -618,12 +568,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -756,16 +702,11 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByCommercePriceListId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commercePriceListId}));
 	}
 
 	/**
@@ -780,14 +721,8 @@ public class CommercePriceEntryPersistenceImpl
 		long commercePriceListId,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByCommercePriceListId(
-			commercePriceListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommercePriceListId.fetchFirst(
+			finderCache, new Object[] {commercePriceListId}, orderByComparator);
 	}
 
 	/**
@@ -797,13 +732,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCommercePriceListId(long commercePriceListId) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByCommercePriceListId(
-					commercePriceListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByCommercePriceListId.remove(
+			finderCache, new Object[] {commercePriceListId});
 	}
 
 	/**
@@ -935,16 +865,9 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByCPInstanceUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceUuid}));
 	}
 
 	/**
@@ -959,14 +882,8 @@ public class CommercePriceEntryPersistenceImpl
 		String CPInstanceUuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByCPInstanceUuid(
-			CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPInstanceUuid.fetchFirst(
+			finderCache, new Object[] {CPInstanceUuid}, orderByComparator);
 	}
 
 	/**
@@ -976,13 +893,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCPInstanceUuid(String CPInstanceUuid) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByCPInstanceUuid(
-					CPInstanceUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByCPInstanceUuid.remove(
+			finderCache, new Object[] {CPInstanceUuid});
 	}
 
 	/**
@@ -1121,19 +1033,10 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {commercePriceListId, CPInstanceUuid}));
 	}
 
 	/**
@@ -1149,14 +1052,9 @@ public class CommercePriceEntryPersistenceImpl
 		long commercePriceListId, String CPInstanceUuid,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByC_C(
-			commercePriceListId, CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {commercePriceListId, CPInstanceUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -1167,13 +1065,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long commercePriceListId, String CPInstanceUuid) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByC_C(
-					commercePriceListId, CPInstanceUuid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {commercePriceListId, CPInstanceUuid});
 	}
 
 	/**
@@ -1309,19 +1202,9 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("displayDate<");
-		sb.append(displayDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
 	}
 
 	/**
@@ -1337,14 +1220,8 @@ public class CommercePriceEntryPersistenceImpl
 		Date displayDate, int status,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByLtD_S(
-			displayDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtD_S.fetchFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1355,13 +1232,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtD_S(Date displayDate, int status) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByLtD_S(
-					displayDate, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByLtD_S.remove(
+			finderCache, new Object[] {displayDate, status});
 	}
 
 	/**
@@ -1498,19 +1370,10 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {expirationDate, status}));
 	}
 
 	/**
@@ -1526,14 +1389,9 @@ public class CommercePriceEntryPersistenceImpl
 		Date expirationDate, int status,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByLtE_S(
-			expirationDate, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtE_S.fetchFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1544,13 +1402,8 @@ public class CommercePriceEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtE_S(Date expirationDate, int status) {
-		for (CommercePriceEntry commercePriceEntry :
-				findByLtE_S(
-					expirationDate, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByLtE_S.remove(
+			finderCache, new Object[] {expirationDate, status});
 	}
 
 	/**
@@ -1698,22 +1551,10 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePriceListId=");
-		sb.append(commercePriceListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {commercePriceListId, CPInstanceUuid, status}));
 	}
 
 	/**
@@ -1730,15 +1571,10 @@ public class CommercePriceEntryPersistenceImpl
 		long commercePriceListId, String CPInstanceUuid, int status,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByC_C_S(
-			commercePriceListId, CPInstanceUuid, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_S.fetchFirst(
+			finderCache,
+			new Object[] {commercePriceListId, CPInstanceUuid, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1752,13 +1588,9 @@ public class CommercePriceEntryPersistenceImpl
 	public void removeByC_C_S(
 		long commercePriceListId, String CPInstanceUuid, int status) {
 
-		for (CommercePriceEntry commercePriceEntry :
-				findByC_C_S(
-					commercePriceListId, CPInstanceUuid, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByC_C_S.remove(
+			finderCache,
+			new Object[] {commercePriceListId, CPInstanceUuid, status});
 	}
 
 	/**
@@ -1912,22 +1744,10 @@ public class CommercePriceEntryPersistenceImpl
 			return commercePriceEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append(", quantity=");
-		sb.append(quantity);
-
-		sb.append(", unitOfMeasureKey=");
-		sb.append(unitOfMeasureKey);
-
-		sb.append("}");
-
-		throw new NoSuchPriceEntryException(sb.toString());
+		throw new NoSuchPriceEntryException(
+			_collectionPersistenceFinderByC_Q_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey}));
 	}
 
 	/**
@@ -1944,15 +1764,10 @@ public class CommercePriceEntryPersistenceImpl
 		String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey,
 		OrderByComparator<CommercePriceEntry> orderByComparator) {
 
-		List<CommercePriceEntry> list = findByC_Q_U(
-			CPInstanceUuid, quantity, unitOfMeasureKey, 0, 1,
+		return _collectionPersistenceFinderByC_Q_U.fetchFirst(
+			finderCache,
+			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1966,13 +1781,9 @@ public class CommercePriceEntryPersistenceImpl
 	public void removeByC_Q_U(
 		String CPInstanceUuid, BigDecimal quantity, String unitOfMeasureKey) {
 
-		for (CommercePriceEntry commercePriceEntry :
-				findByC_Q_U(
-					CPInstanceUuid, quantity, unitOfMeasureKey,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePriceEntry);
-		}
+		_collectionPersistenceFinderByC_Q_U.remove(
+			finderCache,
+			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey});
 	}
 
 	/**
@@ -2018,23 +1829,16 @@ public class CommercePriceEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (commercePriceEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPriceEntryException(sb.toString());
+			throw new NoSuchPriceEntryException(message);
 		}
 
 		return commercePriceEntry;
@@ -3496,4 +3300,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-376539648
+// LIFERAY-SERVICE-BUILDER-HASH:-1812807411

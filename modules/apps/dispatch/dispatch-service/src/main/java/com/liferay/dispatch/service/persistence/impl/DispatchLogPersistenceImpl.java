@@ -190,16 +190,11 @@ public class DispatchLogPersistenceImpl
 			return dispatchLog;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dispatchTriggerId=");
-		sb.append(dispatchTriggerId);
-
-		sb.append("}");
-
-		throw new NoSuchLogException(sb.toString());
+		throw new NoSuchLogException(
+			_collectionPersistenceFinderByDispatchTriggerId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {dispatchTriggerId}));
 	}
 
 	/**
@@ -214,14 +209,8 @@ public class DispatchLogPersistenceImpl
 		long dispatchTriggerId,
 		OrderByComparator<DispatchLog> orderByComparator) {
 
-		List<DispatchLog> list = findByDispatchTriggerId(
-			dispatchTriggerId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDispatchTriggerId.fetchFirst(
+			finderCache, new Object[] {dispatchTriggerId}, orderByComparator);
 	}
 
 	/**
@@ -231,13 +220,8 @@ public class DispatchLogPersistenceImpl
 	 */
 	@Override
 	public void removeByDispatchTriggerId(long dispatchTriggerId) {
-		for (DispatchLog dispatchLog :
-				findByDispatchTriggerId(
-					dispatchTriggerId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dispatchLog);
-		}
+		_collectionPersistenceFinderByDispatchTriggerId.remove(
+			finderCache, new Object[] {dispatchTriggerId});
 	}
 
 	/**
@@ -363,19 +347,10 @@ public class DispatchLogPersistenceImpl
 			return dispatchLog;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("dispatchTriggerId=");
-		sb.append(dispatchTriggerId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchLogException(sb.toString());
+		throw new NoSuchLogException(
+			_collectionPersistenceFinderByDTI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {dispatchTriggerId, status}));
 	}
 
 	/**
@@ -391,14 +366,9 @@ public class DispatchLogPersistenceImpl
 		long dispatchTriggerId, int status,
 		OrderByComparator<DispatchLog> orderByComparator) {
 
-		List<DispatchLog> list = findByDTI_S(
-			dispatchTriggerId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDTI_S.fetchFirst(
+			finderCache, new Object[] {dispatchTriggerId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -409,13 +379,8 @@ public class DispatchLogPersistenceImpl
 	 */
 	@Override
 	public void removeByDTI_S(long dispatchTriggerId, int status) {
-		for (DispatchLog dispatchLog :
-				findByDTI_S(
-					dispatchTriggerId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dispatchLog);
-		}
+		_collectionPersistenceFinderByDTI_S.remove(
+			finderCache, new Object[] {dispatchTriggerId, status});
 	}
 
 	/**
@@ -1112,4 +1077,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1146669640
+// LIFERAY-SERVICE-BUILDER-HASH:1567106924

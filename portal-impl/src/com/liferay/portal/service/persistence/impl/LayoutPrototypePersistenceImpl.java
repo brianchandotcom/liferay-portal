@@ -197,16 +197,9 @@ public class LayoutPrototypePersistenceImpl
 			return layoutPrototype;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
+		throw new NoSuchLayoutPrototypeException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -220,13 +213,9 @@ public class LayoutPrototypePersistenceImpl
 	public LayoutPrototype fetchByUuid_First(
 		String uuid, OrderByComparator<LayoutPrototype> orderByComparator) {
 
-		List<LayoutPrototype> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -391,11 +380,8 @@ public class LayoutPrototypePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LayoutPrototype layoutPrototype :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPrototype);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -606,19 +592,9 @@ public class LayoutPrototypePersistenceImpl
 			return layoutPrototype;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
+		throw new NoSuchLayoutPrototypeException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -634,14 +610,9 @@ public class LayoutPrototypePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LayoutPrototype> orderByComparator) {
 
-		List<LayoutPrototype> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -816,13 +787,8 @@ public class LayoutPrototypePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LayoutPrototype layoutPrototype :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutPrototype);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1037,16 +1003,9 @@ public class LayoutPrototypePersistenceImpl
 			return layoutPrototype;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
+		throw new NoSuchLayoutPrototypeException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1060,14 +1019,9 @@ public class LayoutPrototypePersistenceImpl
 	public LayoutPrototype fetchByCompanyId_First(
 		long companyId, OrderByComparator<LayoutPrototype> orderByComparator) {
 
-		List<LayoutPrototype> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1219,12 +1173,8 @@ public class LayoutPrototypePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (LayoutPrototype layoutPrototype :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(layoutPrototype);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1419,19 +1369,9 @@ public class LayoutPrototypePersistenceImpl
 			return layoutPrototype;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutPrototypeException(sb.toString());
+		throw new NoSuchLayoutPrototypeException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
 	}
 
 	/**
@@ -1447,14 +1387,9 @@ public class LayoutPrototypePersistenceImpl
 		long companyId, boolean active,
 		OrderByComparator<LayoutPrototype> orderByComparator) {
 
-		List<LayoutPrototype> list = findByC_A(
-			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1616,13 +1551,8 @@ public class LayoutPrototypePersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, boolean active) {
-		for (LayoutPrototype layoutPrototype :
-				findByC_A(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(layoutPrototype);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active});
 	}
 
 	/**
@@ -2732,4 +2662,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:138336172
+// LIFERAY-SERVICE-BUILDER-HASH:1839370425

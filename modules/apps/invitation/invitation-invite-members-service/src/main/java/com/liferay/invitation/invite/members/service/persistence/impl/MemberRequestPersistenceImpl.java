@@ -105,20 +105,15 @@ public class MemberRequestPersistenceImpl
 		MemberRequest memberRequest = fetchByKey(key);
 
 		if (memberRequest == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKey.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMemberRequestException(sb.toString());
+			throw new NoSuchMemberRequestException(message);
 		}
 
 		return memberRequest;
@@ -280,16 +275,9 @@ public class MemberRequestPersistenceImpl
 			return memberRequest;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append("}");
-
-		throw new NoSuchMemberRequestException(sb.toString());
+		throw new NoSuchMemberRequestException(
+			_collectionPersistenceFinderByReceiverUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {receiverUserId}));
 	}
 
 	/**
@@ -304,14 +292,8 @@ public class MemberRequestPersistenceImpl
 		long receiverUserId,
 		OrderByComparator<MemberRequest> orderByComparator) {
 
-		List<MemberRequest> list = findByReceiverUserId(
-			receiverUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByReceiverUserId.fetchFirst(
+			finderCache, new Object[] {receiverUserId}, orderByComparator);
 	}
 
 	/**
@@ -321,13 +303,8 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByReceiverUserId(long receiverUserId) {
-		for (MemberRequest memberRequest :
-				findByReceiverUserId(
-					receiverUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(memberRequest);
-		}
+		_collectionPersistenceFinderByReceiverUserId.remove(
+			finderCache, new Object[] {receiverUserId});
 	}
 
 	/**
@@ -452,19 +429,10 @@ public class MemberRequestPersistenceImpl
 			return memberRequest;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("receiverUserId=");
-		sb.append(receiverUserId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchMemberRequestException(sb.toString());
+		throw new NoSuchMemberRequestException(
+			_collectionPersistenceFinderByR_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {receiverUserId, status}));
 	}
 
 	/**
@@ -480,14 +448,9 @@ public class MemberRequestPersistenceImpl
 		long receiverUserId, int status,
 		OrderByComparator<MemberRequest> orderByComparator) {
 
-		List<MemberRequest> list = findByR_S(
-			receiverUserId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_S.fetchFirst(
+			finderCache, new Object[] {receiverUserId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -498,13 +461,8 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Override
 	public void removeByR_S(long receiverUserId, int status) {
-		for (MemberRequest memberRequest :
-				findByR_S(
-					receiverUserId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(memberRequest);
-		}
+		_collectionPersistenceFinderByR_S.remove(
+			finderCache, new Object[] {receiverUserId, status});
 	}
 
 	/**
@@ -542,26 +500,16 @@ public class MemberRequestPersistenceImpl
 			groupId, receiverUserId, status);
 
 		if (memberRequest == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", receiverUserId=");
-			sb.append(receiverUserId);
-
-			sb.append(", status=");
-			sb.append(status);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_R_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, receiverUserId, status});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMemberRequestException(sb.toString());
+			throw new NoSuchMemberRequestException(message);
 		}
 
 		return memberRequest;
@@ -1381,4 +1329,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:931475569
+// LIFERAY-SERVICE-BUILDER-HASH:469929421

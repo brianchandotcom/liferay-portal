@@ -186,16 +186,9 @@ public class DLSyncEventPersistenceImpl
 			return dlSyncEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("modifiedTime>");
-		sb.append(modifiedTime);
-
-		sb.append("}");
-
-		throw new NoSuchEventException(sb.toString());
+		throw new NoSuchEventException(
+			_collectionPersistenceFinderByGtModifiedTime.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {modifiedTime}));
 	}
 
 	/**
@@ -209,14 +202,8 @@ public class DLSyncEventPersistenceImpl
 	public DLSyncEvent fetchByGtModifiedTime_First(
 		long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator) {
 
-		List<DLSyncEvent> list = findByGtModifiedTime(
-			modifiedTime, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGtModifiedTime.fetchFirst(
+			finderCache, new Object[] {modifiedTime}, orderByComparator);
 	}
 
 	/**
@@ -226,12 +213,8 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Override
 	public void removeByGtModifiedTime(long modifiedTime) {
-		for (DLSyncEvent dlSyncEvent :
-				findByGtModifiedTime(
-					modifiedTime, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlSyncEvent);
-		}
+		_collectionPersistenceFinderByGtModifiedTime.remove(
+			finderCache, new Object[] {modifiedTime});
 	}
 
 	/**
@@ -262,20 +245,15 @@ public class DLSyncEventPersistenceImpl
 		DLSyncEvent dlSyncEvent = fetchByTypePK(typePK);
 
 		if (dlSyncEvent == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("typePK=");
-			sb.append(typePK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByTypePK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {typePK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEventException(sb.toString());
+			throw new NoSuchEventException(message);
 		}
 
 		return dlSyncEvent;
@@ -975,4 +953,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:512286638
+// LIFERAY-SERVICE-BUILDER-HASH:-131535236

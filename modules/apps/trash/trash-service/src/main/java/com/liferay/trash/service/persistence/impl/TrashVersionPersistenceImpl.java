@@ -198,16 +198,9 @@ public class TrashVersionPersistenceImpl
 			return trashVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionException(sb.toString());
+		throw new NoSuchVersionException(
+			_collectionPersistenceFinderByEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId}));
 	}
 
 	/**
@@ -221,14 +214,8 @@ public class TrashVersionPersistenceImpl
 	public TrashVersion fetchByEntryId_First(
 		long entryId, OrderByComparator<TrashVersion> orderByComparator) {
 
-		List<TrashVersion> list = findByEntryId(
-			entryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByEntryId.fetchFirst(
+			finderCache, new Object[] {entryId}, orderByComparator);
 	}
 
 	/**
@@ -238,12 +225,8 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByEntryId(long entryId) {
-		for (TrashVersion trashVersion :
-				findByEntryId(
-					entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(trashVersion);
-		}
+		_collectionPersistenceFinderByEntryId.remove(
+			finderCache, new Object[] {entryId});
 	}
 
 	/**
@@ -378,19 +361,9 @@ public class TrashVersionPersistenceImpl
 			return trashVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionException(sb.toString());
+		throw new NoSuchVersionException(
+			_collectionPersistenceFinderByE_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId, classNameId}));
 	}
 
 	/**
@@ -406,14 +379,9 @@ public class TrashVersionPersistenceImpl
 		long entryId, long classNameId,
 		OrderByComparator<TrashVersion> orderByComparator) {
 
-		List<TrashVersion> list = findByE_CN(
-			entryId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByE_CN.fetchFirst(
+			finderCache, new Object[] {entryId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -424,13 +392,8 @@ public class TrashVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByE_CN(long entryId, long classNameId) {
-		for (TrashVersion trashVersion :
-				findByE_CN(
-					entryId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(trashVersion);
-		}
+		_collectionPersistenceFinderByE_CN.remove(
+			finderCache, new Object[] {entryId, classNameId});
 	}
 
 	/**
@@ -470,23 +433,16 @@ public class TrashVersionPersistenceImpl
 		TrashVersion trashVersion = fetchByCN_CPK(classNameId, classPK);
 
 		if (trashVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVersionException(sb.toString());
+			throw new NoSuchVersionException(message);
 		}
 
 		return trashVersion;
@@ -1498,4 +1454,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1305660114
+// LIFERAY-SERVICE-BUILDER-HASH:-1661611210

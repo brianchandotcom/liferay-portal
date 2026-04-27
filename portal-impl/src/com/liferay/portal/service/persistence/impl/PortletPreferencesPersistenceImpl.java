@@ -192,16 +192,9 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByOwnerId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerId}));
 	}
 
 	/**
@@ -215,14 +208,9 @@ public class PortletPreferencesPersistenceImpl
 	public PortletPreferences fetchByOwnerId_First(
 		long ownerId, OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByOwnerId(
-			ownerId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOwnerId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerId},
+			orderByComparator);
 	}
 
 	/**
@@ -232,12 +220,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByOwnerId(long ownerId) {
-		for (PortletPreferences portletPreferences :
-				findByOwnerId(
-					ownerId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByOwnerId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {ownerId});
 	}
 
 	/**
@@ -362,16 +346,9 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByPlid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid}));
 	}
 
 	/**
@@ -385,14 +362,9 @@ public class PortletPreferencesPersistenceImpl
 	public PortletPreferences fetchByPlid_First(
 		long plid, OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByPlid(
-			plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPlid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid},
+			orderByComparator);
 	}
 
 	/**
@@ -402,11 +374,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByPlid(long plid) {
-		for (PortletPreferences portletPreferences :
-				findByPlid(plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByPlid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid});
 	}
 
 	/**
@@ -535,16 +504,9 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
 	}
 
 	/**
@@ -559,14 +521,9 @@ public class PortletPreferencesPersistenceImpl
 		String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByPortletId(
-			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPortletId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -576,12 +533,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByPortletId(String portletId) {
-		for (PortletPreferences portletPreferences :
-				findByPortletId(
-					portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByPortletId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId});
 	}
 
 	/**
@@ -717,19 +670,9 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByO_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ownerType, portletId}));
 	}
 
 	/**
@@ -745,14 +688,9 @@ public class PortletPreferencesPersistenceImpl
 		int ownerType, String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByO_P(
-			ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, portletId}, orderByComparator);
 	}
 
 	/**
@@ -763,13 +701,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByO_P(int ownerType, String portletId) {
-		for (PortletPreferences portletPreferences :
-				findByO_P(
-					ownerType, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByO_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, portletId});
 	}
 
 	/**
@@ -906,19 +840,9 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByP_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid, portletId}));
 	}
 
 	/**
@@ -934,14 +858,9 @@ public class PortletPreferencesPersistenceImpl
 		long plid, String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByP_P(
-			plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -952,13 +871,8 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByP_P(long plid, String portletId) {
-		for (PortletPreferences portletPreferences :
-				findByP_P(
-					plid, portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByP_P.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {plid, portletId});
 	}
 
 	/**
@@ -1104,22 +1018,10 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByO_O_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerId, ownerType, plid}));
 	}
 
 	/**
@@ -1136,14 +1038,9 @@ public class PortletPreferencesPersistenceImpl
 		long ownerId, int ownerType, long plid,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByO_O_P(
-			ownerId, ownerType, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_O_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, plid}, orderByComparator);
 	}
 
 	/**
@@ -1155,13 +1052,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByO_O_P(long ownerId, int ownerType, long plid) {
-		for (PortletPreferences portletPreferences :
-				findByO_O_P(
-					ownerId, ownerType, plid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByO_O_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, plid});
 	}
 
 	/**
@@ -1308,22 +1201,10 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByO_O_PI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerId, ownerType, portletId}));
 	}
 
 	/**
@@ -1340,14 +1221,9 @@ public class PortletPreferencesPersistenceImpl
 		long ownerId, int ownerType, String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByO_O_PI(
-			ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_O_PI.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, portletId}, orderByComparator);
 	}
 
 	/**
@@ -1359,13 +1235,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByO_O_PI(long ownerId, int ownerType, String portletId) {
-		for (PortletPreferences portletPreferences :
-				findByO_O_PI(
-					ownerId, ownerType, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByO_O_PI.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -1512,22 +1384,10 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByO_P_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ownerType, plid, portletId}));
 	}
 
 	/**
@@ -1544,14 +1404,9 @@ public class PortletPreferencesPersistenceImpl
 		int ownerType, long plid, String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByO_P_P(
-			ownerType, plid, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByO_P_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, plid, portletId}, orderByComparator);
 	}
 
 	/**
@@ -1563,13 +1418,9 @@ public class PortletPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByO_P_P(int ownerType, long plid, String portletId) {
-		for (PortletPreferences portletPreferences :
-				findByO_P_P(
-					ownerType, plid, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByO_P_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {ownerType, plid, portletId});
 	}
 
 	/**
@@ -1725,25 +1576,10 @@ public class PortletPreferencesPersistenceImpl
 			return portletPreferences;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ownerId=");
-		sb.append(ownerId);
-
-		sb.append(", ownerType=");
-		sb.append(ownerType);
-
-		sb.append(", portletIdLIKE");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchPortletPreferencesException(sb.toString());
+		throw new NoSuchPortletPreferencesException(
+			_collectionPersistenceFinderByC_O_O_LikeP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, ownerId, ownerType, portletId}));
 	}
 
 	/**
@@ -1761,14 +1597,10 @@ public class PortletPreferencesPersistenceImpl
 		long companyId, long ownerId, int ownerType, String portletId,
 		OrderByComparator<PortletPreferences> orderByComparator) {
 
-		List<PortletPreferences> list = findByC_O_O_LikeP(
-			companyId, ownerId, ownerType, portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_O_O_LikeP.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -1783,13 +1615,9 @@ public class PortletPreferencesPersistenceImpl
 	public void removeByC_O_O_LikeP(
 		long companyId, long ownerId, int ownerType, String portletId) {
 
-		for (PortletPreferences portletPreferences :
-				findByC_O_O_LikeP(
-					companyId, ownerId, ownerType, portletId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portletPreferences);
-		}
+		_collectionPersistenceFinderByC_O_O_LikeP.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -1838,29 +1666,16 @@ public class PortletPreferencesPersistenceImpl
 			ownerId, ownerType, plid, portletId);
 
 		if (portletPreferences == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ownerId=");
-			sb.append(ownerId);
-
-			sb.append(", ownerType=");
-			sb.append(ownerType);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByO_O_P_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {ownerId, ownerType, plid, portletId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPortletPreferencesException(sb.toString());
+			throw new NoSuchPortletPreferencesException(message);
 		}
 
 		return portletPreferences;
@@ -3155,4 +2970,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1462773404
+// LIFERAY-SERVICE-BUILDER-HASH:-166321047

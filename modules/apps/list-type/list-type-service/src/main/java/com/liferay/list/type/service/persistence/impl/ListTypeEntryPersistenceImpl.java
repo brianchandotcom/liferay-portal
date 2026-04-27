@@ -199,16 +199,9 @@ public class ListTypeEntryPersistenceImpl
 			return listTypeEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
+		throw new NoSuchListTypeEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,13 +215,8 @@ public class ListTypeEntryPersistenceImpl
 	public ListTypeEntry fetchByUuid_First(
 		String uuid, OrderByComparator<ListTypeEntry> orderByComparator) {
 
-		List<ListTypeEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -238,11 +226,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ListTypeEntry listTypeEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(listTypeEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -367,19 +352,9 @@ public class ListTypeEntryPersistenceImpl
 			return listTypeEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
+		throw new NoSuchListTypeEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -395,14 +370,8 @@ public class ListTypeEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
-		List<ListTypeEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -413,13 +382,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ListTypeEntry listTypeEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listTypeEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1661,19 +1625,9 @@ public class ListTypeEntryPersistenceImpl
 			return listTypeEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeEntryException(sb.toString());
+		throw new NoSuchListTypeEntryException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -1689,14 +1643,8 @@ public class ListTypeEntryPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
-		List<ListTypeEntry> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1707,13 +1655,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (ListTypeEntry listTypeEntry :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listTypeEntry);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -1748,23 +1691,16 @@ public class ListTypeEntryPersistenceImpl
 		ListTypeEntry listTypeEntry = fetchByLTDI_K(listTypeDefinitionId, key);
 
 		if (listTypeEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("listTypeDefinitionId=");
-			sb.append(listTypeDefinitionId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByLTDI_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {listTypeDefinitionId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchListTypeEntryException(sb.toString());
+			throw new NoSuchListTypeEntryException(message);
 		}
 
 		return listTypeEntry;
@@ -1851,26 +1787,18 @@ public class ListTypeEntryPersistenceImpl
 			externalReferenceCode, companyId, listTypeDefinitionId);
 
 		if (listTypeEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append(", listTypeDefinitionId=");
-			sb.append(listTypeDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C_LTDI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						externalReferenceCode, companyId, listTypeDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchListTypeEntryException(sb.toString());
+			throw new NoSuchListTypeEntryException(message);
 		}
 
 		return listTypeEntry;
@@ -2850,4 +2778,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2100986727
+// LIFERAY-SERVICE-BUILDER-HASH:-1475847062

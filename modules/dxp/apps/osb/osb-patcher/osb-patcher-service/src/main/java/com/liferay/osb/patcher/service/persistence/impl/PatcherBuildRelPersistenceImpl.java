@@ -188,16 +188,11 @@ public class PatcherBuildRelPersistenceImpl
 			return patcherBuildRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("childPatcherBuildId=");
-		sb.append(childPatcherBuildId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherBuildRelException(sb.toString());
+		throw new NoSuchPatcherBuildRelException(
+			_collectionPersistenceFinderByChildPatcherBuildId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {childPatcherBuildId}));
 	}
 
 	/**
@@ -212,14 +207,8 @@ public class PatcherBuildRelPersistenceImpl
 		long childPatcherBuildId,
 		OrderByComparator<PatcherBuildRel> orderByComparator) {
 
-		List<PatcherBuildRel> list = findByChildPatcherBuildId(
-			childPatcherBuildId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByChildPatcherBuildId.fetchFirst(
+			finderCache, new Object[] {childPatcherBuildId}, orderByComparator);
 	}
 
 	/**
@@ -229,13 +218,8 @@ public class PatcherBuildRelPersistenceImpl
 	 */
 	@Override
 	public void removeByChildPatcherBuildId(long childPatcherBuildId) {
-		for (PatcherBuildRel patcherBuildRel :
-				findByChildPatcherBuildId(
-					childPatcherBuildId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherBuildRel);
-		}
+		_collectionPersistenceFinderByChildPatcherBuildId.remove(
+			finderCache, new Object[] {childPatcherBuildId});
 	}
 
 	/**
@@ -358,16 +342,11 @@ public class PatcherBuildRelPersistenceImpl
 			return patcherBuildRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("parentPatcherBuildId=");
-		sb.append(parentPatcherBuildId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherBuildRelException(sb.toString());
+		throw new NoSuchPatcherBuildRelException(
+			_collectionPersistenceFinderByParentPatcherBuildId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {parentPatcherBuildId}));
 	}
 
 	/**
@@ -382,14 +361,9 @@ public class PatcherBuildRelPersistenceImpl
 		long parentPatcherBuildId,
 		OrderByComparator<PatcherBuildRel> orderByComparator) {
 
-		List<PatcherBuildRel> list = findByParentPatcherBuildId(
-			parentPatcherBuildId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByParentPatcherBuildId.fetchFirst(
+			finderCache, new Object[] {parentPatcherBuildId},
+			orderByComparator);
 	}
 
 	/**
@@ -399,13 +373,8 @@ public class PatcherBuildRelPersistenceImpl
 	 */
 	@Override
 	public void removeByParentPatcherBuildId(long parentPatcherBuildId) {
-		for (PatcherBuildRel patcherBuildRel :
-				findByParentPatcherBuildId(
-					parentPatcherBuildId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherBuildRel);
-		}
+		_collectionPersistenceFinderByParentPatcherBuildId.remove(
+			finderCache, new Object[] {parentPatcherBuildId});
 	}
 
 	/**
@@ -1076,4 +1045,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014197980
+// LIFERAY-SERVICE-BUILDER-HASH:1193392342

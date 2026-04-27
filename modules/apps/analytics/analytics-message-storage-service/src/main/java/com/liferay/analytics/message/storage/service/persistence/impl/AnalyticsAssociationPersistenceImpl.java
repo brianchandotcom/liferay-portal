@@ -203,16 +203,9 @@ public class AnalyticsAssociationPersistenceImpl
 			return analyticsAssociation;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
+		throw new NoSuchAssociationException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class AnalyticsAssociationPersistenceImpl
 		long companyId,
 		OrderByComparator<AnalyticsAssociation> orderByComparator) {
 
-		List<AnalyticsAssociation> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -244,12 +231,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AnalyticsAssociation analyticsAssociation :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -386,19 +369,10 @@ public class AnalyticsAssociationPersistenceImpl
 			return analyticsAssociation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
+		throw new NoSuchAssociationException(
+			_collectionPersistenceFinderByC_LtM.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, modifiedDate}));
 	}
 
 	/**
@@ -414,14 +388,9 @@ public class AnalyticsAssociationPersistenceImpl
 		long companyId, Date modifiedDate,
 		OrderByComparator<AnalyticsAssociation> orderByComparator) {
 
-		List<AnalyticsAssociation> list = findByC_LtM(
-			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LtM.fetchFirst(
+			finderCache, new Object[] {companyId, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -432,13 +401,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LtM(long companyId, Date modifiedDate) {
-		for (AnalyticsAssociation analyticsAssociation :
-				findByC_LtM(
-					companyId, modifiedDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
+		_collectionPersistenceFinderByC_LtM.remove(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	/**
@@ -578,19 +542,10 @@ public class AnalyticsAssociationPersistenceImpl
 			return analyticsAssociation;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
+		throw new NoSuchAssociationException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, associationClassName}));
 	}
 
 	/**
@@ -606,14 +561,9 @@ public class AnalyticsAssociationPersistenceImpl
 		long companyId, String associationClassName,
 		OrderByComparator<AnalyticsAssociation> orderByComparator) {
 
-		List<AnalyticsAssociation> list = findByC_A(
-			companyId, associationClassName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, associationClassName},
+			orderByComparator);
 	}
 
 	/**
@@ -624,13 +574,8 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, String associationClassName) {
-		for (AnalyticsAssociation analyticsAssociation :
-				findByC_A(
-					companyId, associationClassName, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, associationClassName});
 	}
 
 	/**
@@ -779,22 +724,10 @@ public class AnalyticsAssociationPersistenceImpl
 			return analyticsAssociation;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate>");
-		sb.append(modifiedDate);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
+		throw new NoSuchAssociationException(
+			_collectionPersistenceFinderByC_GtM_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, modifiedDate, associationClassName}));
 	}
 
 	/**
@@ -811,15 +744,10 @@ public class AnalyticsAssociationPersistenceImpl
 		long companyId, Date modifiedDate, String associationClassName,
 		OrderByComparator<AnalyticsAssociation> orderByComparator) {
 
-		List<AnalyticsAssociation> list = findByC_GtM_A(
-			companyId, modifiedDate, associationClassName, 0, 1,
+		return _collectionPersistenceFinderByC_GtM_A.fetchFirst(
+			finderCache,
+			new Object[] {companyId, modifiedDate, associationClassName},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -833,13 +761,9 @@ public class AnalyticsAssociationPersistenceImpl
 	public void removeByC_GtM_A(
 		long companyId, Date modifiedDate, String associationClassName) {
 
-		for (AnalyticsAssociation analyticsAssociation :
-				findByC_GtM_A(
-					companyId, modifiedDate, associationClassName,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
+		_collectionPersistenceFinderByC_GtM_A.remove(
+			finderCache,
+			new Object[] {companyId, modifiedDate, associationClassName});
 	}
 
 	/**
@@ -998,22 +922,12 @@ public class AnalyticsAssociationPersistenceImpl
 			return analyticsAssociation;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", associationClassName=");
-		sb.append(associationClassName);
-
-		sb.append(", associationClassPK=");
-		sb.append(associationClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchAssociationException(sb.toString());
+		throw new NoSuchAssociationException(
+			_collectionPersistenceFinderByC_A_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					companyId, associationClassName, associationClassPK
+				}));
 	}
 
 	/**
@@ -1030,15 +944,10 @@ public class AnalyticsAssociationPersistenceImpl
 		long companyId, String associationClassName, long associationClassPK,
 		OrderByComparator<AnalyticsAssociation> orderByComparator) {
 
-		List<AnalyticsAssociation> list = findByC_A_A(
-			companyId, associationClassName, associationClassPK, 0, 1,
+		return _collectionPersistenceFinderByC_A_A.fetchFirst(
+			finderCache,
+			new Object[] {companyId, associationClassName, associationClassPK},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1052,13 +961,9 @@ public class AnalyticsAssociationPersistenceImpl
 	public void removeByC_A_A(
 		long companyId, String associationClassName, long associationClassPK) {
 
-		for (AnalyticsAssociation analyticsAssociation :
-				findByC_A_A(
-					companyId, associationClassName, associationClassPK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsAssociation);
-		}
+		_collectionPersistenceFinderByC_A_A.remove(
+			finderCache,
+			new Object[] {companyId, associationClassName, associationClassPK});
 	}
 
 	/**
@@ -2173,4 +2078,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155000164
+// LIFERAY-SERVICE-BUILDER-HASH:-36177298

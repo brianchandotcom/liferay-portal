@@ -203,16 +203,9 @@ public class DDMStorageLinkPersistenceImpl
 			return ddmStorageLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
+		throw new NoSuchStorageLinkException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -226,13 +219,8 @@ public class DDMStorageLinkPersistenceImpl
 	public DDMStorageLink fetchByUuid_First(
 		String uuid, OrderByComparator<DDMStorageLink> orderByComparator) {
 
-		List<DDMStorageLink> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -242,11 +230,8 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDMStorageLink ddmStorageLink :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStorageLink);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -381,19 +366,9 @@ public class DDMStorageLinkPersistenceImpl
 			return ddmStorageLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
+		throw new NoSuchStorageLinkException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -409,14 +384,8 @@ public class DDMStorageLinkPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDMStorageLink> orderByComparator) {
 
-		List<DDMStorageLink> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -427,13 +396,8 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDMStorageLink ddmStorageLink :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStorageLink);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -472,20 +436,15 @@ public class DDMStorageLinkPersistenceImpl
 		DDMStorageLink ddmStorageLink = fetchByClassPK(classPK);
 
 		if (ddmStorageLink == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByClassPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStorageLinkException(sb.toString());
+			throw new NoSuchStorageLinkException(message);
 		}
 
 		return ddmStorageLink;
@@ -657,16 +616,9 @@ public class DDMStorageLinkPersistenceImpl
 			return ddmStorageLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureId=");
-		sb.append(structureId);
-
-		sb.append("}");
-
-		throw new NoSuchStorageLinkException(sb.toString());
+		throw new NoSuchStorageLinkException(
+			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
 	}
 
 	/**
@@ -680,14 +632,8 @@ public class DDMStorageLinkPersistenceImpl
 	public DDMStorageLink fetchByStructureId_First(
 		long structureId, OrderByComparator<DDMStorageLink> orderByComparator) {
 
-		List<DDMStorageLink> list = findByStructureId(
-			structureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureId.fetchFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -697,12 +643,8 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureId(long structureId) {
-		for (DDMStorageLink ddmStorageLink :
-				findByStructureId(
-					structureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStorageLink);
-		}
+		_collectionPersistenceFinderByStructureId.remove(
+			finderCache, new Object[] {structureId});
 	}
 
 	/**
@@ -2401,4 +2343,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:813809263
+// LIFERAY-SERVICE-BUILDER-HASH:-1169667028

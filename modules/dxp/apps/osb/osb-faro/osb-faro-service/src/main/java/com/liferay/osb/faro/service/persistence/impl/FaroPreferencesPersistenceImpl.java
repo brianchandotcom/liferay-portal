@@ -185,16 +185,9 @@ public class FaroPreferencesPersistenceImpl
 			return faroPreferences;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroPreferencesException(sb.toString());
+		throw new NoSuchFaroPreferencesException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -208,14 +201,8 @@ public class FaroPreferencesPersistenceImpl
 	public FaroPreferences fetchByGroupId_First(
 		long groupId, OrderByComparator<FaroPreferences> orderByComparator) {
 
-		List<FaroPreferences> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -225,12 +212,8 @@ public class FaroPreferencesPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FaroPreferences faroPreferences :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroPreferences);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -264,23 +247,15 @@ public class FaroPreferencesPersistenceImpl
 		FaroPreferences faroPreferences = fetchByG_O(groupId, ownerId);
 
 		if (faroPreferences == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", ownerId=");
-			sb.append(ownerId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_O.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, ownerId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroPreferencesException(sb.toString());
+			throw new NoSuchFaroPreferencesException(message);
 		}
 
 		return faroPreferences;
@@ -1000,4 +975,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:940253678
+// LIFERAY-SERVICE-BUILDER-HASH:350915409

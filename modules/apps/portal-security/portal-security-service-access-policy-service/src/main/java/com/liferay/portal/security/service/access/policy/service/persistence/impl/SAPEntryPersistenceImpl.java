@@ -191,16 +191,9 @@ public class SAPEntryPersistenceImpl
 			return sapEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -214,13 +207,8 @@ public class SAPEntryPersistenceImpl
 	public SAPEntry fetchByUuid_First(
 		String uuid, OrderByComparator<SAPEntry> orderByComparator) {
 
-		List<SAPEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -378,11 +366,8 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SAPEntry sapEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sapEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -581,19 +566,9 @@ public class SAPEntryPersistenceImpl
 			return sapEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -609,14 +584,8 @@ public class SAPEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		List<SAPEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -784,13 +753,8 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SAPEntry sapEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sapEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -989,16 +953,9 @@ public class SAPEntryPersistenceImpl
 			return sapEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1012,14 +969,8 @@ public class SAPEntryPersistenceImpl
 	public SAPEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<SAPEntry> orderByComparator) {
 
-		List<SAPEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1166,12 +1117,8 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (SAPEntry sapEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sapEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1355,19 +1302,10 @@ public class SAPEntryPersistenceImpl
 			return sapEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", defaultSAPEntry=");
-		sb.append(defaultSAPEntry);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, defaultSAPEntry}));
 	}
 
 	/**
@@ -1383,14 +1321,9 @@ public class SAPEntryPersistenceImpl
 		long companyId, boolean defaultSAPEntry,
 		OrderByComparator<SAPEntry> orderByComparator) {
 
-		List<SAPEntry> list = findByC_D(
-			companyId, defaultSAPEntry, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_D.fetchFirst(
+			finderCache, new Object[] {companyId, defaultSAPEntry},
+			orderByComparator);
 	}
 
 	/**
@@ -1549,13 +1482,8 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_D(long companyId, boolean defaultSAPEntry) {
-		for (SAPEntry sapEntry :
-				findByC_D(
-					companyId, defaultSAPEntry, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(sapEntry);
-		}
+		_collectionPersistenceFinderByC_D.remove(
+			finderCache, new Object[] {companyId, defaultSAPEntry});
 	}
 
 	/**
@@ -2644,4 +2572,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:118308694
+// LIFERAY-SERVICE-BUILDER-HASH:654914024

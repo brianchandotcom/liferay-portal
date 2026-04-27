@@ -177,16 +177,9 @@ public class RecentLayoutRevisionPersistenceImpl
 			return recentLayoutRevision;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
+		throw new NoSuchRecentLayoutRevisionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -201,14 +194,9 @@ public class RecentLayoutRevisionPersistenceImpl
 		long groupId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator) {
 
-		List<RecentLayoutRevision> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -218,12 +206,8 @@ public class RecentLayoutRevisionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (RecentLayoutRevision recentLayoutRevision :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(recentLayoutRevision);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -341,16 +325,9 @@ public class RecentLayoutRevisionPersistenceImpl
 			return recentLayoutRevision;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
+		throw new NoSuchRecentLayoutRevisionException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -365,14 +342,9 @@ public class RecentLayoutRevisionPersistenceImpl
 		long userId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator) {
 
-		List<RecentLayoutRevision> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -382,12 +354,8 @@ public class RecentLayoutRevisionPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (RecentLayoutRevision recentLayoutRevision :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(recentLayoutRevision);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -509,16 +477,10 @@ public class RecentLayoutRevisionPersistenceImpl
 			return recentLayoutRevision;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutRevisionId=");
-		sb.append(layoutRevisionId);
-
-		sb.append("}");
-
-		throw new NoSuchRecentLayoutRevisionException(sb.toString());
+		throw new NoSuchRecentLayoutRevisionException(
+			_collectionPersistenceFinderByLayoutRevisionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {layoutRevisionId}));
 	}
 
 	/**
@@ -533,14 +495,9 @@ public class RecentLayoutRevisionPersistenceImpl
 		long layoutRevisionId,
 		OrderByComparator<RecentLayoutRevision> orderByComparator) {
 
-		List<RecentLayoutRevision> list = findByLayoutRevisionId(
-			layoutRevisionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLayoutRevisionId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutRevisionId},
+			orderByComparator);
 	}
 
 	/**
@@ -550,13 +507,8 @@ public class RecentLayoutRevisionPersistenceImpl
 	 */
 	@Override
 	public void removeByLayoutRevisionId(long layoutRevisionId) {
-		for (RecentLayoutRevision recentLayoutRevision :
-				findByLayoutRevisionId(
-					layoutRevisionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(recentLayoutRevision);
-		}
+		_collectionPersistenceFinderByLayoutRevisionId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {layoutRevisionId});
 	}
 
 	/**
@@ -593,26 +545,16 @@ public class RecentLayoutRevisionPersistenceImpl
 			userId, layoutSetBranchId, plid);
 
 		if (recentLayoutRevision == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", layoutSetBranchId=");
-			sb.append(layoutSetBranchId);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_L_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, layoutSetBranchId, plid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRecentLayoutRevisionException(sb.toString());
+			throw new NoSuchRecentLayoutRevisionException(message);
 		}
 
 		return recentLayoutRevision;
@@ -1399,4 +1341,4 @@ public class RecentLayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:637203078
+// LIFERAY-SERVICE-BUILDER-HASH:-2123043429

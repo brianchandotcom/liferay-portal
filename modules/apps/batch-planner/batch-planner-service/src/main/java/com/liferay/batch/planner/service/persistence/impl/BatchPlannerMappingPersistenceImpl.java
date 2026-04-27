@@ -193,16 +193,11 @@ public class BatchPlannerMappingPersistenceImpl
 			return batchPlannerMapping;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("batchPlannerPlanId=");
-		sb.append(batchPlannerPlanId);
-
-		sb.append("}");
-
-		throw new NoSuchMappingException(sb.toString());
+		throw new NoSuchMappingException(
+			_collectionPersistenceFinderByBatchPlannerPlanId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {batchPlannerPlanId}));
 	}
 
 	/**
@@ -217,14 +212,8 @@ public class BatchPlannerMappingPersistenceImpl
 		long batchPlannerPlanId,
 		OrderByComparator<BatchPlannerMapping> orderByComparator) {
 
-		List<BatchPlannerMapping> list = findByBatchPlannerPlanId(
-			batchPlannerPlanId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBatchPlannerPlanId.fetchFirst(
+			finderCache, new Object[] {batchPlannerPlanId}, orderByComparator);
 	}
 
 	/**
@@ -234,13 +223,8 @@ public class BatchPlannerMappingPersistenceImpl
 	 */
 	@Override
 	public void removeByBatchPlannerPlanId(long batchPlannerPlanId) {
-		for (BatchPlannerMapping batchPlannerMapping :
-				findByBatchPlannerPlanId(
-					batchPlannerPlanId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(batchPlannerMapping);
-		}
+		_collectionPersistenceFinderByBatchPlannerPlanId.remove(
+			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
 	/**
@@ -278,26 +262,18 @@ public class BatchPlannerMappingPersistenceImpl
 			batchPlannerPlanId, externalFieldName, internalFieldName);
 
 		if (batchPlannerMapping == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("batchPlannerPlanId=");
-			sb.append(batchPlannerPlanId);
-
-			sb.append(", externalFieldName=");
-			sb.append(externalFieldName);
-
-			sb.append(", internalFieldName=");
-			sb.append(internalFieldName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByBPPI_EFN_IFN.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						batchPlannerPlanId, externalFieldName, internalFieldName
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchMappingException(sb.toString());
+			throw new NoSuchMappingException(message);
 		}
 
 		return batchPlannerMapping;
@@ -1091,4 +1067,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:676724789
+// LIFERAY-SERVICE-BUILDER-HASH:-1883555804

@@ -211,16 +211,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -234,13 +227,8 @@ public class StyleBookEntryPersistenceImpl
 	public StyleBookEntry fetchByUuid_First(
 		String uuid, OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -250,11 +238,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (StyleBookEntry styleBookEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -388,19 +373,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, head}));
 	}
 
 	/**
@@ -416,14 +391,8 @@ public class StyleBookEntryPersistenceImpl
 		String uuid, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByUuid_Head(
-			uuid, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_Head.fetchFirst(
+			finderCache, new Object[] {uuid, head}, orderByComparator);
 	}
 
 	/**
@@ -434,12 +403,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_Head(String uuid, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByUuid_Head(
-					uuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByUuid_Head.remove(
+			finderCache, new Object[] {uuid, head});
 	}
 
 	/**
@@ -574,19 +539,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
 	}
 
 	/**
@@ -602,14 +557,8 @@ public class StyleBookEntryPersistenceImpl
 		String uuid, long groupId,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByUUID_G(
-			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUUID_G.fetchFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -620,13 +569,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUUID_G(String uuid, long groupId) {
-		for (StyleBookEntry styleBookEntry :
-				findByUUID_G(
-					uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByUUID_G.remove(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -668,26 +612,16 @@ public class StyleBookEntryPersistenceImpl
 		StyleBookEntry styleBookEntry = fetchByUUID_G_Head(uuid, groupId, head);
 
 		if (styleBookEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G_Head.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {uuid, groupId, head});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return styleBookEntry;
@@ -878,19 +812,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -906,14 +830,8 @@ public class StyleBookEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -924,13 +842,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (StyleBookEntry styleBookEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1073,22 +986,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {uuid, companyId, head}));
 	}
 
 	/**
@@ -1105,14 +1006,9 @@ public class StyleBookEntryPersistenceImpl
 		String uuid, long companyId, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByUuid_C_Head(
-			uuid, companyId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C_Head.fetchFirst(
+			finderCache, new Object[] {uuid, companyId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1124,13 +1020,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C_Head(String uuid, long companyId, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByUuid_C_Head(
-					uuid, companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByUuid_C_Head.remove(
+			finderCache, new Object[] {uuid, companyId, head});
 	}
 
 	/**
@@ -1260,16 +1151,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -1283,14 +1167,8 @@ public class StyleBookEntryPersistenceImpl
 	public StyleBookEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -1300,12 +1178,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (StyleBookEntry styleBookEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1440,19 +1314,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, head}));
 	}
 
 	/**
@@ -1468,14 +1332,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByGroupId_Head(
-			groupId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId_Head.fetchFirst(
+			finderCache, new Object[] {groupId, head}, orderByComparator);
 	}
 
 	/**
@@ -1486,13 +1344,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId_Head(long groupId, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByGroupId_Head(
-					groupId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByGroupId_Head.remove(
+			finderCache, new Object[] {groupId, head});
 	}
 
 	/**
@@ -1632,19 +1485,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry}));
 	}
 
 	/**
@@ -1660,14 +1504,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_D(
-			groupId, defaultStyleBookEntry, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry},
+			orderByComparator);
 	}
 
 	/**
@@ -1678,13 +1517,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_D(long groupId, boolean defaultStyleBookEntry) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_D(
-					groupId, defaultStyleBookEntry, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_D.remove(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry});
 	}
 
 	/**
@@ -1832,22 +1666,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry, head}));
 	}
 
 	/**
@@ -1864,14 +1686,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_D_Head(
-			groupId, defaultStyleBookEntry, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D_Head.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1885,13 +1702,8 @@ public class StyleBookEntryPersistenceImpl
 	public void removeByG_D_Head(
 		long groupId, boolean defaultStyleBookEntry, boolean head) {
 
-		for (StyleBookEntry styleBookEntry :
-				findByG_D_Head(
-					groupId, defaultStyleBookEntry, head, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_D_Head.remove(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, head});
 	}
 
 	/**
@@ -2030,19 +1842,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
 	}
 
 	/**
@@ -2058,14 +1860,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String name,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_N(
-			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_N.fetchFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -2076,13 +1872,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_N(long groupId, String name) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_N(
-					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_N.remove(
+			finderCache, new Object[] {groupId, name});
 	}
 
 	/**
@@ -2225,22 +2016,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_N_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name, head}));
 	}
 
 	/**
@@ -2257,14 +2035,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String name, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_N_Head(
-			groupId, name, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_N_Head.fetchFirst(
+			finderCache, new Object[] {groupId, name, head}, orderByComparator);
 	}
 
 	/**
@@ -2276,13 +2048,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_N_Head(long groupId, String name, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_N_Head(
-					groupId, name, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_N_Head.remove(
+			finderCache, new Object[] {groupId, name, head});
 	}
 
 	/**
@@ -2418,19 +2185,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LikeN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
 	}
 
 	/**
@@ -2446,14 +2203,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String name,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_LikeN(
-			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LikeN.fetchFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -2464,13 +2215,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LikeN(long groupId, String name) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_LikeN(
-					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_LikeN.remove(
+			finderCache, new Object[] {groupId, name});
 	}
 
 	/**
@@ -2612,22 +2358,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_LikeN_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name, head}));
 	}
 
 	/**
@@ -2644,14 +2377,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String name, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_LikeN_Head(
-			groupId, name, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LikeN_Head.fetchFirst(
+			finderCache, new Object[] {groupId, name, head}, orderByComparator);
 	}
 
 	/**
@@ -2663,13 +2390,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LikeN_Head(long groupId, String name, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_LikeN_Head(
-					groupId, name, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_LikeN_Head.remove(
+			finderCache, new Object[] {groupId, name, head});
 	}
 
 	/**
@@ -2809,19 +2531,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", styleBookEntryKey=");
-		sb.append(styleBookEntryKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_SBEK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, styleBookEntryKey}));
 	}
 
 	/**
@@ -2837,14 +2550,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String styleBookEntryKey,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_SBEK(
-			groupId, styleBookEntryKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_SBEK.fetchFirst(
+			finderCache, new Object[] {groupId, styleBookEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -2855,13 +2563,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_SBEK(long groupId, String styleBookEntryKey) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_SBEK(
-					groupId, styleBookEntryKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_SBEK.remove(
+			finderCache, new Object[] {groupId, styleBookEntryKey});
 	}
 
 	/**
@@ -2904,26 +2607,16 @@ public class StyleBookEntryPersistenceImpl
 			groupId, styleBookEntryKey, head);
 
 		if (styleBookEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", styleBookEntryKey=");
-			sb.append(styleBookEntryKey);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_SBEK_Head.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, styleBookEntryKey, head});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return styleBookEntry;
@@ -3117,19 +2810,9 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, themeId}));
 	}
 
 	/**
@@ -3145,14 +2828,8 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String themeId,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_T(
-			groupId, themeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T.fetchFirst(
+			finderCache, new Object[] {groupId, themeId}, orderByComparator);
 	}
 
 	/**
@@ -3163,13 +2840,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T(long groupId, String themeId) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_T(
-					groupId, themeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_T.remove(
+			finderCache, new Object[] {groupId, themeId});
 	}
 
 	/**
@@ -3312,22 +2984,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_T_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, themeId, head}));
 	}
 
 	/**
@@ -3344,14 +3004,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, String themeId, boolean head,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_T_Head(
-			groupId, themeId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T_Head.fetchFirst(
+			finderCache, new Object[] {groupId, themeId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -3363,13 +3018,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T_Head(long groupId, String themeId, boolean head) {
-		for (StyleBookEntry styleBookEntry :
-				findByG_T_Head(
-					groupId, themeId, head, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_T_Head.remove(
+			finderCache, new Object[] {groupId, themeId, head});
 	}
 
 	/**
@@ -3518,22 +3168,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry, themeId}));
 	}
 
 	/**
@@ -3550,14 +3188,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_D_T(
-			groupId, defaultStyleBookEntry, themeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D_T.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, themeId},
+			orderByComparator);
 	}
 
 	/**
@@ -3571,13 +3204,9 @@ public class StyleBookEntryPersistenceImpl
 	public void removeByG_D_T(
 		long groupId, boolean defaultStyleBookEntry, String themeId) {
 
-		for (StyleBookEntry styleBookEntry :
-				findByG_D_T(
-					groupId, defaultStyleBookEntry, themeId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_D_T.remove(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId});
 	}
 
 	/**
@@ -3737,25 +3366,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_D_T_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry, themeId, head}));
 	}
 
 	/**
@@ -3773,15 +3387,10 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		boolean head, OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByG_D_T_Head(
-			groupId, defaultStyleBookEntry, themeId, head, 0, 1,
+		return _collectionPersistenceFinderByG_D_T_Head.fetchFirst(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId, head},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3797,13 +3406,9 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		boolean head) {
 
-		for (StyleBookEntry styleBookEntry :
-				findByG_D_T_Head(
-					groupId, defaultStyleBookEntry, themeId, head,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByG_D_T_Head.remove(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId, head});
 	}
 
 	/**
@@ -3949,19 +3554,10 @@ public class StyleBookEntryPersistenceImpl
 			return styleBookEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("externalReferenceCode=");
-		sb.append(externalReferenceCode);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByERC_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {externalReferenceCode, groupId}));
 	}
 
 	/**
@@ -3977,14 +3573,9 @@ public class StyleBookEntryPersistenceImpl
 		String externalReferenceCode, long groupId,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
-		List<StyleBookEntry> list = findByERC_G(
-			externalReferenceCode, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByERC_G.fetchFirst(
+			finderCache, new Object[] {externalReferenceCode, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -3995,13 +3586,8 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByERC_G(String externalReferenceCode, long groupId) {
-		for (StyleBookEntry styleBookEntry :
-				findByERC_G(
-					externalReferenceCode, groupId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntry);
-		}
+		_collectionPersistenceFinderByERC_G.remove(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -4044,26 +3630,16 @@ public class StyleBookEntryPersistenceImpl
 			externalReferenceCode, groupId, head);
 
 		if (styleBookEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G_Head.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId, head});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return styleBookEntry;
@@ -4162,20 +3738,15 @@ public class StyleBookEntryPersistenceImpl
 		StyleBookEntry styleBookEntry = fetchByHeadId(headId);
 
 		if (styleBookEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("headId=");
-			sb.append(headId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return styleBookEntry;
@@ -6047,4 +5618,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-850095975
+// LIFERAY-SERVICE-BUILDER-HASH:125110814

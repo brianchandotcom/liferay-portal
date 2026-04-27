@@ -214,16 +214,9 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,13 +230,8 @@ public class MBThreadPersistenceImpl
 	public MBThread fetchByUuid_First(
 		String uuid, OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -253,11 +241,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBThread mbThread :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -295,23 +280,15 @@ public class MBThreadPersistenceImpl
 		MBThread mbThread = fetchByUUID_G(uuid, groupId);
 
 		if (mbThread == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchThreadException(sb.toString());
+			throw new NoSuchThreadException(message);
 		}
 
 		return mbThread;
@@ -493,19 +470,9 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -521,14 +488,8 @@ public class MBThreadPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -539,13 +500,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBThread mbThread :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1071,20 +1027,15 @@ public class MBThreadPersistenceImpl
 		MBThread mbThread = fetchByRootMessageId(rootMessageId);
 
 		if (mbThread == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("rootMessageId=");
-			sb.append(rootMessageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByRootMessageId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {rootMessageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchThreadException(sb.toString());
+			throw new NoSuchThreadException(message);
 		}
 
 		return mbThread;
@@ -2312,19 +2263,9 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId!=");
-		sb.append(categoryId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByG_NotC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, categoryId}));
 	}
 
 	/**
@@ -2340,14 +2281,8 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByG_NotC(
-			groupId, categoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_NotC.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId}, orderByComparator);
 	}
 
 	/**
@@ -2504,13 +2439,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByG_NotC(long groupId, long categoryId) {
-		for (MBThread mbThread :
-				findByG_NotC(
-					groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByG_NotC.remove(
+			finderCache, new Object[] {groupId, categoryId});
 	}
 
 	/**
@@ -3242,19 +3172,9 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", priority=");
-		sb.append(priority);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {categoryId, priority}));
 	}
 
 	/**
@@ -3270,14 +3190,9 @@ public class MBThreadPersistenceImpl
 		long categoryId, double priority,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByC_P(
-			categoryId, priority, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P.fetchFirst(
+			finderCache, new Object[] {categoryId, priority},
+			orderByComparator);
 	}
 
 	/**
@@ -3288,13 +3203,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByC_P(long categoryId, double priority) {
-		for (MBThread mbThread :
-				findByC_P(
-					categoryId, priority, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByC_P.remove(
+			finderCache, new Object[] {categoryId, priority});
 	}
 
 	/**
@@ -3794,22 +3704,10 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId=");
-		sb.append(categoryId);
-
-		sb.append(", lastPostDate=");
-		sb.append(lastPostDate);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByG_C_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, lastPostDate}));
 	}
 
 	/**
@@ -3826,14 +3724,9 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId, Date lastPostDate,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByG_C_L(
-			groupId, categoryId, lastPostDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_L.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, lastPostDate},
+			orderByComparator);
 	}
 
 	/**
@@ -4016,13 +3909,8 @@ public class MBThreadPersistenceImpl
 	public void removeByG_C_L(
 		long groupId, long categoryId, Date lastPostDate) {
 
-		for (MBThread mbThread :
-				findByG_C_L(
-					groupId, categoryId, lastPostDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByG_C_L.remove(
+			finderCache, new Object[] {groupId, categoryId, lastPostDate});
 	}
 
 	/**
@@ -6521,22 +6409,10 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByG_NotC_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, status}));
 	}
 
 	/**
@@ -6553,14 +6429,9 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByG_NotC_S(
-			groupId, categoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_NotC_S.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -6729,13 +6600,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByG_NotC_S(long groupId, long categoryId, int status) {
-		for (MBThread mbThread :
-				findByG_NotC_S(
-					groupId, categoryId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByG_NotC_S.remove(
+			finderCache, new Object[] {groupId, categoryId, status});
 	}
 
 	/**
@@ -6956,22 +6822,10 @@ public class MBThreadPersistenceImpl
 			return mbThread;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", categoryId!=");
-		sb.append(categoryId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchThreadException(sb.toString());
+		throw new NoSuchThreadException(
+			_collectionPersistenceFinderByG_NotC_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, categoryId, status}));
 	}
 
 	/**
@@ -6988,14 +6842,9 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId, int status,
 		OrderByComparator<MBThread> orderByComparator) {
 
-		List<MBThread> list = findByG_NotC_NotS(
-			groupId, categoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_NotC_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, categoryId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -7164,13 +7013,8 @@ public class MBThreadPersistenceImpl
 	 */
 	@Override
 	public void removeByG_NotC_NotS(long groupId, long categoryId, int status) {
-		for (MBThread mbThread :
-				findByG_NotC_NotS(
-					groupId, categoryId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbThread);
-		}
+		_collectionPersistenceFinderByG_NotC_NotS.remove(
+			finderCache, new Object[] {groupId, categoryId, status});
 	}
 
 	/**
@@ -8631,4 +8475,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2123785951
+// LIFERAY-SERVICE-BUILDER-HASH:131997732

@@ -208,16 +208,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -231,13 +224,8 @@ public class BookmarksEntryPersistenceImpl
 	public BookmarksEntry fetchByUuid_First(
 		String uuid, OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +235,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (BookmarksEntry bookmarksEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -290,23 +275,15 @@ public class BookmarksEntryPersistenceImpl
 		BookmarksEntry bookmarksEntry = fetchByUUID_G(uuid, groupId);
 
 		if (bookmarksEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return bookmarksEntry;
@@ -489,19 +466,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -517,14 +484,8 @@ public class BookmarksEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -535,13 +496,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (BookmarksEntry bookmarksEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -670,16 +626,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -693,14 +642,8 @@ public class BookmarksEntryPersistenceImpl
 	public BookmarksEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -710,12 +653,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (BookmarksEntry bookmarksEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1912,19 +1851,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -1940,14 +1869,8 @@ public class BookmarksEntryPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByG_S(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_S.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -2107,13 +2030,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_S(long groupId, int status) {
-		for (BookmarksEntry bookmarksEntry :
-				findByG_S(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByG_S.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -2316,19 +2234,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
 	}
 
 	/**
@@ -2344,14 +2252,8 @@ public class BookmarksEntryPersistenceImpl
 		long groupId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByG_NotS(
-			groupId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -2511,13 +2413,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_NotS(long groupId, int status) {
-		for (BookmarksEntry bookmarksEntry :
-				findByG_NotS(
-					groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByG_NotS.remove(
+			finderCache, new Object[] {groupId, status});
 	}
 
 	/**
@@ -2721,19 +2618,9 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
 	}
 
 	/**
@@ -2749,14 +2636,8 @@ public class BookmarksEntryPersistenceImpl
 		long companyId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByC_NotS(
-			companyId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_NotS.fetchFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -2767,13 +2648,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_NotS(long companyId, int status) {
-		for (BookmarksEntry bookmarksEntry :
-				findByC_NotS(
-					companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByC_NotS.remove(
+			finderCache, new Object[] {companyId, status});
 	}
 
 	/**
@@ -2917,22 +2793,10 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, status}));
 	}
 
 	/**
@@ -2949,14 +2813,9 @@ public class BookmarksEntryPersistenceImpl
 		long groupId, long userId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByG_U_S(
-			groupId, userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_S.fetchFirst(
+			finderCache, new Object[] {groupId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3128,13 +2987,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_S(long groupId, long userId, int status) {
-		for (BookmarksEntry bookmarksEntry :
-				findByG_U_S(
-					groupId, userId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByG_U_S.remove(
+			finderCache, new Object[] {groupId, userId, status});
 	}
 
 	/**
@@ -3355,22 +3209,10 @@ public class BookmarksEntryPersistenceImpl
 			return bookmarksEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByG_U_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, userId, status}));
 	}
 
 	/**
@@ -3387,14 +3229,9 @@ public class BookmarksEntryPersistenceImpl
 		long groupId, long userId, int status,
 		OrderByComparator<BookmarksEntry> orderByComparator) {
 
-		List<BookmarksEntry> list = findByG_U_NotS(
-			groupId, userId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U_NotS.fetchFirst(
+			finderCache, new Object[] {groupId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3566,13 +3403,8 @@ public class BookmarksEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U_NotS(long groupId, long userId, int status) {
-		for (BookmarksEntry bookmarksEntry :
-				findByG_U_NotS(
-					groupId, userId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(bookmarksEntry);
-		}
+		_collectionPersistenceFinderByG_U_NotS.remove(
+			finderCache, new Object[] {groupId, userId, status});
 	}
 
 	/**
@@ -8522,4 +8354,4 @@ public class BookmarksEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-168133734
+// LIFERAY-SERVICE-BUILDER-HASH:74729058

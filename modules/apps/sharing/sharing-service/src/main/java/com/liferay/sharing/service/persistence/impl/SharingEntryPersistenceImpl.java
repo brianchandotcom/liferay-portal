@@ -196,16 +196,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -219,13 +212,8 @@ public class SharingEntryPersistenceImpl
 	public SharingEntry fetchByUuid_First(
 		String uuid, OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -235,11 +223,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (SharingEntry sharingEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -273,23 +258,15 @@ public class SharingEntryPersistenceImpl
 		SharingEntry sharingEntry = fetchByUUID_G(uuid, groupId);
 
 		if (sharingEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return sharingEntry;
@@ -462,19 +439,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -490,14 +457,8 @@ public class SharingEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -508,13 +469,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (SharingEntry sharingEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -631,16 +587,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -654,14 +603,8 @@ public class SharingEntryPersistenceImpl
 	public SharingEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -671,12 +614,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SharingEntry sharingEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -791,16 +730,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -814,13 +746,8 @@ public class SharingEntryPersistenceImpl
 	public SharingEntry fetchByUserId_First(
 		long userId, OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -830,12 +757,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SharingEntry sharingEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -953,16 +876,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toUserId=");
-		sb.append(toUserId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByToUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toUserId}));
 	}
 
 	/**
@@ -976,14 +892,8 @@ public class SharingEntryPersistenceImpl
 	public SharingEntry fetchByToUserId_First(
 		long toUserId, OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByToUserId(
-			toUserId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByToUserId.fetchFirst(
+			finderCache, new Object[] {toUserId}, orderByComparator);
 	}
 
 	/**
@@ -993,12 +903,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByToUserId(long toUserId) {
-		for (SharingEntry sharingEntry :
-				findByToUserId(
-					toUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByToUserId.remove(
+			finderCache, new Object[] {toUserId});
 	}
 
 	/**
@@ -1117,16 +1023,10 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate<");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByLtExpirationDate.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -1141,14 +1041,8 @@ public class SharingEntryPersistenceImpl
 		Date expirationDate,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByLtExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtExpirationDate.fetchFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -1158,13 +1052,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtExpirationDate(Date expirationDate) {
-		for (SharingEntry sharingEntry :
-				findByLtExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByLtExpirationDate.remove(
+			finderCache, new Object[] {expirationDate});
 	}
 
 	/**
@@ -1289,19 +1178,10 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -1317,14 +1197,9 @@ public class SharingEntryPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByC_CN(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CN.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -1335,13 +1210,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_CN(long companyId, long classNameId) {
-		for (SharingEntry sharingEntry :
-				findByC_CN(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByC_CN.remove(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -1467,19 +1337,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByU_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, classNameId}));
 	}
 
 	/**
@@ -1495,14 +1355,8 @@ public class SharingEntryPersistenceImpl
 		long userId, long classNameId,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByU_C(
-			userId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_C.fetchFirst(
+			finderCache, new Object[] {userId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -1513,13 +1367,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByU_C(long userId, long classNameId) {
-		for (SharingEntry sharingEntry :
-				findByU_C(
-					userId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByU_C.remove(
+			finderCache, new Object[] {userId, classNameId});
 	}
 
 	/**
@@ -1645,19 +1494,10 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("toUserId=");
-		sb.append(toUserId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByTU_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {toUserId, classNameId}));
 	}
 
 	/**
@@ -1673,14 +1513,9 @@ public class SharingEntryPersistenceImpl
 		long toUserId, long classNameId,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByTU_C(
-			toUserId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTU_C.fetchFirst(
+			finderCache, new Object[] {toUserId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -1691,13 +1526,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByTU_C(long toUserId, long classNameId) {
-		for (SharingEntry sharingEntry :
-				findByTU_C(
-					toUserId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByTU_C.remove(
+			finderCache, new Object[] {toUserId, classNameId});
 	}
 
 	/**
@@ -1823,19 +1653,9 @@ public class SharingEntryPersistenceImpl
 			return sharingEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1851,14 +1671,9 @@ public class SharingEntryPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<SharingEntry> orderByComparator) {
 
-		List<SharingEntry> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1869,13 +1684,8 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (SharingEntry sharingEntry :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(sharingEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1916,32 +1726,19 @@ public class SharingEntryPersistenceImpl
 			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
 
 		if (sharingEntry == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("toTicketId=");
-			sb.append(toTicketId);
-
-			sb.append(", toUserGroupId=");
-			sb.append(toUserGroupId);
-
-			sb.append(", toUserId=");
-			sb.append(toUserId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByTT_TUG_TU_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						toTicketId, toUserGroupId, toUserId, classNameId,
+						classPK
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return sharingEntry;
@@ -2054,23 +1851,16 @@ public class SharingEntryPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (sharingEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return sharingEntry;
@@ -3240,4 +3030,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-451204515
+// LIFERAY-SERVICE-BUILDER-HASH:-1372134638

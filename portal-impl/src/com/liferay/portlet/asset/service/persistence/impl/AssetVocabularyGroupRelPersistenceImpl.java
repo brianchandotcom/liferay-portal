@@ -194,16 +194,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			return assetVocabularyGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
+		throw new NoSuchVocabularyGroupRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -218,14 +211,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		String uuid,
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
 
-		List<AssetVocabularyGroupRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -235,11 +223,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetVocabularyGroupRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -279,23 +264,15 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			uuid, groupId);
 
 		if (assetVocabularyGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVocabularyGroupRelException(sb.toString());
+			throw new NoSuchVocabularyGroupRelException(message);
 		}
 
 		return assetVocabularyGroupRel;
@@ -483,19 +460,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			return assetVocabularyGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
+		throw new NoSuchVocabularyGroupRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -511,14 +478,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
 
-		List<AssetVocabularyGroupRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -529,13 +491,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetVocabularyGroupRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -666,16 +623,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			return assetVocabularyGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
+		throw new NoSuchVocabularyGroupRelException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -690,14 +640,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		long groupId,
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
 
-		List<AssetVocabularyGroupRel> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -707,12 +652,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetVocabularyGroupRel);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -842,16 +783,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			return assetVocabularyGroupRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("vocabularyId=");
-		sb.append(vocabularyId);
-
-		sb.append("}");
-
-		throw new NoSuchVocabularyGroupRelException(sb.toString());
+		throw new NoSuchVocabularyGroupRelException(
+			_collectionPersistenceFinderByVocabularyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {vocabularyId}));
 	}
 
 	/**
@@ -866,14 +800,9 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		long vocabularyId,
 		OrderByComparator<AssetVocabularyGroupRel> orderByComparator) {
 
-		List<AssetVocabularyGroupRel> list = findByVocabularyId(
-			vocabularyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByVocabularyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId},
+			orderByComparator);
 	}
 
 	/**
@@ -883,12 +812,8 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 */
 	@Override
 	public void removeByVocabularyId(long vocabularyId) {
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				findByVocabularyId(
-					vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetVocabularyGroupRel);
-		}
+		_collectionPersistenceFinderByVocabularyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {vocabularyId});
 	}
 
 	/**
@@ -928,23 +853,16 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			groupId, vocabularyId);
 
 		if (assetVocabularyGroupRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", vocabularyId=");
-			sb.append(vocabularyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, vocabularyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVocabularyGroupRelException(sb.toString());
+			throw new NoSuchVocabularyGroupRelException(message);
 		}
 
 		return assetVocabularyGroupRel;
@@ -2095,4 +2013,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-650801249
+// LIFERAY-SERVICE-BUILDER-HASH:2103053750

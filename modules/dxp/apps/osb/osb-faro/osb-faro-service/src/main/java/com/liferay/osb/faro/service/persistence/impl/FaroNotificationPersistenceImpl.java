@@ -188,16 +188,9 @@ public class FaroNotificationPersistenceImpl
 			return faroNotification;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createTime<");
-		sb.append(createTime);
-
-		sb.append("}");
-
-		throw new NoSuchFaroNotificationException(sb.toString());
+		throw new NoSuchFaroNotificationException(
+			_collectionPersistenceFinderByLtCreateTime.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createTime}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class FaroNotificationPersistenceImpl
 		long createTime,
 		OrderByComparator<FaroNotification> orderByComparator) {
 
-		List<FaroNotification> list = findByLtCreateTime(
-			createTime, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtCreateTime.fetchFirst(
+			finderCache, new Object[] {createTime}, orderByComparator);
 	}
 
 	/**
@@ -229,12 +216,8 @@ public class FaroNotificationPersistenceImpl
 	 */
 	@Override
 	public void removeByLtCreateTime(long createTime) {
-		for (FaroNotification faroNotification :
-				findByLtCreateTime(
-					createTime, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroNotification);
-		}
+		_collectionPersistenceFinderByLtCreateTime.remove(
+			finderCache, new Object[] {createTime});
 	}
 
 	/**
@@ -3370,4 +3353,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1845259134
+// LIFERAY-SERVICE-BUILDER-HASH:310412245

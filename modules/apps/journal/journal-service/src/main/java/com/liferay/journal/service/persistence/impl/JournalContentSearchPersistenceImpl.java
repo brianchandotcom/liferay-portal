@@ -201,16 +201,9 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -225,14 +218,8 @@ public class JournalContentSearchPersistenceImpl
 		long companyId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -242,12 +229,8 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (JournalContentSearch journalContentSearch :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -376,16 +359,9 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
 	}
 
 	/**
@@ -400,14 +376,8 @@ public class JournalContentSearchPersistenceImpl
 		String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByPortletId(
-			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPortletId.fetchFirst(
+			finderCache, new Object[] {portletId}, orderByComparator);
 	}
 
 	/**
@@ -417,12 +387,8 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public void removeByPortletId(String portletId) {
-		for (JournalContentSearch journalContentSearch :
-				findByPortletId(
-					portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByPortletId.remove(
+			finderCache, new Object[] {portletId});
 	}
 
 	/**
@@ -551,16 +517,9 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByArticleId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {articleId}));
 	}
 
 	/**
@@ -575,14 +534,8 @@ public class JournalContentSearchPersistenceImpl
 		String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByArticleId(
-			articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByArticleId.fetchFirst(
+			finderCache, new Object[] {articleId}, orderByComparator);
 	}
 
 	/**
@@ -592,12 +545,8 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public void removeByArticleId(String articleId) {
-		for (JournalContentSearch journalContentSearch :
-				findByArticleId(
-					articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByArticleId.remove(
+			finderCache, new Object[] {articleId});
 	}
 
 	/**
@@ -734,19 +683,10 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, privateLayout}));
 	}
 
 	/**
@@ -762,14 +702,9 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, boolean privateLayout,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByG_P(
-			groupId, privateLayout, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, privateLayout},
+			orderByComparator);
 	}
 
 	/**
@@ -780,13 +715,8 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, boolean privateLayout) {
-		for (JournalContentSearch journalContentSearch :
-				findByG_P(
-					groupId, privateLayout, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, privateLayout});
 	}
 
 	/**
@@ -924,19 +854,9 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, articleId}));
 	}
 
 	/**
@@ -952,14 +872,8 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByG_A(
-			groupId, articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A.fetchFirst(
+			finderCache, new Object[] {groupId, articleId}, orderByComparator);
 	}
 
 	/**
@@ -970,13 +884,8 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Override
 	public void removeByG_A(long groupId, String articleId) {
-		for (JournalContentSearch journalContentSearch :
-				findByG_A(
-					groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByG_A.remove(
+			finderCache, new Object[] {groupId, articleId});
 	}
 
 	/**
@@ -1122,22 +1031,10 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", layoutId=");
-		sb.append(layoutId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByG_P_L.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, privateLayout, layoutId}));
 	}
 
 	/**
@@ -1154,14 +1051,9 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, boolean privateLayout, long layoutId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByG_P_L(
-			groupId, privateLayout, layoutId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_L.fetchFirst(
+			finderCache, new Object[] {groupId, privateLayout, layoutId},
+			orderByComparator);
 	}
 
 	/**
@@ -1175,13 +1067,8 @@ public class JournalContentSearchPersistenceImpl
 	public void removeByG_P_L(
 		long groupId, boolean privateLayout, long layoutId) {
 
-		for (JournalContentSearch journalContentSearch :
-				findByG_P_L(
-					groupId, privateLayout, layoutId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByG_P_L.remove(
+			finderCache, new Object[] {groupId, privateLayout, layoutId});
 	}
 
 	/**
@@ -1330,22 +1217,10 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", articleId=");
-		sb.append(articleId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByG_P_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, privateLayout, articleId}));
 	}
 
 	/**
@@ -1362,14 +1237,9 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, boolean privateLayout, String articleId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByG_P_A(
-			groupId, privateLayout, articleId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_A.fetchFirst(
+			finderCache, new Object[] {groupId, privateLayout, articleId},
+			orderByComparator);
 	}
 
 	/**
@@ -1383,13 +1253,8 @@ public class JournalContentSearchPersistenceImpl
 	public void removeByG_P_A(
 		long groupId, boolean privateLayout, String articleId) {
 
-		for (JournalContentSearch journalContentSearch :
-				findByG_P_A(
-					groupId, privateLayout, articleId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByG_P_A.remove(
+			finderCache, new Object[] {groupId, privateLayout, articleId});
 	}
 
 	/**
@@ -1548,25 +1413,10 @@ public class JournalContentSearchPersistenceImpl
 			return journalContentSearch;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", privateLayout=");
-		sb.append(privateLayout);
-
-		sb.append(", layoutId=");
-		sb.append(layoutId);
-
-		sb.append(", portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchContentSearchException(sb.toString());
+		throw new NoSuchContentSearchException(
+			_collectionPersistenceFinderByG_P_L_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, privateLayout, layoutId, portletId}));
 	}
 
 	/**
@@ -1584,15 +1434,10 @@ public class JournalContentSearchPersistenceImpl
 		long groupId, boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator<JournalContentSearch> orderByComparator) {
 
-		List<JournalContentSearch> list = findByG_P_L_P(
-			groupId, privateLayout, layoutId, portletId, 0, 1,
+		return _collectionPersistenceFinderByG_P_L_P.fetchFirst(
+			finderCache,
+			new Object[] {groupId, privateLayout, layoutId, portletId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1607,13 +1452,9 @@ public class JournalContentSearchPersistenceImpl
 	public void removeByG_P_L_P(
 		long groupId, boolean privateLayout, long layoutId, String portletId) {
 
-		for (JournalContentSearch journalContentSearch :
-				findByG_P_L_P(
-					groupId, privateLayout, layoutId, portletId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(journalContentSearch);
-		}
+		_collectionPersistenceFinderByG_P_L_P.remove(
+			finderCache,
+			new Object[] {groupId, privateLayout, layoutId, portletId});
 	}
 
 	/**
@@ -1664,32 +1505,18 @@ public class JournalContentSearchPersistenceImpl
 			groupId, privateLayout, layoutId, portletId, articleId);
 
 		if (journalContentSearch == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", privateLayout=");
-			sb.append(privateLayout);
-
-			sb.append(", layoutId=");
-			sb.append(layoutId);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append(", articleId=");
-			sb.append(articleId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_P_L_P_A.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, privateLayout, layoutId, portletId, articleId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchContentSearchException(sb.toString());
+			throw new NoSuchContentSearchException(message);
 		}
 
 		return journalContentSearch;
@@ -3030,4 +2857,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1497464320
+// LIFERAY-SERVICE-BUILDER-HASH:-2105654140

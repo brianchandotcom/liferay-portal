@@ -191,16 +191,9 @@ public class CommerceTaxMethodPersistenceImpl
 			return commerceTaxMethod;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchTaxMethodException(sb.toString());
+		throw new NoSuchTaxMethodException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -214,14 +207,8 @@ public class CommerceTaxMethodPersistenceImpl
 	public CommerceTaxMethod fetchByGroupId_First(
 		long groupId, OrderByComparator<CommerceTaxMethod> orderByComparator) {
 
-		List<CommerceTaxMethod> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -231,12 +218,8 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CommerceTaxMethod commerceTaxMethod :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceTaxMethod);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -270,23 +253,16 @@ public class CommerceTaxMethodPersistenceImpl
 		CommerceTaxMethod commerceTaxMethod = fetchByG_E(groupId, engineKey);
 
 		if (commerceTaxMethod == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", engineKey=");
-			sb.append(engineKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_E.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, engineKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTaxMethodException(sb.toString());
+			throw new NoSuchTaxMethodException(message);
 		}
 
 		return commerceTaxMethod;
@@ -458,19 +434,9 @@ public class CommerceTaxMethodPersistenceImpl
 			return commerceTaxMethod;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchTaxMethodException(sb.toString());
+		throw new NoSuchTaxMethodException(
+			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, active}));
 	}
 
 	/**
@@ -486,14 +452,8 @@ public class CommerceTaxMethodPersistenceImpl
 		long groupId, boolean active,
 		OrderByComparator<CommerceTaxMethod> orderByComparator) {
 
-		List<CommerceTaxMethod> list = findByG_A(
-			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A.fetchFirst(
+			finderCache, new Object[] {groupId, active}, orderByComparator);
 	}
 
 	/**
@@ -504,13 +464,8 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Override
 	public void removeByG_A(long groupId, boolean active) {
-		for (CommerceTaxMethod commerceTaxMethod :
-				findByG_A(
-					groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTaxMethod);
-		}
+		_collectionPersistenceFinderByG_A.remove(
+			finderCache, new Object[] {groupId, active});
 	}
 
 	/**
@@ -1260,4 +1215,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1967086998
+// LIFERAY-SERVICE-BUILDER-HASH:-141403814

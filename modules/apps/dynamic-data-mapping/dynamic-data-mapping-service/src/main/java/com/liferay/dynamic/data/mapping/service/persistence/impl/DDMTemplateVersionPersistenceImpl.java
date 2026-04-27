@@ -205,16 +205,9 @@ public class DDMTemplateVersionPersistenceImpl
 			return ddmTemplateVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateId=");
-		sb.append(templateId);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateVersionException(sb.toString());
+		throw new NoSuchTemplateVersionException(
+			_collectionPersistenceFinderByTemplateId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {templateId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class DDMTemplateVersionPersistenceImpl
 		long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator) {
 
-		List<DDMTemplateVersion> list = findByTemplateId(
-			templateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTemplateId.fetchFirst(
+			finderCache, new Object[] {templateId}, orderByComparator);
 	}
 
 	/**
@@ -246,12 +233,8 @@ public class DDMTemplateVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByTemplateId(long templateId) {
-		for (DDMTemplateVersion ddmTemplateVersion :
-				findByTemplateId(
-					templateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmTemplateVersion);
-		}
+		_collectionPersistenceFinderByTemplateId.remove(
+			finderCache, new Object[] {templateId});
 	}
 
 	/**
@@ -290,23 +273,16 @@ public class DDMTemplateVersionPersistenceImpl
 		DDMTemplateVersion ddmTemplateVersion = fetchByT_V(templateId, version);
 
 		if (ddmTemplateVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("templateId=");
-			sb.append(templateId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByT_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {templateId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTemplateVersionException(sb.toString());
+			throw new NoSuchTemplateVersionException(message);
 		}
 
 		return ddmTemplateVersion;
@@ -490,19 +466,9 @@ public class DDMTemplateVersionPersistenceImpl
 			return ddmTemplateVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("templateId=");
-		sb.append(templateId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchTemplateVersionException(sb.toString());
+		throw new NoSuchTemplateVersionException(
+			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {templateId, status}));
 	}
 
 	/**
@@ -518,14 +484,8 @@ public class DDMTemplateVersionPersistenceImpl
 		long templateId, int status,
 		OrderByComparator<DDMTemplateVersion> orderByComparator) {
 
-		List<DDMTemplateVersion> list = findByT_S(
-			templateId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_S.fetchFirst(
+			finderCache, new Object[] {templateId, status}, orderByComparator);
 	}
 
 	/**
@@ -536,13 +496,8 @@ public class DDMTemplateVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByT_S(long templateId, int status) {
-		for (DDMTemplateVersion ddmTemplateVersion :
-				findByT_S(
-					templateId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmTemplateVersion);
-		}
+		_collectionPersistenceFinderByT_S.remove(
+			finderCache, new Object[] {templateId, status});
 	}
 
 	/**
@@ -1559,4 +1514,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528188298
+// LIFERAY-SERVICE-BUILDER-HASH:-1201726720

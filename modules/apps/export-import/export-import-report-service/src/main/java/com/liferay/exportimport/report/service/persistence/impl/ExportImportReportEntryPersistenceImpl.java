@@ -202,19 +202,10 @@ public class ExportImportReportEntryPersistenceImpl
 			return exportImportReportEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", exportImportConfigurationId=");
-		sb.append(exportImportConfigurationId);
-
-		sb.append("}");
-
-		throw new NoSuchExportImportReportEntryException(sb.toString());
+		throw new NoSuchExportImportReportEntryException(
+			_collectionPersistenceFinderByC_E.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, exportImportConfigurationId}));
 	}
 
 	/**
@@ -230,14 +221,9 @@ public class ExportImportReportEntryPersistenceImpl
 		long companyId, long exportImportConfigurationId,
 		OrderByComparator<ExportImportReportEntry> orderByComparator) {
 
-		List<ExportImportReportEntry> list = findByC_E(
-			companyId, exportImportConfigurationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_E.fetchFirst(
+			finderCache, new Object[] {companyId, exportImportConfigurationId},
+			orderByComparator);
 	}
 
 	/**
@@ -248,13 +234,8 @@ public class ExportImportReportEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_E(long companyId, long exportImportConfigurationId) {
-		for (ExportImportReportEntry exportImportReportEntry :
-				findByC_E(
-					companyId, exportImportConfigurationId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(exportImportReportEntry);
-		}
+		_collectionPersistenceFinderByC_E.remove(
+			finderCache, new Object[] {companyId, exportImportConfigurationId});
 	}
 
 	/**
@@ -297,35 +278,19 @@ public class ExportImportReportEntryPersistenceImpl
 			exportImportConfigurationId, type);
 
 		if (exportImportReportEntry == null) {
-			StringBundler sb = new StringBundler(14);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append(", classExternalReferenceCode=");
-			sb.append(classExternalReferenceCode);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", exportImportConfigurationId=");
-			sb.append(exportImportConfigurationId);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_C_C_C_E_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, companyId, classExternalReferenceCode,
+						classNameId, exportImportConfigurationId, type
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchExportImportReportEntryException(sb.toString());
+			throw new NoSuchExportImportReportEntryException(message);
 		}
 
 		return exportImportReportEntry;
@@ -1189,4 +1154,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1303997155
+// LIFERAY-SERVICE-BUILDER-HASH:-337893324

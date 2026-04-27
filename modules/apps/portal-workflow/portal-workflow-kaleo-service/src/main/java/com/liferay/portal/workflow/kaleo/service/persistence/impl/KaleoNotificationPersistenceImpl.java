@@ -203,16 +203,9 @@ public class KaleoNotificationPersistenceImpl
 			return kaleoNotification;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
+		throw new NoSuchNotificationException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class KaleoNotificationPersistenceImpl
 		long companyId,
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
-		List<KaleoNotification> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -244,12 +231,8 @@ public class KaleoNotificationPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KaleoNotification kaleoNotification :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNotification);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -385,16 +368,11 @@ public class KaleoNotificationPersistenceImpl
 			return kaleoNotification;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
+		throw new NoSuchNotificationException(
+			_collectionPersistenceFinderByKaleoDefinitionVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoDefinitionVersionId}));
 	}
 
 	/**
@@ -409,14 +387,10 @@ public class KaleoNotificationPersistenceImpl
 		long kaleoDefinitionVersionId,
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
-		List<KaleoNotification> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.
+			fetchFirst(
+				finderCache, new Object[] {kaleoDefinitionVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -428,13 +402,8 @@ public class KaleoNotificationPersistenceImpl
 	public void removeByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId) {
 
-		for (KaleoNotification kaleoNotification :
-				findByKaleoDefinitionVersionId(
-					kaleoDefinitionVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNotification);
-		}
+		_collectionPersistenceFinderByKaleoDefinitionVersionId.remove(
+			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
 	/**
@@ -572,19 +541,10 @@ public class KaleoNotificationPersistenceImpl
 			return kaleoNotification;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
+		throw new NoSuchNotificationException(
+			_collectionPersistenceFinderByKCN_KCPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoClassPK}));
 	}
 
 	/**
@@ -600,14 +560,9 @@ public class KaleoNotificationPersistenceImpl
 		String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
-		List<KaleoNotification> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKCN_KCPK.fetchFirst(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -618,13 +573,8 @@ public class KaleoNotificationPersistenceImpl
 	 */
 	@Override
 	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
-		for (KaleoNotification kaleoNotification :
-				findByKCN_KCPK(
-					kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNotification);
-		}
+		_collectionPersistenceFinderByKCN_KCPK.remove(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
 	/**
@@ -774,22 +724,10 @@ public class KaleoNotificationPersistenceImpl
 			return kaleoNotification;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", executionType=");
-		sb.append(executionType);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationException(sb.toString());
+		throw new NoSuchNotificationException(
+			_collectionPersistenceFinderByKCN_KCPK_ET.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoClassPK, executionType}));
 	}
 
 	/**
@@ -806,15 +744,10 @@ public class KaleoNotificationPersistenceImpl
 		String kaleoClassName, long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoNotification> orderByComparator) {
 
-		List<KaleoNotification> list = findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType, 0, 1,
+		return _collectionPersistenceFinderByKCN_KCPK_ET.fetchFirst(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoClassPK, executionType},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -828,13 +761,9 @@ public class KaleoNotificationPersistenceImpl
 	public void removeByKCN_KCPK_ET(
 		String kaleoClassName, long kaleoClassPK, String executionType) {
 
-		for (KaleoNotification kaleoNotification :
-				findByKCN_KCPK_ET(
-					kaleoClassName, kaleoClassPK, executionType,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNotification);
-		}
+		_collectionPersistenceFinderByKCN_KCPK_ET.remove(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoClassPK, executionType});
 	}
 
 	/**
@@ -1913,4 +1842,4 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-115409628
+// LIFERAY-SERVICE-BUILDER-HASH:-1964507204

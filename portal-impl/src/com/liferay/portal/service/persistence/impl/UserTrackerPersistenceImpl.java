@@ -177,16 +177,9 @@ public class UserTrackerPersistenceImpl
 			return userTracker;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
+		throw new NoSuchUserTrackerException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -200,14 +193,9 @@ public class UserTrackerPersistenceImpl
 	public UserTracker fetchByCompanyId_First(
 		long companyId, OrderByComparator<UserTracker> orderByComparator) {
 
-		List<UserTracker> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -217,12 +205,8 @@ public class UserTrackerPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (UserTracker userTracker :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userTracker);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -337,16 +321,9 @@ public class UserTrackerPersistenceImpl
 			return userTracker;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
+		throw new NoSuchUserTrackerException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -360,13 +337,9 @@ public class UserTrackerPersistenceImpl
 	public UserTracker fetchByUserId_First(
 		long userId, OrderByComparator<UserTracker> orderByComparator) {
 
-		List<UserTracker> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -376,12 +349,8 @@ public class UserTrackerPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (UserTracker userTracker :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userTracker);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -499,16 +468,9 @@ public class UserTrackerPersistenceImpl
 			return userTracker;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sessionId=");
-		sb.append(sessionId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerException(sb.toString());
+		throw new NoSuchUserTrackerException(
+			_collectionPersistenceFinderBySessionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sessionId}));
 	}
 
 	/**
@@ -522,14 +484,9 @@ public class UserTrackerPersistenceImpl
 	public UserTracker fetchBySessionId_First(
 		String sessionId, OrderByComparator<UserTracker> orderByComparator) {
 
-		List<UserTracker> list = findBySessionId(
-			sessionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySessionId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {sessionId},
+			orderByComparator);
 	}
 
 	/**
@@ -539,12 +496,8 @@ public class UserTrackerPersistenceImpl
 	 */
 	@Override
 	public void removeBySessionId(String sessionId) {
-		for (UserTracker userTracker :
-				findBySessionId(
-					sessionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userTracker);
-		}
+		_collectionPersistenceFinderBySessionId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {sessionId});
 	}
 
 	/**
@@ -1211,4 +1164,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1697761959
+// LIFERAY-SERVICE-BUILDER-HASH:827040886

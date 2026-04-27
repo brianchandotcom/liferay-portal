@@ -190,16 +190,9 @@ public class AkismetEntryPersistenceImpl
 			return akismetEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchAkismetEntryException(sb.toString());
+		throw new NoSuchAkismetEntryException(
+			_collectionPersistenceFinderByLtModifiedDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {modifiedDate}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class AkismetEntryPersistenceImpl
 	public AkismetEntry fetchByLtModifiedDate_First(
 		Date modifiedDate, OrderByComparator<AkismetEntry> orderByComparator) {
 
-		List<AkismetEntry> list = findByLtModifiedDate(
-			modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtModifiedDate.fetchFirst(
+			finderCache, new Object[] {modifiedDate}, orderByComparator);
 	}
 
 	/**
@@ -230,12 +217,8 @@ public class AkismetEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtModifiedDate(Date modifiedDate) {
-		for (AkismetEntry akismetEntry :
-				findByLtModifiedDate(
-					modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(akismetEntry);
-		}
+		_collectionPersistenceFinderByLtModifiedDate.remove(
+			finderCache, new Object[] {modifiedDate});
 	}
 
 	/**
@@ -268,23 +251,16 @@ public class AkismetEntryPersistenceImpl
 		AkismetEntry akismetEntry = fetchByC_C(classNameId, classPK);
 
 		if (akismetEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAkismetEntryException(sb.toString());
+			throw new NoSuchAkismetEntryException(message);
 		}
 
 		return akismetEntry;
@@ -1018,4 +994,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1121495847
+// LIFERAY-SERVICE-BUILDER-HASH:354118478

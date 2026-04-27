@@ -192,16 +192,9 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			return cpDefinitionVirtualSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
+		throw new NoSuchCPDefinitionVirtualSettingException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		String uuid,
 		OrderByComparator<CPDefinitionVirtualSetting> orderByComparator) {
 
-		List<CPDefinitionVirtualSetting> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPDefinitionVirtualSetting cpDefinitionVirtualSetting :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionVirtualSetting);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -272,23 +256,15 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			uuid, groupId);
 
 		if (cpDefinitionVirtualSetting == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
+			throw new NoSuchCPDefinitionVirtualSettingException(message);
 		}
 
 		return cpDefinitionVirtualSetting;
@@ -464,19 +440,9 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			return cpDefinitionVirtualSetting;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
+		throw new NoSuchCPDefinitionVirtualSettingException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -492,14 +458,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPDefinitionVirtualSetting> orderByComparator) {
 
-		List<CPDefinitionVirtualSetting> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -510,13 +470,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPDefinitionVirtualSetting cpDefinitionVirtualSetting :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionVirtualSetting);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -552,23 +507,16 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			classNameId, classPK);
 
 		if (cpDefinitionVirtualSetting == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDefinitionVirtualSettingException(sb.toString());
+			throw new NoSuchCPDefinitionVirtualSettingException(message);
 		}
 
 		return cpDefinitionVirtualSetting;
@@ -1461,4 +1409,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1789668546
+// LIFERAY-SERVICE-BUILDER-HASH:-1557891642

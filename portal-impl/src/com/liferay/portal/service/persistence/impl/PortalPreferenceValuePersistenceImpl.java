@@ -755,19 +755,10 @@ public class PortalPreferenceValuePersistenceImpl
 			return portalPreferenceValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
+		throw new NoSuchPreferenceValueException(
+			_collectionPersistenceFinderByP_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {portalPreferencesId, namespace}));
 	}
 
 	/**
@@ -783,14 +774,9 @@ public class PortalPreferenceValuePersistenceImpl
 		long portalPreferencesId, String namespace,
 		OrderByComparator<PortalPreferenceValue> orderByComparator) {
 
-		List<PortalPreferenceValue> list = findByP_N(
-			portalPreferencesId, namespace, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_N.fetchFirst(
+			dummyFinderCache, new Object[] {portalPreferencesId, namespace},
+			orderByComparator);
 	}
 
 	/**
@@ -801,13 +787,8 @@ public class PortalPreferenceValuePersistenceImpl
 	 */
 	@Override
 	public void removeByP_N(long portalPreferencesId, String namespace) {
-		for (PortalPreferenceValue portalPreferenceValue :
-				findByP_N(
-					portalPreferencesId, namespace, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portalPreferenceValue);
-		}
+		_collectionPersistenceFinderByP_N.remove(
+			dummyFinderCache, new Object[] {portalPreferencesId, namespace});
 	}
 
 	/**
@@ -945,22 +926,10 @@ public class PortalPreferenceValuePersistenceImpl
 			return portalPreferenceValue;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
+		throw new NoSuchPreferenceValueException(
+			_collectionPersistenceFinderByP_K_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {portalPreferencesId, key, namespace}));
 	}
 
 	/**
@@ -977,14 +946,10 @@ public class PortalPreferenceValuePersistenceImpl
 		long portalPreferencesId, String key, String namespace,
 		OrderByComparator<PortalPreferenceValue> orderByComparator) {
 
-		List<PortalPreferenceValue> list = findByP_K_N(
-			portalPreferencesId, key, namespace, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_K_N.fetchFirst(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace},
+			orderByComparator);
 	}
 
 	/**
@@ -998,13 +963,9 @@ public class PortalPreferenceValuePersistenceImpl
 	public void removeByP_K_N(
 		long portalPreferencesId, String key, String namespace) {
 
-		for (PortalPreferenceValue portalPreferenceValue :
-				findByP_K_N(
-					portalPreferencesId, key, namespace, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(portalPreferenceValue);
-		}
+		_collectionPersistenceFinderByP_K_N.remove(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace});
 	}
 
 	/**
@@ -1047,29 +1008,16 @@ public class PortalPreferenceValuePersistenceImpl
 			portalPreferencesId, index, key, namespace);
 
 		if (portalPreferenceValue == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("portalPreferencesId=");
-			sb.append(portalPreferencesId);
-
-			sb.append(", index=");
-			sb.append(index);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append(", namespace=");
-			sb.append(namespace);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByP_I_K_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {portalPreferencesId, index, key, namespace});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPreferenceValueException(sb.toString());
+			throw new NoSuchPreferenceValueException(message);
 		}
 
 		return portalPreferenceValue;
@@ -1281,25 +1229,12 @@ public class PortalPreferenceValuePersistenceImpl
 			return portalPreferenceValue;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portalPreferencesId=");
-		sb.append(portalPreferencesId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", namespace=");
-		sb.append(namespace);
-
-		sb.append(", smallValue=");
-		sb.append(smallValue);
-
-		sb.append("}");
-
-		throw new NoSuchPreferenceValueException(sb.toString());
+		throw new NoSuchPreferenceValueException(
+			_collectionPersistenceFinderByP_K_N_SV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					portalPreferencesId, key, namespace, smallValue
+				}));
 	}
 
 	/**
@@ -1318,15 +1253,10 @@ public class PortalPreferenceValuePersistenceImpl
 		String smallValue,
 		OrderByComparator<PortalPreferenceValue> orderByComparator) {
 
-		List<PortalPreferenceValue> list = findByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue, 0, 1,
+		return _collectionPersistenceFinderByP_K_N_SV.fetchFirst(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace, smallValue},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1342,13 +1272,9 @@ public class PortalPreferenceValuePersistenceImpl
 		long portalPreferencesId, String key, String namespace,
 		String smallValue) {
 
-		for (PortalPreferenceValue portalPreferenceValue :
-				findByP_K_N_SV(
-					portalPreferencesId, key, namespace, smallValue,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(portalPreferenceValue);
-		}
+		_collectionPersistenceFinderByP_K_N_SV.remove(
+			dummyFinderCache,
+			new Object[] {portalPreferencesId, key, namespace, smallValue});
 	}
 
 	/**
@@ -2178,4 +2104,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1218373584
+// LIFERAY-SERVICE-BUILDER-HASH:-1539186136

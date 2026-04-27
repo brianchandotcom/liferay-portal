@@ -214,16 +214,9 @@ public class CPConfigurationEntryPersistenceImpl
 			return cpConfigurationEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntryException(sb.toString());
+		throw new NoSuchCPConfigurationEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -238,14 +231,8 @@ public class CPConfigurationEntryPersistenceImpl
 		String uuid,
 		OrderByComparator<CPConfigurationEntry> orderByComparator) {
 
-		List<CPConfigurationEntry> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -255,11 +242,8 @@ public class CPConfigurationEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPConfigurationEntry cpConfigurationEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpConfigurationEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -299,23 +283,15 @@ public class CPConfigurationEntryPersistenceImpl
 			uuid, groupId);
 
 		if (cpConfigurationEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPConfigurationEntryException(sb.toString());
+			throw new NoSuchCPConfigurationEntryException(message);
 		}
 
 		return cpConfigurationEntry;
@@ -500,19 +476,9 @@ public class CPConfigurationEntryPersistenceImpl
 			return cpConfigurationEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntryException(sb.toString());
+		throw new NoSuchCPConfigurationEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -528,14 +494,8 @@ public class CPConfigurationEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPConfigurationEntry> orderByComparator) {
 
-		List<CPConfigurationEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -546,13 +506,8 @@ public class CPConfigurationEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPConfigurationEntry cpConfigurationEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpConfigurationEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -682,16 +637,9 @@ public class CPConfigurationEntryPersistenceImpl
 			return cpConfigurationEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntryException(sb.toString());
+		throw new NoSuchCPConfigurationEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -706,14 +654,8 @@ public class CPConfigurationEntryPersistenceImpl
 		long companyId,
 		OrderByComparator<CPConfigurationEntry> orderByComparator) {
 
-		List<CPConfigurationEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -723,12 +665,8 @@ public class CPConfigurationEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CPConfigurationEntry cpConfigurationEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpConfigurationEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -862,16 +800,11 @@ public class CPConfigurationEntryPersistenceImpl
 			return cpConfigurationEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPConfigurationListId=");
-		sb.append(CPConfigurationListId);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntryException(sb.toString());
+		throw new NoSuchCPConfigurationEntryException(
+			_collectionPersistenceFinderByCPConfigurationListId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPConfigurationListId}));
 	}
 
 	/**
@@ -886,14 +819,9 @@ public class CPConfigurationEntryPersistenceImpl
 		long CPConfigurationListId,
 		OrderByComparator<CPConfigurationEntry> orderByComparator) {
 
-		List<CPConfigurationEntry> list = findByCPConfigurationListId(
-			CPConfigurationListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPConfigurationListId.fetchFirst(
+			finderCache, new Object[] {CPConfigurationListId},
+			orderByComparator);
 	}
 
 	/**
@@ -903,13 +831,8 @@ public class CPConfigurationEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCPConfigurationListId(long CPConfigurationListId) {
-		for (CPConfigurationEntry cpConfigurationEntry :
-				findByCPConfigurationListId(
-					CPConfigurationListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpConfigurationEntry);
-		}
+		_collectionPersistenceFinderByCPConfigurationListId.remove(
+			finderCache, new Object[] {CPConfigurationListId});
 	}
 
 	/**
@@ -1046,19 +969,9 @@ public class CPConfigurationEntryPersistenceImpl
 			return cpConfigurationEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchCPConfigurationEntryException(sb.toString());
+		throw new NoSuchCPConfigurationEntryException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1074,14 +987,9 @@ public class CPConfigurationEntryPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<CPConfigurationEntry> orderByComparator) {
 
-		List<CPConfigurationEntry> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1092,13 +1000,8 @@ public class CPConfigurationEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (CPConfigurationEntry cpConfigurationEntry :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpConfigurationEntry);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1141,26 +1044,16 @@ public class CPConfigurationEntryPersistenceImpl
 			classNameId, classPK, CPConfigurationListId);
 
 		if (cpConfigurationEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", CPConfigurationListId=");
-			sb.append(CPConfigurationListId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, CPConfigurationListId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPConfigurationEntryException(sb.toString());
+			throw new NoSuchCPConfigurationEntryException(message);
 		}
 
 		return cpConfigurationEntry;
@@ -1263,23 +1156,16 @@ public class CPConfigurationEntryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (cpConfigurationEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPConfigurationEntryException(sb.toString());
+			throw new NoSuchCPConfigurationEntryException(message);
 		}
 
 		return cpConfigurationEntry;
@@ -2656,4 +2542,4 @@ public class CPConfigurationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-316156579
+// LIFERAY-SERVICE-BUILDER-HASH:-1226783852

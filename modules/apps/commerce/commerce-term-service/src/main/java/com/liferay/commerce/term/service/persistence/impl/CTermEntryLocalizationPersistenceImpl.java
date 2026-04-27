@@ -196,16 +196,11 @@ public class CTermEntryLocalizationPersistenceImpl
 			return cTermEntryLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchCTermEntryLocalizationException(sb.toString());
+		throw new NoSuchCTermEntryLocalizationException(
+			_collectionPersistenceFinderByCommerceTermEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceTermEntryId}));
 	}
 
 	/**
@@ -220,14 +215,8 @@ public class CTermEntryLocalizationPersistenceImpl
 		long commerceTermEntryId,
 		OrderByComparator<CTermEntryLocalization> orderByComparator) {
 
-		List<CTermEntryLocalization> list = findByCommerceTermEntryId(
-			commerceTermEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceTermEntryId.fetchFirst(
+			finderCache, new Object[] {commerceTermEntryId}, orderByComparator);
 	}
 
 	/**
@@ -237,13 +226,8 @@ public class CTermEntryLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceTermEntryId(long commerceTermEntryId) {
-		for (CTermEntryLocalization cTermEntryLocalization :
-				findByCommerceTermEntryId(
-					commerceTermEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cTermEntryLocalization);
-		}
+		_collectionPersistenceFinderByCommerceTermEntryId.remove(
+			finderCache, new Object[] {commerceTermEntryId});
 	}
 
 	/**
@@ -280,23 +264,17 @@ public class CTermEntryLocalizationPersistenceImpl
 				commerceTermEntryId, languageId);
 
 		if (cTermEntryLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceTermEntryId=");
-			sb.append(commerceTermEntryId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCommerceTermEntryId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {commerceTermEntryId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCTermEntryLocalizationException(sb.toString());
+			throw new NoSuchCTermEntryLocalizationException(message);
 		}
 
 		return cTermEntryLocalization;
@@ -1095,4 +1073,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1423903269
+// LIFERAY-SERVICE-BUILDER-HASH:163362388

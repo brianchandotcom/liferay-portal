@@ -191,16 +191,9 @@ public class CTCollectionTemplatePersistenceImpl
 			return ctCollectionTemplate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionTemplateException(sb.toString());
+		throw new NoSuchCollectionTemplateException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -215,14 +208,8 @@ public class CTCollectionTemplatePersistenceImpl
 		long companyId,
 		OrderByComparator<CTCollectionTemplate> orderByComparator) {
 
-		List<CTCollectionTemplate> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -374,12 +361,8 @@ public class CTCollectionTemplatePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTCollectionTemplate ctCollectionTemplate :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctCollectionTemplate);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1145,4 +1128,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-151843496
+// LIFERAY-SERVICE-BUILDER-HASH:-1200383941

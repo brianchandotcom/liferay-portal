@@ -202,16 +202,9 @@ public class MBThreadFlagPersistenceImpl
 			return mbThreadFlag;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
+		throw new NoSuchThreadFlagException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -225,13 +218,8 @@ public class MBThreadFlagPersistenceImpl
 	public MBThreadFlag fetchByUuid_First(
 		String uuid, OrderByComparator<MBThreadFlag> orderByComparator) {
 
-		List<MBThreadFlag> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +229,8 @@ public class MBThreadFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (MBThreadFlag mbThreadFlag :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbThreadFlag);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -284,23 +269,15 @@ public class MBThreadFlagPersistenceImpl
 		MBThreadFlag mbThreadFlag = fetchByUUID_G(uuid, groupId);
 
 		if (mbThreadFlag == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchThreadFlagException(sb.toString());
+			throw new NoSuchThreadFlagException(message);
 		}
 
 		return mbThreadFlag;
@@ -483,19 +460,9 @@ public class MBThreadFlagPersistenceImpl
 			return mbThreadFlag;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
+		throw new NoSuchThreadFlagException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -511,14 +478,8 @@ public class MBThreadFlagPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<MBThreadFlag> orderByComparator) {
 
-		List<MBThreadFlag> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -529,13 +490,8 @@ public class MBThreadFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (MBThreadFlag mbThreadFlag :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(mbThreadFlag);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -661,16 +617,9 @@ public class MBThreadFlagPersistenceImpl
 			return mbThreadFlag;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
+		throw new NoSuchThreadFlagException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -684,13 +633,8 @@ public class MBThreadFlagPersistenceImpl
 	public MBThreadFlag fetchByUserId_First(
 		long userId, OrderByComparator<MBThreadFlag> orderByComparator) {
 
-		List<MBThreadFlag> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -700,12 +644,8 @@ public class MBThreadFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (MBThreadFlag mbThreadFlag :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbThreadFlag);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -833,16 +773,9 @@ public class MBThreadFlagPersistenceImpl
 			return mbThreadFlag;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("threadId=");
-		sb.append(threadId);
-
-		sb.append("}");
-
-		throw new NoSuchThreadFlagException(sb.toString());
+		throw new NoSuchThreadFlagException(
+			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
 	}
 
 	/**
@@ -856,14 +789,8 @@ public class MBThreadFlagPersistenceImpl
 	public MBThreadFlag fetchByThreadId_First(
 		long threadId, OrderByComparator<MBThreadFlag> orderByComparator) {
 
-		List<MBThreadFlag> list = findByThreadId(
-			threadId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByThreadId.fetchFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -873,12 +800,8 @@ public class MBThreadFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByThreadId(long threadId) {
-		for (MBThreadFlag mbThreadFlag :
-				findByThreadId(
-					threadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbThreadFlag);
-		}
+		_collectionPersistenceFinderByThreadId.remove(
+			finderCache, new Object[] {threadId});
 	}
 
 	/**
@@ -916,23 +839,15 @@ public class MBThreadFlagPersistenceImpl
 		MBThreadFlag mbThreadFlag = fetchByU_T(userId, threadId);
 
 		if (mbThreadFlag == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", threadId=");
-			sb.append(threadId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, threadId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchThreadFlagException(sb.toString());
+			throw new NoSuchThreadFlagException(message);
 		}
 
 		return mbThreadFlag;
@@ -2087,4 +2002,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-881596569
+// LIFERAY-SERVICE-BUILDER-HASH:320528372

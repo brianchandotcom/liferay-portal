@@ -191,16 +191,9 @@ public class ObjectStateTransitionPersistenceImpl
 			return objectStateTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
+		throw new NoSuchObjectStateTransitionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -215,14 +208,8 @@ public class ObjectStateTransitionPersistenceImpl
 		String uuid,
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
-		List<ObjectStateTransition> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -232,11 +219,8 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectStateTransition objectStateTransition :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectStateTransition);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -363,19 +347,9 @@ public class ObjectStateTransitionPersistenceImpl
 			return objectStateTransition;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
+		throw new NoSuchObjectStateTransitionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -391,14 +365,8 @@ public class ObjectStateTransitionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
-		List<ObjectStateTransition> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -409,13 +377,8 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectStateTransition objectStateTransition :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectStateTransition);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -539,16 +502,11 @@ public class ObjectStateTransitionPersistenceImpl
 			return objectStateTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectStateFlowId=");
-		sb.append(objectStateFlowId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
+		throw new NoSuchObjectStateTransitionException(
+			_collectionPersistenceFinderByObjectStateFlowId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectStateFlowId}));
 	}
 
 	/**
@@ -563,14 +521,8 @@ public class ObjectStateTransitionPersistenceImpl
 		long objectStateFlowId,
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
-		List<ObjectStateTransition> list = findByObjectStateFlowId(
-			objectStateFlowId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectStateFlowId.fetchFirst(
+			finderCache, new Object[] {objectStateFlowId}, orderByComparator);
 	}
 
 	/**
@@ -580,13 +532,8 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectStateFlowId(long objectStateFlowId) {
-		for (ObjectStateTransition objectStateTransition :
-				findByObjectStateFlowId(
-					objectStateFlowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectStateTransition);
-		}
+		_collectionPersistenceFinderByObjectStateFlowId.remove(
+			finderCache, new Object[] {objectStateFlowId});
 	}
 
 	/**
@@ -709,16 +656,11 @@ public class ObjectStateTransitionPersistenceImpl
 			return objectStateTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceObjectStateId=");
-		sb.append(sourceObjectStateId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
+		throw new NoSuchObjectStateTransitionException(
+			_collectionPersistenceFinderBySourceObjectStateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {sourceObjectStateId}));
 	}
 
 	/**
@@ -733,14 +675,8 @@ public class ObjectStateTransitionPersistenceImpl
 		long sourceObjectStateId,
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
-		List<ObjectStateTransition> list = findBySourceObjectStateId(
-			sourceObjectStateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySourceObjectStateId.fetchFirst(
+			finderCache, new Object[] {sourceObjectStateId}, orderByComparator);
 	}
 
 	/**
@@ -750,13 +686,8 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeBySourceObjectStateId(long sourceObjectStateId) {
-		for (ObjectStateTransition objectStateTransition :
-				findBySourceObjectStateId(
-					sourceObjectStateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectStateTransition);
-		}
+		_collectionPersistenceFinderBySourceObjectStateId.remove(
+			finderCache, new Object[] {sourceObjectStateId});
 	}
 
 	/**
@@ -879,16 +810,11 @@ public class ObjectStateTransitionPersistenceImpl
 			return objectStateTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("targetObjectStateId=");
-		sb.append(targetObjectStateId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectStateTransitionException(sb.toString());
+		throw new NoSuchObjectStateTransitionException(
+			_collectionPersistenceFinderByTargetObjectStateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {targetObjectStateId}));
 	}
 
 	/**
@@ -903,14 +829,8 @@ public class ObjectStateTransitionPersistenceImpl
 		long targetObjectStateId,
 		OrderByComparator<ObjectStateTransition> orderByComparator) {
 
-		List<ObjectStateTransition> list = findByTargetObjectStateId(
-			targetObjectStateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByTargetObjectStateId.fetchFirst(
+			finderCache, new Object[] {targetObjectStateId}, orderByComparator);
 	}
 
 	/**
@@ -920,13 +840,8 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByTargetObjectStateId(long targetObjectStateId) {
-		for (ObjectStateTransition objectStateTransition :
-				findByTargetObjectStateId(
-					targetObjectStateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectStateTransition);
-		}
+		_collectionPersistenceFinderByTargetObjectStateId.remove(
+			finderCache, new Object[] {targetObjectStateId});
 	}
 
 	/**
@@ -1766,4 +1681,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-405850215
+// LIFERAY-SERVICE-BUILDER-HASH:-1925218322

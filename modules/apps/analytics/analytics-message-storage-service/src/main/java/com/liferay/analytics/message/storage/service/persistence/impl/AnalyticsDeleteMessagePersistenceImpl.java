@@ -203,16 +203,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			return analyticsDeleteMessage;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDeleteMessageException(sb.toString());
+		throw new NoSuchDeleteMessageException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		long companyId,
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
 
-		List<AnalyticsDeleteMessage> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -244,12 +231,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsDeleteMessage);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -386,19 +369,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			return analyticsDeleteMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate>");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchDeleteMessageException(sb.toString());
+		throw new NoSuchDeleteMessageException(
+			_collectionPersistenceFinderByC_GtM.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, modifiedDate}));
 	}
 
 	/**
@@ -414,14 +388,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		long companyId, Date modifiedDate,
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
 
-		List<AnalyticsDeleteMessage> list = findByC_GtM(
-			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_GtM.fetchFirst(
+			finderCache, new Object[] {companyId, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -432,13 +401,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByC_GtM(long companyId, Date modifiedDate) {
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				findByC_GtM(
-					companyId, modifiedDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsDeleteMessage);
-		}
+		_collectionPersistenceFinderByC_GtM.remove(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	/**
@@ -576,19 +540,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			return analyticsDeleteMessage;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", modifiedDate<");
-		sb.append(modifiedDate);
-
-		sb.append("}");
-
-		throw new NoSuchDeleteMessageException(sb.toString());
+		throw new NoSuchDeleteMessageException(
+			_collectionPersistenceFinderByC_LtM.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, modifiedDate}));
 	}
 
 	/**
@@ -604,14 +559,9 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		long companyId, Date modifiedDate,
 		OrderByComparator<AnalyticsDeleteMessage> orderByComparator) {
 
-		List<AnalyticsDeleteMessage> list = findByC_LtM(
-			companyId, modifiedDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LtM.fetchFirst(
+			finderCache, new Object[] {companyId, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -622,13 +572,8 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Override
 	public void removeByC_LtM(long companyId, Date modifiedDate) {
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				findByC_LtM(
-					companyId, modifiedDate, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(analyticsDeleteMessage);
-		}
+		_collectionPersistenceFinderByC_LtM.remove(
+			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
 	/**
@@ -1652,4 +1597,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:322044200
+// LIFERAY-SERVICE-BUILDER-HASH:2041115552

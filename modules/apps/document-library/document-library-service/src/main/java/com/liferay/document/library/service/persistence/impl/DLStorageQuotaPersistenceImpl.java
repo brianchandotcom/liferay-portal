@@ -99,20 +99,15 @@ public class DLStorageQuotaPersistenceImpl
 		DLStorageQuota dlStorageQuota = fetchByCompanyId(companyId);
 
 		if (dlStorageQuota == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStorageQuotaException(sb.toString());
+			throw new NoSuchStorageQuotaException(message);
 		}
 
 		return dlStorageQuota;
@@ -783,4 +778,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1463746262
+// LIFERAY-SERVICE-BUILDER-HASH:-1758649993

@@ -113,20 +113,15 @@ public class PatcherFixPackPersistenceImpl
 		PatcherFixPack patcherFixPack = fetchByPatcherBuildId(patcherBuildId);
 
 		if (patcherFixPack == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("patcherBuildId=");
-			sb.append(patcherBuildId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByPatcherBuildId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {patcherBuildId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherFixPackException(sb.toString());
+			throw new NoSuchPatcherFixPackException(message);
 		}
 
 		return patcherFixPack;
@@ -293,16 +288,11 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPatcherFixComponentId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {patcherFixComponentId}));
 	}
 
 	/**
@@ -317,14 +307,9 @@ public class PatcherFixPackPersistenceImpl
 		long patcherFixComponentId,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPatcherFixComponentId(
-			patcherFixComponentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPatcherFixComponentId.fetchFirst(
+			finderCache, new Object[] {patcherFixComponentId},
+			orderByComparator);
 	}
 
 	/**
@@ -479,13 +464,8 @@ public class PatcherFixPackPersistenceImpl
 	 */
 	@Override
 	public void removeByPatcherFixComponentId(long patcherFixComponentId) {
-		for (PatcherFixPack patcherFixPack :
-				findByPatcherFixComponentId(
-					patcherFixComponentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPatcherFixComponentId.remove(
+			finderCache, new Object[] {patcherFixComponentId});
 	}
 
 	/**
@@ -662,16 +642,9 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByVersion.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {version}));
 	}
 
 	/**
@@ -685,14 +658,8 @@ public class PatcherFixPackPersistenceImpl
 	public PatcherFixPack fetchByVersion_First(
 		int version, OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByVersion(
-			version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByVersion.fetchFirst(
+			finderCache, new Object[] {version}, orderByComparator);
 	}
 
 	/**
@@ -843,12 +810,8 @@ public class PatcherFixPackPersistenceImpl
 	 */
 	@Override
 	public void removeByVersion(int version) {
-		for (PatcherFixPack patcherFixPack :
-				findByVersion(
-					version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByVersion.remove(
+			finderCache, new Object[] {version});
 	}
 
 	/**
@@ -1039,19 +1002,10 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPFCI_PPVI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {patcherFixComponentId, patcherProjectVersionId}));
 	}
 
 	/**
@@ -1067,15 +1021,10 @@ public class PatcherFixPackPersistenceImpl
 		long patcherFixComponentId, long patcherProjectVersionId,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, 0, 1,
+		return _collectionPersistenceFinderByPFCI_PPVI.fetchFirst(
+			finderCache,
+			new Object[] {patcherFixComponentId, patcherProjectVersionId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1243,13 +1192,9 @@ public class PatcherFixPackPersistenceImpl
 	public void removeByPFCI_PPVI(
 		long patcherFixComponentId, long patcherProjectVersionId) {
 
-		for (PatcherFixPack patcherFixPack :
-				findByPFCI_PPVI(
-					patcherFixComponentId, patcherProjectVersionId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPFCI_PPVI.remove(
+			finderCache,
+			new Object[] {patcherFixComponentId, patcherProjectVersionId});
 	}
 
 	/**
@@ -1455,19 +1400,10 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPFCI_V.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {patcherFixComponentId, version}));
 	}
 
 	/**
@@ -1483,14 +1419,9 @@ public class PatcherFixPackPersistenceImpl
 		long patcherFixComponentId, int version,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPFCI_V(
-			patcherFixComponentId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPFCI_V.fetchFirst(
+			finderCache, new Object[] {patcherFixComponentId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1654,13 +1585,8 @@ public class PatcherFixPackPersistenceImpl
 	 */
 	@Override
 	public void removeByPFCI_V(long patcherFixComponentId, int version) {
-		for (PatcherFixPack patcherFixPack :
-				findByPFCI_V(
-					patcherFixComponentId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPFCI_V.remove(
+			finderCache, new Object[] {patcherFixComponentId, version});
 	}
 
 	/**
@@ -1765,23 +1691,16 @@ public class PatcherFixPackPersistenceImpl
 			patcherProjectVersionId, name);
 
 		if (patcherFixPack == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("patcherProjectVersionId=");
-			sb.append(patcherProjectVersionId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByPFCI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {patcherProjectVersionId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherFixPackException(sb.toString());
+			throw new NoSuchPatcherFixPackException(message);
 		}
 
 		return patcherFixPack;
@@ -1963,19 +1882,10 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPFCI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {patcherProjectVersionId, status}));
 	}
 
 	/**
@@ -1991,14 +1901,9 @@ public class PatcherFixPackPersistenceImpl
 		long patcherProjectVersionId, int status,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPFCI_S(
-			patcherProjectVersionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPFCI_S.fetchFirst(
+			finderCache, new Object[] {patcherProjectVersionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2162,13 +2067,8 @@ public class PatcherFixPackPersistenceImpl
 	 */
 	@Override
 	public void removeByPFCI_S(long patcherProjectVersionId, int status) {
-		for (PatcherFixPack patcherFixPack :
-				findByPFCI_S(
-					patcherProjectVersionId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPFCI_S.remove(
+			finderCache, new Object[] {patcherProjectVersionId, status});
 	}
 
 	/**
@@ -2379,22 +2279,12 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", version>");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPFCI_PPVI_GtV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					patcherFixComponentId, patcherProjectVersionId, version
+				}));
 	}
 
 	/**
@@ -2411,15 +2301,12 @@ public class PatcherFixPackPersistenceImpl
 		long patcherFixComponentId, long patcherProjectVersionId, int version,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPFCI_PPVI_GtV(
-			patcherFixComponentId, patcherProjectVersionId, version, 0, 1,
+		return _collectionPersistenceFinderByPFCI_PPVI_GtV.fetchFirst(
+			finderCache,
+			new Object[] {
+				patcherFixComponentId, patcherProjectVersionId, version
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2597,13 +2484,11 @@ public class PatcherFixPackPersistenceImpl
 	public void removeByPFCI_PPVI_GtV(
 		long patcherFixComponentId, long patcherProjectVersionId, int version) {
 
-		for (PatcherFixPack patcherFixPack :
-				findByPFCI_PPVI_GtV(
-					patcherFixComponentId, patcherProjectVersionId, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPFCI_PPVI_GtV.remove(
+			finderCache,
+			new Object[] {
+				patcherFixComponentId, patcherProjectVersionId, version
+			});
 	}
 
 	/**
@@ -2832,22 +2717,12 @@ public class PatcherFixPackPersistenceImpl
 			return patcherFixPack;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherFixComponentId=");
-		sb.append(patcherFixComponentId);
-
-		sb.append(", patcherProjectVersionId=");
-		sb.append(patcherProjectVersionId);
-
-		sb.append(", version<");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherFixPackException(sb.toString());
+		throw new NoSuchPatcherFixPackException(
+			_collectionPersistenceFinderByPFCI_PPVI_LtV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					patcherFixComponentId, patcherProjectVersionId, version
+				}));
 	}
 
 	/**
@@ -2864,15 +2739,12 @@ public class PatcherFixPackPersistenceImpl
 		long patcherFixComponentId, long patcherProjectVersionId, int version,
 		OrderByComparator<PatcherFixPack> orderByComparator) {
 
-		List<PatcherFixPack> list = findByPFCI_PPVI_LtV(
-			patcherFixComponentId, patcherProjectVersionId, version, 0, 1,
+		return _collectionPersistenceFinderByPFCI_PPVI_LtV.fetchFirst(
+			finderCache,
+			new Object[] {
+				patcherFixComponentId, patcherProjectVersionId, version
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3050,13 +2922,11 @@ public class PatcherFixPackPersistenceImpl
 	public void removeByPFCI_PPVI_LtV(
 		long patcherFixComponentId, long patcherProjectVersionId, int version) {
 
-		for (PatcherFixPack patcherFixPack :
-				findByPFCI_PPVI_LtV(
-					patcherFixComponentId, patcherProjectVersionId, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherFixPack);
-		}
+		_collectionPersistenceFinderByPFCI_PPVI_LtV.remove(
+			finderCache,
+			new Object[] {
+				patcherFixComponentId, patcherProjectVersionId, version
+			});
 	}
 
 	/**
@@ -3183,29 +3053,19 @@ public class PatcherFixPackPersistenceImpl
 			patcherFixComponentId, patcherProjectVersionId, name, version);
 
 		if (patcherFixPack == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("patcherFixComponentId=");
-			sb.append(patcherFixComponentId);
-
-			sb.append(", patcherProjectVersionId=");
-			sb.append(patcherProjectVersionId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByPFCI_PPVI_N_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						patcherFixComponentId, patcherProjectVersionId, name,
+						version
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherFixPackException(sb.toString());
+			throw new NoSuchPatcherFixPackException(message);
 		}
 
 		return patcherFixPack;
@@ -4633,4 +4493,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1909410096
+// LIFERAY-SERVICE-BUILDER-HASH:-1190243126

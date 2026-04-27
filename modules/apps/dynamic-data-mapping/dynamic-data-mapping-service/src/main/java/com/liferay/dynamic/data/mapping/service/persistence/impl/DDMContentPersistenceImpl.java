@@ -201,16 +201,9 @@ public class DDMContentPersistenceImpl
 			return ddmContent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,13 +217,8 @@ public class DDMContentPersistenceImpl
 	public DDMContent fetchByUuid_First(
 		String uuid, OrderByComparator<DDMContent> orderByComparator) {
 
-		List<DDMContent> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -240,11 +228,8 @@ public class DDMContentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDMContent ddmContent :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmContent);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -283,23 +268,15 @@ public class DDMContentPersistenceImpl
 		DDMContent ddmContent = fetchByUUID_G(uuid, groupId);
 
 		if (ddmContent == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchContentException(sb.toString());
+			throw new NoSuchContentException(message);
 		}
 
 		return ddmContent;
@@ -482,19 +459,9 @@ public class DDMContentPersistenceImpl
 			return ddmContent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -510,14 +477,8 @@ public class DDMContentPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDMContent> orderByComparator) {
 
-		List<DDMContent> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -528,13 +489,8 @@ public class DDMContentPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDMContent ddmContent :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmContent);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -661,16 +617,9 @@ public class DDMContentPersistenceImpl
 			return ddmContent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -684,13 +633,8 @@ public class DDMContentPersistenceImpl
 	public DDMContent fetchByGroupId_First(
 		long groupId, OrderByComparator<DDMContent> orderByComparator) {
 
-		List<DDMContent> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -700,12 +644,8 @@ public class DDMContentPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (DDMContent ddmContent :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmContent);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -833,16 +773,9 @@ public class DDMContentPersistenceImpl
 			return ddmContent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -856,14 +789,8 @@ public class DDMContentPersistenceImpl
 	public DDMContent fetchByCompanyId_First(
 		long companyId, OrderByComparator<DDMContent> orderByComparator) {
 
-		List<DDMContent> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -873,12 +800,8 @@ public class DDMContentPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DDMContent ddmContent :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmContent);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1949,4 +1872,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-52073114
+// LIFERAY-SERVICE-BUILDER-HASH:-510098289

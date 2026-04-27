@@ -209,16 +209,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		throw new NoSuchEntryAssetEntryRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -233,14 +226,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		String uuid,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		List<AssetListEntryAssetEntryRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -250,11 +237,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetListEntryAssetEntryRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -294,23 +278,15 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			uuid, groupId);
 
 		if (assetListEntryAssetEntryRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryAssetEntryRelException(sb.toString());
+			throw new NoSuchEntryAssetEntryRelException(message);
 		}
 
 		return assetListEntryAssetEntryRel;
@@ -498,19 +474,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		throw new NoSuchEntryAssetEntryRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -526,14 +492,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		List<AssetListEntryAssetEntryRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -544,13 +504,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetListEntryAssetEntryRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -683,16 +638,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		throw new NoSuchEntryAssetEntryRelException(
+			_collectionPersistenceFinderByAssetListEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetListEntryId}));
 	}
 
 	/**
@@ -707,14 +656,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		long assetListEntryId,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		List<AssetListEntryAssetEntryRel> list = findByAssetListEntryId(
-			assetListEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAssetListEntryId.fetchFirst(
+			finderCache, new Object[] {assetListEntryId}, orderByComparator);
 	}
 
 	/**
@@ -724,13 +667,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAssetListEntryId(long assetListEntryId) {
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				findByAssetListEntryId(
-					assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(assetListEntryAssetEntryRel);
-		}
+		_collectionPersistenceFinderByAssetListEntryId.remove(
+			finderCache, new Object[] {assetListEntryId});
 	}
 
 	/**
@@ -862,16 +800,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetEntryId=");
-		sb.append(assetEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		throw new NoSuchEntryAssetEntryRelException(
+			_collectionPersistenceFinderByAssetEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetEntryId}));
 	}
 
 	/**
@@ -886,14 +817,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		long assetEntryId,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		List<AssetListEntryAssetEntryRel> list = findByAssetEntryId(
-			assetEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAssetEntryId.fetchFirst(
+			finderCache, new Object[] {assetEntryId}, orderByComparator);
 	}
 
 	/**
@@ -903,12 +828,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAssetEntryId(long assetEntryId) {
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				findByAssetEntryId(
-					assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetListEntryAssetEntryRel);
-		}
+		_collectionPersistenceFinderByAssetEntryId.remove(
+			finderCache, new Object[] {assetEntryId});
 	}
 
 	/**
@@ -1591,26 +1512,16 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			assetListEntryId, segmentsEntryId, position);
 
 		if (assetListEntryAssetEntryRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("assetListEntryId=");
-			sb.append(assetListEntryId);
-
-			sb.append(", segmentsEntryId=");
-			sb.append(segmentsEntryId);
-
-			sb.append(", position=");
-			sb.append(position);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_S_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {assetListEntryId, segmentsEntryId, position});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryAssetEntryRelException(sb.toString());
+			throw new NoSuchEntryAssetEntryRelException(message);
 		}
 
 		return assetListEntryAssetEntryRel;
@@ -1821,22 +1732,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			return assetListEntryAssetEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("assetListEntryId=");
-		sb.append(assetListEntryId);
-
-		sb.append(", segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append(", position>");
-		sb.append(position);
-
-		sb.append("}");
-
-		throw new NoSuchEntryAssetEntryRelException(sb.toString());
+		throw new NoSuchEntryAssetEntryRelException(
+			_collectionPersistenceFinderByA_S_GtP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {assetListEntryId, segmentsEntryId, position}));
 	}
 
 	/**
@@ -1853,15 +1752,10 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		long assetListEntryId, long segmentsEntryId, int position,
 		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
 
-		List<AssetListEntryAssetEntryRel> list = findByA_S_GtP(
-			assetListEntryId, segmentsEntryId, position, 0, 1,
+		return _collectionPersistenceFinderByA_S_GtP.fetchFirst(
+			finderCache,
+			new Object[] {assetListEntryId, segmentsEntryId, position},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1875,13 +1769,9 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	public void removeByA_S_GtP(
 		long assetListEntryId, long segmentsEntryId, int position) {
 
-		for (AssetListEntryAssetEntryRel assetListEntryAssetEntryRel :
-				findByA_S_GtP(
-					assetListEntryId, segmentsEntryId, position,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(assetListEntryAssetEntryRel);
-		}
+		_collectionPersistenceFinderByA_S_GtP.remove(
+			finderCache,
+			new Object[] {assetListEntryId, segmentsEntryId, position});
 	}
 
 	/**
@@ -3162,4 +3052,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1675700455
+// LIFERAY-SERVICE-BUILDER-HASH:-382957113

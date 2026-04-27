@@ -218,17 +218,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -244,14 +236,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -261,13 +247,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByUuid(
-						uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -308,24 +289,16 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			cpDefinitionSpecificationOptionValue = fetchByUUID_G(uuid, groupId);
 
 		if (cpDefinitionSpecificationOptionValue == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchCPDefinitionSpecificationOptionValueException(
-				sb.toString());
+				message);
 		}
 
 		return cpDefinitionSpecificationOptionValue;
@@ -518,20 +491,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -548,14 +510,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -566,14 +522,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByUuid_C(
-						uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -709,17 +659,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -735,14 +677,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -752,13 +688,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByGroupId(
-						groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -894,17 +825,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -920,14 +843,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -937,14 +854,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByCPDefinitionId(
-						CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -1088,17 +999,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByCPSpecificationOptionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPSpecificationOptionId}));
 	}
 
 	/**
@@ -1115,15 +1020,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			OrderByComparator<CPDefinitionSpecificationOptionValue>
 				orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list =
-			findByCPSpecificationOptionId(
-				CPSpecificationOptionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPSpecificationOptionId.fetchFirst(
+			finderCache, new Object[] {CPSpecificationOptionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1133,14 +1032,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByCPSpecificationOptionId(long CPSpecificationOptionId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByCPSpecificationOptionId(
-						CPSpecificationOptionId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByCPSpecificationOptionId.remove(
+			finderCache, new Object[] {CPSpecificationOptionId});
 	}
 
 	/**
@@ -1277,17 +1170,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByCPOptionCategoryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPOptionCategoryId}));
 	}
 
 	/**
@@ -1303,15 +1190,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list =
-			findByCPOptionCategoryId(
-				CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPOptionCategoryId.fetchFirst(
+			finderCache, new Object[] {CPOptionCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -1321,14 +1201,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByCPOptionCategoryId(long CPOptionCategoryId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByCPOptionCategoryId(
-						CPOptionCategoryId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByCPOptionCategoryId.remove(
+			finderCache, new Object[] {CPOptionCategoryId});
 	}
 
 	/**
@@ -1370,24 +1244,19 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				CPDefinitionSpecificationOptionValueId, CPDefinitionId);
 
 		if (cpDefinitionSpecificationOptionValue == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionSpecificationOptionValueId=");
-			sb.append(CPDefinitionSpecificationOptionValueId);
-
-			sb.append(", CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_CSOVI.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						CPDefinitionSpecificationOptionValueId, CPDefinitionId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchCPDefinitionSpecificationOptionValueException(
-				sb.toString());
+				message);
 		}
 
 		return cpDefinitionSpecificationOptionValue;
@@ -1596,20 +1465,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", CPSpecificationOptionId=");
-		sb.append(CPSpecificationOptionId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByC_CSO.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPDefinitionId, CPSpecificationOptionId}));
 	}
 
 	/**
@@ -1626,14 +1485,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByC_CSO(
-			CPDefinitionId, CPSpecificationOptionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CSO.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId, CPSpecificationOptionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1646,14 +1500,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	public void removeByC_CSO(
 		long CPDefinitionId, long CPSpecificationOptionId) {
 
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByC_CSO(
-						CPDefinitionId, CPSpecificationOptionId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByC_CSO.remove(
+			finderCache,
+			new Object[] {CPDefinitionId, CPSpecificationOptionId});
 	}
 
 	/**
@@ -1799,20 +1648,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			return cpDefinitionSpecificationOptionValue;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append(", CPOptionCategoryId=");
-		sb.append(CPOptionCategoryId);
-
-		sb.append("}");
-
 		throw new NoSuchCPDefinitionSpecificationOptionValueException(
-			sb.toString());
+			_collectionPersistenceFinderByC_COC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {CPDefinitionId, CPOptionCategoryId}));
 	}
 
 	/**
@@ -1829,14 +1668,9 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		OrderByComparator<CPDefinitionSpecificationOptionValue>
 			orderByComparator) {
 
-		List<CPDefinitionSpecificationOptionValue> list = findByC_COC(
-			CPDefinitionId, CPOptionCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_COC.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId, CPOptionCategoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -1847,14 +1681,8 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	 */
 	@Override
 	public void removeByC_COC(long CPDefinitionId, long CPOptionCategoryId) {
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					findByC_COC(
-						CPDefinitionId, CPOptionCategoryId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(cpDefinitionSpecificationOptionValue);
-		}
+		_collectionPersistenceFinderByC_COC.remove(
+			finderCache, new Object[] {CPDefinitionId, CPOptionCategoryId});
 	}
 
 	/**
@@ -1897,24 +1725,17 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				CPDefinitionId, key);
 
 		if (cpDefinitionSpecificationOptionValue == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {CPDefinitionId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchCPDefinitionSpecificationOptionValueException(
-				sb.toString());
+				message);
 		}
 
 		return cpDefinitionSpecificationOptionValue;
@@ -2010,24 +1831,17 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				externalReferenceCode, companyId);
 
 		if (cpDefinitionSpecificationOptionValue == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
 			throw new NoSuchCPDefinitionSpecificationOptionValueException(
-				sb.toString());
+				message);
 		}
 
 		return cpDefinitionSpecificationOptionValue;
@@ -3651,4 +3465,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1991475156
+// LIFERAY-SERVICE-BUILDER-HASH:-255187850

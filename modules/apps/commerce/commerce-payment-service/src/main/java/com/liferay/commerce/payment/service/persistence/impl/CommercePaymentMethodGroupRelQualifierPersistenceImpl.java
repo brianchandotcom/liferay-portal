@@ -210,16 +210,11 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			return commercePaymentMethodGroupRelQualifier;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commercePaymentMethodGroupRelId=");
-		sb.append(commercePaymentMethodGroupRelId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelQualifierException(sb.toString());
+		throw new NoSuchPaymentMethodGroupRelQualifierException(
+			_collectionPersistenceFinderByCommercePaymentMethodGroupRelId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commercePaymentMethodGroupRelId}));
 	}
 
 	/**
@@ -236,15 +231,10 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 				orderByComparator) {
 
-		List<CommercePaymentMethodGroupRelQualifier> list =
-			findByCommercePaymentMethodGroupRelId(
-				commercePaymentMethodGroupRelId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommercePaymentMethodGroupRelId.
+			fetchFirst(
+				finderCache, new Object[] {commercePaymentMethodGroupRelId},
+				orderByComparator);
 	}
 
 	/**
@@ -256,14 +246,8 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	public void removeByCommercePaymentMethodGroupRelId(
 		long commercePaymentMethodGroupRelId) {
 
-		for (CommercePaymentMethodGroupRelQualifier
-				commercePaymentMethodGroupRelQualifier :
-					findByCommercePaymentMethodGroupRelId(
-						commercePaymentMethodGroupRelId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commercePaymentMethodGroupRelQualifier);
-		}
+		_collectionPersistenceFinderByCommercePaymentMethodGroupRelId.remove(
+			finderCache, new Object[] {commercePaymentMethodGroupRelId});
 	}
 
 	/**
@@ -404,19 +388,10 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			return commercePaymentMethodGroupRelQualifier;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commercePaymentMethodGroupRelId=");
-		sb.append(commercePaymentMethodGroupRelId);
-
-		sb.append("}");
-
-		throw new NoSuchPaymentMethodGroupRelQualifierException(sb.toString());
+		throw new NoSuchPaymentMethodGroupRelQualifierException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, commercePaymentMethodGroupRelId}));
 	}
 
 	/**
@@ -433,15 +408,10 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 			orderByComparator) {
 
-		List<CommercePaymentMethodGroupRelQualifier> list = findByC_C(
-			classNameId, commercePaymentMethodGroupRelId, 0, 1,
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache,
+			new Object[] {classNameId, commercePaymentMethodGroupRelId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -454,14 +424,9 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	public void removeByC_C(
 		long classNameId, long commercePaymentMethodGroupRelId) {
 
-		for (CommercePaymentMethodGroupRelQualifier
-				commercePaymentMethodGroupRelQualifier :
-					findByC_C(
-						classNameId, commercePaymentMethodGroupRelId,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commercePaymentMethodGroupRelQualifier);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache,
+			new Object[] {classNameId, commercePaymentMethodGroupRelId});
 	}
 
 	/**
@@ -504,27 +469,18 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				classNameId, classPK, commercePaymentMethodGroupRelId);
 
 		if (commercePaymentMethodGroupRelQualifier == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", commercePaymentMethodGroupRelId=");
-			sb.append(commercePaymentMethodGroupRelId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						classNameId, classPK, commercePaymentMethodGroupRelId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPaymentMethodGroupRelQualifierException(
-				sb.toString());
+			throw new NoSuchPaymentMethodGroupRelQualifierException(message);
 		}
 
 		return commercePaymentMethodGroupRelQualifier;
@@ -1465,4 +1421,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1914564844
+// LIFERAY-SERVICE-BUILDER-HASH:-1318358752

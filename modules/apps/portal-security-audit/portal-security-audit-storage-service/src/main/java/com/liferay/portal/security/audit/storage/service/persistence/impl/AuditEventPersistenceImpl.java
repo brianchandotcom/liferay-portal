@@ -186,16 +186,9 @@ public class AuditEventPersistenceImpl
 			return auditEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEventException(sb.toString());
+		throw new NoSuchEventException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -209,14 +202,8 @@ public class AuditEventPersistenceImpl
 	public AuditEvent fetchByCompanyId_First(
 		long companyId, OrderByComparator<AuditEvent> orderByComparator) {
 
-		List<AuditEvent> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			dummyFinderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -226,12 +213,8 @@ public class AuditEventPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AuditEvent auditEvent :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(auditEvent);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			dummyFinderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -865,4 +848,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:666328849
+// LIFERAY-SERVICE-BUILDER-HASH:227990362

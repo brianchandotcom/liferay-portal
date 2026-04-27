@@ -214,16 +214,9 @@ public class CPTaxCategoryPersistenceImpl
 			return cpTaxCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
+		throw new NoSuchCPTaxCategoryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,13 +230,8 @@ public class CPTaxCategoryPersistenceImpl
 	public CPTaxCategory fetchByUuid_First(
 		String uuid, OrderByComparator<CPTaxCategory> orderByComparator) {
 
-		List<CPTaxCategory> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -407,11 +395,8 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPTaxCategory cpTaxCategory :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpTaxCategory);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -621,19 +606,9 @@ public class CPTaxCategoryPersistenceImpl
 			return cpTaxCategory;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
+		throw new NoSuchCPTaxCategoryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -649,14 +624,8 @@ public class CPTaxCategoryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPTaxCategory> orderByComparator) {
 
-		List<CPTaxCategory> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -828,13 +797,8 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPTaxCategory cpTaxCategory :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpTaxCategory);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1046,16 +1010,9 @@ public class CPTaxCategoryPersistenceImpl
 			return cpTaxCategory;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPTaxCategoryException(sb.toString());
+		throw new NoSuchCPTaxCategoryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1069,14 +1026,8 @@ public class CPTaxCategoryPersistenceImpl
 	public CPTaxCategory fetchByCompanyId_First(
 		long companyId, OrderByComparator<CPTaxCategory> orderByComparator) {
 
-		List<CPTaxCategory> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1227,12 +1178,8 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CPTaxCategory cpTaxCategory :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpTaxCategory);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1332,23 +1279,16 @@ public class CPTaxCategoryPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (cpTaxCategory == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPTaxCategoryException(sb.toString());
+			throw new NoSuchCPTaxCategoryException(message);
 		}
 
 		return cpTaxCategory;
@@ -2543,4 +2483,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:57013843
+// LIFERAY-SERVICE-BUILDER-HASH:-162237842

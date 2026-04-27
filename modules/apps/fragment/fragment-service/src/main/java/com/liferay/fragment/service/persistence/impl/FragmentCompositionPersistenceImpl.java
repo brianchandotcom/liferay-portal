@@ -214,16 +214,9 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -237,14 +230,8 @@ public class FragmentCompositionPersistenceImpl
 	public FragmentComposition fetchByUuid_First(
 		String uuid, OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -254,11 +241,8 @@ public class FragmentCompositionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (FragmentComposition fragmentComposition :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -297,23 +281,15 @@ public class FragmentCompositionPersistenceImpl
 		FragmentComposition fragmentComposition = fetchByUUID_G(uuid, groupId);
 
 		if (fragmentComposition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCompositionException(sb.toString());
+			throw new NoSuchCompositionException(message);
 		}
 
 		return fragmentComposition;
@@ -496,19 +472,9 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -524,14 +490,8 @@ public class FragmentCompositionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -542,13 +502,8 @@ public class FragmentCompositionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (FragmentComposition fragmentComposition :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -678,16 +633,9 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -702,14 +650,8 @@ public class FragmentCompositionPersistenceImpl
 		long groupId,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -719,12 +661,8 @@ public class FragmentCompositionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (FragmentComposition fragmentComposition :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -858,16 +796,11 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByFragmentCollectionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {fragmentCollectionId}));
 	}
 
 	/**
@@ -882,14 +815,9 @@ public class FragmentCompositionPersistenceImpl
 		long fragmentCollectionId,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByFragmentCollectionId(
-			fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFragmentCollectionId.fetchFirst(
+			finderCache, new Object[] {fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -899,13 +827,8 @@ public class FragmentCompositionPersistenceImpl
 	 */
 	@Override
 	public void removeByFragmentCollectionId(long fragmentCollectionId) {
-		for (FragmentComposition fragmentComposition :
-				findByFragmentCollectionId(
-					fragmentCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByFragmentCollectionId.remove(
+			finderCache, new Object[] {fragmentCollectionId});
 	}
 
 	/**
@@ -1043,19 +966,10 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByG_FCI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId}));
 	}
 
 	/**
@@ -1071,14 +985,9 @@ public class FragmentCompositionPersistenceImpl
 		long groupId, long fragmentCollectionId,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByG_FCI(
-			groupId, fragmentCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1089,13 +998,8 @@ public class FragmentCompositionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_FCI(long groupId, long fragmentCollectionId) {
-		for (FragmentComposition fragmentComposition :
-				findByG_FCI(
-					groupId, fragmentCollectionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByG_FCI.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId});
 	}
 
 	/**
@@ -1137,23 +1041,16 @@ public class FragmentCompositionPersistenceImpl
 			groupId, fragmentCompositionKey);
 
 		if (fragmentComposition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", fragmentCompositionKey=");
-			sb.append(fragmentCompositionKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_FCK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, fragmentCompositionKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCompositionException(sb.toString());
+			throw new NoSuchCompositionException(message);
 		}
 
 		return fragmentComposition;
@@ -1351,22 +1248,10 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByG_FCI_LikeN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, name}));
 	}
 
 	/**
@@ -1383,14 +1268,9 @@ public class FragmentCompositionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByG_FCI_LikeN(
-			groupId, fragmentCollectionId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_LikeN.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1404,13 +1284,8 @@ public class FragmentCompositionPersistenceImpl
 	public void removeByG_FCI_LikeN(
 		long groupId, long fragmentCollectionId, String name) {
 
-		for (FragmentComposition fragmentComposition :
-				findByG_FCI_LikeN(
-					groupId, fragmentCollectionId, name, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name});
 	}
 
 	/**
@@ -1562,22 +1437,10 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByG_FCI_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, status}));
 	}
 
 	/**
@@ -1594,14 +1457,9 @@ public class FragmentCompositionPersistenceImpl
 		long groupId, long fragmentCollectionId, int status,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByG_FCI_S(
-			groupId, fragmentCollectionId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_FCI_S.fetchFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1615,13 +1473,8 @@ public class FragmentCompositionPersistenceImpl
 	public void removeByG_FCI_S(
 		long groupId, long fragmentCollectionId, int status) {
 
-		for (FragmentComposition fragmentComposition :
-				findByG_FCI_S(
-					groupId, fragmentCollectionId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByG_FCI_S.remove(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status});
 	}
 
 	/**
@@ -1779,25 +1632,10 @@ public class FragmentCompositionPersistenceImpl
 			return fragmentComposition;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", fragmentCollectionId=");
-		sb.append(fragmentCollectionId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchCompositionException(sb.toString());
+		throw new NoSuchCompositionException(
+			_collectionPersistenceFinderByG_FCI_LikeN_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, fragmentCollectionId, name, status}));
 	}
 
 	/**
@@ -1815,15 +1653,10 @@ public class FragmentCompositionPersistenceImpl
 		long groupId, long fragmentCollectionId, String name, int status,
 		OrderByComparator<FragmentComposition> orderByComparator) {
 
-		List<FragmentComposition> list = findByG_FCI_LikeN_S(
-			groupId, fragmentCollectionId, name, status, 0, 1,
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.fetchFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1838,13 +1671,9 @@ public class FragmentCompositionPersistenceImpl
 	public void removeByG_FCI_LikeN_S(
 		long groupId, long fragmentCollectionId, String name, int status) {
 
-		for (FragmentComposition fragmentComposition :
-				findByG_FCI_LikeN_S(
-					groupId, fragmentCollectionId, name, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(fragmentComposition);
-		}
+		_collectionPersistenceFinderByG_FCI_LikeN_S.remove(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status});
 	}
 
 	/**
@@ -1891,23 +1720,16 @@ public class FragmentCompositionPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (fragmentComposition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCompositionException(sb.toString());
+			throw new NoSuchCompositionException(message);
 		}
 
 		return fragmentComposition;
@@ -3375,4 +3197,4 @@ public class FragmentCompositionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1177089272
+// LIFERAY-SERVICE-BUILDER-HASH:1634446954

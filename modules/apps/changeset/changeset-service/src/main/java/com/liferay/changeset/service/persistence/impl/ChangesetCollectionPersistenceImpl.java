@@ -189,16 +189,9 @@ public class ChangesetCollectionPersistenceImpl
 			return changesetCollection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class ChangesetCollectionPersistenceImpl
 		long groupId,
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
-		List<ChangesetCollection> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -230,12 +217,8 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (ChangesetCollection changesetCollection :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(changesetCollection);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -354,16 +337,9 @@ public class ChangesetCollectionPersistenceImpl
 			return changesetCollection;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -378,14 +354,8 @@ public class ChangesetCollectionPersistenceImpl
 		long companyId,
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
-		List<ChangesetCollection> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -395,12 +365,8 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (ChangesetCollection changesetCollection :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(changesetCollection);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -524,19 +490,9 @@ public class ChangesetCollectionPersistenceImpl
 			return changesetCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -552,14 +508,8 @@ public class ChangesetCollectionPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
-		List<ChangesetCollection> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -570,13 +520,8 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (ChangesetCollection changesetCollection :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(changesetCollection);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			finderCache, new Object[] {groupId, userId});
 	}
 
 	/**
@@ -611,23 +556,15 @@ public class ChangesetCollectionPersistenceImpl
 		ChangesetCollection changesetCollection = fetchByG_N(groupId, name);
 
 		if (changesetCollection == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCollectionException(sb.toString());
+			throw new NoSuchCollectionException(message);
 		}
 
 		return changesetCollection;
@@ -799,19 +736,9 @@ public class ChangesetCollectionPersistenceImpl
 			return changesetCollection;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchCollectionException(sb.toString());
+		throw new NoSuchCollectionException(
+			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
 	}
 
 	/**
@@ -827,14 +754,8 @@ public class ChangesetCollectionPersistenceImpl
 		long companyId, String name,
 		OrderByComparator<ChangesetCollection> orderByComparator) {
 
-		List<ChangesetCollection> list = findByC_N(
-			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_N.fetchFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -845,13 +766,8 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_N(long companyId, String name) {
-		for (ChangesetCollection changesetCollection :
-				findByC_N(
-					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(changesetCollection);
-		}
+		_collectionPersistenceFinderByC_N.remove(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -1654,4 +1570,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-70109011
+// LIFERAY-SERVICE-BUILDER-HASH:-1350835519

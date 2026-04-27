@@ -205,16 +205,9 @@ public class SegmentsEntryRelPersistenceImpl
 			return segmentsEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("segmentsEntryId=");
-		sb.append(segmentsEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
+		throw new NoSuchEntryRelException(
+			_collectionPersistenceFinderBySegmentsEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {segmentsEntryId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class SegmentsEntryRelPersistenceImpl
 		long segmentsEntryId,
 		OrderByComparator<SegmentsEntryRel> orderByComparator) {
 
-		List<SegmentsEntryRel> list = findBySegmentsEntryId(
-			segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsEntryId.fetchFirst(
+			finderCache, new Object[] {segmentsEntryId}, orderByComparator);
 	}
 
 	/**
@@ -246,13 +233,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsEntryId(long segmentsEntryId) {
-		for (SegmentsEntryRel segmentsEntryRel :
-				findBySegmentsEntryId(
-					segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntryRel);
-		}
+		_collectionPersistenceFinderBySegmentsEntryId.remove(
+			finderCache, new Object[] {segmentsEntryId});
 	}
 
 	/**
@@ -387,19 +369,9 @@ public class SegmentsEntryRelPersistenceImpl
 			return segmentsEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
+		throw new NoSuchEntryRelException(
+			_collectionPersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -415,14 +387,9 @@ public class SegmentsEntryRelPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<SegmentsEntryRel> orderByComparator) {
 
-		List<SegmentsEntryRel> list = findByCN_CPK(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCN_CPK.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -433,13 +400,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCN_CPK(long classNameId, long classPK) {
-		for (SegmentsEntryRel segmentsEntryRel :
-				findByCN_CPK(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntryRel);
-		}
+		_collectionPersistenceFinderByCN_CPK.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -583,22 +545,10 @@ public class SegmentsEntryRelPersistenceImpl
 			return segmentsEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchEntryRelException(sb.toString());
+		throw new NoSuchEntryRelException(
+			_collectionPersistenceFinderByG_CN_CPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, classPK}));
 	}
 
 	/**
@@ -615,14 +565,9 @@ public class SegmentsEntryRelPersistenceImpl
 		long groupId, long classNameId, long classPK,
 		OrderByComparator<SegmentsEntryRel> orderByComparator) {
 
-		List<SegmentsEntryRel> list = findByG_CN_CPK(
-			groupId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_CN_CPK.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -634,13 +579,8 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByG_CN_CPK(long groupId, long classNameId, long classPK) {
-		for (SegmentsEntryRel segmentsEntryRel :
-				findByG_CN_CPK(
-					groupId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsEntryRel);
-		}
+		_collectionPersistenceFinderByG_CN_CPK.remove(
+			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
 	/**
@@ -684,26 +624,16 @@ public class SegmentsEntryRelPersistenceImpl
 			segmentsEntryId, classNameId, classPK);
 
 		if (segmentsEntryRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("segmentsEntryId=");
-			sb.append(segmentsEntryId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_CN_CPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {segmentsEntryId, classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryRelException(sb.toString());
+			throw new NoSuchEntryRelException(message);
 		}
 
 		return segmentsEntryRel;
@@ -1826,4 +1756,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:130594216
+// LIFERAY-SERVICE-BUILDER-HASH:-500465876

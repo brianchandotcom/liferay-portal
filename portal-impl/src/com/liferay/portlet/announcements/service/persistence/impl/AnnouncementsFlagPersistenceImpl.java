@@ -195,16 +195,9 @@ public class AnnouncementsFlagPersistenceImpl
 			return announcementsFlag;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFlagException(sb.toString());
+		throw new NoSuchFlagException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -219,14 +212,9 @@ public class AnnouncementsFlagPersistenceImpl
 		long companyId,
 		OrderByComparator<AnnouncementsFlag> orderByComparator) {
 
-		List<AnnouncementsFlag> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -236,12 +224,8 @@ public class AnnouncementsFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (AnnouncementsFlag announcementsFlag :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(announcementsFlag);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -370,16 +354,9 @@ public class AnnouncementsFlagPersistenceImpl
 			return announcementsFlag;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("entryId=");
-		sb.append(entryId);
-
-		sb.append("}");
-
-		throw new NoSuchFlagException(sb.toString());
+		throw new NoSuchFlagException(
+			_collectionPersistenceFinderByEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {entryId}));
 	}
 
 	/**
@@ -393,14 +370,9 @@ public class AnnouncementsFlagPersistenceImpl
 	public AnnouncementsFlag fetchByEntryId_First(
 		long entryId, OrderByComparator<AnnouncementsFlag> orderByComparator) {
 
-		List<AnnouncementsFlag> list = findByEntryId(
-			entryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByEntryId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {entryId},
+			orderByComparator);
 	}
 
 	/**
@@ -410,12 +382,8 @@ public class AnnouncementsFlagPersistenceImpl
 	 */
 	@Override
 	public void removeByEntryId(long entryId) {
-		for (AnnouncementsFlag announcementsFlag :
-				findByEntryId(
-					entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(announcementsFlag);
-		}
+		_collectionPersistenceFinderByEntryId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {entryId});
 	}
 
 	/**
@@ -456,26 +424,16 @@ public class AnnouncementsFlagPersistenceImpl
 			userId, entryId, value);
 
 		if (announcementsFlag == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", entryId=");
-			sb.append(entryId);
-
-			sb.append(", value=");
-			sb.append(value);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_E_V.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, entryId, value});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFlagException(sb.toString());
+			throw new NoSuchFlagException(message);
 		}
 
 		return announcementsFlag;
@@ -1497,4 +1455,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1211316542
+// LIFERAY-SERVICE-BUILDER-HASH:-67516279

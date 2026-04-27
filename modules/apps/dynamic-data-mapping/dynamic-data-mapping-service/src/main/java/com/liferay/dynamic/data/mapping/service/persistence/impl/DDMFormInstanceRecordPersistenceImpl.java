@@ -206,16 +206,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -230,14 +223,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 		String uuid,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -247,11 +234,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -291,23 +275,15 @@ public class DDMFormInstanceRecordPersistenceImpl
 			uuid, groupId);
 
 		if (ddmFormInstanceRecord == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFormInstanceRecordException(sb.toString());
+			throw new NoSuchFormInstanceRecordException(message);
 		}
 
 		return ddmFormInstanceRecord;
@@ -493,19 +469,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -521,14 +487,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -539,13 +499,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -675,16 +630,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -699,14 +647,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 		long companyId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -716,12 +658,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -853,16 +791,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByFormInstanceId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {formInstanceId}));
 	}
 
 	/**
@@ -877,14 +808,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 		long formInstanceId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByFormInstanceId(
-			formInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFormInstanceId.fetchFirst(
+			finderCache, new Object[] {formInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -894,13 +819,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByFormInstanceId(long formInstanceId) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByFormInstanceId(
-					formInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByFormInstanceId.remove(
+			finderCache, new Object[] {formInstanceId});
 	}
 
 	/**
@@ -1037,19 +957,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByU_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, formInstanceId}));
 	}
 
 	/**
@@ -1065,14 +976,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		long userId, long formInstanceId,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByU_F(
-			userId, formInstanceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_F.fetchFirst(
+			finderCache, new Object[] {userId, formInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -1083,13 +989,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByU_F(long userId, long formInstanceId) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByU_F(
-					userId, formInstanceId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByU_F.remove(
+			finderCache, new Object[] {userId, formInstanceId});
 	}
 
 	/**
@@ -1229,19 +1130,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("formInstanceId=");
-		sb.append(formInstanceId);
-
-		sb.append(", formInstanceVersion=");
-		sb.append(formInstanceVersion);
-
-		sb.append("}");
-
-		throw new NoSuchFormInstanceRecordException(sb.toString());
+		throw new NoSuchFormInstanceRecordException(
+			_collectionPersistenceFinderByF_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {formInstanceId, formInstanceVersion}));
 	}
 
 	/**
@@ -1257,14 +1149,9 @@ public class DDMFormInstanceRecordPersistenceImpl
 		long formInstanceId, String formInstanceVersion,
 		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
 
-		List<DDMFormInstanceRecord> list = findByF_F(
-			formInstanceId, formInstanceVersion, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByF_F.fetchFirst(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -1275,13 +1162,8 @@ public class DDMFormInstanceRecordPersistenceImpl
 	 */
 	@Override
 	public void removeByF_F(long formInstanceId, String formInstanceVersion) {
-		for (DDMFormInstanceRecord ddmFormInstanceRecord :
-				findByF_F(
-					formInstanceId, formInstanceVersion, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmFormInstanceRecord);
-		}
+		_collectionPersistenceFinderByF_F.remove(
+			finderCache, new Object[] {formInstanceId, formInstanceVersion});
 	}
 
 	/**
@@ -2484,4 +2366,4 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-404553808
+// LIFERAY-SERVICE-BUILDER-HASH:250389299

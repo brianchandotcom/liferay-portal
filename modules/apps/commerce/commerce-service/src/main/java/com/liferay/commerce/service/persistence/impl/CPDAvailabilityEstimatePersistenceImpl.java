@@ -192,16 +192,9 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			return cpdAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
+		throw new NoSuchCPDAvailabilityEstimateException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -216,14 +209,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		String uuid,
 		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
 
-		List<CPDAvailabilityEstimate> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -233,11 +220,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cpdAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -364,19 +348,9 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			return cpdAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
+		throw new NoSuchCPDAvailabilityEstimateException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -392,14 +366,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
 
-		List<CPDAvailabilityEstimate> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -410,13 +378,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpdAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -546,16 +509,11 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			return cpdAvailabilityEstimate;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceAvailabilityEstimateId=");
-		sb.append(commerceAvailabilityEstimateId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
+		throw new NoSuchCPDAvailabilityEstimateException(
+			_collectionPersistenceFinderByCommerceAvailabilityEstimateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceAvailabilityEstimateId}));
 	}
 
 	/**
@@ -570,15 +528,10 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		long commerceAvailabilityEstimateId,
 		OrderByComparator<CPDAvailabilityEstimate> orderByComparator) {
 
-		List<CPDAvailabilityEstimate> list =
-			findByCommerceAvailabilityEstimateId(
-				commerceAvailabilityEstimateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceAvailabilityEstimateId.
+			fetchFirst(
+				finderCache, new Object[] {commerceAvailabilityEstimateId},
+				orderByComparator);
 	}
 
 	/**
@@ -590,13 +543,8 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	public void removeByCommerceAvailabilityEstimateId(
 		long commerceAvailabilityEstimateId) {
 
-		for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-				findByCommerceAvailabilityEstimateId(
-					commerceAvailabilityEstimateId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(cpdAvailabilityEstimate);
-		}
+		_collectionPersistenceFinderByCommerceAvailabilityEstimateId.remove(
+			finderCache, new Object[] {commerceAvailabilityEstimateId});
 	}
 
 	/**
@@ -632,20 +580,15 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			CProductId);
 
 		if (cpdAvailabilityEstimate == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CProductId=");
-			sb.append(CProductId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCProductId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDAvailabilityEstimateException(sb.toString());
+			throw new NoSuchCPDAvailabilityEstimateException(message);
 		}
 
 		return cpdAvailabilityEstimate;
@@ -1512,4 +1455,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1386387702
+// LIFERAY-SERVICE-BUILDER-HASH:1909024412

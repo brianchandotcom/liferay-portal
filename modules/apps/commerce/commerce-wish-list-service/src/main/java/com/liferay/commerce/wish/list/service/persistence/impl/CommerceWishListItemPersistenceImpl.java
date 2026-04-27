@@ -193,16 +193,11 @@ public class CommerceWishListItemPersistenceImpl
 			return commerceWishListItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
+		throw new NoSuchWishListItemException(
+			_collectionPersistenceFinderByCommerceWishListId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceWishListId}));
 	}
 
 	/**
@@ -217,14 +212,8 @@ public class CommerceWishListItemPersistenceImpl
 		long commerceWishListId,
 		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
-		List<CommerceWishListItem> list = findByCommerceWishListId(
-			commerceWishListId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceWishListId.fetchFirst(
+			finderCache, new Object[] {commerceWishListId}, orderByComparator);
 	}
 
 	/**
@@ -234,13 +223,8 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceWishListId(long commerceWishListId) {
-		for (CommerceWishListItem commerceWishListItem :
-				findByCommerceWishListId(
-					commerceWishListId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceWishListItem);
-		}
+		_collectionPersistenceFinderByCommerceWishListId.remove(
+			finderCache, new Object[] {commerceWishListId});
 	}
 
 	/**
@@ -362,16 +346,9 @@ public class CommerceWishListItemPersistenceImpl
 			return commerceWishListItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
+		throw new NoSuchWishListItemException(
+			_collectionPersistenceFinderByCPInstanceUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceUuid}));
 	}
 
 	/**
@@ -386,14 +363,8 @@ public class CommerceWishListItemPersistenceImpl
 		String CPInstanceUuid,
 		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
-		List<CommerceWishListItem> list = findByCPInstanceUuid(
-			CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPInstanceUuid.fetchFirst(
+			finderCache, new Object[] {CPInstanceUuid}, orderByComparator);
 	}
 
 	/**
@@ -403,13 +374,8 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Override
 	public void removeByCPInstanceUuid(String CPInstanceUuid) {
-		for (CommerceWishListItem commerceWishListItem :
-				findByCPInstanceUuid(
-					CPInstanceUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceWishListItem);
-		}
+		_collectionPersistenceFinderByCPInstanceUuid.remove(
+			finderCache, new Object[] {CPInstanceUuid});
 	}
 
 	/**
@@ -529,16 +495,9 @@ public class CommerceWishListItemPersistenceImpl
 			return commerceWishListItem;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
+		throw new NoSuchWishListItemException(
+			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
 	}
 
 	/**
@@ -553,14 +512,8 @@ public class CommerceWishListItemPersistenceImpl
 		long CProductId,
 		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
-		List<CommerceWishListItem> list = findByCProductId(
-			CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCProductId.fetchFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -570,12 +523,8 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Override
 	public void removeByCProductId(long CProductId) {
-		for (CommerceWishListItem commerceWishListItem :
-				findByCProductId(
-					CProductId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishListItem);
-		}
+		_collectionPersistenceFinderByCProductId.remove(
+			finderCache, new Object[] {CProductId});
 	}
 
 	/**
@@ -705,19 +654,10 @@ public class CommerceWishListItemPersistenceImpl
 			return commerceWishListItem;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append(", CPInstanceUuid=");
-		sb.append(CPInstanceUuid);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
+		throw new NoSuchWishListItemException(
+			_collectionPersistenceFinderByCW_CPI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {commerceWishListId, CPInstanceUuid}));
 	}
 
 	/**
@@ -733,14 +673,9 @@ public class CommerceWishListItemPersistenceImpl
 		long commerceWishListId, String CPInstanceUuid,
 		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
-		List<CommerceWishListItem> list = findByCW_CPI(
-			commerceWishListId, CPInstanceUuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCW_CPI.fetchFirst(
+			finderCache, new Object[] {commerceWishListId, CPInstanceUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -751,13 +686,8 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Override
 	public void removeByCW_CPI(long commerceWishListId, String CPInstanceUuid) {
-		for (CommerceWishListItem commerceWishListItem :
-				findByCW_CPI(
-					commerceWishListId, CPInstanceUuid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishListItem);
-		}
+		_collectionPersistenceFinderByCW_CPI.remove(
+			finderCache, new Object[] {commerceWishListId, CPInstanceUuid});
 	}
 
 	/**
@@ -887,19 +817,10 @@ public class CommerceWishListItemPersistenceImpl
 			return commerceWishListItem;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceWishListId=");
-		sb.append(commerceWishListId);
-
-		sb.append(", CProductId=");
-		sb.append(CProductId);
-
-		sb.append("}");
-
-		throw new NoSuchWishListItemException(sb.toString());
+		throw new NoSuchWishListItemException(
+			_collectionPersistenceFinderByCW_CP.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {commerceWishListId, CProductId}));
 	}
 
 	/**
@@ -915,14 +836,9 @@ public class CommerceWishListItemPersistenceImpl
 		long commerceWishListId, long CProductId,
 		OrderByComparator<CommerceWishListItem> orderByComparator) {
 
-		List<CommerceWishListItem> list = findByCW_CP(
-			commerceWishListId, CProductId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCW_CP.fetchFirst(
+			finderCache, new Object[] {commerceWishListId, CProductId},
+			orderByComparator);
 	}
 
 	/**
@@ -933,13 +849,8 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Override
 	public void removeByCW_CP(long commerceWishListId, long CProductId) {
-		for (CommerceWishListItem commerceWishListItem :
-				findByCW_CP(
-					commerceWishListId, CProductId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceWishListItem);
-		}
+		_collectionPersistenceFinderByCW_CP.remove(
+			finderCache, new Object[] {commerceWishListId, CProductId});
 	}
 
 	/**
@@ -977,26 +888,18 @@ public class CommerceWishListItemPersistenceImpl
 			commerceWishListId, CPInstanceUuid, CProductId);
 
 		if (commerceWishListItem == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("commerceWishListId=");
-			sb.append(commerceWishListId);
-
-			sb.append(", CPInstanceUuid=");
-			sb.append(CPInstanceUuid);
-
-			sb.append(", CProductId=");
-			sb.append(CProductId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCW_CPI_CP.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						commerceWishListId, CPInstanceUuid, CProductId
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchWishListItemException(sb.toString());
+			throw new NoSuchWishListItemException(message);
 		}
 
 		return commerceWishListItem;
@@ -1922,4 +1825,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:390172959
+// LIFERAY-SERVICE-BUILDER-HASH:-876081336

@@ -198,16 +198,9 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			return commerceShippingOptionAccountEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("accountEntryId=");
-		sb.append(accountEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingOptionAccountEntryRelException(sb.toString());
+		throw new NoSuchShippingOptionAccountEntryRelException(
+			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
 	}
 
 	/**
@@ -223,14 +216,8 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		OrderByComparator<CommerceShippingOptionAccountEntryRel>
 			orderByComparator) {
 
-		List<CommerceShippingOptionAccountEntryRel> list = findByAccountEntryId(
-			accountEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAccountEntryId.fetchFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -240,14 +227,8 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByAccountEntryId(long accountEntryId) {
-		for (CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel :
-					findByAccountEntryId(
-						accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(commerceShippingOptionAccountEntryRel);
-		}
+		_collectionPersistenceFinderByAccountEntryId.remove(
+			finderCache, new Object[] {accountEntryId});
 	}
 
 	/**
@@ -374,16 +355,11 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			return commerceShippingOptionAccountEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingOptionAccountEntryRelException(sb.toString());
+		throw new NoSuchShippingOptionAccountEntryRelException(
+			_collectionPersistenceFinderByCommerceChannelId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceChannelId}));
 	}
 
 	/**
@@ -399,14 +375,8 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		OrderByComparator<CommerceShippingOptionAccountEntryRel>
 			orderByComparator) {
 
-		List<CommerceShippingOptionAccountEntryRel> list =
-			findByCommerceChannelId(commerceChannelId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceChannelId.fetchFirst(
+			finderCache, new Object[] {commerceChannelId}, orderByComparator);
 	}
 
 	/**
@@ -416,14 +386,8 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceChannelId(long commerceChannelId) {
-		for (CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel :
-					findByCommerceChannelId(
-						commerceChannelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null)) {
-
-			remove(commerceShippingOptionAccountEntryRel);
-		}
+		_collectionPersistenceFinderByCommerceChannelId.remove(
+			finderCache, new Object[] {commerceChannelId});
 	}
 
 	/**
@@ -557,16 +521,11 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			return commerceShippingOptionAccountEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingOptionKey=");
-		sb.append(commerceShippingOptionKey);
-
-		sb.append("}");
-
-		throw new NoSuchShippingOptionAccountEntryRelException(sb.toString());
+		throw new NoSuchShippingOptionAccountEntryRelException(
+			_collectionPersistenceFinderByCommerceShippingOptionKey.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceShippingOptionKey}));
 	}
 
 	/**
@@ -583,15 +542,10 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceShippingOptionAccountEntryRel>
 				orderByComparator) {
 
-		List<CommerceShippingOptionAccountEntryRel> list =
-			findByCommerceShippingOptionKey(
-				commerceShippingOptionKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceShippingOptionKey.
+			fetchFirst(
+				finderCache, new Object[] {commerceShippingOptionKey},
+				orderByComparator);
 	}
 
 	/**
@@ -603,14 +557,8 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	public void removeByCommerceShippingOptionKey(
 		String commerceShippingOptionKey) {
 
-		for (CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel :
-					findByCommerceShippingOptionKey(
-						commerceShippingOptionKey, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingOptionAccountEntryRel);
-		}
+		_collectionPersistenceFinderByCommerceShippingOptionKey.remove(
+			finderCache, new Object[] {commerceShippingOptionKey});
 	}
 
 	/**
@@ -649,24 +597,16 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				accountEntryId, commerceChannelId);
 
 		if (commerceShippingOptionAccountEntryRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("accountEntryId=");
-			sb.append(accountEntryId);
-
-			sb.append(", commerceChannelId=");
-			sb.append(commerceChannelId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {accountEntryId, commerceChannelId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchShippingOptionAccountEntryRelException(
-				sb.toString());
+			throw new NoSuchShippingOptionAccountEntryRelException(message);
 		}
 
 		return commerceShippingOptionAccountEntryRel;
@@ -1597,4 +1537,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1522337570
+// LIFERAY-SERVICE-BUILDER-HASH:-230281124

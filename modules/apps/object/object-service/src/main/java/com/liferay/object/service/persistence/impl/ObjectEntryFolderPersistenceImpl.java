@@ -199,16 +199,9 @@ public class ObjectEntryFolderPersistenceImpl
 			return objectEntryFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
+		throw new NoSuchObjectEntryFolderException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -222,14 +215,8 @@ public class ObjectEntryFolderPersistenceImpl
 	public ObjectEntryFolder fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectEntryFolder> orderByComparator) {
 
-		List<ObjectEntryFolder> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -239,11 +226,8 @@ public class ObjectEntryFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectEntryFolder objectEntryFolder :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectEntryFolder);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -277,23 +261,15 @@ public class ObjectEntryFolderPersistenceImpl
 		ObjectEntryFolder objectEntryFolder = fetchByUUID_G(uuid, groupId);
 
 		if (objectEntryFolder == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectEntryFolderException(sb.toString());
+			throw new NoSuchObjectEntryFolderException(message);
 		}
 
 		return objectEntryFolder;
@@ -466,19 +442,9 @@ public class ObjectEntryFolderPersistenceImpl
 			return objectEntryFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
+		throw new NoSuchObjectEntryFolderException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -494,14 +460,8 @@ public class ObjectEntryFolderPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectEntryFolder> orderByComparator) {
 
-		List<ObjectEntryFolder> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -512,13 +472,8 @@ public class ObjectEntryFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectEntryFolder objectEntryFolder :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectEntryFolder);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -556,26 +511,16 @@ public class ObjectEntryFolderPersistenceImpl
 			externalReferenceCode, groupId, companyId);
 
 		if (objectEntryFolder == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchObjectEntryFolderException(sb.toString());
+			throw new NoSuchObjectEntryFolderException(message);
 		}
 
 		return objectEntryFolder;
@@ -774,22 +719,10 @@ public class ObjectEntryFolderPersistenceImpl
 			return objectEntryFolder;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentObjectEntryFolderId=");
-		sb.append(parentObjectEntryFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
+		throw new NoSuchObjectEntryFolderException(
+			_collectionPersistenceFinderByG_C_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, companyId, parentObjectEntryFolderId}));
 	}
 
 	/**
@@ -806,15 +739,10 @@ public class ObjectEntryFolderPersistenceImpl
 		long groupId, long companyId, long parentObjectEntryFolderId,
 		OrderByComparator<ObjectEntryFolder> orderByComparator) {
 
-		List<ObjectEntryFolder> list = findByG_C_P(
-			groupId, companyId, parentObjectEntryFolderId, 0, 1,
+		return _collectionPersistenceFinderByG_C_P.fetchFirst(
+			finderCache,
+			new Object[] {groupId, companyId, parentObjectEntryFolderId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -992,13 +920,9 @@ public class ObjectEntryFolderPersistenceImpl
 	public void removeByG_C_P(
 		long groupId, long companyId, long parentObjectEntryFolderId) {
 
-		for (ObjectEntryFolder objectEntryFolder :
-				findByG_C_P(
-					groupId, companyId, parentObjectEntryFolderId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectEntryFolder);
-		}
+		_collectionPersistenceFinderByG_C_P.remove(
+			finderCache,
+			new Object[] {groupId, companyId, parentObjectEntryFolderId});
 	}
 
 	/**
@@ -1215,22 +1139,10 @@ public class ObjectEntryFolderPersistenceImpl
 			return objectEntryFolder;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", treePathLIKE");
-		sb.append(treePath);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
+		throw new NoSuchObjectEntryFolderException(
+			_collectionPersistenceFinderByG_C_LikeT.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, companyId, treePath}));
 	}
 
 	/**
@@ -1247,14 +1159,9 @@ public class ObjectEntryFolderPersistenceImpl
 		long groupId, long companyId, String treePath,
 		OrderByComparator<ObjectEntryFolder> orderByComparator) {
 
-		List<ObjectEntryFolder> list = findByG_C_LikeT(
-			groupId, companyId, treePath, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_LikeT.fetchFirst(
+			finderCache, new Object[] {groupId, companyId, treePath},
+			orderByComparator);
 	}
 
 	/**
@@ -1443,13 +1350,8 @@ public class ObjectEntryFolderPersistenceImpl
 	public void removeByG_C_LikeT(
 		long groupId, long companyId, String treePath) {
 
-		for (ObjectEntryFolder objectEntryFolder :
-				findByG_C_LikeT(
-					groupId, companyId, treePath, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(objectEntryFolder);
-		}
+		_collectionPersistenceFinderByG_C_LikeT.remove(
+			finderCache, new Object[] {groupId, companyId, treePath});
 	}
 
 	/**
@@ -1700,28 +1602,12 @@ public class ObjectEntryFolderPersistenceImpl
 			return objectEntryFolder;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentObjectEntryFolderId=");
-		sb.append(parentObjectEntryFolderId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", status!=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchObjectEntryFolderException(sb.toString());
+		throw new NoSuchObjectEntryFolderException(
+			_collectionPersistenceFinderByG_C_P_N_NotS.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, companyId, parentObjectEntryFolderId, name, status
+				}));
 	}
 
 	/**
@@ -1741,15 +1627,12 @@ public class ObjectEntryFolderPersistenceImpl
 		String name, int status,
 		OrderByComparator<ObjectEntryFolder> orderByComparator) {
 
-		List<ObjectEntryFolder> list = findByG_C_P_N_NotS(
-			groupId, companyId, parentObjectEntryFolderId, name, status, 0, 1,
+		return _collectionPersistenceFinderByG_C_P_N_NotS.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, companyId, parentObjectEntryFolderId, name, status
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1960,13 +1843,11 @@ public class ObjectEntryFolderPersistenceImpl
 		long groupId, long companyId, long parentObjectEntryFolderId,
 		String name, int status) {
 
-		for (ObjectEntryFolder objectEntryFolder :
-				findByG_C_P_N_NotS(
-					groupId, companyId, parentObjectEntryFolderId, name, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectEntryFolder);
-		}
+		_collectionPersistenceFinderByG_C_P_N_NotS.remove(
+			finderCache,
+			new Object[] {
+				groupId, companyId, parentObjectEntryFolderId, name, status
+			});
 	}
 
 	/**
@@ -3082,4 +2963,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:72187581
+// LIFERAY-SERVICE-BUILDER-HASH:-2044014876

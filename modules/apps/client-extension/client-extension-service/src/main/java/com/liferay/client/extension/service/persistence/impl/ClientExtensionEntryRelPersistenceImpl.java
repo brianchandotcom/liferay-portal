@@ -214,16 +214,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -238,14 +231,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 		String uuid,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -255,11 +242,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -299,23 +283,15 @@ public class ClientExtensionEntryRelPersistenceImpl
 			uuid, groupId);
 
 		if (clientExtensionEntryRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchClientExtensionEntryRelException(sb.toString());
+			throw new NoSuchClientExtensionEntryRelException(message);
 		}
 
 		return clientExtensionEntryRel;
@@ -501,19 +477,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -529,14 +495,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -547,13 +507,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -682,16 +637,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -706,14 +654,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 		String type,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByType(
-			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -723,11 +665,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByType(String type) {
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByType.remove(
+			finderCache, new Object[] {type});
 	}
 
 	/**
@@ -867,19 +806,10 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", cetExternalReferenceCode=");
-		sb.append(cetExternalReferenceCode);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByC_CETERC.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, cetExternalReferenceCode}));
 	}
 
 	/**
@@ -895,14 +825,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		long companyId, String cetExternalReferenceCode,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByC_CETERC(
-			companyId, cetExternalReferenceCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CETERC.fetchFirst(
+			finderCache, new Object[] {companyId, cetExternalReferenceCode},
+			orderByComparator);
 	}
 
 	/**
@@ -915,13 +840,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	public void removeByC_CETERC(
 		long companyId, String cetExternalReferenceCode) {
 
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByC_CETERC(
-					companyId, cetExternalReferenceCode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByC_CETERC.remove(
+			finderCache, new Object[] {companyId, cetExternalReferenceCode});
 	}
 
 	/**
@@ -1062,19 +982,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -1090,14 +1000,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1108,13 +1013,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1258,22 +1158,10 @@ public class ClientExtensionEntryRelPersistenceImpl
 			return clientExtensionEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchClientExtensionEntryRelException(sb.toString());
+		throw new NoSuchClientExtensionEntryRelException(
+			_collectionPersistenceFinderByC_C_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, classPK, type}));
 	}
 
 	/**
@@ -1290,14 +1178,9 @@ public class ClientExtensionEntryRelPersistenceImpl
 		long classNameId, long classPK, String type,
 		OrderByComparator<ClientExtensionEntryRel> orderByComparator) {
 
-		List<ClientExtensionEntryRel> list = findByC_C_T(
-			classNameId, classPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_T.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1309,13 +1192,8 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_T(long classNameId, long classPK, String type) {
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				findByC_C_T(
-					classNameId, classPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(clientExtensionEntryRel);
-		}
+		_collectionPersistenceFinderByC_C_T.remove(
+			finderCache, new Object[] {classNameId, classPK, type});
 	}
 
 	/**
@@ -1358,23 +1236,16 @@ public class ClientExtensionEntryRelPersistenceImpl
 			externalReferenceCode, groupId);
 
 		if (clientExtensionEntryRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchClientExtensionEntryRelException(sb.toString());
+			throw new NoSuchClientExtensionEntryRelException(message);
 		}
 
 		return clientExtensionEntryRel;
@@ -2756,4 +2627,4 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1093657785
+// LIFERAY-SERVICE-BUILDER-HASH:-1518773606

@@ -193,19 +193,10 @@ public class ViewCountEntryPersistenceImpl
 			return viewCountEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId}));
 	}
 
 	/**
@@ -221,14 +212,9 @@ public class ViewCountEntryPersistenceImpl
 		long companyId, long classNameId,
 		OrderByComparator<ViewCountEntry> orderByComparator) {
 
-		List<ViewCountEntry> list = findByC_CN(
-			companyId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_CN.fetchFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -239,13 +225,8 @@ public class ViewCountEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_CN(long companyId, long classNameId) {
-		for (ViewCountEntry viewCountEntry :
-				findByC_CN(
-					companyId, classNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(viewCountEntry);
-		}
+		_collectionPersistenceFinderByC_CN.remove(
+			finderCache, new Object[] {companyId, classNameId});
 	}
 
 	/**
@@ -890,4 +871,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1870188450
+// LIFERAY-SERVICE-BUILDER-HASH:-1790222448

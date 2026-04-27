@@ -200,16 +200,9 @@ public class DepotEntryPinPersistenceImpl
 			return depotEntryPin;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
+		throw new NoSuchEntryPinException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,13 +216,8 @@ public class DepotEntryPinPersistenceImpl
 	public DepotEntryPin fetchByUuid_First(
 		String uuid, OrderByComparator<DepotEntryPin> orderByComparator) {
 
-		List<DepotEntryPin> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -239,11 +227,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DepotEntryPin depotEntryPin :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryPin);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -282,23 +267,15 @@ public class DepotEntryPinPersistenceImpl
 		DepotEntryPin depotEntryPin = fetchByUUID_G(uuid, groupId);
 
 		if (depotEntryPin == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryPinException(sb.toString());
+			throw new NoSuchEntryPinException(message);
 		}
 
 		return depotEntryPin;
@@ -481,19 +458,9 @@ public class DepotEntryPinPersistenceImpl
 			return depotEntryPin;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
+		throw new NoSuchEntryPinException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -509,14 +476,8 @@ public class DepotEntryPinPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DepotEntryPin> orderByComparator) {
 
-		List<DepotEntryPin> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -527,13 +488,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DepotEntryPin depotEntryPin :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(depotEntryPin);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -659,16 +615,9 @@ public class DepotEntryPinPersistenceImpl
 			return depotEntryPin;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
+		throw new NoSuchEntryPinException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -682,14 +631,8 @@ public class DepotEntryPinPersistenceImpl
 	public DepotEntryPin fetchByUserId_First(
 		long userId, OrderByComparator<DepotEntryPin> orderByComparator) {
 
-		List<DepotEntryPin> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -699,12 +642,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (DepotEntryPin depotEntryPin :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryPin);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -834,16 +773,9 @@ public class DepotEntryPinPersistenceImpl
 			return depotEntryPin;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("depotEntryId=");
-		sb.append(depotEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryPinException(sb.toString());
+		throw new NoSuchEntryPinException(
+			_collectionPersistenceFinderByDepotEntryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {depotEntryId}));
 	}
 
 	/**
@@ -857,14 +789,8 @@ public class DepotEntryPinPersistenceImpl
 	public DepotEntryPin fetchByDepotEntryId_First(
 		long depotEntryId, OrderByComparator<DepotEntryPin> orderByComparator) {
 
-		List<DepotEntryPin> list = findByDepotEntryId(
-			depotEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDepotEntryId.fetchFirst(
+			finderCache, new Object[] {depotEntryId}, orderByComparator);
 	}
 
 	/**
@@ -874,12 +800,8 @@ public class DepotEntryPinPersistenceImpl
 	 */
 	@Override
 	public void removeByDepotEntryId(long depotEntryId) {
-		for (DepotEntryPin depotEntryPin :
-				findByDepotEntryId(
-					depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(depotEntryPin);
-		}
+		_collectionPersistenceFinderByDepotEntryId.remove(
+			finderCache, new Object[] {depotEntryId});
 	}
 
 	/**
@@ -918,23 +840,16 @@ public class DepotEntryPinPersistenceImpl
 		DepotEntryPin depotEntryPin = fetchByU_D(userId, depotEntryId);
 
 		if (depotEntryPin == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", depotEntryId=");
-			sb.append(depotEntryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_D.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, depotEntryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryPinException(sb.toString());
+			throw new NoSuchEntryPinException(message);
 		}
 
 		return depotEntryPin;
@@ -2064,4 +1979,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:892888751
+// LIFERAY-SERVICE-BUILDER-HASH:-1658334478

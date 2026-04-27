@@ -204,16 +204,9 @@ public class KaleoTransitionPersistenceImpl
 			return kaleoTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
+		throw new NoSuchTransitionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class KaleoTransitionPersistenceImpl
 	public KaleoTransition fetchByCompanyId_First(
 		long companyId, OrderByComparator<KaleoTransition> orderByComparator) {
 
-		List<KaleoTransition> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -244,12 +231,8 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KaleoTransition kaleoTransition :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoTransition);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -384,16 +367,11 @@ public class KaleoTransitionPersistenceImpl
 			return kaleoTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
+		throw new NoSuchTransitionException(
+			_collectionPersistenceFinderByKaleoDefinitionVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoDefinitionVersionId}));
 	}
 
 	/**
@@ -408,14 +386,10 @@ public class KaleoTransitionPersistenceImpl
 		long kaleoDefinitionVersionId,
 		OrderByComparator<KaleoTransition> orderByComparator) {
 
-		List<KaleoTransition> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.
+			fetchFirst(
+				finderCache, new Object[] {kaleoDefinitionVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -427,13 +401,8 @@ public class KaleoTransitionPersistenceImpl
 	public void removeByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId) {
 
-		for (KaleoTransition kaleoTransition :
-				findByKaleoDefinitionVersionId(
-					kaleoDefinitionVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoTransition);
-		}
+		_collectionPersistenceFinderByKaleoDefinitionVersionId.remove(
+			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
 	/**
@@ -563,16 +532,9 @@ public class KaleoTransitionPersistenceImpl
 			return kaleoTransition;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoNodeId=");
-		sb.append(kaleoNodeId);
-
-		sb.append("}");
-
-		throw new NoSuchTransitionException(sb.toString());
+		throw new NoSuchTransitionException(
+			_collectionPersistenceFinderByKaleoNodeId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId}));
 	}
 
 	/**
@@ -587,14 +549,8 @@ public class KaleoTransitionPersistenceImpl
 		long kaleoNodeId,
 		OrderByComparator<KaleoTransition> orderByComparator) {
 
-		List<KaleoTransition> list = findByKaleoNodeId(
-			kaleoNodeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoNodeId.fetchFirst(
+			finderCache, new Object[] {kaleoNodeId}, orderByComparator);
 	}
 
 	/**
@@ -604,12 +560,8 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Override
 	public void removeByKaleoNodeId(long kaleoNodeId) {
-		for (KaleoTransition kaleoTransition :
-				findByKaleoNodeId(
-					kaleoNodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoTransition);
-		}
+		_collectionPersistenceFinderByKaleoNodeId.remove(
+			finderCache, new Object[] {kaleoNodeId});
 	}
 
 	/**
@@ -648,23 +600,15 @@ public class KaleoTransitionPersistenceImpl
 		KaleoTransition kaleoTransition = fetchByKNI_N(kaleoNodeId, name);
 
 		if (kaleoTransition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("kaleoNodeId=");
-			sb.append(kaleoNodeId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKNI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTransitionException(sb.toString());
+			throw new NoSuchTransitionException(message);
 		}
 
 		return kaleoTransition;
@@ -753,23 +697,16 @@ public class KaleoTransitionPersistenceImpl
 			kaleoNodeId, defaultTransition);
 
 		if (kaleoTransition == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("kaleoNodeId=");
-			sb.append(kaleoNodeId);
-
-			sb.append(", defaultTransition=");
-			sb.append(defaultTransition);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKNI_DT.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoNodeId, defaultTransition});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTransitionException(sb.toString());
+			throw new NoSuchTransitionException(message);
 		}
 
 		return kaleoTransition;
@@ -1902,4 +1839,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:356779466
+// LIFERAY-SERVICE-BUILDER-HASH:-425830130

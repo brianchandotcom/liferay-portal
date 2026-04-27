@@ -210,16 +210,9 @@ public class CPDefinitionLocalizationPersistenceImpl
 			return cpDefinitionLocalization;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CPDefinitionId=");
-		sb.append(CPDefinitionId);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionLocalizationException(sb.toString());
+		throw new NoSuchCPDefinitionLocalizationException(
+			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
 	}
 
 	/**
@@ -234,14 +227,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 		long CPDefinitionId,
 		OrderByComparator<CPDefinitionLocalization> orderByComparator) {
 
-		List<CPDefinitionLocalization> list = findByCPDefinitionId(
-			CPDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCPDefinitionId.fetchFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -251,13 +238,8 @@ public class CPDefinitionLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByCPDefinitionId(long CPDefinitionId) {
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				findByCPDefinitionId(
-					CPDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinitionLocalization);
-		}
+		_collectionPersistenceFinderByCPDefinitionId.remove(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -298,23 +280,17 @@ public class CPDefinitionLocalizationPersistenceImpl
 			fetchByCPDefinitionId_LanguageId(CPDefinitionId, languageId);
 
 		if (cpDefinitionLocalization == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("CPDefinitionId=");
-			sb.append(CPDefinitionId);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCPDefinitionId_LanguageId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {CPDefinitionId, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPDefinitionLocalizationException(sb.toString());
+			throw new NoSuchCPDefinitionLocalizationException(message);
 		}
 
 		return cpDefinitionLocalization;
@@ -1432,4 +1408,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2108893359
+// LIFERAY-SERVICE-BUILDER-HASH:1568978782

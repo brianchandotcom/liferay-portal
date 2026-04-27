@@ -177,16 +177,9 @@ public class ListTypePersistenceImpl
 			return listType;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeException(sb.toString());
+		throw new NoSuchListTypeException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -200,13 +193,9 @@ public class ListTypePersistenceImpl
 	public ListType fetchByUuid_First(
 		String uuid, OrderByComparator<ListType> orderByComparator) {
 
-		List<ListType> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -216,11 +205,8 @@ public class ListTypePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ListType listType :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(listType);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -344,19 +330,9 @@ public class ListTypePersistenceImpl
 			return listType;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeException(sb.toString());
+		throw new NoSuchListTypeException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -372,14 +348,9 @@ public class ListTypePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ListType> orderByComparator) {
 
-		List<ListType> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -390,13 +361,8 @@ public class ListTypePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ListType listType :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listType);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -512,16 +478,9 @@ public class ListTypePersistenceImpl
 			return listType;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeException(sb.toString());
+		throw new NoSuchListTypeException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -535,14 +494,9 @@ public class ListTypePersistenceImpl
 	public ListType fetchByCompanyId_First(
 		long companyId, OrderByComparator<ListType> orderByComparator) {
 
-		List<ListType> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -552,12 +506,8 @@ public class ListTypePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (ListType listType :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(listType);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -680,19 +630,9 @@ public class ListTypePersistenceImpl
 			return listType;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchListTypeException(sb.toString());
+		throw new NoSuchListTypeException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
 	}
 
 	/**
@@ -708,14 +648,9 @@ public class ListTypePersistenceImpl
 		long companyId, String type,
 		OrderByComparator<ListType> orderByComparator) {
 
-		List<ListType> list = findByC_T(
-			companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -726,13 +661,8 @@ public class ListTypePersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, String type) {
-		for (ListType listType :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listType);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
 	/**
@@ -767,26 +697,16 @@ public class ListTypePersistenceImpl
 		ListType listType = fetchByC_N_T(companyId, name, type);
 
 		if (listType == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, name, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchListTypeException(sb.toString());
+			throw new NoSuchListTypeException(message);
 		}
 
 		return listType;
@@ -1611,4 +1531,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1632822882
+// LIFERAY-SERVICE-BUILDER-HASH:859101337

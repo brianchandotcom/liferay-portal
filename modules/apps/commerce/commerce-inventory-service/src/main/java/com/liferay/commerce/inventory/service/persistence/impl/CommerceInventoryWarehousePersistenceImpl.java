@@ -203,16 +203,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -227,14 +220,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -400,11 +387,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -608,19 +592,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -636,14 +610,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -819,13 +787,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1030,16 +993,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1054,14 +1010,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 		long companyId,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -1216,12 +1166,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -1409,19 +1355,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, active}));
 	}
 
 	/**
@@ -1437,14 +1373,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 		long companyId, boolean active,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByC_A(
-			companyId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, active}, orderByComparator);
 	}
 
 	/**
@@ -1607,13 +1537,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, boolean active) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByC_A(
-					companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, active});
 	}
 
 	/**
@@ -1813,19 +1738,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", countryTwoLettersISOCode=");
-		sb.append(countryTwoLettersISOCode);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, countryTwoLettersISOCode}));
 	}
 
 	/**
@@ -1841,14 +1757,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 		long companyId, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByC_C(
-			companyId, countryTwoLettersISOCode, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, countryTwoLettersISOCode},
+			orderByComparator);
 	}
 
 	/**
@@ -2029,13 +1940,8 @@ public class CommerceInventoryWarehousePersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, String countryTwoLettersISOCode) {
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByC_C(
-					companyId, countryTwoLettersISOCode, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, countryTwoLettersISOCode});
 	}
 
 	/**
@@ -2264,22 +2170,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 			return commerceInventoryWarehouse;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append(", countryTwoLettersISOCode=");
-		sb.append(countryTwoLettersISOCode);
-
-		sb.append("}");
-
-		throw new NoSuchInventoryWarehouseException(sb.toString());
+		throw new NoSuchInventoryWarehouseException(
+			_collectionPersistenceFinderByC_A_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, active, countryTwoLettersISOCode}));
 	}
 
 	/**
@@ -2296,15 +2190,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 		long companyId, boolean active, String countryTwoLettersISOCode,
 		OrderByComparator<CommerceInventoryWarehouse> orderByComparator) {
 
-		List<CommerceInventoryWarehouse> list = findByC_A_C(
-			companyId, active, countryTwoLettersISOCode, 0, 1,
+		return _collectionPersistenceFinderByC_A_C.fetchFirst(
+			finderCache,
+			new Object[] {companyId, active, countryTwoLettersISOCode},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2497,13 +2386,9 @@ public class CommerceInventoryWarehousePersistenceImpl
 	public void removeByC_A_C(
 		long companyId, boolean active, String countryTwoLettersISOCode) {
 
-		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
-				findByC_A_C(
-					companyId, active, countryTwoLettersISOCode,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceInventoryWarehouse);
-		}
+		_collectionPersistenceFinderByC_A_C.remove(
+			finderCache,
+			new Object[] {companyId, active, countryTwoLettersISOCode});
 	}
 
 	/**
@@ -2642,23 +2527,16 @@ public class CommerceInventoryWarehousePersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (commerceInventoryWarehouse == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchInventoryWarehouseException(sb.toString());
+			throw new NoSuchInventoryWarehouseException(message);
 		}
 
 		return commerceInventoryWarehouse;
@@ -3768,4 +3646,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1144060683
+// LIFERAY-SERVICE-BUILDER-HASH:1656481798

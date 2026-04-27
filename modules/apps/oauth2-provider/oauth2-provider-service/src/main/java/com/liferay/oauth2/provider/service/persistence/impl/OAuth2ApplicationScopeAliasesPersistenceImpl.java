@@ -190,16 +190,9 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			return oAuth2ApplicationScopeAliases;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(sb.toString());
+		throw new NoSuchOAuth2ApplicationScopeAliasesException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -214,14 +207,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		long companyId,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		List<OAuth2ApplicationScopeAliases> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -231,12 +218,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(oAuth2ApplicationScopeAliases);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -359,16 +342,11 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			return oAuth2ApplicationScopeAliases;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("oAuth2ApplicationId=");
-		sb.append(oAuth2ApplicationId);
-
-		sb.append("}");
-
-		throw new NoSuchOAuth2ApplicationScopeAliasesException(sb.toString());
+		throw new NoSuchOAuth2ApplicationScopeAliasesException(
+			_collectionPersistenceFinderByOAuth2ApplicationId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {oAuth2ApplicationId}));
 	}
 
 	/**
@@ -383,14 +361,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		long oAuth2ApplicationId,
 		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
 
-		List<OAuth2ApplicationScopeAliases> list = findByOAuth2ApplicationId(
-			oAuth2ApplicationId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByOAuth2ApplicationId.fetchFirst(
+			finderCache, new Object[] {oAuth2ApplicationId}, orderByComparator);
 	}
 
 	/**
@@ -400,13 +372,8 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Override
 	public void removeByOAuth2ApplicationId(long oAuth2ApplicationId) {
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				findByOAuth2ApplicationId(
-					oAuth2ApplicationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(oAuth2ApplicationScopeAliases);
-		}
+		_collectionPersistenceFinderByOAuth2ApplicationId.remove(
+			finderCache, new Object[] {oAuth2ApplicationId});
 	}
 
 	/**
@@ -1159,4 +1126,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:69274460
+// LIFERAY-SERVICE-BUILDER-HASH:-1885529468

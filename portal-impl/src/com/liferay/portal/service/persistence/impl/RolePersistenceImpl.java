@@ -211,16 +211,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -234,13 +227,9 @@ public class RolePersistenceImpl
 	public Role fetchByUuid_First(
 		String uuid, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -398,11 +387,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Role role :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -611,19 +597,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -639,14 +615,9 @@ public class RolePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -814,13 +785,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Role role :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1029,16 +995,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1052,13 +1011,9 @@ public class RolePersistenceImpl
 	public Role fetchByCompanyId_First(
 		long companyId, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1205,12 +1160,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (Role role :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1392,16 +1343,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByName.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
 	}
 
 	/**
@@ -1415,13 +1359,9 @@ public class RolePersistenceImpl
 	public Role fetchByName_First(
 		String name, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByName(name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByName.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name},
+			orderByComparator);
 	}
 
 	/**
@@ -1579,11 +1519,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByName(String name) {
-		for (Role role :
-				findByName(name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByName.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
 	/**
@@ -1780,16 +1717,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -1803,13 +1733,9 @@ public class RolePersistenceImpl
 	public Role fetchByType_First(
 		int type, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByType(type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -1954,11 +1880,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByType(int type) {
-		for (Role role :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByType.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
 	/**
@@ -2141,16 +2064,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("subtype=");
-		sb.append(subtype);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderBySubtype.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {subtype}));
 	}
 
 	/**
@@ -2164,13 +2080,9 @@ public class RolePersistenceImpl
 	public Role fetchBySubtype_First(
 		String subtype, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findBySubtype(subtype, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySubtype.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {subtype},
+			orderByComparator);
 	}
 
 	/**
@@ -2328,12 +2240,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeBySubtype(String subtype) {
-		for (Role role :
-				findBySubtype(
-					subtype, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderBySubtype.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {subtype});
 	}
 
 	/**
@@ -3781,19 +3689,9 @@ public class RolePersistenceImpl
 			return role;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", subtype=");
-		sb.append(subtype);
-
-		sb.append("}");
-
-		throw new NoSuchRoleException(sb.toString());
+		throw new NoSuchRoleException(
+			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, subtype}));
 	}
 
 	/**
@@ -3808,13 +3706,9 @@ public class RolePersistenceImpl
 	public Role fetchByT_S_First(
 		int type, String subtype, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByT_S(type, subtype, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_S.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type, subtype},
+			orderByComparator);
 	}
 
 	/**
@@ -3982,13 +3876,8 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByT_S(int type, String subtype) {
-		for (Role role :
-				findByT_S(
-					type, subtype, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByT_S.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {type, subtype});
 	}
 
 	/**
@@ -5621,23 +5510,16 @@ public class RolePersistenceImpl
 		Role role = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (role == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRoleException(sb.toString());
+			throw new NoSuchRoleException(message);
 		}
 
 		return role;
@@ -7720,4 +7602,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:814158647
+// LIFERAY-SERVICE-BUILDER-HASH:-2041712130

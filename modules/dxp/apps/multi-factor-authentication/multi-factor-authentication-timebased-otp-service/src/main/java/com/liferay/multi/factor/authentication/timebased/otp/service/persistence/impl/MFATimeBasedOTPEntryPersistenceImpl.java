@@ -102,20 +102,15 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry = fetchByUserId(userId);
 
 		if (mfaTimeBasedOTPEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return mfaTimeBasedOTPEntry;
@@ -834,4 +829,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1031403982
+// LIFERAY-SERVICE-BUILDER-HASH:2113560601

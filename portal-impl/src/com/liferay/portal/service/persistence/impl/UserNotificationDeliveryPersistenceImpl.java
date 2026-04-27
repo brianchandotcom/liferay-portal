@@ -176,16 +176,9 @@ public class UserNotificationDeliveryPersistenceImpl
 			return userNotificationDelivery;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationDeliveryException(sb.toString());
+		throw new NoSuchUserNotificationDeliveryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -200,14 +193,9 @@ public class UserNotificationDeliveryPersistenceImpl
 		long userId,
 		OrderByComparator<UserNotificationDelivery> orderByComparator) {
 
-		List<UserNotificationDelivery> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -217,12 +205,8 @@ public class UserNotificationDeliveryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (UserNotificationDelivery userNotificationDelivery :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationDelivery);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -262,32 +246,19 @@ public class UserNotificationDeliveryPersistenceImpl
 			userId, portletId, classNameId, notificationType, deliveryType);
 
 		if (userNotificationDelivery == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", notificationType=");
-			sb.append(notificationType);
-
-			sb.append(", deliveryType=");
-			sb.append(deliveryType);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_P_C_N_D.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						userId, portletId, classNameId, notificationType,
+						deliveryType
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserNotificationDeliveryException(sb.toString());
+			throw new NoSuchUserNotificationDeliveryException(message);
 		}
 
 		return userNotificationDelivery;
@@ -1066,4 +1037,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1998096385
+// LIFERAY-SERVICE-BUILDER-HASH:1298655670

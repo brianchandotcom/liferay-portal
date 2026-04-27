@@ -192,16 +192,11 @@ public class SamlSpSessionPersistenceImpl
 			return samlSpSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("samlPeerBindingId=");
-		sb.append(samlPeerBindingId);
-
-		sb.append("}");
-
-		throw new NoSuchSpSessionException(sb.toString());
+		throw new NoSuchSpSessionException(
+			_collectionPersistenceFinderBySamlPeerBindingId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {samlPeerBindingId}));
 	}
 
 	/**
@@ -216,14 +211,8 @@ public class SamlSpSessionPersistenceImpl
 		long samlPeerBindingId,
 		OrderByComparator<SamlSpSession> orderByComparator) {
 
-		List<SamlSpSession> list = findBySamlPeerBindingId(
-			samlPeerBindingId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySamlPeerBindingId.fetchFirst(
+			finderCache, new Object[] {samlPeerBindingId}, orderByComparator);
 	}
 
 	/**
@@ -233,13 +222,8 @@ public class SamlSpSessionPersistenceImpl
 	 */
 	@Override
 	public void removeBySamlPeerBindingId(long samlPeerBindingId) {
-		for (SamlSpSession samlSpSession :
-				findBySamlPeerBindingId(
-					samlPeerBindingId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(samlSpSession);
-		}
+		_collectionPersistenceFinderBySamlPeerBindingId.remove(
+			finderCache, new Object[] {samlPeerBindingId});
 	}
 
 	/**
@@ -272,20 +256,15 @@ public class SamlSpSessionPersistenceImpl
 		SamlSpSession samlSpSession = fetchByJSessionId(jSessionId);
 
 		if (samlSpSession == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("jSessionId=");
-			sb.append(jSessionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByJSessionId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {jSessionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSpSessionException(sb.toString());
+			throw new NoSuchSpSessionException(message);
 		}
 
 		return samlSpSession;
@@ -362,20 +341,17 @@ public class SamlSpSessionPersistenceImpl
 		SamlSpSession samlSpSession = fetchBySamlSpSessionKey(samlSpSessionKey);
 
 		if (samlSpSession == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("samlSpSessionKey=");
-			sb.append(samlSpSessionKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderBySamlSpSessionKey.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {samlSpSessionKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchSpSessionException(sb.toString());
+			throw new NoSuchSpSessionException(message);
 		}
 
 		return samlSpSession;
@@ -545,19 +521,10 @@ public class SamlSpSessionPersistenceImpl
 			return samlSpSession;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", sessionIndex=");
-		sb.append(sessionIndex);
-
-		sb.append("}");
-
-		throw new NoSuchSpSessionException(sb.toString());
+		throw new NoSuchSpSessionException(
+			_collectionPersistenceFinderByC_SI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, sessionIndex}));
 	}
 
 	/**
@@ -573,14 +540,9 @@ public class SamlSpSessionPersistenceImpl
 		long companyId, String sessionIndex,
 		OrderByComparator<SamlSpSession> orderByComparator) {
 
-		List<SamlSpSession> list = findByC_SI(
-			companyId, sessionIndex, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_SI.fetchFirst(
+			finderCache, new Object[] {companyId, sessionIndex},
+			orderByComparator);
 	}
 
 	/**
@@ -591,13 +553,8 @@ public class SamlSpSessionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_SI(long companyId, String sessionIndex) {
-		for (SamlSpSession samlSpSession :
-				findByC_SI(
-					companyId, sessionIndex, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(samlSpSession);
-		}
+		_collectionPersistenceFinderByC_SI.remove(
+			finderCache, new Object[] {companyId, sessionIndex});
 	}
 
 	/**
@@ -1349,4 +1306,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1993108326
+// LIFERAY-SERVICE-BUILDER-HASH:1000020556

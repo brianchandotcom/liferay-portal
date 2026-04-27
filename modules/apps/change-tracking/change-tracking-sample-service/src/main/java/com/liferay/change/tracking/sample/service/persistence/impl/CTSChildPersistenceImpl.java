@@ -195,16 +195,9 @@ public class CTSChildPersistenceImpl
 			return ctsChild;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSChildException(sb.toString());
+		throw new NoSuchCTSChildException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -218,14 +211,8 @@ public class CTSChildPersistenceImpl
 	public CTSChild fetchByCompanyId_First(
 		long companyId, OrderByComparator<CTSChild> orderByComparator) {
 
-		List<CTSChild> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -235,12 +222,8 @@ public class CTSChildPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTSChild ctsChild :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctsChild);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -375,19 +358,10 @@ public class CTSChildPersistenceImpl
 			return ctsChild;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", ctsGrandParentId=");
-		sb.append(ctsGrandParentId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSChildException(sb.toString());
+		throw new NoSuchCTSChildException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, ctsGrandParentId}));
 	}
 
 	/**
@@ -403,14 +377,9 @@ public class CTSChildPersistenceImpl
 		long companyId, long ctsGrandParentId,
 		OrderByComparator<CTSChild> orderByComparator) {
 
-		List<CTSChild> list = findByC_C(
-			companyId, ctsGrandParentId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {companyId, ctsGrandParentId},
+			orderByComparator);
 	}
 
 	/**
@@ -421,13 +390,8 @@ public class CTSChildPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long companyId, long ctsGrandParentId) {
-		for (CTSChild ctsChild :
-				findByC_C(
-					companyId, ctsGrandParentId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsChild);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {companyId, ctsGrandParentId});
 	}
 
 	/**
@@ -563,19 +527,10 @@ public class CTSChildPersistenceImpl
 			return ctsChild;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", parentCTSChildId=");
-		sb.append(parentCTSChildId);
-
-		sb.append("}");
-
-		throw new NoSuchCTSChildException(sb.toString());
+		throw new NoSuchCTSChildException(
+			_collectionPersistenceFinderByC_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, parentCTSChildId}));
 	}
 
 	/**
@@ -591,14 +546,9 @@ public class CTSChildPersistenceImpl
 		long companyId, long parentCTSChildId,
 		OrderByComparator<CTSChild> orderByComparator) {
 
-		List<CTSChild> list = findByC_P(
-			companyId, parentCTSChildId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_P.fetchFirst(
+			finderCache, new Object[] {companyId, parentCTSChildId},
+			orderByComparator);
 	}
 
 	/**
@@ -609,13 +559,8 @@ public class CTSChildPersistenceImpl
 	 */
 	@Override
 	public void removeByC_P(long companyId, long parentCTSChildId) {
-		for (CTSChild ctsChild :
-				findByC_P(
-					companyId, parentCTSChildId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsChild);
-		}
+		_collectionPersistenceFinderByC_P.remove(
+			finderCache, new Object[] {companyId, parentCTSChildId});
 	}
 
 	/**
@@ -1556,4 +1501,4 @@ public class CTSChildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1060964511
+// LIFERAY-SERVICE-BUILDER-HASH:1504874027

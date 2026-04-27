@@ -191,16 +191,9 @@ public class CommerceShippingMethodPersistenceImpl
 			return commerceShippingMethod;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingMethodException(sb.toString());
+		throw new NoSuchShippingMethodException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -215,14 +208,8 @@ public class CommerceShippingMethodPersistenceImpl
 		long groupId,
 		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		List<CommerceShippingMethod> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -232,12 +219,8 @@ public class CommerceShippingMethodPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (CommerceShippingMethod commerceShippingMethod :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingMethod);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -363,19 +346,9 @@ public class CommerceShippingMethodPersistenceImpl
 			return commerceShippingMethod;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", active=");
-		sb.append(active);
-
-		sb.append("}");
-
-		throw new NoSuchShippingMethodException(sb.toString());
+		throw new NoSuchShippingMethodException(
+			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, active}));
 	}
 
 	/**
@@ -391,14 +364,8 @@ public class CommerceShippingMethodPersistenceImpl
 		long groupId, boolean active,
 		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		List<CommerceShippingMethod> list = findByG_A(
-			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A.fetchFirst(
+			finderCache, new Object[] {groupId, active}, orderByComparator);
 	}
 
 	/**
@@ -409,13 +376,8 @@ public class CommerceShippingMethodPersistenceImpl
 	 */
 	@Override
 	public void removeByG_A(long groupId, boolean active) {
-		for (CommerceShippingMethod commerceShippingMethod :
-				findByG_A(
-					groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceShippingMethod);
-		}
+		_collectionPersistenceFinderByG_A.remove(
+			finderCache, new Object[] {groupId, active});
 	}
 
 	/**
@@ -451,23 +413,16 @@ public class CommerceShippingMethodPersistenceImpl
 			groupId, engineKey);
 
 		if (commerceShippingMethod == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", engineKey=");
-			sb.append(engineKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_E.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, engineKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchShippingMethodException(sb.toString());
+			throw new NoSuchShippingMethodException(message);
 		}
 
 		return commerceShippingMethod;
@@ -1291,4 +1246,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1382789517
+// LIFERAY-SERVICE-BUILDER-HASH:67181719

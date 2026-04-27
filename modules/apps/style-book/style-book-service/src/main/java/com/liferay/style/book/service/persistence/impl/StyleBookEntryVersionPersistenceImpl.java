@@ -216,16 +216,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("styleBookEntryId=");
-		sb.append(styleBookEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByStyleBookEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {styleBookEntryId}));
 	}
 
 	/**
@@ -240,14 +234,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long styleBookEntryId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByStyleBookEntryId(
-			styleBookEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStyleBookEntryId.fetchFirst(
+			finderCache, new Object[] {styleBookEntryId}, orderByComparator);
 	}
 
 	/**
@@ -257,13 +245,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByStyleBookEntryId(long styleBookEntryId) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByStyleBookEntryId(
-					styleBookEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByStyleBookEntryId.remove(
+			finderCache, new Object[] {styleBookEntryId});
 	}
 
 	/**
@@ -304,23 +287,17 @@ public class StyleBookEntryVersionPersistenceImpl
 			fetchByStyleBookEntryId_Version(styleBookEntryId, version);
 
 		if (styleBookEntryVersion == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("styleBookEntryId=");
-			sb.append(styleBookEntryId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByStyleBookEntryId_Version.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {styleBookEntryId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return styleBookEntryVersion;
@@ -503,16 +480,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -527,14 +497,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		String uuid,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -544,11 +508,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -685,19 +646,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, version}));
 	}
 
 	/**
@@ -713,14 +664,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		String uuid, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByUuid_Version(
-			uuid, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_Version.fetchFirst(
+			finderCache, new Object[] {uuid, version}, orderByComparator);
 	}
 
 	/**
@@ -731,13 +676,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_Version(String uuid, int version) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByUuid_Version(
-					uuid, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_Version.remove(
+			finderCache, new Object[] {uuid, version});
 	}
 
 	/**
@@ -872,19 +812,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
 	}
 
 	/**
@@ -900,14 +830,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		String uuid, long groupId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByUUID_G(
-			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUUID_G.fetchFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -918,13 +842,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUUID_G(String uuid, long groupId) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByUUID_G(
-					uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByUUID_G.remove(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -967,26 +886,16 @@ public class StyleBookEntryVersionPersistenceImpl
 			uuid, groupId, version);
 
 		if (styleBookEntryVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G_Version.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {uuid, groupId, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return styleBookEntryVersion;
@@ -1180,19 +1089,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -1208,14 +1107,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -1226,13 +1119,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -1377,22 +1265,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByUuid_C_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {uuid, companyId, version}));
 	}
 
 	/**
@@ -1409,14 +1285,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		String uuid, long companyId, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByUuid_C_Version(
-			uuid, companyId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C_Version.fetchFirst(
+			finderCache, new Object[] {uuid, companyId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1430,13 +1301,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	public void removeByUuid_C_Version(
 		String uuid, long companyId, int version) {
 
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByUuid_C_Version(
-					uuid, companyId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByUuid_C_Version.remove(
+			finderCache, new Object[] {uuid, companyId, version});
 	}
 
 	/**
@@ -1567,16 +1433,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -1591,14 +1450,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -1608,12 +1461,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -1750,19 +1599,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByGroupId_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, version}));
 	}
 
 	/**
@@ -1778,14 +1617,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByGroupId_Version(
-			groupId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId_Version.fetchFirst(
+			finderCache, new Object[] {groupId, version}, orderByComparator);
 	}
 
 	/**
@@ -1796,13 +1629,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId_Version(long groupId, int version) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByGroupId_Version(
-					groupId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByGroupId_Version.remove(
+			finderCache, new Object[] {groupId, version});
 	}
 
 	/**
@@ -1942,19 +1770,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry}));
 	}
 
 	/**
@@ -1970,14 +1789,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_D(
-			groupId, defaultStyleBookEntry, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry},
+			orderByComparator);
 	}
 
 	/**
@@ -1988,13 +1802,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_D(long groupId, boolean defaultStyleBookEntry) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_D(
-					groupId, defaultStyleBookEntry, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_D.remove(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry});
 	}
 
 	/**
@@ -2142,22 +1951,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_D_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry, version}));
 	}
 
 	/**
@@ -2174,14 +1971,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_D_Version(
-			groupId, defaultStyleBookEntry, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D_Version.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2195,13 +1987,9 @@ public class StyleBookEntryVersionPersistenceImpl
 	public void removeByG_D_Version(
 		long groupId, boolean defaultStyleBookEntry, int version) {
 
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_D_Version(
-					groupId, defaultStyleBookEntry, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_D_Version.remove(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, version});
 	}
 
 	/**
@@ -2340,19 +2128,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
 	}
 
 	/**
@@ -2368,14 +2146,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String name,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_N(
-			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_N.fetchFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -2386,13 +2158,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_N(long groupId, String name) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_N(
-					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_N.remove(
+			finderCache, new Object[] {groupId, name});
 	}
 
 	/**
@@ -2535,22 +2302,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_N_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, name, version}));
 	}
 
 	/**
@@ -2567,14 +2322,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String name, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_N_Version(
-			groupId, name, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_N_Version.fetchFirst(
+			finderCache, new Object[] {groupId, name, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2586,13 +2336,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_N_Version(long groupId, String name, int version) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_N_Version(
-					groupId, name, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_N_Version.remove(
+			finderCache, new Object[] {groupId, name, version});
 	}
 
 	/**
@@ -2731,19 +2476,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_LikeN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
 	}
 
 	/**
@@ -2759,14 +2494,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String name,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_LikeN(
-			groupId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LikeN.fetchFirst(
+			finderCache, new Object[] {groupId, name}, orderByComparator);
 	}
 
 	/**
@@ -2777,13 +2506,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_LikeN(long groupId, String name) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_LikeN(
-					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_LikeN.remove(
+			finderCache, new Object[] {groupId, name});
 	}
 
 	/**
@@ -2927,22 +2651,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_LikeN_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, name, version}));
 	}
 
 	/**
@@ -2959,14 +2671,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String name, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_LikeN_Version(
-			groupId, name, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_LikeN_Version.fetchFirst(
+			finderCache, new Object[] {groupId, name, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2980,13 +2687,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	public void removeByG_LikeN_Version(
 		long groupId, String name, int version) {
 
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_LikeN_Version(
-					groupId, name, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_LikeN_Version.remove(
+			finderCache, new Object[] {groupId, name, version});
 	}
 
 	/**
@@ -3126,19 +2828,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", styleBookEntryKey=");
-		sb.append(styleBookEntryKey);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_SBEK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, styleBookEntryKey}));
 	}
 
 	/**
@@ -3154,14 +2847,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String styleBookEntryKey,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_SBEK(
-			groupId, styleBookEntryKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_SBEK.fetchFirst(
+			finderCache, new Object[] {groupId, styleBookEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -3172,13 +2860,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_SBEK(long groupId, String styleBookEntryKey) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_SBEK(
-					groupId, styleBookEntryKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_SBEK.remove(
+			finderCache, new Object[] {groupId, styleBookEntryKey});
 	}
 
 	/**
@@ -3221,26 +2904,16 @@ public class StyleBookEntryVersionPersistenceImpl
 			groupId, styleBookEntryKey, version);
 
 		if (styleBookEntryVersion == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", styleBookEntryKey=");
-			sb.append(styleBookEntryKey);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_SBEK_Version.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, styleBookEntryKey, version});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryVersionException(sb.toString());
+			throw new NoSuchEntryVersionException(message);
 		}
 
 		return styleBookEntryVersion;
@@ -3434,19 +3107,9 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, themeId}));
 	}
 
 	/**
@@ -3462,14 +3125,8 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String themeId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_T(
-			groupId, themeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T.fetchFirst(
+			finderCache, new Object[] {groupId, themeId}, orderByComparator);
 	}
 
 	/**
@@ -3480,13 +3137,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T(long groupId, String themeId) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_T(
-					groupId, themeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_T.remove(
+			finderCache, new Object[] {groupId, themeId});
 	}
 
 	/**
@@ -3630,22 +3282,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_T_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, themeId, version}));
 	}
 
 	/**
@@ -3662,14 +3302,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, String themeId, int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_T_Version(
-			groupId, themeId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_T_Version.fetchFirst(
+			finderCache, new Object[] {groupId, themeId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -3681,13 +3316,8 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByG_T_Version(long groupId, String themeId, int version) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_T_Version(
-					groupId, themeId, version, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_T_Version.remove(
+			finderCache, new Object[] {groupId, themeId, version});
 	}
 
 	/**
@@ -3836,22 +3466,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_D_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, defaultStyleBookEntry, themeId}));
 	}
 
 	/**
@@ -3868,14 +3486,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_D_T(
-			groupId, defaultStyleBookEntry, themeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_D_T.fetchFirst(
+			finderCache, new Object[] {groupId, defaultStyleBookEntry, themeId},
+			orderByComparator);
 	}
 
 	/**
@@ -3889,13 +3502,9 @@ public class StyleBookEntryVersionPersistenceImpl
 	public void removeByG_D_T(
 		long groupId, boolean defaultStyleBookEntry, String themeId) {
 
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_D_T(
-					groupId, defaultStyleBookEntry, themeId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_D_T.remove(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId});
 	}
 
 	/**
@@ -4058,25 +3667,12 @@ public class StyleBookEntryVersionPersistenceImpl
 			return styleBookEntryVersion;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", defaultStyleBookEntry=");
-		sb.append(defaultStyleBookEntry);
-
-		sb.append(", themeId=");
-		sb.append(themeId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchEntryVersionException(sb.toString());
+		throw new NoSuchEntryVersionException(
+			_collectionPersistenceFinderByG_D_T_Version.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					groupId, defaultStyleBookEntry, themeId, version
+				}));
 	}
 
 	/**
@@ -4095,15 +3691,10 @@ public class StyleBookEntryVersionPersistenceImpl
 		int version,
 		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
 
-		List<StyleBookEntryVersion> list = findByG_D_T_Version(
-			groupId, defaultStyleBookEntry, themeId, version, 0, 1,
+		return _collectionPersistenceFinderByG_D_T_Version.fetchFirst(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId, version},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4119,13 +3710,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		long groupId, boolean defaultStyleBookEntry, String themeId,
 		int version) {
 
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				findByG_D_T_Version(
-					groupId, defaultStyleBookEntry, themeId, version,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(styleBookEntryVersion);
-		}
+		_collectionPersistenceFinderByG_D_T_Version.remove(
+			finderCache,
+			new Object[] {groupId, defaultStyleBookEntry, themeId, version});
 	}
 
 	/**
@@ -6008,4 +5595,4 @@ public class StyleBookEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1817674783
+// LIFERAY-SERVICE-BUILDER-HASH:698366957

@@ -210,16 +210,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			return deDataDefinitionFieldLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		throw new NoSuchDataDefinitionFieldLinkException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -234,14 +227,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		String uuid,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
 
-		List<DEDataDefinitionFieldLink> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -251,11 +238,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(deDataDefinitionFieldLink);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -295,23 +279,15 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			uuid, groupId);
 
 		if (deDataDefinitionFieldLink == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+			throw new NoSuchDataDefinitionFieldLinkException(message);
 		}
 
 		return deDataDefinitionFieldLink;
@@ -497,19 +473,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			return deDataDefinitionFieldLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		throw new NoSuchDataDefinitionFieldLinkException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -525,14 +491,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
 
-		List<DEDataDefinitionFieldLink> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -543,13 +503,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(deDataDefinitionFieldLink);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -682,16 +637,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			return deDataDefinitionFieldLink;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		throw new NoSuchDataDefinitionFieldLinkException(
+			_collectionPersistenceFinderByDDMStructureId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ddmStructureId}));
 	}
 
 	/**
@@ -706,14 +654,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		long ddmStructureId,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
 
-		List<DEDataDefinitionFieldLink> list = findByDDMStructureId(
-			ddmStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDDMStructureId.fetchFirst(
+			finderCache, new Object[] {ddmStructureId}, orderByComparator);
 	}
 
 	/**
@@ -723,13 +665,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByDDMStructureId(long ddmStructureId) {
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				findByDDMStructureId(
-					ddmStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(deDataDefinitionFieldLink);
-		}
+		_collectionPersistenceFinderByDDMStructureId.remove(
+			finderCache, new Object[] {ddmStructureId});
 	}
 
 	/**
@@ -866,19 +803,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			return deDataDefinitionFieldLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		throw new NoSuchDataDefinitionFieldLinkException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -894,14 +821,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
 
-		List<DEDataDefinitionFieldLink> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -912,13 +834,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(deDataDefinitionFieldLink);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1058,19 +975,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			return deDataDefinitionFieldLink;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", ddmStructureId=");
-		sb.append(ddmStructureId);
-
-		sb.append("}");
-
-		throw new NoSuchDataDefinitionFieldLinkException(sb.toString());
+		throw new NoSuchDataDefinitionFieldLinkException(
+			_collectionPersistenceFinderByC_DDMSI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, ddmStructureId}));
 	}
 
 	/**
@@ -1086,14 +994,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		long classNameId, long ddmStructureId,
 		OrderByComparator<DEDataDefinitionFieldLink> orderByComparator) {
 
-		List<DEDataDefinitionFieldLink> list = findByC_DDMSI(
-			classNameId, ddmStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_DDMSI.fetchFirst(
+			finderCache, new Object[] {classNameId, ddmStructureId},
+			orderByComparator);
 	}
 
 	/**
@@ -1104,13 +1007,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Override
 	public void removeByC_DDMSI(long classNameId, long ddmStructureId) {
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				findByC_DDMSI(
-					classNameId, ddmStructureId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(deDataDefinitionFieldLink);
-		}
+		_collectionPersistenceFinderByC_DDMSI.remove(
+			finderCache, new Object[] {classNameId, ddmStructureId});
 	}
 
 	/**
@@ -4219,4 +4117,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-318090680
+// LIFERAY-SERVICE-BUILDER-HASH:1286605643

@@ -208,19 +208,9 @@ public class JSONStorageEntryPersistenceImpl
 			return jsonStorageEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchJSONStorageEntryException(sb.toString());
+		throw new NoSuchJSONStorageEntryException(
+			_collectionPersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -236,14 +226,9 @@ public class JSONStorageEntryPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<JSONStorageEntry> orderByComparator) {
 
-		List<JSONStorageEntry> list = findByCN_CPK(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCN_CPK.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -254,13 +239,8 @@ public class JSONStorageEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCN_CPK(long classNameId, long classPK) {
-		for (JSONStorageEntry jsonStorageEntry :
-				findByCN_CPK(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(jsonStorageEntry);
-		}
+		_collectionPersistenceFinderByCN_CPK.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -421,28 +401,10 @@ public class JSONStorageEntryPersistenceImpl
 			return jsonStorageEntry;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", index=");
-		sb.append(index);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", valueLong=");
-		sb.append(valueLong);
-
-		sb.append("}");
-
-		throw new NoSuchJSONStorageEntryException(sb.toString());
+		throw new NoSuchJSONStorageEntryException(
+			_collectionPersistenceFinderByC_CN_I_T_VL.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, index, type, valueLong}));
 	}
 
 	/**
@@ -461,15 +423,10 @@ public class JSONStorageEntryPersistenceImpl
 		long companyId, long classNameId, int index, int type, long valueLong,
 		OrderByComparator<JSONStorageEntry> orderByComparator) {
 
-		List<JSONStorageEntry> list = findByC_CN_I_T_VL(
-			companyId, classNameId, index, type, valueLong, 0, 1,
+		return _collectionPersistenceFinderByC_CN_I_T_VL.fetchFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, index, type, valueLong},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -485,13 +442,9 @@ public class JSONStorageEntryPersistenceImpl
 	public void removeByC_CN_I_T_VL(
 		long companyId, long classNameId, int index, int type, long valueLong) {
 
-		for (JSONStorageEntry jsonStorageEntry :
-				findByC_CN_I_T_VL(
-					companyId, classNameId, index, type, valueLong,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(jsonStorageEntry);
-		}
+		_collectionPersistenceFinderByC_CN_I_T_VL.remove(
+			finderCache,
+			new Object[] {companyId, classNameId, index, type, valueLong});
 	}
 
 	/**
@@ -659,28 +612,10 @@ public class JSONStorageEntryPersistenceImpl
 			return jsonStorageEntry;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", key=");
-		sb.append(key);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", valueLong=");
-		sb.append(valueLong);
-
-		sb.append("}");
-
-		throw new NoSuchJSONStorageEntryException(sb.toString());
+		throw new NoSuchJSONStorageEntryException(
+			_collectionPersistenceFinderByC_CN_K_T_VL.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, key, type, valueLong}));
 	}
 
 	/**
@@ -699,15 +634,10 @@ public class JSONStorageEntryPersistenceImpl
 		long companyId, long classNameId, String key, int type, long valueLong,
 		OrderByComparator<JSONStorageEntry> orderByComparator) {
 
-		List<JSONStorageEntry> list = findByC_CN_K_T_VL(
-			companyId, classNameId, key, type, valueLong, 0, 1,
+		return _collectionPersistenceFinderByC_CN_K_T_VL.fetchFirst(
+			finderCache,
+			new Object[] {companyId, classNameId, key, type, valueLong},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -724,13 +654,9 @@ public class JSONStorageEntryPersistenceImpl
 		long companyId, long classNameId, String key, int type,
 		long valueLong) {
 
-		for (JSONStorageEntry jsonStorageEntry :
-				findByC_CN_K_T_VL(
-					companyId, classNameId, key, type, valueLong,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(jsonStorageEntry);
-		}
+		_collectionPersistenceFinderByC_CN_K_T_VL.remove(
+			finderCache,
+			new Object[] {companyId, classNameId, key, type, valueLong});
 	}
 
 	/**
@@ -783,32 +709,19 @@ public class JSONStorageEntryPersistenceImpl
 			classNameId, classPK, parentJSONStorageEntryId, index, key);
 
 		if (jsonStorageEntry == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", parentJSONStorageEntryId=");
-			sb.append(parentJSONStorageEntryId);
-
-			sb.append(", index=");
-			sb.append(index);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCN_CPK_P_I_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						classNameId, classPK, parentJSONStorageEntryId, index,
+						key
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchJSONStorageEntryException(sb.toString());
+			throw new NoSuchJSONStorageEntryException(message);
 		}
 
 		return jsonStorageEntry;
@@ -2007,4 +1920,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1842928517
+// LIFERAY-SERVICE-BUILDER-HASH:28032305

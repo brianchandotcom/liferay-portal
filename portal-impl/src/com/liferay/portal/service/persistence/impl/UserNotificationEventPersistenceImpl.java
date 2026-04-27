@@ -179,16 +179,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -203,14 +196,9 @@ public class UserNotificationEventPersistenceImpl
 		String uuid,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -220,11 +208,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -351,19 +336,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -379,14 +354,9 @@ public class UserNotificationEventPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -397,13 +367,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -522,16 +487,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -546,14 +504,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -563,12 +516,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -686,16 +635,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
 	}
 
 	/**
@@ -710,14 +652,9 @@ public class UserNotificationEventPersistenceImpl
 		String type,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByType(
-			type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByType.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -727,11 +664,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByType(String type) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByType.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
 	/**
@@ -859,19 +793,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, deliveryType}));
 	}
 
 	/**
@@ -887,14 +811,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT(
-			userId, deliveryType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_DT.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType}, orderByComparator);
 	}
 
 	/**
@@ -905,13 +824,9 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByU_DT(long userId, int deliveryType) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT(
-					userId, deliveryType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType});
 	}
 
 	/**
@@ -1040,19 +955,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, delivered}));
 	}
 
 	/**
@@ -1068,14 +973,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean delivered,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_D(
-			userId, delivered, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_D.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -1086,13 +986,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByU_D(long userId, boolean delivered) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_D(
-					userId, delivered, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_D.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, delivered});
 	}
 
 	/**
@@ -1219,19 +1114,9 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, archived}));
 	}
 
 	/**
@@ -1247,14 +1132,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_A(
-			userId, archived, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -1265,13 +1145,8 @@ public class UserNotificationEventPersistenceImpl
 	 */
 	@Override
 	public void removeByU_A(long userId, boolean archived) {
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_A(
-					userId, archived, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_A.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, archived});
 	}
 
 	/**
@@ -1407,22 +1282,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, deliveryType, delivered}));
 	}
 
 	/**
@@ -1439,14 +1302,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean delivered,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_D(
-			userId, deliveryType, delivered, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_DT_D.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered}, orderByComparator);
 	}
 
 	/**
@@ -1460,13 +1318,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_DT_D(
 		long userId, int deliveryType, boolean delivered) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_D(
-					userId, deliveryType, delivered, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_D.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered});
 	}
 
 	/**
@@ -1604,22 +1458,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, deliveryType, archived}));
 	}
 
 	/**
@@ -1636,14 +1478,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_A(
-			userId, deliveryType, archived, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_DT_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, archived}, orderByComparator);
 	}
 
 	/**
@@ -1657,13 +1494,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_DT_A(
 		long userId, int deliveryType, boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_A(
-					userId, deliveryType, archived, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, archived});
 	}
 
 	/**
@@ -1803,22 +1636,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_D_AR.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, delivered, actionRequired}));
 	}
 
 	/**
@@ -1835,14 +1656,10 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean delivered, boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_D_AR(
-			userId, delivered, actionRequired, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_D_AR.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired},
+			orderByComparator);
 	}
 
 	/**
@@ -1856,13 +1673,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_D_AR(
 		long userId, boolean delivered, boolean actionRequired) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_D_AR(
-					userId, delivered, actionRequired, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_D_AR.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired});
 	}
 
 	/**
@@ -2001,22 +1814,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_D_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, delivered, archived}));
 	}
 
 	/**
@@ -2033,14 +1834,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean delivered, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_D_A(
-			userId, delivered, archived, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_D_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, archived}, orderByComparator);
 	}
 
 	/**
@@ -2054,13 +1850,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_D_A(
 		long userId, boolean delivered, boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_D_A(
-					userId, delivered, archived, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_D_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, archived});
 	}
 
 	/**
@@ -2199,22 +1991,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_AR_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, actionRequired, archived}));
 	}
 
 	/**
@@ -2231,14 +2011,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_AR_A(
-			userId, actionRequired, archived, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_AR_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, actionRequired, archived}, orderByComparator);
 	}
 
 	/**
@@ -2252,13 +2027,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_AR_A(
 		long userId, boolean actionRequired, boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_AR_A(
-					userId, actionRequired, archived, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_AR_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, actionRequired, archived});
 	}
 
 	/**
@@ -2404,25 +2175,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", timestamp>=");
-		sb.append(timestamp);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_T_GteT_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, type, timestamp, delivered}));
 	}
 
 	/**
@@ -2440,14 +2196,10 @@ public class UserNotificationEventPersistenceImpl
 		long userId, String type, long timestamp, boolean delivered,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_T_GteT_D(
-			userId, type, timestamp, delivered, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_T_GteT_D.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, timestamp, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -2462,13 +2214,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_T_GteT_D(
 		long userId, String type, long timestamp, boolean delivered) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_T_GteT_D(
-					userId, type, timestamp, delivered, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_T_GteT_D.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, timestamp, delivered});
 	}
 
 	/**
@@ -2618,25 +2366,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_T_DT_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, type, deliveryType, delivered}));
 	}
 
 	/**
@@ -2654,14 +2387,10 @@ public class UserNotificationEventPersistenceImpl
 		long userId, String type, int deliveryType, boolean delivered,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_T_DT_D(
-			userId, type, deliveryType, delivered, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_T_DT_D.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered},
+			orderByComparator);
 	}
 
 	/**
@@ -2676,13 +2405,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_T_DT_D(
 		long userId, String type, int deliveryType, boolean delivered) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_T_DT_D(
-					userId, type, deliveryType, delivered, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_T_DT_D.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered});
 	}
 
 	/**
@@ -2834,25 +2559,12 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_D_AR.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					userId, deliveryType, delivered, actionRequired
+				}));
 	}
 
 	/**
@@ -2871,15 +2583,10 @@ public class UserNotificationEventPersistenceImpl
 		boolean actionRequired,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, 0, 1,
+		return _collectionPersistenceFinderByU_DT_D_AR.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, actionRequired},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2895,13 +2602,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_D_AR(
-					userId, deliveryType, delivered, actionRequired,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_D_AR.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, actionRequired});
 	}
 
 	/**
@@ -3052,25 +2755,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_D_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, deliveryType, delivered, archived}));
 	}
 
 	/**
@@ -3088,14 +2776,10 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean delivered, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_DT_D_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, archived},
+			orderByComparator);
 	}
 
 	/**
@@ -3110,13 +2794,9 @@ public class UserNotificationEventPersistenceImpl
 	public void removeByU_DT_D_A(
 		long userId, int deliveryType, boolean delivered, boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_D_A(
-					userId, deliveryType, delivered, archived,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_D_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, delivered, archived});
 	}
 
 	/**
@@ -3268,25 +2948,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_AR_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, deliveryType, actionRequired, archived}));
 	}
 
 	/**
@@ -3304,15 +2969,10 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, 0, 1,
+		return _collectionPersistenceFinderByU_DT_AR_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, actionRequired, archived},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3328,13 +2988,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean actionRequired,
 		boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_AR_A(
-					userId, deliveryType, actionRequired, archived,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_AR_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, deliveryType, actionRequired, archived});
 	}
 
 	/**
@@ -3487,25 +3143,10 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_D_AR_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {userId, delivered, actionRequired, archived}));
 	}
 
 	/**
@@ -3524,15 +3165,10 @@ public class UserNotificationEventPersistenceImpl
 		boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, 0, 1,
+		return _collectionPersistenceFinderByU_D_AR_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired, archived},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3548,13 +3184,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, boolean delivered, boolean actionRequired,
 		boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_D_AR_A(
-					userId, delivered, actionRequired, archived,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_D_AR_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, delivered, actionRequired, archived});
 	}
 
 	/**
@@ -3712,28 +3344,12 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_T_DT_D_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					userId, type, deliveryType, delivered, archived
+				}));
 	}
 
 	/**
@@ -3753,15 +3369,10 @@ public class UserNotificationEventPersistenceImpl
 		boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, 0, 1,
+		return _collectionPersistenceFinderByU_T_DT_D_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered, archived},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3778,13 +3389,9 @@ public class UserNotificationEventPersistenceImpl
 		long userId, String type, int deliveryType, boolean delivered,
 		boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_T_DT_D_A(
-					userId, type, deliveryType, delivered, archived,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_T_DT_D_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, type, deliveryType, delivered, archived});
 	}
 
 	/**
@@ -3947,28 +3554,12 @@ public class UserNotificationEventPersistenceImpl
 			return userNotificationEvent;
 		}
 
-		StringBundler sb = new StringBundler(12);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", deliveryType=");
-		sb.append(deliveryType);
-
-		sb.append(", delivered=");
-		sb.append(delivered);
-
-		sb.append(", actionRequired=");
-		sb.append(actionRequired);
-
-		sb.append(", archived=");
-		sb.append(archived);
-
-		sb.append("}");
-
-		throw new NoSuchUserNotificationEventException(sb.toString());
+		throw new NoSuchUserNotificationEventException(
+			_collectionPersistenceFinderByU_DT_D_AR_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					userId, deliveryType, delivered, actionRequired, archived
+				}));
 	}
 
 	/**
@@ -3988,15 +3579,12 @@ public class UserNotificationEventPersistenceImpl
 		boolean actionRequired, boolean archived,
 		OrderByComparator<UserNotificationEvent> orderByComparator) {
 
-		List<UserNotificationEvent> list = findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived, 0, 1,
+		return _collectionPersistenceFinderByU_DT_D_AR_A.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				userId, deliveryType, delivered, actionRequired, archived
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -4013,13 +3601,11 @@ public class UserNotificationEventPersistenceImpl
 		long userId, int deliveryType, boolean delivered,
 		boolean actionRequired, boolean archived) {
 
-		for (UserNotificationEvent userNotificationEvent :
-				findByU_DT_D_AR_A(
-					userId, deliveryType, delivered, actionRequired, archived,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(userNotificationEvent);
-		}
+		_collectionPersistenceFinderByU_DT_D_AR_A.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				userId, deliveryType, delivered, actionRequired, archived
+			});
 	}
 
 	/**
@@ -5558,4 +5144,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:810729295
+// LIFERAY-SERVICE-BUILDER-HASH:-1236976237

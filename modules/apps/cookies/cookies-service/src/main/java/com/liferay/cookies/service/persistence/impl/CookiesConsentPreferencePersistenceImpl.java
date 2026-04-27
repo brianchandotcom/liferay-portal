@@ -186,16 +186,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			return cookiesConsentPreference;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchCookiesConsentPreferenceException(sb.toString());
+		throw new NoSuchCookiesConsentPreferenceException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -210,14 +203,8 @@ public class CookiesConsentPreferencePersistenceImpl
 		long userId,
 		OrderByComparator<CookiesConsentPreference> orderByComparator) {
 
-		List<CookiesConsentPreference> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -227,12 +214,8 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (CookiesConsentPreference cookiesConsentPreference :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(cookiesConsentPreference);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -354,16 +337,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			return cookiesConsentPreference;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("expirationDate=");
-		sb.append(expirationDate);
-
-		sb.append("}");
-
-		throw new NoSuchCookiesConsentPreferenceException(sb.toString());
+		throw new NoSuchCookiesConsentPreferenceException(
+			_collectionPersistenceFinderByExpirationDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
 	}
 
 	/**
@@ -378,14 +354,8 @@ public class CookiesConsentPreferencePersistenceImpl
 		Date expirationDate,
 		OrderByComparator<CookiesConsentPreference> orderByComparator) {
 
-		List<CookiesConsentPreference> list = findByExpirationDate(
-			expirationDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByExpirationDate.fetchFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -395,13 +365,8 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Override
 	public void removeByExpirationDate(Date expirationDate) {
-		for (CookiesConsentPreference cookiesConsentPreference :
-				findByExpirationDate(
-					expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cookiesConsentPreference);
-		}
+		_collectionPersistenceFinderByExpirationDate.remove(
+			finderCache, new Object[] {expirationDate});
 	}
 
 	/**
@@ -527,19 +492,9 @@ public class CookiesConsentPreferencePersistenceImpl
 			return cookiesConsentPreference;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append(", domain=");
-		sb.append(domain);
-
-		sb.append("}");
-
-		throw new NoSuchCookiesConsentPreferenceException(sb.toString());
+		throw new NoSuchCookiesConsentPreferenceException(
+			_collectionPersistenceFinderByU_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, domain}));
 	}
 
 	/**
@@ -555,14 +510,8 @@ public class CookiesConsentPreferencePersistenceImpl
 		long userId, String domain,
 		OrderByComparator<CookiesConsentPreference> orderByComparator) {
 
-		List<CookiesConsentPreference> list = findByU_D(
-			userId, domain, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_D.fetchFirst(
+			finderCache, new Object[] {userId, domain}, orderByComparator);
 	}
 
 	/**
@@ -573,13 +522,8 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Override
 	public void removeByU_D(long userId, String domain) {
-		for (CookiesConsentPreference cookiesConsentPreference :
-				findByU_D(
-					userId, domain, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cookiesConsentPreference);
-		}
+		_collectionPersistenceFinderByU_D.remove(
+			finderCache, new Object[] {userId, domain});
 	}
 
 	/**
@@ -617,26 +561,16 @@ public class CookiesConsentPreferencePersistenceImpl
 			userId, domain, name);
 
 		if (cookiesConsentPreference == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("userId=");
-			sb.append(userId);
-
-			sb.append(", domain=");
-			sb.append(domain);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByU_D_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {userId, domain, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCookiesConsentPreferenceException(sb.toString());
+			throw new NoSuchCookiesConsentPreferenceException(message);
 		}
 
 		return cookiesConsentPreference;
@@ -1470,4 +1404,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1902508799
+// LIFERAY-SERVICE-BUILDER-HASH:-456057479

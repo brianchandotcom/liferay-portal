@@ -195,16 +195,9 @@ public class RedirectNotFoundEntryPersistenceImpl
 			return redirectNotFoundEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchNotFoundEntryException(sb.toString());
+		throw new NoSuchNotFoundEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class RedirectNotFoundEntryPersistenceImpl
 		long groupId,
 		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
 
-		List<RedirectNotFoundEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -236,12 +223,8 @@ public class RedirectNotFoundEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (RedirectNotFoundEntry redirectNotFoundEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(redirectNotFoundEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -275,23 +258,15 @@ public class RedirectNotFoundEntryPersistenceImpl
 		RedirectNotFoundEntry redirectNotFoundEntry = fetchByG_U(groupId, url);
 
 		if (redirectNotFoundEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", url=");
-			sb.append(url);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_U.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, url});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNotFoundEntryException(sb.toString());
+			throw new NoSuchNotFoundEntryException(message);
 		}
 
 		return redirectNotFoundEntry;
@@ -1091,4 +1066,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1444598230
+// LIFERAY-SERVICE-BUILDER-HASH:-262646192

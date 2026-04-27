@@ -206,16 +206,9 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class DDMStructureLayoutPersistenceImpl
 	public DDMStructureLayout fetchByUuid_First(
 		String uuid, OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -246,11 +233,8 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DDMStructureLayout ddmStructureLayout :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -289,23 +273,15 @@ public class DDMStructureLayoutPersistenceImpl
 		DDMStructureLayout ddmStructureLayout = fetchByUUID_G(uuid, groupId);
 
 		if (ddmStructureLayout == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStructureLayoutException(sb.toString());
+			throw new NoSuchStructureLayoutException(message);
 		}
 
 		return ddmStructureLayout;
@@ -488,19 +464,9 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -516,14 +482,8 @@ public class DDMStructureLayoutPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -534,13 +494,8 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DDMStructureLayout ddmStructureLayout :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -670,16 +625,9 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -693,14 +641,8 @@ public class DDMStructureLayoutPersistenceImpl
 	public DDMStructureLayout fetchByGroupId_First(
 		long groupId, OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -710,12 +652,8 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (DDMStructureLayout ddmStructureLayout :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -847,16 +785,11 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureLayoutKey=");
-		sb.append(structureLayoutKey);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByStructureLayoutKey.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {structureLayoutKey}));
 	}
 
 	/**
@@ -871,14 +804,8 @@ public class DDMStructureLayoutPersistenceImpl
 		String structureLayoutKey,
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByStructureLayoutKey(
-			structureLayoutKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureLayoutKey.fetchFirst(
+			finderCache, new Object[] {structureLayoutKey}, orderByComparator);
 	}
 
 	/**
@@ -888,13 +815,8 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureLayoutKey(String structureLayoutKey) {
-		for (DDMStructureLayout ddmStructureLayout :
-				findByStructureLayoutKey(
-					structureLayoutKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByStructureLayoutKey.remove(
+			finderCache, new Object[] {structureLayoutKey});
 	}
 
 	/**
@@ -933,20 +855,17 @@ public class DDMStructureLayoutPersistenceImpl
 			structureVersionId);
 
 		if (ddmStructureLayout == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("structureVersionId=");
-			sb.append(structureVersionId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByStructureVersionId.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {structureVersionId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStructureLayoutException(sb.toString());
+			throw new NoSuchStructureLayoutException(message);
 		}
 
 		return ddmStructureLayout;
@@ -1129,19 +1048,9 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
 	}
 
 	/**
@@ -1157,14 +1066,9 @@ public class DDMStructureLayoutPersistenceImpl
 		long groupId, long classNameId,
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByG_C(
-			groupId, classNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -1175,13 +1079,8 @@ public class DDMStructureLayoutPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long classNameId) {
-		for (DDMStructureLayout ddmStructureLayout :
-				findByG_C(
-					groupId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, classNameId});
 	}
 
 	/**
@@ -1224,26 +1123,16 @@ public class DDMStructureLayoutPersistenceImpl
 			groupId, classNameId, structureLayoutKey);
 
 		if (ddmStructureLayout == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", structureLayoutKey=");
-			sb.append(structureLayoutKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_C_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, classNameId, structureLayoutKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchStructureLayoutException(sb.toString());
+			throw new NoSuchStructureLayoutException(message);
 		}
 
 		return ddmStructureLayout;
@@ -1452,22 +1341,10 @@ public class DDMStructureLayoutPersistenceImpl
 			return ddmStructureLayout;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", structureVersionId=");
-		sb.append(structureVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchStructureLayoutException(sb.toString());
+		throw new NoSuchStructureLayoutException(
+			_collectionPersistenceFinderByG_C_SV.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, classNameId, structureVersionId}));
 	}
 
 	/**
@@ -1484,14 +1361,10 @@ public class DDMStructureLayoutPersistenceImpl
 		long groupId, long classNameId, long structureVersionId,
 		OrderByComparator<DDMStructureLayout> orderByComparator) {
 
-		List<DDMStructureLayout> list = findByG_C_SV(
-			groupId, classNameId, structureVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C_SV.fetchFirst(
+			finderCache,
+			new Object[] {groupId, classNameId, structureVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1505,13 +1378,9 @@ public class DDMStructureLayoutPersistenceImpl
 	public void removeByG_C_SV(
 		long groupId, long classNameId, long structureVersionId) {
 
-		for (DDMStructureLayout ddmStructureLayout :
-				findByG_C_SV(
-					groupId, classNameId, structureVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ddmStructureLayout);
-		}
+		_collectionPersistenceFinderByG_C_SV.remove(
+			finderCache,
+			new Object[] {groupId, classNameId, structureVersionId});
 	}
 
 	/**
@@ -2788,4 +2657,4 @@ public class DDMStructureLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-133543350
+// LIFERAY-SERVICE-BUILDER-HASH:74504134

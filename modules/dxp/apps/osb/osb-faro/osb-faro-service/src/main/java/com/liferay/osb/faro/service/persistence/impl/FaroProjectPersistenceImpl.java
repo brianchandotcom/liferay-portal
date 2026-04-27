@@ -101,20 +101,15 @@ public class FaroProjectPersistenceImpl
 		FaroProject faroProject = fetchByGroupId(groupId);
 
 		if (faroProject == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByGroupId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroProjectException(sb.toString());
+			throw new NoSuchFaroProjectException(message);
 		}
 
 		return faroProject;
@@ -271,16 +266,9 @@ public class FaroProjectPersistenceImpl
 			return faroProject;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectException(sb.toString());
+		throw new NoSuchFaroProjectException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -294,13 +282,8 @@ public class FaroProjectPersistenceImpl
 	public FaroProject fetchByUserId_First(
 		long userId, OrderByComparator<FaroProject> orderByComparator) {
 
-		List<FaroProject> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -310,12 +293,8 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (FaroProject faroProject :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroProject);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -348,20 +327,15 @@ public class FaroProjectPersistenceImpl
 		FaroProject faroProject = fetchByCorpProjectUuid(corpProjectUuid);
 
 		if (faroProject == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("corpProjectUuid=");
-			sb.append(corpProjectUuid);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCorpProjectUuid.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {corpProjectUuid});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroProjectException(sb.toString());
+			throw new NoSuchFaroProjectException(message);
 		}
 
 		return faroProject;
@@ -525,16 +499,9 @@ public class FaroProjectPersistenceImpl
 			return faroProject;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("serverLocation=");
-		sb.append(serverLocation);
-
-		sb.append("}");
-
-		throw new NoSuchFaroProjectException(sb.toString());
+		throw new NoSuchFaroProjectException(
+			_collectionPersistenceFinderByServerLocation.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {serverLocation}));
 	}
 
 	/**
@@ -549,14 +516,8 @@ public class FaroProjectPersistenceImpl
 		String serverLocation,
 		OrderByComparator<FaroProject> orderByComparator) {
 
-		List<FaroProject> list = findByServerLocation(
-			serverLocation, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByServerLocation.fetchFirst(
+			finderCache, new Object[] {serverLocation}, orderByComparator);
 	}
 
 	/**
@@ -566,13 +527,8 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Override
 	public void removeByServerLocation(String serverLocation) {
-		for (FaroProject faroProject :
-				findByServerLocation(
-					serverLocation, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(faroProject);
-		}
+		_collectionPersistenceFinderByServerLocation.remove(
+			finderCache, new Object[] {serverLocation});
 	}
 
 	/**
@@ -605,20 +561,15 @@ public class FaroProjectPersistenceImpl
 		FaroProject faroProject = fetchByWeDeployKey(weDeployKey);
 
 		if (faroProject == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("weDeployKey=");
-			sb.append(weDeployKey);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByWeDeployKey.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {weDeployKey});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFaroProjectException(sb.toString());
+			throw new NoSuchFaroProjectException(message);
 		}
 
 		return faroProject;
@@ -1401,4 +1352,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1575516008
+// LIFERAY-SERVICE-BUILDER-HASH:-135354641

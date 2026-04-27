@@ -200,16 +200,9 @@ public class RepositoryPersistenceImpl
 			return repository;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
+		throw new NoSuchRepositoryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -223,13 +216,9 @@ public class RepositoryPersistenceImpl
 	public Repository fetchByUuid_First(
 		String uuid, OrderByComparator<Repository> orderByComparator) {
 
-		List<Repository> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -239,11 +228,8 @@ public class RepositoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Repository repository :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(repository);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -282,23 +268,15 @@ public class RepositoryPersistenceImpl
 		Repository repository = fetchByUUID_G(uuid, groupId);
 
 		if (repository == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRepositoryException(sb.toString());
+			throw new NoSuchRepositoryException(message);
 		}
 
 		return repository;
@@ -483,19 +461,9 @@ public class RepositoryPersistenceImpl
 			return repository;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
+		throw new NoSuchRepositoryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -511,14 +479,9 @@ public class RepositoryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Repository> orderByComparator) {
 
-		List<Repository> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -529,13 +492,8 @@ public class RepositoryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Repository repository :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(repository);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -663,16 +621,9 @@ public class RepositoryPersistenceImpl
 			return repository;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
+		throw new NoSuchRepositoryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -686,13 +637,9 @@ public class RepositoryPersistenceImpl
 	public Repository fetchByGroupId_First(
 		long groupId, OrderByComparator<Repository> orderByComparator) {
 
-		List<Repository> list = findByGroupId(groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -702,12 +649,8 @@ public class RepositoryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (Repository repository :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(repository);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -835,16 +778,9 @@ public class RepositoryPersistenceImpl
 			return repository;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("portletId=");
-		sb.append(portletId);
-
-		sb.append("}");
-
-		throw new NoSuchRepositoryException(sb.toString());
+		throw new NoSuchRepositoryException(
+			_collectionPersistenceFinderByPortletId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portletId}));
 	}
 
 	/**
@@ -858,14 +794,9 @@ public class RepositoryPersistenceImpl
 	public Repository fetchByPortletId_First(
 		String portletId, OrderByComparator<Repository> orderByComparator) {
 
-		List<Repository> list = findByPortletId(
-			portletId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPortletId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -875,12 +806,8 @@ public class RepositoryPersistenceImpl
 	 */
 	@Override
 	public void removeByPortletId(String portletId) {
-		for (Repository repository :
-				findByPortletId(
-					portletId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(repository);
-		}
+		_collectionPersistenceFinderByPortletId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {portletId});
 	}
 
 	/**
@@ -919,26 +846,16 @@ public class RepositoryPersistenceImpl
 		Repository repository = fetchByG_N_P(groupId, name, portletId);
 
 		if (repository == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append(", portletId=");
-			sb.append(portletId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_N_P.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, name, portletId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRepositoryException(sb.toString());
+			throw new NoSuchRepositoryException(message);
 		}
 
 		return repository;
@@ -1032,23 +949,16 @@ public class RepositoryPersistenceImpl
 		Repository repository = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (repository == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRepositoryException(sb.toString());
+			throw new NoSuchRepositoryException(message);
 		}
 
 		return repository;
@@ -2272,4 +2182,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1350594537
+// LIFERAY-SERVICE-BUILDER-HASH:-1285826216

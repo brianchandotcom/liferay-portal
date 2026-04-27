@@ -205,16 +205,9 @@ public class KaleoNodeSettingPersistenceImpl
 			return kaleoNodeSetting;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoNodeId=");
-		sb.append(kaleoNodeId);
-
-		sb.append("}");
-
-		throw new NoSuchNodeSettingException(sb.toString());
+		throw new NoSuchNodeSettingException(
+			_collectionPersistenceFinderByKaleoNodeId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId}));
 	}
 
 	/**
@@ -229,14 +222,8 @@ public class KaleoNodeSettingPersistenceImpl
 		long kaleoNodeId,
 		OrderByComparator<KaleoNodeSetting> orderByComparator) {
 
-		List<KaleoNodeSetting> list = findByKaleoNodeId(
-			kaleoNodeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoNodeId.fetchFirst(
+			finderCache, new Object[] {kaleoNodeId}, orderByComparator);
 	}
 
 	/**
@@ -246,12 +233,8 @@ public class KaleoNodeSettingPersistenceImpl
 	 */
 	@Override
 	public void removeByKaleoNodeId(long kaleoNodeId) {
-		for (KaleoNodeSetting kaleoNodeSetting :
-				findByKaleoNodeId(
-					kaleoNodeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoNodeSetting);
-		}
+		_collectionPersistenceFinderByKaleoNodeId.remove(
+			finderCache, new Object[] {kaleoNodeId});
 	}
 
 	/**
@@ -290,23 +273,15 @@ public class KaleoNodeSettingPersistenceImpl
 		KaleoNodeSetting kaleoNodeSetting = fetchByKNI_N(kaleoNodeId, name);
 
 		if (kaleoNodeSetting == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("kaleoNodeId=");
-			sb.append(kaleoNodeId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByKNI_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {kaleoNodeId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchNodeSettingException(sb.toString());
+			throw new NoSuchNodeSettingException(message);
 		}
 
 		return kaleoNodeSetting;
@@ -1332,4 +1307,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-383031158
+// LIFERAY-SERVICE-BUILDER-HASH:-781821699

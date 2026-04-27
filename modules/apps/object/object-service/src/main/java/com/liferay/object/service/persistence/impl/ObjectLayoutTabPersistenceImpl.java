@@ -188,16 +188,9 @@ public class ObjectLayoutTabPersistenceImpl
 			return objectLayoutTab;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
+		throw new NoSuchObjectLayoutTabException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -211,13 +204,8 @@ public class ObjectLayoutTabPersistenceImpl
 	public ObjectLayoutTab fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectLayoutTab> orderByComparator) {
 
-		List<ObjectLayoutTab> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -227,11 +215,8 @@ public class ObjectLayoutTabPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectLayoutTab objectLayoutTab :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectLayoutTab);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -356,19 +341,9 @@ public class ObjectLayoutTabPersistenceImpl
 			return objectLayoutTab;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
+		throw new NoSuchObjectLayoutTabException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -384,14 +359,8 @@ public class ObjectLayoutTabPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectLayoutTab> orderByComparator) {
 
-		List<ObjectLayoutTab> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -402,13 +371,8 @@ public class ObjectLayoutTabPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectLayoutTab objectLayoutTab :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectLayoutTab);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -529,16 +493,9 @@ public class ObjectLayoutTabPersistenceImpl
 			return objectLayoutTab;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutId=");
-		sb.append(objectLayoutId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
+		throw new NoSuchObjectLayoutTabException(
+			_collectionPersistenceFinderByObjectLayoutId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectLayoutId}));
 	}
 
 	/**
@@ -553,14 +510,8 @@ public class ObjectLayoutTabPersistenceImpl
 		long objectLayoutId,
 		OrderByComparator<ObjectLayoutTab> orderByComparator) {
 
-		List<ObjectLayoutTab> list = findByObjectLayoutId(
-			objectLayoutId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectLayoutId.fetchFirst(
+			finderCache, new Object[] {objectLayoutId}, orderByComparator);
 	}
 
 	/**
@@ -570,13 +521,8 @@ public class ObjectLayoutTabPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectLayoutId(long objectLayoutId) {
-		for (ObjectLayoutTab objectLayoutTab :
-				findByObjectLayoutId(
-					objectLayoutId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectLayoutTab);
-		}
+		_collectionPersistenceFinderByObjectLayoutId.remove(
+			finderCache, new Object[] {objectLayoutId});
 	}
 
 	/**
@@ -699,16 +645,11 @@ public class ObjectLayoutTabPersistenceImpl
 			return objectLayoutTab;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectRelationshipId=");
-		sb.append(objectRelationshipId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutTabException(sb.toString());
+		throw new NoSuchObjectLayoutTabException(
+			_collectionPersistenceFinderByObjectRelationshipId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectRelationshipId}));
 	}
 
 	/**
@@ -723,14 +664,9 @@ public class ObjectLayoutTabPersistenceImpl
 		long objectRelationshipId,
 		OrderByComparator<ObjectLayoutTab> orderByComparator) {
 
-		List<ObjectLayoutTab> list = findByObjectRelationshipId(
-			objectRelationshipId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectRelationshipId.fetchFirst(
+			finderCache, new Object[] {objectRelationshipId},
+			orderByComparator);
 	}
 
 	/**
@@ -740,13 +676,8 @@ public class ObjectLayoutTabPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectRelationshipId(long objectRelationshipId) {
-		for (ObjectLayoutTab objectLayoutTab :
-				findByObjectRelationshipId(
-					objectRelationshipId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectLayoutTab);
-		}
+		_collectionPersistenceFinderByObjectRelationshipId.remove(
+			finderCache, new Object[] {objectRelationshipId});
 	}
 
 	/**
@@ -1526,4 +1457,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-406099700
+// LIFERAY-SERVICE-BUILDER-HASH:-1053033460

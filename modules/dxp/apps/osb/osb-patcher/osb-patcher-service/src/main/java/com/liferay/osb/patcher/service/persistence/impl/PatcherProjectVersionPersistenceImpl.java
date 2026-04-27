@@ -200,16 +200,11 @@ public class PatcherProjectVersionPersistenceImpl
 			return patcherProjectVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
+		throw new NoSuchPatcherProjectVersionException(
+			_collectionPersistenceFinderByPatcherProductVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {patcherProductVersionId}));
 	}
 
 	/**
@@ -224,14 +219,9 @@ public class PatcherProjectVersionPersistenceImpl
 		long patcherProductVersionId,
 		OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
-		List<PatcherProjectVersion> list = findByPatcherProductVersionId(
-			patcherProductVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByPatcherProductVersionId.fetchFirst(
+			finderCache, new Object[] {patcherProductVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -390,13 +380,8 @@ public class PatcherProjectVersionPersistenceImpl
 	 */
 	@Override
 	public void removeByPatcherProductVersionId(long patcherProductVersionId) {
-		for (PatcherProjectVersion patcherProjectVersion :
-				findByPatcherProductVersionId(
-					patcherProductVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherProjectVersion);
-		}
+		_collectionPersistenceFinderByPatcherProductVersionId.remove(
+			finderCache, new Object[] {patcherProductVersionId});
 	}
 
 	/**
@@ -588,16 +573,11 @@ public class PatcherProjectVersionPersistenceImpl
 			return patcherProjectVersion;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("rootPatcherProjectVersionId=");
-		sb.append(rootPatcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
+		throw new NoSuchPatcherProjectVersionException(
+			_collectionPersistenceFinderByRootPatcherProjectVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {rootPatcherProjectVersionId}));
 	}
 
 	/**
@@ -612,14 +592,10 @@ public class PatcherProjectVersionPersistenceImpl
 		long rootPatcherProjectVersionId,
 		OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
-		List<PatcherProjectVersion> list = findByRootPatcherProjectVersionId(
-			rootPatcherProjectVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRootPatcherProjectVersionId.
+			fetchFirst(
+				finderCache, new Object[] {rootPatcherProjectVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -780,13 +756,8 @@ public class PatcherProjectVersionPersistenceImpl
 	public void removeByRootPatcherProjectVersionId(
 		long rootPatcherProjectVersionId) {
 
-		for (PatcherProjectVersion patcherProjectVersion :
-				findByRootPatcherProjectVersionId(
-					rootPatcherProjectVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherProjectVersion);
-		}
+		_collectionPersistenceFinderByRootPatcherProjectVersionId.remove(
+			finderCache, new Object[] {rootPatcherProjectVersionId});
 	}
 
 	/**
@@ -888,20 +859,15 @@ public class PatcherProjectVersionPersistenceImpl
 			committish);
 
 		if (patcherProjectVersion == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("committish=");
-			sb.append(committish);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCommittish.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {committish});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherProjectVersionException(sb.toString());
+			throw new NoSuchPatcherProjectVersionException(message);
 		}
 
 		return patcherProjectVersion;
@@ -979,20 +945,15 @@ public class PatcherProjectVersionPersistenceImpl
 		PatcherProjectVersion patcherProjectVersion = fetchByName(name);
 
 		if (patcherProjectVersion == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchPatcherProjectVersionException(sb.toString());
+			throw new NoSuchPatcherProjectVersionException(message);
 		}
 
 		return patcherProjectVersion;
@@ -1172,19 +1133,12 @@ public class PatcherProjectVersionPersistenceImpl
 			return patcherProjectVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append(", rootPatcherProjectVersionId=");
-		sb.append(rootPatcherProjectVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
+		throw new NoSuchPatcherProjectVersionException(
+			_collectionPersistenceFinderByP_R.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					patcherProductVersionId, rootPatcherProjectVersionId
+				}));
 	}
 
 	/**
@@ -1200,15 +1154,10 @@ public class PatcherProjectVersionPersistenceImpl
 		long patcherProductVersionId, long rootPatcherProjectVersionId,
 		OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
-		List<PatcherProjectVersion> list = findByP_R(
-			patcherProductVersionId, rootPatcherProjectVersionId, 0, 1,
+		return _collectionPersistenceFinderByP_R.fetchFirst(
+			finderCache,
+			new Object[] {patcherProductVersionId, rootPatcherProjectVersionId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1380,13 +1329,11 @@ public class PatcherProjectVersionPersistenceImpl
 	public void removeByP_R(
 		long patcherProductVersionId, long rootPatcherProjectVersionId) {
 
-		for (PatcherProjectVersion patcherProjectVersion :
-				findByP_R(
-					patcherProductVersionId, rootPatcherProjectVersionId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(patcherProjectVersion);
-		}
+		_collectionPersistenceFinderByP_R.remove(
+			finderCache,
+			new Object[] {
+				patcherProductVersionId, rootPatcherProjectVersionId
+			});
 	}
 
 	/**
@@ -1596,19 +1543,10 @@ public class PatcherProjectVersionPersistenceImpl
 			return patcherProjectVersion;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("patcherProductVersionId=");
-		sb.append(patcherProductVersionId);
-
-		sb.append(", repositoryName=");
-		sb.append(repositoryName);
-
-		sb.append("}");
-
-		throw new NoSuchPatcherProjectVersionException(sb.toString());
+		throw new NoSuchPatcherProjectVersionException(
+			_collectionPersistenceFinderByP_RN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {patcherProductVersionId, repositoryName}));
 	}
 
 	/**
@@ -1624,14 +1562,9 @@ public class PatcherProjectVersionPersistenceImpl
 		long patcherProductVersionId, String repositoryName,
 		OrderByComparator<PatcherProjectVersion> orderByComparator) {
 
-		List<PatcherProjectVersion> list = findByP_RN(
-			patcherProductVersionId, repositoryName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByP_RN.fetchFirst(
+			finderCache, new Object[] {patcherProductVersionId, repositoryName},
+			orderByComparator);
 	}
 
 	/**
@@ -1814,13 +1747,9 @@ public class PatcherProjectVersionPersistenceImpl
 	public void removeByP_RN(
 		long patcherProductVersionId, String repositoryName) {
 
-		for (PatcherProjectVersion patcherProjectVersion :
-				findByP_RN(
-					patcherProductVersionId, repositoryName, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherProjectVersion);
-		}
+		_collectionPersistenceFinderByP_RN.remove(
+			finderCache,
+			new Object[] {patcherProductVersionId, repositoryName});
 	}
 
 	/**
@@ -2796,4 +2725,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:543746479
+// LIFERAY-SERVICE-BUILDER-HASH:973034535

@@ -195,19 +195,9 @@ public class OpenIdConnectUserPersistenceImpl
 			return openIdConnectUser;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchUserException(sb.toString());
+		throw new NoSuchUserException(
+			_collectionPersistenceFinderByC_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId}));
 	}
 
 	/**
@@ -223,14 +213,8 @@ public class OpenIdConnectUserPersistenceImpl
 		long companyId, long userId,
 		OrderByComparator<OpenIdConnectUser> orderByComparator) {
 
-		List<OpenIdConnectUser> list = findByC_U(
-			companyId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_U.fetchFirst(
+			finderCache, new Object[] {companyId, userId}, orderByComparator);
 	}
 
 	/**
@@ -241,13 +225,8 @@ public class OpenIdConnectUserPersistenceImpl
 	 */
 	@Override
 	public void removeByC_U(long companyId, long userId) {
-		for (OpenIdConnectUser openIdConnectUser :
-				findByC_U(
-					companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(openIdConnectUser);
-		}
+		_collectionPersistenceFinderByC_U.remove(
+			finderCache, new Object[] {companyId, userId});
 	}
 
 	/**
@@ -285,26 +264,16 @@ public class OpenIdConnectUserPersistenceImpl
 			companyId, issuer, subject);
 
 		if (openIdConnectUser == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", issuer=");
-			sb.append(issuer);
-
-			sb.append(", subject=");
-			sb.append(subject);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_I_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, issuer, subject});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchUserException(sb.toString());
+			throw new NoSuchUserException(message);
 		}
 
 		return openIdConnectUser;
@@ -1064,4 +1033,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-878151027
+// LIFERAY-SERVICE-BUILDER-HASH:-401989766

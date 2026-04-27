@@ -203,16 +203,9 @@ public class CalendarPersistenceImpl
 			return calendar;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
+		throw new NoSuchCalendarException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -226,13 +219,8 @@ public class CalendarPersistenceImpl
 	public Calendar fetchByUuid_First(
 		String uuid, OrderByComparator<Calendar> orderByComparator) {
 
-		List<Calendar> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -242,11 +230,8 @@ public class CalendarPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Calendar calendar :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendar);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -284,23 +269,15 @@ public class CalendarPersistenceImpl
 		Calendar calendar = fetchByUUID_G(uuid, groupId);
 
 		if (calendar == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCalendarException(sb.toString());
+			throw new NoSuchCalendarException(message);
 		}
 
 		return calendar;
@@ -482,19 +459,9 @@ public class CalendarPersistenceImpl
 			return calendar;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
+		throw new NoSuchCalendarException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -510,14 +477,8 @@ public class CalendarPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Calendar> orderByComparator) {
 
-		List<Calendar> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -528,13 +489,8 @@ public class CalendarPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Calendar calendar :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(calendar);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -670,19 +626,10 @@ public class CalendarPersistenceImpl
 			return calendar;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
+		throw new NoSuchCalendarException(
+			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, calendarResourceId}));
 	}
 
 	/**
@@ -698,14 +645,9 @@ public class CalendarPersistenceImpl
 		long groupId, long calendarResourceId,
 		OrderByComparator<Calendar> orderByComparator) {
 
-		List<Calendar> list = findByG_C(
-			groupId, calendarResourceId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_C.fetchFirst(
+			finderCache, new Object[] {groupId, calendarResourceId},
+			orderByComparator);
 	}
 
 	/**
@@ -865,13 +807,8 @@ public class CalendarPersistenceImpl
 	 */
 	@Override
 	public void removeByG_C(long groupId, long calendarResourceId) {
-		for (Calendar calendar :
-				findByG_C(
-					groupId, calendarResourceId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(calendar);
-		}
+		_collectionPersistenceFinderByG_C.remove(
+			finderCache, new Object[] {groupId, calendarResourceId});
 	}
 
 	/**
@@ -1086,22 +1023,10 @@ public class CalendarPersistenceImpl
 			return calendar;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", calendarResourceId=");
-		sb.append(calendarResourceId);
-
-		sb.append(", defaultCalendar=");
-		sb.append(defaultCalendar);
-
-		sb.append("}");
-
-		throw new NoSuchCalendarException(sb.toString());
+		throw new NoSuchCalendarException(
+			_collectionPersistenceFinderByG_C_D.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, calendarResourceId, defaultCalendar}));
 	}
 
 	/**
@@ -1118,15 +1043,10 @@ public class CalendarPersistenceImpl
 		long groupId, long calendarResourceId, boolean defaultCalendar,
 		OrderByComparator<Calendar> orderByComparator) {
 
-		List<Calendar> list = findByG_C_D(
-			groupId, calendarResourceId, defaultCalendar, 0, 1,
+		return _collectionPersistenceFinderByG_C_D.fetchFirst(
+			finderCache,
+			new Object[] {groupId, calendarResourceId, defaultCalendar},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1299,13 +1219,9 @@ public class CalendarPersistenceImpl
 	public void removeByG_C_D(
 		long groupId, long calendarResourceId, boolean defaultCalendar) {
 
-		for (Calendar calendar :
-				findByG_C_D(
-					groupId, calendarResourceId, defaultCalendar,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(calendar);
-		}
+		_collectionPersistenceFinderByG_C_D.remove(
+			finderCache,
+			new Object[] {groupId, calendarResourceId, defaultCalendar});
 	}
 
 	/**
@@ -2494,4 +2410,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-768902187
+// LIFERAY-SERVICE-BUILDER-HASH:2078881096

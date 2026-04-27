@@ -197,16 +197,9 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -220,13 +213,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByUuid_First(
 		String uuid, OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -236,11 +224,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CTEntry ctEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -364,19 +349,9 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -392,14 +367,8 @@ public class CTEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -410,13 +379,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CTEntry ctEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -530,16 +494,9 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -553,13 +510,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByUserId_First(
 		long userId, OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByUserId(userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -569,12 +521,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (CTEntry ctEntry :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -692,16 +640,9 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -715,14 +656,8 @@ public class CTEntryPersistenceImpl
 	public CTEntry fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -732,13 +667,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTEntry ctEntry :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -866,19 +796,10 @@ public class CTEntryPersistenceImpl
 			return ctEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", modelClassNameId=");
-		sb.append(modelClassNameId);
-
-		sb.append("}");
-
-		throw new NoSuchEntryException(sb.toString());
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByC_MCNI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {ctCollectionId, modelClassNameId}));
 	}
 
 	/**
@@ -894,14 +815,9 @@ public class CTEntryPersistenceImpl
 		long ctCollectionId, long modelClassNameId,
 		OrderByComparator<CTEntry> orderByComparator) {
 
-		List<CTEntry> list = findByC_MCNI(
-			ctCollectionId, modelClassNameId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_MCNI.fetchFirst(
+			finderCache, new Object[] {ctCollectionId, modelClassNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -912,13 +828,8 @@ public class CTEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_MCNI(long ctCollectionId, long modelClassNameId) {
-		for (CTEntry ctEntry :
-				findByC_MCNI(
-					ctCollectionId, modelClassNameId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctEntry);
-		}
+		_collectionPersistenceFinderByC_MCNI.remove(
+			finderCache, new Object[] {ctCollectionId, modelClassNameId});
 	}
 
 	/**
@@ -956,26 +867,18 @@ public class CTEntryPersistenceImpl
 			ctCollectionId, modelClassNameId, modelClassPK);
 
 		if (ctEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("ctCollectionId=");
-			sb.append(ctCollectionId);
-
-			sb.append(", modelClassNameId=");
-			sb.append(modelClassNameId);
-
-			sb.append(", modelClassPK=");
-			sb.append(modelClassPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_MCNI_MCPK.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						ctCollectionId, modelClassNameId, modelClassPK
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return ctEntry;
@@ -1712,23 +1615,16 @@ public class CTEntryPersistenceImpl
 		CTEntry ctEntry = fetchByERC_C(externalReferenceCode, companyId);
 
 		if (ctEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return ctEntry;
@@ -2714,4 +2610,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-325288169
+// LIFERAY-SERVICE-BUILDER-HASH:1447135298

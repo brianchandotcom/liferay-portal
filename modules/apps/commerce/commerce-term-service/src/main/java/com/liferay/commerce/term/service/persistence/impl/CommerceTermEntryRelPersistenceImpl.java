@@ -193,16 +193,11 @@ public class CommerceTermEntryRelPersistenceImpl
 			return commerceTermEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryRelException(sb.toString());
+		throw new NoSuchTermEntryRelException(
+			_collectionPersistenceFinderByCommerceTermEntryId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceTermEntryId}));
 	}
 
 	/**
@@ -217,14 +212,8 @@ public class CommerceTermEntryRelPersistenceImpl
 		long commerceTermEntryId,
 		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
 
-		List<CommerceTermEntryRel> list = findByCommerceTermEntryId(
-			commerceTermEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceTermEntryId.fetchFirst(
+			finderCache, new Object[] {commerceTermEntryId}, orderByComparator);
 	}
 
 	/**
@@ -234,13 +223,8 @@ public class CommerceTermEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceTermEntryId(long commerceTermEntryId) {
-		for (CommerceTermEntryRel commerceTermEntryRel :
-				findByCommerceTermEntryId(
-					commerceTermEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceTermEntryRel);
-		}
+		_collectionPersistenceFinderByCommerceTermEntryId.remove(
+			finderCache, new Object[] {commerceTermEntryId});
 	}
 
 	/**
@@ -369,19 +353,10 @@ public class CommerceTermEntryRelPersistenceImpl
 			return commerceTermEntryRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceTermEntryId=");
-		sb.append(commerceTermEntryId);
-
-		sb.append("}");
-
-		throw new NoSuchTermEntryRelException(sb.toString());
+		throw new NoSuchTermEntryRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, commerceTermEntryId}));
 	}
 
 	/**
@@ -397,14 +372,9 @@ public class CommerceTermEntryRelPersistenceImpl
 		long classNameId, long commerceTermEntryId,
 		OrderByComparator<CommerceTermEntryRel> orderByComparator) {
 
-		List<CommerceTermEntryRel> list = findByC_C(
-			classNameId, commerceTermEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, commerceTermEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -415,13 +385,8 @@ public class CommerceTermEntryRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long commerceTermEntryId) {
-		for (CommerceTermEntryRel commerceTermEntryRel :
-				findByC_C(
-					classNameId, commerceTermEntryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceTermEntryRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, commerceTermEntryId});
 	}
 
 	/**
@@ -459,26 +424,16 @@ public class CommerceTermEntryRelPersistenceImpl
 			classNameId, classPK, commerceTermEntryId);
 
 		if (commerceTermEntryRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", commerceTermEntryId=");
-			sb.append(commerceTermEntryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, commerceTermEntryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchTermEntryRelException(sb.toString());
+			throw new NoSuchTermEntryRelException(message);
 		}
 
 		return commerceTermEntryRel;
@@ -1300,4 +1255,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-668609819
+// LIFERAY-SERVICE-BUILDER-HASH:-1044415297

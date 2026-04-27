@@ -189,16 +189,9 @@ public class CTProcessPersistenceImpl
 			return ctProcess;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
+		throw new NoSuchProcessException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class CTProcessPersistenceImpl
 	public CTProcess fetchByCompanyId_First(
 		long companyId, OrderByComparator<CTProcess> orderByComparator) {
 
-		List<CTProcess> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -366,12 +353,8 @@ public class CTProcessPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (CTProcess ctProcess :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctProcess);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -549,16 +532,9 @@ public class CTProcessPersistenceImpl
 			return ctProcess;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
+		throw new NoSuchProcessException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -572,14 +548,8 @@ public class CTProcessPersistenceImpl
 	public CTProcess fetchByCtCollectionId_First(
 		long ctCollectionId, OrderByComparator<CTProcess> orderByComparator) {
 
-		List<CTProcess> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -727,13 +697,8 @@ public class CTProcessPersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTProcess ctProcess :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctProcess);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -917,19 +882,9 @@ public class CTProcessPersistenceImpl
 			return ctProcess;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append(", type=");
-		sb.append(type);
-
-		sb.append("}");
-
-		throw new NoSuchProcessException(sb.toString());
+		throw new NoSuchProcessException(
+			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId, type}));
 	}
 
 	/**
@@ -945,14 +900,9 @@ public class CTProcessPersistenceImpl
 		long ctCollectionId, int type,
 		OrderByComparator<CTProcess> orderByComparator) {
 
-		List<CTProcess> list = findByC_T(
-			ctCollectionId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			finderCache, new Object[] {ctCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1108,13 +1058,8 @@ public class CTProcessPersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long ctCollectionId, int type) {
-		for (CTProcess ctProcess :
-				findByC_T(
-					ctCollectionId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctProcess);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			finderCache, new Object[] {ctCollectionId, type});
 	}
 
 	/**
@@ -1918,4 +1863,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-689201055
+// LIFERAY-SERVICE-BUILDER-HASH:-1568609010

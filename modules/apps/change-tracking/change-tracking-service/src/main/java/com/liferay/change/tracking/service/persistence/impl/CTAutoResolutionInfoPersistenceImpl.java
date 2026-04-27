@@ -194,16 +194,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 			return ctAutoResolutionInfo;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("ctCollectionId=");
-		sb.append(ctCollectionId);
-
-		sb.append("}");
-
-		throw new NoSuchAutoResolutionInfoException(sb.toString());
+		throw new NoSuchAutoResolutionInfoException(
+			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
 	}
 
 	/**
@@ -218,14 +211,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 		long ctCollectionId,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
-		List<CTAutoResolutionInfo> list = findByCtCollectionId(
-			ctCollectionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCtCollectionId.fetchFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -235,13 +222,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 */
 	@Override
 	public void removeByCtCollectionId(long ctCollectionId) {
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				findByCtCollectionId(
-					ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctAutoResolutionInfo);
-		}
+		_collectionPersistenceFinderByCtCollectionId.remove(
+			finderCache, new Object[] {ctCollectionId});
 	}
 
 	/**
@@ -1626,4 +1608,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-44927655
+// LIFERAY-SERVICE-BUILDER-HASH:1814052265

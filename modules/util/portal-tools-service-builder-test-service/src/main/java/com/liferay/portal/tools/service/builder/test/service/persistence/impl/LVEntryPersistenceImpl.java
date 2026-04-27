@@ -185,16 +185,9 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -208,13 +201,8 @@ public class LVEntryPersistenceImpl
 	public LVEntry fetchByUuid_First(
 		String uuid, OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -224,11 +212,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (LVEntry lvEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -350,19 +335,9 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByUuid_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, head}));
 	}
 
 	/**
@@ -378,14 +353,8 @@ public class LVEntryPersistenceImpl
 		String uuid, boolean head,
 		OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByUuid_Head(
-			uuid, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_Head.fetchFirst(
+			finderCache, new Object[] {uuid, head}, orderByComparator);
 	}
 
 	/**
@@ -396,12 +365,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_Head(String uuid, boolean head) {
-		for (LVEntry lvEntry :
-				findByUuid_Head(
-					uuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByUuid_Head.remove(
+			finderCache, new Object[] {uuid, head});
 	}
 
 	/**
@@ -524,19 +489,9 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
 	}
 
 	/**
@@ -552,14 +507,8 @@ public class LVEntryPersistenceImpl
 		String uuid, long groupId,
 		OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByUUID_G(
-			uuid, groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUUID_G.fetchFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -570,13 +519,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUUID_G(String uuid, long groupId) {
-		for (LVEntry lvEntry :
-				findByUUID_G(
-					uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByUUID_G.remove(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -612,26 +556,16 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByUUID_G_Head(uuid, groupId, head);
 
 		if (lvEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G_Head.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {uuid, groupId, head});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLVEntryException(sb.toString());
+			throw new NoSuchLVEntryException(message);
 		}
 
 		return lvEntry;
@@ -807,19 +741,9 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -835,14 +759,8 @@ public class LVEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -853,13 +771,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (LVEntry lvEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -991,22 +904,10 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByUuid_C_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {uuid, companyId, head}));
 	}
 
 	/**
@@ -1023,14 +924,9 @@ public class LVEntryPersistenceImpl
 		String uuid, long companyId, boolean head,
 		OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByUuid_C_Head(
-			uuid, companyId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C_Head.fetchFirst(
+			finderCache, new Object[] {uuid, companyId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1042,13 +938,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C_Head(String uuid, long companyId, boolean head) {
-		for (LVEntry lvEntry :
-				findByUuid_C_Head(
-					uuid, companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByUuid_C_Head.remove(
+			finderCache, new Object[] {uuid, companyId, head});
 	}
 
 	/**
@@ -2427,19 +2318,10 @@ public class LVEntryPersistenceImpl
 			return lvEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", uniqueGroupKey=");
-		sb.append(uniqueGroupKey);
-
-		sb.append("}");
-
-		throw new NoSuchLVEntryException(sb.toString());
+		throw new NoSuchLVEntryException(
+			_collectionPersistenceFinderByG_UGK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, uniqueGroupKey}));
 	}
 
 	/**
@@ -2455,14 +2337,9 @@ public class LVEntryPersistenceImpl
 		long groupId, String uniqueGroupKey,
 		OrderByComparator<LVEntry> orderByComparator) {
 
-		List<LVEntry> list = findByG_UGK(
-			groupId, uniqueGroupKey, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_UGK.fetchFirst(
+			finderCache, new Object[] {groupId, uniqueGroupKey},
+			orderByComparator);
 	}
 
 	/**
@@ -2473,13 +2350,8 @@ public class LVEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_UGK(long groupId, String uniqueGroupKey) {
-		for (LVEntry lvEntry :
-				findByG_UGK(
-					groupId, uniqueGroupKey, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(lvEntry);
-		}
+		_collectionPersistenceFinderByG_UGK.remove(
+			finderCache, new Object[] {groupId, uniqueGroupKey});
 	}
 
 	/**
@@ -2516,26 +2388,16 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByG_UGK_Head(groupId, uniqueGroupKey, head);
 
 		if (lvEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", uniqueGroupKey=");
-			sb.append(uniqueGroupKey);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_UGK_Head.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, uniqueGroupKey, head});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLVEntryException(sb.toString());
+			throw new NoSuchLVEntryException(message);
 		}
 
 		return lvEntry;
@@ -2624,20 +2486,15 @@ public class LVEntryPersistenceImpl
 		LVEntry lvEntry = fetchByHeadId(headId);
 
 		if (lvEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("headId=");
-			sb.append(headId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchLVEntryException(sb.toString());
+			throw new NoSuchLVEntryException(message);
 		}
 
 		return lvEntry;
@@ -3986,4 +3843,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-354808975
+// LIFERAY-SERVICE-BUILDER-HASH:1911046822

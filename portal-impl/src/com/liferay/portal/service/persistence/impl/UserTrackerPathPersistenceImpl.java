@@ -179,16 +179,9 @@ public class UserTrackerPathPersistenceImpl
 			return userTrackerPath;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userTrackerId=");
-		sb.append(userTrackerId);
-
-		sb.append("}");
-
-		throw new NoSuchUserTrackerPathException(sb.toString());
+		throw new NoSuchUserTrackerPathException(
+			_collectionPersistenceFinderByUserTrackerId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userTrackerId}));
 	}
 
 	/**
@@ -203,14 +196,9 @@ public class UserTrackerPathPersistenceImpl
 		long userTrackerId,
 		OrderByComparator<UserTrackerPath> orderByComparator) {
 
-		List<UserTrackerPath> list = findByUserTrackerId(
-			userTrackerId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserTrackerId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userTrackerId},
+			orderByComparator);
 	}
 
 	/**
@@ -220,13 +208,8 @@ public class UserTrackerPathPersistenceImpl
 	 */
 	@Override
 	public void removeByUserTrackerId(long userTrackerId) {
-		for (UserTrackerPath userTrackerPath :
-				findByUserTrackerId(
-					userTrackerId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(userTrackerPath);
-		}
+		_collectionPersistenceFinderByUserTrackerId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userTrackerId});
 	}
 
 	/**
@@ -845,4 +828,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-740804371
+// LIFERAY-SERVICE-BUILDER-HASH:728140914

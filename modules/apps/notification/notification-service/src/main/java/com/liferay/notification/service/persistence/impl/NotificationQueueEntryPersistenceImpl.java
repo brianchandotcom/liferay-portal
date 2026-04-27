@@ -196,16 +196,9 @@ public class NotificationQueueEntryPersistenceImpl
 			return notificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -220,14 +213,8 @@ public class NotificationQueueEntryPersistenceImpl
 		long companyId,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		List<NotificationQueueEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -380,12 +367,8 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (NotificationQueueEntry notificationQueueEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationQueueEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -570,16 +553,11 @@ public class NotificationQueueEntryPersistenceImpl
 			return notificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("notificationTemplateId=");
-		sb.append(notificationTemplateId);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByNotificationTemplateId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {notificationTemplateId}));
 	}
 
 	/**
@@ -594,14 +572,9 @@ public class NotificationQueueEntryPersistenceImpl
 		long notificationTemplateId,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		List<NotificationQueueEntry> list = findByNotificationTemplateId(
-			notificationTemplateId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByNotificationTemplateId.fetchFirst(
+			finderCache, new Object[] {notificationTemplateId},
+			orderByComparator);
 	}
 
 	/**
@@ -759,13 +732,8 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByNotificationTemplateId(long notificationTemplateId) {
-		for (NotificationQueueEntry notificationQueueEntry :
-				findByNotificationTemplateId(
-					notificationTemplateId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(notificationQueueEntry);
-		}
+		_collectionPersistenceFinderByNotificationTemplateId.remove(
+			finderCache, new Object[] {notificationTemplateId});
 	}
 
 	/**
@@ -948,16 +916,9 @@ public class NotificationQueueEntryPersistenceImpl
 			return notificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sentDate<");
-		sb.append(sentDate);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByLtSentDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sentDate}));
 	}
 
 	/**
@@ -972,14 +933,8 @@ public class NotificationQueueEntryPersistenceImpl
 		Date sentDate,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		List<NotificationQueueEntry> list = findByLtSentDate(
-			sentDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtSentDate.fetchFirst(
+			finderCache, new Object[] {sentDate}, orderByComparator);
 	}
 
 	/**
@@ -1143,12 +1098,8 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLtSentDate(Date sentDate) {
-		for (NotificationQueueEntry notificationQueueEntry :
-				findByLtSentDate(
-					sentDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationQueueEntry);
-		}
+		_collectionPersistenceFinderByLtSentDate.remove(
+			finderCache, new Object[] {sentDate});
 	}
 
 	/**
@@ -1347,19 +1298,9 @@ public class NotificationQueueEntryPersistenceImpl
 			return notificationQueueEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("type=");
-		sb.append(type);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchNotificationQueueEntryException(sb.toString());
+		throw new NoSuchNotificationQueueEntryException(
+			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, status}));
 	}
 
 	/**
@@ -1375,14 +1316,8 @@ public class NotificationQueueEntryPersistenceImpl
 		String type, int status,
 		OrderByComparator<NotificationQueueEntry> orderByComparator) {
 
-		List<NotificationQueueEntry> list = findByT_S(
-			type, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_S.fetchFirst(
+			finderCache, new Object[] {type, status}, orderByComparator);
 	}
 
 	/**
@@ -1558,12 +1493,8 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByT_S(String type, int status) {
-		for (NotificationQueueEntry notificationQueueEntry :
-				findByT_S(
-					type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(notificationQueueEntry);
-		}
+		_collectionPersistenceFinderByT_S.remove(
+			finderCache, new Object[] {type, status});
 	}
 
 	/**
@@ -2473,4 +2404,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-532002641
+// LIFERAY-SERVICE-BUILDER-HASH:-102021794

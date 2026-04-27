@@ -207,19 +207,9 @@ public class CTSContentPersistenceImpl
 			return ctsContent;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByR_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {repositoryId, path}));
 	}
 
 	/**
@@ -235,14 +225,8 @@ public class CTSContentPersistenceImpl
 		long repositoryId, String path,
 		OrderByComparator<CTSContent> orderByComparator) {
 
-		List<CTSContent> list = findByR_P(
-			repositoryId, path, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_P.fetchFirst(
+			finderCache, new Object[] {repositoryId, path}, orderByComparator);
 	}
 
 	/**
@@ -253,13 +237,8 @@ public class CTSContentPersistenceImpl
 	 */
 	@Override
 	public void removeByR_P(long repositoryId, String path) {
-		for (CTSContent ctsContent :
-				findByR_P(
-					repositoryId, path, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ctsContent);
-		}
+		_collectionPersistenceFinderByR_P.remove(
+			finderCache, new Object[] {repositoryId, path});
 	}
 
 	/**
@@ -406,22 +385,10 @@ public class CTSContentPersistenceImpl
 			return ctsContent;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId, storeType}));
 	}
 
 	/**
@@ -438,14 +405,9 @@ public class CTSContentPersistenceImpl
 		long companyId, long repositoryId, String storeType,
 		OrderByComparator<CTSContent> orderByComparator) {
 
-		List<CTSContent> list = findByC_R_S(
-			companyId, repositoryId, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R_S.fetchFirst(
+			finderCache, new Object[] {companyId, repositoryId, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -459,13 +421,8 @@ public class CTSContentPersistenceImpl
 	public void removeByC_R_S(
 		long companyId, long repositoryId, String storeType) {
 
-		for (CTSContent ctsContent :
-				findByC_R_S(
-					companyId, repositoryId, storeType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsContent);
-		}
+		_collectionPersistenceFinderByC_R_S.remove(
+			finderCache, new Object[] {companyId, repositoryId, storeType});
 	}
 
 	/**
@@ -621,25 +578,10 @@ public class CTSContentPersistenceImpl
 			return ctsContent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", path=");
-		sb.append(path);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R_P_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId, path, storeType}));
 	}
 
 	/**
@@ -657,14 +599,10 @@ public class CTSContentPersistenceImpl
 		long companyId, long repositoryId, String path, String storeType,
 		OrderByComparator<CTSContent> orderByComparator) {
 
-		List<CTSContent> list = findByC_R_P_S(
-			companyId, repositoryId, path, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R_P_S.fetchFirst(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -679,13 +617,9 @@ public class CTSContentPersistenceImpl
 	public void removeByC_R_P_S(
 		long companyId, long repositoryId, String path, String storeType) {
 
-		for (CTSContent ctsContent :
-				findByC_R_P_S(
-					companyId, repositoryId, path, storeType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsContent);
-		}
+		_collectionPersistenceFinderByC_R_P_S.remove(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
 	/**
@@ -842,25 +776,10 @@ public class CTSContentPersistenceImpl
 			return ctsContent;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", pathLIKE");
-		sb.append(path);
-
-		sb.append(", storeType=");
-		sb.append(storeType);
-
-		sb.append("}");
-
-		throw new NoSuchContentException(sb.toString());
+		throw new NoSuchContentException(
+			_collectionPersistenceFinderByC_R_LikeP_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, repositoryId, path, storeType}));
 	}
 
 	/**
@@ -878,14 +797,10 @@ public class CTSContentPersistenceImpl
 		long companyId, long repositoryId, String path, String storeType,
 		OrderByComparator<CTSContent> orderByComparator) {
 
-		List<CTSContent> list = findByC_R_LikeP_S(
-			companyId, repositoryId, path, storeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_R_LikeP_S.fetchFirst(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType},
+			orderByComparator);
 	}
 
 	/**
@@ -900,13 +815,9 @@ public class CTSContentPersistenceImpl
 	public void removeByC_R_LikeP_S(
 		long companyId, long repositoryId, String path, String storeType) {
 
-		for (CTSContent ctsContent :
-				findByC_R_LikeP_S(
-					companyId, repositoryId, path, storeType, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(ctsContent);
-		}
+		_collectionPersistenceFinderByC_R_LikeP_S.remove(
+			finderCache,
+			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
 	/**
@@ -957,32 +868,18 @@ public class CTSContentPersistenceImpl
 			companyId, repositoryId, path, version, storeType);
 
 		if (ctsContent == null) {
-			StringBundler sb = new StringBundler(12);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", repositoryId=");
-			sb.append(repositoryId);
-
-			sb.append(", path=");
-			sb.append(path);
-
-			sb.append(", version=");
-			sb.append(version);
-
-			sb.append(", storeType=");
-			sb.append(storeType);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_R_P_V_S.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						companyId, repositoryId, path, version, storeType
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchContentException(sb.toString());
+			throw new NoSuchContentException(message);
 		}
 
 		return ctsContent;
@@ -2163,4 +2060,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1534321893
+// LIFERAY-SERVICE-BUILDER-HASH:-1786001370

@@ -188,16 +188,9 @@ public class SamlIdpSpSessionPersistenceImpl
 			return samlIdpSpSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("createDate<");
-		sb.append(createDate);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSpSessionException(sb.toString());
+		throw new NoSuchIdpSpSessionException(
+			_collectionPersistenceFinderByLtCreateDate.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createDate}));
 	}
 
 	/**
@@ -212,14 +205,8 @@ public class SamlIdpSpSessionPersistenceImpl
 		Date createDate,
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		List<SamlIdpSpSession> list = findByLtCreateDate(
-			createDate, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtCreateDate.fetchFirst(
+			finderCache, new Object[] {createDate}, orderByComparator);
 	}
 
 	/**
@@ -229,12 +216,8 @@ public class SamlIdpSpSessionPersistenceImpl
 	 */
 	@Override
 	public void removeByLtCreateDate(Date createDate) {
-		for (SamlIdpSpSession samlIdpSpSession :
-				findByLtCreateDate(
-					createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(samlIdpSpSession);
-		}
+		_collectionPersistenceFinderByLtCreateDate.remove(
+			finderCache, new Object[] {createDate});
 	}
 
 	/**
@@ -356,16 +339,11 @@ public class SamlIdpSpSessionPersistenceImpl
 			return samlIdpSpSession;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("samlIdpSsoSessionId=");
-		sb.append(samlIdpSsoSessionId);
-
-		sb.append("}");
-
-		throw new NoSuchIdpSpSessionException(sb.toString());
+		throw new NoSuchIdpSpSessionException(
+			_collectionPersistenceFinderBySamlIdpSsoSessionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {samlIdpSsoSessionId}));
 	}
 
 	/**
@@ -380,14 +358,8 @@ public class SamlIdpSpSessionPersistenceImpl
 		long samlIdpSsoSessionId,
 		OrderByComparator<SamlIdpSpSession> orderByComparator) {
 
-		List<SamlIdpSpSession> list = findBySamlIdpSsoSessionId(
-			samlIdpSsoSessionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySamlIdpSsoSessionId.fetchFirst(
+			finderCache, new Object[] {samlIdpSsoSessionId}, orderByComparator);
 	}
 
 	/**
@@ -397,13 +369,8 @@ public class SamlIdpSpSessionPersistenceImpl
 	 */
 	@Override
 	public void removeBySamlIdpSsoSessionId(long samlIdpSsoSessionId) {
-		for (SamlIdpSpSession samlIdpSpSession :
-				findBySamlIdpSsoSessionId(
-					samlIdpSsoSessionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(samlIdpSpSession);
-		}
+		_collectionPersistenceFinderBySamlIdpSsoSessionId.remove(
+			finderCache, new Object[] {samlIdpSsoSessionId});
 	}
 
 	/**
@@ -1091,4 +1058,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1282524105
+// LIFERAY-SERVICE-BUILDER-HASH:642811746

@@ -207,16 +207,11 @@ public class CommerceChannelRelPersistenceImpl
 			return commerceChannelRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceChannelId=");
-		sb.append(commerceChannelId);
-
-		sb.append("}");
-
-		throw new NoSuchChannelRelException(sb.toString());
+		throw new NoSuchChannelRelException(
+			_collectionPersistenceFinderByCommerceChannelId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceChannelId}));
 	}
 
 	/**
@@ -231,14 +226,8 @@ public class CommerceChannelRelPersistenceImpl
 		long commerceChannelId,
 		OrderByComparator<CommerceChannelRel> orderByComparator) {
 
-		List<CommerceChannelRel> list = findByCommerceChannelId(
-			commerceChannelId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceChannelId.fetchFirst(
+			finderCache, new Object[] {commerceChannelId}, orderByComparator);
 	}
 
 	/**
@@ -248,13 +237,8 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceChannelId(long commerceChannelId) {
-		for (CommerceChannelRel commerceChannelRel :
-				findByCommerceChannelId(
-					commerceChannelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceChannelRel);
-		}
+		_collectionPersistenceFinderByCommerceChannelId.remove(
+			finderCache, new Object[] {commerceChannelId});
 	}
 
 	/**
@@ -389,19 +373,9 @@ public class CommerceChannelRelPersistenceImpl
 			return commerceChannelRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchChannelRelException(sb.toString());
+		throw new NoSuchChannelRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -417,14 +391,9 @@ public class CommerceChannelRelPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<CommerceChannelRel> orderByComparator) {
 
-		List<CommerceChannelRel> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -435,13 +404,8 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (CommerceChannelRel commerceChannelRel :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceChannelRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -484,26 +448,16 @@ public class CommerceChannelRelPersistenceImpl
 			classNameId, classPK, commerceChannelId);
 
 		if (commerceChannelRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", commerceChannelId=");
-			sb.append(commerceChannelId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, commerceChannelId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchChannelRelException(sb.toString());
+			throw new NoSuchChannelRelException(message);
 		}
 
 		return commerceChannelRel;
@@ -1595,4 +1549,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-392414990
+// LIFERAY-SERVICE-BUILDER-HASH:-2140694556

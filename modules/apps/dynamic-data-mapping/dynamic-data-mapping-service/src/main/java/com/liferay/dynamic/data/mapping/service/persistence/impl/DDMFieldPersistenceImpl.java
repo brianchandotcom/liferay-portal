@@ -196,16 +196,9 @@ public class DDMFieldPersistenceImpl
 			return ddmField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
+		throw new NoSuchFieldException(
+			_collectionPersistenceFinderByStorageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {storageId}));
 	}
 
 	/**
@@ -219,14 +212,8 @@ public class DDMFieldPersistenceImpl
 	public DDMField fetchByStorageId_First(
 		long storageId, OrderByComparator<DDMField> orderByComparator) {
 
-		List<DDMField> list = findByStorageId(
-			storageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStorageId.fetchFirst(
+			finderCache, new Object[] {storageId}, orderByComparator);
 	}
 
 	/**
@@ -236,12 +223,8 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByStorageId(long storageId) {
-		for (DDMField ddmField :
-				findByStorageId(
-					storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddmField);
-		}
+		_collectionPersistenceFinderByStorageId.remove(
+			finderCache, new Object[] {storageId});
 	}
 
 	/**
@@ -370,16 +353,11 @@ public class DDMFieldPersistenceImpl
 			return ddmField;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("structureVersionId=");
-		sb.append(structureVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
+		throw new NoSuchFieldException(
+			_collectionPersistenceFinderByStructureVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {structureVersionId}));
 	}
 
 	/**
@@ -394,14 +372,8 @@ public class DDMFieldPersistenceImpl
 		long structureVersionId,
 		OrderByComparator<DDMField> orderByComparator) {
 
-		List<DDMField> list = findByStructureVersionId(
-			structureVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByStructureVersionId.fetchFirst(
+			finderCache, new Object[] {structureVersionId}, orderByComparator);
 	}
 
 	/**
@@ -411,13 +383,8 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByStructureVersionId(long structureVersionId) {
-		for (DDMField ddmField :
-				findByStructureVersionId(
-					structureVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmField);
-		}
+		_collectionPersistenceFinderByStructureVersionId.remove(
+			finderCache, new Object[] {structureVersionId});
 	}
 
 	/**
@@ -551,19 +518,9 @@ public class DDMFieldPersistenceImpl
 			return ddmField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", fieldType=");
-		sb.append(fieldType);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
+		throw new NoSuchFieldException(
+			_collectionPersistenceFinderByC_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, fieldType}));
 	}
 
 	/**
@@ -579,14 +536,9 @@ public class DDMFieldPersistenceImpl
 		long companyId, String fieldType,
 		OrderByComparator<DDMField> orderByComparator) {
 
-		List<DDMField> list = findByC_F(
-			companyId, fieldType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_F.fetchFirst(
+			finderCache, new Object[] {companyId, fieldType},
+			orderByComparator);
 	}
 
 	/**
@@ -597,13 +549,8 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByC_F(long companyId, String fieldType) {
-		for (DDMField ddmField :
-				findByC_F(
-					companyId, fieldType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmField);
-		}
+		_collectionPersistenceFinderByC_F.remove(
+			finderCache, new Object[] {companyId, fieldType});
 	}
 
 	/**
@@ -738,19 +685,9 @@ public class DDMFieldPersistenceImpl
 			return ddmField;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("storageId=");
-		sb.append(storageId);
-
-		sb.append(", fieldName=");
-		sb.append(fieldName);
-
-		sb.append("}");
-
-		throw new NoSuchFieldException(sb.toString());
+		throw new NoSuchFieldException(
+			_collectionPersistenceFinderByS_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {storageId, fieldName}));
 	}
 
 	/**
@@ -766,14 +703,9 @@ public class DDMFieldPersistenceImpl
 		long storageId, String fieldName,
 		OrderByComparator<DDMField> orderByComparator) {
 
-		List<DDMField> list = findByS_F(
-			storageId, fieldName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_F.fetchFirst(
+			finderCache, new Object[] {storageId, fieldName},
+			orderByComparator);
 	}
 
 	/**
@@ -784,13 +716,8 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Override
 	public void removeByS_F(long storageId, String fieldName) {
-		for (DDMField ddmField :
-				findByS_F(
-					storageId, fieldName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmField);
-		}
+		_collectionPersistenceFinderByS_F.remove(
+			finderCache, new Object[] {storageId, fieldName});
 	}
 
 	/**
@@ -829,23 +756,16 @@ public class DDMFieldPersistenceImpl
 		DDMField ddmField = fetchByS_I(storageId, instanceId);
 
 		if (ddmField == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("storageId=");
-			sb.append(storageId);
-
-			sb.append(", instanceId=");
-			sb.append(instanceId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_I.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {storageId, instanceId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFieldException(sb.toString());
+			throw new NoSuchFieldException(message);
 		}
 
 		return ddmField;
@@ -1907,4 +1827,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1708096422
+// LIFERAY-SERVICE-BUILDER-HASH:-1933809143

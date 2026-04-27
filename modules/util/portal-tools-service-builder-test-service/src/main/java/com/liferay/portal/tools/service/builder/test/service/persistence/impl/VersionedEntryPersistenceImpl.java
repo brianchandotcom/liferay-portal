@@ -174,16 +174,9 @@ public class VersionedEntryPersistenceImpl
 			return versionedEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryException(sb.toString());
+		throw new NoSuchVersionedEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -197,14 +190,8 @@ public class VersionedEntryPersistenceImpl
 	public VersionedEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<VersionedEntry> orderByComparator) {
 
-		List<VersionedEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -214,12 +201,8 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (VersionedEntry versionedEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(versionedEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {groupId});
 	}
 
 	/**
@@ -344,19 +327,9 @@ public class VersionedEntryPersistenceImpl
 			return versionedEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", head=");
-		sb.append(head);
-
-		sb.append("}");
-
-		throw new NoSuchVersionedEntryException(sb.toString());
+		throw new NoSuchVersionedEntryException(
+			_collectionPersistenceFinderByGroupId_Head.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, head}));
 	}
 
 	/**
@@ -372,14 +345,8 @@ public class VersionedEntryPersistenceImpl
 		long groupId, boolean head,
 		OrderByComparator<VersionedEntry> orderByComparator) {
 
-		List<VersionedEntry> list = findByGroupId_Head(
-			groupId, head, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId_Head.fetchFirst(
+			finderCache, new Object[] {groupId, head}, orderByComparator);
 	}
 
 	/**
@@ -390,13 +357,8 @@ public class VersionedEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId_Head(long groupId, boolean head) {
-		for (VersionedEntry versionedEntry :
-				findByGroupId_Head(
-					groupId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(versionedEntry);
-		}
+		_collectionPersistenceFinderByGroupId_Head.remove(
+			finderCache, new Object[] {groupId, head});
 	}
 
 	/**
@@ -430,20 +392,15 @@ public class VersionedEntryPersistenceImpl
 		VersionedEntry versionedEntry = fetchByHeadId(headId);
 
 		if (versionedEntry == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("headId=");
-			sb.append(headId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByHeadId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {headId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchVersionedEntryException(sb.toString());
+			throw new NoSuchVersionedEntryException(message);
 		}
 
 		return versionedEntry;
@@ -1148,4 +1105,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1009095175
+// LIFERAY-SERVICE-BUILDER-HASH:1234962435

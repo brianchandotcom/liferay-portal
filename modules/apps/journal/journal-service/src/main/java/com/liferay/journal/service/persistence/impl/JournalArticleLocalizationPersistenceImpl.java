@@ -209,19 +209,9 @@ public class JournalArticleLocalizationPersistenceImpl
 			return journalArticleLocalization;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", articlePK=");
-		sb.append(articlePK);
-
-		sb.append("}");
-
-		throw new NoSuchArticleLocalizationException(sb.toString());
+		throw new NoSuchArticleLocalizationException(
+			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, articlePK}));
 	}
 
 	/**
@@ -237,14 +227,9 @@ public class JournalArticleLocalizationPersistenceImpl
 		long companyId, long articlePK,
 		OrderByComparator<JournalArticleLocalization> orderByComparator) {
 
-		List<JournalArticleLocalization> list = findByC_A(
-			companyId, articlePK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_A.fetchFirst(
+			finderCache, new Object[] {companyId, articlePK},
+			orderByComparator);
 	}
 
 	/**
@@ -255,13 +240,8 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Override
 	public void removeByC_A(long companyId, long articlePK) {
-		for (JournalArticleLocalization journalArticleLocalization :
-				findByC_A(
-					companyId, articlePK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(journalArticleLocalization);
-		}
+		_collectionPersistenceFinderByC_A.remove(
+			finderCache, new Object[] {companyId, articlePK});
 	}
 
 	/**
@@ -304,26 +284,16 @@ public class JournalArticleLocalizationPersistenceImpl
 			companyId, articlePK, languageId);
 
 		if (journalArticleLocalization == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", articlePK=");
-			sb.append(articlePK);
-
-			sb.append(", languageId=");
-			sb.append(languageId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_A_L.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, articlePK, languageId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchArticleLocalizationException(sb.toString());
+			throw new NoSuchArticleLocalizationException(message);
 		}
 
 		return journalArticleLocalization;
@@ -1393,4 +1363,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1853259148
+// LIFERAY-SERVICE-BUILDER-HASH:580504752

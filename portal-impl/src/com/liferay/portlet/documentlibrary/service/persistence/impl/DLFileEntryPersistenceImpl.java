@@ -205,16 +205,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -228,13 +221,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByUuid_First(
 		String uuid, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -244,11 +233,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (DLFileEntry dlFileEntry :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
 	/**
@@ -287,23 +273,15 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntry dlFileEntry = fetchByUUID_G(uuid, groupId);
 
 		if (dlFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryException(sb.toString());
+			throw new NoSuchFileEntryException(message);
 		}
 
 		return dlFileEntry;
@@ -488,19 +466,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -516,14 +484,9 @@ public class DLFileEntryPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -534,13 +497,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (DLFileEntry dlFileEntry :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -668,16 +626,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -691,14 +642,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -848,12 +794,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (DLFileEntry dlFileEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -1040,16 +982,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -1063,14 +998,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByCompanyId_First(
 		long companyId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -1080,12 +1010,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (DLFileEntry dlFileEntry :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -1214,16 +1140,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByRepositoryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {repositoryId}));
 	}
 
 	/**
@@ -1237,14 +1156,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByRepositoryId_First(
 		long repositoryId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByRepositoryId(
-			repositoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByRepositoryId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -1254,12 +1168,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByRepositoryId(long repositoryId) {
-		for (DLFileEntry dlFileEntry :
-				findByRepositoryId(
-					repositoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByRepositoryId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {repositoryId});
 	}
 
 	/**
@@ -1387,16 +1297,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("mimeType=");
-		sb.append(mimeType);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByMimeType.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {mimeType}));
 	}
 
 	/**
@@ -1410,14 +1313,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByMimeType_First(
 		String mimeType, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByMimeType(
-			mimeType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByMimeType.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {mimeType},
+			orderByComparator);
 	}
 
 	/**
@@ -1427,12 +1325,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByMimeType(String mimeType) {
-		for (DLFileEntry dlFileEntry :
-				findByMimeType(
-					mimeType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByMimeType.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {mimeType});
 	}
 
 	/**
@@ -1563,16 +1457,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("fileEntryTypeId=");
-		sb.append(fileEntryTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByFileEntryTypeId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fileEntryTypeId}));
 	}
 
 	/**
@@ -1587,14 +1474,9 @@ public class DLFileEntryPersistenceImpl
 		long fileEntryTypeId,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByFileEntryTypeId(
-			fileEntryTypeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByFileEntryTypeId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryTypeId},
+			orderByComparator);
 	}
 
 	/**
@@ -1604,13 +1486,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByFileEntryTypeId(long fileEntryTypeId) {
-		for (DLFileEntry dlFileEntry :
-				findByFileEntryTypeId(
-					fileEntryTypeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByFileEntryTypeId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {fileEntryTypeId});
 	}
 
 	/**
@@ -1740,16 +1617,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("smallImageId=");
-		sb.append(smallImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderBySmallImageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {smallImageId}));
 	}
 
 	/**
@@ -1763,14 +1633,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchBySmallImageId_First(
 		long smallImageId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findBySmallImageId(
-			smallImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySmallImageId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {smallImageId},
+			orderByComparator);
 	}
 
 	/**
@@ -1780,12 +1645,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeBySmallImageId(long smallImageId) {
-		for (DLFileEntry dlFileEntry :
-				findBySmallImageId(
-					smallImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderBySmallImageId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {smallImageId});
 	}
 
 	/**
@@ -1914,16 +1775,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("largeImageId=");
-		sb.append(largeImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByLargeImageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {largeImageId}));
 	}
 
 	/**
@@ -1937,14 +1791,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByLargeImageId_First(
 		long largeImageId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByLargeImageId(
-			largeImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLargeImageId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {largeImageId},
+			orderByComparator);
 	}
 
 	/**
@@ -1954,12 +1803,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByLargeImageId(long largeImageId) {
-		for (DLFileEntry dlFileEntry :
-				findByLargeImageId(
-					largeImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByLargeImageId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {largeImageId});
 	}
 
 	/**
@@ -2089,16 +1934,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("custom1ImageId=");
-		sb.append(custom1ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByCustom1ImageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {custom1ImageId}));
 	}
 
 	/**
@@ -2112,14 +1950,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByCustom1ImageId_First(
 		long custom1ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByCustom1ImageId(
-			custom1ImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCustom1ImageId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {custom1ImageId},
+			orderByComparator);
 	}
 
 	/**
@@ -2129,13 +1962,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCustom1ImageId(long custom1ImageId) {
-		for (DLFileEntry dlFileEntry :
-				findByCustom1ImageId(
-					custom1ImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByCustom1ImageId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {custom1ImageId});
 	}
 
 	/**
@@ -2266,16 +2094,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("custom2ImageId=");
-		sb.append(custom2ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByCustom2ImageId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {custom2ImageId}));
 	}
 
 	/**
@@ -2289,14 +2110,9 @@ public class DLFileEntryPersistenceImpl
 	public DLFileEntry fetchByCustom2ImageId_First(
 		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByCustom2ImageId(
-			custom2ImageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCustom2ImageId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {custom2ImageId},
+			orderByComparator);
 	}
 
 	/**
@@ -2306,13 +2122,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByCustom2ImageId(long custom2ImageId) {
-		for (DLFileEntry dlFileEntry :
-				findByCustom2ImageId(
-					custom2ImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByCustom2ImageId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {custom2ImageId});
 	}
 
 	/**
@@ -2448,19 +2259,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
 	}
 
 	/**
@@ -2476,14 +2277,9 @@ public class DLFileEntryPersistenceImpl
 		long groupId, long userId,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByG_U(
-			groupId, userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_U.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId},
+			orderByComparator);
 	}
 
 	/**
@@ -2641,13 +2437,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_U(long groupId, long userId) {
-		for (DLFileEntry dlFileEntry :
-				findByG_U(
-					groupId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByG_U.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, userId});
 	}
 
 	/**
@@ -3907,19 +3698,10 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("repositoryId=");
-		sb.append(repositoryId);
-
-		sb.append(", folderId=");
-		sb.append(folderId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByR_F.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {repositoryId, folderId}));
 	}
 
 	/**
@@ -3935,14 +3717,9 @@ public class DLFileEntryPersistenceImpl
 		long repositoryId, long folderId,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByR_F(
-			repositoryId, folderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByR_F.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {repositoryId, folderId}, orderByComparator);
 	}
 
 	/**
@@ -3953,13 +3730,9 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByR_F(long repositoryId, long folderId) {
-		for (DLFileEntry dlFileEntry :
-				findByR_F(
-					repositoryId, folderId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByR_F.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {repositoryId, folderId});
 	}
 
 	/**
@@ -4095,19 +3868,9 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("folderId=");
-		sb.append(folderId);
-
-		sb.append(", name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByF_N.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {folderId, name}));
 	}
 
 	/**
@@ -4123,14 +3886,9 @@ public class DLFileEntryPersistenceImpl
 		long folderId, String name,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByF_N(
-			folderId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByF_N.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {folderId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -4141,13 +3899,8 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByF_N(long folderId, String name) {
-		for (DLFileEntry dlFileEntry :
-				findByF_N(
-					folderId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByF_N.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {folderId, name});
 	}
 
 	/**
@@ -5321,26 +5074,16 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntry dlFileEntry = fetchByG_F_N(groupId, folderId, name);
 
 		if (dlFileEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", folderId=");
-			sb.append(folderId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_F_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, folderId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryException(sb.toString());
+			throw new NoSuchFileEntryException(message);
 		}
 
 		return dlFileEntry;
@@ -5435,26 +5178,16 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntry dlFileEntry = fetchByG_F_FN(groupId, folderId, fileName);
 
 		if (dlFileEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", folderId=");
-			sb.append(folderId);
-
-			sb.append(", fileName=");
-			sb.append(fileName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_F_FN.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, folderId, fileName});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryException(sb.toString());
+			throw new NoSuchFileEntryException(message);
 		}
 
 		return dlFileEntry;
@@ -5551,26 +5284,16 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntry dlFileEntry = fetchByG_F_T(groupId, folderId, title);
 
 		if (dlFileEntry == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", folderId=");
-			sb.append(folderId);
-
-			sb.append(", title=");
-			sb.append(title);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_F_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, folderId, title});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryException(sb.toString());
+			throw new NoSuchFileEntryException(message);
 		}
 
 		return dlFileEntry;
@@ -6935,22 +6658,10 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, classNameId, classPK}));
 	}
 
 	/**
@@ -6967,14 +6678,9 @@ public class DLFileEntryPersistenceImpl
 		long companyId, long classNameId, long classPK,
 		OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByC_C_C(
-			companyId, classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -6986,13 +6692,9 @@ public class DLFileEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C_C(long companyId, long classNameId, long classPK) {
-		for (DLFileEntry dlFileEntry :
-				findByC_C_C(
-					companyId, classNameId, classPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByC_C_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -7155,25 +6857,12 @@ public class DLFileEntryPersistenceImpl
 			return dlFileEntry;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("smallImageId=");
-		sb.append(smallImageId);
-
-		sb.append(", largeImageId=");
-		sb.append(largeImageId);
-
-		sb.append(", custom1ImageId=");
-		sb.append(custom1ImageId);
-
-		sb.append(", custom2ImageId=");
-		sb.append(custom2ImageId);
-
-		sb.append("}");
-
-		throw new NoSuchFileEntryException(sb.toString());
+		throw new NoSuchFileEntryException(
+			_collectionPersistenceFinderByS_L_C1_C2.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					smallImageId, largeImageId, custom1ImageId, custom2ImageId
+				}));
 	}
 
 	/**
@@ -7191,15 +6880,12 @@ public class DLFileEntryPersistenceImpl
 		long smallImageId, long largeImageId, long custom1ImageId,
 		long custom2ImageId, OrderByComparator<DLFileEntry> orderByComparator) {
 
-		List<DLFileEntry> list = findByS_L_C1_C2(
-			smallImageId, largeImageId, custom1ImageId, custom2ImageId, 0, 1,
+		return _collectionPersistenceFinderByS_L_C1_C2.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				smallImageId, largeImageId, custom1ImageId, custom2ImageId
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -7215,13 +6901,11 @@ public class DLFileEntryPersistenceImpl
 		long smallImageId, long largeImageId, long custom1ImageId,
 		long custom2ImageId) {
 
-		for (DLFileEntry dlFileEntry :
-				findByS_L_C1_C2(
-					smallImageId, largeImageId, custom1ImageId, custom2ImageId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(dlFileEntry);
-		}
+		_collectionPersistenceFinderByS_L_C1_C2.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				smallImageId, largeImageId, custom1ImageId, custom2ImageId
+			});
 	}
 
 	/**
@@ -7269,23 +6953,16 @@ public class DLFileEntryPersistenceImpl
 		DLFileEntry dlFileEntry = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (dlFileEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFileEntryException(sb.toString());
+			throw new NoSuchFileEntryException(message);
 		}
 
 		return dlFileEntry;
@@ -9113,4 +8790,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-901340048
+// LIFERAY-SERVICE-BUILDER-HASH:1330430855

@@ -188,16 +188,9 @@ public class ObjectLayoutBoxPersistenceImpl
 			return objectLayoutBox;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
+		throw new NoSuchObjectLayoutBoxException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -211,13 +204,8 @@ public class ObjectLayoutBoxPersistenceImpl
 	public ObjectLayoutBox fetchByUuid_First(
 		String uuid, OrderByComparator<ObjectLayoutBox> orderByComparator) {
 
-		List<ObjectLayoutBox> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -227,11 +215,8 @@ public class ObjectLayoutBoxPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (ObjectLayoutBox objectLayoutBox :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(objectLayoutBox);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -356,19 +341,9 @@ public class ObjectLayoutBoxPersistenceImpl
 			return objectLayoutBox;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
+		throw new NoSuchObjectLayoutBoxException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -384,14 +359,8 @@ public class ObjectLayoutBoxPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<ObjectLayoutBox> orderByComparator) {
 
-		List<ObjectLayoutBox> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -402,13 +371,8 @@ public class ObjectLayoutBoxPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (ObjectLayoutBox objectLayoutBox :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectLayoutBox);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -531,16 +495,11 @@ public class ObjectLayoutBoxPersistenceImpl
 			return objectLayoutBox;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("objectLayoutTabId=");
-		sb.append(objectLayoutTabId);
-
-		sb.append("}");
-
-		throw new NoSuchObjectLayoutBoxException(sb.toString());
+		throw new NoSuchObjectLayoutBoxException(
+			_collectionPersistenceFinderByObjectLayoutTabId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {objectLayoutTabId}));
 	}
 
 	/**
@@ -555,14 +514,8 @@ public class ObjectLayoutBoxPersistenceImpl
 		long objectLayoutTabId,
 		OrderByComparator<ObjectLayoutBox> orderByComparator) {
 
-		List<ObjectLayoutBox> list = findByObjectLayoutTabId(
-			objectLayoutTabId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByObjectLayoutTabId.fetchFirst(
+			finderCache, new Object[] {objectLayoutTabId}, orderByComparator);
 	}
 
 	/**
@@ -572,13 +525,8 @@ public class ObjectLayoutBoxPersistenceImpl
 	 */
 	@Override
 	public void removeByObjectLayoutTabId(long objectLayoutTabId) {
-		for (ObjectLayoutBox objectLayoutBox :
-				findByObjectLayoutTabId(
-					objectLayoutTabId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectLayoutBox);
-		}
+		_collectionPersistenceFinderByObjectLayoutTabId.remove(
+			finderCache, new Object[] {objectLayoutTabId});
 	}
 
 	/**
@@ -1327,4 +1275,4 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1990373305
+// LIFERAY-SERVICE-BUILDER-HASH:-1890324602

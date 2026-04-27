@@ -211,16 +211,9 @@ public class KBFolderPersistenceImpl
 			return kbFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -234,13 +227,8 @@ public class KBFolderPersistenceImpl
 	public KBFolder fetchByUuid_First(
 		String uuid, OrderByComparator<KBFolder> orderByComparator) {
 
-		List<KBFolder> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -250,11 +238,8 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (KBFolder kbFolder :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kbFolder);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -292,23 +277,15 @@ public class KBFolderPersistenceImpl
 		KBFolder kbFolder = fetchByUUID_G(uuid, groupId);
 
 		if (kbFolder == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("uuid=");
-			sb.append(uuid);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFolderException(sb.toString());
+			throw new NoSuchFolderException(message);
 		}
 
 		return kbFolder;
@@ -490,19 +467,9 @@ public class KBFolderPersistenceImpl
 			return kbFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -518,14 +485,8 @@ public class KBFolderPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<KBFolder> orderByComparator) {
 
-		List<KBFolder> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -536,13 +497,8 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (KBFolder kbFolder :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(kbFolder);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -668,16 +624,9 @@ public class KBFolderPersistenceImpl
 			return kbFolder;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -691,14 +640,8 @@ public class KBFolderPersistenceImpl
 	public KBFolder fetchByCompanyId_First(
 		long companyId, OrderByComparator<KBFolder> orderByComparator) {
 
-		List<KBFolder> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -708,12 +651,8 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KBFolder kbFolder :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kbFolder);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -848,19 +787,10 @@ public class KBFolderPersistenceImpl
 			return kbFolder;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentKBFolderId=");
-		sb.append(parentKBFolderId);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentKBFolderId}));
 	}
 
 	/**
@@ -876,14 +806,9 @@ public class KBFolderPersistenceImpl
 		long groupId, long parentKBFolderId,
 		OrderByComparator<KBFolder> orderByComparator) {
 
-		List<KBFolder> list = findByG_P(
-			groupId, parentKBFolderId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, parentKBFolderId},
+			orderByComparator);
 	}
 
 	/**
@@ -1041,13 +966,8 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long parentKBFolderId) {
-		for (KBFolder kbFolder :
-				findByG_P(
-					groupId, parentKBFolderId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbFolder);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, parentKBFolderId});
 	}
 
 	/**
@@ -1155,26 +1075,16 @@ public class KBFolderPersistenceImpl
 		KBFolder kbFolder = fetchByG_P_N(groupId, parentKBFolderId, name);
 
 		if (kbFolder == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", parentKBFolderId=");
-			sb.append(parentKBFolderId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_P_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, parentKBFolderId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFolderException(sb.toString());
+			throw new NoSuchFolderException(message);
 		}
 
 		return kbFolder;
@@ -1271,26 +1181,16 @@ public class KBFolderPersistenceImpl
 		KBFolder kbFolder = fetchByG_P_UT(groupId, parentKBFolderId, urlTitle);
 
 		if (kbFolder == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", parentKBFolderId=");
-			sb.append(parentKBFolderId);
-
-			sb.append(", urlTitle=");
-			sb.append(urlTitle);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_P_UT.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {groupId, parentKBFolderId, urlTitle});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFolderException(sb.toString());
+			throw new NoSuchFolderException(message);
 		}
 
 		return kbFolder;
@@ -1492,22 +1392,10 @@ public class KBFolderPersistenceImpl
 			return kbFolder;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append(", parentKBFolderId=");
-		sb.append(parentKBFolderId);
-
-		sb.append(", status=");
-		sb.append(status);
-
-		sb.append("}");
-
-		throw new NoSuchFolderException(sb.toString());
+		throw new NoSuchFolderException(
+			_collectionPersistenceFinderByG_P_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {groupId, parentKBFolderId, status}));
 	}
 
 	/**
@@ -1524,14 +1412,9 @@ public class KBFolderPersistenceImpl
 		long groupId, long parentKBFolderId, int status,
 		OrderByComparator<KBFolder> orderByComparator) {
 
-		List<KBFolder> list = findByG_P_S(
-			groupId, parentKBFolderId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_S.fetchFirst(
+			finderCache, new Object[] {groupId, parentKBFolderId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1701,13 +1584,8 @@ public class KBFolderPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_S(long groupId, long parentKBFolderId, int status) {
-		for (KBFolder kbFolder :
-				findByG_P_S(
-					groupId, parentKBFolderId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kbFolder);
-		}
+		_collectionPersistenceFinderByG_P_S.remove(
+			finderCache, new Object[] {groupId, parentKBFolderId, status});
 	}
 
 	/**
@@ -1825,23 +1703,16 @@ public class KBFolderPersistenceImpl
 		KBFolder kbFolder = fetchByERC_G(externalReferenceCode, groupId);
 
 		if (kbFolder == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", groupId=");
-			sb.append(groupId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, groupId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchFolderException(sb.toString());
+			throw new NoSuchFolderException(message);
 		}
 
 		return kbFolder;
@@ -3189,4 +3060,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1958046090
+// LIFERAY-SERVICE-BUILDER-HASH:1721473923

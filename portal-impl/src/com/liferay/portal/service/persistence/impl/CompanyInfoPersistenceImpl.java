@@ -91,20 +91,15 @@ public class CompanyInfoPersistenceImpl
 		CompanyInfo companyInfo = fetchByCompanyId(companyId);
 
 		if (companyInfo == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCompanyInfoException(sb.toString());
+			throw new NoSuchCompanyInfoException(message);
 		}
 
 		return companyInfo;
@@ -752,4 +747,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397469032
+// LIFERAY-SERVICE-BUILDER-HASH:-768563039

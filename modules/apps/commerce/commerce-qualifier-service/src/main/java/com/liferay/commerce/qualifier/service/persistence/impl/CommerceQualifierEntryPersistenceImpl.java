@@ -201,19 +201,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			return commerceQualifierEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", sourceClassPK=");
-		sb.append(sourceClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
+		throw new NoSuchCommerceQualifierEntryException(
+			_collectionPersistenceFinderByS_S.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {sourceClassNameId, sourceClassPK}));
 	}
 
 	/**
@@ -229,14 +220,9 @@ public class CommerceQualifierEntryPersistenceImpl
 		long sourceClassNameId, long sourceClassPK,
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
-		List<CommerceQualifierEntry> list = findByS_S(
-			sourceClassNameId, sourceClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_S.fetchFirst(
+			finderCache, new Object[] {sourceClassNameId, sourceClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -247,13 +233,8 @@ public class CommerceQualifierEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByS_S(long sourceClassNameId, long sourceClassPK) {
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				findByS_S(
-					sourceClassNameId, sourceClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceQualifierEntry);
-		}
+		_collectionPersistenceFinderByS_S.remove(
+			finderCache, new Object[] {sourceClassNameId, sourceClassPK});
 	}
 
 	/**
@@ -383,19 +364,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			return commerceQualifierEntry;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append(", targetClassPK=");
-		sb.append(targetClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
+		throw new NoSuchCommerceQualifierEntryException(
+			_collectionPersistenceFinderByT_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {targetClassNameId, targetClassPK}));
 	}
 
 	/**
@@ -411,14 +383,9 @@ public class CommerceQualifierEntryPersistenceImpl
 		long targetClassNameId, long targetClassPK,
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
-		List<CommerceQualifierEntry> list = findByT_T(
-			targetClassNameId, targetClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByT_T.fetchFirst(
+			finderCache, new Object[] {targetClassNameId, targetClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -429,13 +396,8 @@ public class CommerceQualifierEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByT_T(long targetClassNameId, long targetClassPK) {
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				findByT_T(
-					targetClassNameId, targetClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceQualifierEntry);
-		}
+		_collectionPersistenceFinderByT_T.remove(
+			finderCache, new Object[] {targetClassNameId, targetClassPK});
 	}
 
 	/**
@@ -577,22 +539,12 @@ public class CommerceQualifierEntryPersistenceImpl
 			return commerceQualifierEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", sourceClassPK=");
-		sb.append(sourceClassPK);
-
-		sb.append(", targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
+		throw new NoSuchCommerceQualifierEntryException(
+			_collectionPersistenceFinderByS_S_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					sourceClassNameId, sourceClassPK, targetClassNameId
+				}));
 	}
 
 	/**
@@ -609,15 +561,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
-		List<CommerceQualifierEntry> list = findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, 0, 1,
+		return _collectionPersistenceFinderByS_S_T.fetchFirst(
+			finderCache,
+			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -631,13 +578,9 @@ public class CommerceQualifierEntryPersistenceImpl
 	public void removeByS_S_T(
 		long sourceClassNameId, long sourceClassPK, long targetClassNameId) {
 
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				findByS_S_T(
-					sourceClassNameId, sourceClassPK, targetClassNameId,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceQualifierEntry);
-		}
+		_collectionPersistenceFinderByS_S_T.remove(
+			finderCache,
+			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId});
 	}
 
 	/**
@@ -783,22 +726,12 @@ public class CommerceQualifierEntryPersistenceImpl
 			return commerceQualifierEntry;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("sourceClassNameId=");
-		sb.append(sourceClassNameId);
-
-		sb.append(", targetClassNameId=");
-		sb.append(targetClassNameId);
-
-		sb.append(", targetClassPK=");
-		sb.append(targetClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchCommerceQualifierEntryException(sb.toString());
+		throw new NoSuchCommerceQualifierEntryException(
+			_collectionPersistenceFinderByS_T_T.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					sourceClassNameId, targetClassNameId, targetClassPK
+				}));
 	}
 
 	/**
@@ -815,15 +748,10 @@ public class CommerceQualifierEntryPersistenceImpl
 		long sourceClassNameId, long targetClassNameId, long targetClassPK,
 		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
 
-		List<CommerceQualifierEntry> list = findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, 0, 1,
+		return _collectionPersistenceFinderByS_T_T.fetchFirst(
+			finderCache,
+			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -837,13 +765,9 @@ public class CommerceQualifierEntryPersistenceImpl
 	public void removeByS_T_T(
 		long sourceClassNameId, long targetClassNameId, long targetClassPK) {
 
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				findByS_T_T(
-					sourceClassNameId, targetClassNameId, targetClassPK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceQualifierEntry);
-		}
+		_collectionPersistenceFinderByS_T_T.remove(
+			finderCache,
+			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK});
 	}
 
 	/**
@@ -887,29 +811,19 @@ public class CommerceQualifierEntryPersistenceImpl
 			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK);
 
 		if (commerceQualifierEntry == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("sourceClassNameId=");
-			sb.append(sourceClassNameId);
-
-			sb.append(", sourceClassPK=");
-			sb.append(sourceClassPK);
-
-			sb.append(", targetClassNameId=");
-			sb.append(targetClassNameId);
-
-			sb.append(", targetClassPK=");
-			sb.append(targetClassPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByS_S_T_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						sourceClassNameId, sourceClassPK, targetClassNameId,
+						targetClassPK
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCommerceQualifierEntryException(sb.toString());
+			throw new NoSuchCommerceQualifierEntryException(message);
 		}
 
 		return commerceQualifierEntry;
@@ -1898,4 +1812,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-795655878
+// LIFERAY-SERVICE-BUILDER-HASH:-2014976332

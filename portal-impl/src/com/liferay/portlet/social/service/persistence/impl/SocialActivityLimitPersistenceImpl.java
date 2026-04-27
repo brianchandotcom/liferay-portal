@@ -192,16 +192,9 @@ public class SocialActivityLimitPersistenceImpl
 			return socialActivityLimit;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("groupId=");
-		sb.append(groupId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
+		throw new NoSuchActivityLimitException(
+			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
 	}
 
 	/**
@@ -216,14 +209,9 @@ public class SocialActivityLimitPersistenceImpl
 		long groupId,
 		OrderByComparator<SocialActivityLimit> orderByComparator) {
 
-		List<SocialActivityLimit> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -233,12 +221,8 @@ public class SocialActivityLimitPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SocialActivityLimit socialActivityLimit :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialActivityLimit);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
 	/**
@@ -366,16 +350,9 @@ public class SocialActivityLimitPersistenceImpl
 			return socialActivityLimit;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("userId=");
-		sb.append(userId);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
+		throw new NoSuchActivityLimitException(
+			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
 	}
 
 	/**
@@ -389,14 +366,9 @@ public class SocialActivityLimitPersistenceImpl
 	public SocialActivityLimit fetchByUserId_First(
 		long userId, OrderByComparator<SocialActivityLimit> orderByComparator) {
 
-		List<SocialActivityLimit> list = findByUserId(
-			userId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUserId.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -406,12 +378,8 @@ public class SocialActivityLimitPersistenceImpl
 	 */
 	@Override
 	public void removeByUserId(long userId) {
-		for (SocialActivityLimit socialActivityLimit :
-				findByUserId(
-					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(socialActivityLimit);
-		}
+		_collectionPersistenceFinderByUserId.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -547,19 +515,9 @@ public class SocialActivityLimitPersistenceImpl
 			return socialActivityLimit;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchActivityLimitException(sb.toString());
+		throw new NoSuchActivityLimitException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -575,14 +533,9 @@ public class SocialActivityLimitPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<SocialActivityLimit> orderByComparator) {
 
-		List<SocialActivityLimit> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -593,13 +546,9 @@ public class SocialActivityLimitPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (SocialActivityLimit socialActivityLimit :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(socialActivityLimit);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -648,35 +597,19 @@ public class SocialActivityLimitPersistenceImpl
 			activityCounterName);
 
 		if (socialActivityLimit == null) {
-			StringBundler sb = new StringBundler(14);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", userId=");
-			sb.append(userId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", activityType=");
-			sb.append(activityType);
-
-			sb.append(", activityCounterName=");
-			sb.append(activityCounterName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByG_U_C_C_A_A.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {
+						groupId, userId, classNameId, classPK, activityType,
+						activityCounterName
+					});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchActivityLimitException(sb.toString());
+			throw new NoSuchActivityLimitException(message);
 		}
 
 		return socialActivityLimit;
@@ -1787,4 +1720,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-166590985
+// LIFERAY-SERVICE-BUILDER-HASH:1723845821

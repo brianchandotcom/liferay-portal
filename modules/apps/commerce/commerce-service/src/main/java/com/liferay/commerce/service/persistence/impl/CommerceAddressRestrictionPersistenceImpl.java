@@ -189,16 +189,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 			return commerceAddressRestriction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("countryId=");
-		sb.append(countryId);
-
-		sb.append("}");
-
-		throw new NoSuchAddressRestrictionException(sb.toString());
+		throw new NoSuchAddressRestrictionException(
+			_collectionPersistenceFinderByCountryId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId}));
 	}
 
 	/**
@@ -213,14 +206,8 @@ public class CommerceAddressRestrictionPersistenceImpl
 		long countryId,
 		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
 
-		List<CommerceAddressRestriction> list = findByCountryId(
-			countryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCountryId.fetchFirst(
+			finderCache, new Object[] {countryId}, orderByComparator);
 	}
 
 	/**
@@ -230,12 +217,8 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Override
 	public void removeByCountryId(long countryId) {
-		for (CommerceAddressRestriction commerceAddressRestriction :
-				findByCountryId(
-					countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceAddressRestriction);
-		}
+		_collectionPersistenceFinderByCountryId.remove(
+			finderCache, new Object[] {countryId});
 	}
 
 	/**
@@ -362,19 +345,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 			return commerceAddressRestriction;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", classPK=");
-		sb.append(classPK);
-
-		sb.append("}");
-
-		throw new NoSuchAddressRestrictionException(sb.toString());
+		throw new NoSuchAddressRestrictionException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
 	}
 
 	/**
@@ -390,14 +363,9 @@ public class CommerceAddressRestrictionPersistenceImpl
 		long classNameId, long classPK,
 		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
 
-		List<CommerceAddressRestriction> list = findByC_C(
-			classNameId, classPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -408,13 +376,8 @@ public class CommerceAddressRestrictionPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long classPK) {
-		for (CommerceAddressRestriction commerceAddressRestriction :
-				findByC_C(
-					classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceAddressRestriction);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -452,26 +415,16 @@ public class CommerceAddressRestrictionPersistenceImpl
 			classNameId, classPK, countryId);
 
 		if (commerceAddressRestriction == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", countryId=");
-			sb.append(countryId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, countryId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAddressRestrictionException(sb.toString());
+			throw new NoSuchAddressRestrictionException(message);
 		}
 
 		return commerceAddressRestriction;
@@ -1317,4 +1270,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1370899212
+// LIFERAY-SERVICE-BUILDER-HASH:1206510938

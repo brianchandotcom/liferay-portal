@@ -200,16 +200,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			return commerceOrderTypeRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
+		throw new NoSuchOrderTypeRelException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -224,14 +217,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 		String uuid,
 		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
 
-		List<CommerceOrderTypeRel> list = findByUuid(
-			uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -241,11 +228,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceOrderTypeRel);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -372,19 +356,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 			return commerceOrderTypeRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
+		throw new NoSuchOrderTypeRelException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -400,14 +374,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
 
-		List<CommerceOrderTypeRel> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -418,13 +386,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceOrderTypeRel);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -548,16 +511,11 @@ public class CommerceOrderTypeRelPersistenceImpl
 			return commerceOrderTypeRel;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceOrderTypeId=");
-		sb.append(commerceOrderTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
+		throw new NoSuchOrderTypeRelException(
+			_collectionPersistenceFinderByCommerceOrderTypeId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {commerceOrderTypeId}));
 	}
 
 	/**
@@ -572,14 +530,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 		long commerceOrderTypeId,
 		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
 
-		List<CommerceOrderTypeRel> list = findByCommerceOrderTypeId(
-			commerceOrderTypeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCommerceOrderTypeId.fetchFirst(
+			finderCache, new Object[] {commerceOrderTypeId}, orderByComparator);
 	}
 
 	/**
@@ -589,13 +541,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 	 */
 	@Override
 	public void removeByCommerceOrderTypeId(long commerceOrderTypeId) {
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				findByCommerceOrderTypeId(
-					commerceOrderTypeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(commerceOrderTypeRel);
-		}
+		_collectionPersistenceFinderByCommerceOrderTypeId.remove(
+			finderCache, new Object[] {commerceOrderTypeId});
 	}
 
 	/**
@@ -724,19 +671,10 @@ public class CommerceOrderTypeRelPersistenceImpl
 			return commerceOrderTypeRel;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("classNameId=");
-		sb.append(classNameId);
-
-		sb.append(", commerceOrderTypeId=");
-		sb.append(commerceOrderTypeId);
-
-		sb.append("}");
-
-		throw new NoSuchOrderTypeRelException(sb.toString());
+		throw new NoSuchOrderTypeRelException(
+			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {classNameId, commerceOrderTypeId}));
 	}
 
 	/**
@@ -752,14 +690,9 @@ public class CommerceOrderTypeRelPersistenceImpl
 		long classNameId, long commerceOrderTypeId,
 		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
 
-		List<CommerceOrderTypeRel> list = findByC_C(
-			classNameId, commerceOrderTypeId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C.fetchFirst(
+			finderCache, new Object[] {classNameId, commerceOrderTypeId},
+			orderByComparator);
 	}
 
 	/**
@@ -770,13 +703,8 @@ public class CommerceOrderTypeRelPersistenceImpl
 	 */
 	@Override
 	public void removeByC_C(long classNameId, long commerceOrderTypeId) {
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				findByC_C(
-					classNameId, commerceOrderTypeId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceOrderTypeRel);
-		}
+		_collectionPersistenceFinderByC_C.remove(
+			finderCache, new Object[] {classNameId, commerceOrderTypeId});
 	}
 
 	/**
@@ -814,26 +742,16 @@ public class CommerceOrderTypeRelPersistenceImpl
 			classNameId, classPK, commerceOrderTypeId);
 
 		if (commerceOrderTypeRel == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", commerceOrderTypeId=");
-			sb.append(commerceOrderTypeId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {classNameId, classPK, commerceOrderTypeId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOrderTypeRelException(sb.toString());
+			throw new NoSuchOrderTypeRelException(message);
 		}
 
 		return commerceOrderTypeRel;
@@ -931,23 +849,16 @@ public class CommerceOrderTypeRelPersistenceImpl
 			externalReferenceCode, companyId);
 
 		if (commerceOrderTypeRel == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append(", companyId=");
-			sb.append(companyId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {externalReferenceCode, companyId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchOrderTypeRelException(sb.toString());
+			throw new NoSuchOrderTypeRelException(message);
 		}
 
 		return commerceOrderTypeRel;
@@ -1946,4 +1857,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2070531524
+// LIFERAY-SERVICE-BUILDER-HASH:-1852704200

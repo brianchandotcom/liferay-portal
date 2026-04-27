@@ -202,16 +202,9 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -225,14 +218,8 @@ public class KaleoActionPersistenceImpl
 	public KaleoAction fetchByCompanyId_First(
 		long companyId, OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByCompanyId(
-			companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -242,12 +229,8 @@ public class KaleoActionPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (KaleoAction kaleoAction :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -382,16 +365,11 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoDefinitionVersionId=");
-		sb.append(kaleoDefinitionVersionId);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByKaleoDefinitionVersionId.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {kaleoDefinitionVersionId}));
 	}
 
 	/**
@@ -406,14 +384,10 @@ public class KaleoActionPersistenceImpl
 		long kaleoDefinitionVersionId,
 		OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByKaleoDefinitionVersionId(
-			kaleoDefinitionVersionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.
+			fetchFirst(
+				finderCache, new Object[] {kaleoDefinitionVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -425,13 +399,8 @@ public class KaleoActionPersistenceImpl
 	public void removeByKaleoDefinitionVersionId(
 		long kaleoDefinitionVersionId) {
 
-		for (KaleoAction kaleoAction :
-				findByKaleoDefinitionVersionId(
-					kaleoDefinitionVersionId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByKaleoDefinitionVersionId.remove(
+			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
 	/**
@@ -569,19 +538,10 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByKCN_KCPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoClassPK}));
 	}
 
 	/**
@@ -597,14 +557,9 @@ public class KaleoActionPersistenceImpl
 		String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByKCN_KCPK(
-			kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByKCN_KCPK.fetchFirst(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -615,13 +570,8 @@ public class KaleoActionPersistenceImpl
 	 */
 	@Override
 	public void removeByKCN_KCPK(String kaleoClassName, long kaleoClassPK) {
-		for (KaleoAction kaleoAction :
-				findByKCN_KCPK(
-					kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByKCN_KCPK.remove(
+			finderCache, new Object[] {kaleoClassName, kaleoClassPK});
 	}
 
 	/**
@@ -769,22 +719,10 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByC_KCN_KCPK.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, kaleoClassName, kaleoClassPK}));
 	}
 
 	/**
@@ -801,14 +739,9 @@ public class KaleoActionPersistenceImpl
 		long companyId, String kaleoClassName, long kaleoClassPK,
 		OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByC_KCN_KCPK(
-			companyId, kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_KCN_KCPK.fetchFirst(
+			finderCache, new Object[] {companyId, kaleoClassName, kaleoClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -822,13 +755,9 @@ public class KaleoActionPersistenceImpl
 	public void removeByC_KCN_KCPK(
 		long companyId, String kaleoClassName, long kaleoClassPK) {
 
-		for (KaleoAction kaleoAction :
-				findByC_KCN_KCPK(
-					companyId, kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByC_KCN_KCPK.remove(
+			finderCache,
+			new Object[] {companyId, kaleoClassName, kaleoClassPK});
 	}
 
 	/**
@@ -980,22 +909,10 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", executionType=");
-		sb.append(executionType);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByKCN_KCPK_ET.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoClassPK, executionType}));
 	}
 
 	/**
@@ -1012,15 +929,10 @@ public class KaleoActionPersistenceImpl
 		String kaleoClassName, long kaleoClassPK, String executionType,
 		OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType, 0, 1,
+		return _collectionPersistenceFinderByKCN_KCPK_ET.fetchFirst(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoClassPK, executionType},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1034,13 +946,9 @@ public class KaleoActionPersistenceImpl
 	public void removeByKCN_KCPK_ET(
 		String kaleoClassName, long kaleoClassPK, String executionType) {
 
-		for (KaleoAction kaleoAction :
-				findByKCN_KCPK_ET(
-					kaleoClassName, kaleoClassPK, executionType,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByKCN_KCPK_ET.remove(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoClassPK, executionType});
 	}
 
 	/**
@@ -1205,25 +1113,12 @@ public class KaleoActionPersistenceImpl
 			return kaleoAction;
 		}
 
-		StringBundler sb = new StringBundler(10);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", kaleoClassName=");
-		sb.append(kaleoClassName);
-
-		sb.append(", kaleoClassPK=");
-		sb.append(kaleoClassPK);
-
-		sb.append(", executionType=");
-		sb.append(executionType);
-
-		sb.append("}");
-
-		throw new NoSuchActionException(sb.toString());
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByC_KCN_KCPK_ET.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {
+					companyId, kaleoClassName, kaleoClassPK, executionType
+				}));
 	}
 
 	/**
@@ -1242,15 +1137,12 @@ public class KaleoActionPersistenceImpl
 		String executionType,
 		OrderByComparator<KaleoAction> orderByComparator) {
 
-		List<KaleoAction> list = findByC_KCN_KCPK_ET(
-			companyId, kaleoClassName, kaleoClassPK, executionType, 0, 1,
+		return _collectionPersistenceFinderByC_KCN_KCPK_ET.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, kaleoClassName, kaleoClassPK, executionType
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1266,13 +1158,11 @@ public class KaleoActionPersistenceImpl
 		long companyId, String kaleoClassName, long kaleoClassPK,
 		String executionType) {
 
-		for (KaleoAction kaleoAction :
-				findByC_KCN_KCPK_ET(
-					companyId, kaleoClassName, kaleoClassPK, executionType,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(kaleoAction);
-		}
+		_collectionPersistenceFinderByC_KCN_KCPK_ET.remove(
+			finderCache,
+			new Object[] {
+				companyId, kaleoClassName, kaleoClassPK, executionType
+			});
 	}
 
 	/**
@@ -2435,4 +2325,4 @@ public class KaleoActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1157991982
+// LIFERAY-SERVICE-BUILDER-HASH:779658303

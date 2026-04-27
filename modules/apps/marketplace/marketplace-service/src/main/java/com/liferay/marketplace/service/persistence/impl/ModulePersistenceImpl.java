@@ -183,16 +183,9 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -206,13 +199,8 @@ public class ModulePersistenceImpl
 	public Module fetchByUuid_First(
 		String uuid, OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -222,11 +210,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (Module module :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -349,19 +334,9 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -377,14 +352,8 @@ public class ModulePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByUuid_C(
-			uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -395,13 +364,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (Module module :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -515,16 +479,9 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("appId=");
-		sb.append(appId);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByAppId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {appId}));
 	}
 
 	/**
@@ -538,13 +495,8 @@ public class ModulePersistenceImpl
 	public Module fetchByAppId_First(
 		long appId, OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByAppId(appId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByAppId.fetchFirst(
+			finderCache, new Object[] {appId}, orderByComparator);
 	}
 
 	/**
@@ -554,12 +506,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByAppId(long appId) {
-		for (Module module :
-				findByAppId(
-					appId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByAppId.remove(
+			finderCache, new Object[] {appId});
 	}
 
 	/**
@@ -678,16 +626,11 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("bundleSymbolicName=");
-		sb.append(bundleSymbolicName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByBundleSymbolicName.
+				buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {bundleSymbolicName}));
 	}
 
 	/**
@@ -702,14 +645,8 @@ public class ModulePersistenceImpl
 		String bundleSymbolicName,
 		OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByBundleSymbolicName(
-			bundleSymbolicName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByBundleSymbolicName.fetchFirst(
+			finderCache, new Object[] {bundleSymbolicName}, orderByComparator);
 	}
 
 	/**
@@ -719,13 +656,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByBundleSymbolicName(String bundleSymbolicName) {
-		for (Module module :
-				findByBundleSymbolicName(
-					bundleSymbolicName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByBundleSymbolicName.remove(
+			finderCache, new Object[] {bundleSymbolicName});
 	}
 
 	/**
@@ -843,16 +775,9 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("contextName=");
-		sb.append(contextName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByContextName.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {contextName}));
 	}
 
 	/**
@@ -866,14 +791,8 @@ public class ModulePersistenceImpl
 	public Module fetchByContextName_First(
 		String contextName, OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByContextName(
-			contextName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByContextName.fetchFirst(
+			finderCache, new Object[] {contextName}, orderByComparator);
 	}
 
 	/**
@@ -883,12 +802,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByContextName(String contextName) {
-		for (Module module :
-				findByContextName(
-					contextName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByContextName.remove(
+			finderCache, new Object[] {contextName});
 	}
 
 	/**
@@ -1012,19 +927,9 @@ public class ModulePersistenceImpl
 			return module;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("appId=");
-		sb.append(appId);
-
-		sb.append(", contextName=");
-		sb.append(contextName);
-
-		sb.append("}");
-
-		throw new NoSuchModuleException(sb.toString());
+		throw new NoSuchModuleException(
+			_collectionPersistenceFinderByA_CN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {appId, contextName}));
 	}
 
 	/**
@@ -1040,14 +945,8 @@ public class ModulePersistenceImpl
 		long appId, String contextName,
 		OrderByComparator<Module> orderByComparator) {
 
-		List<Module> list = findByA_CN(
-			appId, contextName, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByA_CN.fetchFirst(
+			finderCache, new Object[] {appId, contextName}, orderByComparator);
 	}
 
 	/**
@@ -1058,13 +957,8 @@ public class ModulePersistenceImpl
 	 */
 	@Override
 	public void removeByA_CN(long appId, String contextName) {
-		for (Module module :
-				findByA_CN(
-					appId, contextName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(module);
-		}
+		_collectionPersistenceFinderByA_CN.remove(
+			finderCache, new Object[] {appId, contextName});
 	}
 
 	/**
@@ -1101,26 +995,16 @@ public class ModulePersistenceImpl
 			appId, bundleSymbolicName, bundleVersion);
 
 		if (module == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("appId=");
-			sb.append(appId);
-
-			sb.append(", bundleSymbolicName=");
-			sb.append(bundleSymbolicName);
-
-			sb.append(", bundleVersion=");
-			sb.append(bundleVersion);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByA_BSN_BV.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {appId, bundleSymbolicName, bundleVersion});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchModuleException(sb.toString());
+			throw new NoSuchModuleException(message);
 		}
 
 		return module;
@@ -2010,4 +1894,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-918102706
+// LIFERAY-SERVICE-BUILDER-HASH:389137871

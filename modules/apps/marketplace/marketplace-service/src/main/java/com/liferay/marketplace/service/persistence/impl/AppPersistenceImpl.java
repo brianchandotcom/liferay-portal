@@ -185,16 +185,9 @@ public class AppPersistenceImpl
 			return app;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
+		throw new NoSuchAppException(
+			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
 	}
 
 	/**
@@ -208,13 +201,8 @@ public class AppPersistenceImpl
 	public App fetchByUuid_First(
 		String uuid, OrderByComparator<App> orderByComparator) {
 
-		List<App> list = findByUuid(uuid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid.fetchFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -224,11 +212,8 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (App app :
-				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(app);
-		}
+		_collectionPersistenceFinderByUuid.remove(
+			finderCache, new Object[] {uuid});
 	}
 
 	/**
@@ -351,19 +336,9 @@ public class AppPersistenceImpl
 			return app;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("uuid=");
-		sb.append(uuid);
-
-		sb.append(", companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
+		throw new NoSuchAppException(
+			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
 	}
 
 	/**
@@ -378,13 +353,8 @@ public class AppPersistenceImpl
 	public App fetchByUuid_C_First(
 		String uuid, long companyId, OrderByComparator<App> orderByComparator) {
 
-		List<App> list = findByUuid_C(uuid, companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByUuid_C.fetchFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -395,13 +365,8 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (App app :
-				findByUuid_C(
-					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(app);
-		}
+		_collectionPersistenceFinderByUuid_C.remove(
+			finderCache, new Object[] {uuid, companyId});
 	}
 
 	/**
@@ -516,16 +481,9 @@ public class AppPersistenceImpl
 			return app;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
+		throw new NoSuchAppException(
+			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
 	}
 
 	/**
@@ -539,13 +497,8 @@ public class AppPersistenceImpl
 	public App fetchByCompanyId_First(
 		long companyId, OrderByComparator<App> orderByComparator) {
 
-		List<App> list = findByCompanyId(companyId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCompanyId.fetchFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -555,12 +508,8 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public void removeByCompanyId(long companyId) {
-		for (App app :
-				findByCompanyId(
-					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(app);
-		}
+		_collectionPersistenceFinderByCompanyId.remove(
+			finderCache, new Object[] {companyId});
 	}
 
 	/**
@@ -590,20 +539,15 @@ public class AppPersistenceImpl
 		App app = fetchByRemoteAppId(remoteAppId);
 
 		if (app == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("remoteAppId=");
-			sb.append(remoteAppId);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByRemoteAppId.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {remoteAppId});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchAppException(sb.toString());
+			throw new NoSuchAppException(message);
 		}
 
 		return app;
@@ -757,16 +701,9 @@ public class AppPersistenceImpl
 			return app;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("category=");
-		sb.append(category);
-
-		sb.append("}");
-
-		throw new NoSuchAppException(sb.toString());
+		throw new NoSuchAppException(
+			_collectionPersistenceFinderByCategory.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {category}));
 	}
 
 	/**
@@ -780,13 +717,8 @@ public class AppPersistenceImpl
 	public App fetchByCategory_First(
 		String category, OrderByComparator<App> orderByComparator) {
 
-		List<App> list = findByCategory(category, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCategory.fetchFirst(
+			finderCache, new Object[] {category}, orderByComparator);
 	}
 
 	/**
@@ -796,12 +728,8 @@ public class AppPersistenceImpl
 	 */
 	@Override
 	public void removeByCategory(String category) {
-		for (App app :
-				findByCategory(
-					category, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(app);
-		}
+		_collectionPersistenceFinderByCategory.remove(
+			finderCache, new Object[] {category});
 	}
 
 	/**
@@ -1577,4 +1505,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1288352587
+// LIFERAY-SERVICE-BUILDER-HASH:-1447840956

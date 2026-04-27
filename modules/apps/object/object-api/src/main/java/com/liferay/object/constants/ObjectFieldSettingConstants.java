@@ -42,6 +42,8 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_PREFIX = "prefix";
 
+	public static final String NAME_PREFIX_TYPE = "prefixType";
+
 	public static final String NAME_SHOW_COUNTER = "showCounter";
 
 	public static final String NAME_SHOW_FILES_IN_LIBRARY =
@@ -68,9 +70,13 @@ public class ObjectFieldSettingConstants {
 
 	public static final String VALUE_COUNT = "COUNT";
 
+	public static final String VALUE_DEFINED_BY_USER = "definedByUser";
+
 	public static final String VALUE_DOCS_AND_MEDIA = "documentsAndMedia";
 
 	public static final String VALUE_EXPRESSION_BUILDER = "expressionBuilder";
+
+	public static final String VALUE_FIXED = "fixed";
 
 	public static final String VALUE_INPUT_AS_VALUE = "inputAsValue";
 

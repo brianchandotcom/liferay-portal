@@ -246,6 +246,32 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
+	public static class InvalidPhoneNumber extends ObjectEntryValuesException {
+
+		public InvalidPhoneNumber(String objectFieldName, String phoneNumber) {
+			super(
+				StringBundler.concat(
+					"The phone number \"", phoneNumber,
+					"\" has an invalid format for object field \"",
+					objectFieldName, "\""));
+
+			_objectFieldName = objectFieldName;
+			_phoneNumber = phoneNumber;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		public String getPhoneNumber() {
+			return _phoneNumber;
+		}
+
+		private final String _objectFieldName;
+		private final String _phoneNumber;
+
+	}
+
 	public static class InvalidValue extends ObjectEntryValuesException {
 
 		public InvalidValue(String objectFieldName) {

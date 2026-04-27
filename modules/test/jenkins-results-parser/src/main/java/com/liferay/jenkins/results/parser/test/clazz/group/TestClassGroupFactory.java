@@ -542,6 +542,18 @@ public class TestClassGroupFactory {
 							batchName, (QAWebsitesGitRepositoryJob)job);
 				}
 			}
+			else if (batchName.startsWith("rest-builder-and-service-builder")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
 			else if (batchName.startsWith("rest-builder")) {
 				if (jsonObject != null) {
 					batchTestClassGroup =
@@ -562,18 +574,6 @@ public class TestClassGroupFactory {
 				else {
 					batchTestClassGroup = new SemanticVersioningTestClassGroup(
 						batchName, portalTestClassJob);
-				}
-			}
-			else if (batchName.startsWith("rest-builder-and-service-builder")) {
-				if (jsonObject != null) {
-					batchTestClassGroup =
-						new RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
-							jsonObject, portalTestClassJob);
-				}
-				else {
-					batchTestClassGroup =
-						new RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
-							batchName, portalTestClassJob);
 				}
 			}
 			else if (batchName.startsWith("service-builder")) {

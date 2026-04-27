@@ -3879,6 +3879,60 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await expect(page.getByRole('menu')).toContainText('test 2');
 	});
 
+	test('can view other users entry with view permission', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectEntry = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: objectEntry},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'] as any[],
+					primaryKey: company.companyId,
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await performUserSwitch(page, user.alternateName);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: objectEntry})
+		).toBeVisible();
+	});
+
 	test('can view success message entirely in arabic', async ({
 		apiHelpers,
 		page,
@@ -3910,6 +3964,31 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await viewObjectEntriesPage.saveObjectEntryButtonArabic.click();
 
 		await expect(viewObjectEntriesPage.successMessageArabic).toBeVisible();
+	});
+
+	test('can view user name on author column', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: getRandomString()},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	});
 
 	test('cannot add translation to a non-translatable field', async ({
@@ -3958,6 +4037,70 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const translationButton = page.getByRole('button', {name: 'en-us'});
 
 		await expect(translationButton).toHaveCount(0);
+	});
+
+	test('cannot view other users entry without view permission', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectEntry = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: objectEntry},
+			'c/' + objectDefinition.name.toLowerCase() + 's'
+		);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await createUserWithPermissions({
+			apiHelpers,
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['ADD_OBJECT_ENTRY'] as any[],
+					primaryKey: company.companyId,
+					resourceName: `com.liferay.object#${objectDefinition.id}`,
+					scope: 1,
+				},
+			],
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: objectEntry})
+		).toBeVisible();
+
+		await performUserSwitch(page, user.alternateName);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByText('Add ' + objectDefinition.label.en_US)
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: objectEntry})
+		).not.toBeVisible();
 	});
 
 	test('change the object entry status from Draft to Approved after processing an update', async ({

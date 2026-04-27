@@ -205,4 +205,4 @@ public class ShippingMethod implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:125965579
+// LIFERAY-REST-BUILDER-HASH:1514904053

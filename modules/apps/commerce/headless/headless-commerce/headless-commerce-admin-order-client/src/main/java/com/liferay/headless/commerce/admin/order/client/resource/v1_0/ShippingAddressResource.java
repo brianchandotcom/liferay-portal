@@ -709,4 +709,4 @@ public interface ShippingAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1055692326
+// LIFERAY-REST-BUILDER-HASH:-1374334865

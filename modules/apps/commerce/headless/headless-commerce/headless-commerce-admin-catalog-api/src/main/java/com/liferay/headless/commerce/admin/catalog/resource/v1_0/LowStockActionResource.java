@@ -147,4 +147,4 @@ public interface LowStockActionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-263093300
+// LIFERAY-REST-BUILDER-HASH:-1390188422

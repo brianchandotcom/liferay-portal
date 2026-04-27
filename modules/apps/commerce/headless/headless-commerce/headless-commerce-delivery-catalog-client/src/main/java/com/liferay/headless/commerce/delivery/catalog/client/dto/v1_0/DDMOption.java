@@ -118,4 +118,4 @@ public class DDMOption implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2123720239
+// LIFERAY-REST-BUILDER-HASH:455766247

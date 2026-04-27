@@ -102,4 +102,4 @@ public class DefaultProductDisplayPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-841673502
+// LIFERAY-REST-BUILDER-HASH:-568365165

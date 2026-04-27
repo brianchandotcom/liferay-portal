@@ -137,4 +137,4 @@ public class InnerHit implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1304135475
+// LIFERAY-REST-BUILDER-HASH:-97075836

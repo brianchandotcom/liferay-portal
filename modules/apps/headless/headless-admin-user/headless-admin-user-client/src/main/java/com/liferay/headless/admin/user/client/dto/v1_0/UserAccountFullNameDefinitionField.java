@@ -123,4 +123,4 @@ public class UserAccountFullNameDefinitionField
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1479875872
+// LIFERAY-REST-BUILDER-HASH:421361556

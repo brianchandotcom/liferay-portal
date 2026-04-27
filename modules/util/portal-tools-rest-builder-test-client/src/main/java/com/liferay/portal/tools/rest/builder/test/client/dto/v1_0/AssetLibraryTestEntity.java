@@ -196,4 +196,4 @@ public class AssetLibraryTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-207092573
+// LIFERAY-REST-BUILDER-HASH:-1986946068

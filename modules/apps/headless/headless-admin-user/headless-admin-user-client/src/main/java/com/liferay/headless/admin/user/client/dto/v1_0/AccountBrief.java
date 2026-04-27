@@ -156,4 +156,4 @@ public class AccountBrief implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-381975849
+// LIFERAY-REST-BUILDER-HASH:-933706854

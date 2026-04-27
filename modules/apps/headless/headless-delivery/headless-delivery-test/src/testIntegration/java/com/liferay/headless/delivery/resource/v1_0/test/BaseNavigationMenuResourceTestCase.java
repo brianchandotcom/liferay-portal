@@ -3107,4 +3107,4 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1292090591
+// LIFERAY-REST-BUILDER-HASH:-2110994784

@@ -191,4 +191,4 @@ public class CategoryDisplayPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:713726585
+// LIFERAY-REST-BUILDER-HASH:-686912360

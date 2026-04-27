@@ -5214,4 +5214,4 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1776297145
+// LIFERAY-REST-BUILDER-HASH:1380956108

@@ -147,4 +147,4 @@ public interface AccountForecastResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1997242893
+// LIFERAY-REST-BUILDER-HASH:-1656491676

@@ -300,4 +300,4 @@ public class ObjectDefinitionSettingSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-480729538
+// LIFERAY-REST-BUILDER-HASH:1877150609

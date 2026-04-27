@@ -276,4 +276,4 @@ public class SitePageNavigationMenuSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:995754605
+// LIFERAY-REST-BUILDER-HASH:-337432998

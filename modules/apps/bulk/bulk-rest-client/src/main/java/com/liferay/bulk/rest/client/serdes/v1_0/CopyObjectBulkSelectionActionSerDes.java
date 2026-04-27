@@ -331,4 +331,4 @@ public class CopyObjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1977129150
+// LIFERAY-REST-BUILDER-HASH:-23855075

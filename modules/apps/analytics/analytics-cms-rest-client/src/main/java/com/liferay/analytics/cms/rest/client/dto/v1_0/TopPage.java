@@ -141,4 +141,4 @@ public class TopPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-651439383
+// LIFERAY-REST-BUILDER-HASH:-1981158411

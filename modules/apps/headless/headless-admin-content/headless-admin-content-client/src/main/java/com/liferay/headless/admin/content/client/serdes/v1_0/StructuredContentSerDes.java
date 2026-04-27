@@ -1425,4 +1425,4 @@ public class StructuredContentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-921095648
+// LIFERAY-REST-BUILDER-HASH:-958476082

@@ -125,4 +125,4 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1643553549
+// LIFERAY-REST-BUILDER-HASH:-1543641396

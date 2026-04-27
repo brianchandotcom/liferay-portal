@@ -370,4 +370,4 @@ public abstract class TestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1512172249
+// LIFERAY-REST-BUILDER-HASH:1826378845

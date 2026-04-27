@@ -99,4 +99,4 @@ public class Filter implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:269134124
+// LIFERAY-REST-BUILDER-HASH:479797346

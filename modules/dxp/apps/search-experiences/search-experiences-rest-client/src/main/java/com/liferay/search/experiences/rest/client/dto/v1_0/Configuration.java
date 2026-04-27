@@ -270,4 +270,4 @@ public class Configuration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2107447424
+// LIFERAY-REST-BUILDER-HASH:-1063641055

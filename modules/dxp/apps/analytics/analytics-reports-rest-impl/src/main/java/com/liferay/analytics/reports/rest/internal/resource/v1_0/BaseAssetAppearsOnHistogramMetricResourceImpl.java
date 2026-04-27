@@ -552,4 +552,4 @@ public abstract class BaseAssetAppearsOnHistogramMetricResourceImpl
 			BaseAssetAppearsOnHistogramMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:509295793
+// LIFERAY-REST-BUILDER-HASH:-1911085014

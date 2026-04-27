@@ -78,4 +78,4 @@ public class UiConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1241243812
+// LIFERAY-REST-BUILDER-HASH:-327949597

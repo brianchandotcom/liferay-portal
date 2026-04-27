@@ -637,4 +637,4 @@ public abstract class BasePlacedOrderAddressResourceImpl
 		LogFactoryUtil.getLog(BasePlacedOrderAddressResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:2136346035
+// LIFERAY-REST-BUILDER-HASH:128097531

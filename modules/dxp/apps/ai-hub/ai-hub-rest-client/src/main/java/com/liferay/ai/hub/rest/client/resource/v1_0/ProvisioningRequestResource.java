@@ -265,4 +265,4 @@ public interface ProvisioningRequestResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1249096298
+// LIFERAY-REST-BUILDER-HASH:-653955770

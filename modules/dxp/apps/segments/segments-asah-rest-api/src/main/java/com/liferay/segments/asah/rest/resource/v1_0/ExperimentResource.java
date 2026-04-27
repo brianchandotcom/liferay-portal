@@ -147,4 +147,4 @@ public interface ExperimentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1835689022
+// LIFERAY-REST-BUILDER-HASH:-1849300297

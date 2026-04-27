@@ -385,4 +385,4 @@ public interface QueryPrefilterContributorResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1948196184
+// LIFERAY-REST-BUILDER-HASH:-2055511660

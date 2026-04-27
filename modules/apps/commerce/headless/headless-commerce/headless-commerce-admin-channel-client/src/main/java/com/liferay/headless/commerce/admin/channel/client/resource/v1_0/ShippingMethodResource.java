@@ -404,4 +404,4 @@ public interface ShippingMethodResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-892999383
+// LIFERAY-REST-BUILDER-HASH:-1167639331

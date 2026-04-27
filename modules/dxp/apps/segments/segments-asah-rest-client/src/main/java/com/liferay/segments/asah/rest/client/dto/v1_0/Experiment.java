@@ -222,4 +222,4 @@ public class Experiment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-895080464
+// LIFERAY-REST-BUILDER-HASH:-1880248468

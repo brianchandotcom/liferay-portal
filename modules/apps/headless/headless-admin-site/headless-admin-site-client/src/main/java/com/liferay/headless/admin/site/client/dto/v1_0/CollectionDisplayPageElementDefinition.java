@@ -346,4 +346,4 @@ public class CollectionDisplayPageElementDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1331220966
+// LIFERAY-REST-BUILDER-HASH:-997549499

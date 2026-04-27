@@ -1212,4 +1212,4 @@ public abstract class BaseTicketResourceTestCase {
 		_ticketResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1727000654
+// LIFERAY-REST-BUILDER-HASH:-1697484739

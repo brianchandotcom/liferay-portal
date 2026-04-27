@@ -1703,4 +1703,4 @@ public interface NotificationTemplateResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-706093379
+// LIFERAY-REST-BUILDER-HASH:-1608849402

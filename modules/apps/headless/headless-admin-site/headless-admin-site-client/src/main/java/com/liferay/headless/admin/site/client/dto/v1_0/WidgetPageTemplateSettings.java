@@ -105,4 +105,4 @@ public class WidgetPageTemplateSettings
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:927206688
+// LIFERAY-REST-BUILDER-HASH:365136080

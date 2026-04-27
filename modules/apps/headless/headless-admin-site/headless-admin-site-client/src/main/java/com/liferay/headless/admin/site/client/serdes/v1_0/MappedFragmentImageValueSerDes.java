@@ -238,4 +238,4 @@ public class MappedFragmentImageValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2107303395
+// LIFERAY-REST-BUILDER-HASH:-1489753897

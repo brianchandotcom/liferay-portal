@@ -239,4 +239,4 @@ public class MeasurementUnit implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1191810472
+// LIFERAY-REST-BUILDER-HASH:1445628899

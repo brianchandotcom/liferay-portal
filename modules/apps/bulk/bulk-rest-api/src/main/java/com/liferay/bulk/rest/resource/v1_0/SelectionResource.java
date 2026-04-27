@@ -134,4 +134,4 @@ public interface SelectionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1597667742
+// LIFERAY-REST-BUILDER-HASH:2058414363

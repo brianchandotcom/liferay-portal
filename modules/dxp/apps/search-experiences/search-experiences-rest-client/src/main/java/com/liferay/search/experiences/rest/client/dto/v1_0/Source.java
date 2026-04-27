@@ -120,4 +120,4 @@ public class Source implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1069086656
+// LIFERAY-REST-BUILDER-HASH:2085994279

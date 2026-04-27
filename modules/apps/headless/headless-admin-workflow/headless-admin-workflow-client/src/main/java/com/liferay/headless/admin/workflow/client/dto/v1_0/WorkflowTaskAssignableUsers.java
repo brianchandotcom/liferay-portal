@@ -86,4 +86,4 @@ public class WorkflowTaskAssignableUsers implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1906034464
+// LIFERAY-REST-BUILDER-HASH:-882062519

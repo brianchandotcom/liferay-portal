@@ -408,4 +408,4 @@ public class OrderRuleAccountGroupSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1807601349
+// LIFERAY-REST-BUILDER-HASH:-615404875

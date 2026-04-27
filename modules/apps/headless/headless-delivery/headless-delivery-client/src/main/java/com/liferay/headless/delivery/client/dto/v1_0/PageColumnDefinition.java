@@ -123,4 +123,4 @@ public class PageColumnDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1089135641
+// LIFERAY-REST-BUILDER-HASH:407804528

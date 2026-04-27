@@ -437,4 +437,4 @@ public class SXPElement implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1611389692
+// LIFERAY-REST-BUILDER-HASH:-1272945781

@@ -204,4 +204,4 @@ public class AccountMember implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:894621726
+// LIFERAY-REST-BUILDER-HASH:-177320861

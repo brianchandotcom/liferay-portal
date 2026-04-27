@@ -185,4 +185,4 @@ public class ProductInteractionRecommendation
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1476300546
+// LIFERAY-REST-BUILDER-HASH:627794724

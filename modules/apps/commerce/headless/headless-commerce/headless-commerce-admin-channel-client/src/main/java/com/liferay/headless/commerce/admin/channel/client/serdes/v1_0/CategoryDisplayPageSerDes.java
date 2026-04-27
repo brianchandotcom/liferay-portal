@@ -364,4 +364,4 @@ public class CategoryDisplayPageSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:33349374
+// LIFERAY-REST-BUILDER-HASH:-34298721

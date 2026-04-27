@@ -144,4 +144,4 @@ public class WidgetInstance implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1677657290
+// LIFERAY-REST-BUILDER-HASH:213993998

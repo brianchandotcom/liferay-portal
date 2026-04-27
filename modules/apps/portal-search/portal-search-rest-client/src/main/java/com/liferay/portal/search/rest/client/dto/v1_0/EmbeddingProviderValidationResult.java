@@ -104,4 +104,4 @@ public class EmbeddingProviderValidationResult
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:178027907
+// LIFERAY-REST-BUILDER-HASH:27078030

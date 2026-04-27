@@ -158,4 +158,4 @@ public class EmailAddress implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1519395909
+// LIFERAY-REST-BUILDER-HASH:-60849310

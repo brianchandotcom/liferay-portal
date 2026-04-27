@@ -105,4 +105,4 @@ public class WorkflowDefinitionLink implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1060802058
+// LIFERAY-REST-BUILDER-HASH:1558701239

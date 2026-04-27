@@ -253,4 +253,4 @@ public class AssetAppearsOnHistogramMetricSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1921382414
+// LIFERAY-REST-BUILDER-HASH:-244534004

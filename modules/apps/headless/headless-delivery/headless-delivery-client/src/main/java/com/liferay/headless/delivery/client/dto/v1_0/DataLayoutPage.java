@@ -123,4 +123,4 @@ public class DataLayoutPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-329566084
+// LIFERAY-REST-BUILDER-HASH:-646765239

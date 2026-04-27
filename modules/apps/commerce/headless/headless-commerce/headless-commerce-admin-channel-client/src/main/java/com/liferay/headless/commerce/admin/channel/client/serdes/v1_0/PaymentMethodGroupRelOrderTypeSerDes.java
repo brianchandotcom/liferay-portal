@@ -424,4 +424,4 @@ public class PaymentMethodGroupRelOrderTypeSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:715158846
+// LIFERAY-REST-BUILDER-HASH:-23891165

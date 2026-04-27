@@ -273,4 +273,4 @@ public interface TaskAssigneeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-57883124
+// LIFERAY-REST-BUILDER-HASH:1707908751

@@ -214,4 +214,4 @@ public class ChannelAccount implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2133322242
+// LIFERAY-REST-BUILDER-HASH:-683084631

@@ -120,4 +120,4 @@ public class CustomMetaTag implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:375489191
+// LIFERAY-REST-BUILDER-HASH:1639932558

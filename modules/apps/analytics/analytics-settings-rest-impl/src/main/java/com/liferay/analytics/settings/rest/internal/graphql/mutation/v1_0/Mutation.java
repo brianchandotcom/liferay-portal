@@ -342,4 +342,4 @@ public class Mutation {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:396179273
+// LIFERAY-REST-BUILDER-HASH:-1595589409

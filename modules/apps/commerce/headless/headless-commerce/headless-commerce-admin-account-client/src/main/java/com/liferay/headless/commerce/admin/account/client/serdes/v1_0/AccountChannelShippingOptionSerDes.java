@@ -508,4 +508,4 @@ public class AccountChannelShippingOptionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1308683027
+// LIFERAY-REST-BUILDER-HASH:-1352902063

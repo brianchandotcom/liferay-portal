@@ -336,4 +336,4 @@ public class StatusObjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-893586117
+// LIFERAY-REST-BUILDER-HASH:1938482195

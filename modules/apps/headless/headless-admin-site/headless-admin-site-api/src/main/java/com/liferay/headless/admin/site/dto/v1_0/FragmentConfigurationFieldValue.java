@@ -360,4 +360,4 @@ public abstract class FragmentConfigurationFieldValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1455337931
+// LIFERAY-REST-BUILDER-HASH:-2111710114

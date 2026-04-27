@@ -162,4 +162,4 @@ public class Rescore implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:813784394
+// LIFERAY-REST-BUILDER-HASH:1711935683

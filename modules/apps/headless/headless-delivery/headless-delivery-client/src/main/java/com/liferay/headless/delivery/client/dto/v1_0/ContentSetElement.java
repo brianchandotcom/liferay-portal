@@ -162,4 +162,4 @@ public class ContentSetElement implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:18636209
+// LIFERAY-REST-BUILDER-HASH:-890582695

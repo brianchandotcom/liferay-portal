@@ -264,4 +264,4 @@ public class CTRemote implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1389334857
+// LIFERAY-REST-BUILDER-HASH:1257465643

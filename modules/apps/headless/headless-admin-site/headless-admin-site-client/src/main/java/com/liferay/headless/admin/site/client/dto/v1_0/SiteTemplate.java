@@ -276,4 +276,4 @@ public class SiteTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-95668403
+// LIFERAY-REST-BUILDER-HASH:-592031663

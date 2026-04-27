@@ -3686,4 +3686,4 @@ public abstract class BasePriceEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-223821273
+// LIFERAY-REST-BUILDER-HASH:1742457716

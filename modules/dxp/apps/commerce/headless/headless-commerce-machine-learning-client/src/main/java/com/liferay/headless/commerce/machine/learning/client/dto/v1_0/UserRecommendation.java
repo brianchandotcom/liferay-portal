@@ -201,4 +201,4 @@ public class UserRecommendation implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:146564529
+// LIFERAY-REST-BUILDER-HASH:-432934081

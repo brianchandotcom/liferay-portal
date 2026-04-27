@@ -100,4 +100,4 @@ public class MarginAndPaddingConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1609044361
+// LIFERAY-REST-BUILDER-HASH:660166478

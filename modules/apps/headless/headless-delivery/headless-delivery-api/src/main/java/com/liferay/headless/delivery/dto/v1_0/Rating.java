@@ -641,4 +641,4 @@ public class Rating implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2034769035
+// LIFERAY-REST-BUILDER-HASH:-1864313979

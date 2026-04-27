@@ -156,4 +156,4 @@ public class ProductChannel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2094039647
+// LIFERAY-REST-BUILDER-HASH:1168560607

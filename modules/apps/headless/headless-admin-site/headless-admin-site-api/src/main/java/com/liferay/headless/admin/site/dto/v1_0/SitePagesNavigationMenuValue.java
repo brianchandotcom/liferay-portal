@@ -367,4 +367,4 @@ public class SitePagesNavigationMenuValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1434242617
+// LIFERAY-REST-BUILDER-HASH:113940564

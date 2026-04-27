@@ -2542,4 +2542,4 @@ public abstract class BaseShipmentResourceTestCase {
 			ShipmentResource _shipmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-289432524
+// LIFERAY-REST-BUILDER-HASH:-315018370

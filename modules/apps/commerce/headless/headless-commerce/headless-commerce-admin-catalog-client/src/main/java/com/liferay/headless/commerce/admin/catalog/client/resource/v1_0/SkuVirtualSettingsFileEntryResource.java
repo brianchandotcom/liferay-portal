@@ -892,4 +892,4 @@ public interface SkuVirtualSettingsFileEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2000328945
+// LIFERAY-REST-BUILDER-HASH:-546680559

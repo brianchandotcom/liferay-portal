@@ -214,4 +214,4 @@ public class WarehouseAccount implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:747272633
+// LIFERAY-REST-BUILDER-HASH:-63408836

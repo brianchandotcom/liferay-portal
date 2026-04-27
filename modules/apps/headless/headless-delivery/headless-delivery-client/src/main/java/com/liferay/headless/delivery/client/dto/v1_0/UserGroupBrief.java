@@ -95,4 +95,4 @@ public class UserGroupBrief implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1034588981
+// LIFERAY-REST-BUILDER-HASH:-503208664

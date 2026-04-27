@@ -312,4 +312,4 @@ public class DisplayPageFormSubmissionResultSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1865476672
+// LIFERAY-REST-BUILDER-HASH:654474003

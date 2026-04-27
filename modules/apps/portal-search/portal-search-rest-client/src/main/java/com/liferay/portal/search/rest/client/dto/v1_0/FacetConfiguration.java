@@ -183,4 +183,4 @@ public class FacetConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:896345420
+// LIFERAY-REST-BUILDER-HASH:2136224478

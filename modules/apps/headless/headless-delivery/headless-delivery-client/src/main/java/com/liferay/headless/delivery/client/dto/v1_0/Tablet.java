@@ -120,4 +120,4 @@ public class Tablet implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1110816438
+// LIFERAY-REST-BUILDER-HASH:-289204751

@@ -268,4 +268,4 @@ public class ObjectEntryAcquisitionChannelSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1786821329
+// LIFERAY-REST-BUILDER-HASH:-115194007

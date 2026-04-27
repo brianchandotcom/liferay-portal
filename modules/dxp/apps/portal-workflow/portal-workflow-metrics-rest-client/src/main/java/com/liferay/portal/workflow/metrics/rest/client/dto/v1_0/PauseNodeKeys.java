@@ -99,4 +99,4 @@ public class PauseNodeKeys implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1840091979
+// LIFERAY-REST-BUILDER-HASH:432977675

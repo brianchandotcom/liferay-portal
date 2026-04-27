@@ -249,4 +249,4 @@ public class WarehouseItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1736243974
+// LIFERAY-REST-BUILDER-HASH:1275294889

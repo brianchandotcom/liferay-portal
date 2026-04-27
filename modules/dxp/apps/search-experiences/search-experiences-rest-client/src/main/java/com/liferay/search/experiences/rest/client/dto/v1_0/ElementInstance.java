@@ -165,4 +165,4 @@ public class ElementInstance implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1527661644
+// LIFERAY-REST-BUILDER-HASH:633811012

@@ -338,4 +338,4 @@ public class AccountOrganizationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:690782531
+// LIFERAY-REST-BUILDER-HASH:-1787455828

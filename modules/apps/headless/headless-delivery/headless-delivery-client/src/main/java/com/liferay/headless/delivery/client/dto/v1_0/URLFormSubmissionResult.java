@@ -79,4 +79,4 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1008214320
+// LIFERAY-REST-BUILDER-HASH:-1624198112

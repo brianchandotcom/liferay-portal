@@ -124,4 +124,4 @@ public abstract class FragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:60095324
+// LIFERAY-REST-BUILDER-HASH:-1736464512

@@ -79,4 +79,4 @@ public class PageDropZoneDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:874799594
+// LIFERAY-REST-BUILDER-HASH:517226254

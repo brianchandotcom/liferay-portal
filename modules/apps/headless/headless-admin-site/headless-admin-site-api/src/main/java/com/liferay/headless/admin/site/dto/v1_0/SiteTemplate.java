@@ -770,4 +770,4 @@ public class SiteTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1720607832
+// LIFERAY-REST-BUILDER-HASH:942551449

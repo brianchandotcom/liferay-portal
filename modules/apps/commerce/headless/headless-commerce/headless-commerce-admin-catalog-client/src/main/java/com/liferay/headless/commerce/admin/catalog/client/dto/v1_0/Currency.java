@@ -373,4 +373,4 @@ public class Currency implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-34560988
+// LIFERAY-REST-BUILDER-HASH:-1023528941

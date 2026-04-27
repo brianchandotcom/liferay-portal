@@ -217,4 +217,4 @@ public class FormContainerConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1559095909
+// LIFERAY-REST-BUILDER-HASH:1544913288

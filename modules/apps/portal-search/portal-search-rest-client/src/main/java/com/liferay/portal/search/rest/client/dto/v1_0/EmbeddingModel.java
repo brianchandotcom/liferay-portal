@@ -78,4 +78,4 @@ public class EmbeddingModel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1776424628
+// LIFERAY-REST-BUILDER-HASH:882889747

@@ -177,4 +177,4 @@ public class Channel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1776304299
+// LIFERAY-REST-BUILDER-HASH:-1704896356

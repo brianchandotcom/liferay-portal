@@ -270,4 +270,4 @@ public class UnreferencedTestEntitySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:248088665
+// LIFERAY-REST-BUILDER-HASH:1029272957

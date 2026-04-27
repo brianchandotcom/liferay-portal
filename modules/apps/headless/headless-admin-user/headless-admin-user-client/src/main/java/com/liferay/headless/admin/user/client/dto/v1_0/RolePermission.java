@@ -200,4 +200,4 @@ public class RolePermission implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:188351492
+// LIFERAY-REST-BUILDER-HASH:1313771538

@@ -399,4 +399,4 @@ public class ReplenishmentItemSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:16867474
+// LIFERAY-REST-BUILDER-HASH:1436226298

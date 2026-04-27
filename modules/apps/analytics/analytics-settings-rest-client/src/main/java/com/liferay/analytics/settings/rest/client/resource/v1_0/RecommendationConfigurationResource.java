@@ -379,4 +379,4 @@ public interface RecommendationConfigurationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:728452685
+// LIFERAY-REST-BUILDER-HASH:1366659330

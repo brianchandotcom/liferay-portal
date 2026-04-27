@@ -467,4 +467,4 @@ public class UtilityPageTemplate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2008955362
+// LIFERAY-REST-BUILDER-HASH:1733093220

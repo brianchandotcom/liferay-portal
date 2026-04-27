@@ -195,4 +195,4 @@ public class WidgetLookAndFeelConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:387693048
+// LIFERAY-REST-BUILDER-HASH:-746014572

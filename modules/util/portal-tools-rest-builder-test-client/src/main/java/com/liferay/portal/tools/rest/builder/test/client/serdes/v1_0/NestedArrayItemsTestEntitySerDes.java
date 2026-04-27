@@ -251,4 +251,4 @@ public class NestedArrayItemsTestEntitySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1850679572
+// LIFERAY-REST-BUILDER-HASH:-1261059916

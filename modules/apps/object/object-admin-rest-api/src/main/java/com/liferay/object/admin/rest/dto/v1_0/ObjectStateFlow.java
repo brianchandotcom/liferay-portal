@@ -291,4 +291,4 @@ public class ObjectStateFlow implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:374193639
+// LIFERAY-REST-BUILDER-HASH:-1072712484

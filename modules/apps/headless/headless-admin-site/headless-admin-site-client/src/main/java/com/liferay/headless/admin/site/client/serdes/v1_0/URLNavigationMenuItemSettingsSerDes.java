@@ -239,4 +239,4 @@ public class URLNavigationMenuItemSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1562658259
+// LIFERAY-REST-BUILDER-HASH:-900281970

@@ -137,4 +137,4 @@ public interface InventoryAnalysisResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-571503399
+// LIFERAY-REST-BUILDER-HASH:1101897895

@@ -159,4 +159,4 @@ public class AdminAccountGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-19603807
+// LIFERAY-REST-BUILDER-HASH:358524569

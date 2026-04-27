@@ -343,4 +343,4 @@ public class UnreferencedTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1407006926
+// LIFERAY-REST-BUILDER-HASH:1504076078

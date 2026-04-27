@@ -1003,4 +1003,4 @@ public abstract class BaseDefaultCategoryDisplayPageResourceTestCase {
 		DefaultCategoryDisplayPageResource _defaultCategoryDisplayPageResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-540089081
+// LIFERAY-REST-BUILDER-HASH:-780435539

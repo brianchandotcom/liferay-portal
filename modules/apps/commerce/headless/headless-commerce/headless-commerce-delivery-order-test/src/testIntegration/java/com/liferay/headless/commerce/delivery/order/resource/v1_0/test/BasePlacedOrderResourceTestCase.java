@@ -5224,4 +5224,4 @@ public abstract class BasePlacedOrderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:989692736
+// LIFERAY-REST-BUILDER-HASH:-829747167

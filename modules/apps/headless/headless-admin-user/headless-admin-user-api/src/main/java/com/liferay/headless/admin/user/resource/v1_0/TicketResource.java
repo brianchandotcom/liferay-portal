@@ -135,4 +135,4 @@ public interface TicketResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:256264820
+// LIFERAY-REST-BUILDER-HASH:-863669928

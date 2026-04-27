@@ -268,4 +268,4 @@ public class SearchResult implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1090536072
+// LIFERAY-REST-BUILDER-HASH:-1071752244

@@ -1160,4 +1160,4 @@ public interface DiscountRuleResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:860736414
+// LIFERAY-REST-BUILDER-HASH:144245855

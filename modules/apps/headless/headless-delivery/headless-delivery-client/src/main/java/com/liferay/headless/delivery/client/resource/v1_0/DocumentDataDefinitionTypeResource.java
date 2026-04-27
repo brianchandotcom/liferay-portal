@@ -1554,4 +1554,4 @@ public interface DocumentDataDefinitionTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1701581541
+// LIFERAY-REST-BUILDER-HASH:1574277138

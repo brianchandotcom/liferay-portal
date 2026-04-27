@@ -105,4 +105,4 @@ public class DefaultCategoryDisplayPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1064431978
+// LIFERAY-REST-BUILDER-HASH:599647642

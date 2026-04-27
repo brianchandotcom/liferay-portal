@@ -268,4 +268,4 @@ public interface WorkflowTaskTransitionsResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2072307416
+// LIFERAY-REST-BUILDER-HASH:591449410

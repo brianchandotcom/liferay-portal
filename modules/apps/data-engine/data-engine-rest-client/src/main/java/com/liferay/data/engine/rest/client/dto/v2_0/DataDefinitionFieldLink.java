@@ -122,4 +122,4 @@ public class DataDefinitionFieldLink implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-40830488
+// LIFERAY-REST-BUILDER-HASH:-1518007329

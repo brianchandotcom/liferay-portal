@@ -140,4 +140,4 @@ public class CreatorStatistics implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1842552934
+// LIFERAY-REST-BUILDER-HASH:-797360098

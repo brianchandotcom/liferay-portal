@@ -288,4 +288,4 @@ public interface AssetHistogramMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:38378474
+// LIFERAY-REST-BUILDER-HASH:380733175

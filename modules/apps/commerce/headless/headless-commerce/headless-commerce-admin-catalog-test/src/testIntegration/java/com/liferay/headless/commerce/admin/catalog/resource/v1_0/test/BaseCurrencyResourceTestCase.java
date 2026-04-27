@@ -2660,4 +2660,4 @@ public abstract class BaseCurrencyResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-592353895
+// LIFERAY-REST-BUILDER-HASH:413142290

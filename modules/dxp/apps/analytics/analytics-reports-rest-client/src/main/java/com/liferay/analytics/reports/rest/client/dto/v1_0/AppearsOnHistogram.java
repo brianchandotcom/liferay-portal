@@ -162,4 +162,4 @@ public class AppearsOnHistogram implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1493738468
+// LIFERAY-REST-BUILDER-HASH:-305147337

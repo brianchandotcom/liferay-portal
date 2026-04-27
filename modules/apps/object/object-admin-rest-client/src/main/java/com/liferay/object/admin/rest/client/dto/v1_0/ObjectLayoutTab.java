@@ -188,4 +188,4 @@ public class ObjectLayoutTab implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:864629140
+// LIFERAY-REST-BUILDER-HASH:1912754029

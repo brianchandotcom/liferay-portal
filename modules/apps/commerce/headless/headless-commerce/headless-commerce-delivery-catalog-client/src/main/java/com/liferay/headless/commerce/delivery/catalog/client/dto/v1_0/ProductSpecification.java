@@ -289,4 +289,4 @@ public class ProductSpecification implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1229487321
+// LIFERAY-REST-BUILDER-HASH:-236592567

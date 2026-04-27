@@ -416,4 +416,4 @@ public class SkuVirtualSettings implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1894042749
+// LIFERAY-REST-BUILDER-HASH:-1758944439

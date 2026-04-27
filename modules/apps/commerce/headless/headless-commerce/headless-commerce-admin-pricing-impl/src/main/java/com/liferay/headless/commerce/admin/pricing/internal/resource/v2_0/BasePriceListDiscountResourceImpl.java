@@ -1063,4 +1063,4 @@ public abstract class BasePriceListDiscountResourceImpl
 		LogFactoryUtil.getLog(BasePriceListDiscountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-652462974
+// LIFERAY-REST-BUILDER-HASH:825616591

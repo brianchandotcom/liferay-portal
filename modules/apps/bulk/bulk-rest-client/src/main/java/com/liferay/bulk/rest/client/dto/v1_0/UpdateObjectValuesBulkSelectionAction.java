@@ -85,4 +85,4 @@ public class UpdateObjectValuesBulkSelectionAction
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1506776471
+// LIFERAY-REST-BUILDER-HASH:1325903911

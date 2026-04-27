@@ -86,4 +86,4 @@ public class AssetAppearsOnHistogramMetric implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1361344490
+// LIFERAY-REST-BUILDER-HASH:666040216

@@ -228,4 +228,4 @@ public class GridPageElementDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-925211158
+// LIFERAY-REST-BUILDER-HASH:-1417237966

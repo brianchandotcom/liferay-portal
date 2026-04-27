@@ -920,4 +920,4 @@ public interface PageExperienceResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-780464847
+// LIFERAY-REST-BUILDER-HASH:1764594436

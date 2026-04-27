@@ -78,4 +78,4 @@ public class Etag implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1046783161
+// LIFERAY-REST-BUILDER-HASH:-723661454

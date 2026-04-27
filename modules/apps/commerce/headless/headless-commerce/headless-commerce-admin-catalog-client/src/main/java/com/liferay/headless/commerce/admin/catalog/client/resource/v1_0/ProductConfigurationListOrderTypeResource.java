@@ -1030,4 +1030,4 @@ public interface ProductConfigurationListOrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2080530720
+// LIFERAY-REST-BUILDER-HASH:1506124356

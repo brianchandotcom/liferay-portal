@@ -141,4 +141,4 @@ public class Histogram implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-839159001
+// LIFERAY-REST-BUILDER-HASH:1705035037

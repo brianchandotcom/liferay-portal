@@ -223,4 +223,4 @@ public class DSDocument implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1714559161
+// LIFERAY-REST-BUILDER-HASH:-1928720726

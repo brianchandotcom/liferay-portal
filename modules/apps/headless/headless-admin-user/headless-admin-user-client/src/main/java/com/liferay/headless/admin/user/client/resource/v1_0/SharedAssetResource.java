@@ -433,4 +433,4 @@ public interface SharedAssetResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:828447179
+// LIFERAY-REST-BUILDER-HASH:-1391291060

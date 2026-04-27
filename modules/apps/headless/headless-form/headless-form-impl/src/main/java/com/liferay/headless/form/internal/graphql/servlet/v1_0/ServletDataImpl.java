@@ -212,4 +212,4 @@ public class ServletDataImpl implements ServletData {
 		_formStructureResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-107935929
+// LIFERAY-REST-BUILDER-HASH:1306245880

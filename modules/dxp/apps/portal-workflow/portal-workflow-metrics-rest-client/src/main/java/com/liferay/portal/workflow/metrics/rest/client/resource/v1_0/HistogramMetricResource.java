@@ -292,4 +292,4 @@ public interface HistogramMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1081026223
+// LIFERAY-REST-BUILDER-HASH:933373418

@@ -137,4 +137,4 @@ public class DiscountRule implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1753973159
+// LIFERAY-REST-BUILDER-HASH:-1443899269

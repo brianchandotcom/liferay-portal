@@ -2394,4 +2394,4 @@ public abstract class BaseWebUrlResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:183596027
+// LIFERAY-REST-BUILDER-HASH:346522847

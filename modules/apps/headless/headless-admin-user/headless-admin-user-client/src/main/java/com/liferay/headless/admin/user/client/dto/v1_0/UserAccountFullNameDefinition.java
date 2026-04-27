@@ -91,4 +91,4 @@ public class UserAccountFullNameDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1859514450
+// LIFERAY-REST-BUILDER-HASH:819508462

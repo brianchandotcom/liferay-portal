@@ -175,4 +175,4 @@ public interface SkuUnitOfMeasureResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:870792185
+// LIFERAY-REST-BUILDER-HASH:-1790981195

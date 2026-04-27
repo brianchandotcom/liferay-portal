@@ -398,4 +398,4 @@ public class DataDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1526984488
+// LIFERAY-REST-BUILDER-HASH:115077282

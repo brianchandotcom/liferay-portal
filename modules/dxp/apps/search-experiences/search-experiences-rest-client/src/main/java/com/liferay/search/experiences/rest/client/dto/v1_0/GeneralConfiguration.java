@@ -346,4 +346,4 @@ public class GeneralConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1311774587
+// LIFERAY-REST-BUILDER-HASH:-2095752395

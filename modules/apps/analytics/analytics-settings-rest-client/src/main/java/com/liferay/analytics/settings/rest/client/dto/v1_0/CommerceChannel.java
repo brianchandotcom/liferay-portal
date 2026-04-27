@@ -137,4 +137,4 @@ public class CommerceChannel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:266832797
+// LIFERAY-REST-BUILDER-HASH:-675270935

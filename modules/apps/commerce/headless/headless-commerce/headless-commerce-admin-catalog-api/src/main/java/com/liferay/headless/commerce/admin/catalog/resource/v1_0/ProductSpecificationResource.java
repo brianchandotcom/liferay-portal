@@ -192,4 +192,4 @@ public interface ProductSpecificationResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2063975588
+// LIFERAY-REST-BUILDER-HASH:1594325266

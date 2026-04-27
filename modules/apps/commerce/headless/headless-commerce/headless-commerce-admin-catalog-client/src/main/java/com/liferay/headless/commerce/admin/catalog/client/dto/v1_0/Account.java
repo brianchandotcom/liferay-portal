@@ -116,4 +116,4 @@ public class Account implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1703814725
+// LIFERAY-REST-BUILDER-HASH:1712027948

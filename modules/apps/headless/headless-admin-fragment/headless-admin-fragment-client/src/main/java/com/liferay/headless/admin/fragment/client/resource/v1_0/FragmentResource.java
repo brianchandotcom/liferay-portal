@@ -780,4 +780,4 @@ public interface FragmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:75999108
+// LIFERAY-REST-BUILDER-HASH:1408687517

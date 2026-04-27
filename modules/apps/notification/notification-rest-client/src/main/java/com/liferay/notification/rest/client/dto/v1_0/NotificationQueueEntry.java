@@ -307,4 +307,4 @@ public class NotificationQueueEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-972517973
+// LIFERAY-REST-BUILDER-HASH:-954374811

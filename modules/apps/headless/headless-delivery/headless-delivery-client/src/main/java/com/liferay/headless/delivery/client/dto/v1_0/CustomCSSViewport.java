@@ -97,4 +97,4 @@ public class CustomCSSViewport implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1682867229
+// LIFERAY-REST-BUILDER-HASH:-783452400

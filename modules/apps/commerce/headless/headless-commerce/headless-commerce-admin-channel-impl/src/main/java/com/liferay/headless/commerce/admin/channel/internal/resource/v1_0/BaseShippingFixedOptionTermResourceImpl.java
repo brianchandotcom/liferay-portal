@@ -943,4 +943,4 @@ public abstract class BaseShippingFixedOptionTermResourceImpl
 		LogFactoryUtil.getLog(BaseShippingFixedOptionTermResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1365624338
+// LIFERAY-REST-BUILDER-HASH:-517244893

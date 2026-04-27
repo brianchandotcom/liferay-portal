@@ -992,4 +992,4 @@ public interface PriceListChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:743232606
+// LIFERAY-REST-BUILDER-HASH:1661689221

@@ -242,4 +242,4 @@ public interface ObjectEntryFolderResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-339454853
+// LIFERAY-REST-BUILDER-HASH:-1714698297

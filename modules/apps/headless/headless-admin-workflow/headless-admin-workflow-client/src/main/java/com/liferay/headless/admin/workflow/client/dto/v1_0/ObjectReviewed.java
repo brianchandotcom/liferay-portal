@@ -139,4 +139,4 @@ public class ObjectReviewed implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-625650289
+// LIFERAY-REST-BUILDER-HASH:1802966918

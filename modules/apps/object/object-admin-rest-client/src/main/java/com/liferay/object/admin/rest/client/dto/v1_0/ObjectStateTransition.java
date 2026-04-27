@@ -77,4 +77,4 @@ public class ObjectStateTransition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1779756106
+// LIFERAY-REST-BUILDER-HASH:-810857998

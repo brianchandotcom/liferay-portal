@@ -137,4 +137,4 @@ public class ObjectLayoutColumn implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:178743054
+// LIFERAY-REST-BUILDER-HASH:337207156

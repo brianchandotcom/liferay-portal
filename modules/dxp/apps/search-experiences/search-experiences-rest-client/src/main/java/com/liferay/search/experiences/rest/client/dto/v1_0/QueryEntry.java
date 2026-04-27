@@ -162,4 +162,4 @@ public class QueryEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-880096063
+// LIFERAY-REST-BUILDER-HASH:-7746663

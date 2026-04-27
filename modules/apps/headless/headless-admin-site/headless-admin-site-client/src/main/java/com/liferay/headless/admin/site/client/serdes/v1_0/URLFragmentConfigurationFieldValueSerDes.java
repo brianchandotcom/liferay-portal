@@ -274,4 +274,4 @@ public class URLFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-762813885
+// LIFERAY-REST-BUILDER-HASH:-865857729

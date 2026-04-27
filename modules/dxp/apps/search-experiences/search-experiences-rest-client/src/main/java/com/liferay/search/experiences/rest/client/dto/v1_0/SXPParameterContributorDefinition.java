@@ -125,4 +125,4 @@ public class SXPParameterContributorDefinition
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1629186766
+// LIFERAY-REST-BUILDER-HASH:792762660

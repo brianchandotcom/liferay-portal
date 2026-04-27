@@ -595,4 +595,4 @@ public interface BillingAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1542634171
+// LIFERAY-REST-BUILDER-HASH:2002135092

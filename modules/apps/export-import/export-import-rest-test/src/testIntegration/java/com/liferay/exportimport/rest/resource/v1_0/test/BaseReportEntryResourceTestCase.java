@@ -2020,4 +2020,4 @@ public abstract class BaseReportEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:318566495
+// LIFERAY-REST-BUILDER-HASH:1203530701

@@ -97,4 +97,4 @@ public class FragmentFieldText implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-927203267
+// LIFERAY-REST-BUILDER-HASH:841551844

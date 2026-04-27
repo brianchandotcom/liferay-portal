@@ -516,4 +516,4 @@ public abstract class BaseAccountResourceImpl implements AccountResource {
 		LogFactoryUtil.getLog(BaseAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1670473042
+// LIFERAY-REST-BUILDER-HASH:-1398082155

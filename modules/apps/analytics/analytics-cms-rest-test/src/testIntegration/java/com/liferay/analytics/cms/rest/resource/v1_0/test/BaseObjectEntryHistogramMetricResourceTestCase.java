@@ -820,4 +820,4 @@ public abstract class BaseObjectEntryHistogramMetricResourceTestCase {
 		ObjectEntryHistogramMetricResource _objectEntryHistogramMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1607608548
+// LIFERAY-REST-BUILDER-HASH:1241081348

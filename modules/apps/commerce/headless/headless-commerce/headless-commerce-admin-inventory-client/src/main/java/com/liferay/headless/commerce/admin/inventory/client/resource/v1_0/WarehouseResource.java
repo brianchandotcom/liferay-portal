@@ -1418,4 +1418,4 @@ public interface WarehouseResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1103056799
+// LIFERAY-REST-BUILDER-HASH:350488646

@@ -232,4 +232,4 @@ public class BackgroundImageValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2110410959
+// LIFERAY-REST-BUILDER-HASH:297165290

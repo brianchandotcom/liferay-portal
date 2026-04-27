@@ -1557,4 +1557,4 @@ public abstract class BasePageElementResourceTestCase {
 		_pageElementResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2104449222
+// LIFERAY-REST-BUILDER-HASH:-1199952978

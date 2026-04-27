@@ -177,4 +177,4 @@ public class FileEntry implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:985405710
+// LIFERAY-REST-BUILDER-HASH:-1680732252

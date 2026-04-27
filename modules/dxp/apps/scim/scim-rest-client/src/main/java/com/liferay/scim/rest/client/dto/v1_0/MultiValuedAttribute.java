@@ -159,4 +159,4 @@ public class MultiValuedAttribute implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-344439427
+// LIFERAY-REST-BUILDER-HASH:-336317989

@@ -5596,4 +5596,4 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-574990406
+// LIFERAY-REST-BUILDER-HASH:-1092146018

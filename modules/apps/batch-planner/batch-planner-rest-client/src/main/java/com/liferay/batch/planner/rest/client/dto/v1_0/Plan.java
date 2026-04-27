@@ -366,4 +366,4 @@ public class Plan implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1566343259
+// LIFERAY-REST-BUILDER-HASH:-656085779

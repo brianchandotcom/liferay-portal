@@ -287,4 +287,4 @@ public class PageColumnDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:43448672
+// LIFERAY-REST-BUILDER-HASH:-256969816

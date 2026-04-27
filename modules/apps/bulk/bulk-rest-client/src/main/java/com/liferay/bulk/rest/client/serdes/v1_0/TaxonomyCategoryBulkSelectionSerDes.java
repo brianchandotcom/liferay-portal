@@ -325,4 +325,4 @@ public class TaxonomyCategoryBulkSelectionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:256035889
+// LIFERAY-REST-BUILDER-HASH:554210558

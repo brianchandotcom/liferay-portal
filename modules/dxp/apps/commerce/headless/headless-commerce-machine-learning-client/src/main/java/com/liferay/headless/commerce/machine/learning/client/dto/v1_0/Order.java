@@ -441,4 +441,4 @@ public class Order implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1749679053
+// LIFERAY-REST-BUILDER-HASH:-245459245

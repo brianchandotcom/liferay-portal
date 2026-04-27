@@ -237,4 +237,4 @@ public class InstanceConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1938062910
+// LIFERAY-REST-BUILDER-HASH:199157020

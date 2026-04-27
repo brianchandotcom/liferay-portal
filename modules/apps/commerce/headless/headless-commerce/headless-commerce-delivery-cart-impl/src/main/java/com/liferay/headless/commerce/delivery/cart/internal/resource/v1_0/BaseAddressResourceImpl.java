@@ -622,4 +622,4 @@ public abstract class BaseAddressResourceImpl implements AddressResource {
 		LogFactoryUtil.getLog(BaseAddressResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-398172754
+// LIFERAY-REST-BUILDER-HASH:306517760

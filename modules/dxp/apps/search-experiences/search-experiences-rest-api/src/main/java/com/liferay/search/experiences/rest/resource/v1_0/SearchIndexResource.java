@@ -147,4 +147,4 @@ public interface SearchIndexResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-543251175
+// LIFERAY-REST-BUILDER-HASH:590869011

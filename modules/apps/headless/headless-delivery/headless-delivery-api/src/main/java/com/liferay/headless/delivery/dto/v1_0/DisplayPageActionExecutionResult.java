@@ -241,4 +241,4 @@ public class DisplayPageActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1971697009
+// LIFERAY-REST-BUILDER-HASH:-524031765

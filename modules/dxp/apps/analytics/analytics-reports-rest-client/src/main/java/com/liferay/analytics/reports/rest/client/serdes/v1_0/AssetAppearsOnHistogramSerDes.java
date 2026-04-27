@@ -269,4 +269,4 @@ public class AssetAppearsOnHistogramSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-403218263
+// LIFERAY-REST-BUILDER-HASH:-1357666461

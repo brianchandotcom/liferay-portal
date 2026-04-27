@@ -677,4 +677,4 @@ public class KnowledgeBaseFolderSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-909868338
+// LIFERAY-REST-BUILDER-HASH:-454121056

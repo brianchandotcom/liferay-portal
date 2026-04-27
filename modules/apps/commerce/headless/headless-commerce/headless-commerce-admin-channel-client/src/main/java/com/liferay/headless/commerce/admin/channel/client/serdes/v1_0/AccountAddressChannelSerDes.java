@@ -405,4 +405,4 @@ public class AccountAddressChannelSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:637433857
+// LIFERAY-REST-BUILDER-HASH:944640213

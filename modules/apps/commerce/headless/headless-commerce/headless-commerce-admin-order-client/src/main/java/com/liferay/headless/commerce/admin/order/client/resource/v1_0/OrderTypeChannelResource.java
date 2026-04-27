@@ -987,4 +987,4 @@ public interface OrderTypeChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1702180945
+// LIFERAY-REST-BUILDER-HASH:-1021151850

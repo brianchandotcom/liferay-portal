@@ -191,4 +191,4 @@ public class MessageFormSubmissionResult implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-313169386
+// LIFERAY-REST-BUILDER-HASH:-1303712514

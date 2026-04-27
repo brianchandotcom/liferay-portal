@@ -183,4 +183,4 @@ public class PageElement implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:425351815
+// LIFERAY-REST-BUILDER-HASH:1401638646

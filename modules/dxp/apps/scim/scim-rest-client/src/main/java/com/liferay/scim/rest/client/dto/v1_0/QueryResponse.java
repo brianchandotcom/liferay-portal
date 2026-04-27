@@ -141,4 +141,4 @@ public class QueryResponse implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1965249171
+// LIFERAY-REST-BUILDER-HASH:994767788

@@ -654,4 +654,4 @@ public interface ShippingFixedOptionOrderTypeResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:105597897
+// LIFERAY-REST-BUILDER-HASH:2075772989

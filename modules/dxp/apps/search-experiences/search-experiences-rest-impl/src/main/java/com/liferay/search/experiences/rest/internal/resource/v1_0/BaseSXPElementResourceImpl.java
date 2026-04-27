@@ -1486,4 +1486,4 @@ public abstract class BaseSXPElementResourceImpl
 		LogFactoryUtil.getLog(BaseSXPElementResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-681311649
+// LIFERAY-REST-BUILDER-HASH:137671617

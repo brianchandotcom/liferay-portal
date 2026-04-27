@@ -102,4 +102,4 @@ public class EmptyCollectionConfig implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1057269893
+// LIFERAY-REST-BUILDER-HASH:-1680582855

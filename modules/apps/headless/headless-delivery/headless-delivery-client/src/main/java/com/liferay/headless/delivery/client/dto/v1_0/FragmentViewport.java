@@ -100,4 +100,4 @@ public class FragmentViewport implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:492267716
+// LIFERAY-REST-BUILDER-HASH:1982569019

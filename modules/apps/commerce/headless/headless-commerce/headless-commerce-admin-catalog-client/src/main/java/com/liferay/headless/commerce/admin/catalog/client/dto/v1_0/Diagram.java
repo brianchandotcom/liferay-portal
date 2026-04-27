@@ -247,4 +247,4 @@ public class Diagram implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-904912445
+// LIFERAY-REST-BUILDER-HASH:1840651634

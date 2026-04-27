@@ -133,4 +133,4 @@ public interface OrderAccountGroupResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1348409277
+// LIFERAY-REST-BUILDER-HASH:547117422

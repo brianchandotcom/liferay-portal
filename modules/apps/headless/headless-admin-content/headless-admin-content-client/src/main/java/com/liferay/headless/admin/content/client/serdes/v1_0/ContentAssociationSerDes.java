@@ -239,4 +239,4 @@ public class ContentAssociationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:821414544
+// LIFERAY-REST-BUILDER-HASH:428755166

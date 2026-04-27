@@ -238,4 +238,4 @@ public class NotificationActionExecutionResultSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2092810741
+// LIFERAY-REST-BUILDER-HASH:54966494

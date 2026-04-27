@@ -271,4 +271,4 @@ public interface TaxonomyVocabularyResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:870313519
+// LIFERAY-REST-BUILDER-HASH:-1816027928

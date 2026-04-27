@@ -553,4 +553,4 @@ public class Summary implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:568834404
+// LIFERAY-REST-BUILDER-HASH:-493849028

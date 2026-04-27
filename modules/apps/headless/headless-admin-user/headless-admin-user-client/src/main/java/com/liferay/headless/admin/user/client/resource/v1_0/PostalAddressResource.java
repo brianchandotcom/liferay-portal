@@ -2597,4 +2597,4 @@ public interface PostalAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1097602735
+// LIFERAY-REST-BUILDER-HASH:232184838

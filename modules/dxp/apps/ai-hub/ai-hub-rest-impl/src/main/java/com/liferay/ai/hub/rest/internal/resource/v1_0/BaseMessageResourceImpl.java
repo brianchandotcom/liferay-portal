@@ -520,4 +520,4 @@ public abstract class BaseMessageResourceImpl implements MessageResource {
 		LogFactoryUtil.getLog(BaseMessageResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-245496752
+// LIFERAY-REST-BUILDER-HASH:2085110722

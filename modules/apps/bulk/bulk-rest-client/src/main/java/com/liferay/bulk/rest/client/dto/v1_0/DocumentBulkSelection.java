@@ -101,4 +101,4 @@ public class DocumentBulkSelection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-84473892
+// LIFERAY-REST-BUILDER-HASH:335685285

@@ -120,4 +120,4 @@ public class EnumTestEntity implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-809832876
+// LIFERAY-REST-BUILDER-HASH:-743899691

@@ -1004,4 +1004,4 @@ public abstract class BaseOrderAccountGroupResourceTestCase {
 		OrderAccountGroupResource _orderAccountGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1088933359
+// LIFERAY-REST-BUILDER-HASH:703809959

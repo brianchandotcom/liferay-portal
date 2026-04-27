@@ -217,4 +217,4 @@ public interface ScopedTestEntityResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:299046817
+// LIFERAY-REST-BUILDER-HASH:-1444493566

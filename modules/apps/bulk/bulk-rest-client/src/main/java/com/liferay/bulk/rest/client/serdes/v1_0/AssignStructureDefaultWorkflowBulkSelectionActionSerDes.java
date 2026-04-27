@@ -379,4 +379,4 @@ public class AssignStructureDefaultWorkflowBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1473131839
+// LIFERAY-REST-BUILDER-HASH:58083254

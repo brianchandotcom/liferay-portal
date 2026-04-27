@@ -294,4 +294,4 @@ public class NavigationMenuFragmentConfigurationFieldValueSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1504699601
+// LIFERAY-REST-BUILDER-HASH:1530743795

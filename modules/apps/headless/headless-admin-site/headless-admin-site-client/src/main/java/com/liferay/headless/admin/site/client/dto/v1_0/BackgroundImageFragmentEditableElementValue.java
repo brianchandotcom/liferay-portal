@@ -90,4 +90,4 @@ public class BackgroundImageFragmentEditableElementValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-943728077
+// LIFERAY-REST-BUILDER-HASH:1403578861

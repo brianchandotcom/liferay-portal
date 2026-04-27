@@ -150,4 +150,4 @@ public class SitePagesNavigationMenuValue
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1792643433
+// LIFERAY-REST-BUILDER-HASH:1966728070

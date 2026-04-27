@@ -140,4 +140,4 @@ public class ObjectViewColumn implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:821265527
+// LIFERAY-REST-BUILDER-HASH:-1223297930

@@ -141,4 +141,4 @@ public class ListStyleDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-786820151
+// LIFERAY-REST-BUILDER-HASH:-1889102194

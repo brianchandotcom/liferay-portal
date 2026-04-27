@@ -1710,4 +1710,4 @@ public abstract class BaseAttachmentResourceImpl
 		LogFactoryUtil.getLog(BaseAttachmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1810635910
+// LIFERAY-REST-BUILDER-HASH:1864443077

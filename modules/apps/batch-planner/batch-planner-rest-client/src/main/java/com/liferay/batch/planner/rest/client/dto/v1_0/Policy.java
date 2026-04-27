@@ -137,4 +137,4 @@ public class Policy implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:146002273
+// LIFERAY-REST-BUILDER-HASH:388787432

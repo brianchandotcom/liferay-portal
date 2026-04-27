@@ -293,4 +293,4 @@ public class ParentTaxonomyCategorySerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1278935873
+// LIFERAY-REST-BUILDER-HASH:2107450390

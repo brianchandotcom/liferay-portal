@@ -177,4 +177,4 @@ public class Schema implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1242640910
+// LIFERAY-REST-BUILDER-HASH:1997469870

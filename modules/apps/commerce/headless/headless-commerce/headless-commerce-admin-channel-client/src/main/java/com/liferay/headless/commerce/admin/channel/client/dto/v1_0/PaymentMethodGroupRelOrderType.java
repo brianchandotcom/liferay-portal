@@ -220,4 +220,4 @@ public class PaymentMethodGroupRelOrderType implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2041446323
+// LIFERAY-REST-BUILDER-HASH:163164464

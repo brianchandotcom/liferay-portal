@@ -259,4 +259,4 @@ public class TypeOptions implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:708167171
+// LIFERAY-REST-BUILDER-HASH:413605831

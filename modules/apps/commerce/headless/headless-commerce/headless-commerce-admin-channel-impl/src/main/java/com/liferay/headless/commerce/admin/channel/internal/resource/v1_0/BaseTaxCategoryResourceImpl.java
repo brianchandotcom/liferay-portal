@@ -868,4 +868,4 @@ public abstract class BaseTaxCategoryResourceImpl
 		LogFactoryUtil.getLog(BaseTaxCategoryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1073538994
+// LIFERAY-REST-BUILDER-HASH:1072797471

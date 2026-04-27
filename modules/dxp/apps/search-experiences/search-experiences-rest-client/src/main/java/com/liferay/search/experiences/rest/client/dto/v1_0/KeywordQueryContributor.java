@@ -79,4 +79,4 @@ public class KeywordQueryContributor implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:134402010
+// LIFERAY-REST-BUILDER-HASH:1317395600

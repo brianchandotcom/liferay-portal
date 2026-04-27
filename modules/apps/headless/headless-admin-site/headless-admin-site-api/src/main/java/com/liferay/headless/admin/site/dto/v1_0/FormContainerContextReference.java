@@ -307,4 +307,4 @@ public class FormContainerContextReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2080496956
+// LIFERAY-REST-BUILDER-HASH:-1052374063

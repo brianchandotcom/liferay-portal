@@ -162,4 +162,4 @@ public class RenderedPage implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1892398962
+// LIFERAY-REST-BUILDER-HASH:-1147599211

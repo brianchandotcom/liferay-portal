@@ -120,4 +120,4 @@ public class Equals implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1905255745
+// LIFERAY-REST-BUILDER-HASH:-1418723114

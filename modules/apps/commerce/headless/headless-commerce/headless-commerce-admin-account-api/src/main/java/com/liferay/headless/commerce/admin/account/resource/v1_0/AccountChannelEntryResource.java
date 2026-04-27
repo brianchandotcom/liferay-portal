@@ -398,4 +398,4 @@ public interface AccountChannelEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1257254676
+// LIFERAY-REST-BUILDER-HASH:1495340324

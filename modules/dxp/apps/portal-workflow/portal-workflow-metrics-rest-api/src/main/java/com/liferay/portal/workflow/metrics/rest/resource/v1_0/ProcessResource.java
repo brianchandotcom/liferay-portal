@@ -159,4 +159,4 @@ public interface ProcessResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1045270298
+// LIFERAY-REST-BUILDER-HASH:-1666921097

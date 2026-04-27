@@ -434,4 +434,4 @@ public class DisplayPageTemplate implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:451620607
+// LIFERAY-REST-BUILDER-HASH:1285173238

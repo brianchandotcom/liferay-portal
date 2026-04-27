@@ -142,4 +142,4 @@ public class GridViewportDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-749974803
+// LIFERAY-REST-BUILDER-HASH:663941063

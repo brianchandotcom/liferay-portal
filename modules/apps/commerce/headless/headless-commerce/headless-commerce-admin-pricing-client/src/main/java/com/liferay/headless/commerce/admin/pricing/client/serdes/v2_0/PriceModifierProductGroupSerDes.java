@@ -428,4 +428,4 @@ public class PriceModifierProductGroupSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1870564765
+// LIFERAY-REST-BUILDER-HASH:-1461874111

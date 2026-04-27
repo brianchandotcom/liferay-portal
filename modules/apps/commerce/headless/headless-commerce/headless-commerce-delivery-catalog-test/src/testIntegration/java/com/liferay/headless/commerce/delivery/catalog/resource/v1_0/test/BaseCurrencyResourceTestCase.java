@@ -2029,4 +2029,4 @@ public abstract class BaseCurrencyResourceTestCase {
 		CurrencyResource _currencyResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:373278802
+// LIFERAY-REST-BUILDER-HASH:1449896107

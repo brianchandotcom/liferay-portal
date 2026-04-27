@@ -185,4 +185,4 @@ public class Location implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1415209178
+// LIFERAY-REST-BUILDER-HASH:-540936218

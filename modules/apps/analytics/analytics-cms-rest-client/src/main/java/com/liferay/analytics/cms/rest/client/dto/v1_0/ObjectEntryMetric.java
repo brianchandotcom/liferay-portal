@@ -141,4 +141,4 @@ public class ObjectEntryMetric implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1460394096
+// LIFERAY-REST-BUILDER-HASH:-983757021

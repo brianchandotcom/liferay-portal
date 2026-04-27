@@ -410,4 +410,4 @@ public class OrganizationContactInformationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:142710162
+// LIFERAY-REST-BUILDER-HASH:1824357510

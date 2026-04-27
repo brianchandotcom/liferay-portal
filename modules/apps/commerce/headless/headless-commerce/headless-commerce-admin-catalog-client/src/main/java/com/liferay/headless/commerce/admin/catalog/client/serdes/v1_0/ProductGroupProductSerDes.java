@@ -403,4 +403,4 @@ public class ProductGroupProductSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1398969503
+// LIFERAY-REST-BUILDER-HASH:-372383666

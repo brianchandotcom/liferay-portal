@@ -1809,4 +1809,4 @@ public abstract class BaseContentStructureResourceImpl
 		LogFactoryUtil.getLog(BaseContentStructureResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:746618132
+// LIFERAY-REST-BUILDER-HASH:-846784486

@@ -1821,4 +1821,4 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		ProductGroupProductResource _productGroupProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1291234610
+// LIFERAY-REST-BUILDER-HASH:807114957

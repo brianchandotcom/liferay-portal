@@ -349,4 +349,4 @@ public class PageElementDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-58744624
+// LIFERAY-REST-BUILDER-HASH:1275309391

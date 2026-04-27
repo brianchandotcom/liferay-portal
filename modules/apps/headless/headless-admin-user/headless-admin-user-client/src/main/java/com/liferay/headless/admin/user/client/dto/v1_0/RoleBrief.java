@@ -179,4 +179,4 @@ public class RoleBrief implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1689135682
+// LIFERAY-REST-BUILDER-HASH:1392699935

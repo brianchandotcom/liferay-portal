@@ -290,4 +290,4 @@ public class AdvancedStylingConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1805619934
+// LIFERAY-REST-BUILDER-HASH:629261423

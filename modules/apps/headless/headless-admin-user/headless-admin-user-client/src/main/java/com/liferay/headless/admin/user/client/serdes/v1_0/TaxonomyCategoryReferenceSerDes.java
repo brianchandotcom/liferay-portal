@@ -246,4 +246,4 @@ public class TaxonomyCategoryReferenceSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-709303820
+// LIFERAY-REST-BUILDER-HASH:-1637628343

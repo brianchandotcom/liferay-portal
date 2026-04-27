@@ -78,4 +78,4 @@ public class SortConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2035141288
+// LIFERAY-REST-BUILDER-HASH:1567818394

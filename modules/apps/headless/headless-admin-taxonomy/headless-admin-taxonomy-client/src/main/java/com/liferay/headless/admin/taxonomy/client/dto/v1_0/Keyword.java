@@ -332,4 +332,4 @@ public class Keyword implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1792996207
+// LIFERAY-REST-BUILDER-HASH:193441813

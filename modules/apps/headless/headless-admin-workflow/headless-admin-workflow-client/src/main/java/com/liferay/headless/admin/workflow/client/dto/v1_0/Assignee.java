@@ -95,4 +95,4 @@ public class Assignee implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1355029516
+// LIFERAY-REST-BUILDER-HASH:-171674980

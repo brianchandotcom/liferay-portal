@@ -800,4 +800,4 @@ public abstract class BaseTimeRangeResourceImpl
 		LogFactoryUtil.getLog(BaseTimeRangeResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-601352655
+// LIFERAY-REST-BUILDER-HASH:-432149479

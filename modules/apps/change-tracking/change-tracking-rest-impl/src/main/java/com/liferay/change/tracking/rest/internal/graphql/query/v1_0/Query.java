@@ -724,4 +724,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1078242070
+// LIFERAY-REST-BUILDER-HASH:-602052383

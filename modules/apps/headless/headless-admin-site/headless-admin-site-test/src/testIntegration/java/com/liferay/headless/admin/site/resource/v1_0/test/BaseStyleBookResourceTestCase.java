@@ -1951,4 +1951,4 @@ public abstract class BaseStyleBookResourceTestCase {
 		_styleBookResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:635478062
+// LIFERAY-REST-BUILDER-HASH:-1445790421

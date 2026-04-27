@@ -101,4 +101,4 @@ public class SystemConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:539564796
+// LIFERAY-REST-BUILDER-HASH:741841864

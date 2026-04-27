@@ -416,4 +416,4 @@ public class ProductShippingConfigurationSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1228852670
+// LIFERAY-REST-BUILDER-HASH:21989579

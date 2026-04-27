@@ -141,4 +141,4 @@ public class FragmentFieldAction implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1869343680
+// LIFERAY-REST-BUILDER-HASH:-1265392989

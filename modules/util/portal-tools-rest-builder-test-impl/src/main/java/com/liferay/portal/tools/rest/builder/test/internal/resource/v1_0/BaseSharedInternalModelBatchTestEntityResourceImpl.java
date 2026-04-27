@@ -1111,4 +1111,4 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceImpl
 			BaseSharedInternalModelBatchTestEntityResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1751181612
+// LIFERAY-REST-BUILDER-HASH:753696642

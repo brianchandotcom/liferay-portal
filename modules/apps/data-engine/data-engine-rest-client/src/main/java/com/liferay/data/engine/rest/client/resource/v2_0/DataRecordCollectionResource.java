@@ -1824,4 +1824,4 @@ public interface DataRecordCollectionResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:275277003
+// LIFERAY-REST-BUILDER-HASH:-1694772156

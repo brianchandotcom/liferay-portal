@@ -548,4 +548,4 @@ public abstract class BaseAssetHistogramMetricResourceImpl
 		LogFactoryUtil.getLog(BaseAssetHistogramMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-967964997
+// LIFERAY-REST-BUILDER-HASH:298378149

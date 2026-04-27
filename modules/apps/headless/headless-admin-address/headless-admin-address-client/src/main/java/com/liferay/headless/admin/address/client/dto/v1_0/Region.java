@@ -202,4 +202,4 @@ public class Region implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-969345504
+// LIFERAY-REST-BUILDER-HASH:2006803034

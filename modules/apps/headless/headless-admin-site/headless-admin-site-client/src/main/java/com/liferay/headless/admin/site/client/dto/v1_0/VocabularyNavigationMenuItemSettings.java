@@ -193,4 +193,4 @@ public class VocabularyNavigationMenuItemSettings
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:228442094
+// LIFERAY-REST-BUILDER-HASH:-563992232

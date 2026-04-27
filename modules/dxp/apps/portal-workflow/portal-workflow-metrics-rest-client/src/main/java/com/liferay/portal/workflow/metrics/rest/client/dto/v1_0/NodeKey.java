@@ -97,4 +97,4 @@ public class NodeKey implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1013978282
+// LIFERAY-REST-BUILDER-HASH:1057115026

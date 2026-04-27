@@ -1113,4 +1113,4 @@ public interface NotificationQueueEntryResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1886595358
+// LIFERAY-REST-BUILDER-HASH:-1078131477

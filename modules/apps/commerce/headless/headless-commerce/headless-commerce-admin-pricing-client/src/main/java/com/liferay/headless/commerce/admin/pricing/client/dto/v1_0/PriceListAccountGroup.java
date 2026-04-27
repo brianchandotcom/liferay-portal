@@ -191,4 +191,4 @@ public class PriceListAccountGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-179738384
+// LIFERAY-REST-BUILDER-HASH:454095594

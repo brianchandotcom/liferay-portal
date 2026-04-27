@@ -119,4 +119,4 @@ public class ProductTaxConfiguration implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:554752232
+// LIFERAY-REST-BUILDER-HASH:1662840386

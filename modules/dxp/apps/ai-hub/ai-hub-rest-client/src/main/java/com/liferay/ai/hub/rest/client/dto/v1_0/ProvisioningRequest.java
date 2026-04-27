@@ -78,4 +78,4 @@ public class ProvisioningRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-932506813
+// LIFERAY-REST-BUILDER-HASH:-528621504

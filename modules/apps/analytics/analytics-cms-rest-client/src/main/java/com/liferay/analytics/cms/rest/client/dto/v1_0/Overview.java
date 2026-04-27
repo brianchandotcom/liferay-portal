@@ -160,4 +160,4 @@ public class Overview implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:532379645
+// LIFERAY-REST-BUILDER-HASH:596363239

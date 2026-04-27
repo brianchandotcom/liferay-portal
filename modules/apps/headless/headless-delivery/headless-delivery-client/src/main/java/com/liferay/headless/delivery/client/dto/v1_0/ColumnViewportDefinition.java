@@ -77,4 +77,4 @@ public class ColumnViewportDefinition implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1423552966
+// LIFERAY-REST-BUILDER-HASH:510950316

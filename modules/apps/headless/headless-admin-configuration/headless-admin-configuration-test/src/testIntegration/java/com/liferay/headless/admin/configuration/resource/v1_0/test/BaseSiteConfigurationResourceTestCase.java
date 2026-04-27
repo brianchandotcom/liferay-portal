@@ -1055,4 +1055,4 @@ public abstract class BaseSiteConfigurationResourceTestCase {
 		SiteConfigurationResource _siteConfigurationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1115368907
+// LIFERAY-REST-BUILDER-HASH:-1498663233

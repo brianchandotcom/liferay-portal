@@ -102,4 +102,4 @@ public class SharedInternalModelBatchTestEntity
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:974020973
+// LIFERAY-REST-BUILDER-HASH:762814718

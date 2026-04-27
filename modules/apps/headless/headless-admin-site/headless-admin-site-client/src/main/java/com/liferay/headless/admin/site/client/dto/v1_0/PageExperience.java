@@ -232,4 +232,4 @@ public class PageExperience implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:303745919
+// LIFERAY-REST-BUILDER-HASH:-675926797

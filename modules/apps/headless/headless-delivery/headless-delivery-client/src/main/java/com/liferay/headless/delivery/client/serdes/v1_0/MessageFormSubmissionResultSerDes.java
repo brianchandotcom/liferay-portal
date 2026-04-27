@@ -314,4 +314,4 @@ public class MessageFormSubmissionResultSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:611530502
+// LIFERAY-REST-BUILDER-HASH:-1600950275

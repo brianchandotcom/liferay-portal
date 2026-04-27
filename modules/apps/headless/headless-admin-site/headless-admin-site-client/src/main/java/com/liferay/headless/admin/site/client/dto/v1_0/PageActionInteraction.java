@@ -83,4 +83,4 @@ public class PageActionInteraction
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1912809256
+// LIFERAY-REST-BUILDER-HASH:-93333573

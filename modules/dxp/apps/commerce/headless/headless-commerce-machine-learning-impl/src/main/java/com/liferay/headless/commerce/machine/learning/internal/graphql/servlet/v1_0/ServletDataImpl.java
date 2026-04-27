@@ -111,4 +111,4 @@ public class ServletDataImpl implements ServletData {
 		_skuForecastResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-576551020
+// LIFERAY-REST-BUILDER-HASH:1597809573

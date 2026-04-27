@@ -141,4 +141,4 @@ public class Error implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-418324677
+// LIFERAY-REST-BUILDER-HASH:-1045848816

@@ -212,4 +212,4 @@ public class TermOrderType implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-582238747
+// LIFERAY-REST-BUILDER-HASH:-378569800

@@ -172,4 +172,4 @@ public interface PriceListDiscountResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-526297147
+// LIFERAY-REST-BUILDER-HASH:44170232

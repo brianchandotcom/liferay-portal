@@ -468,4 +468,4 @@ public class EditObjectCategoriesBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1932886266
+// LIFERAY-REST-BUILDER-HASH:-1879323494

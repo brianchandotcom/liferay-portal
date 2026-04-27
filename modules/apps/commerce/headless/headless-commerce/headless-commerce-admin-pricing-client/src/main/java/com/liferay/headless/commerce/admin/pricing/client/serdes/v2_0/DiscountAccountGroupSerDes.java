@@ -406,4 +406,4 @@ public class DiscountAccountGroupSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-456219447
+// LIFERAY-REST-BUILDER-HASH:1023946464

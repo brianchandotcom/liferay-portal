@@ -541,4 +541,4 @@ public class PageFormRelationshipDefinitionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1142094226
+// LIFERAY-REST-BUILDER-HASH:-1860114955

@@ -120,4 +120,4 @@ public class SelectionScope implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:756328214
+// LIFERAY-REST-BUILDER-HASH:666927954

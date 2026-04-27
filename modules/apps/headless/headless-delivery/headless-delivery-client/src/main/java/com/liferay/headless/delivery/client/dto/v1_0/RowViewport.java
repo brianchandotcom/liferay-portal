@@ -100,4 +100,4 @@ public class RowViewport implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:15770792
+// LIFERAY-REST-BUILDER-HASH:-520562729

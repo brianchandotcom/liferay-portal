@@ -198,4 +198,4 @@ public class ResourceType implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1241312898
+// LIFERAY-REST-BUILDER-HASH:185954014

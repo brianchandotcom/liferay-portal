@@ -78,4 +78,4 @@ public class InnerCollapse implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1620443294
+// LIFERAY-REST-BUILDER-HASH:1571165725

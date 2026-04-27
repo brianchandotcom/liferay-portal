@@ -926,4 +926,4 @@ public abstract class BaseContactConfigurationResourceTestCase {
 		ContactConfigurationResource _contactConfigurationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1156680010
+// LIFERAY-REST-BUILDER-HASH:57701265

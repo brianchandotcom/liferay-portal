@@ -335,4 +335,4 @@ public class WorkflowTasksBulkSelection implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:809580026
+// LIFERAY-REST-BUILDER-HASH:46644006

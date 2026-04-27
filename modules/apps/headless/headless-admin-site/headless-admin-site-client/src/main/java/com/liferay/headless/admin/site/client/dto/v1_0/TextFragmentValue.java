@@ -117,4 +117,4 @@ public abstract class TextFragmentValue implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-682027996
+// LIFERAY-REST-BUILDER-HASH:-2120528233

@@ -1155,4 +1155,4 @@ public abstract class BaseFormRecordResourceImpl
 		LogFactoryUtil.getLog(BaseFormRecordResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-931274076
+// LIFERAY-REST-BUILDER-HASH:579021088

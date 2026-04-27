@@ -1685,4 +1685,4 @@ public interface ReplenishmentItemResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-398884589
+// LIFERAY-REST-BUILDER-HASH:-1638821192

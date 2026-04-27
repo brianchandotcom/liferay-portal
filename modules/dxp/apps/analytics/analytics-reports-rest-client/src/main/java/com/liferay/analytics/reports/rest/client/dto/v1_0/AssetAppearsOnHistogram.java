@@ -103,4 +103,4 @@ public class AssetAppearsOnHistogram implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-89938006
+// LIFERAY-REST-BUILDER-HASH:881438570

@@ -78,4 +78,4 @@ public class SearchableAssetName implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-170070028
+// LIFERAY-REST-BUILDER-HASH:-1380248601

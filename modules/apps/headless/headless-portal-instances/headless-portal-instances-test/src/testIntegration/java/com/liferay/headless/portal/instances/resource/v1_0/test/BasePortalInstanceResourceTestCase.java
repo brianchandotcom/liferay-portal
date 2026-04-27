@@ -1298,4 +1298,4 @@ public abstract class BasePortalInstanceResourceTestCase {
 			PortalInstanceResource _portalInstanceResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:153024658
+// LIFERAY-REST-BUILDER-HASH:-1665097324

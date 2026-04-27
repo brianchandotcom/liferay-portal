@@ -156,4 +156,4 @@ public class TaskAssignee implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-61886
+// LIFERAY-REST-BUILDER-HASH:788285889

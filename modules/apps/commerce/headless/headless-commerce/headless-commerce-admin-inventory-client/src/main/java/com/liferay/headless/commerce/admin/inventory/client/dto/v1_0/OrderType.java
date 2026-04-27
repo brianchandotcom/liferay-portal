@@ -98,4 +98,4 @@ public class OrderType implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:761276795
+// LIFERAY-REST-BUILDER-HASH:975182686

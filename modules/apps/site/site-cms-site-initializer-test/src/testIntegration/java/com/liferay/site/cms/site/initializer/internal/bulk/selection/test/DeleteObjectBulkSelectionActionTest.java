@@ -84,17 +84,15 @@ public class DeleteObjectBulkSelectionActionTest {
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		try {
-			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					_user, PermissionCheckerFactoryUtil.create(_user))) {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
-				ReflectionTestUtil.invoke(
-					_deleteObjectBulkSelectionAction, "doExecute",
-					new Class<?>[] {User.class, Map.class, Object.class}, _user,
-					Collections.emptyMap(), objectEntryFolder);
+			ReflectionTestUtil.invoke(
+				_deleteObjectBulkSelectionAction, "doExecute",
+				new Class<?>[] {User.class, Map.class, Object.class}, _user,
+				Collections.emptyMap(), objectEntryFolder);
 
-				Assert.fail();
-			}
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(

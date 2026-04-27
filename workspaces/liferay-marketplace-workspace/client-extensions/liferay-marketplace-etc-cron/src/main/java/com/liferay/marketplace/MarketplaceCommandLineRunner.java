@@ -650,9 +650,9 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processMostPurchasedProducts() throws Exception {
-		ZonedDateTime nowZonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
+		ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneOffset.UTC);
 
-		if ((nowZonedDateTime.getHour() / _WINDOW_SIZE_HOURS) != 0) {
+		if ((zonedDateTime.getHour() / _WINDOW_SIZE_HOURS) != 0) {
 			return;
 		}
 

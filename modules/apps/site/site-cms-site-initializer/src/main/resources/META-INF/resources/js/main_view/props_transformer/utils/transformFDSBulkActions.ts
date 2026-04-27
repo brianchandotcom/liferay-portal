@@ -35,10 +35,16 @@ export default function transformFDSBulkActions(
 		return {
 			...action,
 			isVisible: ({
+				allItemsSelectedActive,
 				selectedItems,
 			}: {
+				allItemsSelectedActive?: boolean;
 				selectedItems?: Array<any>;
 			} = {}): boolean => {
+				if (allItemsSelectedActive && key === 'download') {
+					return false;
+				}
+
 				return (
 					selectedItems?.every(
 						(item: any) => item?.actions?.[permissionKey]

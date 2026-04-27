@@ -18,16 +18,30 @@
 	</#list>
 
 	) {
-		for (${entity.name} ${entity.variableName} : findBy${entityFinder.name}(
+		<#if entityFinder.collectionPersistenceFinderEnabled>
+			_collectionPersistenceFinderBy${entityFinder.name}.remove(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						${entityColumn.name}
 
-		<#list entityColumns as entityColumn>
-			${entityColumn.name},
-		</#list>
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				});
+		<#else>
+			for (${entity.name} ${entity.variableName} : findBy${entityFinder.name}(
 
-		QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
-		)) {
-			remove(${entity.variableName});
-		}
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
+
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
+			)) {
+				remove(${entity.variableName});
+			}
+		</#if>
 	}
 <#else>
 

@@ -401,7 +401,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute name="ant.target.file" />
 
 		<sequential>
-			<trycatch property="ant.target.failure">
+			<local name="builder.type" />
+
+			<condition else="build services" property="builder.type" value="REST builder">
+				<equals arg1="@{ant.target.name}" arg2="build-rests" />
+			</condition>
+
+			<trycatch property="ant.target.failure" reference="ant.target.failure.ref">
 				<try>
 					<beanshell>
 						project.setProperty("ant.target.start.time", String.valueOf(System.currentTimeMillis()));
@@ -449,7 +455,33 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					/>
 				</try>
 				<catch>
+					<var name="ant.target.failure.full.stack" unset="true" />
+
+					<beanshell>
+						<![CDATA[
+							import java.io.PrintWriter;
+							import java.io.StringWriter;
+
+							Object reference = project.getReference("ant.target.failure.ref");
+
+							if (!(reference instanceof Throwable)) {
+								return;
+							}
+
+							Throwable throwable = (Throwable)reference;
+
+							StringWriter stringWriter = new StringWriter();
+							PrintWriter printWriter = new PrintWriter(stringWriter);
+
+							throwable.printStackTrace(printWriter);
+
+							project.setProperty("ant.target.failure.full.stack", stringWriter.toString());
+						]]>
+					</beanshell>
+
 					<record action="stop" name="${project.dir}/execute.ant.target.log" />
+
+					<echo>${ant.target.failure.full.stack}</echo>
 
 					<local name="execute.ant.target.log" />
 
@@ -464,13 +496,13 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 					<local name="ant.target.failure.stacktrace" />
 
-					<condition else="${ant.target.failure}" property="ant.target.failure.stacktrace" value="${console.log.failure.message}">
+					<condition else="${ant.target.failure.full.stack}" property="ant.target.failure.stacktrace" value="${console.log.failure.message}">
 						<isset property="console.log.failure.message" />
 					</condition>
 
 					<generate-backend-batch-junit-report-ant-target
 						ant.target.failure.count="1"
-						ant.target.failure.message="Detected build services compilation error. Please check the logs for details."
+						ant.target.failure.message="Detected ${builder.type} compilation error. Please check the logs for details."
 						ant.target.failure.stacktrace="${ant.target.failure.stacktrace}"
 						ant.target.file="@{ant.target.file}"
 						ant.target.name="@{ant.target.name}"
@@ -487,7 +519,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<then>
 							<generate-backend-batch-junit-report-ant-target
 								ant.target.failure.count="1"
-								ant.target.failure.message="Detected build services changes. Please check the logs for details. Make sure to commit in all build services results."
+								ant.target.failure.message="Detected ${builder.type} changes. Please check the logs for details. Make sure to commit in all ${builder.type} results."
 								ant.target.failure.stacktrace="${git.diffs}"
 								ant.target.file="@{ant.target.file}"
 								ant.target.name="@{ant.target.name}"

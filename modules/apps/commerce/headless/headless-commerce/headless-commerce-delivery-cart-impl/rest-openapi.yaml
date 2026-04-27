@@ -113,6 +113,20 @@ components:
             type: object
         Attachment:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                extension:
+                    readOnly: true
+                    type: string
                 externalReferenceCode:
                     example: AB-34098-789-N
                     readOnly: true
@@ -121,13 +135,19 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                priority:
+                    format: double
+                    readOnly: true
+                    type: number
+                restricted:
+                    readOnly: true
+                    type: boolean
                 title:
                     readOnly: true
                     type: string
                 type:
-                    format: int32
                     readOnly: true
-                    type: integer
+                    type: string
                 url:
                     readOnly: true
                     type: string
@@ -140,7 +160,14 @@ components:
                 externalReferenceCode:
                     example: AB-34098-789-N
                     type: string
+                priority:
+                    format: double
+                    type: number
+                restricted:
+                    type: boolean
                 title:
+                    type: string
+                type:
                     type: string
             type: object
         Cart:
@@ -1872,6 +1899,11 @@ paths:
                         minLength: 1
                         type: string
                 -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
                     explode: true
                     name: page
                     required: false
@@ -1885,6 +1917,16 @@ paths:
                     schema:
                         type: integer
                     style: form
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:
@@ -3025,6 +3067,11 @@ paths:
                         type: integer
                     style: simple
                 -   in: query
+                    name: filter
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
                     explode: true
                     name: page
                     required: false
@@ -3038,6 +3085,16 @@ paths:
                     schema:
                         type: integer
                     style: form
+                -   in: query
+                    name: search
+                    required: false
+                    schema:
+                        type: string
+                -   in: query
+                    name: sort
+                    required: false
+                    schema:
+                        type: string
             responses:
                 200:
                     content:

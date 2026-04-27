@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import {Option, Picker} from '@clayui/core';
+import {ClayInput} from '@clayui/form';
 import React from 'react';
+import {TriggerLabel} from './ConditionBuilder';
 
 import type {ValueInputRenderer} from './types';
 
@@ -24,37 +26,37 @@ export const DefaultValueInput: ValueInputRenderer = (
 	const {options, type} = property;
 
 	if (type === 'boolean') {
+		const items = [
+			{label: Liferay.Language.get('is-true'), value: 'true'},
+			{label: Liferay.Language.get('is-false'), value: 'false'},
+		];
+
 		return (
-			<ClaySelectWithOption
+			<Picker
 				aria-label={Liferay.Language.get('value')}
-				onChange={(e) => onChange(e.target.value)}
-				options={[
-					{
-						label: `-- ${Liferay.Language.get('select')} --`,
-						value: '',
-					},
-					{label: Liferay.Language.get('true'), value: 'true'},
-					{label: Liferay.Language.get('false'), value: 'false'},
-				]}
-				value={value ?? ''}
-			/>
+				as={TriggerLabel}
+				items={items}
+				onSelectionChange={(key) => onChange(key as string)}
+				placeholder={Liferay.Language.get('select')}
+				selectedKey={value}
+			>
+				{(item) => <Option key={item.value}>{item.label}</Option>}
+			</Picker>
 		);
 	}
 
 	if (type === 'picklist' && options?.length) {
 		return (
-			<ClaySelectWithOption
+			<Picker
 				aria-label={Liferay.Language.get('value')}
-				onChange={(e) => onChange(e.target.value)}
-				options={[
-					{
-						label: `-- ${Liferay.Language.get('select')} --`,
-						value: '',
-					},
-					...options,
-				]}
-				value={value ?? ''}
-			/>
+				as={TriggerLabel}
+				items={options}
+				onSelectionChange={(key) => onChange(key as string)}
+				placeholder={Liferay.Language.get('select')}
+				selectedKey={value}
+			>
+				{(item) => <Option key={item.value}>{item.label}</Option>}
+			</Picker>
 		);
 	}
 
@@ -62,6 +64,7 @@ export const DefaultValueInput: ValueInputRenderer = (
 		return (
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
+				className="form-control-sm"
 				onChange={(e) => onChange(e.target.value)}
 				placeholder={Liferay.Language.get('enter-value')}
 				type="number"
@@ -74,6 +77,7 @@ export const DefaultValueInput: ValueInputRenderer = (
 		return (
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
+				className="form-control-sm"
 				onChange={(e) => onChange(e.target.value)}
 				type={type === 'date-time' ? 'datetime-local' : 'date'}
 				value={value ?? ''}
@@ -81,10 +85,10 @@ export const DefaultValueInput: ValueInputRenderer = (
 		);
 	}
 
-	// string / id
 	return (
 		<ClayInput
 			aria-label={Liferay.Language.get('value')}
+			className="form-control-sm"
 			onChange={(e) => onChange(e.target.value)}
 			placeholder={Liferay.Language.get('enter-value')}
 			type="text"

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {ClaySelectWithOption} from '@clayui/form';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React, {useCallback} from 'react';
 
@@ -23,7 +23,22 @@ let condCounter = 0;
 
 export const generateConditionId = () => {
 	return `condition_${++condCounter}`;
-}
+};
+
+export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
+	({children, className: _className, onClick, ...otherProps}, ref) => (
+		<ClayButton
+			className="form-control form-control-select form-control-sm"
+			displayType="secondary"
+			onClick={onClick}
+			ref={ref}
+			size="sm"
+			{...otherProps}
+		>
+			{children}
+		</ClayButton>
+	)
+);
 
 type ConditionRowProps = {
 	condition: FilterCondition;
@@ -50,23 +65,6 @@ function ConditionRow({
 
 	const operators = selectedProperty ? getOperators(selectedProperty) : [];
 
-	const handlePropertyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		onChange({
-			id: condition.id,
-			operatorName: undefined,
-			propertyName: e.target.value || undefined,
-			value: undefined,
-		});
-	};
-
-	const handleOperatorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		onChange({
-			...condition,
-			operatorName: e.target.value || undefined,
-			value: undefined,
-		});
-	};
-
 	const handleValueChange = useCallback(
 		(value: string) => {
 			onChange({...condition, value});
@@ -75,62 +73,95 @@ function ConditionRow({
 	);
 
 	return (
-		<div className="condition-builder__row" role="listitem">
+		<div
+			className="condition-builder__row rounded p-2 mb-3 d-flex align-items-center justify-content-between"
+			role="menuitem"
+		>
+			<div className="c-gap-2 d-flex flex-grow-1 flex-wrap">
+				<div className="condition-builder__select form-group mb-0 w-100">
+					<Picker
+						aria-label={Liferay.Language.get('field')}
+						as={TriggerLabel}
+						items={properties.map((p) => ({
+							label: p.label,
+							value: p.name,
+						}))}
+						onSelectionChange={(key) => {
+							const newProperty = properties.find(
+								(p) => p.name === key
+							);
+
+							const operators = key
+								? getOperators(newProperty as GenericProperty)
+								: [];
+
+							onChange({
+								id: condition.id,
+								operatorName:
+									operators.length === 0 ? 'eq' : undefined,
+								propertyName: (key as string) || undefined,
+								value: undefined,
+							});
+						}}
+						placeholder={Liferay.Language.get('select')}
+						selectedKey={condition.propertyName}
+					>
+						{(item) => (
+							<Option key={item.value}>{item.label}</Option>
+						)}
+					</Picker>
+				</div>
+
+				{operators.length > 0 && (
+					<div className="condition-builder__select form-group mb-0 w-100">
+						<Picker
+							aria-label={Liferay.Language.get('operator')}
+							as={TriggerLabel}
+							disabled={!selectedProperty}
+							items={operators.map((op) => ({
+								label: op.label,
+								value: op.value,
+							}))}
+							onSelectionChange={(key) =>
+								onChange({
+									...condition,
+									operatorName: (key as string) || undefined,
+									value: undefined,
+								})
+							}
+							placeholder={Liferay.Language.get('select')}
+							selectedKey={condition.operatorName}
+						>
+							{(item) => (
+								<Option key={item.value}>{item.label}</Option>
+							)}
+						</Picker>
+					</div>
+				)}
+
+				<div className="condition-builder__value-input d-flex c-gap-2 flex-grow-1">
+					{selectedProperty && condition.operatorName
+						? renderValueInput(
+								selectedProperty,
+								condition.operatorName,
+								condition.value,
+								handleValueChange
+							)
+						: null}
+				</div>
+			</div>
+
 			{showDeleteButton && (
-				<ClayButton
+				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('delete-condition')}
+					borderless
+					className="align-self-baseline condition-builder__delete c-ml-auto"
 					displayType="secondary"
-					monospaced
 					onClick={onDelete}
 					size="sm"
-				>
-					<ClayIcon symbol="times" />
-				</ClayButton>
+					symbol="times-circle"
+				/>
 			)}
-
-			<ClaySelectWithOption
-				aria-label={Liferay.Language.get('field')}
-				onChange={handlePropertyChange}
-				options={[
-					{
-						label: `-- ${Liferay.Language.get('select-field')} --`,
-						value: '',
-					},
-					...properties.map((p) => ({
-						label: p.label,
-						value: p.name,
-					})),
-				]}
-				value={condition.propertyName ?? ''}
-			/>
-
-			<ClaySelectWithOption
-				aria-label={Liferay.Language.get('operator')}
-				disabled={!selectedProperty}
-				onChange={handleOperatorChange}
-				options={[
-					{
-						label: `-- ${Liferay.Language.get('select-operator')} --`,
-						value: '',
-					},
-					...operators.map((op) => ({
-						label: op.label,
-						value: op.value,
-					})),
-				]}
-				value={condition.operatorName ?? ''}
-			/>
-
-			<div className="condition-builder__value-input">
-				{selectedProperty && condition.operatorName
-					? renderValueInput(
-							selectedProperty,
-							condition.operatorName,
-							condition.value,
-							handleValueChange
-						)
-					: null}
-			</div>
 		</div>
 	);
 }
@@ -168,33 +199,36 @@ export function ConditionBuilder({
 		onChange(next, conditionType);
 	};
 
-	const handleConjunctionChange = (
-		e: React.ChangeEvent<HTMLSelectElement>
-	) => {
-		onChange(conditions, e.target.value as ConditionType);
-	};
-
 	return (
 		<div className="condition-builder">
 			{showConjunctionPicker && (
-				<div className="condition-builder__conjunction">
+				<div className="condition-builder__conjunction c-gapx-2 c-mb-3 d-flex align-items-center">
 					<span>{Liferay.Language.get('if')}</span>
 
-					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('conjunction')}
-						onChange={handleConjunctionChange}
-						options={[
-							{
-								label: Liferay.Language.get('all'),
-								value: 'all',
-							},
-							{
-								label: Liferay.Language.get('any'),
-								value: 'any',
-							},
-						]}
-						value={conditionType}
-					/>
+					<div className="condition-builder__select">
+						<Picker
+							aria-label={Liferay.Language.get('conjunction')}
+							as={TriggerLabel}
+							items={[
+								{
+									label: Liferay.Language.get('all'),
+									value: 'all',
+								},
+								{
+									label: Liferay.Language.get('any'),
+									value: 'any',
+								},
+							]}
+							onSelectionChange={(key) =>
+								onChange(conditions, key as ConditionType)
+							}
+							selectedKey={conditionType}
+						>
+							{(item) => (
+								<Option key={item.value}>{item.label}</Option>
+							)}
+						</Picker>
+					</div>
 
 					<span>
 						{Liferay.Language.get(
@@ -204,7 +238,10 @@ export function ConditionBuilder({
 				</div>
 			)}
 
-			<div className="condition-builder__conditions" role="list">
+			<div
+				className="condition-builder__conditions d-flex flex-column c-gapx-3"
+				role="list"
+			>
 				{conditions.map((condition, index) => (
 					<ConditionRow
 						condition={condition}
@@ -229,7 +266,7 @@ export function ConditionBuilder({
 				onClick={handleAddCondition}
 				size="sm"
 			>
-				{Liferay.Language.get('add-condition')}
+				{Liferay.Language.get('add-filter')}
 			</ClayButton>
 		</div>
 	);

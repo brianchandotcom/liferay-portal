@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// Booleans use an implicit `eq` operator (auto-set when the field is selected
+// in ConditionBuilder) and render their value as a single Is True / Is False
+// picker via DefaultValueInput. No explicit operator picker is needed.
+
+const BOOLEAN_OPERATORS = [];
+
 const COMPARISON_OPERATORS = [
 	{label: Liferay.Language.get('equals'), value: 'eq'},
 	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
@@ -12,35 +18,9 @@ const COMPARISON_OPERATORS = [
 	{label: Liferay.Language.get('less-than-or-equals'), value: 'le'},
 ];
 
-const DATE_OPERATORS = [
-	{label: Liferay.Language.get('equals'), value: 'eq'},
-	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
-	{label: Liferay.Language.get('after'), value: 'gt'},
-	{label: Liferay.Language.get('on-or-after'), value: 'ge'},
-	{label: Liferay.Language.get('before'), value: 'lt'},
-	{label: Liferay.Language.get('on-or-before'), value: 'le'},
-];
-
-const BOOLEAN_OPERATORS = [
-	{label: Liferay.Language.get('is'), value: 'eq'},
-	{label: Liferay.Language.get('is-not'), value: 'not-eq'},
-];
-
-const PICKLIST_OPERATORS = [
-	{label: Liferay.Language.get('includes'), value: 'includes'},
-	{label: Liferay.Language.get('excludes'), value: 'excludes'},
-];
-
-const STRING_OPERATORS = [
-	{label: Liferay.Language.get('equals'), value: 'eq'},
-	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
+const DEFAULT_OPERATORS = [
 	{label: Liferay.Language.get('contains'), value: 'contains'},
 	{label: Liferay.Language.get('does-not-contain'), value: 'not-contains'},
-];
-
-const ID_OPERATORS = [
-	{label: Liferay.Language.get('equals'), value: 'eq'},
-	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
 ];
 
 export function getCollectionOperators(property) {
@@ -49,16 +29,12 @@ export function getCollectionOperators(property) {
 			return BOOLEAN_OPERATORS;
 		case 'date':
 		case 'date-time':
-			return DATE_OPERATORS;
 		case 'double':
 		case 'integer':
 			return COMPARISON_OPERATORS;
 		case 'picklist':
-			return PICKLIST_OPERATORS;
-		case 'id':
-			return ID_OPERATORS;
 		case 'string':
 		default:
-			return STRING_OPERATORS;
+			return DEFAULT_OPERATORS;
 	}
 }

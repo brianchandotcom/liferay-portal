@@ -36,7 +36,7 @@ const mapLabelToLabelDisplayType: {[key in AssetStatus]: LabelDisplayType} = {
 };
 
 interface StatusLabelProps {
-	expirationDate?: string | null;
+	expirationDate?: string;
 	label: AssetStatus;
 }
 
@@ -67,22 +67,22 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 		}
 	}
 
-    if (
-        label !== ASSET_STATUS.APPROVED ||
-        !isExpiringSoon(expirationDate ?? undefined)
-    ) {
-        return (
-            <Label displayType={mapLabelToLabelDisplayType[label]}>
-                {Liferay.Language.get(label)}
-            </Label>
-        );
-    }
+	if (
+		label !== ASSET_STATUS.APPROVED ||
+		!isExpiringSoon(expirationDate)
+	) {
+		return (
+			<Label displayType={mapLabelToLabelDisplayType[label]}>
+				{Liferay.Language.get(label)}
+			</Label>
+		);
+	}
 
-	const formattedDate = formatExpirationDate(expirationDate ?? undefined);
+	const formattedDate = formatExpirationDate(expirationDate);
 	const expiringSoonText = Liferay.Language.get('expiring-soon');
 	const ariaLabel = sub(
 		Liferay.Language.get('expiring-soon-expires-on-x'),
-		formatExpirationDateLong(expirationDate ?? undefined) ?? ''
+		formatExpirationDateLong(expirationDate) ?? ''
 	);
 
 	return (

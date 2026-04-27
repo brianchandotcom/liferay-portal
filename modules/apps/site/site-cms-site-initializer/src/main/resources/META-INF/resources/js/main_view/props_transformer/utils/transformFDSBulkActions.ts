@@ -42,8 +42,8 @@ export default function transformFDSBulkActions(
 				allItemsSelectedActive?: boolean;
 				selectedItems?: Array<any>;
 			} = {}): boolean => {
-				if (allItemsSelectedActive && key === 'download') {
-					return false;
+				if (allItemsSelectedActive) {
+					return key !== 'download';
 				}
 
 				return (

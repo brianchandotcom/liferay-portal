@@ -7,6 +7,7 @@ import {MultiSelect, Skeleton} from '~/components';
 import ClayForm from '@clayui/form';
 import {useEffect, useState} from 'react';
 import useUserAccountsByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
+import {HIGH_PRIORITY_CONTACT_CATEGORIES} from '~/features/project/utils/getHighPriorityContacts';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 
@@ -88,7 +89,7 @@ const HighPriorityContactsInput = ({
 				onChange={handleMultiSelectChange}
 				onItemsChange={setItems}
 				placeholder={i18n.translate('enter-name-or-email-address')}
-				required
+				required={inputName !== HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative}
 				sourceItems={sourceItems}
 				type="email"
 				values={items}

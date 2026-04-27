@@ -71,6 +71,9 @@ const MultiSelect = ({
 			? [...validations, () => requiredMultiSelect(values.length)]
 			: [() => requiredMultiSelect(values.length)];
 	}
+	else {
+		validations = validations || [];
+	}
 
 	return (
 		<div className="multi-select-container">

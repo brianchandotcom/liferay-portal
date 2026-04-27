@@ -12,7 +12,6 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -32,19 +31,17 @@ public class ObjectEntrySharingEntryDropdownItemContributor
 	implements SharingEntryDropdownItemContributor {
 
 	public ObjectEntrySharingEntryDropdownItemContributor(
-		AssetEntryLocalService assetEntryLocalService, Language language,
-		ObjectDefinition objectDefinition) {
+		AssetEntryLocalService assetEntryLocalService, Language language) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_language = language;
-		_objectDefinition = objectDefinition;
 	}
 
 	@Override
 	public List<DropdownItem> getSharingEntryDropdownItems(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
-		if (!_isVisible(sharingEntry) || !_objectDefinition.isCMS()) {
+		if (!_isVisible(sharingEntry)) {
 			return Collections.emptyList();
 		}
 
@@ -112,6 +109,5 @@ public class ObjectEntrySharingEntryDropdownItemContributor
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final Language _language;
-	private final ObjectDefinition _objectDefinition;
 
 }

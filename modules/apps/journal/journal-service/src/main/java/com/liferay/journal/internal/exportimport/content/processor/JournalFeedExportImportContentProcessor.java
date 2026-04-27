@@ -95,10 +95,6 @@ public class JournalFeedExportImportContentProcessor
 		String targetLayoutFriendlyURL = null;
 
 		if (friendlyURLParts.length > 3) {
-			Group targetLayoutGroup = _groupLocalService.fetchFriendlyURLGroup(
-				portletDataContext.getCompanyId(),
-				StringPool.SLASH + oldGroupFriendlyURL);
-
 			targetLayoutFriendlyURL = StringUtil.merge(
 				Arrays.copyOfRange(
 					friendlyURLParts, 3, friendlyURLParts.length),
@@ -106,6 +102,10 @@ public class JournalFeedExportImportContentProcessor
 
 			targetLayoutFriendlyURL =
 				StringPool.SLASH + targetLayoutFriendlyURL;
+
+			Group targetLayoutGroup = _groupLocalService.fetchFriendlyURLGroup(
+				portletDataContext.getCompanyId(),
+				StringPool.SLASH + oldGroupFriendlyURL);
 
 			targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				targetLayoutGroup.getGroupId(), privateLayout,

@@ -144,9 +144,6 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list entry
 
-		assetListEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-
 		if (Validator.isNull(assetListEntry.getAssetEntryType())) {
 			String assetEntryType = _getManualAssetEntryType(assetListEntryId);
 
@@ -193,9 +190,6 @@ public class AssetListEntryLocalServiceImpl
 		assetListEntry.setCompanyId(user.getCompanyId());
 		assetListEntry.setUserId(user.getUserId());
 		assetListEntry.setUserName(user.getFullName());
-		assetListEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		assetListEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 
 		_setAssetListEntryKey(
 			assetListEntry,
@@ -429,9 +423,6 @@ public class AssetListEntryLocalServiceImpl
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
-		assetListEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
-
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
 
@@ -499,9 +490,6 @@ public class AssetListEntryLocalServiceImpl
 		}
 
 		_validateTitle(assetListEntry.getGroupId(), title);
-
-		assetListEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
 
 		_setAssetListEntryKey(
 			assetListEntry, assetListEntryKey, assetListEntry.getGroupId(),

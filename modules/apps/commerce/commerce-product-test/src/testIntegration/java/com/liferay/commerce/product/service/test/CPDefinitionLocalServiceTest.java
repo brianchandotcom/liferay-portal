@@ -15,8 +15,11 @@ import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.model.CPDefinitionOptionRel;
+import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CProduct;
@@ -25,8 +28,10 @@ import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -47,6 +52,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -66,6 +72,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -120,8 +127,6 @@ public class CPDefinitionLocalServiceTest {
 		for (CPDefinition cpDefinition : cpDefinitions) {
 			_cpDefinitionLocalService.deleteCPDefinition(cpDefinition);
 		}
-
-		_cpOptionLocalService.deleteCPOptions(TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -213,6 +218,8 @@ public class CPDefinitionLocalServiceTest {
 			CPOption cpOption = CPTestUtil.addCPOption(
 				_commerceCatalog.getGroupId(), true);
 
+			_cpOptions.add(cpOption);
+
 			for (int j = 0; j < cpOptionValuesCount; j++) {
 				CPTestUtil.addCPOptionValue(cpOption);
 			}
@@ -277,6 +284,8 @@ public class CPDefinitionLocalServiceTest {
 		for (int i = 0; i < cpOptionsCount; i++) {
 			CPOption cpOption = CPTestUtil.addCPOption(
 				_commerceCatalog.getGroupId(), true);
+
+			_cpOptions.add(cpOption);
 
 			for (int j = 0; j < cpOptionValuesCount; j++) {
 				CPTestUtil.addCPOptionValue(cpOption);
@@ -647,6 +656,87 @@ public class CPDefinitionLocalServiceTest {
 				_cpDefinitionInventoryLocalService.
 					fetchCPDefinitionInventoryByCPDefinitionId(
 						cpDefinition2.getCPDefinitionId()));
+		}
+	}
+
+	@Test
+	public void testCopyCPDefinitionWithSKUCombinations() throws Exception {
+		frutillaRule.scenario(
+			"Copy a product definition with SKU combinations"
+		).given(
+			"A product definition with SKU combinations"
+		).when(
+			"the copy method is run"
+		).then(
+			"the copied SKUs link to the copied option value rels"
+		);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		CPOption cpOption = CPTestUtil.addCPOption(
+			_commerceCatalog.getGroupId(), true);
+
+		_cpOptions.add(cpOption);
+
+		for (int i = 0; i < 3; i++) {
+			CPTestUtil.addCPOptionValue(cpOption);
+		}
+
+		CPTestUtil.addCPDefinitionOptionRel(
+			_commerceCatalog.getGroupId(), cpDefinition1.getCPDefinitionId(),
+			cpOption.getCPOptionId());
+
+		CPTestUtil.buildCPInstances(cpDefinition1);
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CProductVersionConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).put(
+							"versionThreshold", 5
+						).build())) {
+
+			CPDefinition cpDefinition2 =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpDefinition1.getCPDefinitionId(),
+					cpDefinition1.getGroupId(), WorkflowConstants.STATUS_DRAFT);
+
+			List<CPInstance> cpInstances =
+				_cpInstanceLocalService.getCPDefinitionInstances(
+					cpDefinition2.getCPDefinitionId(),
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Assert.assertFalse(cpInstances.isEmpty());
+
+			for (CPInstance cpInstance : cpInstances) {
+				List<CPInstanceOptionValueRel> cpInstanceOptionValueRels =
+					_cpInstanceOptionValueRelLocalService.
+						getCPInstanceCPInstanceOptionValueRels(
+							cpInstance.getCPInstanceId());
+
+				for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
+						cpInstanceOptionValueRels) {
+
+					CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+						_cpDefinitionOptionValueRelLocalService.
+							getCPDefinitionOptionValueRel(
+								cpInstanceOptionValueRel.
+									getCPDefinitionOptionValueRelId());
+
+					CPDefinitionOptionRel cpDefinitionOptionRel =
+						cpDefinitionOptionValueRel.getCPDefinitionOptionRel();
+
+					Assert.assertEquals(
+						cpDefinition2.getCPDefinitionId(),
+						cpDefinitionOptionRel.getCPDefinitionId());
+				}
+			}
 		}
 	}
 
@@ -1299,6 +1389,10 @@ public class CPDefinitionLocalServiceTest {
 		_cpDefinitionOptionRelLocalService;
 
 	@Inject
+	private CPDefinitionOptionValueRelLocalService
+		_cpDefinitionOptionValueRelLocalService;
+
+	@Inject
 	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 
@@ -1306,7 +1400,14 @@ public class CPDefinitionLocalServiceTest {
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Inject
+	private CPInstanceOptionValueRelLocalService
+		_cpInstanceOptionValueRelLocalService;
+
+	@Inject
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@DeleteAfterTestRun
+	private final List<CPOption> _cpOptions = new ArrayList<>();
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

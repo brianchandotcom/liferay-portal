@@ -28,6 +28,46 @@ export type JournalContentPage<T = {}> = {
 	title: string;
 } & T;
 
+type FlatPage<T = {}> = {
+	contentTitle: string;
+	friendlyUrlPath: string;
+	pageNumber: string;
+	title: string;
+} & T;
+
+export function flattenPageHierarchy<T = {}>(
+	nodes: Array<PageNode<T>>
+): Array<FlatPage<T>> {
+	const result: Array<FlatPage<T>> = [];
+
+	for (const node of nodes) {
+		const {
+			children,
+			contentTitle: nodeContentTitle,
+			pageNumber,
+			title: nodeTitle,
+			widgets: _widgets,
+			...extraProps
+		} = node;
+
+		const title = nodeTitle ?? `Page ${pageNumber}`;
+
+		result.push({
+			...(extraProps as unknown as T),
+			contentTitle: nodeContentTitle ?? `Title-${pageNumber}`,
+			friendlyUrlPath: title.toLowerCase().replace(/\s+/g, '-'),
+			pageNumber,
+			title,
+		});
+
+		if (children) {
+			result.push(...flattenPageHierarchy(children));
+		}
+	}
+
+	return result;
+}
+
 export async function createLayoutHierarchy<T = {}>(options: {
 	apiHelpers: ApiHelpers;
 	pageNodes: Array<PageNode<T>>;

@@ -12,6 +12,7 @@ import com.liferay.osb.patcher.model.PatcherFixModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -50,6 +51,7 @@ import java.util.function.Function;
  * @see PatcherFixImpl
  * @generated
  */
+@JSON(strict = true)
 public class PatcherFixModelImpl
 	extends BaseModelImpl<PatcherFix> implements PatcherFixModel {
 
@@ -492,6 +494,7 @@ public class PatcherFixModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -506,6 +509,7 @@ public class PatcherFixModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getPatcherFixId() {
 		return _patcherFixId;
@@ -520,6 +524,7 @@ public class PatcherFixModelImpl
 		_patcherFixId = patcherFixId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -534,6 +539,7 @@ public class PatcherFixModelImpl
 		_companyId = companyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -564,6 +570,7 @@ public class PatcherFixModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -583,6 +590,7 @@ public class PatcherFixModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -597,6 +605,7 @@ public class PatcherFixModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -626,6 +635,7 @@ public class PatcherFixModelImpl
 		return getColumnOriginalValue("modifiedDate");
 	}
 
+	@JSON
 	@Override
 	public long getPatcherProductVersionId() {
 		return _patcherProductVersionId;
@@ -640,6 +650,7 @@ public class PatcherFixModelImpl
 		_patcherProductVersionId = patcherProductVersionId;
 	}
 
+	@JSON
 	@Override
 	public long getPatcherProjectVersionId() {
 		return _patcherProjectVersionId;
@@ -664,6 +675,7 @@ public class PatcherFixModelImpl
 			this.<Long>getColumnOriginalValue("patcherProjectVersionId"));
 	}
 
+	@JSON
 	@Override
 	public String getComments() {
 		if (_comments == null) {
@@ -683,6 +695,7 @@ public class PatcherFixModelImpl
 		_comments = comments;
 	}
 
+	@JSON
 	@Override
 	public String getCommittish() {
 		if (_committish == null) {
@@ -702,6 +715,7 @@ public class PatcherFixModelImpl
 		_committish = committish;
 	}
 
+	@JSON
 	@Override
 	public String getDependencies() {
 		if (_dependencies == null) {
@@ -721,6 +735,7 @@ public class PatcherFixModelImpl
 		_dependencies = dependencies;
 	}
 
+	@JSON
 	@Override
 	public int getFixPackStatus() {
 		return _fixPackStatus;
@@ -735,6 +750,7 @@ public class PatcherFixModelImpl
 		_fixPackStatus = fixPackStatus;
 	}
 
+	@JSON
 	@Override
 	public String getGitHash() {
 		if (_gitHash == null) {
@@ -754,6 +770,7 @@ public class PatcherFixModelImpl
 		_gitHash = gitHash;
 	}
 
+	@JSON
 	@Override
 	public String getGitRemoteURL() {
 		if (_gitRemoteURL == null) {
@@ -773,6 +790,7 @@ public class PatcherFixModelImpl
 		_gitRemoteURL = gitRemoteURL;
 	}
 
+	@JSON
 	@Override
 	public String getJenkinsResults() {
 		if (_jenkinsResults == null) {
@@ -792,6 +810,7 @@ public class PatcherFixModelImpl
 		_jenkinsResults = jenkinsResults;
 	}
 
+	@JSON
 	@Override
 	public String getKey() {
 		if (_key == null) {
@@ -820,6 +839,7 @@ public class PatcherFixModelImpl
 		return getColumnOriginalValue("key_");
 	}
 
+	@JSON
 	@Override
 	public double getKeyVersion() {
 		return _keyVersion;
@@ -844,11 +864,13 @@ public class PatcherFixModelImpl
 			this.<Double>getColumnOriginalValue("keyVersion"));
 	}
 
+	@JSON
 	@Override
 	public boolean getLatestFix() {
 		return _latestFix;
 	}
 
+	@JSON
 	@Override
 	public boolean isLatestFix() {
 		return _latestFix;
@@ -873,6 +895,7 @@ public class PatcherFixModelImpl
 			this.<Boolean>getColumnOriginalValue("latestFix"));
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -901,11 +924,13 @@ public class PatcherFixModelImpl
 		return getColumnOriginalValue("name");
 	}
 
+	@JSON
 	@Override
 	public boolean getNotified() {
 		return _notified;
 	}
 
+	@JSON
 	@Override
 	public boolean isNotified() {
 		return _notified;
@@ -930,11 +955,13 @@ public class PatcherFixModelImpl
 			this.<Boolean>getColumnOriginalValue("notified"));
 	}
 
+	@JSON
 	@Override
 	public boolean getObsolete() {
 		return _obsolete;
 	}
 
+	@JSON
 	@Override
 	public boolean isObsolete() {
 		return _obsolete;
@@ -949,6 +976,7 @@ public class PatcherFixModelImpl
 		_obsolete = obsolete;
 	}
 
+	@JSON
 	@Override
 	public int getProductVersion() {
 		return _productVersion;
@@ -963,6 +991,7 @@ public class PatcherFixModelImpl
 		_productVersion = productVersion;
 	}
 
+	@JSON
 	@Override
 	public String getRequestKey() {
 		if (_requestKey == null) {
@@ -982,6 +1011,7 @@ public class PatcherFixModelImpl
 		_requestKey = requestKey;
 	}
 
+	@JSON
 	@Override
 	public String getRequirements() {
 		if (_requirements == null) {
@@ -1001,6 +1031,7 @@ public class PatcherFixModelImpl
 		_requirements = requirements;
 	}
 
+	@JSON
 	@Override
 	public int getType() {
 		return _type;
@@ -1025,6 +1056,7 @@ public class PatcherFixModelImpl
 			this.<Integer>getColumnOriginalValue("type_"));
 	}
 
+	@JSON
 	@Override
 	public int getStatus() {
 		return _status;
@@ -1049,6 +1081,7 @@ public class PatcherFixModelImpl
 			this.<Integer>getColumnOriginalValue("status"));
 	}
 
+	@JSON
 	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
@@ -1079,6 +1112,7 @@ public class PatcherFixModelImpl
 	public void setStatusByUserUuid(String statusByUserUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
@@ -1098,6 +1132,7 @@ public class PatcherFixModelImpl
 		_statusByUserName = statusByUserName;
 	}
 
+	@JSON
 	@Override
 	public Date getStatusDate() {
 		return _statusDate;
@@ -1822,4 +1857,4 @@ public class PatcherFixModelImpl
 	private PatcherFix _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1746456872
+// LIFERAY-SERVICE-BUILDER-HASH:410708594

@@ -16,9 +16,9 @@ import com.liferay.jenkins.results.parser.test.clazz.group.NPMTestBatchTestClass
 import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PluginsBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.PluginsGulpBatchTestClassGroup;
+import com.liferay.jenkins.results.parser.test.clazz.group.RESTBuilderAndServiceBuilderModulesBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.RESTBuilderModulesBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.SemVerModulesBatchTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.ServiceAndRESTBuilderModulesBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.ServiceBuilderModulesBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.TCKJunitBatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.WorkspacesCompileBatchTestClassGroup;
@@ -333,7 +333,7 @@ public class TestClassFactory {
 					batchTestClassGroup, testClassFile);
 			}
 			else if (batchTestClassGroup instanceof
-						ServiceAndRESTBuilderModulesBatchTestClassGroup) {
+						RESTBuilderAndServiceBuilderModulesBatchTestClassGroup) {
 
 				String antTargetName = null;
 

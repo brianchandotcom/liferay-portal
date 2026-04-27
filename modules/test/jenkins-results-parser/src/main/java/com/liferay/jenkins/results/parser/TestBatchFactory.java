@@ -39,7 +39,7 @@ public class TestBatchFactory {
 					 batchName.startsWith("modules-compile") ||
 					 batchName.startsWith("modules-semantic-versioning") ||
 					 batchName.startsWith("rest-builder") ||
-					 batchName.startsWith("service-and-rest-builder") ||
+					 batchName.startsWith("rest-builder-and-service-builder") ||
 					 batchName.startsWith("service-builder")) {
 
 				testBatch = new ModulesPortalTestBatch(

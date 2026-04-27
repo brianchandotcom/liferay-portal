@@ -405,19 +405,34 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#list>
 
 	OrderByComparator<${entity.name}> orderByComparator) {
-		List<${entity.name}> list = findBy${entityFinder.name}(
+		<#if entityFinder.collectionPersistenceFinderEnabled>
+			return _collectionPersistenceFinderBy${entityFinder.name}.fetchFirst(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						${entityColumn.name}
 
-		<#list entityColumns as entityColumn>
-			${entityColumn.name},
-		</#list>
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				},
+				orderByComparator);
+		<#else>
+			List<${entity.name}> list = findBy${entityFinder.name}(
 
-		0, 1, orderByComparator);
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
 
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
+			0, 1, orderByComparator);
 
-		return null;
+			if (!list.isEmpty()) {
+				return list.get(0);
+			}
+
+			return null;
+		</#if>
 	}
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>

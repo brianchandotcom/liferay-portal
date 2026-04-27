@@ -78,6 +78,19 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		return count.intValue();
 	}
 
+	public T fetchFirst(
+		FinderCache finderCache, Object[] values,
+		OrderByComparator<T> orderByComparator) {
+
+		List<T> list = find(finderCache, values, 0, 1, orderByComparator, true);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<T> find(
 		FinderCache finderCache, Object[] values, int start, int end,

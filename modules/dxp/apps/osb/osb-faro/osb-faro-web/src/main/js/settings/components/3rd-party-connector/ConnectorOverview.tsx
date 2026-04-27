@@ -4,10 +4,10 @@ import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import DemandbaseEntities from './DemandbaseEntities';
+import ConnectorEntities from './ConnectorEntities';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Loading from 'shared/components/Loading';
-import React, {useEffect, useState} from 'react';
+import React, {ComponentType, useEffect, useRef, useState} from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
@@ -17,18 +17,15 @@ import {ClayInput} from '@clayui/form';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
+import {ConnectorConfig} from './types';
 import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
 import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses} from 'shared/util/constants';
-import {
-	fetch,
-	fetchDemandbaseAccountsCount,
-	fetchToken,
-	updateDemandbase
-} from 'shared/api/data-source';
+import {fetch, fetchToken} from 'shared/api/data-source';
 import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Text} from '@clayui/core';
+import {updateConnector} from 'shared/api/connector';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDisconnectDataSource} from '../data-source/utils';
 import {useParams} from 'react-router-dom';
@@ -45,13 +42,20 @@ const connector = connect(null, {
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-interface IDemandbaseOverviewProps extends PropsFromRedux {
+interface IConnectorOverviewProps extends PropsFromRedux {
+	config: ConnectorConfig;
 	dataSource: DataSource;
 }
 
-const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
+type AlertState = {
+	displayType: DisplayType;
+	message: string;
+};
+
+const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 	addAlert,
 	close,
+	config,
 	dataSource: initialDataSource,
 	open
 }) => {
@@ -65,12 +69,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 	}>();
 	const currentUser = useCurrentUser();
 
-	type Alert = {
-		displayType: DisplayType;
-		message: string;
-	};
-
-	const [alert, setAlert] = useState<Alert>({
+	const [alert, setAlert] = useState<AlertState>({
 		displayType: 'success',
 		message: ''
 	});
@@ -105,52 +104,49 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 	};
 
 	useEffect(() => {
-		const alert: Alert = {
+		const next: AlertState = {
 			displayType: 'success',
-			message: Liferay.Language.get(
-				'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-demandbase-data-will-appear-here-once-it-is-sent-and-processed'
-			)
+			message: config.languages.successAlert
 		};
 
 		if (!dataSourceActive) {
-			alert.displayType = 'warning';
-
-			alert.message = Liferay.Language.get(
-				'the-data-source-is-disconnected.-data-is-no-longer-being-synced-from-demandbase,-but-you-can-reconnect-to-resume-syncing.'
-			);
+			next.displayType = 'warning';
+			next.message = config.languages.disconnectedAlert;
 		} else if (accountStatus) {
-			alert.message = Liferay.Language.get(
+			next.message = Liferay.Language.get(
 				'all-data-coming-from-this-data-source-is-up-to-date.-there-are-no-errors-to-report'
 			);
 		}
 
-		setAlert(alert);
-	}, [dataSourceActive, accountStatus]);
+		setAlert(next);
+	}, [accountStatus, config.languages, dataSourceActive]);
 
-	let _tokenRequest: ReturnType<typeof setTimeout> | Promise<any> | undefined;
-
-	const getNextToken = async (prevToken?: string) => {
-		const nextToken = await fetchToken(groupId, id);
-
-		if (!prevToken || prevToken === nextToken) {
-			_tokenRequest = setTimeout(
-				() => getNextToken(nextToken),
-				TIMEOUT_INTERVAL
-			);
-		} else {
-			handleUpdateDataSource();
-		}
-
-		return nextToken;
-	};
+	const tokenRequestRef = useRef<ReturnType<typeof setTimeout> | undefined>();
 
 	useEffect(() => {
+		const getNextToken = async (prevToken?: string) => {
+			const nextToken = await fetchToken(groupId, id);
+
+			if (!prevToken || prevToken === nextToken) {
+				tokenRequestRef.current = setTimeout(
+					() => getNextToken(nextToken),
+					TIMEOUT_INTERVAL
+				);
+			} else {
+				handleUpdateDataSource();
+			}
+
+			return nextToken;
+		};
+
 		if (!dataSourceActive) {
-			_tokenRequest = getNextToken().then(setToken);
+			getNextToken().then(setToken);
 		}
 
 		return () => {
-			clearTimeout(_tokenRequest as ReturnType<typeof setTimeout>);
+			if (tokenRequestRef.current) {
+				clearTimeout(tokenRequestRef.current);
+			}
 		};
 	}, [dataSourceActive]);
 
@@ -166,6 +162,12 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 	});
 
 	const {display, label} = getDataSourceDisplayObject(dataSource);
+
+	const updateDataSourceFn = (params: {[key: string]: any}) =>
+		updateConnector(
+			config.slug,
+			params as Parameters<typeof updateConnector>[1]
+		);
 
 	return (
 		<BasePage
@@ -185,7 +187,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				groupId={groupId}
 				label={label}
 				onUpdateName={async (name: string) => {
-					await updateDemandbase({groupId, id, name} as any);
+					await updateConnector(config.slug, {groupId, id, name});
 
 					await handleUpdateDataSource();
 				}}
@@ -207,9 +209,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 						<>
 							<div className='mb-3'>
 								<Text color='secondary' size={4}>
-									{Liferay.Language.get(
-										'to-reestablish-the-connection-between-demandbase-instance-and-liferay-analytics-cloud,-copy-the-token-below-and-go-to-demandbase-instance-settings-to-continue-the-data-source-configuration'
-									)}
+									{config.languages.reconnectHelper}
 								</Text>
 
 								<ClayLink
@@ -223,13 +223,13 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 									)}
 								</ClayLink>
 							</div>
+
 							<label>
 								<Text size={3} weight='semi-bold'>
-									{Liferay.Language.get(
-										'copy-this-endpoint-url-to-your-demandbase-instance'
-									)}
+									{config.languages.endpointLabel}
 								</Text>
 							</label>
+
 							<CopyInputValue
 								addAlert={addAlert}
 								disabled={false}
@@ -253,7 +253,7 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 							<ClayInput
 								readOnly
 								type='text'
-								value={Liferay.Language.get('demandbase')}
+								value={config.displayName}
 							/>
 						</ClayInput.GroupItem>
 
@@ -289,8 +289,9 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 			</Card>
 
 			<Card title={Liferay.Language.get('synced-data')}>
-				<DemandbaseEntityList
+				<ConnectorEntityList
 					accountStatus={accountStatus}
+					config={config}
 					dataSource={dataSource}
 					groupId={groupId}
 				/>
@@ -303,91 +304,58 @@ const DemandbaseOverview: React.FC<IDemandbaseOverviewProps> = ({
 				<AssignedPropertiesTable
 					addAlert={addAlert}
 					close={close}
-					customColumns={
-						[
-							{
-								accessor: 'accounts',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('accounts')
-							},
-							{
-								accessor: 'intentData',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('intent-data')
-							},
-							{
-								accessor: 'buyingCommittee',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('buying-committee')
-							},
-							{
-								accessor: 'customAttributes',
-								cellRenderer: ({data}: {data: any}) => (
-									<td key={data.channelId}>
-										<div className='table-title text-truncate'>
-											<Text>{data.count}</Text>
-										</div>
-									</td>
-								),
-								label: Liferay.Language.get('custom-attributes')
-							}
-						] as unknown as any[]
-					}
+					customColumns={config.columns ?? []}
 					dataSource={dataSource}
 					handleUpdateDataSource={handleUpdateDataSource}
 					loading={loading}
 					open={open}
-					updateDataSourceFn={
-						updateDemandbase as (params: {
-							[key: string]: any;
-						}) => Promise<any>
-					}
+					updateDataSourceFn={updateDataSourceFn}
 				/>
 			</Card>
 		</BasePage>
 	);
 };
 
-const DemandbaseEntityList = ({
-	accountStatus,
-	dataSource,
-	groupId
-}: {
-	accountStatus: any;
+interface IConnectorEntityListProps {
+	accountStatus: 'connected' | 'disconnected';
+	config: ConnectorConfig;
 	dataSource: DataSource;
 	groupId: string;
+}
+
+const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
+	accountStatus,
+	config,
+	dataSource,
+	groupId
 }) => {
-	const accountsCountResponse = useRequest({
-		dataSourceFn: fetchDemandbaseAccountsCount as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+	const primaryEntity = config.entities[0];
+
+	const countResponse = useRequest({
+		dataSourceFn: (params: {[key: string]: any}) =>
+			primaryEntity?.fetchCount
+				? primaryEntity.fetchCount({
+						groupId: params.groupId,
+						id: params.id
+				  })
+				: Promise.resolve(undefined),
 		variables: {groupId, id: dataSource.id}
 	});
 
-	if (accountsCountResponse.error) {
+	if (countResponse.error) {
 		return <ErrorDisplay />;
 	}
 
-	if (accountsCountResponse.loading) {
+	if (countResponse.loading) {
 		return <Loading spacer />;
+	}
+
+	const syncedCounts: {[accessor: string]: number | undefined} = {};
+
+	if (primaryEntity) {
+		syncedCounts[primaryEntity.accessor] = countResponse.data as
+			| number
+			| undefined;
 	}
 
 	return (
@@ -400,9 +368,7 @@ const DemandbaseEntityList = ({
 
 			<div className='mb-2'>
 				<Text color='secondary' size={4}>
-					{Liferay.Language.get(
-						'to-configure-your-demandbase-data-source,-go-to-demandbase-account-connector-settings-and-use-the-token-and-endpoint-url-provided-by-liferay-analytics-cloud'
-					)}
+					{config.languages.syncHelper}
 				</Text>
 			</div>
 
@@ -412,12 +378,19 @@ const DemandbaseEntityList = ({
 				</Text>
 			</div>
 
-			<DemandbaseEntities
-				accountConnectionStatus={accountStatus}
-				accountsSyncedCount={accountsCountResponse.data}
+			<ConnectorEntities
+				connectionStatus={accountStatus}
+				entities={config.entities}
+				syncedCounts={syncedCounts}
 			/>
 		</div>
 	);
 };
 
-export default compose(connector, withSelectionProvider)(DemandbaseOverview);
+export default compose(
+	connector,
+	withSelectionProvider
+)(ConnectorOverview) as ComponentType<{
+	config: ConnectorConfig;
+	dataSource: DataSource;
+}>;

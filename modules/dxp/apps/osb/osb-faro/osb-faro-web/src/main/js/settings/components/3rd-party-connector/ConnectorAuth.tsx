@@ -1,18 +1,22 @@
-import * as API from 'shared/api';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 import {Alert} from 'shared/types';
+import {ConnectorConfig} from './types';
 import {CopyInputValue} from '../CopyInputValue';
-import {createDemandbase, updateDemandbase} from 'shared/api/data-source';
+import {
+	createConnector,
+	generateConnectorToken,
+	updateConnector
+} from 'shared/api/connector';
 import {CredentialTypes} from 'shared/util/constants';
 import {DataSource} from 'shared/util/records';
-import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
 
-interface IConnectDemandbaseAuthProps {
-	addAlert: any;
+interface IConnectorAuthProps {
+	addAlert: Alert.AddAlert;
 	buttonProps?: {[key: string]: any};
+	config: ConnectorConfig;
 	dataSource?: DataSource;
 	disabled?: boolean;
 	groupId: string;
@@ -20,25 +24,27 @@ interface IConnectDemandbaseAuthProps {
 	onSubmit: (dataSource: any) => void;
 }
 
-const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
+const ConnectorAuth: React.FC<IConnectorAuthProps> = ({
 	addAlert,
 	buttonProps,
+	config,
 	dataSource,
 	disabled = false,
 	groupId,
 	onCancel,
 	onSubmit
 }) => {
-	const endpointURL = `${window.location.origin}/api/demandbase_accounts`;
+	const endpointURL = `${window.location.origin}${config.endpointPath}`;
 
 	const [token, setToken] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	useEffect(() => {
-		const fetchDemandbaseToken = async () => {
+		const fetchConnectorTokenForGroup = async () => {
 			try {
-				const data = await API.apiTokens.generateDemandbaseToken({
-					groupId
+				const data = await generateConnectorToken({
+					groupId,
+					type: config.slug
 				});
 
 				if (data?.token) setToken(data.token);
@@ -51,8 +57,8 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 			}
 		};
 
-		fetchDemandbaseToken();
-	}, [groupId]);
+		fetchConnectorTokenForGroup();
+	}, [config.slug, groupId]);
 
 	return (
 		<ClayForm
@@ -62,31 +68,40 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 
 				try {
 					if (dataSource) {
-						const updatedDataSource = await updateDemandbase({
-							channelsConfiguration: dataSource
-								.getIn(['provider', 'channelsConfiguration'])
-								?.toJS(),
-							credentials: {
-								privateKey: token,
-								publicKey: '',
-								type: CredentialTypes.Token
-							},
-							groupId,
-							id: dataSource.id,
-							name: dataSource.name
-						} as any);
+						const updatedDataSource = await updateConnector(
+							config.slug,
+							{
+								channelsConfiguration: dataSource
+									.getIn([
+										'provider',
+										'channelsConfiguration'
+									])
+									?.toJS(),
+								credentials: {
+									privateKey: token,
+									publicKey: '',
+									type: CredentialTypes.Token
+								},
+								groupId,
+								id: dataSource.id ?? '',
+								name: dataSource.name
+							}
+						);
 
 						onSubmit(updatedDataSource);
 					} else {
-						const newDataSource = await createDemandbase({
-							credentials: {
-								privateKey: token,
-								publicKey: '',
-								type: CredentialTypes.Token
-							},
-							groupId,
-							name: Liferay.Language.get('demandbase')
-						} as any);
+						const newDataSource = await createConnector(
+							config.slug,
+							{
+								credentials: {
+									privateKey: token,
+									publicKey: '',
+									type: CredentialTypes.Token
+								},
+								groupId,
+								name: config.displayName
+							}
+						);
 
 						onSubmit(newDataSource);
 					}
@@ -103,20 +118,11 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 			}}
 		>
 			<label htmlFor='endpoint'>
-				<Text weight='semi-bold'>
-					{Liferay.Language.get(
-						'copy-this-endpoint-url-to-your-demandbase-instance'
-					)}
-				</Text>
+				<Text weight='semi-bold'>{config.languages.endpointLabel}</Text>
 			</label>
 
 			<Text as='p' color='secondary' size={3}>
-				{sub(
-					Liferay.Language.get(
-						'this-is-analytics-cloud-url-x-will-redirect-to-after-a-user-authorizes-the-connection'
-					),
-					[Liferay.Language.get('demandbase')]
-				)}
+				{config.languages.endpointHelper}
 			</Text>
 
 			<CopyInputValue
@@ -126,14 +132,7 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 			/>
 
 			<label htmlFor='token'>
-				<Text weight='semi-bold'>
-					{sub(
-						Liferay.Language.get(
-							'copy-this-token-to-your-x-instance'
-						),
-						[Liferay.Language.get('demandbase')]
-					)}
-				</Text>
+				<Text weight='semi-bold'>{config.languages.tokenLabel}</Text>
 			</label>
 
 			<CopyInputValue
@@ -169,4 +168,4 @@ const ConnectDemandbaseAuth: React.FC<IConnectDemandbaseAuthProps> = ({
 	);
 };
 
-export default ConnectDemandbaseAuth;
+export default ConnectorAuth;

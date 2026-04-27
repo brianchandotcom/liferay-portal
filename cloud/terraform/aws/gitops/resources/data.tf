@@ -432,6 +432,10 @@ data "aws_iam_role" "envoy_proxy_role" {
 data "aws_iam_role" "liferay_irsa" {
 	name=local.liferay_service_account_role_name
 }
+data "aws_subnet" "private" {
+	for_each=toset(data.aws_subnets.private.ids)
+	id=each.value
+}
 data "aws_subnets" "private" {
 	filter {
 		name="tag:DeploymentName"

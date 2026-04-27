@@ -24,6 +24,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -76,29 +78,35 @@ public class AccountRoleResourceUpgradeProcessTest {
 
 		_resourceActionLocalService.checkResourceActions();
 
-		Assert.assertEquals(
-			0,
+		List<ResourceAction> resourceActions =
 			_resourceActionLocalService.getResourceActions(
-				"EDIT_ORGANIZATIONS"
-			).size());
+				"EDIT_ORGANIZATIONS");
+
+		Assert.assertEquals(
+			resourceActions.toString(), 0, resourceActions.size());
+
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				AccountEntry.class.getName(),
 				AccountActionKeys.UPDATE_ORGANIZATIONS));
+
+		resourceActions = _resourceActionLocalService.getResourceActions(
+			"EDIT_SUBORGANIZATIONS");
+
 		Assert.assertEquals(
-			0,
-			_resourceActionLocalService.getResourceActions(
-				"EDIT_SUBORGANIZATIONS"
-			).size());
+			resourceActions.toString(), 0, resourceActions.size());
+
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),
 				ActionKeys.UPDATE_SUBORGANIZATIONS));
+
+		resourceActions = _resourceActionLocalService.getResourceActions(
+			"EDIT_SUBORGANIZATIONS_ACCOUNTS");
+
 		Assert.assertEquals(
-			0,
-			_resourceActionLocalService.getResourceActions(
-				"EDIT_SUBORGANIZATIONS_ACCOUNTS"
-			).size());
+			resourceActions.toString(), 0, resourceActions.size());
+
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
 				Organization.class.getName(),

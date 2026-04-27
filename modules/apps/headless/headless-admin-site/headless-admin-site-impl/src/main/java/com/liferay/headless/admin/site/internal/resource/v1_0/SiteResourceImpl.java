@@ -343,7 +343,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			if (guestGroup != null) {
 				boolean alreadyIncluded = groups.contains(guestGroup);
 				boolean shouldBeIncluded = _descriptiveNameContains(
-					guestGroup, search);
+					guestGroup, search,
+					contextAcceptLanguage.getPreferredLocale());
 
 				if (alreadyIncluded && !shouldBeIncluded) {
 					groups = new ArrayList<>(groups);
@@ -558,13 +559,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return group;
 	}
 
-	private boolean _descriptiveNameContains(Group group, String search)
+	private boolean _descriptiveNameContains(
+			Group group, String search, Locale locale)
 		throws Exception {
 
 		String descriptiveName = StringUtil.toLowerCase(
-			group.getDescriptiveName(LocaleUtil.getDefault()));
+			group.getDescriptiveName(locale), locale);
 
-		return descriptiveName.contains(StringUtil.toLowerCase(search));
+		return descriptiveName.contains(StringUtil.toLowerCase(search, locale));
 	}
 
 	private Map<Locale, String> _getDescriptionMap(Site site) {

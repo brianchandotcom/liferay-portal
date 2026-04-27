@@ -1,6 +1,5 @@
 liferay-default:
     annotations:
-        gke-gcsfuse/volumes: "true"
         instrumentation.opentelemetry.io/inject-dotnet: "false"
         instrumentation.opentelemetry.io/inject-java: "false"
         instrumentation.opentelemetry.io/inject-nodejs: "false"
@@ -98,7 +97,7 @@ liferay-default:
                         type: RuntimeDefault
                 volumeMounts:
                     -   mountPath: /liferay-init-scripts/wait-for-elasticsearch.sh
-                        name: liferay-init-scripts
+                        name: liferay-init-scripts-gcp
                         subPath: wait-for-elasticsearch.sh
     customLabels:
         origin: liferay-gcp
@@ -122,11 +121,11 @@ liferay-default:
             -   name: liferay-license
                 secret:
                     secretName: liferay-license
-        x-liferay-init-scripts:
+        x-liferay-init-scripts-gcp:
             -   configMap:
                     defaultMode: 0755
-                    name: liferay-init-scripts
-                name: liferay-init-scripts
+                    name: liferay-init-scripts-gcp
+                name: liferay-init-scripts-gcp
     network:
         enabled: true
         hostnames: []
@@ -134,9 +133,9 @@ liferay-default:
             backendRequest: 300s
             request: 300s
     overlay:
-        bucketName: ""
-        driver: gcsfuse.csi.storage.gke.io
+        copy: []
         enabled: false
+        type: gcs
     podSecurityContext:
         fsGroup: 1000
         runAsNonRoot: true

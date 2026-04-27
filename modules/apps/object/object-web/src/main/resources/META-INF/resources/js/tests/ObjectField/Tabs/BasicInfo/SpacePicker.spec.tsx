@@ -140,4 +140,15 @@ describe('The SpacePicker component', () => {
 
 		expect(combobox).toHaveTextContent('Engineering Space');
 	});
+
+	it('shows the selected space name as a tooltip', async () => {
+		render(<SpacePicker {...defaultProps} value="2" />);
+
+		await waitFor(() => expect(fetch).toHaveBeenCalled());
+
+		const titled = await screen.findByTitle('Engineering Space');
+
+		expect(titled).toHaveClass('text-truncate');
+		expect(titled).toHaveTextContent('Engineering Space');
+	});
 });

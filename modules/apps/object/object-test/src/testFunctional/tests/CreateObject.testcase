@@ -759,66 +759,6 @@ definition {
 		ObjectAdmin.assertObjectLayout(layoutLabel = "Layout Name");
 	}
 
-	@description = "LPS-135401 - Verify it is possible to create a Many to Many Relationship"
-	@priority = 5
-	test CanCreateManyToManyRelationship {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Object A 25",
-			objectName = "ObjectA25",
-			pluralLabelName = "Objects A");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Object B 26",
-			objectName = "ObjectB26",
-			pluralLabelName = "Objects B 26");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Object A 25");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Object B 26",
-			type = "Many to Many");
-
-		AssertElementPresent(
-			key_label = "Relationship",
-			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-	}
-
-	@description = "LPS-135400 - Verify it is possible to create a One to Many Relationship"
-	@priority = 4
-	test CanCreateOneToManyRelationship {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object A 27",
-			objectName = "CustomObjectA27",
-			pluralLabelName = "Custom Objects A 27");
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object B 28",
-			objectName = "CustomObjectB28",
-			pluralLabelName = "Custom Objects B 28");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A 27");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Custom Object B 28",
-			type = "One to Many");
-
-		AssertElementPresent(
-			key_label = "Relationship",
-			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-	}
-
 	@description = "LPS-135397 - Verify if it's possible to delete a Field"
 	@priority = 5
 	test CanDeleteFieldOnLayout {
@@ -989,36 +929,6 @@ definition {
 		AssertElementNotPresent(
 			key_tabName = "Custom Object 35",
 			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
-	}
-
-	@description = "LPS-135400 - Verify it is possible to delete a Relationship"
-	@priority = 5
-	test CanDeleteRelationship {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 36",
-			objectName = "CustomObject36",
-			pluralLabelName = "Custom Objects 36");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject36",
-			objectName_2 = "CustomObject36",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 36");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
 	}
 
 	@description = "LPS-151877 - Verify that when the admin user deletes the relationship between Account and the Object, the Account Restriction is disabled and the admin user can edit the Object"
@@ -1202,36 +1112,6 @@ definition {
 			value1 = "This name is already in use. Try another one.");
 	}
 
-	@description = "LPS-135400 - Verify it is not possible to create duplicated Relationship name"
-	@priority = 4
-	test CannotCreateDuplicatedRelationshipName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 41",
-			objectName = "CustomObject41",
-			pluralLabelName = "Custom Objects 41");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject41",
-			objectName_2 = "CustomObject41",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 41");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			invalidEntry = "true",
-			label = "Relationship",
-			object = "Custom Object 41",
-			type = "One to Many");
-
-		Alert.viewErrorMessage(errorMessage = '''There is already an object relationship with this name in the object definition "CustomObject41"''');
-	}
-
 	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"
 	@priority = 4
 	test CannotDeleteObjectWithoutDeletePermission {
@@ -1313,75 +1193,6 @@ definition {
 
 		AssertElementPresent(
 			key_fieldLabel = "Object Name",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Name blank"
-	@priority = 4
-	test CannotLeaveRelationshipNameBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 49",
-			objectName = "CustomObject49",
-			pluralLabelName = "Custom Objects 49");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 49");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			name = "",
-			object = "Custom Object 49",
-			type = "One to Many");
-
-		AssertElementPresent(
-			key_fieldLabel = "Name",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Object blank"
-	@priority = 4
-	test CannotLeaveRelationshipObjectBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 50",
-			objectName = "CustomObject50",
-			pluralLabelName = "Custom Objects 50");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 50");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Custom Relationship",
-			type = "One to Many");
-
-		AssertElementPresent(
-			key_fieldLabel = "Many Records Of",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Type blank"
-	@priority = 4
-	test CannotLeaveRelationshipTypeBlank {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 51",
-			objectName = "CustomObject51",
-			pluralLabelName = "Custom Objects 51");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 51");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
-
-		AssertElementPresent(
-			key_fieldLabel = "Type",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
@@ -2228,45 +2039,6 @@ definition {
 			valueScope = "Company");
 	}
 
-	@description = "LPS-135400 - Verify it is possible to update a Relationship"
-	@priority = 5
-	test CanUpdateRelationship {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 102",
-			objectName = "CustomObject102",
-			pluralLabelName = "Custom Objects 102");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject102",
-			objectName_2 = "CustomObject102",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 102");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
-
-		SelectFrame(locator1 = "IFrame#IFRAME");
-
-		CreateObject.editLabel(labelName = "Relationship Updated");
-
-		CreateObject.saveObject();
-
-		Refresh();
-
-		AssertTextEquals(
-			key_label = "Relationship Updated",
-			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL",
-			value1 = "Relationship Updated");
-	}
-
 	@description = "LPS-135397 - Verify if it's possible to view the Entry with one column"
 	@priority = 4
 	test CanViewEntryWithOneColumn {
@@ -3054,34 +2826,6 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
-	@description = "LPS-135400 - Verify it is possible to view a Relationship"
-	@priority = 5
-	test CanViewRelationship {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 120",
-			objectName = "CustomObject120",
-			pluralLabelName = "Custom Objects 120");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject120",
-			objectName_2 = "CustomObject120",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 120");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
-
-		ObjectAdmin.viewDetails();
-	}
-
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted but not its relation"
 	@priority = 4
 	test CascadeDeletionOneToManyWillAllowDeleteChild {
@@ -3625,25 +3369,6 @@ definition {
 			value1 = "No Objects Created Yet");
 	}
 
-	@description = "LPS-135400 - Verify the empty state message when there is no Relationship"
-	@priority = 3
-	test EmptyStateWhenNoRelationship {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 131",
-			objectName = "CustomObject131",
-			pluralLabelName = "Custom Objects 131");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 131");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
-	}
-
 	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
 	@priority = 4
 	test FieldOptionRequired {
@@ -3679,50 +3404,6 @@ definition {
 		AssertElementPresent(
 			key_fieldLabel = "Field",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-140097 - Verify that other fields are not deleted when a Relationship field is deleted after a Relationship is deleted"
-	@priority = 4
-	test FieldsAreNotDeletedWhenRelationshipDeleted {
-		for (var nameObject : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${nameObject} 134",
-				objectName = "CustomObject${nameObject}134",
-				pluralLabelName = "Custom Objects ${nameObject} 134");
-		}
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field B",
-			fieldName = "customObjectFieldB",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObjectB134");
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA134",
-			objectName_2 = "CustomObjectB134",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A 134");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object B 134");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Field",
-			fieldType = "Text");
 	}
 
 	@description = "LPS-137874 - Verify that Objects created on a Virtual Instance are not displayed on the Forms Settings, Collection Providers and Display Page Template of the Main Instance and vice versa"
@@ -4413,44 +4094,6 @@ definition {
 			locator1 = "WorkflowSubmissions#SUBMISSION_BY_NAME");
 	}
 
-	@description = "LPS-139603 - Verify that the Object Name is displayed on the Relationship tab when a Relationship is created"
-	@priority = 4
-	test ObjectNameDisplayedOnTheRelationshipTab {
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter} 149",
-				objectName = "CustomObject${letter}149",
-				pluralLabelName = "Custom Objects ${letter} 149");
-		}
-
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Custom Field ${letter}",
-				fieldName = "customObjectField${letter}",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject${letter}149");
-		}
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA149",
-			objectName_2 = "CustomObjectB149",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "oneToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A 149");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertElementPresent(
-			key_relatedObject = "CustomObjectB149",
-			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
-	}
-
 	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
 	@priority = 4
 	test ObjectNameIsAutofilled {
@@ -4783,33 +4426,6 @@ definition {
 
 	}
 
-	@description = "LPS-135401 - Verify that by default the Prevent deletion type of Relationship is selected"
-	@priority = 4
-	test PreventDeletionIsDefault {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 162",
-			objectName = "CustomObject162",
-			pluralLabelName = "Custom Objects 162");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 162");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Custom Object 162",
-			type = "One to Many");
-
-		ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship");
-
-		AssertTextEquals(
-			key_labelName = "Deletion Type",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
-			value1 = "Prevent");
-	}
-
 	@description = "LPS-135401 - Verify if Prevent deletion type of Relationship One to Many will allow the user to delete an entry with relation from the child Object"
 	@priority = 4
 	test PreventDeletionOneToManyWillAllowDelete {
@@ -5014,46 +4630,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
 			value1 = "");
-	}
-
-	@description = "LPS-135401 - Verify that the Relationship is created on both objects for a Many to Many Relationship"
-	@priority = 5
-	test RelationshipCreatedBothObjectsManyToMany {
-		property portal.acceptance = "true";
-
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter} 167",
-				objectName = "CustomObject${letter}167",
-				pluralLabelName = "Custom Objects ${letter} 167");
-		}
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObjectA167",
-			objectName_2 = "CustomObjectB167",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "manyToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object A 167");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertElementPresent(
-			key_relatedObject = "CustomObjectB167",
-			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object B 167");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertElementPresent(
-			key_relatedObject = "CustomObjectA167",
-			locator1 = "CreateObject#VIEW_RELATED_OBJECT_ON_RELATIONSHIP_FIELD");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
@@ -5281,32 +4857,6 @@ definition {
 			key_fieldLabelName = "Custom Field A",
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Field A");
-	}
-
-	@description = "LPS-135401 - Verify that the Relationship field is not created"
-	@priority = 4
-	test RelationshipFieldNotCreatedOnManyToMany {
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 141659 ${letter}",
-				objectName = "CustomObject141659${letter}",
-				pluralLabelName = "Custom Objects 141659 ${letter}");
-		}
-
-		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject141659A",
-			objectName_2 = "CustomObject141659B",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
-			relationshipType = "manyToMany");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 141659 B");
-
-		ObjectAdmin.goToFieldsTab();
-
-		ObjectAdmin.assertObjectFieldNotPresent(fieldLabel = "Relationship");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field is displayed again when the parent object is reactivated (One to Many)"

@@ -6,49 +6,53 @@
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TOrderAttachment = {
-	attachment?: {
-		fileBase64: string;
-		name: string;
-	};
-	attachmentType?: {
-		key: string;
-	};
+	dateModified?: string;
+	extension?: string;
+	externalReferenceCode?: string;
 	id?: number;
 	priority?: number;
-	private?: boolean;
-	r_accountToCommerceOrderAttachments_accountEntryId: number;
-	r_commerceOrderToCommerceOrderAttachments_commerceOrderId: number;
+	restricted?: boolean;
+	title?: string;
+	type?: string;
+	url?: string;
+};
+
+type TOrderAttachmentBase64 = {
+	attachment: string;
+	externalReferenceCode?: string;
+	priority?: number;
+	restricted?: boolean;
 	title: string;
+	type?: string;
 };
 
 export class HeadlessCommerceAdminOrderAttachmentApiHelper {
-	readonly apiHelpers: ApiHelpers;
-	readonly applicationName: string;
+	readonly apiHelpers: ApiHelpers | DataApiHelpers;
+	readonly basePath: string;
 
-	constructor(apiHelpers: ApiHelpers) {
+	constructor(apiHelpers: ApiHelpers | DataApiHelpers) {
 		this.apiHelpers = apiHelpers;
-		this.applicationName = 'commerce/order-attachments';
+		this.basePath = 'headless-commerce-delivery-order/v1.0';
 	}
 
-	async deleteOrderAttachment(orderAttachmentId: number) {
-		return this.apiHelpers.objectEntry.deleteObjectEntry(
-			this.applicationName,
-			String(orderAttachmentId)
+	async deleteOrderAttachment(orderAttachmentId: number, orderId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/placed-orders/${orderId}/attachments/${orderAttachmentId}`
 		);
 	}
 
 	async postOrderAttachment(
-		orderAttachment: TOrderAttachment
-	): Promise<ObjectEntry> {
-		const postOrderAttachment =
-			await this.apiHelpers.objectEntry.postObjectEntry(
-				orderAttachment,
-				this.applicationName
-			);
+		orderId: number,
+		orderAttachment: TOrderAttachmentBase64
+	): Promise<TOrderAttachment> {
+		const postOrderAttachment = await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/placed-orders/${orderId}/attachments/by-base64`,
+			{data: orderAttachment, failOnStatusCode: true}
+		);
 
 		if (this.apiHelpers instanceof DataApiHelpers) {
 			this.apiHelpers.data.push({
-				id: postOrderAttachment.id,
+				id: `${orderId}_${postOrderAttachment.id}`,
 				type: 'orderAttachment',
 			});
 		}

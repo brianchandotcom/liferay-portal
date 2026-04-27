@@ -17,16 +17,16 @@ import org.json.JSONObject;
 /**
  * @author Brittney Nguyen
  */
-public class ServiceAndRESTBuilderModulesBatchTestClassGroup
+public class RESTBuilderAndServiceBuilderModulesBatchTestClassGroup
 	extends ModulesBatchTestClassGroup {
 
-	protected ServiceAndRESTBuilderModulesBatchTestClassGroup(
+	protected RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
 		super(jsonObject, portalTestClassJob);
 	}
 
-	protected ServiceAndRESTBuilderModulesBatchTestClassGroup(
+	protected RESTBuilderAndServiceBuilderModulesBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
@@ -43,10 +43,11 @@ public class ServiceAndRESTBuilderModulesBatchTestClassGroup
 
 		addTestClass(
 			TestClassFactory.newAntTargetTestClass(
-				this, portalImplBuildFile, "build-services"));
+				this, portalImplBuildFile, "build-rests"));
+
 		addTestClass(
 			TestClassFactory.newAntTargetTestClass(
-				this, portalImplBuildFile, "build-rests"));
+				this, portalImplBuildFile, "build-services"));
 	}
 
 }

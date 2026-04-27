@@ -173,6 +173,16 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		return list;
 	}
 
+	public void remove(FinderCache finderCache, Object[] values) {
+		for (T entity :
+				find(
+					finderCache, values, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null, true)) {
+
+			basePersistenceImpl.remove(entity);
+		}
+	}
+
 	private String _buildFindSql(
 		Object[] values, OrderByComparator<T> orderByComparator) {
 

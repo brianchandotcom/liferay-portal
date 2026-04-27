@@ -8,9 +8,9 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {createRecipientWithDataSetViewerRole} from '../../../helpers/DataSetManagerApiHelpers';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {createRecipientWithDataSetViewerRole} from '../../../helpers/DataSetManagerApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -491,12 +491,11 @@ test(
 		});
 
 		await test.step('Create a snapshot as the current user', async () => {
-			const snapshot = (await dataSetManagerApiHelpers.createDataSetSnapshot(
-				{
+			const snapshot =
+				(await dataSetManagerApiHelpers.createDataSetSnapshot({
 					dataSetERC,
 					snapshotName: sharedSnapshotName,
-				}
-			)) as {id: number};
+				})) as {id: number};
 
 			snapshotId = snapshot.id;
 		});

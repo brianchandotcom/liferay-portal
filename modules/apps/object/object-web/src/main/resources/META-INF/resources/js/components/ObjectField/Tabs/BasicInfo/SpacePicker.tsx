@@ -18,7 +18,7 @@ interface SpacePickerProps {
 }
 
 interface SpaceTriggerProps {
-	children?: React.ReactNode;
+	children?: string;
 	space?: Space;
 }
 
@@ -26,13 +26,16 @@ const SpaceTrigger = forwardRef<HTMLDivElement, SpaceTriggerProps>(
 	({children, space, ...otherProps}, ref) => {
 		return (
 			<div
-				ref={ref}
 				{...otherProps}
 				className="form-control"
+				ref={ref}
 				tabIndex={0}
 			>
 				<div className="align-items-center d-flex justify-content-between">
-					<div className="align-items-center c-gap-2 d-flex">
+					<div
+						className="align-items-center c-gap-2 d-flex text-truncate"
+						title={space?.name}
+					>
 						{space && (
 							<div aria-hidden="true">
 								<SpaceSticker

@@ -2,11 +2,13 @@
 // https://liferay.atlassian.net/wiki/spaces/ENGAC/pages/4841275420/Third-Party+Connector+Framework+-+Adding+a+New+Data+Source+Connector+on+osb-faro-web+frontend
 
 import demandbaseConfig from './configs/demandbase';
+import hubspotConfig from './configs/hubspot';
 import {ConnectorConfig} from './types';
 import {DataSourceTypes} from 'shared/util/constants';
 
 const connectorRegistry: Record<string, ConnectorConfig> = {
-	[DataSourceTypes.Demandbase]: demandbaseConfig
+	[DataSourceTypes.Demandbase]: demandbaseConfig,
+	[DataSourceTypes.Hubspot]: hubspotConfig
 };
 
 export function getConnectorConfig(

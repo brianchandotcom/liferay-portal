@@ -15,8 +15,17 @@ describe('connector registry', () => {
 			expect(config?.type).toBe(DataSourceTypes.Demandbase);
 		});
 
+		it('returns the hubspot config when looked up by enum value', () => {
+			const config = getConnectorConfig(DataSourceTypes.Hubspot);
+
+			expect(config).toBeDefined();
+			expect(config?.slug).toBe('hubspot');
+			expect(config?.type).toBe(DataSourceTypes.Hubspot);
+		});
+
 		it('is case-insensitive on the lookup key', () => {
 			expect(getConnectorConfig('demandbase')?.slug).toBe('demandbase');
+			expect(getConnectorConfig('HuBsPoT')?.slug).toBe('hubspot');
 		});
 
 		it('returns undefined for unknown types', () => {
@@ -35,7 +44,7 @@ describe('connector registry', () => {
 				.map(c => c.slug)
 				.sort();
 
-			expect(slugs).toEqual(['demandbase']);
+			expect(slugs).toEqual(['demandbase', 'hubspot']);
 		});
 	});
 
@@ -46,6 +55,7 @@ describe('connector registry', () => {
 			const slugs = listAvailableConnectors(existing).map(c => c.slug);
 
 			expect(slugs).not.toContain('demandbase');
+			expect(slugs).toContain('hubspot');
 		});
 
 		it('returns all connectors when none are present yet', () => {
@@ -53,7 +63,7 @@ describe('connector registry', () => {
 				.map(c => c.slug)
 				.sort();
 
-			expect(slugs).toEqual(['demandbase']);
+			expect(slugs).toEqual(['demandbase', 'hubspot']);
 		});
 	});
 });

@@ -2,8 +2,8 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+EmbeddedJSONCheck | [Styling](styling_checks.md#styling-checks) | Ensures consistent formatting for embedded JSON. |
 XMLBuildFileCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `build.xml`. |
-XMLCDATACheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `CDATA` inside `xml`. |
 XMLCheckstyleFileCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `checkstyle.xml` file. |
 XMLCustomSQLOrderCheck | [Styling](styling_checks.md#styling-checks) | Checks the order of attributes in `custom-sql` file. |
 XMLCustomSQLStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules to enforce consistency in code style for `.xml` files in directory `custom-sql`. |

@@ -9,6 +9,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.util.AssetHelper;
@@ -122,6 +123,7 @@ import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectE
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttachmentMVCActionCommand;
+import com.liferay.object.web.internal.sharing.servlet.taglib.ui.ObjectEntrySharingEntryDropdownItemContributor;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -162,6 +164,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.sharing.servlet.taglib.ui.SharingEntryDropdownItemContributor;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -697,6 +700,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"panel.category.key", objectDefinition.getPanelCategoryKey()
 				).build()));
 
+		serviceRegistrations.add(
+			_bundleContext.registerService(
+				SharingEntryDropdownItemContributor.class,
+				new ObjectEntrySharingEntryDropdownItemContributor(
+					_assetEntryLocalService, _language, objectDefinition),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"model.class.name", objectDefinition.getClassName()
+				).build()));
+
 		return serviceRegistrations;
 	}
 
@@ -742,6 +754,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetHelper _assetHelper;

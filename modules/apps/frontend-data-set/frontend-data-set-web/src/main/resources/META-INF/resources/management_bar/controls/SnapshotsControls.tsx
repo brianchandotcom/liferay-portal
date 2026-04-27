@@ -200,14 +200,10 @@ const SnapshotsControls = () => {
 			)) ||
 		defaultSnapshotItem;
 
-	const ownedSnapshots = snapshots.filter(
-		(view: ISnapshot) => !view.shared
-	);
-	const sharedSnapshots = snapshots.filter(
-		(view: ISnapshot) => view.shared
-	);
+	const ownedSnapshots = snapshots.filter((view: ISnapshot) => !view.shared);
+	const sharedSnapshots = snapshots.filter((view: ISnapshot) => view.shared);
 
-	const hasSharedSnapshots = sharedSnapshots.length > 0;
+	const hasSharedSnapshots = !!sharedSnapshots.length;
 
 	type PickerItem = ISnapshot | {items: ISnapshot[]; label?: string};
 
@@ -218,7 +214,7 @@ const SnapshotsControls = () => {
 					items: sharedSnapshots,
 					label: Liferay.Language.get('shared-with-me'),
 				},
-		  ]
+			]
 		: [defaultSnapshotItem, ...ownedSnapshots];
 
 	const activeSnapshotLabel = activeSnapshot.label ?? '';

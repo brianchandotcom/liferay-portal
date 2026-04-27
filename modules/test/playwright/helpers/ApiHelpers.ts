@@ -603,8 +603,13 @@ export class DataApiHelpers extends ApiHelpers {
 				await this.headlessCommerceAdminOrder.deleteOrder(item.id);
 			}
 			else if (item.type === 'orderAttachment') {
+				const [orderId, attachmentId] = String(item.id)
+					.split('_')
+					.map(Number);
+
 				await this.headlessCommerceAdminOrderAttachment.deleteOrderAttachment(
-					item.id
+					attachmentId,
+					orderId
 				);
 			}
 			else if (item.type === 'orderRule') {

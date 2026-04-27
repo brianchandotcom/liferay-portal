@@ -25,6 +25,15 @@ public class FinderColumn<T extends BaseModel<T>> {
 		_convertNull = convertNull;
 		_valueExtractor = valueExtractor;
 
+		int dotIndex = columnName.indexOf('.');
+
+		if (dotIndex == -1) {
+			_keyFragment = columnName + comparator;
+		}
+		else {
+			_keyFragment = columnName.substring(dotIndex + 1) + comparator;
+		}
+
 		String suffix = last ? "" : " AND ";
 
 		_sqlBind = StringBundler.concat(
@@ -51,6 +60,10 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	public Object extractValue(T entity) {
 		return _valueExtractor.apply(entity);
+	}
+
+	public String getKeyFragment() {
+		return _keyFragment;
 	}
 
 	public String getSqlFragment(Object normalizedValue) {
@@ -133,6 +146,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	private final boolean _convertNull;
+	private final String _keyFragment;
 	private final String _sqlBind;
 	private final String _sqlIsNull;
 	private final String _sqlNull;

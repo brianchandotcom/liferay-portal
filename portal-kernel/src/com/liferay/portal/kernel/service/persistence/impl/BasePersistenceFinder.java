@@ -24,6 +24,25 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		this.finderColumns = finderColumns;
 	}
 
+	public String buildNoSuchKeyMessage(String prefix, Object[] values) {
+		StringBundler sb = new StringBundler((finderColumns.length * 3) + 1);
+
+		sb.append(prefix);
+
+		for (int i = 0; i < finderColumns.length; i++) {
+			if (i > 0) {
+				sb.append(", ");
+			}
+
+			sb.append(finderColumns[i].getKeyFragment());
+			sb.append(values[i]);
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
 	protected void bindQueryParams(QueryPos queryPos, Object[] values) {
 		for (int i = 0; i < finderColumns.length; i++) {
 			if (finderColumns[i].shouldBind(values[i])) {

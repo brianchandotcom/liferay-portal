@@ -2123,63 +2123,64 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
-	test(
-		'can add entry with empty value for picklist field',
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const {listTypeDefinition} =
-				await postListTypeDefinitionListTypeEntries({
-					apiHelpers,
-					listTypeEntriesLength: 2,
-				});
-
-			const objectFields = generateObjectFields({
-				listTypeDefinitionExternalReferenceCode:
-					listTypeDefinition.externalReferenceCode,
-				objectFieldBusinessTypes: [
-					{
-						businessType: 'Picklist',
-					},
-					{
-						businessType: 'Text',
-						label: {en_US: 'Text Field'},
-					},
-				],
+	test('can add entry with empty value for picklist field', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const {listTypeDefinition} =
+			await postListTypeDefinitionListTypeEntries({
+				apiHelpers,
+				listTypeEntriesLength: 2,
 			});
 
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
+		const objectFields = generateObjectFields({
+			listTypeDefinitionExternalReferenceCode:
+				listTypeDefinition.externalReferenceCode,
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'Picklist',
+				},
+				{
+					businessType: 'Text',
+					label: {en_US: 'Text Field'},
+				},
+			],
+		});
 
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
 			});
 
-			await viewObjectEntriesPage.goto(objectDefinition.className);
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldBusinessType: 'Text',
-				objectFieldLabel: 'Text Field',
-				objectFieldValue: 'test',
-			});
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Text Field',
+			objectFieldValue: 'test',
+		});
 
-			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-			await viewObjectEntriesPage.backButton.click();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-			await expect(
-				page.locator('td').getByText('test', {exact: true})
-			).toBeVisible();
-		}
-	);
+		await viewObjectEntriesPage.backButton.click();
+
+		await expect(
+			page.locator('td').getByText('test', {exact: true})
+		).toBeVisible();
+	});
 
 	test('can add object entry with add permission', async ({
 		apiHelpers,
@@ -2202,8 +2203,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 
 		const companyId = await page.evaluate(() => {
-				return Liferay.ThemeDisplay.getCompanyId();
-			});
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
 
 		const user = await createUserWithPermissions({
 			apiHelpers,
@@ -4290,49 +4291,50 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
-	test(
-		'duplicated entry is not submitted when refreshing page',
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
+	test('duplicated entry is not submitted when refreshing page', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
 			});
 
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-			await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
 
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: objectFields[0].label['en_US'],
+			objectFieldValue: 'test',
+		});
 
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldBusinessType: 'Text',
-				objectFieldLabel: objectFields[0].label['en_US'],
-				objectFieldValue: 'test',
-			});
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await page.reload();
 
-			await page.reload();
+		await viewObjectEntriesPage.goto(objectDefinition.className);
 
-			await viewObjectEntriesPage.goto(objectDefinition.className);
-
-			await expect(
-				page.locator('td').getByText('test', {exact: true})
-			).toHaveCount(1);
-		}
-	);
+		await expect(
+			page.locator('td').getByText('test', {exact: true})
+		).toHaveCount(1);
+	});
 
 	test('error message is displayed in the language of the site context', async ({
 		apiHelpers,

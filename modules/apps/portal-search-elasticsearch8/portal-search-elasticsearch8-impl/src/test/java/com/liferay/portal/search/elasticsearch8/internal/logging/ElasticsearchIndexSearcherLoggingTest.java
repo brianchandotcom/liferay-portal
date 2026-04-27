@@ -44,9 +44,18 @@ public class ElasticsearchIndexSearcherLoggingTest
 
 			searchCount(createSearchContext(), new MatchAllQuery());
 
-			_assertLogCapture(
-				logCapture, "The search engine processed", LoggerTestUtil.DEBUG,
-				2);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
+
+			_assertLogEntry(
+				logEntries.get(0), "Stack trace for", LoggerTestUtil.INFO);
+			_assertLogEntry(
+				logEntries.get(1), "Search request string for",
+				LoggerTestUtil.DEBUG);
+			_assertLogEntry(
+				logEntries.get(2), "The search engine processed the request in",
+				LoggerTestUtil.DEBUG);
 		}
 	}
 
@@ -58,8 +67,15 @@ public class ElasticsearchIndexSearcherLoggingTest
 
 			searchCount(createSearchContext(), new MatchAllQuery());
 
-			_assertLogCapture(
-				logCapture, "The search engine processed", LoggerTestUtil.INFO);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+			_assertLogEntry(
+				logEntries.get(0), "The search engine processed",
+				LoggerTestUtil.INFO);
+			_assertLogEntry(
+				logEntries.get(1), "Searching took", LoggerTestUtil.INFO);
 		}
 	}
 
@@ -71,49 +87,38 @@ public class ElasticsearchIndexSearcherLoggingTest
 
 			search(createSearchContext());
 
-			_assertLogCapture(
-				logCapture, "The search engine processed", LoggerTestUtil.INFO);
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 2, logEntries.size());
+
+			_assertLogEntry(
+				logEntries.get(0), "The search engine processed",
+				LoggerTestUtil.INFO);
+			_assertLogEntry(
+				logEntries.get(1), "Searching took", LoggerTestUtil.INFO);
 		}
 	}
 
 	@Test
-	public void testSearchSearchRequestExecutorLogsExecutionTime() {
+	public void testSearchSearchRequestExecutorLogs() {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				SearchSearchRequestExecutor.class.getName(),
 				LoggerTestUtil.DEBUG)) {
 
 			search(createSearchContext());
 
-			_assertLogCapture(
-				logCapture, "The search engine processed the request in",
-				LoggerTestUtil.DEBUG, 2);
-		}
-	}
+			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-	@Test
-	public void testSearchSearchRequestExecutorLogsRequestString() {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				SearchSearchRequestExecutor.class.getName(),
-				LoggerTestUtil.DEBUG)) {
+			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
-			search(createSearchContext());
-
-			_assertLogCapture(
-				logCapture, "Search request string for", LoggerTestUtil.DEBUG,
-				1);
-		}
-	}
-
-	@Test
-	public void testSearchSearchRequestExecutorLogsStackTraceInfo() {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				SearchSearchRequestExecutor.class.getName(),
-				LoggerTestUtil.INFO)) {
-
-			search(createSearchContext());
-
-			_assertLogCapture(
-				logCapture, "Stack trace for", LoggerTestUtil.INFO);
+			_assertLogEntry(
+				logEntries.get(0), "Stack trace for", LoggerTestUtil.INFO);
+			_assertLogEntry(
+				logEntries.get(1), "Search request string for",
+				LoggerTestUtil.DEBUG);
+			_assertLogEntry(
+				logEntries.get(2), "The search engine processed the request in",
+				LoggerTestUtil.DEBUG);
 		}
 	}
 
@@ -122,24 +127,10 @@ public class ElasticsearchIndexSearcherLoggingTest
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
-	private void _assertLogCapture(
-		LogCapture logCapture, String expectedMessage, String logLevel) {
-
-		_assertLogCapture(logCapture, expectedMessage, logLevel, 0);
-	}
-
-	private void _assertLogCapture(
-		LogCapture logCapture, String expectedMessage, String logLevel,
-		int index) {
-
-		List<LogEntry> logEntries = logCapture.getLogEntries();
-
-		Assert.assertFalse(logEntries.toString(), logEntries.isEmpty());
-
-		LogEntry logEntry = logEntries.get(index);
+	private void _assertLogEntry(
+		LogEntry logEntry, String expectedMessage, String logLevel) {
 
 		Assert.assertEquals(logLevel, logEntry.getPriority());
-
 		Assert.assertTrue(
 			logEntry.getMessage(
 			).startsWith(

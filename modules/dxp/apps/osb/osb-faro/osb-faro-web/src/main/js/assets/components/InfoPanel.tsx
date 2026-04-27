@@ -14,12 +14,17 @@ import {Text} from '@clayui/core';
 interface IInfoPanelProps {
 	data: {
 		itemData: {
-			assetCategories?: {id: string; name: string}[];
-			mimeType?: string;
+			assetCategories?: {
+				id: string;
+				name: string;
+				vocabularyId: string;
+			}[];
 			assetTags?: {id: string; name: string}[];
 			assetTitle: string;
 			assetType: string;
+			assetVocabularies?: {id: string; name: string}[];
 			id: string;
+			mimeType?: string;
 		};
 	} | null;
 	onClose: () => void;
@@ -129,14 +134,13 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane aria-labelledby='tab-2'>
-						<InfoPanelContent
+						<CategoriesInfoPanelContent
 							items={data?.itemData?.assetCategories}
-							title={Liferay.Language.get('categories')}
+							vocabularies={data?.itemData?.assetVocabularies}
 						/>
 
-						<InfoPanelContent
+						<TagsInfoPanelContent
 							items={data?.itemData?.assetTags}
-							title={Liferay.Language.get('tags')}
 						/>
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>
@@ -145,56 +149,150 @@ const InfoPanel: React.FC<IInfoPanelProps> = ({data, onClose}) => {
 	);
 };
 
-interface InfoPanelContentProps {
-	items?: {id: string; name: string}[];
-	title: string;
+interface CategoriesInfoPanelContentProps {
+	items?: {id: string; name: string; vocabularyId: string}[];
+	vocabularies?: {id: string; name: string}[];
 }
 
-const InfoPanelContent: React.FC<InfoPanelContentProps> = ({items, title}) => (
-	<ClayPanel
-		collapsable={false}
-		displayTitle={
-			<ClayPanel.Header className='border-bottom'>
-				<ClayPanel.Title className='panel-title text-secondary'>
-					{title}
-				</ClayPanel.Title>
-			</ClayPanel.Header>
-		}
-		displayType='unstyled'
-	>
-		<ClayPanel.Body>
-			{!items?.length && (
-				<>
-					<div className='mb-2'>
-						<Text size={4} weight='semi-bold'>
+const CategoriesInfoPanelContent: React.FC<CategoriesInfoPanelContentProps> = ({
+	items,
+	vocabularies
+}) => {
+	const title = Liferay.Language.get('categories');
+	const hasItems = !!items?.length;
+
+	const grouped = hasItems
+		? items!.reduce((map, category) => {
+				const key = category.vocabularyId;
+
+				return map.set(key, [...(map.get(key) ?? []), category]);
+		  }, new Map<string, typeof items>())
+		: null;
+
+	return (
+		<ClayPanel
+			collapsable={false}
+			displayTitle={
+				<ClayPanel.Header className='border-bottom'>
+					<ClayPanel.Title className='panel-title text-secondary'>
+						{title}
+					</ClayPanel.Title>
+				</ClayPanel.Header>
+			}
+			displayType='unstyled'
+		>
+			<ClayPanel.Body>
+				{!hasItems && (
+					<>
+						<div className='mb-2'>
+							<Text size={4} weight='semi-bold'>
+								{sub(
+									Liferay.Language.get(
+										'no-x-were-found-for-this-asset'
+									),
+									[title]
+								)}
+							</Text>
+						</div>
+
+						<Text color='secondary' size={3}>
 							{sub(
 								Liferay.Language.get(
-									'no-x-were-found-for-this-asset'
+									'go-to-your-content-management-system-to-manage-x'
 								),
 								[title]
 							)}
 						</Text>
-					</div>
+					</>
+				)}
 
-					<Text color='secondary' size={3}>
-						{sub(
-							Liferay.Language.get(
-								'go-to-your-content-management-system-to-manage-x'
-							),
-							[title]
-						)}
-					</Text>
-				</>
-			)}
+				{grouped &&
+					vocabularies!.map(({id, name}) => {
+						const categories = grouped.get(id);
 
-			{!!items?.length &&
-				items.map(({id, name}) => (
-					<ClayLabel className='label-lg' key={id}>
-						{name}
-					</ClayLabel>
-				))}
-		</ClayPanel.Body>
-	</ClayPanel>
-);
+						if (!categories?.length) {
+							return null;
+						}
+
+						return (
+							<div className='mb-3' key={id}>
+								<div className='mb-2'>
+									<Text size={2} weight='semi-bold'>
+										{name}
+									</Text>
+								</div>
+
+								{categories.map(
+									({id: categoryId, name: categoryName}) => (
+										<ClayLabel
+											className='label-lg'
+											key={categoryId}
+										>
+											{categoryName}
+										</ClayLabel>
+									)
+								)}
+							</div>
+						);
+					})}
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+};
+
+interface TagsInfoPanelContentProps {
+	items?: {id: string; name: string}[];
+}
+
+const TagsInfoPanelContent: React.FC<TagsInfoPanelContentProps> = ({items}) => {
+	const title = Liferay.Language.get('tags');
+
+	return (
+		<ClayPanel
+			collapsable={false}
+			displayTitle={
+				<ClayPanel.Header className='border-bottom'>
+					<ClayPanel.Title className='panel-title text-secondary'>
+						{title}
+					</ClayPanel.Title>
+				</ClayPanel.Header>
+			}
+			displayType='unstyled'
+		>
+			<ClayPanel.Body>
+				{!items?.length && (
+					<>
+						<div className='mb-2'>
+							<Text size={4} weight='semi-bold'>
+								{sub(
+									Liferay.Language.get(
+										'no-x-were-found-for-this-asset'
+									),
+									[title]
+								)}
+							</Text>
+						</div>
+
+						<Text color='secondary' size={3}>
+							{sub(
+								Liferay.Language.get(
+									'go-to-your-content-management-system-to-manage-x'
+								),
+								[title]
+							)}
+						</Text>
+					</>
+				)}
+
+				{!!items?.length &&
+					items.map(({id, name}) => (
+						<ClayLabel className='label-lg' key={id}>
+							{name}
+						</ClayLabel>
+					))}
+			</ClayPanel.Body>
+		</ClayPanel>
+	);
+};
 
 export {InfoPanel};

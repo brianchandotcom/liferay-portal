@@ -14,7 +14,9 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForModal} from '../../../utils/waitFor';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {checkInZip} from '../../../utils/zip';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {PicklistBuilderPage} from './pages/PicklistBuilderPage';
@@ -624,5 +626,81 @@ test(
 				}
 			}
 		}
+	}
+);
+
+test(
+	'Export for Translation a content asset',
+	{tag: '@LPD-85361'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const basicWebContentTitle = `Basic Web Content ${getRandomString()}`;
+
+		await test.step('Create CMS asset', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: basicWebContentTitle,
+				},
+				'cms/basic-web-contents',
+				'Default'
+			);
+		});
+
+		await test.step('Exporting for Translation with a single target language', async () => {
+			await assetsPage.gotoContents();
+
+			await assetsPage.execItemAction({
+				action: 'Export for Translation',
+				filter: basicWebContentTitle,
+			});
+
+			await waitForModal({
+				page,
+			});
+
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
+
+			const filePath = await assetsPage.exportForTranslation(false, [
+				'Spanish (Spain)',
+			]);
+
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+		});
+
+		await test.step('Exporting for Translation with a multiple target languages', async () => {
+			await assetsPage.execItemAction({
+				action: 'Export for Translation',
+				filter: basicWebContentTitle,
+			});
+
+			await waitForModal({
+				page,
+			});
+
+			await expect(
+				page
+					.locator('.modal-header')
+					.getByText('Export for Translation')
+			).toBeVisible();
+
+			const filePath = await assetsPage.exportForTranslation(false, [
+				'Chinese (China)',
+				'Spanish (Spain)',
+			]);
+
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle}-en_US-es_ES.xlf`)
+			).resolves.toBe(true);
+
+			await expect(
+				checkInZip(filePath, `${basicWebContentTitle}-en_US-zh_CN.xlf`)
+			).resolves.toBe(true);
+		});
 	}
 );

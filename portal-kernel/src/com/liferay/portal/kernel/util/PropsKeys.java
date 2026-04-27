@@ -1072,6 +1072,16 @@ public interface PropsKeys {
 		FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS =
 			"field.enable.com.liferay.portal.kernel.model.Organization.status";
 
+	public static final String FIPS_ENABLED = "fips.enabled";
+
+	public static final String FIPS_PROVIDER = "fips.provider";
+
+	public static final String FIPS_STRICT_MODE_APPROVED_PROVIDERS =
+		"fips.strict.mode.approved.providers";
+
+	public static final String FIPS_STRICT_MODE_ENABLED =
+		"fips.strict.mode.enabled";
+
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 
 	public static final String GLOBAL_SHUTDOWN_EVENTS =

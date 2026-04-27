@@ -48,8 +48,6 @@ public class ExtensionSelectionFDSFilterTest {
 	public void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
 
-		_extensionSelectionFDSFilter = new ExtensionSelectionFDSFilter();
-
 		ReflectionTestUtil.setFieldValue(
 			_extensionSelectionFDSFilter, "_aggregations", _aggregations);
 		ReflectionTestUtil.setFieldValue(
@@ -101,7 +99,7 @@ public class ExtensionSelectionFDSFilterTest {
 	}
 
 	@Test
-	public void testGetSelectionFDSFilterItemsReturnsEmptyListWhenAggregationIsNull() {
+	public void testGetSelectionFDSFilterItems1() {
 		Mockito.when(
 			_searchResponse.getAggregationResult("extensions")
 		).thenReturn(
@@ -117,7 +115,7 @@ public class ExtensionSelectionFDSFilterTest {
 	}
 
 	@Test
-	public void testGetSelectionFDSFilterItemsReturnsItemsFromBuckets() {
+	public void testGetSelectionFDSFilterItems2() {
 		Bucket pdfBucket = Mockito.mock(Bucket.class);
 
 		Mockito.when(
@@ -175,7 +173,8 @@ public class ExtensionSelectionFDSFilterTest {
 	@Mock
 	private DepotEntryLocalService _depotEntryLocalService;
 
-	private ExtensionSelectionFDSFilter _extensionSelectionFDSFilter;
+	private ExtensionSelectionFDSFilter _extensionSelectionFDSFilter =
+		new ExtensionSelectionFDSFilter();
 	private final Locale _locale = LocaleUtil.US;
 
 	@Mock

@@ -7,6 +7,8 @@ package com.liferay.osb.patcher.service.impl;
 
 import com.liferay.osb.patcher.service.base.PatcherFixServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -21,6 +23,17 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class PatcherFixServiceImpl extends PatcherFixServiceBaseImpl {
+
+	@Override
+	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
+			String patcherProjectVersionName, String ticketList)
+		throws PortalException {
+
+		return patcherFixLocalService.
+			checkPatcherFixesByPatcherProjectVersionName(
+				patcherProjectVersionName, ticketList);
+	}
+
 }
 
 // LIFERAY-SERVICE-BUILDER-HASH:1619952532

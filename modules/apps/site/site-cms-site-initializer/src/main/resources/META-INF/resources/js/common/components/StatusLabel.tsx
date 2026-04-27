@@ -55,7 +55,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 	const formattedDate = formatExpirationDate(expirationDate ?? undefined);
 	const expiringSoonText = Liferay.Language.get('expiring-soon');
 	const ariaLabel = sub(
-		Liferay.Language.get('expiring-soon.expires-on-x'),
+		Liferay.Language.get('expiring-soon-expires-on-x'),
 		formatExpirationDateLong(expirationDate ?? undefined) ?? ''
 	);
 

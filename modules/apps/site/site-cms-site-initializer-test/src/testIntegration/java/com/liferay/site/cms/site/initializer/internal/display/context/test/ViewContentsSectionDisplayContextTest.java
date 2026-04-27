@@ -15,6 +15,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -76,6 +77,7 @@ public class ViewContentsSectionDisplayContextTest
 	}
 
 	@Test
+	@TestInfo("LPD-87118")
 	public void testGetBulkActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> bulkActionDropdownItems =
 			getBulkActionDropdownItems();

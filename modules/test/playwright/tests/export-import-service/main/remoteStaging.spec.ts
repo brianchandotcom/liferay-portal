@@ -20,6 +20,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {
 	JournalContentPage,
 	PageNode,
+	Widget,
 	createLayoutHierarchy,
 } from '../../../utils/createLayoutHierarchy';
 import getGlobalSiteId from '../../../utils/getGlobalSiteId';
@@ -30,7 +31,6 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getDataStructureDefinition from '../../journal-web/main/utils/getDataStructureDefinition';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
-import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {remoteStagingPagesTest} from './fixtures/remoteStagingPagesTest';
 import {safeTeardown} from './utils/safeTeardown';
 
@@ -294,25 +294,6 @@ test(
 		const WC_DISPLAY =
 			'com_liferay_journal_content_web_portlet_JournalContentPortlet';
 
-		const buildWidgetsForPage = (pageNumber: string): PageElement[] => [
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetConfig: {
-					articleId: allLinksArticleId,
-					ddmTemplateKey: templateKey,
-				},
-				widgetName: WC_DISPLAY,
-			}),
-			getWidgetDefinition({
-				id: getRandomString(),
-				widgetConfig: {
-					articleId: perPageArticleIds.get(pageNumber)!,
-					ddmTemplateKey: templateKey2,
-				},
-				widgetName: WC_DISPLAY,
-			}),
-		];
-
 		const attachWidgetsToNodes = (
 			nodes: Array<PageNode<{verify?: boolean}>>
 		): Array<PageNode<{verify?: boolean}>> =>
@@ -321,7 +302,22 @@ test(
 				children: node.children
 					? attachWidgetsToNodes(node.children)
 					: undefined,
-				widgetDefinitions: buildWidgetsForPage(node.pageNumber),
+				widgets: [
+					{
+						config: {
+							articleId: allLinksArticleId,
+							ddmTemplateKey: templateKey,
+						},
+						name: WC_DISPLAY,
+					},
+					{
+						config: {
+							articleId: perPageArticleIds.get(node.pageNumber)!,
+							ddmTemplateKey: templateKey2,
+						},
+						name: WC_DISPLAY,
+					},
+				],
 			}));
 
 		let layouts: Array<JournalContentPage<{verify?: boolean}>> = [];

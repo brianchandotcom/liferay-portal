@@ -5,13 +5,20 @@
 
 import {ApiHelpers} from '../helpers/ApiHelpers';
 import getPageDefinition from '../tests/layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../tests/layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import getRandomString from './getRandomString';
+
+export type Widget = {
+	config?: Record<string, unknown>;
+	name: string;
+};
 
 export type PageNode<T = {}> = {
 	children?: Array<PageNode<T>>;
 	contentTitle?: string;
 	pageNumber: string;
 	title?: string;
-	widgetDefinitions?: Array<PageElement>;
+	widgets?: Array<Widget>;
 } & T;
 
 export type JournalContentPage<T = {}> = {
@@ -36,15 +43,23 @@ export async function createLayoutHierarchy<T = {}>(options: {
 			contentTitle: nodeContentTitle,
 			pageNumber,
 			title: nodeTitle,
-			widgetDefinitions,
+			widgets,
 			...extraProps
 		} = node;
 
 		const title = nodeTitle || `Page ${pageNumber}`;
 		const contentTitle = nodeContentTitle || `Title-${pageNumber}`;
 
+		const widgetDefinitions = (widgets || []).map(({config, name}) =>
+			getWidgetDefinition({
+				id: getRandomString(),
+				widgetConfig: config,
+				widgetName: name,
+			})
+		);
+
 		const layout = (await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: widgetDefinitions?.length
+			pageDefinition: widgetDefinitions.length
 				? getPageDefinition(widgetDefinitions)
 				: undefined,
 			parentSitePage,

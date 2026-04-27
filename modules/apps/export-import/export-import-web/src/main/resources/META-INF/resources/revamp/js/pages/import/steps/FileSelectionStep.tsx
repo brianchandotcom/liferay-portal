@@ -27,12 +27,13 @@ export default function FileSelectionStep() {
 	useEffect(() => {
 		const currentFile = values.fileSelector;
 
-		if (
-			currentFile instanceof File &&
-			currentFile !== autoFilledFileRef.current &&
-			!values.name
-		) {
-			autoFilledFileRef.current = currentFile;
+		if (currentFile === autoFilledFileRef.current) {
+			return;
+		}
+
+		autoFilledFileRef.current = currentFile;
+
+		if (currentFile instanceof File && !values.name) {
 			setFieldValue('name', currentFile.name.replace(/\.lar$/i, ''));
 		}
 	}, [values.fileSelector, values.name, setFieldValue]);

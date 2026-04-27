@@ -73,32 +73,43 @@ public class GlobalPrivacyControlWellKnownFilter extends BasePortalFilter {
 
 		JSONObject jsonObject = JSONUtil.put("gpc", enabled);
 
-		if (enabled) {
-			long modifiedDate =
-				_cookiesConfigurationProvider.
-					getCookiesPreferenceHandlingModifiedDate(
-						ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+		if (!enabled) {
+			_writeJSON(httpServletResponse, jsonObject.toString());
 
-			if (modifiedDate > 0) {
-				jsonObject.put(
-					"lastUpdate",
-					Instant.ofEpochMilli(
-						modifiedDate
-					).atZone(
-						ZoneOffset.UTC
-					).toLocalDate(
-					).format(
-						DateTimeFormatter.ISO_LOCAL_DATE
-					));
-			}
+			return;
 		}
+
+		long modifiedDate =
+			_cookiesConfigurationProvider.
+				getCookiesPreferenceHandlingModifiedDate(
+					ExtendedObjectClassDefinition.Scope.COMPANY, companyId);
+
+		if (modifiedDate > 0) {
+			jsonObject.put(
+				"lastUpdate",
+				Instant.ofEpochMilli(
+					modifiedDate
+				).atZone(
+					ZoneOffset.UTC
+				).toLocalDate(
+				).format(
+					DateTimeFormatter.ISO_LOCAL_DATE
+				));
+		}
+
+		_writeJSON(httpServletResponse, jsonObject.toString());
+	}
+
+	private void _writeJSON(
+			HttpServletResponse httpServletResponse, String json)
+		throws Exception {
 
 		httpServletResponse.setCharacterEncoding(StringPool.UTF8);
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 		httpServletResponse.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObject.toString());
+		ServletResponseUtil.write(httpServletResponse, json);
 
 		httpServletResponse.flushBuffer();
 	}

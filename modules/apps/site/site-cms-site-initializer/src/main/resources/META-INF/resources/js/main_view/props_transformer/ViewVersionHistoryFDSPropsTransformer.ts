@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
+import {
+	IBulkActionItem,
+	IInternalRenderer,
+	replaceTokens,
+} from '@liferay/frontend-data-set-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
 import StatusLabel from '../../common/components/StatusLabel';
@@ -16,19 +20,23 @@ import AssetVersionRenderer from './cell_renderers/AssetVersionRenderer';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import VersionRenderer from './cell_renderers/VersionRenderer';
 import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
+import transformFDSBulkActions from './utils/transformFDSBulkActions';
 
 export default function ViewVersionHistoryFDSPropsTransformer({
 	additionalProps,
+	bulkActions = [],
 	itemsActions = [],
 	...otherProps
 }: {
 	additionalProps: any;
 	apiURL?: string;
+	bulkActions: Array<IBulkActionItem>;
 	id?: string;
 	itemsActions?: any[];
 }) {
 	return {
 		...otherProps,
+		bulkActions: transformFDSBulkActions(bulkActions),
 		customRenderers: {
 			tableCell: [
 				{

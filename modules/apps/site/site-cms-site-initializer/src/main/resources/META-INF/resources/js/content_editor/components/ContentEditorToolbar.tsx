@@ -84,10 +84,9 @@ export default function ContentEditorToolbar({
 					'[name="ObjectField_title"]'
 				) as HTMLInputElement | null;
 
-				const value =
-					defaultTitleInput?.value ||
-					currentTitleInput?.value ||
-					headerTitle;
+				const titleInput = defaultTitleInput ?? currentTitleInput;
+
+				const value = titleInput?.value.trim() || headerTitle;
 
 				sessionStorage.setItem(
 					'com.liferay.site.cms.site.initializer.successMessage',

@@ -116,6 +116,36 @@ describe('ShareModalContent', () => {
 		expect(queryByText('who-has-access (x-users)')).not.toBeInTheDocument();
 	});
 
+	it('renders a custom autocomplete label without a help icon by default', () => {
+		const {container, getByText} = renderComponent({
+			...DEFAULT_PROPS,
+			autocompleteLabel: 'add-people',
+		});
+
+		expect(getByText('add-people')).toBeInTheDocument();
+		expect(
+			container.querySelector('svg.lexicon-icon-question-circle')
+		).not.toBeInTheDocument();
+	});
+
+	it('renders the help icon when autocompleteHelpText is supplied', () => {
+		const {container} = renderComponent({
+			...DEFAULT_PROPS,
+			autocompleteHelpText:
+				'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it',
+		});
+
+		const helpIcon = container.querySelector(
+			'svg.lexicon-icon-question-circle'
+		);
+
+		expect(helpIcon).toBeInTheDocument();
+		expect(helpIcon).toHaveAttribute(
+			'data-title',
+			'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it'
+		);
+	});
+
 	it('renders the list of users with access', () => {
 		const {container} = renderComponent();
 

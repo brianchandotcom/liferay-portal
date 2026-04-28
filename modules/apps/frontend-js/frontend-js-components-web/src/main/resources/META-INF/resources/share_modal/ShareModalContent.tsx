@@ -204,6 +204,8 @@ function CollaboratorListItem({
 }
 
 export default function ShareModalContent({
+	autocompleteHelpText,
+	autocompleteLabel = Liferay.Language.get('add-people-to-collaborate'),
 	autocompleteURL = '',
 	canManageCollaborators = true,
 	closeModal,
@@ -215,6 +217,8 @@ export default function ShareModalContent({
 	permissionOptions,
 	title = '',
 }: {
+	autocompleteHelpText?: string;
+	autocompleteLabel?: string;
 	autocompleteURL: string;
 	canManageCollaborators?: boolean;
 	closeModal: () => void;
@@ -365,10 +369,19 @@ export default function ShareModalContent({
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<label htmlFor="collaboratorAutocomplete">
-								{Liferay.Language.get(
-									'add-people-to-collaborate'
-								)}
+								{autocompleteLabel}
 							</label>
+
+							{autocompleteHelpText ? (
+								<ClayIcon
+									className="lfr-portal-tooltip ml-1 text-secondary"
+									data-title={autocompleteHelpText}
+									focusable="false"
+									role="dialog"
+									symbol="question-circle"
+									tabIndex={0}
+								/>
+							) : null}
 
 							<ClayMultiSelect
 								id="collaboratorAutocomplete"

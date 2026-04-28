@@ -59,6 +59,10 @@ export default async function shareSnapshotAction({
 		openModal({
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				ShareModalContent({
+					autocompleteHelpText: Liferay.Language.get(
+						'this-view-can-be-used-by-users-with-whom-you-have-shared-it-but-only-you-can-modify-it'
+					),
+					autocompleteLabel: Liferay.Language.get('add-people'),
 					autocompleteURL: AUTOCOMPLETE_URL,
 					closeModal,
 					collaboratorURL: COLLABORATOR_URL,

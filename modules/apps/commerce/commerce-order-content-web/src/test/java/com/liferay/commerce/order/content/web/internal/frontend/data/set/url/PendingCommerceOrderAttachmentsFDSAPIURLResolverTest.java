@@ -26,9 +26,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * @author Tancredi Covioli
+ * @author Stefano Motta
  */
-public class PlacedCommerceOrderAttachmentsFDSAPIURLResolverTest {
+public class PendingCommerceOrderAttachmentsFDSAPIURLResolverTest {
 
 	@ClassRule
 	@Rule
@@ -61,27 +61,26 @@ public class PlacedCommerceOrderAttachmentsFDSAPIURLResolverTest {
 
 	@Test
 	public void testResolve() throws PortalException {
-		String baseURLString =
-			"/o/headless-commerce-delivery-order/v1.0/placed-orders/";
+		String baseURLString = "/o/headless-commerce-delivery-cart/v1.0/carts/";
 
 		Assert.assertEquals(
 			baseURLString + _commerceOrder.getCommerceOrderId() +
 				"/attachments",
-			_placedCommerceOrderAttachmentsFDSAPIURLResolver.resolve(
-				baseURLString + "{placedOrderId}/attachments",
+			_pendingCommerceOrderAttachmentsFDSAPIURLResolver.resolve(
+				baseURLString + "{cartId}/attachments",
 				_mockHttpServletRequest));
 	}
 
 	@Test
 	public void testResolveByExternalReferenceCode() throws PortalException {
 		String baseURLString =
-			"/o/headless-commerce-delivery-order/v1.0/placed-orders" +
+			"/o/headless-commerce-delivery-cart/v1.0/carts" +
 				"/by-externalReferenceCode/";
 
 		Assert.assertEquals(
 			baseURLString + _commerceOrder.getExternalReferenceCode() +
 				"/attachments",
-			_placedCommerceOrderAttachmentsFDSAPIURLResolver.resolve(
+			_pendingCommerceOrderAttachmentsFDSAPIURLResolver.resolve(
 				baseURLString + "{externalReferenceCode}/attachments",
 				_mockHttpServletRequest));
 	}
@@ -97,7 +96,7 @@ public class PlacedCommerceOrderAttachmentsFDSAPIURLResolverTest {
 		new MockHttpServletRequest();
 
 	@InjectMocks
-	private PlacedCommerceOrderAttachmentsFDSAPIURLResolver
-		_placedCommerceOrderAttachmentsFDSAPIURLResolver;
+	private PendingCommerceOrderAttachmentsFDSAPIURLResolver
+		_pendingCommerceOrderAttachmentsFDSAPIURLResolver;
 
 }

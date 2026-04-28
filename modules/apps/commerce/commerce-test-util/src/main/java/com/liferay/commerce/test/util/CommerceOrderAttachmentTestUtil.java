@@ -6,8 +6,8 @@
 package com.liferay.commerce.test.util;
 
 import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 /**
@@ -16,21 +16,20 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 public class CommerceOrderAttachmentTestUtil {
 
 	public static void initialize(Class<?> clazz) throws Exception {
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_COMMERCE_ORDER_ATTACHMENT",
+		ListTypeDefinition listTypeDefinition =
+			ListTypeDefinitionLocalServiceUtil.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
 					TestPropsValues.getCompanyId());
 
-		if (objectDefinition != null) {
+		if (listTypeDefinition != null) {
 			return;
 		}
 
 		BatchEngineTestUtil.processBatchEngineUnits(
 			_BUNDLE_SYMBOLIC_NAME, clazz,
 			new String[] {
-				".com.liferay.commerce.internal.batch.01.list.type.definition",
-				".com.liferay.commerce.internal.batch.03.object.definition"
+				".com.liferay.commerce.internal.batch.01.list.type.definition"
 			});
 	}
 

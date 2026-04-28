@@ -1,0 +1,13 @@
+{
+	"deletionType": "cascade",
+	"externalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_MODEL_ARMOR_TEMPLATES",
+	"label": {
+		"en_US": "Account to Model Armor Templates"
+	},
+	"name": "accountToAIHubModelArmorTemplates",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:AIHubModelArmorTemplate$]",
+	"objectDefinitionName2": "AIHubModelArmorTemplate",
+	"system": true,
+	"type": "oneToMany"
+}

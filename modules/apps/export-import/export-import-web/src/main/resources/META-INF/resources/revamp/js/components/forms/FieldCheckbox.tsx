@@ -4,10 +4,9 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import '../../../css/utilities.scss';
+import {OptionRow} from './OptionRow';
 
 export function FieldCheckbox({
 	bordered = true,
@@ -33,54 +32,26 @@ export function FieldCheckbox({
 
 	const handleChange = () => onChange(!checked);
 
-	const stopPropagation = (event: React.SyntheticEvent) => {
-		event.stopPropagation();
-	};
-
 	return (
-		<div
-			className={`${bordered ? 'border p-3 rounded ' : ''}cursor-pointer mb-2 text-3`}
+		<OptionRow
+			bordered={bordered}
+			description={description}
+			descriptionId={descriptionId}
+			input={
+				<ClayCheckbox
+					{...restProps}
+					aria-describedby={description ? descriptionId : undefined}
+					aria-labelledby={labelId}
+					checked={checked}
+					id={fieldId}
+					onChange={handleChange}
+					onClick={(event) => event.stopPropagation()}
+				/>
+			}
+			label={label}
+			labelHtmlFor={fieldId}
+			labelId={labelId}
 			onClick={handleChange}
-		>
-			<ClayLayout.ContentRow padded>
-				<ClayLayout.ContentCol expand={false}>
-					<div className="pt-1">
-						<ClayCheckbox
-							{...restProps}
-							aria-describedby={
-								description ? descriptionId : undefined
-							}
-							aria-labelledby={labelId}
-							checked={checked}
-							id={fieldId}
-							onChange={handleChange}
-							onClick={stopPropagation}
-						/>
-					</div>
-				</ClayLayout.ContentCol>
-
-				<ClayLayout.ContentCol expand>
-					<ClayLayout.ContentSection>
-						<label
-							className="font-weight-semi-bold mb-0 text-dark"
-							htmlFor={fieldId}
-							id={labelId}
-							onClick={stopPropagation}
-						>
-							{label}
-						</label>
-
-						{description && (
-							<div
-								className="small text-secondary"
-								id={descriptionId}
-							>
-								{description}
-							</div>
-						)}
-					</ClayLayout.ContentSection>
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
-		</div>
+		/>
 	);
 }

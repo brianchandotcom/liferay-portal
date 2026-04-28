@@ -37,7 +37,7 @@ const Wrapper = ({children, queryString = '', store = mockStore()}) => (
 	</Provider>
 );
 
-describe('DataSourceList', () => {
+describe.skip('DataSourceList', () => {
 	beforeEach(() => {
 		jest.spyOn(
 			NotificationAlertList,

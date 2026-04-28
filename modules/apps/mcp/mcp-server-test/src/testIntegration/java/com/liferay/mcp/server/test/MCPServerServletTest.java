@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -21,7 +22,9 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -197,6 +200,59 @@ public class MCPServerServletTest {
 		mcpSyncClient.closeGracefully();
 	}
 
+	@Test
+	public void testServiceWithoutSession() throws Exception {
+		Http.Options options = new Http.Options();
+
+		options.addHeader("Authorization", _getAuthorization());
+		options.setLocation("http://localhost:8080/o/mcp");
+
+		_http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		Assert.assertEquals("text/event-stream", response.getContentType());
+		Assert.assertEquals(200, response.getResponseCode());
+
+		options = new Http.Options();
+
+		options.addHeader("Accept", "application/json, text/event-stream");
+		options.addHeader("Authorization", _getAuthorization());
+		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
+		options.setBody(
+			JSONUtil.put(
+				"id", 1
+			).put(
+				"jsonrpc", "2.0"
+			).put(
+				"method", "initialize"
+			).put(
+				"params",
+				JSONUtil.put(
+					"capabilities", JSONFactoryUtil.createJSONObject()
+				).put(
+					"clientInfo",
+					JSONUtil.put(
+						"name", "test-client"
+					).put(
+						"version", "1.0.0"
+					)
+				).put(
+					"protocolVersion", "2025-11-25"
+				)
+			).toString(),
+			ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		options.setLocation("http://localhost:8080/o/mcp");
+		options.setPost(true);
+
+		_http.URLtoString(options);
+
+		response = options.getResponse();
+
+		Assert.assertEquals(200, response.getResponseCode());
+		Assert.assertNull(response.getHeader("Mcp-Session-Id"));
+	}
+
 	@FeatureFlag("LPD-86164")
 	@Test
 	public void testServiceWithProfile() throws Exception {
@@ -348,6 +404,9 @@ public class MCPServerServletTest {
 			).build()
 		).build();
 	}
+
+	@Inject
+	private Http _http;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

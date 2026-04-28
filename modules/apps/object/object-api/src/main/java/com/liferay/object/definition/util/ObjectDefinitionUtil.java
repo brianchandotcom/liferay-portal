@@ -173,8 +173,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CMSExternalVideo", "/cms/external-videos"
 		).put(
-			"CommerceOrderAttachment", "/commerce/order-attachments"
-		).put(
 			"CommerceReturn", "/commerce/returns"
 		).put(
 			"CommerceReturnItem", "/commerce/return-items"

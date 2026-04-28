@@ -141,6 +141,7 @@ import com.liferay.portal.kernel.tree.TreeModelTasksAdapter;
 import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLKeywordsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -400,6 +401,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		friendlyURL = getFriendlyURL(
 			user.getCompanyId(), groupId, classNameId, classPK, friendlyName,
 			friendlyURL);
+
+		if (site) {
+			_validateFriendlyURLKeyword(friendlyURL);
+		}
 
 		if (staging) {
 			int groupKeyMaxLength = ModelHintsUtil.getMaxLength(
@@ -5038,6 +5043,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			throw new GroupFriendlyURLException(exceptionType);
 		}
 
+		_validateFriendlyURLKeyword(friendlyURL);
+
 		Group group = groupPersistence.fetchByC_F(companyId, friendlyURL);
 
 		if ((group != null) && (group.getGroupId() != groupId)) {
@@ -5575,6 +5582,25 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	private String _toExternalReferenceCode(String groupKey) {
 		return "L_" + TextFormatter.format(groupKey, TextFormatter.A);
+	}
+
+	private void _validateFriendlyURLKeyword(String friendlyURL)
+		throws PortalException {
+
+		String keyword = FriendlyURLKeywordsUtil.getFriendlyURLKeyword(
+			friendlyURL);
+
+		if (Validator.isNull(keyword)) {
+			return;
+		}
+
+		GroupFriendlyURLException groupFriendlyURLException =
+			new GroupFriendlyURLException(
+				GroupFriendlyURLException.KEYWORD_CONFLICT);
+
+		groupFriendlyURLException.setKeywordConflict(keyword);
+
+		throw groupFriendlyURLException;
 	}
 
 	private void _validateGroupKeyChange(long groupId, String typeSettings)

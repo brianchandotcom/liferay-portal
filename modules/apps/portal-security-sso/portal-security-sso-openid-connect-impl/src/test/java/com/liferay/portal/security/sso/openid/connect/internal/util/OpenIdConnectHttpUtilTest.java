@@ -27,7 +27,7 @@ import org.mockito.Mockito;
 /**
  * @author Christian Moura
  */
-public class OpenIdConnectHTTPUtilTest {
+public class OpenIdConnectHttpUtilTest {
 
 	@ClassRule
 	@Rule
@@ -41,7 +41,7 @@ public class OpenIdConnectHTTPUtilTest {
 
 		httpRequest.setAuthorization("Bearer token");
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Assert.assertEquals(
@@ -63,7 +63,7 @@ public class OpenIdConnectHTTPUtilTest {
 		httpRequest.setBody("grant_type=authorization_code&code=xyz");
 		httpRequest.setHeader("X-Custom", "value");
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Assert.assertTrue(httpOptions.isPost());
@@ -94,7 +94,7 @@ public class OpenIdConnectHTTPUtilTest {
 
 		httpRequest.setBody("a=1");
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Http.Body body = httpOptions.getBody();
@@ -111,7 +111,7 @@ public class OpenIdConnectHTTPUtilTest {
 		HTTPRequest httpRequest = new HTTPRequest(
 			HTTPRequest.Method.GET, new URL("http://localhost:63636/userinfo"));
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Assert.assertEquals(0, httpOptions.getTimeout());
@@ -127,7 +127,7 @@ public class OpenIdConnectHTTPUtilTest {
 		httpRequest.setConnectTimeout(1000);
 		httpRequest.setReadTimeout(5000);
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Assert.assertEquals(5000, httpOptions.getTimeout());
@@ -142,7 +142,7 @@ public class OpenIdConnectHTTPUtilTest {
 
 		httpRequest.setReadTimeout(3000);
 
-		Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
 		Assert.assertEquals(3000, httpOptions.getTimeout());
@@ -170,7 +170,7 @@ public class OpenIdConnectHTTPUtilTest {
 
 		httpOptions.setResponse(mockResponse);
 
-		HTTPResponse httpResponse = OpenIdConnectHTTPUtil.toHTTPResponse(
+		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
 			httpOptions, "{\"sub\":\"subject\"}");
 
 		Assert.assertEquals(200, httpResponse.getStatusCode());
@@ -200,7 +200,7 @@ public class OpenIdConnectHTTPUtilTest {
 
 		httpOptions.setResponse(mockResponse);
 
-		HTTPResponse httpResponse = OpenIdConnectHTTPUtil.toHTTPResponse(
+		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
 			httpOptions, StringPool.BLANK);
 
 		Assert.assertEquals(204, httpResponse.getStatusCode());

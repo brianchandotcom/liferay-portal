@@ -442,9 +442,7 @@ function FolderItemSelectorModalContent({
 				onClick: (event: React.MouseEvent) => {
 					const target = event.nativeEvent.target as HTMLElement;
 					const anchor =
-						target.tagName === 'A'
-							? target
-							: target.closest('a');
+						target.tagName === 'A' ? target : target.closest('a');
 
 					if (anchor) {
 						if (isModifiedClick(event)) {
@@ -727,7 +725,8 @@ function FolderItemSelectorModalContent({
 								label: Liferay.Language.get('cards'),
 								name: 'cards',
 								schema:
-									selectedItemType === ITEM_SELECTOR_ITEM_TYPE.FOLDER
+									selectedItemType ===
+									ITEM_SELECTOR_ITEM_TYPE.FOLDER
 										? {
 												description: 'description',
 												title: 'title',
@@ -745,7 +744,8 @@ function FolderItemSelectorModalContent({
 								name: 'table',
 								schema: {
 									fields: [
-										selectedItemType === ITEM_SELECTOR_ITEM_TYPE.FOLDER
+										selectedItemType ===
+										ITEM_SELECTOR_ITEM_TYPE.FOLDER
 											? {
 													contentRenderer:
 														'folderTitleCellRenderer',
@@ -810,7 +810,9 @@ function FolderItemSelectorModalContent({
 					onItemsChange={(items: any[]) => {
 						if (items.length) {
 							const item = items[0];
-							const isFolder = selectedItemType === ITEM_SELECTOR_ITEM_TYPE.FOLDER;
+							const isFolder =
+								selectedItemType ===
+								ITEM_SELECTOR_ITEM_TYPE.FOLDER;
 
 							let name = item.title;
 

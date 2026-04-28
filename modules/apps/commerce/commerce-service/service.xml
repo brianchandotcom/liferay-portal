@@ -988,6 +988,7 @@
 		<exception>CommerceGeocoder</exception>
 		<exception>CommerceOrderAccountLimit</exception>
 		<exception>CommerceOrderAttachmentTitle</exception>
+		<exception>CommerceOrderAttachmentType</exception>
 		<exception>CommerceOrderBillingAddress</exception>
 		<exception>CommerceOrderDate</exception>
 		<exception>CommerceOrderDefaultBillingAddress</exception>

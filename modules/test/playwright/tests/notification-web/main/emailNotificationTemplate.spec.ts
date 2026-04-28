@@ -651,9 +651,7 @@ test.describe('Email notification template', () => {
 
 		await emailNotificationTemplatePage.saveButton.click();
 
-		await page
-			.getByRole('link', {name: notificationTemplateName})
-			.click();
+		await page.getByRole('link', {name: notificationTemplateName}).click();
 
 		await expect(
 			emailNotificationTemplatePage.primaryRecipients
@@ -885,16 +883,13 @@ test.describe('Email notification template', () => {
 	test(
 		'can add attachment to notification template',
 		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			emailNotificationTemplatePage,
-			page,
-		}) => {
-			const objectDefinitionExternalReferenceCode = 'ObjectDefinition' + getRandomInt();
+		async ({apiHelpers, emailNotificationTemplatePage, page}) => {
+			const objectDefinitionExternalReferenceCode =
+				'ObjectDefinition' + getRandomInt();
 
 			const attachmentObjectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectDefinitionExternalReferenceCode: objectDefinitionExternalReferenceCode,
+					objectDefinitionExternalReferenceCode,
 					objectFields: [
 						{
 							DBType: 'Long',
@@ -903,7 +898,9 @@ test.describe('Email notification template', () => {
 							indexed: true,
 							indexedAsKeyword: false,
 							indexedLanguageId: '',
-							label: {en_US: 'From Computer And Show Files In DM'},
+							label: {
+								en_US: 'From Computer And Show Files In DM',
+							},
 							listTypeDefinitionId: 0,
 							localized: false,
 							name: 'attachmentField',
@@ -938,13 +935,17 @@ test.describe('Email notification template', () => {
 
 			const templateName = 'Notification Template ' + getRandomInt();
 
-			await emailNotificationTemplatePage.basicInfoName.fill(templateName);
+			await emailNotificationTemplatePage.basicInfoName.fill(
+				templateName
+			);
 
 			await emailNotificationTemplatePage.senderEmailAddress.fill(
 				'test@liferay.com'
 			);
 
-			await emailNotificationTemplatePage.primaryRecipients.fill('test@liferay.com');
+			await emailNotificationTemplatePage.primaryRecipients.fill(
+				'test@liferay.com'
+			);
 
 			await emailNotificationTemplatePage.senderName.fill('Test Test');
 
@@ -952,18 +953,24 @@ test.describe('Email notification template', () => {
 
 			await page.getByText('Select a Data Source').click();
 
-			await page.getByRole('option', {name: objectDefinitionExternalReferenceCode}).click();
+			await page
+				.getByRole('option', {
+					name: objectDefinitionExternalReferenceCode,
+				})
+				.click();
 
 			await page.getByPlaceholder('Select a Field').click();
 
-			await page.getByRole('menuitem', { name: 'From Computer And Show Files' }).click();
+			await page
+				.getByRole('menuitem', {name: 'From Computer And Show Files'})
+				.click();
 
-			await page.keyboard.press('Escape'); 
+			await page.keyboard.press('Escape');
 
 			await emailNotificationTemplatePage.saveButton.click();
 
-			await expect(page
-				.getByRole('link', {name: templateName})
+			await expect(
+				page.getByRole('link', {name: templateName})
 			).toBeVisible();
 		}
 	);
@@ -979,7 +986,7 @@ test.describe('Email notification template', () => {
 
 				const objectDefinition =
 					await apiHelpers.objectAdmin.postRandomObjectDefinition({
-						objectDefinitionExternalReferenceCode: objectDefinitionExternalReferenceCode,
+						objectDefinitionExternalReferenceCode,
 						objectFields: [
 							{
 								DBType: 'Long',
@@ -1041,7 +1048,7 @@ test.describe('Email notification template', () => {
 				.click();
 
 			await page.getByText(objectDefinitionA).click();
-			
+
 			await page.getByRole('option', {name: objectDefinitionB}).click();
 
 			await page.getByPlaceholder('Select a Field').click();

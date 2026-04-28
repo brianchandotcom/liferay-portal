@@ -45,7 +45,9 @@ test.describe('Notification templates', () => {
 
 			for (const name of templateNames) {
 				await expect(
-					notificationTemplatesPage.getFrontEndDatasetItemLocator(name)
+					notificationTemplatesPage.getFrontEndDatasetItemLocator(
+						name
+					)
 				).toBeVisible();
 			}
 

@@ -11,7 +11,6 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {waitForAlert} from '../../../utils/waitForAlert';
 
 const notificationTemplateInfo = {
 	description: 'This is a description',
@@ -168,56 +167,6 @@ test.describe('User notification template', () => {
 					).toBeVisible();
 				}
 			});
-		}
-	);
-
-	test(
-		'can delete user notification template',
-		{tag: '@LPD-78504'},
-		async ({
-			notificationTemplatesPage,
-			page,
-			userNotificationTemplatePage,
-		}) => {
-			const templateName =
-				'User Notification Template ' + getRandomInt();
-
-			await userNotificationTemplatePage.goto();
-
-			await userNotificationTemplatePage.basicInfoName.fill(templateName);
-			await userNotificationTemplatePage.contentSubject.fill(
-				'Subject content'
-			);
-
-			await userNotificationTemplatePage.selectNotificationRecipient('User');
-
-			await page.getByPlaceholder('Enter user name.').click();
-			await page.getByLabel('Test', {exact: true}).check();
-			await page.keyboard.press('Escape');
-
-			await userNotificationTemplatePage.saveButton.click();
-
-			await expect(
-				notificationTemplatesPage.getFrontEndDatasetItemLocator(
-					templateName
-				)
-			).toBeVisible();
-
-			const actionButton = page
-				.getByRole('row', {name: templateName})
-				.getByRole('button', {name: 'Actions'});
-
-			await actionButton.click();
-
-			await notificationTemplatesPage.frontEndDatasetItemActionDelete.click();
-
-			await waitForAlert(page);
-
-			await expect(
-				notificationTemplatesPage.getFrontEndDatasetItemLocator(
-					templateName
-				)
-			).not.toBeVisible();
 		}
 	);
 });

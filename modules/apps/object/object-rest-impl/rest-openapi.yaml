@@ -1547,6 +1547,110 @@ paths:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
             tags: ["Collaborator"]
+    "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/collaborators/by-email-address/{emailAddress}":
+        delete:
+            description:
+                Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Collaborator"]
+        get:
+            description:
+                Retrieves the collaborator for an object entry.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                        application/xml:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+            tags: ["Collaborator"]
+        put:
+            description:
+                Add or update a collaborator received in the request.
+            parameters:
+                -   in: path
+                    name: scopeKey
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                    application/xml:
+                        schema:
+                            $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                        application/xml:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+            tags: ["Collaborator"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/collaborators/by-type/{type}/{collaboratorId}":
         delete:
             description:
@@ -2568,6 +2672,98 @@ paths:
                                 items:
                                     $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
                                 type: array
+            tags: ["Collaborator"]
+    "/{objectEntryId}/collaborators/by-email-address/{emailAddress}":
+        delete:
+            description:
+                Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Collaborator"]
+        get:
+            description:
+                Retrieves the collaborator for an object entry.
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                        application/xml:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+            tags: ["Collaborator"]
+        put:
+            description:
+                Add or update a collaborator received in the request.
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: emailAddress
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                    application/xml:
+                        schema:
+                            $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
+                        application/xml:
+                            schema:
+                                $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Collaborator
             tags: ["Collaborator"]
     "/{objectEntryId}/collaborators/by-type/{type}/{collaboratorId}":
         delete:

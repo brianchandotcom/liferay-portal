@@ -1,3 +1,11 @@
+variable "argocd_additional_allowed_cidr_blocks" {
+	default=[]
+	type=list(string)
+	validation {
+		condition=alltrue([for cidr in var.argocd_additional_allowed_cidr_blocks : can(cidrhost(cidr, 0))])
+		error_message="The variable \"argocd_allowed_cidr_blocks\" must contain valid CIDR blocks."
+	}
+}
 variable "argocd_domain_config" {
 	default={}
 	type=object({

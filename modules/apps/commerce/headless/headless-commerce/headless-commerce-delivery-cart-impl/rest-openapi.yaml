@@ -148,6 +148,9 @@ components:
                 type:
                     readOnly: true
                     type: string
+                typeLabel:
+                    readOnly: true
+                    type: string
                 url:
                     readOnly: true
                     type: string

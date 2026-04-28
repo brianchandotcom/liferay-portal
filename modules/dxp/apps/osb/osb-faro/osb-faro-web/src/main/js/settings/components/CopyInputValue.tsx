@@ -14,9 +14,15 @@ interface ICopyInputValueProps {
 	}) => any;
 	disabled?: boolean;
 	value: string;
+	title?: string;
 }
 
-const CopyInputValue = ({addAlert, disabled, value}: ICopyInputValueProps) => {
+const CopyInputValue = ({
+	addAlert,
+	disabled,
+	title,
+	value
+}: ICopyInputValueProps) => {
 	const [isUrlCopied, setIsUrlCopied] = useState(false);
 	const [copyTitle, setCopyTitle] = useState(
 		Liferay.Language.get('click-to-copy')
@@ -57,6 +63,8 @@ const CopyInputValue = ({addAlert, disabled, value}: ICopyInputValueProps) => {
 				'has-success': isUrlCopied
 			})}
 		>
+			{title && <label htmlFor='value'>{title}</label>}
+
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend>
 					<ClayInput

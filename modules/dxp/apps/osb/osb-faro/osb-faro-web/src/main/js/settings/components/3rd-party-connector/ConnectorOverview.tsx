@@ -2,18 +2,17 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'settings/components/base-page/BasePage';
 import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
+import ClayLayout from '@clayui/layout';
 import ConnectorEntities from './ConnectorEntities';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Loading from 'shared/components/Loading';
-import React, {ComponentType, useEffect, useRef, useState} from 'react';
-import URLConstants from 'shared/util/url-constants';
+import React, {ComponentType, useEffect, useState} from 'react';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {AssignedPropertiesTable} from '../AssignedPropertiesTable';
 import {Card} from 'shared/components/revamping/Card';
-import {ClayInput} from '@clayui/form';
 import {close, open} from 'shared/actions/modals';
 import {compose} from 'redux';
 import {connect, ConnectedProps} from 'react-redux';
@@ -22,17 +21,15 @@ import {CopyInputValue} from '../CopyInputValue';
 import {DataSource} from 'shared/util/records';
 import {DataSourceEditableTitle} from '../data-source/DataSourceEditableTitle';
 import {DataSourceStatuses} from 'shared/util/constants';
-import {fetch, fetchToken} from 'shared/api/data-source';
+import {fetch} from 'shared/api/data-source';
+import {generateConnectorToken, updateConnector} from 'shared/api/connector';
 import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Text} from '@clayui/core';
-import {updateConnector} from 'shared/api/connector';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useDisconnectDataSource} from '../data-source/utils';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 import {withSelectionProvider} from 'shared/context/selection';
-
-const TIMEOUT_INTERVAL = 5000;
 
 const connector = connect(null, {
 	addAlert,
@@ -81,6 +78,8 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 		'accountsStatus'
 	]);
 
+	const endpointURL = `${window.location.origin}${config.endpointPath}`;
+
 	const handleUpdateDataSource = async () => {
 		try {
 			setLoading(true);
@@ -121,34 +120,32 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 		setAlert(next);
 	}, [accountStatus, config.languages, dataSourceActive]);
 
-	const tokenRequestRef = useRef<ReturnType<typeof setTimeout> | undefined>();
-
 	useEffect(() => {
-		const getNextToken = async (prevToken?: string) => {
-			const nextToken = await fetchToken(groupId, id);
-
-			if (!prevToken || prevToken === nextToken) {
-				tokenRequestRef.current = setTimeout(
-					() => getNextToken(nextToken),
-					TIMEOUT_INTERVAL
-				);
-			} else {
-				handleUpdateDataSource();
-			}
-
-			return nextToken;
-		};
-
-		if (!dataSourceActive) {
-			getNextToken().then(setToken);
+		if (dataSourceActive) {
+			return;
 		}
 
-		return () => {
-			if (tokenRequestRef.current) {
-				clearTimeout(tokenRequestRef.current);
+		const fetchConnectorTokenForGroup = async () => {
+			try {
+				const data = await generateConnectorToken({
+					groupId,
+					type: config.slug
+				});
+
+				if (data?.token) {
+					setToken(data.token);
+				}
+			} catch (error) {
+				addAlert({
+					alertType: Alert.Types.Error,
+					message: (error as Error).message,
+					timeout: false
+				});
 			}
 		};
-	}, [dataSourceActive]);
+
+		fetchConnectorTokenForGroup();
+	}, [config.slug, dataSourceActive, groupId]);
 
 	const {handleDisconnect} = useDisconnectDataSource({
 		addAlert,
@@ -204,71 +201,64 @@ const ConnectorOverview: React.FC<IConnectorOverviewProps> = ({
 							{alert.message}
 						</ClayAlert>
 					)}
-
-					{!dataSourceActive && (
-						<>
-							<div className='mb-3'>
-								<Text color='secondary' size={4}>
-									{config.languages.reconnectHelper}
-								</Text>
-
-								<ClayLink
-									className='ml-1'
-									href={URLConstants.HelpConnectDxp}
-									key='DOCUMENTATION'
-									target='_blank'
-								>
-									{Liferay.Language.get(
-										'learn-more-about-data-sources'
-									)}
-								</ClayLink>
-							</div>
-
-							<label>
-								<Text size={3} weight='semi-bold'>
-									{config.languages.endpointLabel}
-								</Text>
-							</label>
-
-							<CopyInputValue
-								addAlert={addAlert}
-								disabled={false}
-								value={token}
-							/>
-						</>
-					)}
 				</div>
 
-				<div className='mb-4'>
+				<div>
 					<Card.SubHeader
 						title={Liferay.Language.get('data-source-details')}
 					/>
 
-					<ClayInput.Group className='d-flex mt-3'>
-						<ClayInput.GroupItem className='mr-3' shrink>
-							<label htmlFor='dataSourceType'>
-								{Liferay.Language.get('data-source-type')}
-							</label>
-
-							<ClayInput
-								readOnly
-								type='text'
-								value={config.displayName}
+					<ClayLayout.Row className='mt-4'>
+						<ClayLayout.Col size={6}>
+							<CopyInputValue
+								addAlert={addAlert}
+								disabled={false}
+								title={Liferay.Language.get('endpoint-url')}
+								value={endpointURL}
 							/>
-						</ClayInput.GroupItem>
+						</ClayLayout.Col>
 
-						<ClayInput.GroupItem className='ml-0' shrink>
-							<label htmlFor='dataSourceId'>
-								{Liferay.Language.get('data-source-id')}
-							</label>
-
-							<ClayInput
-								readOnly
-								type='text'
-								value={dataSource.id}
+						<ClayLayout.Col size={6}>
+							<CopyInputValue
+								addAlert={addAlert}
+								disabled={false}
+								title={Liferay.Language.get('token')}
+								value={token}
 							/>
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayLayout.Row>
+						<ClayLayout.Col size={6}>
+							<ClayForm.Group className='mb-0'>
+								<label htmlFor='dataSourceType'>
+									{Liferay.Language.get('data-source-type')}
+								</label>
+
+								<ClayInput
+									id='dataSourceType'
+									readOnly
+									type='text'
+									value={config.displayName}
+								/>
+							</ClayForm.Group>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col size={6}>
+							<ClayForm.Group className='mb-0'>
+								<label htmlFor='dataSourceId'>
+									{Liferay.Language.get('data-source-id')}
+								</label>
+
+								<ClayInput
+									id='dataSourceId'
+									readOnly
+									type='text'
+									value={dataSource.id}
+								/>
+							</ClayForm.Group>
+						</ClayLayout.Col>
+					</ClayLayout.Row>
 				</div>
 
 				{currentUser.isAdmin() && dataSourceActive && (

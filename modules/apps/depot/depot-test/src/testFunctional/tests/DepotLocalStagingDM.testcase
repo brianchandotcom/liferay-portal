@@ -55,84 +55,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that image in depot can be removed and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
-	@e2e
-	@priority = 5
-	@refactordone
-	test CanDeleteDMImage {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Test Depot Name-staging",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Test Page",
-			site = "false",
-			widgetName = "Asset Publisher");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "Document_2.jpg",
-			assetType = "Basic Document",
-			depotName = "Test Depot Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_2.jpg");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_2.jpg");
-
-		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
-
-		RecycleBin.deleteCP(
-			assetName = "Document_2.jpg",
-			assetType = "Document");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Navigator.gotoStagedView();
-	}
-
 	@description = "This ensures that custom field in document from depot can be deleted and republished in the site when enabling local staging. Skip the instance for performance improvement."
 	@priority = 4
 	@refactordone
@@ -509,9 +431,11 @@ definition {
 	}
 
 	@description = "This ensures that an image in depot can be replaced and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
-	@priority = 4
+	@e2e
+	@priority = 5
 	@refactordone
 	test CanEditAndDeleteDMImage {
+		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -589,6 +513,30 @@ definition {
 			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_1.jpg");
+
+		DepotNavigator.openDepotRecycleBinAdminStaging(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_1.jpg",
+			assetType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.jpg");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
 	}
 
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging. Skip the instance for performance improvement."

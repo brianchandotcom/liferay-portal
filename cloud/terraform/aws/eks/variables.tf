@@ -19,6 +19,14 @@ variable "ecr_repositories" {
 	type=map(object({ arn=string, url=string }))
 	default={}
 }
+variable "eks_api_additional_allowed_cidr_blocks" {
+	default=[]
+	type=list(string)
+	validation {
+		condition=alltrue([for cidr in var.eks_api_additional_allowed_cidr_blocks : can(cidrhost(cidr, 0))])
+		error_message="The variable \"eks_api_additional_allowed_cidr_blocks\" must contain valid CIDR blocks."
+	}
+}
 variable "envoy_gateway_helm_chart_version" {
 	type=string
 }

@@ -27,6 +27,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"ckEditor5Config", objectDefinitionsFieldsDisplayContext.getEditorConfig()
 		).put(
+			"countries", objectDefinitionsFieldsDisplayContext.getCountries()
+		).put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
 			"decimalSeparator", String.valueOf(decimalFormatSymbols.getDecimalSeparator())

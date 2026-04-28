@@ -719,6 +719,110 @@ test(
 );
 
 test(
+	'Destination picker shows folder hierarchy via drill-down',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const sourceSpaceName = `Source ${getRandomString()}`;
+		const destinationSpaceName = `Destination ${getRandomString()}`;
+		const folder1Name = `Folder1 ${getRandomString()}`;
+		const folder2Name = `Folder2 ${getRandomString()}`;
+		const contentTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create source and destination Spaces', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: sourceSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a nested folder hierarchy in the destination Space', async () => {
+			const folder1 =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: destinationSpaceName,
+					title: folder1Name,
+				});
+
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					folder1.externalReferenceCode,
+				scopeKey: destinationSpaceName,
+				title: folder2Name,
+			});
+		});
+
+		await test.step('Create a content in the source Space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				'cms/basic-web-contents',
+				sourceSpaceName
+			);
+		});
+
+		await test.step('Open the Move To picker', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.selectItems([contentTitle]);
+
+			await page
+				.getByRole('button', {exact: true, name: 'Move To'})
+				.click();
+		});
+
+		const dialog = page.getByRole('dialog', {
+			name: `Move ${contentTitle} To`,
+		});
+
+		await test.step('Inside the destination Space the picker only shows the top-level folder', async () => {
+			await dialog.getByLabel(destinationSpaceName).click();
+
+			await expect(
+				dialog.getByRole('radio', {
+					exact: true,
+					name: `Select ${folder1Name}`,
+				})
+			).toBeVisible();
+
+			await expect(
+				dialog.getByRole('radio', {
+					exact: true,
+					name: `Select ${folder2Name}`,
+				})
+			).toBeHidden();
+		});
+
+		await test.step('Drilling into the top-level folder reveals the nested folder and updates breadcrumbs', async () => {
+			await dialog
+				.getByRole('link', {exact: true, name: folder1Name})
+				.click();
+
+			await expect(
+				dialog
+					.getByRole('navigation', {name: 'Breadcrumb'})
+					.getByText(folder1Name)
+			).toBeVisible();
+
+			await expect(
+				dialog.getByRole('radio', {
+					exact: true,
+					name: `Select ${folder2Name}`,
+				})
+			).toBeVisible();
+		});
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

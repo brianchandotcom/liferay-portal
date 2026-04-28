@@ -13,5 +13,5 @@ liferay-sample-custom-element-6:
         foo: bar
     type: customElement
     urls:
-        -   "main.js"
+        -   main.js
     useESM: true

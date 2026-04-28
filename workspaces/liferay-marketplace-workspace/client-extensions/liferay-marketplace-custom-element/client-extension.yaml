@@ -22,5 +22,5 @@ liferay-marketplace-custom-element:
         useSiteTaxonomyVocabularyQuery: false
     type: customElement
     urls:
-        -   "main.js"
+        -   main.js
     useESM: true

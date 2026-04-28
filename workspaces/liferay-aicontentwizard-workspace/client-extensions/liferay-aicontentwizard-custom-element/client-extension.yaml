@@ -13,7 +13,7 @@ liferay-aicontentwizard-custom-element-app:
         route: app
     type: customElement
     urls:
-        -   "main.js"
+        -   main.js
     useESM: true
 liferay-aicontentwizard-custom-element-settings:
     cssURLs:
@@ -29,5 +29,5 @@ liferay-aicontentwizard-custom-element-settings:
         route: settings
     type: customElement
     urls:
-        -   "main.js"
+        -   main.js
     useESM: true

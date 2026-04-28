@@ -11,5 +11,5 @@ liferay-one-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        -   "main.js"
+        -   main.js
     useESM: true

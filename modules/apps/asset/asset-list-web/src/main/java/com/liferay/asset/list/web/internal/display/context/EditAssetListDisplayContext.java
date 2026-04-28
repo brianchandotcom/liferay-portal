@@ -26,6 +26,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.util.comparator.ClassNameModelResourceComparator;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
+import com.liferay.asset.list.web.internal.portlet.action.GetTypePropertiesMVCResourceCommand;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
@@ -65,6 +66,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -663,6 +665,44 @@ public class EditAssetListDisplayContext {
 			unicodeProperties, className, availableClassTypeIds);
 	}
 
+	public List<Map<String, Object>> getConditions() {
+		String conditions = _unicodeProperties.getProperty("conditions");
+
+		if (Validator.isNull(conditions)) {
+			return Collections.emptyList();
+		}
+
+		try {
+			JSONArray conditionsJSONArray = JSONFactoryUtil.createJSONArray(
+				conditions);
+
+			List<Map<String, Object>> conditionsList = new ArrayList<>(
+				conditionsJSONArray.length());
+
+			for (int i = 0; i < conditionsJSONArray.length(); i++) {
+				JSONObject conditionJSONObject =
+					conditionsJSONArray.getJSONObject(i);
+
+				Map<String, Object> conditionMap = new HashMap<>();
+
+				for (String key : conditionJSONObject.keySet()) {
+					conditionMap.put(key, conditionJSONObject.get(key));
+				}
+
+				conditionsList.add(conditionMap);
+			}
+
+			return conditionsList;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return Collections.emptyList();
+		}
+	}
+
 	public Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
 			"assetListEntrySegmentsEntryRels",
@@ -1030,6 +1070,44 @@ public class EditAssetListDisplayContext {
 				RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
 				_portletResponse.getNamespace() + "selectTag",
 				assetTagsItemSelectorCriterion));
+	}
+
+	public JSONArray getTypePropertiesJSONArray() {
+		long[] classNameIds = GetterUtil.getLongValues(
+			StringUtil.split(
+				_unicodeProperties.getProperty("classNameIds", null)));
+
+		List<Long> classTypeIdsList = new ArrayList<>();
+
+		for (Map.Entry<String, String> entry : _unicodeProperties.entrySet()) {
+			if (!entry.getKey(
+				).startsWith(
+					"classTypeIds"
+				)) {
+
+				continue;
+			}
+
+			for (String classTypeId : StringUtil.split(entry.getValue())) {
+				classTypeIdsList.add(GetterUtil.getLong(classTypeId));
+			}
+		}
+
+		return GetTypePropertiesMVCResourceCommand.getTypePropertiesJSONArray(
+			classNameIds, ArrayUtil.toLongArray(classTypeIdsList));
+	}
+
+	public String getTypePropertiesURL() {
+		LiferayPortletResponse liferayPortletResponse =
+			PortalUtil.getLiferayPortletResponse(_portletResponse);
+
+		LiferayPortletURL getTypePropertiesURL =
+			(LiferayPortletURL)liferayPortletResponse.createResourceURL();
+
+		getTypePropertiesURL.setCopyCurrentRenderParameters(false);
+		getTypePropertiesURL.setResourceID("/asset_list/get_type_properties");
+
+		return getTypePropertiesURL.toString();
 	}
 
 	public UnicodeProperties getUnicodeProperties() {

@@ -60,6 +60,10 @@ export default function ({classTypes, namespace}) {
 
 	const eventDelegates = [];
 
+	const fireSourceChange = () => {
+		Liferay.fire(`${namespace}sourceChange`);
+	};
+
 	const createElement = (label, classNames, attributes, content) => {
 		const element = document.createElement(label);
 
@@ -295,6 +299,8 @@ export default function ({classTypes, namespace}) {
 				});
 
 			toggleSubclassesFields(true, className);
+
+			fireSourceChange();
 		};
 
 		const changeSubtypeSelector = delegate(
@@ -318,6 +324,8 @@ export default function ({classTypes, namespace}) {
 		}
 
 		toggleSubclasses(assetSelector.value);
+
+		fireSourceChange();
 	};
 
 	const changeAssetSelector = delegate(
@@ -345,21 +353,37 @@ export default function ({classTypes, namespace}) {
 	eventDelegates.push(clickEnablePopupButtons);
 
 	Liferay.after('inputmoveboxes:moveItem', ({fromBox, toBox}) => {
-		const id = `${namespace}currentClassNameIds`;
+		const classNameIdsId = `${namespace}currentClassNameIds`;
+		const fromBoxId = fromBox.getAttribute('id');
+		const toBoxId = toBox.getAttribute('id');
 
-		if (
-			fromBox.getAttribute('id') === id ||
-			toBox.getAttribute('id') === id
-		) {
-			toggleSubclasses();
+		const isClassNameMove =
+			fromBoxId === classNameIdsId || toBoxId === classNameIdsId;
 
-			if (!document.getElementById(id).options.length) {
-				toggleSaveButton(true);
-			}
-			else {
-				toggleSaveButton(false);
-			}
+		const isClassTypeMove = classTypes.some(({className}) => {
+			const classTypeIdsId = `${namespace}${className}currentClassTypeIds`;
+
+			return fromBoxId === classTypeIdsId || toBoxId === classTypeIdsId;
+		});
+
+		if (!isClassNameMove && !isClassTypeMove) {
+			return;
 		}
+
+		// The select boxes are rendered by ClayDualListBox; setTimeout defers
+		// our reads until after React commits the new <option> children.
+
+		setTimeout(() => {
+			if (isClassNameMove) {
+				toggleSubclasses();
+
+				toggleSaveButton(
+					!document.getElementById(classNameIdsId).options.length
+				);
+			}
+
+			fireSourceChange();
+		}, 0);
 	});
 
 	const openModal = ({delegateTarget}) => {

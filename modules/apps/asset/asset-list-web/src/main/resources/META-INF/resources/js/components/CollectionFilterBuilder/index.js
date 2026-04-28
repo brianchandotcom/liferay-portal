@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useState} from 'react';
+import {addParams, fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import {
 	ConditionBuilder,
@@ -30,7 +31,8 @@ export default function CollectionFilterBuilder({
 	initialConditions,
 	namespace,
 	onChange,
-	properties,
+	properties: initialProperties,
+	propertiesURL,
 }) {
 	const [conditions, setConditions] = useState(
 		initialConditions?.length
@@ -42,6 +44,86 @@ export default function CollectionFilterBuilder({
 	);
 
 	const [conditionType, setConditionType] = useState(initialConditionType);
+
+	const [properties, setProperties] = useState(initialProperties || []);
+
+	useEffect(() => {
+		if (!propertiesURL) {
+			return undefined;
+		}
+
+		const assetTypeListenerHandler = () => {
+			const assetTypeSelector = document.getElementById(
+				`${namespace}anyAssetType`
+			);
+			const assetTypeValue = assetTypeSelector?.value || '';
+
+			let classNameIds = [];
+
+			if (assetTypeValue === 'false') {
+				const multiSelector = document.getElementById(
+					`${namespace}currentClassNameIds`
+				);
+
+				classNameIds = Array.from(multiSelector?.options || []).map(
+					(option) => option.value
+				);
+			}
+			else if (assetTypeValue && assetTypeValue !== 'true') {
+				classNameIds = [assetTypeValue];
+			}
+
+			let classTypeIds = [];
+
+			if (classNameIds.length === 1) {
+				const subtypeContainer = document.querySelector(
+					'.asset-subtype:not(.hide)'
+				);
+				const subtypeSelector = subtypeContainer?.querySelector(
+					`[id^="${namespace}anyClassType"]`
+				);
+				const subtypeValue = subtypeSelector?.value;
+
+				if (subtypeValue === 'false') {
+					const className = subtypeContainer.id.slice(
+						namespace.length,
+						-'Options'.length
+					);
+					const multiSubtypeSelect = document.getElementById(
+						`${namespace}${className}currentClassTypeIds`
+					);
+
+					classTypeIds = Array.from(
+						multiSubtypeSelect?.options || []
+					).map((option) => option.value);
+				}
+				else if (subtypeValue && subtypeValue !== 'true') {
+					classTypeIds = [subtypeValue];
+				}
+			}
+
+			fetch(
+				addParams(
+					{
+						[`${namespace}classNameIds`]: classNameIds.join(','),
+						[`${namespace}classTypeIds`]: classTypeIds.join(','),
+					},
+					propertiesURL
+				)
+			)
+				.then((response) => response.json())
+				.then((data) => setProperties(data || []))
+				.catch(() => {});
+		};
+
+		const eventName = `${namespace}sourceChange`;
+
+		Liferay.on(eventName, assetTypeListenerHandler);
+
+		return () => {
+			Liferay.detach(eventName, assetTypeListenerHandler);
+		};
+	}, [namespace, propertiesURL]);
 
 	const handleChange = (newConditions, newType) => {
 		setConditions(newConditions);

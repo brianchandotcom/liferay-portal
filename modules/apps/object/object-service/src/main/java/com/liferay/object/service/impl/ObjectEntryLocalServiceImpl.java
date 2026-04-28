@@ -202,6 +202,7 @@ import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -3268,17 +3269,35 @@ public class ObjectEntryLocalServiceImpl
 				_objectDefinitionPersistence.fetchByPrimaryKey(
 					objectEntry.getObjectDefinitionId());
 
+			JSONObject payloadJSONObject = JSONUtil.put(
+				"classPK", objectEntry.getObjectEntryId()
+			).put(
+				"notificationMessageArg", objectEntry.getTitleValue()
+			).put(
+				"notificationMessageKey", "x-has-reached-its-review-date"
+			);
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderPersistence.fetchByPrimaryKey(
+					objectEntry.getObjectEntryFolderId());
+
+			if ((objectEntryFolder != null) &&
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS.
+					equals(objectEntryFolder.getExternalReferenceCode())) {
+
+				payloadJSONObject.put(
+					"notificationLink",
+					StringBundler.concat(
+						_portal.getPathMain(), GroupConstants.CMS_FRIENDLY_URL,
+						"/edit_content_item?p_l_mode=read&p_p_state=",
+						LiferayWindowState.POP_UP, "&objectEntryId=",
+						objectEntry.getObjectEntryId()));
+			}
+
 			_userNotificationEventLocalService.sendUserNotificationEvents(
 				objectEntry.getUserId(), objectDefinition.getPortletId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
-				JSONUtil.put(
-					"classPK", objectEntry.getObjectEntryId()
-				).put(
-					"notificationMessage",
-					StringBundler.concat(
-						"The object entry ", objectEntry.getTitleValue(),
-						" has reached its review date.")
-				));
+				payloadJSONObject);
 		}
 	}
 

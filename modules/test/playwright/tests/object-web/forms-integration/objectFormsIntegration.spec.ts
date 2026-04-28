@@ -1962,3 +1962,178 @@ test(
 		await expect(page.getByLabel('Searchable')).not.toBeVisible();
 	}
 );
+
+test(
+	'Verify that form entry submission is blocked when an Object is inactivated and restored when reactivated',
+	{tag: '@LPS-139005'},
+	async ({
+		apiHelpers,
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		formSettingsModalPage,
+		formsPage,
+		page,
+		viewObjectDefinitionsPage,
+		viewObjectEntriesPage,
+	}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: ['Text'],
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields,
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await formBuilderPage.goToNew();
+
+		const formName = 'Form' + getRandomInt();
+
+		await formBuilderPage.fillFormTitle(formName);
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.selectStorageType('Object');
+
+		await formSettingsModalPage.selectObject(
+			objectDefinition.label['en_US']
+		);
+
+		await formSettingsModalPage.clickDoneButton();
+
+		await formBuilderSidePanelPage.addTextButton.dblclick();
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.selectObjectField(
+			objectFields[0].label!['en_US']
+		);
+
+		await page.waitForTimeout(1000);
+
+		await formBuilderSidePanelPage.clickBackButton();
+
+		await formBuilderPage.clickSaveButton();
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const formSubmissionURL =
+			await formBuilderPage.getFormSubmissionURL();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await formsPage.goTo();
+
+		await page.reload();
+
+		await expect(
+			page.locator('.lexicon-icon-exclamation-full').first()
+		).toBeVisible();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await formsPage.goTo();
+
+		await page.reload();
+
+		await expect(
+			page.locator('.lexicon-icon-exclamation-full').first()
+		).toBeHidden();
+
+		await page.goto(formSubmissionURL);
+
+		await page.getByLabel('Text').fill('Entry 1');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page.getByText(
+				'Your information was successfully received. Thank you for filling out the form.'
+			)
+		).toBeVisible();
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByText('Entry 1')).toBeVisible();
+	}
+);
+
+test(
+	'Verify that the Object visibility in the Form storage type changes according to activation status',
+	{tag: '@LPS-139005'},
+	async ({
+		apiHelpers,
+		formBuilderPage,
+		formSettingsModalPage,
+		page,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.storageTypeSelect.click();
+
+		await page.getByRole('option', {name: 'Object'}).click();
+
+		await formSettingsModalPage.objectSelect.click();
+
+		await expect(
+			page.getByRole('option', {
+				name: objectDefinition.label['en_US'],
+			})
+		).toBeHidden();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinition.name
+		);
+
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.storageTypeSelect.click();
+
+		await page.getByRole('option', {name: 'Object'}).click();
+
+		await formSettingsModalPage.objectSelect.click();
+
+		await expect(
+			page.getByRole('option', {
+				name: objectDefinition.label['en_US'],
+			})
+		).toBeVisible();
+	}
+);

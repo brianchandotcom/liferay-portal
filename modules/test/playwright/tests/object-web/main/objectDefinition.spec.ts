@@ -9,37 +9,50 @@ import {
 	ObjectFolderAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
+import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+	performUserSwitch,
+	userData,
+} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
 import {generateObjectFields} from '../utils/generateObjectFields';
 
 const test = mergeTests(
+	collectionsPagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
 	fragmentsPagesTest,
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	localizationPagesTest,
 	loginTest(),
 	objectPagesTest,
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	productMenuPageTest
 );
 
 const cmsTest = mergeTests(
@@ -1648,6 +1661,1188 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await expect(page.getByText('Required')).toBeVisible();
 	});
+});
+
+test.describe('Manage object definitions through the Object Definitions portlet', () => {
+	test(
+		'Verify that the Access in Control Panel and View permissions control Object Admin portlet access and object visibility',
+		{tag: '@LPS-135390'},
+		async ({
+			apiHelpers,
+			globalMenuPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const companyId = await page.evaluate(() => {
+				return Liferay.ThemeDisplay.getCompanyId();
+			});
+
+			const role1 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName:
+							'com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet',
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role1.id, type: 'role'});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role1.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('menuitem', {exact: true, name: 'Objects'})
+			).toBeHidden();
+
+			await page.goto(`/group/guest${PORTLET_URLS.objects}`, {
+				waitUntil: 'load',
+			});
+
+			await expect(
+				page.getByText(
+					'You do not have the roles required to access this portlet.'
+				)
+			).toBeVisible();
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const role2 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role2.id, type: 'role'});
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role2.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('menuitem', {exact: true, name: 'Objects'})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await expect(
+				page.getByText('No Objects Created Yet', {
+					exact: true,
+				})
+			).toBeVisible();
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const role3 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com.liferay.object.model.ObjectDefinition',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role3.id, type: 'role'});
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role3.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Add Object Definition permission controls the ability to create an Object',
+		{tag: '@LPS-135390'},
+		async ({
+			apiHelpers,
+			modalAddObjectDefinitionPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const companyId = await page.evaluate(() => {
+				return Liferay.ThemeDisplay.getCompanyId();
+			});
+
+			const role1 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName:
+							'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role1.id, type: 'role'});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role1.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await expect(
+				viewObjectDefinitionsPage.createObjectDefinitionButton
+			).toBeHidden();
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const role2 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['ADD_OBJECT_DEFINITION'],
+						primaryKey: companyId,
+						resourceName: 'com.liferay.object',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role2.id, type: 'role'});
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role2.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await expect(
+				viewObjectDefinitionsPage.createObjectDefinitionButton
+			).toBeVisible();
+
+			const objectDefinitionLabel = 'CustomObject' + getRandomInt();
+
+			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+			const objectDefinition =
+				await modalAddObjectDefinitionPage.createObjectDefinition(
+					objectDefinitionLabel
+				);
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await waitForAlert(
+				page,
+				`Success:${objectDefinitionLabel} was created successfully.`
+			);
+
+			await expect(
+				page.getByRole('link', {name: objectDefinitionLabel})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Delete permission controls the ability to delete an Object',
+		{tag: '@LPS-135390'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const companyId = await page.evaluate(() => {
+				return Liferay.ThemeDisplay.getCompanyId();
+			});
+
+			const role1 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com.liferay.object.model.ObjectDefinition',
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role1.id, type: 'role'});
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role1.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
+				viewObjectDefinitionsPage.deleteObjectDefinitionOption
+			).toBeHidden();
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const role2 = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + getRandomInt(),
+				rolePermissions: [
+					{
+						actionIds: ['DELETE', 'UPDATE'],
+						primaryKey: companyId,
+						resourceName:
+							'com.liferay.object.model.ObjectDefinition',
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role2.id, type: 'role'});
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role2.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(
+				viewObjectDefinitionsPage.deleteObjectDefinitionOption
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			expect(
+				await page
+					.getByRole('switch', {name: 'Activate Object'})
+					.isChecked()
+			).toBeFalsy();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+			await page
+				.getByPlaceholder('Confirm Object Definition Name', {
+					exact: false,
+				})
+				.fill(objectDefinition.name);
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			apiHelpers.data.splice(
+				apiHelpers.data.findIndex(
+					(object) =>
+						object.id === objectDefinition.id &&
+						object.type === 'objectDefinition'
+				),
+				1
+			);
+
+			await waitForAlert(
+				page,
+				`Success:${objectDefinition.label['en_US']} was deleted successfully.`
+			);
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeHidden();
+		}
+	);
+
+	test(
+		'Verify that it is not possible to create an Object with a duplicated Object Name',
+		{tag: '@LPS-135549'},
+		async ({
+			apiHelpers,
+			modalAddObjectDefinitionPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+			await modalAddObjectDefinitionPage.objectLabelInput.fill(
+				objectDefinition.label['en_US']
+			);
+			await modalAddObjectDefinitionPage.objectPluralLabelInput.fill(
+				objectDefinition.pluralLabel['en_US']
+			);
+
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(
+				page.getByText('This name is already in use. Try another one.')
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify required field validations and Object Name autofill when creating an Object',
+		{tag: '@LPS-135549'},
+		async ({
+			modalAddObjectDefinitionPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinitionLabel = 'Object' + getRandomInt();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+			await modalAddObjectDefinitionPage.objectLabelInput.fill(
+				objectDefinitionLabel
+			);
+			await modalAddObjectDefinitionPage.objectPluralLabelInput.fill(
+				objectDefinitionLabel
+			);
+			await expect(
+				modalAddObjectDefinitionPage.objectNameInput
+			).toHaveValue(objectDefinitionLabel);
+			await modalAddObjectDefinitionPage.objectNameInput.fill('Object@');
+
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(
+				page.getByText('Name must only contain letters and digits.')
+			).toBeVisible();
+
+			await modalAddObjectDefinitionPage.objectNameInput.fill('object');
+
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(
+				page.getByText(
+					'The first character of a name must be an uppercase letter.'
+				)
+			).toBeVisible();
+
+			await modalAddObjectDefinitionPage.objectNameInput.fill('');
+
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(page.getByText('Required')).toBeVisible();
+
+			await modalAddObjectDefinitionPage.objectNameInput.fill(
+				objectDefinitionLabel
+			);
+			await modalAddObjectDefinitionPage.objectLabelInput.fill('');
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(page.getByText('Required')).toBeVisible();
+
+			await modalAddObjectDefinitionPage.objectLabelInput.fill(
+				objectDefinitionLabel
+			);
+
+			await modalAddObjectDefinitionPage.objectPluralLabelInput.fill('');
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await expect(page.getByText('Required')).toBeVisible();
+
+			await modalAddObjectDefinitionPage.objectPluralLabelInput.fill(
+				objectDefinitionLabel
+			);
+
+			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
+
+			await waitForAlert(
+				page,
+				`Success:${objectDefinitionLabel} was created successfully.`
+			);
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinitionLabel
+			);
+
+			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+			await waitForAlert(
+				page,
+				`Success:${objectDefinitionLabel} was deleted successfully.`
+			);
+		}
+	);
+
+	test(
+		'Verify it is possible to search for Custom and System Objects and verify the empty state when no results are found',
+		{tag: '@LPS-135547'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.searchInput.fill(
+				objectDefinition.label['en_US']
+			);
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.searchInput.fill('Account');
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {name: 'Account', exact: true})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.searchInput.fill(
+				'NonExistentObject' + getRandomInt()
+			);
+
+			await page.keyboard.press('Enter');
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+
+			await viewObjectDefinitionsPage.searchInput.clear();
+
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {name: 'Account', exact: true})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: objectDefinition.label['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify it is possible to view Object Details by clicking on its name or the eye icon',
+		{tag: '@LPS-135549'},
+		async ({
+			apiHelpers,
+			editObjectDetailsPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label['en_US']
+			);
+
+			await page.getByRole('menuitem', {
+				name: 'View',
+			}).click();
+
+			await expect(editObjectDetailsPage.detailsTabItem).toBeVisible();
+
+			await expect(
+				page
+					.getByRole('heading', {
+						name: objectDefinition.label['en_US'],
+					})
+					.first()
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				objectDefinition.label['en_US']
+			);
+
+			await expect(editObjectDetailsPage.detailsTabItem).toBeVisible();
+
+			await expect(
+				page
+					.getByRole('heading', {
+						name: objectDefinition.label['en_US'],
+					})
+					.first()
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the columns Label, System and Status display the correct values for custom and system objects',
+		{tag: '@LPS-135549'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			for (const col of ['Label', 'System', 'Status']) {
+				await expect(
+					page.getByRole('columnheader', {name: col})
+				).toBeVisible();
+			}
+
+			const ths = await page.locator('th').allTextContents();
+			const cell = (row: Locator, col: string) =>
+				row.getByRole('cell').nth(ths.indexOf(col));
+
+			const customRow = page
+				.getByRole('row')
+				.filter({hasText: objectDefinition.label['en_US']});
+
+			await expect(cell(customRow, 'Label')).toContainText(
+				objectDefinition.label['en_US']
+			);
+			await expect(cell(customRow, 'System')).toHaveText('No');
+			await expect(cell(customRow, 'Status')).toHaveText('Approved');
+
+			const systemRow = page.getByRole('row').filter({hasText: 'User'});
+
+			await expect(cell(systemRow, 'Label')).toContainText('User');
+			await expect(cell(systemRow, 'System')).toHaveText('Yes');
+			await expect(cell(systemRow, 'Status')).toHaveText('Approved');
+		}
+	);
+
+	test(
+		'Verify that previous filled data is not kept when cancelling the creation of an Object',
+		{tag: '@LPS-139418'},
+		async ({
+			modalAddObjectDefinitionPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			await viewObjectDefinitionsPage.goto();
+
+			const objectDefinitionLabel = 'CustomObject' + getRandomInt();
+
+			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+			await modalAddObjectDefinitionPage.objectLabelInput.fill(
+				objectDefinitionLabel
+			);
+			await modalAddObjectDefinitionPage.objectPluralLabelInput.fill(
+				objectDefinitionLabel
+			);
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+
+			await expect(page.getByText(objectDefinitionLabel)).toBeHidden();
+
+			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
+
+			await expect(
+				modalAddObjectDefinitionPage.objectLabelInput
+			).toHaveValue('');
+			await expect(
+				modalAddObjectDefinitionPage.objectPluralLabelInput
+			).toHaveValue('');
+		}
+	);
+
+	test(
+		'Verify that the Object visibility in Collection Providers changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			collectionsPage,
+			page,
+			site,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await collectionsPage.goto(site.friendlyUrlPath);
+
+			await page
+				.getByRole('link', {name: 'Collection Providers'})
+				.click();
+
+			await expect(
+				page.getByText(objectDefinition.name).first()
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await collectionsPage.goto(site.friendlyUrlPath);
+
+			await page
+				.getByRole('link', {name: 'Collection Providers'})
+				.click();
+
+			await expect(
+				page.getByText(objectDefinition.name).first()
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Object visibility in the Page Item Selector changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({apiHelpers, page, pageEditorPage, site, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByLabel('Select Item').click();
+
+			const selectFrame = page.frameLocator('iframe[title="Select"]');
+
+			await expect(
+				selectFrame.getByRole('menuitem', {
+					name: objectDefinition.name,
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByLabel('Select Item').click();
+
+			await expect(
+				selectFrame.getByRole('menuitem', {
+					name: objectDefinition.name,
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Object visibility in the Page Template subtype changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({apiHelpers, displayPageTemplatesPage, page, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await displayPageTemplatesPage.goto();
+
+			await displayPageTemplatesPage.newButton.click();
+
+			await page
+				.getByRole('menuitem', {name: 'Display Page Template'})
+				.click();
+
+			await page.getByRole('button', {name: 'Blank'}).click();
+
+			await expect(page.getByLabel('Content Type')).toContainText(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await displayPageTemplatesPage.goto();
+
+			await displayPageTemplatesPage.newButton.click();
+
+			await page
+				.getByRole('menuitem', {name: 'Display Page Template'})
+				.click();
+
+			await page.getByRole('button', {name: 'Blank'}).click();
+
+			await expect(page.getByLabel('Content Type')).not.toContainText(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await displayPageTemplatesPage.goto();
+
+			await page.reload();
+
+			await displayPageTemplatesPage.newButton.click();
+
+			await page
+				.getByRole('menuitem', {name: 'Display Page Template'})
+				.click();
+
+			await page.getByRole('button', {name: 'Blank'}).click();
+
+			await expect(page.getByLabel('Content Type')).toContainText(
+				objectDefinition.label['en_US']
+			);
+		}
+	);
+
+	test(
+		'Verify that the Object entry visibility in Page fragments changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({apiHelpers, page, pageEditorPage, site, viewObjectDefinitionsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+					titleObjectFieldName: fieldName,
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName!]: 'Test 1'},
+				applicationName
+			);
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByLabel('Select Item').click();
+
+			const selectFrame = page.frameLocator('iframe[title="Select"]');
+
+			await selectFrame
+				.getByRole('menuitem', {name: objectDefinition.name})
+				.click();
+
+			await selectFrame.getByText('Test 1').click();
+
+			await page
+				.getByLabel('Field')
+				.selectOption(`ObjectField_${fieldName}`);
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(page.getByText('Test 1')).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(page.getByText('Test 1')).toBeHidden();
+			await expect(page.getByText('Heading Example')).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(page.getByText('Test 1')).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Object portlet visibility in the Open Menu changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			globalMenuPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					panelCategoryKey: 'control_panel.object',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Verify that the Object portlet visibility in the Site Menu changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			page,
+			productMenuPage,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					panelCategoryKey: 'site_administration.content',
+					scope: 'site',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await page.reload();
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
 });
 
 cmsTest.describe('Manage enableFormContainer configuration', () => {

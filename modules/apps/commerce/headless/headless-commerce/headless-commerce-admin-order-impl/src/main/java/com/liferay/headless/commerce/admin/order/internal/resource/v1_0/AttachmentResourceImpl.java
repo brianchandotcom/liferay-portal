@@ -16,6 +16,10 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0.AttachmentEntityModel;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AttachmentResource;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -27,6 +31,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -290,6 +295,33 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		return commerceOrder;
 	}
 
+	private String _getTypeLabel(String type) {
+		if (Validator.isNull(type)) {
+			return type;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
+					contextCompany.getCompanyId());
+
+		if (listTypeDefinition == null) {
+			return type;
+		}
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), type);
+
+		if (listTypeEntry == null) {
+			return type;
+		}
+
+		return listTypeEntry.getName(
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
 	private Attachment _toAttachment(
 			CommerceOrderAttachment commerceOrderAttachment)
 		throws PortalException {
@@ -338,6 +370,8 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 				setRestricted(commerceOrderAttachment::isRestricted);
 				setTitle(commerceOrderAttachment::getTitle);
 				setType(commerceOrderAttachment::getType);
+				setTypeLabel(
+					() -> _getTypeLabel(commerceOrderAttachment.getType()));
 				setUrl(
 					() -> {
 						if (fileEntry == null) {
@@ -368,5 +402,11 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

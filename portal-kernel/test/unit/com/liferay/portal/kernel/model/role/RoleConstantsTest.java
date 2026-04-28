@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.model.role;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,6 +14,18 @@ import org.junit.Test;
  * @author Stefano Motta
  */
 public class RoleConstantsTest {
+
+	@Test
+	public void testIsProtected() {
+		Assert.assertFalse(RoleConstants.isProtected(null));
+		Assert.assertFalse(RoleConstants.isProtected(""));
+		Assert.assertFalse(
+			RoleConstants.isProtected(RandomTestUtil.randomString()));
+		Assert.assertFalse(
+			RoleConstants.isProtected(RoleConstants.ADMINISTRATOR));
+		Assert.assertTrue(
+			RoleConstants.isProtected(RoleConstants.CMS_ADMINISTRATOR));
+	}
 
 	@Test
 	public void testToSystemRoleExternalReferenceCode() {

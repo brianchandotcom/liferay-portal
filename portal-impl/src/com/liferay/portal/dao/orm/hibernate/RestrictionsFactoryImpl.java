@@ -17,8 +17,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.criterion.Restrictions;
-
 /**
  * @author Raymond Augé
  */
@@ -26,71 +24,65 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion allEq(Map<String, Criterion> propertyNameValues) {
-		return new CriterionImpl(Restrictions.allEq(propertyNameValues));
+		return new CriterionImpl(CriterionType.ALL_EQ, propertyNameValues);
 	}
 
 	@Override
 	public Criterion and(Criterion lhs, Criterion rhs) {
-		CriterionImpl lhsCriterionImpl = (CriterionImpl)lhs;
-		CriterionImpl rhsCriterionImpl = (CriterionImpl)rhs;
-
-		return new CriterionImpl(
-			Restrictions.and(
-				lhsCriterionImpl.getWrappedCriterion(),
-				rhsCriterionImpl.getWrappedCriterion()));
+		return new CriterionImpl(CriterionType.AND, lhs, rhs);
 	}
 
 	@Override
 	public Criterion between(String propertyName, Object lo, Object hi) {
-		return new CriterionImpl(Restrictions.between(propertyName, lo, hi));
+		return new CriterionImpl(CriterionType.BETWEEN, propertyName, lo, hi);
 	}
 
 	@Override
 	public Conjunction conjunction() {
-		return new ConjunctionImpl(Restrictions.conjunction());
+		return new ConjunctionImpl();
 	}
 
 	@Override
 	public Disjunction disjunction() {
-		return new DisjunctionImpl(Restrictions.disjunction());
+		return new DisjunctionImpl();
 	}
 
 	@Override
 	public Criterion eq(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.eq(propertyName, value));
+		return new CriterionImpl(CriterionType.EQ, propertyName, value);
 	}
 
 	@Override
 	public Criterion eqProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.eqProperty(propertyName, otherPropertyName));
+			CriterionType.EQ, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion ge(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.ge(propertyName, value));
+		return new CriterionImpl(CriterionType.GE, propertyName, value);
 	}
 
 	@Override
 	public Criterion geProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.geProperty(propertyName, otherPropertyName));
+			CriterionType.GE, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion gt(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.gt(propertyName, value));
+		return new CriterionImpl(CriterionType.GT, propertyName, value);
 	}
 
 	@Override
 	public Criterion gtProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.gtProperty(propertyName, otherPropertyName));
+			CriterionType.GT, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion ilike(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.ilike(propertyName, value));
+		return new CriterionImpl(CriterionType.ILIKE, propertyName, value);
 	}
 
 	@Override
@@ -104,10 +96,11 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 			int start = 0;
 
 			while (start < size) {
+				List<?> subList = ListUtil.subList(list, start, end);
+
 				disjunction.add(
 					new CriterionImpl(
-						Restrictions.in(
-							propertyName, ListUtil.subList(list, start, end))));
+						CriterionType.IN, propertyName, subList.toArray()));
 
 				end += DBManagerUtil.getDBInMaxParameters();
 				start += DBManagerUtil.getDBInMaxParameters();
@@ -116,7 +109,8 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 			return disjunction;
 		}
 
-		return new CriterionImpl(Restrictions.in(propertyName, values));
+		return new CriterionImpl(
+			CriterionType.IN, propertyName, values.toArray());
 	}
 
 	@Override
@@ -126,134 +120,115 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 
 	@Override
 	public Criterion isEmpty(String propertyName) {
-		return new CriterionImpl(Restrictions.isEmpty(propertyName));
+		return new CriterionImpl(CriterionType.IS_EMPTY, propertyName);
 	}
 
 	@Override
 	public Criterion isNotEmpty(String propertyName) {
-		return new CriterionImpl(Restrictions.isNotEmpty(propertyName));
+		return new CriterionImpl(CriterionType.IS_NOT_EMPTY, propertyName);
 	}
 
 	@Override
 	public Criterion isNotNull(String propertyName) {
-		return new CriterionImpl(Restrictions.isNotNull(propertyName));
+		return new CriterionImpl(CriterionType.IS_NOT_NULL, propertyName);
 	}
 
 	@Override
 	public Criterion isNull(String propertyName) {
-		return new CriterionImpl(Restrictions.isNull(propertyName));
+		return new CriterionImpl(CriterionType.IS_NULL, propertyName);
 	}
 
 	@Override
 	public Criterion le(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.le(propertyName, value));
+		return new CriterionImpl(CriterionType.LE, propertyName, value);
 	}
 
 	@Override
 	public Criterion leProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.leProperty(propertyName, otherPropertyName));
+			CriterionType.LE, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion like(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.like(propertyName, value));
+		return new CriterionImpl(CriterionType.LIKE, propertyName, value);
 	}
 
 	@Override
 	public Criterion lt(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.lt(propertyName, value));
+		return new CriterionImpl(CriterionType.LT, propertyName, value);
 	}
 
 	@Override
 	public Criterion ltProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.ltProperty(propertyName, otherPropertyName));
+			CriterionType.LT, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion ne(String propertyName, Object value) {
-		return new CriterionImpl(Restrictions.ne(propertyName, value));
+		return new CriterionImpl(CriterionType.NE, propertyName, value);
 	}
 
 	@Override
 	public Criterion neProperty(String propertyName, String otherPropertyName) {
 		return new CriterionImpl(
-			Restrictions.neProperty(propertyName, otherPropertyName));
+			CriterionType.NE, propertyName, otherPropertyName);
 	}
 
 	@Override
 	public Criterion not(Criterion expression) {
-		CriterionImpl expressionCriterionImpl = (CriterionImpl)expression;
-
-		return new CriterionImpl(
-			Restrictions.not(expressionCriterionImpl.getWrappedCriterion()));
+		return new CriterionImpl(CriterionType.NOT, expression);
 	}
 
 	@Override
 	public Criterion or(Criterion lhs, Criterion rhs) {
-		CriterionImpl lhsCriterionImpl = (CriterionImpl)lhs;
-		CriterionImpl rhsCriterionImpl = (CriterionImpl)rhs;
-
-		return new CriterionImpl(
-			Restrictions.or(
-				lhsCriterionImpl.getWrappedCriterion(),
-				rhsCriterionImpl.getWrappedCriterion()));
+		return new CriterionImpl(CriterionType.OR, lhs, rhs);
 	}
 
 	@Override
 	public Criterion sizeEq(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeEq(propertyName, size));
+		return new CriterionImpl(CriterionType.EQ, propertyName, size);
 	}
 
 	@Override
 	public Criterion sizeGe(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeGe(propertyName, size));
+		return new CriterionImpl(CriterionType.GE, propertyName, size);
 	}
 
 	@Override
 	public Criterion sizeGt(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeGt(propertyName, size));
+		return new CriterionImpl(CriterionType.GT, propertyName, size);
 	}
 
 	@Override
 	public Criterion sizeLe(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeLe(propertyName, size));
+		return new CriterionImpl(CriterionType.LE, propertyName, size);
 	}
 
 	@Override
 	public Criterion sizeLt(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeLt(propertyName, size));
+		return new CriterionImpl(CriterionType.LT, propertyName, size);
 	}
 
 	@Override
 	public Criterion sizeNe(String propertyName, int size) {
-		return new CriterionImpl(Restrictions.sizeNe(propertyName, size));
+		return new CriterionImpl(CriterionType.NE, propertyName, size);
 	}
 
 	@Override
 	public Criterion sqlRestriction(String sql) {
-		return new CriterionImpl(Restrictions.sqlRestriction(sql));
+		return new CriterionImpl(sql, null, null);
 	}
 
 	@Override
 	public Criterion sqlRestriction(String sql, Object value, Type type) {
-		return new CriterionImpl(
-			Restrictions.sqlRestriction(
-				sql, value, TypeTranslator.translate(type)));
+		return new CriterionImpl(sql, new Type[] {type}, new Object[] {value});
 	}
 
 	@Override
 	public Criterion sqlRestriction(String sql, Object[] values, Type[] types) {
-		org.hibernate.type.Type[] hibernateTypes =
-			new org.hibernate.type.Type[types.length];
-
-		for (int i = 0; i < types.length; i++) {
-			hibernateTypes[i] = TypeTranslator.translate(types[i]);
-		}
-
-		return new CriterionImpl(
-			Restrictions.sqlRestriction(sql, values, hibernateTypes));
+		return new CriterionImpl(sql, types, values);
 	}
 
 }

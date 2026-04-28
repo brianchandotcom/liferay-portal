@@ -42,9 +42,7 @@ public class ProjectionFactoryImpl implements ProjectionFactory {
 
 	@Override
 	public Projection groupProperty(String propertyName) {
-		return new PropertyImpl(
-			true, org.hibernate.criterion.Property.forName(propertyName),
-			propertyName);
+		return new PropertyImpl(true, propertyName);
 	}
 
 	@Override
@@ -64,9 +62,7 @@ public class ProjectionFactoryImpl implements ProjectionFactory {
 
 	@Override
 	public Projection property(String propertyName) {
-		return new PropertyImpl(
-			org.hibernate.criterion.Property.forName(propertyName),
-			propertyName);
+		return new PropertyImpl(propertyName);
 	}
 
 	@Override

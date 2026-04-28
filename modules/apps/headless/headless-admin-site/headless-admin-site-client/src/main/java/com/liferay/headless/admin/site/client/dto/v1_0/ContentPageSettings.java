@@ -48,6 +48,31 @@ public class ContentPageSettings
 
 	protected CustomMetaTag[] customMetaTags;
 
+	public String getDefaultAssetPublisherPortletId() {
+		return defaultAssetPublisherPortletId;
+	}
+
+	public void setDefaultAssetPublisherPortletId(
+		String defaultAssetPublisherPortletId) {
+
+		this.defaultAssetPublisherPortletId = defaultAssetPublisherPortletId;
+	}
+
+	public void setDefaultAssetPublisherPortletId(
+		UnsafeSupplier<String, Exception>
+			defaultAssetPublisherPortletIdUnsafeSupplier) {
+
+		try {
+			defaultAssetPublisherPortletId =
+				defaultAssetPublisherPortletIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String defaultAssetPublisherPortletId;
+
 	public OpenGraphSettings getOpenGraphSettings() {
 		return openGraphSettings;
 	}
@@ -123,4 +148,4 @@ public class ContentPageSettings
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1448262453
+// LIFERAY-REST-BUILDER-HASH:679253373

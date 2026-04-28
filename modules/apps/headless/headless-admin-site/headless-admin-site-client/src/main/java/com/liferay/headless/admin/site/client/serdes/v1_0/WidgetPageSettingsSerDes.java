@@ -106,6 +106,22 @@ public class WidgetPageSettingsSerDes {
 			sb.append("]");
 		}
 
+		if (widgetPageSettings.getDefaultAssetPublisherPortletId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultAssetPublisherPortletId\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					widgetPageSettings.getDefaultAssetPublisherPortletId()));
+
+			sb.append("\"");
+		}
+
 		if (widgetPageSettings.getInheritChanges() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -254,6 +270,16 @@ public class WidgetPageSettingsSerDes {
 				String.valueOf(widgetPageSettings.getCustomizableSectionIds()));
 		}
 
+		if (widgetPageSettings.getDefaultAssetPublisherPortletId() == null) {
+			map.put("defaultAssetPublisherPortletId", null);
+		}
+		else {
+			map.put(
+				"defaultAssetPublisherPortletId",
+				String.valueOf(
+					widgetPageSettings.getDefaultAssetPublisherPortletId()));
+		}
+
 		if (widgetPageSettings.getInheritChanges() == null) {
 			map.put("inheritChanges", null);
 		}
@@ -362,6 +388,12 @@ public class WidgetPageSettingsSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultAssetPublisherPortletId")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "inheritChanges")) {
 				return false;
 			}
@@ -432,6 +464,15 @@ public class WidgetPageSettingsSerDes {
 				if (jsonParserFieldValue != null) {
 					widgetPageSettings.setCustomizableSectionIds(
 						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultAssetPublisherPortletId")) {
+
+				if (jsonParserFieldValue != null) {
+					widgetPageSettings.setDefaultAssetPublisherPortletId(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "inheritChanges")) {
@@ -579,4 +620,4 @@ public class WidgetPageSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-907916827
+// LIFERAY-REST-BUILDER-HASH:-1746106313

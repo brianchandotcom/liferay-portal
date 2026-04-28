@@ -5,8 +5,6 @@ metadata:
         component: backup-create-platform
     name: backup-create-cluster-workflow-template
 spec:
-    artifactGC:
-        {{- .Values.argo.workflowSpec.artifactGC | toYaml | nindent 8 }}
     entrypoint: main
     podGC:
         {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}

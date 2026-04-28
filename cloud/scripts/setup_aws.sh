@@ -462,7 +462,12 @@ function _terraform_init_and_apply {
 		-backend-config="use_lockfile=true" \
 		-upgrade
 	else
-		terraform init -backend=false -upgrade
+			cat > backend_override.tf <<EOF
+terraform {
+	backend "local" {}
+}
+EOF
+			terraform init -upgrade
 	fi
 
 	terraform apply ${terraform_args} "${@:7}"

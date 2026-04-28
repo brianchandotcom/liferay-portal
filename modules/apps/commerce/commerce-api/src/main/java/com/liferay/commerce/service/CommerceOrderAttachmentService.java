@@ -103,4 +103,4 @@ public interface CommerceOrderAttachmentService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1216050619
+// LIFERAY-SERVICE-BUILDER-HASH:-2090663514

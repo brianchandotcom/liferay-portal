@@ -16,6 +16,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Attachment;
 import com.liferay.petra.string.StringPool;
@@ -48,6 +49,9 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		CommerceOrderAttachmentTestUtil.initialize(
+			AttachmentResourceTest.class);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -162,7 +166,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 				priority = RandomTestUtil.nextDouble();
 				restricted = RandomTestUtil.randomBoolean();
 				title = RandomTestUtil.randomString() + ".jpg";
-				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				type = "invoice";
 			}
 		};
 	}

@@ -17,6 +17,7 @@ import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -73,6 +74,9 @@ public class CommerceOrderAttachmentIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CommerceOrderAttachmentTestUtil.initialize(
+			CommerceOrderAttachmentIndexerTest.class);
+
 		_group = GroupTestUtil.addGroup();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -187,8 +191,8 @@ public class CommerceOrderAttachmentIndexerTest {
 		return _commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			commerceOrder.getCommerceOrderId(), RandomTestUtil.nextDouble(),
-			restricted, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			restricted, RandomTestUtil.randomString(), "invoice",
+			RandomTestUtil.randomString(),
 			getClass().getResourceAsStream("dependencies/attachment.txt"));
 	}
 

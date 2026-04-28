@@ -251,10 +251,18 @@ public class LayoutsImporterTest {
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		LayoutsImporterResultEntry layoutsImporterResultEntry =
 			layoutsImporterResultEntries.get(0);
@@ -319,11 +327,19 @@ public class LayoutsImporterTest {
 			}
 		}
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0,
 				zipWriter.getFile(), LayoutsImportStrategy.DO_NOT_OVERWRITE,
 				true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 2,
@@ -498,10 +514,18 @@ public class LayoutsImporterTest {
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext1);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group1.getGroupId(), 0, file,
 				LayoutsImportStrategy.OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		_assertLayoutPageTemplateEntry(
 			fragmentEntryLink,
@@ -680,10 +704,18 @@ public class LayoutsImporterTest {
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		LayoutsImporterResultEntry layoutsImporterResultEntry =
 			layoutsImporterResultEntries.get(0);
@@ -743,10 +775,18 @@ public class LayoutsImporterTest {
 			new long[] {layoutPageTemplateEntry.getLayoutPageTemplateEntryId()},
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		LayoutsImporterResultEntry layoutsImporterResultEntry =
 			layoutsImporterResultEntries.get(0);
@@ -822,10 +862,18 @@ public class LayoutsImporterTest {
 		StyleBookEntry curStyleBookEntry = _addStyleBookEntry(
 			_serviceContext2, styleBookEntry.getStyleBookEntryKey());
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		Assert.assertEquals(
 			layoutsImporterResultEntries.toString(), 1,
@@ -897,10 +945,18 @@ public class LayoutsImporterTest {
 		FragmentEntry curFragmentEntry = _addFragmentEntry(
 			fragmentEntry, _serviceContext2);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries = null;
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		_assertLayoutPageTemplateEntry(
 			configurationJSONObject, editableValuesJSONObject, curFragmentEntry,
@@ -2295,10 +2351,18 @@ public class LayoutsImporterTest {
 		FragmentEntry curFragmentEntry = _addFragmentEntry(
 			fragmentEntry, _serviceContext2);
 
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-			_layoutsImporter.importFile(
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext2);
+
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries;
+
+		try {
+			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group2.getGroupId(), 0, file,
 				LayoutsImportStrategy.DO_NOT_OVERWRITE, true);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		_assertLayoutPageTemplateEntry(
 			configurationJSONObject,

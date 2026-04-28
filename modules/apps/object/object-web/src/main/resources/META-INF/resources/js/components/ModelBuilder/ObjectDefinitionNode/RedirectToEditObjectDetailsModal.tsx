@@ -63,7 +63,7 @@ export function RedirectToEditObjectDetailsModal({
 										aria-labelledby={Liferay.Language.get(
 											'open-page-view'
 										)}
-										displayType="primary"
+										displayType="info"
 										onClick={handleSubmit}
 									>
 										{Liferay.Language.get('open-page-view')}

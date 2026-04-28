@@ -314,6 +314,20 @@ definition {
 			folderName = "DM Folder Name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "DM Folder Name");
+
+		Button.clickSelect();
+
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
+
+		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
 	@description = "This ensures that a folder in a depot can be copied to the connected site."
@@ -378,27 +392,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "DM Folder Name");
-	}
-
-	@description = "This ensures that a folder in a site can not be copied to the unconnected depot."
-	@priority = 4
-	test CannotCopyFolderFromUnconnectedSiteToDepot {
-		JSONFolder.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Site Name");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy To",
-			rowEntry = "DM Folder Nam");
-
-		Button.clickSelect();
-
-		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
-
-		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."

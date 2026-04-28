@@ -128,6 +128,21 @@ describe('ShareModalContent', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('renders the expiration date selector by default', () => {
+		const {getByLabelText} = renderComponent();
+
+		expect(getByLabelText('set-expiration-date')).toBeInTheDocument();
+	});
+
+	it('hides the expiration date selector when showExpirationDate is false', () => {
+		const {queryByLabelText} = renderComponent({
+			...DEFAULT_PROPS,
+			showExpirationDate: false,
+		});
+
+		expect(queryByLabelText('set-expiration-date')).not.toBeInTheDocument();
+	});
+
 	it('renders the help icon when autocompleteHelpText is supplied', () => {
 		const {container} = renderComponent({
 			...DEFAULT_PROPS,

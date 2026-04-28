@@ -51,6 +51,25 @@ spec:
             protocol: HTTP
         {{- end }}
         {{- range  $name, $config := .Values.endpoints }}
+        {{- if $config.hostnames }}
+        {{- range $hostname := $config.hostnames }}
+        {{- $slug := include "liferay.hostnameSlug" $hostname }}
+        -   allowedRoutes:
+                namespaces:
+                    from: Same
+            hostname: {{ $hostname | quote }}
+            name: {{ printf "%s-%s" $name $slug }}
+            port: {{ $config.port }}
+            protocol: {{ $config.protocol }}
+            {{- with $config.tls }}
+            tls:
+                certificateRefs:
+                    -   kind: Secret
+                        name: {{ printf "%s-%s-tls" $.Values.gateway.name $slug }}
+                mode: {{ .mode | default "Terminate" }}
+            {{- end }}
+        {{- end }}
+        {{- else }}
         -   allowedRoutes:
                 namespaces:
                     from: Same
@@ -76,6 +95,7 @@ spec:
                 {{- end }}
                 mode: {{ .mode | default "Terminate" }}
             {{- end }}
+        {{- end }}
         {{- end }}
     {{- end }}
 {{- end -}}

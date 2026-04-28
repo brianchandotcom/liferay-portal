@@ -2,6 +2,16 @@
 {{- .Values.search.elasticsearch.name | default (printf "%s-es" .Release.Name) | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "liferay.hostnameSlug" -}}
+{{- $hostname := . | lower -}}
+{{- $sanitized := $hostname | replace "*" "wildcard" | replace "." "-" | trimPrefix "-" | trimSuffix "-" -}}
+{{- if gt (len $sanitized) 50 -}}
+{{- $hash := sha256sum $hostname | trunc 8 -}}
+{{- $sanitized = printf "%s-%s" (trunc 41 $sanitized | trimSuffix "-") $hash -}}
+{{- end -}}
+{{- $sanitized -}}
+{{- end -}}
+
 {{- define "liferay.k8sFriendlyString" -}}
 {{- $sanitized := . | lower | replace "/" "-" | replace "_" "-" | trimPrefix "-" | trunc 63 | trimSuffix "-" -}}
 {{- if or (empty $sanitized) (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$" $sanitized)) -}}

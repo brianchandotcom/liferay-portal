@@ -64,7 +64,7 @@ public class HubspotWebhookController extends BaseFaroController {
 
 			URIBuilder uriBuilder = new URIBuilder(
 				EngineServiceURLUtil.getPublisherURL(
-					faroProject, "/hubspot-webhook"));
+					faroProject, "/webhook-events/hubspot"));
 
 			URI uri = uriBuilder.build();
 

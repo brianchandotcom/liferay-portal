@@ -114,21 +114,21 @@ public class LearnRestController extends BaseRestController {
 					).build(
 					).toUri());
 
+				Base64.Decoder decoder = Base64.getDecoder();
+
 				byteArrayOutputStream.write(
-					Base64.getDecoder(
-					).decode(
+					decoder.decode(
 						new JSONObject(
 							response
 						).getString(
 							"audioContent"
-						)
-					));
+						)));
 			}
 
-			String audioContentBase64 = Base64.getEncoder(
-			).encodeToString(
-				byteArrayOutputStream.toByteArray()
-			);
+			Base64.Encoder encoder = Base64.getEncoder();
+
+			String audioContentBase64 = encoder.encodeToString(
+				byteArrayOutputStream.toByteArray());
 
 			return ResponseEntity.ok(audioContentBase64);
 		}
@@ -252,13 +252,9 @@ public class LearnRestController extends BaseRestController {
 			GetterUtil.getBoolean(quizResultMap.get("passed")) &&
 			(jwt != null)) {
 
-			_postUserBadge(
-				quizId,
-				GetterUtil.getLong(
-					jwt.getClaims(
-					).get(
-						"sub"
-					)));
+			Map<String, Object> claims = jwt.getClaims();
+
+			_postUserBadge(quizId, GetterUtil.getLong(claims.get("sub")));
 		}
 
 		return ResponseEntity.ok(quizResultMap);

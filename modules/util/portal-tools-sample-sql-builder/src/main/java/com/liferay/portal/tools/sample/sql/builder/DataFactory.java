@@ -5980,7 +5980,7 @@ public class DataFactory {
 		throws Exception {
 
 		boolean addSubmitFragmentEntryLink = false;
-		List<FragmentEntryLinkModel> nonhiddenFragmentEntryLinkModels =
+		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
 			new ArrayList<>();
 		String paragraphRenderNamespace = StringUtil.randomId();
 		long segmentsExperienceId = 0;
@@ -6073,7 +6073,7 @@ public class DataFactory {
 			segmentsExperienceId = _getSegmentsExperienceId(
 				layoutModels.get(1), segmentsExperienceModels);
 
-			nonhiddenFragmentEntryLinkModels.add(
+			originalFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModels.get(1), null, segmentsExperienceId,
 					_escape(css), _escape(html), _escape(js), StringPool.BLANK,
@@ -6082,7 +6082,7 @@ public class DataFactory {
 		}
 
 		if (addSubmitFragmentEntryLink) {
-			nonhiddenFragmentEntryLinkModels.add(
+			originalFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModels.get(1), null, segmentsExperienceId,
 					StringPool.BLANK,
@@ -6103,13 +6103,13 @@ public class DataFactory {
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
-			nonhiddenFragmentEntryLinkModels);
+			originalFragmentEntryLinkModels);
 
 		segmentsExperienceId = _getSegmentsExperienceId(
 			layoutModels.get(0), segmentsExperienceModels);
 
 		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
-				nonhiddenFragmentEntryLinkModels) {
+				originalFragmentEntryLinkModels) {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(

@@ -10,6 +10,9 @@ import com.liferay.headless.commerce.delivery.cart.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -44,6 +47,48 @@ public class AttachmentSerDes {
 
 		sb.append("{");
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (attachment.getActions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"actions\": ");
+
+			sb.append(_toJSON(attachment.getActions()));
+		}
+
+		if (attachment.getDateModified() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dateModified\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(attachment.getDateModified()));
+
+			sb.append("\"");
+		}
+
+		if (attachment.getExtension() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"extension\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getExtension()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -68,6 +113,26 @@ public class AttachmentSerDes {
 			sb.append(attachment.getId());
 		}
 
+		if (attachment.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(attachment.getPriority());
+		}
+
+		if (attachment.getRestricted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"restricted\": ");
+
+			sb.append(attachment.getRestricted());
+		}
+
 		if (attachment.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -89,7 +154,11 @@ public class AttachmentSerDes {
 
 			sb.append("\"type\": ");
 
-			sb.append(attachment.getType());
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getType()));
+
+			sb.append("\"");
 		}
 
 		if (attachment.getUrl() != null) {
@@ -124,6 +193,32 @@ public class AttachmentSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ssXX");
+
+		if (attachment.getActions() == null) {
+			map.put("actions", null);
+		}
+		else {
+			map.put("actions", String.valueOf(attachment.getActions()));
+		}
+
+		if (attachment.getDateModified() == null) {
+			map.put("dateModified", null);
+		}
+		else {
+			map.put(
+				"dateModified",
+				liferayToJSONDateFormat.format(attachment.getDateModified()));
+		}
+
+		if (attachment.getExtension() == null) {
+			map.put("extension", null);
+		}
+		else {
+			map.put("extension", String.valueOf(attachment.getExtension()));
+		}
+
 		if (attachment.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -138,6 +233,20 @@ public class AttachmentSerDes {
 		}
 		else {
 			map.put("id", String.valueOf(attachment.getId()));
+		}
+
+		if (attachment.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(attachment.getPriority()));
+		}
+
+		if (attachment.getRestricted() == null) {
+			map.put("restricted", null);
+		}
+		else {
+			map.put("restricted", String.valueOf(attachment.getRestricted()));
 		}
 
 		if (attachment.getTitle() == null) {
@@ -179,10 +288,27 @@ public class AttachmentSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "extension")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -203,7 +329,26 @@ public class AttachmentSerDes {
 			Attachment attachment, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "actions")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setActions(
+						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "extension")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setExtension((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
 					attachment.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
@@ -215,6 +360,17 @@ public class AttachmentSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setPriority(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setRestricted((Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					attachment.setTitle((String)jsonParserFieldValue);
@@ -222,8 +378,7 @@ public class AttachmentSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					attachment.setType(
-						Integer.valueOf((String)jsonParserFieldValue));
+					attachment.setType((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
@@ -312,4 +467,4 @@ public class AttachmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2083615548
+// LIFERAY-REST-BUILDER-HASH:85396501

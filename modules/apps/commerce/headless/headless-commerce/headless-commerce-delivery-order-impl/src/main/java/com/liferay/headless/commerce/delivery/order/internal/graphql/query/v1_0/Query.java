@@ -131,13 +131,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderAttachments(page: ___, pageSize: ___, placedOrderId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderAttachments(filter: ___, page: ___, pageSize: ___, placedOrderId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage placedOrderAttachments(
 			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -145,19 +148,25 @@ public class Query {
 			this::_populateResourceContext,
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId, Pagination.of(page, pageSize))));
+					placedOrderId, search,
+					_filterBiFunction.apply(attachmentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(attachmentResource, sortsString))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodeAttachments(externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {placedOrderByExternalReferenceCodeAttachments(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage placedOrderByExternalReferenceCodeAttachments(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -166,7 +175,12 @@ public class Query {
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode, Pagination.of(page, pageSize))));
+						externalReferenceCode, search,
+						_filterBiFunction.apply(
+							attachmentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							attachmentResource, sortsString))));
 	}
 
 	/**
@@ -1022,8 +1036,11 @@ public class Query {
 
 		@GraphQLField
 		public AttachmentPage byExternalReferenceCodeAttachments(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -1032,8 +1049,12 @@ public class Query {
 				attachmentResource -> new AttachmentPage(
 					attachmentResource.
 						getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-							_placedOrder.getExternalReferenceCode(),
-							Pagination.of(page, pageSize))));
+							_placedOrder.getExternalReferenceCode(), search,
+							_filterBiFunction.apply(
+								attachmentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								attachmentResource, sortsString))));
 		}
 
 		private PlacedOrder _placedOrder;
@@ -1872,4 +1893,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1002405429
+// LIFERAY-REST-BUILDER-HASH:300824936

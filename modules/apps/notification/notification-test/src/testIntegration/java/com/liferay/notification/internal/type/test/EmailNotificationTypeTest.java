@@ -1645,6 +1645,39 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			listTypeDefinition);
 	}
 
+	@Test
+	public void testSendNotificationWithStandaloneObjectAction()
+		throws Exception {
+
+		String body = RandomTestUtil.randomString();
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			body, NotificationTemplateConstants.EDITOR_TYPE_RICH_TEXT,
+			ObjectActionTriggerConstants.KEY_STANDALONE, childObjectDefinition);
+
+		ObjectEntry objectEntry = objectEntryManager.addObjectEntry(
+			dtoConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.putAll(
+						childObjectEntryValues
+					).build();
+				}
+			},
+			group.getGroupKey());
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			(DefaultObjectEntryManager)objectEntryManager;
+
+		defaultObjectEntryManager.executeObjectAction(
+			dtoConverterContext, objectAction.getName(), childObjectDefinition,
+			objectEntry.getId());
+
+		_assertNotificationQueueEntryBody(body);
+
+		objectActionLocalService.deleteObjectAction(objectAction);
+	}
+
 	private static void _pushServiceContext() throws Exception {
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest(
 			null, StringPool.BLANK, RandomTestUtil.randomString());

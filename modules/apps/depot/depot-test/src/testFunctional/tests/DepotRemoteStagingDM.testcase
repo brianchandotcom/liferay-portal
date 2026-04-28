@@ -618,7 +618,7 @@ definition {
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling remote staging."
 	@priority = 5
 	@refactordone
-	test CanEditOpenGraphImage {
+	test CanEditAndDeleteOpenGraphImage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

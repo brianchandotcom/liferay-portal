@@ -27,6 +27,7 @@ import {PlacedOrderPage} from '../pages/commerce/commerce-order-content-web/plac
 import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/placedOrdersPage';
 import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/returnDetailsPage';
 import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
+import {CommerceAdminOrderAttachmentsPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderAttachmentsPage';
 import {CommerceAdminOrderDetailsPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderDetailsPage';
 import {CommerceAdminOrderNotesPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderNotesPage';
 import {CommerceAdminOrderTypeDetailsPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderTypeDetailsPage';
@@ -93,6 +94,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
 	commerceAdminHealthCheckPage: CommerceAdminHealthCheckPage;
 	commerceAdminInventoryPage: CommerceAdminInventoryPage;
+	commerceAdminOrderAttachmentsPage: CommerceAdminOrderAttachmentsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrderNotesPage: CommerceAdminOrderNotesPage;
 	commerceAdminOrderTypeDetailsPage: CommerceAdminOrderTypeDetailsPage;
@@ -200,6 +202,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminInventoryPage: async ({page}, use) => {
 		await use(new CommerceAdminInventoryPage(page));
+	},
+	commerceAdminOrderAttachmentsPage: async ({page}, use) => {
+		await use(new CommerceAdminOrderAttachmentsPage(page));
 	},
 	commerceAdminOrderDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminOrderDetailsPage(page));

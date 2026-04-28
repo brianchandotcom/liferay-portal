@@ -89,8 +89,6 @@ public class CommerceOrderAttachmentLocalServiceImpl
 		commerceOrderAttachment = commerceOrderAttachmentPersistence.update(
 			commerceOrderAttachment);
 
-		// Resources
-
 		_resourceLocalService.addModelResources(
 			commerceOrderAttachment.getCompanyId(),
 			commerceOrderAttachment.getGroupId(),
@@ -119,8 +117,6 @@ public class CommerceOrderAttachmentLocalServiceImpl
 			localRepository.deleteFileEntry(
 				commerceOrderAttachment.getFileEntryId());
 		}
-
-		// Resources
 
 		_resourceLocalService.deleteResource(
 			commerceOrderAttachment.getCompanyId(),

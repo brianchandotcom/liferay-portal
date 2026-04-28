@@ -542,7 +542,7 @@ definition {
 	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling local staging. Skip the instance for performance improvement."
 	@priority = 4
 	@refactordone
-	test CanEditWCImage {
+	test CanEditAndDeleteWCImage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -104,6 +104,18 @@ describe('ShareModalContent', () => {
 		expect(getByText('who-has-access (x-users)')).toBeInTheDocument();
 	});
 
+	it('renders the supplied collaborators list title', () => {
+		const {getByText, queryByText} = renderComponent({
+			...DEFAULT_PROPS,
+			collaboratorsListTitle: 'who-can-see-this-view',
+		});
+
+		expect(
+			getByText('who-can-see-this-view (x-users)')
+		).toBeInTheDocument();
+		expect(queryByText('who-has-access (x-users)')).not.toBeInTheDocument();
+	});
+
 	it('renders the list of users with access', () => {
 		const {container} = renderComponent();
 

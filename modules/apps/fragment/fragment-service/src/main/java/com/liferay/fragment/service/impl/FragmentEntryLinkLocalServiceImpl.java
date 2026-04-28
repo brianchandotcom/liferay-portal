@@ -331,16 +331,15 @@ public class FragmentEntryLinkLocalServiceImpl
 			OrderByComparator<FragmentEntryLink> orderByComparator)
 		throws PortalException {
 
-		Predicate predicate = _getAllFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, FragmentEntryLinkTable.INSTANCE);
-
 		return fragmentEntryLinkPersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
 				FragmentEntryLinkTable.INSTANCE
 			).from(
 				FragmentEntryLinkTable.INSTANCE
 			).where(
-				predicate.and(_getMaxCreateDatePredicate(fragmentEntry))
+				_getLatestFragmentEntryLinkPredicate(
+					_getAllFragmentEntryLinksByFragmentEntryPredicate(
+						fragmentEntry, FragmentEntryLinkTable.INSTANCE))
 			).orderBy(
 				_getOrderByStepLimitStepFunction(orderByComparator)
 			).limit(
@@ -858,6 +857,22 @@ public class FragmentEntryLinkLocalServiceImpl
 		).and(
 			predicate
 		);
+	}
+
+	private Predicate _getLatestFragmentEntryLinkPredicate(
+		Predicate predicate) {
+
+		return FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId.in(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.max(
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId)
+			).from(
+				FragmentEntryLinkTable.INSTANCE
+			).where(
+				predicate
+			).groupBy(
+				FragmentEntryLinkTable.INSTANCE.plid
+			));
 	}
 
 	private GroupByStep _getLayoutFragmentEntryLinksByFragmentEntryGroupByStep(

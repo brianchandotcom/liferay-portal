@@ -12,8 +12,11 @@ import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPages
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {generateObjectFields} from '../utils/generateObjectFields';
 import {salesforceConfig} from './salesforce.config';
 
@@ -21,11 +24,13 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-135430': {enabled: true},
+		'LPS-178052': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
 	isolatedSiteTest,
 	loginTest(),
-	objectPagesTest
+	objectPagesTest,
+	pageEditorPagesTest
 );
 
 test.beforeEach(async ({instanceSettingsPage, page}) => {
@@ -162,5 +167,103 @@ test('Assert CRUD with created custom object using Salesforce storage type', asy
 		await expect(
 			page.getByRole('cell', {name: objectFieldUpdatedValue})
 		).toBeAttached({attached: false});
+	});
+});
+
+test('Assert CRUD with created custom object using Salesforce storage type in form container', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+	viewObjectEntriesPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: [
+			{
+				businessType: 'Text',
+				externalReferenceCode: 'Title__c',
+				label: {en_US: 'Title'},
+				name: 'title',
+			},
+		],
+	});
+
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'Playwright_Test__c',
+			label: {en_US: 'Playwright Test'},
+			name: 'PlaywrightTest',
+			objectFields,
+			panelCategoryKey: 'control_panel.object',
+			pluralLabel: {en_US: 'Playwright Tests'},
+			portlet: true,
+			scope: 'company',
+			status: {code: 0},
+			storageType: 'salesforce',
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const formId = getRandomString();
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFormContainerDefinition({id: formId}),
+		]),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await test.step('Map the form container to the Salesforce object', async () => {
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.mapFormFragment(
+			formId,
+			objectDefinition.label['en_US'],
+			['Title']
+		);
+
+		await pageEditorPage.publishPage();
+	});
+
+	const entryValue = getRandomString();
+
+	await test.step('Submit an entry via the published form', async () => {
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await page.getByRole('textbox', {name: 'Title'}).fill(entryValue);
+
+		await page.getByRole('button', {name: 'Submit'}).click();
+
+		await expect(
+			page.getByText(
+				'Thank you. Your information was successfully received.'
+			)
+		).toBeVisible();
+	});
+
+	await test.step('Read Object Entry in object admin', async () => {
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(page.getByRole('cell', {name: entryValue})).toBeVisible();
+	});
+
+	await test.step('Delete Object Entry', async () => {
+		await viewObjectEntriesPage.frontendDatasetActions.last().click();
+		await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
+		await viewObjectEntriesPage.deletionConfirmationModal
+			.getByRole('button', {name: 'Delete'})
+			.click();
+
+		await expect(page.getByRole('cell', {name: entryValue})).toBeAttached({
+			attached: false,
+		});
 	});
 });

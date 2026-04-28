@@ -45,6 +45,15 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 			}
 
 			String actualParameter = parametersList.get(1);
+			String expectedParameter = parametersList.get(0);
+
+			if ((actualParameter.startsWith("expected") ||
+				 actualParameter.startsWith("\"expected")) &&
+				(expectedParameter.startsWith("expected") ||
+				 expectedParameter.startsWith("\"expected"))) {
+
+				continue;
+			}
 
 			String strippedQuotesActualParameter = SourceUtil.stripQuotes(
 				actualParameter);
@@ -57,7 +66,6 @@ public class JavaAssertEqualsCheck extends BaseFileCheck {
 			}
 
 			String assertEquals = matcher.group();
-			String expectedParameter = parametersList.get(0);
 
 			String newAssertEquals = StringUtil.replaceFirst(
 				assertEquals, expectedParameter, actualParameter,

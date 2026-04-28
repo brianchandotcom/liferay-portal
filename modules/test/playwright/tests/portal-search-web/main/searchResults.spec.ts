@@ -412,10 +412,16 @@ test.describe('Search Paginator', () => {
 			);
 		});
 
-		await test.step('Verify search results are available but pagination is not', async () => {
+		await test.step('Verify search results are available but pagination link has null href', async () => {
 			await expect(searchPage.searchResults).toBeVisible();
 
-			await expect(searchPage.searchResultsPaginationBar).toBeHidden();
+			await searchPage.searchResultsPaginationItemsPerPageToggle.click();
+
+			await expect(
+				searchPage.searchResultsPaginationItemsPerPageDropdown
+					.locator('a.dropdown-item')
+					.first()
+			).toHaveAttribute('href', /null/);
 		});
 	});
 });

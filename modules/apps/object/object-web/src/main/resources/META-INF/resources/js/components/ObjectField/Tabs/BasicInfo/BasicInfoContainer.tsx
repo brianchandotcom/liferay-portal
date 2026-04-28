@@ -17,6 +17,7 @@ import ObjectFieldFormBase, {
 import {AttachmentProperties} from './AttachmentProperties';
 import {AggregationFilters} from './BasicInfoTab';
 import {MaxLengthProperties} from './MaxLengthProperties';
+import {PhoneNumberProperties} from './PhoneNumberProperties';
 
 import '../../EditObjectFieldContent.scss';
 
@@ -154,6 +155,18 @@ export function BasicInfoContainer({
 					/>
 				)}
 			</ObjectFieldFormBase>
+
+			{values.businessType === 'PhoneNumber' && (
+				<PhoneNumberProperties
+					disabled={disableFieldFormBase}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					onSubmit={onSubmit}
+					setValues={setValues}
+					values={values}
+				/>
+			)}
 		</div>
 	);
 }

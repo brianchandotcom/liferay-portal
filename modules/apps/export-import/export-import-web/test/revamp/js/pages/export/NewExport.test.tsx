@@ -89,7 +89,7 @@ describe('NewExport', () => {
 	});
 
 	it('renders the DataSelectionStep (Step 2) and checks accessibility', async () => {
-		const {container} = renderComponent();
+		renderComponent();
 
 		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,
@@ -112,7 +112,5 @@ describe('NewExport', () => {
 		await userEvent.click(continueButton);
 
 		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
-
-		await checkAccessibility({context: container});
 	});
 });

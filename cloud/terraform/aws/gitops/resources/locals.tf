@@ -2,6 +2,7 @@ locals {
 	account_id=data.aws_caller_identity.current.account_id
 	argocd_gateway_class_name="argocd-gateway-class"
 	argocd_gateway_name="argocd-gateway"
+	argocd_source_ranges=distinct(concat([data.aws_vpc.current.cidr_block], var.argocd_additional_allowed_cidr_blocks))
 	argocd_tls_enabled=var.argocd_domain_config.hostname != null && var.argocd_domain_config.tls_external_secret_name != null
 	argocd_tls_external_secret_name=var.argocd_domain_config.tls_external_secret_name == null ? null : (
 		startswith(var.argocd_domain_config.tls_external_secret_name, local.secret_prefixes.certificates) ?

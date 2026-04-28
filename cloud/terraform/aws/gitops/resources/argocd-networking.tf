@@ -93,6 +93,7 @@ resource "kubernetes_manifest" "argocd_gateway_proxy_config" {
 							"service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules"="false"
 							"service.beta.kubernetes.io/aws-load-balancer-scheme"="internet-facing"
 							"service.beta.kubernetes.io/aws-load-balancer-type"="nlb"
+							"service.beta.kubernetes.io/load-balancer-source-ranges"=join(",", local.argocd_source_ranges)
 						}
 					}
 				}

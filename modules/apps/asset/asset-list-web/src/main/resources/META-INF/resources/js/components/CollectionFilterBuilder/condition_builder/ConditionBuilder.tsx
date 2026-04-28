@@ -92,13 +92,12 @@ function ConditionRow({
 
 							const operators = key
 								? getOperators(newProperty as GenericProperty)
-								: [];
+								: null;
 
 							onChange({
 								id: condition.id,
-								operatorName: !operators.length
-									? 'eq'
-									: undefined,
+								operatorName:
+									operators?.length === 0 ? 'eq' : undefined,
 								propertyName: (key as string) || undefined,
 								value: undefined,
 							});

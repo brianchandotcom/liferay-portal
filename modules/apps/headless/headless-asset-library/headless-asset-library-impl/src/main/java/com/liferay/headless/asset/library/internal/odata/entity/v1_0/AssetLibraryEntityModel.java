@@ -31,8 +31,8 @@ public class AssetLibraryEntityModel implements EntityModel {
 				locale -> "type",
 				value -> String.valueOf(
 					AssetLibraryUtil.getDepotEntryType((String)value))),
-			new StringEntityField("name", locale -> Field.NAME),
-			new IntegerEntityField("siteId", locale -> Field.GROUP_ID));
+			new IntegerEntityField("siteId", locale -> Field.GROUP_ID),
+			new StringEntityField("name", locale -> Field.NAME));
 	}
 
 	@Override

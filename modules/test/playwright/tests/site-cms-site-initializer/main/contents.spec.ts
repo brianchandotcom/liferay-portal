@@ -630,7 +630,13 @@ test(
 test(
 	'Creation menu for structure restricted to specific spaces lists only those spaces',
 	{tag: '@LPD-87258'},
-	async ({apiHelpers, contentsPage, homePage, page, structureBuilderPage}) => {
+	async ({
+		apiHelpers,
+		contentsPage,
+		homePage,
+		page,
+		structureBuilderPage,
+	}) => {
 		const allowedSpace =
 			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 				name: `Allowed ${getRandomString()}`,

@@ -465,6 +465,47 @@ public class Attachment implements Serializable {
 	private Supplier<String> _typeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getTypeLabel() {
+		if (_typeLabelSupplier != null) {
+			typeLabel = _typeLabelSupplier.get();
+
+			_typeLabelSupplier = null;
+		}
+
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+
+		_typeLabelSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		_typeLabelSupplier = () -> {
+			try {
+				return typeLabelUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String typeLabel;
+
+	@JsonIgnore
+	private Supplier<String> _typeLabelSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -677,6 +718,22 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 		}
 
+		String typeLabel = getTypeLabel();
+
+		if (typeLabel != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(typeLabel));
+
+			sb.append("\"");
+		}
+
 		String url = getUrl();
 
 		if (url != null) {
@@ -794,4 +851,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-477232716
+// LIFERAY-REST-BUILDER-HASH:-684937967

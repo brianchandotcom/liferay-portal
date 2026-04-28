@@ -234,6 +234,27 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected String type;
 
+	public String getTypeLabel() {
+		return typeLabel;
+	}
+
+	public void setTypeLabel(String typeLabel) {
+		this.typeLabel = typeLabel;
+	}
+
+	public void setTypeLabel(
+		UnsafeSupplier<String, Exception> typeLabelUnsafeSupplier) {
+
+		try {
+			typeLabel = typeLabelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String typeLabel;
+
 	public String getUrl() {
 		return url;
 	}
@@ -285,4 +306,4 @@ public class Attachment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1630435617
+// LIFERAY-REST-BUILDER-HASH:117928706

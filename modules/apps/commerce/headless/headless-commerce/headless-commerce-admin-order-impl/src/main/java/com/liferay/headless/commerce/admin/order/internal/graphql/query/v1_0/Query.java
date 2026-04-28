@@ -268,7 +268,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderAttachment(attachmentId: ___, orderId: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, url}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderAttachment(attachmentId: ___, orderId: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, typeLabel, url}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Attachment orderAttachment(
@@ -312,7 +312,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeAttachmentByExternalReferenceCode(attachmentExternalReferenceCode: ___, externalReferenceCode: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, url}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeAttachmentByExternalReferenceCode(attachmentExternalReferenceCode: ___, externalReferenceCode: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, typeLabel, url}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Attachment
@@ -2766,4 +2766,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:800298515
+// LIFERAY-REST-BUILDER-HASH:1859200421

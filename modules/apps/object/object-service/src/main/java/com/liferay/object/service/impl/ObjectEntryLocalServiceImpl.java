@@ -3302,99 +3302,108 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		ObjectRelationshipLocalService objectRelationshipLocalService =
-			_objectRelationshipLocalServiceSnapshot.get();
-
 		for (ObjectRelationship objectRelationship :
 				_objectRelationshipPersistence.findByObjectDefinitionId1(
 					objectDefinition.getObjectDefinitionId())) {
 
-			if (Objects.equals(
+			_copyRelatedObjectEntry(
+				userId, currentCopyDepth, objectDefinition, objectRelationship,
+				serviceContext, sourceObjectEntry, targetObjectEntry);
+		}
+	}
+
+	private void _copyRelatedObjectEntry(
+			long userId, int currentCopyDepth,
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship,
+			ServiceContext serviceContext, ObjectEntry sourceObjectEntry,
+			ObjectEntry targetObjectEntry)
+		throws PortalException {
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			ObjectRelationshipLocalService objectRelationshipLocalService =
+				_objectRelationshipLocalServiceSnapshot.get();
+
+			List<ObjectEntry> relatedObjectEntries = getManyToManyObjectEntries(
+				sourceObjectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(),
+				sourceObjectEntry.getObjectEntryId(), true, false, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+				objectRelationshipLocalService.
+					addObjectRelationshipMappingTableValues(
+						userId, objectRelationship.getObjectRelationshipId(),
+						targetObjectEntry.getObjectEntryId(),
+						relatedObjectEntry.getObjectEntryId(), serviceContext);
+			}
+		}
+		else if (Objects.equals(
 					objectRelationship.getType(),
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				List<ObjectEntry> relatedObjectEntries =
-					getManyToManyObjectEntries(
-						sourceObjectEntry.getGroupId(),
-						objectRelationship.getObjectRelationshipId(),
-						sourceObjectEntry.getObjectEntryId(), true, false, null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-				for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
-					objectRelationshipLocalService.
-						addObjectRelationshipMappingTableValues(
-							userId,
-							objectRelationship.getObjectRelationshipId(),
-							targetObjectEntry.getObjectEntryId(),
-							relatedObjectEntry.getObjectEntryId(),
-							serviceContext);
-				}
+			if (!objectRelationship.isEdge()) {
+				return;
 			}
-			else if (Objects.equals(
-						objectRelationship.getType(),
-						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				if (!objectRelationship.isEdge()) {
-					continue;
-				}
+			ObjectDefinition relatedObjectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId2());
 
-				ObjectDefinition relatedObjectDefinition =
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectRelationship.getObjectDefinitionId2());
+			if (!relatedObjectDefinition.isApproved() ||
+				relatedObjectDefinition.isUnmodifiableSystemObject()) {
 
-				if (!relatedObjectDefinition.isApproved() ||
-					relatedObjectDefinition.isUnmodifiableSystemObject()) {
-
-					continue;
-				}
-
-				int originalWorkflowAction = serviceContext.getWorkflowAction();
-
-				if (relatedObjectDefinition.isEnableObjectEntryDraft()) {
-					serviceContext.setWorkflowAction(
-						WorkflowConstants.ACTION_SAVE_DRAFT);
-				}
-				else {
-					serviceContext.setWorkflowAction(
-						WorkflowConstants.ACTION_PUBLISH);
-				}
-
-				List<ObjectEntry> relatedObjectEntries =
-					getOneToManyObjectEntries(
-						sourceObjectEntry.getGroupId(),
-						objectRelationship.getObjectRelationshipId(), null,
-						false, sourceObjectEntry.getObjectEntryId(), true, null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-				String relationshipFieldName =
-					ObjectRelationshipUtil.getObjectRelationshipFieldName(
-						objectDefinition, objectRelationship.getName());
-
-				for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
-					Map<String, Serializable> relatedValues =
-						HashMapBuilder.<String, Serializable>putAll(
-							getValues(relatedObjectEntry.getObjectEntryId())
-						).put(
-							relationshipFieldName,
-							targetObjectEntry.getObjectEntryId()
-						).put(
-							"externalReferenceCode", () -> null
-						).build();
-
-					ObjectEntry newObjectEntry = addObjectEntry(
-						relatedObjectEntry.getGroupId(), userId,
-						relatedObjectDefinition.getObjectDefinitionId(),
-						relatedObjectEntry.getObjectEntryFolderId(),
-						relatedObjectEntry.getDefaultLanguageId(),
-						relatedValues, serviceContext);
-
-					_copyRelatedObjectEntries(
-						userId, currentCopyDepth + 1, relatedObjectDefinition,
-						serviceContext, relatedObjectEntry, newObjectEntry);
-				}
-
-				serviceContext.setWorkflowAction(originalWorkflowAction);
+				return;
 			}
+
+			int originalWorkflowAction = serviceContext.getWorkflowAction();
+
+			if (relatedObjectDefinition.isEnableObjectEntryDraft()) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+			}
+			else {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+
+			List<ObjectEntry> relatedObjectEntries = getOneToManyObjectEntries(
+				sourceObjectEntry.getGroupId(),
+				objectRelationship.getObjectRelationshipId(), null, false,
+				sourceObjectEntry.getObjectEntryId(), true, null,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			String relationshipFieldName =
+				ObjectRelationshipUtil.getObjectRelationshipFieldName(
+					objectDefinition, objectRelationship.getName());
+
+			for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+				Map<String, Serializable> relatedValues =
+					HashMapBuilder.<String, Serializable>putAll(
+						getValues(relatedObjectEntry.getObjectEntryId())
+					).put(
+						relationshipFieldName,
+						targetObjectEntry.getObjectEntryId()
+					).put(
+						"externalReferenceCode", () -> null
+					).build();
+
+				ObjectEntry newObjectEntry = addObjectEntry(
+					relatedObjectEntry.getGroupId(), userId,
+					relatedObjectDefinition.getObjectDefinitionId(),
+					relatedObjectEntry.getObjectEntryFolderId(),
+					relatedObjectEntry.getDefaultLanguageId(), relatedValues,
+					serviceContext);
+
+				_copyRelatedObjectEntries(
+					userId, currentCopyDepth + 1, relatedObjectDefinition,
+					serviceContext, relatedObjectEntry, newObjectEntry);
+			}
+
+			serviceContext.setWorkflowAction(originalWorkflowAction);
 		}
 	}
 

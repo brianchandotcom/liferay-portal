@@ -23,6 +23,7 @@ export interface IViewsContext {
 export interface ISnapshot {
 	configuration?: any;
 	erc: string;
+	id?: number;
 	label: string;
 }
 

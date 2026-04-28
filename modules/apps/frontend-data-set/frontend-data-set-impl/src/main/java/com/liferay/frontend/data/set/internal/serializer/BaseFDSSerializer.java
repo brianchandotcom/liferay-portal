@@ -198,6 +198,8 @@ public abstract class BaseFDSSerializer {
 				).put(
 					"erc", objectEntry.getExternalReferenceCode()
 				).put(
+					"id", objectEntry.getId()
+				).put(
 					"label", String.valueOf(properties.get("label"))
 				);
 			});

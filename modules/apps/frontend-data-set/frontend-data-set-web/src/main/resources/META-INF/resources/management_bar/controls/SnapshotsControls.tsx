@@ -22,6 +22,7 @@ import {DEFAULT_FETCH_HEADERS} from '../../constants';
 import getRandomId from '../../utils/getRandomId';
 import ViewsContext, {ISnapshot, ISnapshots} from '../../views/ViewsContext';
 import {EViewsActionTypes} from '../../views/viewsReducer';
+import shareSnapshotAction from './shareSnapshotAction';
 
 const DEFAULT_VIEW_ID = 'DEFAULT_VIEW';
 
@@ -207,6 +208,10 @@ const SnapshotsControls = () => {
 	);
 	const visibleHeaderSnapshots = snapshots.filter(
 		(group: ISnapshots) => group.headerVisible
+	);
+
+	const isActiveSnapshotOwned = !!ownedSnapshots?.items.some(
+		(item: ISnapshot) => item.erc === activeSnapshot.erc
 	);
 
 	const pickerItems: ISnapshots[] = [
@@ -555,6 +560,22 @@ const SnapshotsControls = () => {
 								>
 									{Liferay.Language.get('rename-view')}
 								</ClayDropDown.Item>
+
+								{isActiveSnapshotOwned && activeSnapshot.id ? (
+									<ClayDropDown.Item
+										onClick={() => {
+											shareSnapshotAction({
+												itemId: activeSnapshot.id as number,
+												title: activeSnapshot.label,
+											});
+
+											setActionsDropdownActive(false);
+										}}
+										symbolLeft="share"
+									>
+										{Liferay.Language.get('share-view')}
+									</ClayDropDown.Item>
+								) : null}
 
 								<ClayDropDown.Item
 									onClick={() =>

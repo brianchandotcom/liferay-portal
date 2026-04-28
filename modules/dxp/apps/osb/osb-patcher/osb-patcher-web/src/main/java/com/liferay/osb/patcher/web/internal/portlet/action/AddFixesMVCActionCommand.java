@@ -79,11 +79,11 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		int type = PatcherFixConstants.TYPE_PATCH;
 	
-		if (workaround) {
-			type = PatcherFixConstants.TYPE_WORKAROUND;
-		}
-		else if (autoFix) {
+		if (autoFix) {
 			type = PatcherFixConstants.TYPE_AUTO_FIX;
+		}
+		else if (workaround) {
+			type = PatcherFixConstants.TYPE_WORKAROUND;
 		}
 
 		PatcherFix patcherFix = _patcherFixLocalService.addPatcherFix(

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export {default as AttachmentsFDSPropsTransformer} from './AttachmentsFDSPropsTransformer';
 export {default as CommerceOrderItemsFDSPropsTransformer} from './CommerceOrderItemsFDSPropsTransformer';
 export {default as CommerceStatusDataRenderer} from './CommerceStatusDataRenderer';
 export {default as addCommerceOrderType} from './addCommerceOrderType';
@@ -13,6 +14,7 @@ export {default as deleteCommerceReturnsPropsTransformer} from './deleteCommerce
 export {default as editCommerceOrderType} from './editCommerceOrderType';
 export {default as editCommerceReturn} from './editCommerceReturn';
 export {default as editCommerceReturnItem} from './editCommerceReturnItem';
+export {default as editOrderAttachment} from './edit_order_attachment';
 export {default as qualifiers} from './qualifiers';
 export {default as summary} from './summary';
 export {default as termsDescriptionHandler} from './termsDescriptionHandler';

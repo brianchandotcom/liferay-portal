@@ -15,6 +15,7 @@ import {
 	getOAuthWindowErrorMessage,
 	getTempCredentials
 } from 'shared/util/oauth';
+import {FormikProps} from 'formik';
 import {OAUTH_CALLBACK_URL} from 'shared/util/oauth';
 import {Routes} from 'shared/util/router';
 import {sequence} from 'shared/util/promise';
@@ -125,9 +126,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 	const [showClientId, setShowClientId] = useState(false);
 	const [showClientSecret, setShowClientSecret] = useState(false);
 
-	const _formRef = useRef<{
-		setSubmitting: (submitting: boolean) => void;
-	} | null>(null);
+	const _formRef = useRef<FormikProps<any>>(null);
 
 	useEffect(() => {
 		const _clipboard = new Clipboard('[data-clipboard-text]');
@@ -158,6 +157,7 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 				clientSecret: dataSource?.credentials?.get('oAuthClientSecret'),
 				salesForceDataSource: dataSource?.url
 			}}
+			innerRef={_formRef}
 			onSubmit={(values: any) => {
 				const {setSubmitting} = _formRef.current!;
 
@@ -267,7 +267,6 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 						setSubmitting(false);
 					});
 			}}
-			ref={_formRef}
 		>
 			{({handleSubmit, isSubmitting, isValid, values}) => (
 				<Form.Form

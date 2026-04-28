@@ -117,6 +117,10 @@ public interface ObjectFieldBusinessType {
 
 	public PropertyDefinition.PropertyType getPropertyType();
 
+	public default Map<String, Object> getRenderingProperties() {
+		return Collections.emptyMap();
+	}
+
 	public default Set<String> getRequiredObjectFieldSettingsNames(
 		ObjectField objectField) {
 

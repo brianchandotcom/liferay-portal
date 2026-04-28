@@ -1,1 +1,0 @@
-{"version":3,"sources":["math.es.js"],"names":["sum","x","y","pi"],"mappings":";;;;;;SAAgBA,G,GAAAA,G;AAAT,UAASA,GAAT,CAAaC,CAAb,EAAgBC,CAAhB,EAAmB;AACzB,SAAOD,IAAIC,CAAX;AACA;;AAEM,KAAIC,kBAAK,QAAT","file":"math/math.es.js","sourcesContent":["export function sum(x, y) {\r\n\treturn x + y;\r\n}\r\n\r\nexport var pi = 3.141593;\r\n"],"sourceRoot":"/source/"}

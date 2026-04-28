@@ -91,6 +91,31 @@ public class WidgetPageSettings
 
 	protected String[] customizableSectionIds;
 
+	public String getDefaultAssetPublisherPortletId() {
+		return defaultAssetPublisherPortletId;
+	}
+
+	public void setDefaultAssetPublisherPortletId(
+		String defaultAssetPublisherPortletId) {
+
+		this.defaultAssetPublisherPortletId = defaultAssetPublisherPortletId;
+	}
+
+	public void setDefaultAssetPublisherPortletId(
+		UnsafeSupplier<String, Exception>
+			defaultAssetPublisherPortletIdUnsafeSupplier) {
+
+		try {
+			defaultAssetPublisherPortletId =
+				defaultAssetPublisherPortletIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String defaultAssetPublisherPortletId;
+
 	public Boolean getInheritChanges() {
 		return inheritChanges;
 	}
@@ -233,4 +258,4 @@ public class WidgetPageSettings
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1051915932
+// LIFERAY-REST-BUILDER-HASH:-803155053

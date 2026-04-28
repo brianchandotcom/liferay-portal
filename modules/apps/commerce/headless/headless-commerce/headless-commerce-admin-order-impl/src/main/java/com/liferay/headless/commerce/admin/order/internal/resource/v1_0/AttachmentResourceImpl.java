@@ -294,12 +294,11 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 			CommerceOrderAttachment commerceOrderAttachment)
 		throws PortalException {
 
-		FileEntry fileEntry = _dlAppLocalService.fetchFileEntry(
-			commerceOrderAttachment.getFileEntryId());
-
 		long attachmentId =
 			commerceOrderAttachment.getCommerceOrderAttachmentId();
 		long commerceOrderId = commerceOrderAttachment.getCommerceOrderId();
+		FileEntry fileEntry = _dlAppLocalService.fetchFileEntry(
+			commerceOrderAttachment.getFileEntryId());
 
 		return new Attachment() {
 			{
@@ -325,8 +324,13 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 					).build());
 				setDateModified(commerceOrderAttachment::getModifiedDate);
 				setExtension(
-					() ->
-						(fileEntry != null) ? fileEntry.getExtension() : null);
+					() -> {
+						if (fileEntry == null) {
+							return null;
+						}
+
+						return fileEntry.getExtension();
+					});
 				setExternalReferenceCode(
 					commerceOrderAttachment::getExternalReferenceCode);
 				setId(commerceOrderAttachment::getCommerceOrderAttachmentId);

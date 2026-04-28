@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.order.internal.graphql.servlet.v1_0;
 import com.liferay.headless.commerce.admin.order.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.admin.order.internal.graphql.query.v1_0.Query;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.AccountResourceImpl;
+import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.AttachmentResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.BillingAddressResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.ChannelResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.OrderAccountGroupResourceImpl;
@@ -25,6 +26,7 @@ import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.Shipping
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.TermOrderTypeResourceImpl;
 import com.liferay.headless.commerce.admin.order.internal.resource.v1_0.TermResourceImpl;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderAccountGroupResource;
@@ -66,6 +68,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setAttachmentResourceComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects);
 		Mutation.setBillingAddressResourceComponentServiceObjects(
 			_billingAddressResourceComponentServiceObjects);
 		Mutation.setOrderResourceComponentServiceObjects(
@@ -97,6 +101,8 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setAccountResourceComponentServiceObjects(
 			_accountResourceComponentServiceObjects);
+		Query.setAttachmentResourceComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects);
 		Query.setBillingAddressResourceComponentServiceObjects(
 			_billingAddressResourceComponentServiceObjects);
 		Query.setChannelResourceComponentServiceObjects(
@@ -165,6 +171,36 @@ public class ServletDataImpl implements ServletData {
 		_resourceMethodObjectValuePairs =
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
+					put(
+						"mutation#deleteOrderAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"deleteOrderAttachment"));
+					put(
+						"mutation#deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode"));
+					put(
+						"mutation#patchOrderAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"patchOrderAttachment"));
+					put(
+						"mutation#patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode"));
+					put(
+						"mutation#createOrderAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"postOrderAttachment"));
+					put(
+						"mutation#createOrderByExternalReferenceCodeAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"postOrderByExternalReferenceCodeAttachment"));
 					put(
 						"mutation#patchOrderByExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
@@ -607,6 +643,26 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"getOrderRuleAccountAccount"));
 					put(
+						"query#orderAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderAttachment"));
+					put(
+						"query#orderAttachments",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderAttachmentsPage"));
+					put(
+						"query#orderByExternalReferenceCodeAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderByExternalReferenceCodeAttachmentByExternalReferenceCode"));
+					put(
+						"query#orderByExternalReferenceCodeAttachments",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderByExternalReferenceCodeAttachmentsPage"));
+					put(
 						"query#orderByExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
 							BillingAddressResourceImpl.class,
@@ -856,6 +912,11 @@ public class ServletDataImpl implements ServletData {
 							AccountResourceImpl.class,
 							"getOrderByExternalReferenceCodeAccount"));
 					put(
+						"query#Order.byExternalReferenceCodeAttachments",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderByExternalReferenceCodeAttachmentsPage"));
+					put(
 						"query#Order.byExternalReferenceCodeBillingAddress",
 						new ObjectValuePair<>(
 							BillingAddressResourceImpl.class,
@@ -910,8 +971,17 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							TermOrderTypeResourceImpl.class,
 							"getTermByExternalReferenceCodeTermOrderTypesPage"));
+					put(
+						"query#Order.byExternalReferenceCodeAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"getOrderByExternalReferenceCodeAttachmentByExternalReferenceCode"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AttachmentResource>
+		_attachmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<BillingAddressResource>
@@ -982,4 +1052,4 @@ public class ServletDataImpl implements ServletData {
 		_orderAccountGroupResourceComponentServiceObjects;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-496484281
+// LIFERAY-REST-BUILDER-HASH:-1694090567

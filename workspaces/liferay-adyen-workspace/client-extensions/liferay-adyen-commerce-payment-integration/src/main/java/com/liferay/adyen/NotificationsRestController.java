@@ -218,13 +218,13 @@ public class NotificationsRestController extends BaseRestController {
 			return false;
 		}
 
+		Base64.Decoder decoder = Base64.getDecoder();
+
 		String[] authorizationParts = new String(
-			Base64.getDecoder(
-			).decode(
+			decoder.decode(
 				authorization.substring(
 					"Basic".length()
-				).trim()
-			),
+				).trim()),
 			StandardCharsets.UTF_8
 		).split(
 			":", 2

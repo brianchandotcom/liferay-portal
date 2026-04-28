@@ -77,6 +77,7 @@ export default async function shareSnapshotAction({
 					initialCollaborators,
 					itemId,
 					permissionOptions: PERMISSION_OPTIONS,
+					showExpirationDate: false,
 					title,
 				}),
 			size: 'md',

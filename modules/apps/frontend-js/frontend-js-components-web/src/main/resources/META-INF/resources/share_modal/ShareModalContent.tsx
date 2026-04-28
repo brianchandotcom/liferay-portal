@@ -43,6 +43,7 @@ function CollaboratorListItem({
 	onRemoveUser,
 	permissionOptions,
 	share,
+	showExpirationDate = true,
 	toBeShared,
 	type = COLLABORATOR_TYPE.USER,
 	user,
@@ -58,6 +59,7 @@ function CollaboratorListItem({
 	onRemoveUser: (user: ShareModalUserAccount | ShareModalUserGroup) => void;
 	permissionOptions: PermissionOption[];
 	share: boolean;
+	showExpirationDate?: boolean;
 	toBeShared?: boolean;
 	type: CollaboratorType;
 	user: ShareModalUserAccount | ShareModalUserGroup;
@@ -114,45 +116,54 @@ function CollaboratorListItem({
 					</div>
 				</div>
 
-				{error ? (
-					<div className="text-2 text-danger">{error}</div>
-				) : (
-					dateExpired && (
-						<div className="text-2">
-							{sub(Liferay.Language.get('access-expires-x'), [
-								formatDateForView(dateExpired),
-							])}
-
-							<ClayButtonWithIcon
-								aria-label={sub(
-									Liferay.Language.get('clear-x'),
-									[Liferay.Language.get('expiration-date')]
+				{showExpirationDate ? (
+					error ? (
+						<div className="text-2 text-danger">{error}</div>
+					) : (
+						dateExpired && (
+							<div className="text-2">
+								{sub(
+									Liferay.Language.get('access-expires-x'),
+									[formatDateForView(dateExpired)]
 								)}
-								borderless
-								className="c-ml-1 inline-item"
-								displayType="secondary"
-								monospaced
-								onClick={() =>
-									handleChangeUserProperties({
-										dateExpired: '',
-										error: '',
-									})
-								}
-								size="xs"
-								symbol="trash"
-							/>
-						</div>
+
+								<ClayButtonWithIcon
+									aria-label={sub(
+										Liferay.Language.get('clear-x'),
+										[
+											Liferay.Language.get(
+												'expiration-date'
+											),
+										]
+									)}
+									borderless
+									className="c-ml-1 inline-item"
+									displayType="secondary"
+									monospaced
+									onClick={() =>
+										handleChangeUserProperties({
+											dateExpired: '',
+											error: '',
+										})
+									}
+									size="xs"
+									symbol="trash"
+								/>
+							</div>
+						)
 					)
-				)}
+				) : null}
 			</div>
 
 			{canManageCollaborators && (
 				<div className="autofit-col p-0">
 					<div className="d-flex">
-						<ExpirationDateSelector
-							dateExpired={dateExpired}
-							onChange={handleChangeUserProperties}
-						/>
+						{showExpirationDate ? (
+							<ExpirationDateSelector
+								dateExpired={dateExpired}
+								onChange={handleChangeUserProperties}
+							/>
+						) : null}
 
 						<ClayDropDown
 							hasLeftSymbols={true}
@@ -215,6 +226,7 @@ export default function ShareModalContent({
 	initialCollaborators = [],
 	itemId,
 	permissionOptions,
+	showExpirationDate = true,
 	title = '',
 }: {
 	autocompleteHelpText?: string;
@@ -228,6 +240,7 @@ export default function ShareModalContent({
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	permissionOptions: PermissionOption[];
+	showExpirationDate?: boolean;
 	title: string;
 }) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
@@ -522,6 +535,7 @@ export default function ShareModalContent({
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}
 										permissionOptions={permissionOptions}
+										showExpirationDate={showExpirationDate}
 										{...item}
 									/>
 								))}

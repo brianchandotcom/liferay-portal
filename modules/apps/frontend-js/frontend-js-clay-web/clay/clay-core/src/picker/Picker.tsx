@@ -412,6 +412,37 @@ export function Picker<T extends Record<string, any> | string | number>({
 			listRef.current?.removeEventListener('scroll', onScroll, true);
 	}, [active]);
 
+	useEffect(() => {
+		if (!active || !listRef.current) {
+			return;
+		}
+
+		const key =
+			selectedKey || selectedKey === 0
+				? selectedKey
+				: activeDescendant;
+
+		if (!key && key !== 0) {
+			return;
+		}
+
+		const item = document.getElementById(String(key));
+
+		if (!item || !listRef.current.contains(item)) {
+			return;
+		}
+
+		const list = listRef.current;
+		const offsetTop = item.offsetTop - list.offsetTop;
+		const centeredTop =
+			offsetTop - (list.clientHeight - item.offsetHeight) / 2;
+
+		list.scrollTop = Math.max(
+			0,
+			Math.min(centeredTop, list.scrollHeight - list.clientHeight)
+		);
+	}, [active]);
+
 	const onMoveFocus = useCallback(
 		(
 			key: 'PageUp' | 'PageDown',

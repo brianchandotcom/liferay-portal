@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
 import com.liferay.commerce.service.CommerceOrderAttachmentService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -63,6 +64,9 @@ public class CommerceOrderAttachmentServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CommerceOrderAttachmentTestUtil.initialize(
+			CommerceOrderAttachmentServiceTest.class);
+
 		_group = GroupTestUtil.addGroup();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -102,7 +106,7 @@ public class CommerceOrderAttachmentServiceTest {
 			_commerceOrderAttachmentService.addCommerceOrderAttachment(
 				_commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "invoice",
 				RandomTestUtil.randomString(),
 				getClass().getResourceAsStream("dependencies/attachment.txt"));
 
@@ -127,7 +131,7 @@ public class CommerceOrderAttachmentServiceTest {
 			_commerceOrderAttachmentService.addCommerceOrderAttachment(
 				_commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "invoice",
 				RandomTestUtil.randomString(),
 				getClass().getResourceAsStream("dependencies/attachment.txt"));
 		}
@@ -321,7 +325,7 @@ public class CommerceOrderAttachmentServiceTest {
 			_commerceOrderAttachmentService.updateCommerceOrderAttachment(
 				_commerceOrderAttachment.getCommerceOrderAttachmentId(),
 				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), "invoice");
 
 			Assert.fail();
 		}
@@ -347,7 +351,7 @@ public class CommerceOrderAttachmentServiceTest {
 			_commerceOrderAttachmentService.updateCommerceOrderAttachment(
 				_commerceOrderAttachment.getCommerceOrderAttachmentId(),
 				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), "invoice");
 		}
 	}
 
@@ -358,8 +362,8 @@ public class CommerceOrderAttachmentServiceTest {
 		return _commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			_commerceOrder.getCommerceOrderId(), RandomTestUtil.nextDouble(),
-			restricted, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			restricted, RandomTestUtil.randomString(), "invoice",
+			RandomTestUtil.randomString(),
 			getClass().getResourceAsStream("dependencies/attachment.txt"));
 	}
 

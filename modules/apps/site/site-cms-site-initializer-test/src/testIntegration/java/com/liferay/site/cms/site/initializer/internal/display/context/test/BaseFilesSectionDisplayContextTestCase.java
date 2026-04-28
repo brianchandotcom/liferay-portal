@@ -17,7 +17,7 @@ public abstract class BaseFilesSectionDisplayContextTestCase
 	extends BaseSectionDisplayContextTestCase {
 
 	@Override
-	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
+	public Map<String, Object> getBaseAdditionalProps() throws Exception {
 		return new HashMapBuilder<>().putAll(
 			super.getBaseAdditionalProps()
 		).put(

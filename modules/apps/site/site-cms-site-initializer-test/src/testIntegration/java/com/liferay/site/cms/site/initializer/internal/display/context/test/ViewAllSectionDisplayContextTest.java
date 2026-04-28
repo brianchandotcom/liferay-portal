@@ -25,7 +25,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -54,7 +53,7 @@ public class ViewAllSectionDisplayContextTest
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
-	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
+	public Map<String, Object> getBaseAdditionalProps() throws Exception {
 		return new HashMapBuilder<>().putAll(
 			super.getBaseAdditionalProps()
 		).put(

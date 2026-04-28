@@ -113,13 +113,13 @@ import org.springframework.mock.web.MockHttpServletRequest;
 public abstract class BaseSectionDisplayContextTestCase
 	extends BaseDisplayContextTestCase {
 
-	public HashMap<String, Object> getAdditionalProps() throws Exception {
+	public Map<String, Object> getAdditionalProps() throws Exception {
 		return ReflectionTestUtil.invoke(
 			getSectionDisplayContext(mockHttpServletRequest),
 			"getAdditionalProps", new Class<?>[0]);
 	}
 
-	public HashMap<String, Object> getBaseAdditionalProps() throws Exception {
+	public Map<String, Object> getBaseAdditionalProps() throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)mockHttpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -919,7 +919,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		for (DropdownItem dropdownItem : dropdownItems) {
 			if (Objects.equals(dropdownItem.get("label"), expectedLabel)) {
-				dropdownItemData = (HashMap<String, Object>)dropdownItem.get(
+				dropdownItemData = (Map<String, Object>)dropdownItem.get(
 					"data");
 
 				break;
@@ -954,7 +954,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		for (DropdownItem dropdownItem : dropdownItems) {
 			if (Objects.equals(dropdownItem.get("label"), unexpectedLabel)) {
-				dropdownItemData = (HashMap<String, Object>)dropdownItem.get(
+				dropdownItemData = (Map<String, Object>)dropdownItem.get(
 					"data");
 
 				break;
@@ -980,7 +980,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			JSONCompareMode.STRICT);
 	}
 
-	private HashMap<String, Object> _getBreadcrumbProps(
+	private Map<String, Object> _getBreadcrumbProps(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -1222,8 +1222,7 @@ public abstract class BaseSectionDisplayContextTestCase
 	}
 
 	private String _getRedirect(DropdownItem dropdownItem) {
-		Map<String, Object> map = (HashMap<String, Object>)dropdownItem.get(
-			"data");
+		Map<String, Object> map = (Map<String, Object>)dropdownItem.get("data");
 
 		if (map == null) {
 			return null;

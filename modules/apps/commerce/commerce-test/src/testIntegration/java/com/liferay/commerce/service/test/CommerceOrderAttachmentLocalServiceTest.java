@@ -11,11 +11,13 @@ import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderAttachmentTitleException;
+import com.liferay.commerce.exception.CommerceOrderAttachmentTypeException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -56,6 +58,8 @@ public class CommerceOrderAttachmentLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CommerceOrderAttachmentTestUtil.initialize(getClass());
+
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
@@ -81,8 +85,8 @@ public class CommerceOrderAttachmentLocalServiceTest {
 		try {
 			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
 				null, _user.getUserId(), _commerceOrder.getCommerceOrderId(),
-				RandomTestUtil.nextDouble(), false, null,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.nextDouble(), false, null, _TYPE_KEY,
+				RandomTestUtil.randomString(),
 				getClass().getResourceAsStream("dependencies/attachment.txt"));
 
 			Assert.fail();
@@ -93,16 +97,31 @@ public class CommerceOrderAttachmentLocalServiceTest {
 			Assert.assertNotNull(commerceOrderAttachmentTitleException);
 		}
 
+		try {
+			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
+				null, _user.getUserId(), _commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.nextDouble(), false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				getClass().getResourceAsStream("dependencies/attachment.txt"));
+
+			Assert.fail();
+		}
+		catch (CommerceOrderAttachmentTypeException
+					commerceOrderAttachmentTypeException) {
+
+			Assert.assertNotNull(commerceOrderAttachmentTypeException);
+		}
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 		double priority = RandomTestUtil.nextDouble();
 		String title = RandomTestUtil.randomString();
-		String type = RandomTestUtil.randomString();
 
 		CommerceOrderAttachment commerceOrderAttachment =
 			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
 				externalReferenceCode, _user.getUserId(),
 				_commerceOrder.getCommerceOrderId(), priority, false, title,
-				type, RandomTestUtil.randomString(),
+				_TYPE_KEY, RandomTestUtil.randomString(),
 				getClass().getResourceAsStream("dependencies/attachment.txt"));
 
 		Assert.assertEquals(
@@ -119,7 +138,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 		Assert.assertEquals(priority, commerceOrderAttachment.getPriority(), 0);
 		Assert.assertFalse(commerceOrderAttachment.isRestricted());
 		Assert.assertEquals(title, commerceOrderAttachment.getTitle());
-		Assert.assertEquals(type, commerceOrderAttachment.getType());
+		Assert.assertEquals(_TYPE_KEY, commerceOrderAttachment.getType());
 
 		LocalRepository localRepository = _commerceOrder.getLocalRepository();
 
@@ -240,8 +259,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 		try {
 			_commerceOrderAttachmentLocalService.updateCommerceOrderAttachment(
 				commerceOrderAttachment.getCommerceOrderAttachmentId(),
-				RandomTestUtil.nextDouble(), false, null,
-				RandomTestUtil.randomString());
+				RandomTestUtil.nextDouble(), false, null, _TYPE_KEY);
 
 			Assert.fail();
 		}
@@ -251,19 +269,32 @@ public class CommerceOrderAttachmentLocalServiceTest {
 			Assert.assertNotNull(commerceOrderAttachmentTitleException);
 		}
 
+		try {
+			_commerceOrderAttachmentLocalService.updateCommerceOrderAttachment(
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				RandomTestUtil.nextDouble(), false,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (CommerceOrderAttachmentTypeException
+					commerceOrderAttachmentTypeException) {
+
+			Assert.assertNotNull(commerceOrderAttachmentTypeException);
+		}
+
 		double priority = RandomTestUtil.nextDouble();
 		String title = RandomTestUtil.randomString();
-		String type = RandomTestUtil.randomString();
 
 		commerceOrderAttachment =
 			_commerceOrderAttachmentLocalService.updateCommerceOrderAttachment(
 				commerceOrderAttachment.getCommerceOrderAttachmentId(),
-				priority, true, title, type);
+				priority, true, title, _TYPE_KEY);
 
 		Assert.assertEquals(priority, commerceOrderAttachment.getPriority(), 0);
 		Assert.assertTrue(commerceOrderAttachment.isRestricted());
 		Assert.assertEquals(title, commerceOrderAttachment.getTitle());
-		Assert.assertEquals(type, commerceOrderAttachment.getType());
+		Assert.assertEquals(_TYPE_KEY, commerceOrderAttachment.getType());
 	}
 
 	private CommerceOrderAttachment _addCommerceOrderAttachment(
@@ -273,10 +304,12 @@ public class CommerceOrderAttachmentLocalServiceTest {
 		return _commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			_commerceOrder.getCommerceOrderId(), RandomTestUtil.nextDouble(),
-			restricted, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			restricted, RandomTestUtil.randomString(), _TYPE_KEY,
+			RandomTestUtil.randomString(),
 			getClass().getResourceAsStream("dependencies/attachment.txt"));
 	}
+
+	private static final String _TYPE_KEY = "invoice";
 
 	private AccountEntry _accountEntry;
 	private CommerceChannel _commerceChannel;

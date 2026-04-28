@@ -65,17 +65,19 @@ public class CommerceOrderAttachmentSearchPermissionFilterContributor
 
 				for (AccountEntry accountEntry : accountEntries) {
 					if (_portletResourcePermission.contains(
-						permissionChecker,
-						accountEntry.getAccountEntryGroupId(),
-						CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS) || (
-							_portletResourcePermission.contains(
-								permissionChecker,
-								accountEntry.getAccountEntryGroupId(),
-								CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS) ||
-							_portletResourcePermission.contains(
-								permissionChecker,
-								accountEntry.getAccountEntryGroupId(),
-								CommerceOrderActionKeys.VIEW_OPEN_COMMERCE_ORDERS))) {
+							permissionChecker,
+							accountEntry.getAccountEntryGroupId(),
+							CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS) ||
+						_portletResourcePermission.contains(
+							permissionChecker,
+							accountEntry.getAccountEntryGroupId(),
+							CommerceOrderActionKeys.
+								VIEW_OPEN_COMMERCE_ORDERS) ||
+						_portletResourcePermission.contains(
+							permissionChecker,
+							accountEntry.getAccountEntryGroupId(),
+							CommerceOrderActionKeys.
+								VIEW_OPEN_COMMERCE_ORDERS)) {
 
 						termsFilter.addValue(
 							String.valueOf(

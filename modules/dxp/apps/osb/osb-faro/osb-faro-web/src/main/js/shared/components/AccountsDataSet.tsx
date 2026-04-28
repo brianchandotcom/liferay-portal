@@ -6,7 +6,12 @@ import {Routes} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 
-const lifecycleStagesLabelMap = {
+type DisplayType = 'danger' | 'info' | 'secondary' | 'success' | 'warning';
+
+const lifecycleStagesLabelMap: Record<
+	LifecycleStages,
+	{displayType: DisplayType; label: string}
+> = {
 	[LifecycleStages.AT_RISK]: {
 		displayType: 'danger',
 		label: Liferay.Language.get('at-risk')
@@ -79,24 +84,35 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 				apiURL={`/o/faro/contacts/${groupId}/account/search`}
 				configInURLBehavior='off'
 				customDataRenderers={{
-					accountLifecycleStageRenderer: ({value}) =>
+					accountLifecycleStageRenderer: ({
+						value
+					}: {
+						value: LifecycleStages;
+					}) =>
 						value &&
 						columns.cmsLabelRenderer({
 							displayType:
 								lifecycleStagesLabelMap[value].displayType,
 							label: lifecycleStagesLabelMap[value].label
 						}),
-					accountNameRenderer: ({itemData, value}) =>
+					accountNameRenderer: ({
+						itemData,
+						value
+					}: {
+						itemData: {id: string | number};
+						value: string;
+					}) =>
 						columns.nameAndLinkRenderer({
 							groupId,
 							itemData,
 							route: Routes.CONTACTS_ACCOUNT,
 							value
 						}),
-					annualRevenueRenderer: ({value}) => (
+					annualRevenueRenderer: ({value}: {value: number}) => (
 						<div>{toThousands(value)}</div>
 					),
-					dateRenderer: ({value}) => columns.dateRenderer({value})
+					dateRenderer: ({value}: {value: string}) =>
+						columns.dateRenderer({itemData: {}, value})
 				}}
 				emptyState={{
 					description: Liferay.Language.get(

@@ -47,7 +47,7 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 		);
 	}
 
-	const percentageColor = getStatsColor(trend?.trendClassification);
+	const percentageColor = getStatsColor(trend?.trendClassification || '');
 
 	return (
 		<Card className={classNames(className, 'flex-fill p-3 w-100')}>
@@ -73,7 +73,7 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 							TrendClassification.Neutral && (
 							<ClayIcon
 								style={{color: percentageColor}}
-								symbol={getIcon(trend?.percentage)}
+								symbol={getIcon(trend?.percentage ?? 0) ?? ''}
 							/>
 						)}
 					{renderTrendLabel(

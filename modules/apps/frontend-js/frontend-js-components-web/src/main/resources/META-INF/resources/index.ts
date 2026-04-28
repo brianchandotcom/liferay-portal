@@ -55,6 +55,28 @@ export {
 export {default as openToast} from './toast/openToast';
 export type {OpenToastProps} from './toast/openToast';
 
+export {default as CollaboratorService} from './share_modal/CollaboratorService';
+export type {
+	CollaboratorItem,
+	CollaboratorPayload,
+} from './share_modal/CollaboratorService';
+export {
+	default as ExpirationDateSelector,
+	formatDateForView,
+	formatDateToISO,
+} from './share_modal/ExpirationDateSelector';
+export {default as PermissionSelector} from './share_modal/PermissionSelector';
+export {default as ShareModalContent} from './share_modal/ShareModalContent';
+export {COLLABORATOR_TYPE} from './share_modal/types';
+export type {
+	Collaborator,
+	CollaboratorType,
+	PermissionOption,
+	ShareModalCreator,
+	ShareModalUserAccount,
+	ShareModalUserGroup,
+} from './share_modal/types';
+
 export {
 	Locale,
 	Translations,

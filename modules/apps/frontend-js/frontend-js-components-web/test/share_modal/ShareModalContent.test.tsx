@@ -1,0 +1,243 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom';
+
+// eslint-disable-next-line
+import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
+import {act, fireEvent, render, waitFor} from '@testing-library/react';
+import React from 'react';
+
+import ShareModalContent from '../../src/main/resources/META-INF/resources/share_modal/ShareModalContent';
+import {PermissionOption} from '../../src/main/resources/META-INF/resources/share_modal/types';
+
+jest.useFakeTimers();
+
+jest.mock('../../src/main/resources/META-INF/resources/toast/openToast', () => ({
+	__esModule: true,
+	default: jest.fn(),
+}));
+
+jest.mock('frontend-js-web', () => ({
+	dateUtils: {
+		getFirstDayOfWeek: jest.fn(() => 0),
+	},
+	fetch: (...args: any[]) => (global.fetch as any)(...args),
+	sub: jest.fn((str) => str),
+}));
+
+const mockCloseModal = jest.fn();
+
+const DEFAULT_PERMISSION_OPTIONS: PermissionOption[] = [
+	{label: 'view-and-download', value: 'VIEW'},
+	{label: 'view-download-and-comment', value: 'ADD_DISCUSSION,VIEW'},
+	{label: 'view-download-comment-and-update', value: 'ADD_DISCUSSION,UPDATE,VIEW'},
+];
+
+const FOLDER_PERMISSION_OPTIONS: PermissionOption[] = [
+	{label: 'view-and-download', value: 'VIEW'},
+	{label: 'view-download-and-update', value: 'UPDATE,VIEW'},
+];
+
+const DEFAULT_PROPS = {
+	autocompleteURL: '/search',
+	closeModal: mockCloseModal,
+	collaboratorURL: '/o/cms/basic-documents/{objectEntryId}/collaborators',
+	creator: {
+		contentType: 'UserAccount',
+		id: '1',
+		name: 'Test1 Test1',
+	},
+	initialCollaborators: [
+		{
+			actionIds: 'VIEW',
+			share: false,
+			type: 'User' as const,
+			user: {
+				id: '2',
+				name: 'Test2 Test2',
+			},
+		},
+	],
+	itemId: 20,
+	permissionOptions: DEFAULT_PERMISSION_OPTIONS,
+	title: 'Test Document',
+};
+
+const renderComponent = (props = DEFAULT_PROPS) => {
+	return render(<ShareModalContent {...props} />);
+};
+
+describe('ShareModalContent', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+
+		global.fetch = jest.fn().mockImplementation(() => {
+			return Promise.resolve({
+				json: () => Promise.resolve({items: []}),
+				ok: true,
+			});
+		});
+	});
+
+	it('checks the accessibility of the share content', async () => {
+		const {container} = renderComponent();
+
+		await act(async () => {
+			checkAccessibility({bestPractices: true, context: container});
+		});
+	});
+
+	it('renders the modal header and collaborators header', () => {
+		const {getByText} = renderComponent();
+
+		expect(getByText('share-x')).toBeInTheDocument();
+		expect(getByText('add-people-to-collaborate')).toBeInTheDocument();
+		expect(getByText('who-has-access (x-users)')).toBeInTheDocument();
+	});
+
+	it('renders the list of users with access', () => {
+		const {container} = renderComponent();
+
+		expect(
+			container.querySelectorAll<HTMLInputElement>(
+				'li.list-group-item .autofit-col-expand'
+			)[0]
+		).toHaveTextContent('Test2 Test2');
+
+		expect(
+			container.querySelectorAll<HTMLInputElement>(
+				'li.list-group-item .autofit-col-expand'
+			)[1]
+		).toHaveTextContent('Test1 Test1');
+		expect(
+			container.querySelectorAll<HTMLInputElement>(
+				'li.list-group-item'
+			)[1]
+		).toHaveTextContent(/owner/);
+	});
+
+	it('renders the cancel and save buttons', () => {
+		const {getByText} = renderComponent();
+
+		expect(getByText('cancel')).toBeInTheDocument();
+
+		const saveButton = getByText('save');
+
+		expect(saveButton).toBeInTheDocument();
+		expect(saveButton).toBeDisabled();
+	});
+
+	it('calls search when the autocomplete input changes', async () => {
+		const {container, getByRole} = renderComponent();
+
+		const input = container.querySelector<HTMLInputElement>(
+			'input#collaboratorAutocomplete'
+		)!;
+
+		await act(async () => {
+			fireEvent.change(input, {
+				target: {value: 'Test3'},
+			});
+		});
+
+		await act(async () => {
+			jest.advanceTimersByTime(300);
+		});
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			expect.stringContaining('search?search=Test3'),
+			expect.objectContaining({
+				method: 'GET',
+			}),
+			undefined
+		);
+
+		await waitFor(() => {
+			expect(getByRole('listbox')).toBeInTheDocument();
+		});
+	});
+
+	it('calls submission when save is clicked', async () => {
+		const {getByLabelText, getByRole, getByText} = renderComponent();
+
+		fireEvent.click(getByLabelText('more-options'));
+
+		waitFor(() => {
+			expect(
+				getByRole('menuitem', {name: 'allow-resharing'})
+			).toBeInTheDocument();
+		});
+
+		await act(async () => {
+			fireEvent.click(getByRole('menuitem', {name: 'allow-resharing'}));
+		});
+
+		waitFor(() => {
+			expect(getByText('save')).toBeEnabled();
+		});
+
+		await act(async () => {
+			fireEvent.click(getByText('save'));
+		});
+
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/o/cms/basic-documents/20/collaborators',
+			expect.objectContaining({
+				body: JSON.stringify([
+					{actionIds: ['VIEW'], id: '2', share: true, type: 'User'},
+				]),
+				method: 'POST',
+			})
+		);
+
+		expect(mockCloseModal).toHaveBeenCalledTimes(1);
+	});
+
+	it('renders the supplied permission options', () => {
+		const {getByLabelText, getByRole} = renderComponent();
+
+		fireEvent.click(getByLabelText('edit-permissions'));
+
+		expect(
+			getByRole('option', {name: 'view-and-download'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-and-comment'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-comment-and-update'})
+		).toBeInTheDocument();
+	});
+
+	it('renders only the permission options the caller provides', () => {
+		const folderProps = {
+			...DEFAULT_PROPS,
+			permissionOptions: FOLDER_PERMISSION_OPTIONS,
+		};
+
+		const {getByLabelText, getByRole, queryByText} =
+			renderComponent(folderProps);
+
+		fireEvent.click(getByLabelText('edit-permissions'));
+
+		expect(
+			getByRole('option', {name: 'view-and-download'})
+		).toBeInTheDocument();
+		expect(
+			getByRole('option', {name: 'view-download-and-update'})
+		).toBeInTheDocument();
+
+		expect(
+			queryByText('view-download-and-comment')
+		).not.toBeInTheDocument();
+	});
+});

@@ -55,7 +55,6 @@ export function RedirectToEditObjectDetailsModal({
 										)}
 										displayType="secondary"
 										onClick={onClose}
-										size="sm"
 									>
 										{Liferay.Language.get('cancel')}
 									</ClayButton>
@@ -66,7 +65,6 @@ export function RedirectToEditObjectDetailsModal({
 										)}
 										displayType="primary"
 										onClick={handleSubmit}
-										size="sm"
 									>
 										{Liferay.Language.get('open-page-view')}
 									</ClayButton>

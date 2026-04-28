@@ -39,7 +39,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +127,7 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 
 	@Test
 	public void testGetAdditionalProps() throws Exception {
-		HashMap<String, Object> additionalProps = ReflectionTestUtil.invoke(
+		Map<String, Object> additionalProps = ReflectionTestUtil.invoke(
 			_getViewRelatedAssetsSectionDisplayContext(mockHttpServletRequest),
 			"getAdditionalProps", new Class<?>[0]);
 

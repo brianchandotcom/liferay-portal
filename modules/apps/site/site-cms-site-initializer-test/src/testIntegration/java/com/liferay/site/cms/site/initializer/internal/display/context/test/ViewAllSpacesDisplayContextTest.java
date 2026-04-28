@@ -22,7 +22,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -75,7 +75,7 @@ public class ViewAllSpacesDisplayContextTest
 			_getBreadcrumbProps(httpServletRequest));
 	}
 
-	private HashMap<String, Object> _getBreadcrumbProps(
+	private Map<String, Object> _getBreadcrumbProps(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 

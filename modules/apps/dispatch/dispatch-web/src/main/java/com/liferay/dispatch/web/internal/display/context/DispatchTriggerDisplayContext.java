@@ -15,12 +15,15 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -238,14 +241,30 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 						dispatchTrigger.
 							getDispatchTaskSettingsUnicodeProperties();
 
-					if (!unicodeProperties.containsKey("featureFlagKey") ||
-						FeatureFlagManagerUtil.isEnabled(
-							unicodeProperties.getProperty("featureFlagKey"))) {
-
+					if (!unicodeProperties.containsKey("featureFlagKey")) {
 						return true;
 					}
 
-					return false;
+					String featureFlagKey = unicodeProperties.getProperty(
+						"featureFlagKey");
+
+					try {
+						return FeatureFlagManagerUtil.isEnabled(
+							dispatchRequestHelper.getCompanyId(),
+							featureFlagKey);
+					}
+					catch (IllegalStateException illegalStateException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Feature flag key ", featureFlagKey,
+									" is not registered for dispatch trigger ",
+									dispatchTrigger.getDispatchTriggerId()),
+								illegalStateException);
+						}
+
+						return false;
+					}
 				}));
 		_searchContainer.setRowChecker(getRowChecker());
 
@@ -269,6 +288,9 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	public boolean isClusterModeSingle(String type) {
 		return _dispatchTaskExecutorRegistry.isClusterModeSingle(type);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DispatchTriggerDisplayContext.class);
 
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;

@@ -734,7 +734,7 @@ test('can import CSV file with custom columns order', async ({
 			testLongTextField: 'This is a long text to test testLongTextField',
 			testPrecisionDecimalField: 321.123,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField\n </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField',
 			testTextField: 'Test',
@@ -796,7 +796,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 					'This is a long text to test testLongTextField. The first entry',
 				testPrecisionDecimalField: 321.123,
 				testRichTextField:
-					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry.\n </p>',
+					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry. </p>',
 				testRichTextFieldRawText:
 					'This is a long text with some fomatting to text testRichTextField. The first entry.',
 				testTextField: 'Test_FirstEntry',
@@ -816,7 +816,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 					'This is a long text to test testLongTextField. The second entry',
 				testPrecisionDecimalField: 123.321,
 				testRichTextField:
-					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry.\n </p>',
+					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry. </p>',
 				testRichTextFieldRawText:
 					'This is a long text with some fomatting to text testRichTextField. The second entry.',
 				testTextField: 'Test_SecondEntry',
@@ -889,7 +889,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField.\n </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField.',
 			testTextField: 'Test',
@@ -909,7 +909,7 @@ test('can import CSV file with new and existing site scoped object entries', asy
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. New entry.\n </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. New entry. </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. New entry.',
 			testTextField: 'Test_SecondEntry',
@@ -979,7 +979,7 @@ test('can import CSV file with new and modified existing company scoped object e
 				'This is a long text to test testLongTextField. The first entry',
 			testPrecisionDecimalField: 321.123,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The modified entry.\n </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The modified entry. </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The modified entry.',
 			testTextField: 'Test_Modified',
@@ -998,7 +998,7 @@ test('can import CSV file with new and modified existing company scoped object e
 				'This is a long text to test testLongTextField. The second entry',
 			testPrecisionDecimalField: 123.321,
 			testRichTextField:
-				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The new entry.\n </p>',
+				'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The new entry. </p>',
 			testRichTextFieldRawText:
 				'This is a long text with some fomatting to text testRichTextField. The new entry.',
 			testTextField: 'Test_NewEntry',

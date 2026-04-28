@@ -63,7 +63,8 @@ const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
-		'LPS-178052': {enabled: true},
+		'LPS-178052': { enabled: true },
+		'LPD-83570': {enabled: true}, // Phone Number field
 	}),
 	globalMenuPagesTest,
 	formsPagesTest,
@@ -5318,6 +5319,220 @@ test.describe('Manage object entries through View Object Entries', () => {
 			page.getByRole('cell', {name: secondItemName})
 		).toBeVisible();
 	});
+
+	test(
+		'can add an entry with phone number object field where prefix type is defined by user',
+		{tag: ['@LPD-83570']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const localNumber = '1231231234';
+			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
+			const prefix = '+1';
+
+			const fieldContainer = page.locator(
+				`[data-field-name="${objectFieldLabel}"]`
+			);
+
+			let objectDefinition: ObjectDefinition;
+
+			await test.step('Create an object definition', async () => {
+				const objectDefinitionAPIClient =
+					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+				const response =
+					await objectDefinitionAPIClient.postObjectDefinition({
+						active: true,
+						externalReferenceCode: getRandomString(),
+						label: {
+							en_US: getRandomString(),
+						},
+						name: 'ObjectDefinitionName' + getRandomInt(),
+						objectFields: [
+							{
+								DBType: 'String' as const,
+								businessType: 'PhoneNumber' as const,
+								indexedAsKeyword: false,
+								indexedLanguageId: '',
+								label: {en_US: objectFieldLabel},
+								localized: false,
+								name: objectFieldLabel,
+								objectFieldSettings: [
+									{
+										name: 'prefixType',
+										value: 'definedByUser',
+									}
+								] as any,
+								readOnly: 'false',
+								readOnlyConditionExpression: '',
+								required: false,
+								state: false,
+								system: false,
+								type: 'String' as const,
+								unique: false,
+							},
+						],
+						panelCategoryKey: 'control_panel.object',
+						pluralLabel: {
+							en_US: 'NewObject',
+						},
+						portlet: true,
+						scope: 'company',
+						status: {
+							code: 0,
+						},
+					});
+
+				objectDefinition = response.body;
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate to the object definition and add an entry', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+			});
+
+			await test.step('Select the "United States" prefix, fill the phone number field, and save the entry', async () => {
+				await fieldContainer.getByRole('combobox').click();
+
+				await page
+					.getByRole('option', {name: /United States/})
+					.click();
+
+				await expect(fieldContainer.getByText(prefix)).toBeVisible();
+
+				await fieldContainer.locator('input[type="tel"]').fill(localNumber);
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+			});
+
+			await test.step('Verify the phone number field values are saved', async () => {
+				await viewObjectEntriesPage.backButton.click();
+
+				await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+				await expect(fieldContainer.getByRole('combobox')).toHaveText(
+					prefix
+				);
+
+				await expect(
+					fieldContainer.locator('input[type="tel"]')
+				).toHaveValue(localNumber);
+			});
+		}
+	);
+
+	test(
+		'can add an entry with phone number object field where prefix type is fixed',
+		{tag: ['@LPD-83570']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const localNumber = '11987654321';
+			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
+			const prefix = '+1';
+
+			const fieldContainer = page.locator(
+				`[data-field-name="${objectFieldLabel}"]`
+			);
+
+			let objectDefinition: ObjectDefinition;
+
+			await test.step('Create an object definition', async () => {
+				const objectDefinitionAPIClient =
+					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+				const response =
+					await objectDefinitionAPIClient.postObjectDefinition({
+						active: true,
+						externalReferenceCode: getRandomString(),
+						label: {
+							en_US: getRandomString(),
+						},
+						name: 'ObjectDefinitionName' + getRandomInt(),
+						objectFields: [
+							{
+								DBType: 'String' as const,
+								businessType: 'PhoneNumber' as const,
+								indexedAsKeyword: false,
+								indexedLanguageId: '',
+								label: {en_US: objectFieldLabel},
+								localized: false,
+								name: objectFieldLabel,
+								objectFieldSettings: [
+									{
+										name: 'prefixType',
+										value: 'fixed',
+									},
+									{
+										name: 'prefix',
+										value: prefix,
+									},
+								] as any,
+								readOnly: 'false',
+								readOnlyConditionExpression: '',
+								required: false,
+								state: false,
+								system: false,
+								type: 'String' as const,
+								unique: false,
+							},
+						],
+						panelCategoryKey: 'control_panel.object',
+						pluralLabel: {
+							en_US: 'NewObject',
+						},
+						portlet: true,
+						scope: 'company',
+						status: {
+							code: 0,
+						},
+					});
+
+				objectDefinition = response.body;
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate to the object definition and add an entry', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+			});
+
+			await test.step('Fill the phone number field and save the entry', async () => {
+				await expect(fieldContainer.getByText(prefix)).toBeVisible();
+
+				await fieldContainer.locator('input[type="tel"]').fill(localNumber);
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+			});
+
+			await test.step('Verify the phone number field values are saved', async () => {
+				await viewObjectEntriesPage.backButton.click();
+
+				await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+				await expect(fieldContainer.getByText(prefix)).toBeVisible();
+
+				await expect(
+					fieldContainer.locator('input[type="tel"]')
+				).toHaveValue(localNumber);
+			});
+		}
+	);
 });
 
 ckEditor4Test.describe('Manage object entries with CKEditor 4', () => {

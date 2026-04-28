@@ -876,8 +876,8 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	private GroupByStep _getLayoutFragmentEntryLinksByFragmentEntryGroupByStep(
-			FragmentEntry fragmentEntry, FromStep fromStep,
-			boolean maxCreateDatePredicate, long scopeGroupId)
+			FragmentEntry fragmentEntry, FromStep fromStep, boolean latest,
+			long scopeGroupId)
 		throws PortalException {
 
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
@@ -885,9 +885,12 @@ public class FragmentEntryLinkLocalServiceImpl
 			FragmentEntryLinkTable.INSTANCE.plid.notIn(_getPlidsDSLQuery(null)),
 			scopeGroupId);
 
-		if (maxCreateDatePredicate) {
-			predicate = predicate.and(
-				_getMaxCreateDatePredicate(fragmentEntry));
+		if (latest) {
+			return fromStep.from(
+				FragmentEntryLinkTable.INSTANCE
+			).where(
+				_getLatestFragmentEntryLinkPredicate(predicate)
+			);
 		}
 
 		return fromStep.from(
@@ -900,8 +903,7 @@ public class FragmentEntryLinkLocalServiceImpl
 	private GroupByStep
 			_getLayoutPageTemplateFragmentEntryLinksByFragmentEntryGroupByStep(
 				FragmentEntry fragmentEntry, FromStep fromStep,
-				int layoutPageTemplateType, boolean maxCreateDatePredicate,
-				long scopeGroupId)
+				int layoutPageTemplateType, boolean latest, long scopeGroupId)
 		throws PortalException {
 
 		Predicate predicate = _getFragmentEntryLinksByFragmentEntryPredicate(
@@ -912,9 +914,12 @@ public class FragmentEntryLinkLocalServiceImpl
 						layoutPageTemplateType))),
 			scopeGroupId);
 
-		if (maxCreateDatePredicate) {
-			predicate = predicate.and(
-				_getMaxCreateDatePredicate(fragmentEntry));
+		if (latest) {
+			return fromStep.from(
+				FragmentEntryLinkTable.INSTANCE
+			).where(
+				_getLatestFragmentEntryLinkPredicate(predicate)
+			);
 		}
 
 		return fromStep.from(
@@ -922,35 +927,6 @@ public class FragmentEntryLinkLocalServiceImpl
 		).where(
 			predicate
 		);
-	}
-
-	private Predicate _getMaxCreateDatePredicate(FragmentEntry fragmentEntry)
-		throws PortalException {
-
-		FragmentEntryLinkTable tempFragmentEntryLinkTable =
-			FragmentEntryLinkTable.INSTANCE.as("tempFragmentEntryLinkTable");
-
-		Predicate predicate = _getAllFragmentEntryLinksByFragmentEntryPredicate(
-			fragmentEntry, tempFragmentEntryLinkTable);
-
-		return FragmentEntryLinkTable.INSTANCE.createDate.in(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.max(
-					tempFragmentEntryLinkTable.createDate)
-			).from(
-				tempFragmentEntryLinkTable
-			).where(
-				predicate.and(
-					tempFragmentEntryLinkTable.groupId.eq(
-						FragmentEntryLinkTable.INSTANCE.groupId)
-				).and(
-					tempFragmentEntryLinkTable.classNameId.eq(
-						FragmentEntryLinkTable.INSTANCE.classNameId)
-				).and(
-					tempFragmentEntryLinkTable.classPK.eq(
-						FragmentEntryLinkTable.INSTANCE.classPK)
-				)
-			));
 	}
 
 	private Function<OrderByStep, LimitStep> _getOrderByStepLimitStepFunction(

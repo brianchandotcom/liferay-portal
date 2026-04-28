@@ -6,13 +6,16 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import com.nimbusds.common.contenttype.ContentType;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
+
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -38,12 +41,14 @@ public class OpenIdConnectHttpUtil {
 		String requestBody = httpRequest.getBody();
 
 		if (Validator.isNotNull(requestBody)) {
-			httpOptions.setBody(
-				requestBody,
-				GetterUtil.getString(
-					String.valueOf(httpRequest.getEntityContentType()),
-					"application/x-www-form-urlencoded"),
-				StringPool.UTF8);
+			ContentType entityContentType = httpRequest.getEntityContentType();
+
+			String contentType =
+				(entityContentType == null) ?
+					"application/x-www-form-urlencoded" :
+						entityContentType.toString();
+
+			httpOptions.setBody(requestBody, contentType, StringPool.UTF8);
 		}
 
 		httpOptions.setLocation(String.valueOf(httpRequest.getURL()));
@@ -62,16 +67,17 @@ public class OpenIdConnectHttpUtil {
 		return httpOptions;
 	}
 
-	public static HTTPResponse toHTTPResponse(
-			Http.Options httpOptions, String responseContent)
-		throws ParseException {
+	public static HTTPResponse toHTTPResponse(Http.Options httpOptions)
+		throws IOException, ParseException {
+
+		String responseJSON = HttpUtil.URLtoString(httpOptions);
 
 		Http.Response liferayHttpResponse = httpOptions.getResponse();
 
 		HTTPResponse httpResponse = new HTTPResponse(
 			liferayHttpResponse.getResponseCode());
 
-		httpResponse.setBody(responseContent);
+		httpResponse.setBody(responseJSON);
 
 		String contentType = liferayHttpResponse.getContentType();
 

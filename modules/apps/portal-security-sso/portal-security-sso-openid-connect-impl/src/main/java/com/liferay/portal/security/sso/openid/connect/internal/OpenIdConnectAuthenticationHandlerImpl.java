@@ -445,11 +445,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 				httpRequest);
 
-			String responseContent = _http.URLtoString(httpOptions);
-
 			UserInfoResponse userInfoResponse = UserInfoResponse.parse(
-				OpenIdConnectHttpUtil.toHTTPResponse(
-					httpOptions, responseContent));
+				OpenIdConnectHttpUtil.toHTTPResponse(httpOptions));
 
 			if (userInfoResponse instanceof UserInfoErrorResponse) {
 				UserInfoErrorResponse userInfoErrorResponse =
@@ -520,9 +517,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
-
-	@Reference
-	private Http _http;
 
 	@Reference
 	private Language _language;

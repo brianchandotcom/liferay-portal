@@ -59,8 +59,8 @@ spec:
                             parameters:
                                 -   name: expected-generation
                                     value: "{{ "{{" }}steps.apply-infrastructure.outputs.parameters.generation}}"
-                        name: wait-infrastructure-ready
-                        template: wait-infrastructure-ready
+                        name: wait-for-infrastructure
+                        template: wait-for-infrastructure
         -   container:
                 args:
                     -   storage
@@ -385,13 +385,13 @@ spec:
         -   inputs:
                 parameters:
                     -   name: expected-generation
-            name: wait-infrastructure-ready
+            name: wait-for-infrastructure
             script:
                 command: [sh]
                 image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
                 resources:
                     {{- .Values.resources.default | toYaml | nindent 20 }}
                 source: |-
-                    {{- tpl (.Files.Get "scripts/wait-infrastructure-ready.sh") . | nindent 20 }}
+                    {{- tpl (.Files.Get "scripts/wait-for-infrastructure.sh") . | nindent 20 }}
     ttlStrategy:
         {{- .Values.argo.workflowSpec.ttlStrategy | toYaml | nindent 8 }}

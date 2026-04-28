@@ -703,8 +703,14 @@ test(
 			`${liferayConfig.environment.baseUrl}/o/blogs-web/blogs/entry_cover_image_caption.jsp?coverImageCaption=${encodeURIComponent(payload)}&coverImageURL=https://example.com/image.png`
 		);
 
-		await expect(page.locator('.cover-image')).not.toHaveAttribute('onmouseover', /.+/);
-		await expect(page.locator('.cover-image')).toHaveAttribute('aria-label', /onmouseover=alert\(1\)/);
+		await expect(page.locator('.cover-image')).not.toHaveAttribute(
+			'onmouseover',
+			/.+/
+		);
+		await expect(page.locator('.cover-image')).toHaveAttribute(
+			'aria-label',
+			/onmouseover=alert\(1\)/
+		);
 	}
 );
 
@@ -752,7 +758,10 @@ test(
 			`${liferayConfig.environment.baseUrl}/o/blogs-web/blogs/entry_cover_image_caption.jsp?coverImageCaption=safe&coverImageURL=${encodeURIComponent(validUrl)}`
 		);
 
-		await expect(page.locator('.cover-image')).toHaveAttribute('style', new RegExp(validUrl));
+		await expect(page.locator('.cover-image')).toHaveAttribute(
+			'style',
+			new RegExp(validUrl)
+		);
 	}
 );
 

@@ -70,6 +70,9 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 		if ((selUser == null) ||
 			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingEnabled(
 				ExtendedObjectClassDefinition.Scope.COMPANY,
+				user.getCompanyId()) ||
+			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActived(
+				ExtendedObjectClassDefinition.Scope.COMPANY,
 				user.getCompanyId())) {
 
 			return false;

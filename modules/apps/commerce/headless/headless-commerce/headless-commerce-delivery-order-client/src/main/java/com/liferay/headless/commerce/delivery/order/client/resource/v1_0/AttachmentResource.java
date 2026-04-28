@@ -56,21 +56,25 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Page<Attachment> getPlacedOrderAttachmentsPage(
-			Long placedOrderId, Pagination pagination)
+			Long placedOrderId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getPlacedOrderAttachmentsPageHttpResponse(
-			Long placedOrderId, Pagination pagination)
+			Long placedOrderId, String search, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public Page<Attachment>
 			getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getPlacedOrderByExternalReferenceCodeAttachmentsPageHttpResponse(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public Attachment postPlacedOrderAttachmentByBase64(
@@ -83,13 +87,15 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public void postPlacedOrderAttachmentsPageExportBatch(
-			Long placedOrderId, String callbackURL, String contentType,
+			Long placedOrderId, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postPlacedOrderAttachmentsPageExportBatchHttpResponse(
-				Long placedOrderId, String callbackURL, String contentType,
+				Long placedOrderId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
@@ -433,12 +439,14 @@ public interface AttachmentResource {
 		}
 
 		public Page<Attachment> getPlacedOrderAttachmentsPage(
-				Long placedOrderId, Pagination pagination)
+				Long placedOrderId, String search, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getPlacedOrderAttachmentsPageHttpResponse(
-					placedOrderId, pagination);
+					placedOrderId, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -501,7 +509,8 @@ public interface AttachmentResource {
 
 		public HttpInvoker.HttpResponse
 				getPlacedOrderAttachmentsPageHttpResponse(
-					Long placedOrderId, Pagination pagination)
+					Long placedOrderId, String search, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -525,11 +534,23 @@ public interface AttachmentResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -549,12 +570,15 @@ public interface AttachmentResource {
 
 		public Page<Attachment>
 				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					String externalReferenceCode, Pagination pagination)
+					String externalReferenceCode, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getPlacedOrderByExternalReferenceCodeAttachmentsPageHttpResponse(
-					externalReferenceCode, pagination);
+					externalReferenceCode, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -617,7 +641,9 @@ public interface AttachmentResource {
 
 		public HttpInvoker.HttpResponse
 				getPlacedOrderByExternalReferenceCodeAttachmentsPageHttpResponse(
-					String externalReferenceCode, Pagination pagination)
+					String externalReferenceCode, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -641,11 +667,23 @@ public interface AttachmentResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(
@@ -774,13 +812,15 @@ public interface AttachmentResource {
 		}
 
 		public void postPlacedOrderAttachmentsPageExportBatch(
-				Long placedOrderId, String callbackURL, String contentType,
+				Long placedOrderId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postPlacedOrderAttachmentsPageExportBatchHttpResponse(
-					placedOrderId, callbackURL, contentType, fieldNames);
+					placedOrderId, search, filterString, sortString,
+					callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -832,7 +872,8 @@ public interface AttachmentResource {
 
 		public HttpInvoker.HttpResponse
 				postPlacedOrderAttachmentsPageExportBatchHttpResponse(
-					Long placedOrderId, String callbackURL, String contentType,
+					Long placedOrderId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
 
@@ -858,6 +899,18 @@ public interface AttachmentResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(
@@ -1013,4 +1066,4 @@ public interface AttachmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:977097624
+// LIFERAY-REST-BUILDER-HASH:455014201

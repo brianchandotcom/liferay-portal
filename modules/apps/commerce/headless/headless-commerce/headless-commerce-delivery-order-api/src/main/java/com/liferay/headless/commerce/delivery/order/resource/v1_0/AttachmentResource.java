@@ -58,12 +58,18 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Page<Attachment> getPlacedOrderAttachmentsPage(
-			Long placedOrderId, Pagination pagination)
+			Long placedOrderId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Page<Attachment>
 			getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-				String externalReferenceCode, Pagination pagination)
+				String externalReferenceCode, String search,
+				com.liferay.portal.kernel.search.filter.Filter filter,
+				Pagination pagination,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Attachment postPlacedOrderAttachmentByBase64(
@@ -71,8 +77,10 @@ public interface AttachmentResource {
 		throws Exception;
 
 	public Response postPlacedOrderAttachmentsPageExportBatch(
-			Long placedOrderId, String callbackURL, String contentType,
-			String fieldNames)
+			Long placedOrderId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Attachment postPlacedOrderByExternalReferenceCodeAttachmentByBase64(
@@ -175,4 +183,4 @@ public interface AttachmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1973660494
+// LIFERAY-REST-BUILDER-HASH:1293991872

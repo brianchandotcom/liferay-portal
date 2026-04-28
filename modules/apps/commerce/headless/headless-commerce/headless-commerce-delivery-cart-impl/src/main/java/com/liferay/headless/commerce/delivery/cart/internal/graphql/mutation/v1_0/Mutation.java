@@ -156,6 +156,9 @@ public class Mutation {
 	@GraphQLField
 	public Response createCartAttachmentsPageExportBatch(
 			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -166,7 +169,10 @@ public class Mutation {
 			this::_populateResourceContext,
 			attachmentResource ->
 				attachmentResource.postCartAttachmentsPageExportBatch(
-					cartId, callbackURL, contentType, fieldNames));
+					cartId, search,
+					_filterBiFunction.apply(attachmentResource, filterString),
+					_sortsBiFunction.apply(attachmentResource, sortsString),
+					callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField
@@ -917,6 +923,9 @@ public class Mutation {
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction
+		<Object, String, com.liferay.portal.kernel.search.filter.Filter>
+			_filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;
@@ -931,4 +940,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1869498325
+// LIFERAY-REST-BUILDER-HASH:698776677

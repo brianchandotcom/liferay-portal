@@ -124,7 +124,7 @@ describe('ShareModalContent', () => {
 
 		expect(getByText('add-people')).toBeInTheDocument();
 		expect(
-			container.querySelector('svg.lexicon-icon-question-circle')
+			container.querySelector('svg.lexicon-icon-question-circle-full')
 		).not.toBeInTheDocument();
 	});
 
@@ -136,7 +136,7 @@ describe('ShareModalContent', () => {
 		});
 
 		const helpIcon = container.querySelector(
-			'svg.lexicon-icon-question-circle'
+			'svg.lexicon-icon-question-circle-full'
 		);
 
 		expect(helpIcon).toBeInTheDocument();

@@ -368,20 +368,25 @@ export default function ShareModalContent({
 				<ClayForm.Group>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
-							<label htmlFor="collaboratorAutocomplete">
-								{autocompleteLabel}
-							</label>
+							<div className="align-items-center d-flex mb-1">
+								<label
+									className="mb-0"
+									htmlFor="collaboratorAutocomplete"
+								>
+									{autocompleteLabel}
+								</label>
 
-							{autocompleteHelpText ? (
-								<ClayIcon
-									className="lfr-portal-tooltip ml-1 text-secondary"
-									data-title={autocompleteHelpText}
-									focusable="false"
-									role="dialog"
-									symbol="question-circle"
-									tabIndex={0}
-								/>
-							) : null}
+								{autocompleteHelpText ? (
+									<ClayIcon
+										className="lfr-portal-tooltip ml-1 text-secondary"
+										data-title={autocompleteHelpText}
+										focusable="false"
+										role="dialog"
+										symbol="question-circle-full"
+										tabIndex={0}
+									/>
+								) : null}
+							</div>
 
 							<ClayMultiSelect
 								id="collaboratorAutocomplete"

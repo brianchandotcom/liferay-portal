@@ -211,6 +211,20 @@ definition {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+		JSONDepot.disconnectSite(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "DM Document Title");
+
+		Button.clickSelect();
+
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
+
+		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
 	@description = "This ensures that a document in a depot can be copied to the connected site."
@@ -345,29 +359,6 @@ definition {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title");
-	}
-
-	@description = "This ensures that a document in a site can not be copied to the unconnected depot."
-	@priority = 4
-	test CannotCopyDocumentFromUnconnectedSiteToDepot {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpeg");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy To",
-			rowEntry = "DM Document Title");
-
-		Button.clickSelect();
-
-		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
-
-		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
 	@description = "This ensures that a folder in a depot can not be copied to an unconnected site."

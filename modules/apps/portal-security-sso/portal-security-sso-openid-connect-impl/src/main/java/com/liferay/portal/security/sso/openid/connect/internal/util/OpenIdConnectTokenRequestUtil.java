@@ -130,13 +130,13 @@ public class OpenIdConnectTokenRequestUtil {
 		}
 
 		try {
-			Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+			Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 				httpRequest);
 
 			String responseContent = HttpUtil.URLtoString(httpOptions);
 
 			TokenResponse tokenResponse = OIDCTokenResponseParser.parse(
-				OpenIdConnectHTTPUtil.toHTTPResponse(
+				OpenIdConnectHttpUtil.toHTTPResponse(
 					httpOptions, responseContent));
 
 			if (tokenResponse instanceof TokenErrorResponse) {

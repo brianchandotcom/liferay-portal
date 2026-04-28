@@ -102,6 +102,7 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
 import org.json.JSONArray;
@@ -745,17 +746,15 @@ public class Main {
 		CanonicalTreeParser oldTreeParser = new CanonicalTreeParser();
 
 		RevCommit newCommit = repository.parseCommit(newRev);
-
 		RevCommit oldCommit = repository.parseCommit(oldRev);
 
+		RevTree newCommitTree = newCommit.getTree();
+		RevTree oldCommitTree = oldCommit.getTree();
+
 		newTreeParser.reset(
-			repository.newObjectReader(),
-			newCommit.getTree(
-			).getId());
+			repository.newObjectReader(), newCommitTree.getId());
 		oldTreeParser.reset(
-			repository.newObjectReader(),
-			oldCommit.getTree(
-			).getId());
+			repository.newObjectReader(), oldCommitTree.getId());
 
 		List<DiffEntry> diffs = git.diff(
 		).setOldTree(
@@ -765,23 +764,21 @@ public class Main {
 		).call();
 
 		for (DiffEntry diff : diffs) {
-			if (diff.getNewPath(
-				).endsWith(
-					".md"
-				)) {
+			String newPath = diff.getNewPath();
 
-				_diffFileNames.add("/" + diff.getNewPath());
+			if (newPath.endsWith(".md")) {
+				_diffFileNames.add("/" + newPath);
 			}
 		}
 	}
 
 	private String _getHTML(File file) throws Exception {
-		String htmlFilePath = file.getCanonicalPath(
-		).replaceFirst(
-			_docsDirName, _baseDirName + "/site"
-		).replaceFirst(
-			"\\.md", ".html"
-		);
+		String htmlFilePath = file.getCanonicalPath();
+
+		htmlFilePath = htmlFilePath.replaceFirst(
+			_docsDirName, _baseDirName + "/site");
+
+		htmlFilePath = htmlFilePath.replaceFirst("\\.md", ".html");
 
 		File htmlFile = new File(htmlFilePath);
 
@@ -796,8 +793,10 @@ public class Main {
 				continue;
 			}
 
-			return contentField.getContentFieldValue(
-			).getData();
+			ContentFieldValue contentFieldValue =
+				contentField.getContentFieldValue();
+
+			return contentFieldValue.getData();
 		}
 
 		return StringPool.BLANK;

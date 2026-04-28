@@ -5,7 +5,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
@@ -20,20 +19,23 @@ import java.util.Collection;
  */
 public class PropertyImpl extends ProjectionImpl implements Property {
 
-	public PropertyImpl(org.hibernate.criterion.Property property) {
-		super(property);
+	public PropertyImpl(
+		org.hibernate.criterion.Property property, String propertyName) {
+
+		super(ProjectionType.PROPERTY, propertyName);
 
 		_property = property;
+		_propertyName = propertyName;
 	}
 
 	@Override
 	public Order asc() {
-		return new OrderImpl(_property.getPropertyName(), true);
+		return new OrderImpl(_propertyName, true);
 	}
 
 	@Override
 	public Projection avg() {
-		return new ProjectionImpl(_property.avg());
+		return new ProjectionImpl(ProjectionType.AVG, _propertyName);
 	}
 
 	@Override
@@ -43,12 +45,12 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection count() {
-		return new ProjectionImpl(_property.count());
+		return new ProjectionImpl(ProjectionType.COUNT, _propertyName);
 	}
 
 	@Override
 	public Order desc() {
-		return new OrderImpl(_property.getPropertyName(), false);
+		return new OrderImpl(_propertyName, false);
 	}
 
 	@Override
@@ -129,7 +131,8 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Property getProperty(String propertyName) {
-		return new PropertyImpl(_property.getProperty(propertyName));
+		return new PropertyImpl(
+			_property.getProperty(propertyName), propertyName);
 	}
 
 	public org.hibernate.criterion.Property getWrappedProperty() {
@@ -138,7 +141,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection group() {
-		return new ProjectionImpl(_property.group());
+		return new ProjectionImpl(ProjectionType.GROUP_PROPERTY, _propertyName);
 	}
 
 	@Override
@@ -342,12 +345,12 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection max() {
-		return new ProjectionImpl(_property.max());
+		return new ProjectionImpl(ProjectionType.MAX, _propertyName);
 	}
 
 	@Override
 	public Projection min() {
-		return new ProjectionImpl(_property.min());
+		return new ProjectionImpl(ProjectionType.MIN, _propertyName);
 	}
 
 	@Override
@@ -386,9 +389,10 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public String toString() {
-		return StringBundler.concat("{_property=", _property, "}");
+		return _propertyName;
 	}
 
 	private final org.hibernate.criterion.Property _property;
+	private final String _propertyName;
 
 }

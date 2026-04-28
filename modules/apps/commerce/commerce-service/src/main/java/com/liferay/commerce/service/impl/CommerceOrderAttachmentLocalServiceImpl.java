@@ -199,7 +199,6 @@ public class CommerceOrderAttachmentLocalServiceImpl
 
 		_validate(title);
 
-		commerceOrderAttachment.setModifiedDate(new Date());
 		commerceOrderAttachment.setPriority(priority);
 		commerceOrderAttachment.setRestricted(restricted);
 		commerceOrderAttachment.setTitle(title);

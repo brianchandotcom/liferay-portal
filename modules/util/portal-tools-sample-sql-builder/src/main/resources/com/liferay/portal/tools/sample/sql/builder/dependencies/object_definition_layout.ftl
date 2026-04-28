@@ -24,6 +24,8 @@
 		</#list>
 
 		<#list contentLayoutModels as contentLayoutModel>
+			<@insertAssetEntry _entry = contentLayoutModel />
+
 			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
 
 			${dataFactory.toInsertSQL(contentLayoutModel)}

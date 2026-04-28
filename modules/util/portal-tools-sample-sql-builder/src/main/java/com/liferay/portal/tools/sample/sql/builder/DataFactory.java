@@ -1196,6 +1196,14 @@ public class DataFactory {
 			null, dlFolderModel.getName());
 	}
 
+	public AssetEntryModel newAssetEntryModel(LayoutModel layoutModel) {
+		return newAssetEntryModel(
+			layoutModel.getGroupId(), layoutModel.getCreateDate(),
+			layoutModel.getModifiedDate(), getClassNameId(Layout.class),
+			layoutModel.getPlid(), layoutModel.getUuid(), 0, true, false,
+			"text/html", layoutModel.getTitle());
+	}
+
 	public AssetEntryModel newAssetEntryModel(MBMessageModel mbMessageModel) {
 		long classNameId = 0;
 		boolean visible = false;

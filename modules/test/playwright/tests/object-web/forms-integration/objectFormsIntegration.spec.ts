@@ -11,6 +11,7 @@ import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {liferayConfig} from '../../../liferay.config';
+import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -1412,24 +1413,110 @@ test(
 	}
 );
 
-test.skip('can send form email when form is related with Object', async () => {
+test(
+	'can send form email when form is related with Object',
+	{tag: '@LPS-200847'},
+	async ({
+		apiHelpers,
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		formSettingsModalPage,
+		page,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
 
-	// Original Poshi test (CanSendFormEmailWhenItIsRelatedWithObject):
-	// 1. Creates an object with a Text field and publishes it
-	// 2. Creates a form mapped to the object's storage type with a Text field
-	// 3. Configures email notifications (from: test@liferay.com, to: formreviewer@liferay.com,
-	//    subject: "Form Subject", sender: "Sender Name")
-	// 4. Publishes the form
-	// 5. Creates a widget page with a Form widget displaying the form
-	// 6. Submits an entry ("Entry test") through the widget page
-	// 7. Verifies the email was sent via MockMock SMTP server
-	//
-	// Requirements not yet available in this test project:
-	// - MockMock SMTP server (requires env/set_up.sh, see users-admin-web/email/ for reference)
-	// - Form email notification configuration (no page object exists)
-	// - Widget page creation with Form widget portlet configuration
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
 
-});
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.selectStorageType('Object');
+
+		await formSettingsModalPage.selectObject(
+			objectDefinition.label['en_US']
+		);
+
+		await page.getByRole('tab', {name: 'Notifications'}).click();
+
+		await page
+			.getByLabel('Send an Email Notification for Each Entry')
+			.click();
+
+		await page.getByLabel('From Name').fill('Sender Name');
+
+		await page.getByLabel('From Address').fill('test@liferay.com');
+
+		await page.getByLabel('To Address').fill('formreviewer@liferay.com');
+
+		await page.getByLabel('Subject').fill('Form Subject');
+
+		await formSettingsModalPage.clickDoneButton();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.selectObjectField('textField');
+
+		await page.waitForTimeout(1000);
+
+		await formBuilderPage.clickPublishFormButton();
+
+		const mockMockPage = await page.context().newPage();
+		const emailNotificationPage = new EmailNotificationPage(mockMockPage);
+
+		try {
+			await emailNotificationPage.goto();
+
+			if (await emailNotificationPage.deleteAllLink.isVisible()) {
+				await emailNotificationPage.deleteAllLink.click();
+
+				await expect(
+					emailNotificationPage.noEmailsInQueueMessage
+				).toBeVisible();
+			}
+
+			const formSubmissionURL =
+				await formBuilderPage.getFormSubmissionURL();
+
+			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+			await page.getByLabel('Text').fill('Entry test');
+
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.getByText('Your request completed successfully.')
+			).toBeVisible();
+
+			await emailNotificationPage.page.reload();
+
+			await expect(
+				emailNotificationPage.emailSubjectLink('Form Subject')
+			).toBeVisible({timeout: 15000});
+
+			await emailNotificationPage
+				.emailSubjectLink('Form Subject')
+				.click();
+
+			await expect(
+				emailNotificationPage.emailBodyText('Entry test')
+			).toBeVisible();
+		}
+		finally {
+			await mockMockPage.close();
+		}
+	}
+);
 
 test(
 	'can submit blank form entry with object field of Decimal type that is not required',

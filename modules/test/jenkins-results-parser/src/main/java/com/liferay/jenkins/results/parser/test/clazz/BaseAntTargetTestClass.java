@@ -98,6 +98,15 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 			jsonObject.put("ant_target_name", _antTargetName);
 		}
 
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayMainComponentName)) {
+			jsonObject.put(
+				"testray_main_component_name", _testrayMainComponentName);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayTeamName)) {
+			jsonObject.put("testray_team_name", _testrayTeamName);
+		}
+
 		return jsonObject;
 	}
 

@@ -177,6 +177,7 @@ spec:
         {{- end }}
     {{- end }}
 {{- if and .statefulset.network .statefulset.network.enabled }}
+{{- $perHost := and .statefulset.network.perHostnameRoutes (gt (len .statefulset.network.hostnames) 0) }}
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -195,6 +196,14 @@ spec:
             type: Cookie
         type: ConsistentHash
     targetRefs:
+        {{- if $perHost }}
+        {{- range $hostname := .statefulset.network.hostnames }}
+        {{- $slug := include "liferay.hostnameSlug" $hostname }}
+        -   group: gateway.networking.k8s.io
+            kind: HTTPRoute
+            name: {{ include "liferay.name" $.root }}-httproute-{{ $slug }}
+        {{- end }}
+        {{- else }}
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" .root }}-httproute
@@ -217,6 +226,53 @@ spec:
             name: {{ include "liferay.name" $.root }}-httproute
 {{- end }}
 {{- if .statefulset.network.gatewayName }}
+        {{- end }}
+{{- if $perHost }}
+{{- $ctx := . }}
+{{- range $hostname := .statefulset.network.hostnames }}
+{{- $slug := include "liferay.hostnameSlug" $hostname }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+    {{- with $ctx.statefulset.network.annotations }}
+    annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    labels:
+        app: {{ include "liferay.name" $ctx.root }}{{ $suffix }}
+        {{- include "liferay.labels" $ctx.root | nindent 8 }}
+    name: {{ include "liferay.name" $ctx.root }}-httproute-{{ $slug }}
+    namespace: {{ include "liferay.namespace" $ctx.root }}
+spec:
+    hostnames:
+        -   {{ $hostname | quote }}
+    parentRefs:
+        -   group: gateway.networking.k8s.io
+            kind: Gateway
+            name: {{ $ctx.statefulset.network.gatewayName }}
+            sectionName: {{ printf "%s-%s" $ctx.statefulset.network.endpointRef $slug }}
+        {{- with $ctx.statefulset.network.extraParentRefs }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    rules:
+        -   backendRefs:
+                -   name: {{ include "liferay.name" $ctx.root }}{{ $suffix }}
+                    port: {{ $backendPort }}
+            matches:
+                -   path:
+                        type: PathPrefix
+                        value: /
+            {{- with $ctx.statefulset.network.timeouts }}
+            timeouts:
+                backendRequest: {{ .backendRequest }}
+                request: {{ .request }}
+            {{- end }}
+        {{- with $ctx.statefulset.network.extraRules }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+{{- end }}
+{{- else }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -259,6 +315,7 @@ spec:
         {{- with .statefulset.network.extraRules }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+{{- end }}
 {{- if and .statefulset.network.forceHttpsRedirect (ne .statefulset.network.endpointRef "http") }}
 ---
 apiVersion: gateway.networking.k8s.io/v1

@@ -93,6 +93,10 @@ export class ViewObjectDefinitionsPage {
 		await this.page.getByRole('switch', {name: 'Activate Object'}).click();
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
+
+		await this.page
+			.getByText('The object was saved successfully.')
+			.waitFor();
 	}
 
 	async clickEditObjectDefinitionLink(
@@ -196,6 +200,7 @@ export class ViewObjectDefinitionsPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.objects}`,
 			{waitUntil: 'load'}
 		);
+		await this.openObjectFolder('Default');
 	}
 
 	async importObjectDefinition(

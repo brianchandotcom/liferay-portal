@@ -2242,6 +2242,13 @@ public class ObjectDefinitionTreeUtilTest {
 			).build(),
 			_objectDefinitionTreeFactory.create(rootNodeC.getPrimaryKey()),
 			_objectDefinitionLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				"C_A", "C_AA", "C_B", "C_BB", "C_C", "C_CC", "C_D", "C_DD"
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

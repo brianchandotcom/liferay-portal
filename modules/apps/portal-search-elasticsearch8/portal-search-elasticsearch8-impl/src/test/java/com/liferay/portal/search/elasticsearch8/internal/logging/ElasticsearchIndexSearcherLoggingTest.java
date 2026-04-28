@@ -131,11 +131,12 @@ public class ElasticsearchIndexSearcherLoggingTest
 		LogEntry logEntry, String expectedMessage, String logLevel) {
 
 		Assert.assertEquals(logLevel, logEntry.getPriority());
+
+		String message = logEntry.getMessage();
+
 		Assert.assertTrue(
-			logEntry.getMessage(
-			).startsWith(
-				expectedMessage
-			));
+			message + " does not start with " + expectedMessage,
+			message.startsWith(expectedMessage));
 	}
 
 }

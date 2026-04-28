@@ -6,14 +6,13 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Validator;
 
-import com.nimbusds.common.contenttype.ContentType;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
-
-import java.net.URL;
 
 import java.util.List;
 import java.util.Map;
@@ -21,25 +20,10 @@ import java.util.Map;
 /**
  * @author Christian Moura
  */
-public class OpenIdConnectHTTPUtil {
+public class OpenIdConnectHttpUtil {
 
 	public static Http.Options toHttpOptions(HTTPRequest httpRequest) {
 		Http.Options httpOptions = new Http.Options();
-
-		URL url = httpRequest.getURL();
-
-		httpOptions.setLocation(url.toString());
-
-		int connectTimeout = httpRequest.getConnectTimeout();
-		int readTimeout = httpRequest.getReadTimeout();
-
-		if ((connectTimeout > 0) || (readTimeout > 0)) {
-			httpOptions.setTimeout(Math.max(connectTimeout, readTimeout));
-		}
-
-		if (HTTPRequest.Method.POST.equals(httpRequest.getMethod())) {
-			httpOptions.setPost(true);
-		}
 
 		Map<String, List<String>> headerMap = httpRequest.getHeaderMap();
 
@@ -53,16 +37,26 @@ public class OpenIdConnectHTTPUtil {
 
 		String requestBody = httpRequest.getBody();
 
-		if ((requestBody != null) && !requestBody.isEmpty()) {
-			String contentType = "application/x-www-form-urlencoded";
+		if (Validator.isNotNull(requestBody)) {
+			httpOptions.setBody(
+				requestBody,
+				GetterUtil.getString(
+					String.valueOf(httpRequest.getEntityContentType()),
+					"application/x-www-form-urlencoded"),
+				StringPool.UTF8);
+		}
 
-			ContentType entityContentType = httpRequest.getEntityContentType();
+		httpOptions.setLocation(String.valueOf(httpRequest.getURL()));
 
-			if (entityContentType != null) {
-				contentType = entityContentType.toString();
-			}
+		if (HTTPRequest.Method.POST.equals(httpRequest.getMethod())) {
+			httpOptions.setPost(true);
+		}
 
-			httpOptions.setBody(requestBody, contentType, StringPool.UTF8);
+		int connectTimeout = httpRequest.getConnectTimeout();
+		int readTimeout = httpRequest.getReadTimeout();
+
+		if ((connectTimeout > 0) || (readTimeout > 0)) {
+			httpOptions.setTimeout(Math.max(connectTimeout, readTimeout));
 		}
 
 		return httpOptions;
@@ -79,10 +73,10 @@ public class OpenIdConnectHTTPUtil {
 
 		httpResponse.setBody(responseContent);
 
-		String responseContentType = liferayHttpResponse.getContentType();
+		String contentType = liferayHttpResponse.getContentType();
 
-		if (responseContentType != null) {
-			httpResponse.setContentType(responseContentType);
+		if (contentType != null) {
+			httpResponse.setContentType(contentType);
 		}
 
 		return httpResponse;

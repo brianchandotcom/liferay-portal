@@ -27,7 +27,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceExcept
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectConstants;
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 import com.liferay.portal.security.sso.openid.connect.internal.session.manager.OfflineOpenIdConnectSessionManager;
-import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectHTTPUtil;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectHttpUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectRequestParametersUtil;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil;
@@ -442,13 +442,13 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			"text/html, image/gif, image/jpeg, */*; q=0.2, */*; q=0.2");
 
 		try {
-			Http.Options httpOptions = OpenIdConnectHTTPUtil.toHttpOptions(
+			Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 				httpRequest);
 
 			String responseContent = _http.URLtoString(httpOptions);
 
 			UserInfoResponse userInfoResponse = UserInfoResponse.parse(
-				OpenIdConnectHTTPUtil.toHTTPResponse(
+				OpenIdConnectHttpUtil.toHTTPResponse(
 					httpOptions, responseContent));
 
 			if (userInfoResponse instanceof UserInfoErrorResponse) {

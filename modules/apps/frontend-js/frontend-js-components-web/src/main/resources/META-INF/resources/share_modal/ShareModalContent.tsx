@@ -208,6 +208,7 @@ export default function ShareModalContent({
 	canManageCollaborators = true,
 	closeModal,
 	collaboratorURL = '',
+	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
 	creator,
 	initialCollaborators = [],
 	itemId,
@@ -218,6 +219,7 @@ export default function ShareModalContent({
 	canManageCollaborators?: boolean;
 	closeModal: () => void;
 	collaboratorURL: string;
+	collaboratorsListTitle?: string;
 	creator: ShareModalCreator;
 	initialCollaborators: Collaborator[];
 	itemId: number;
@@ -480,7 +482,7 @@ export default function ShareModalContent({
 						defaultExpanded={true}
 						displayTitle={
 							<div className="panel-title text-secondary">
-								{Liferay.Language.get('who-has-access') +
+								{collaboratorsListTitle +
 									` (` +
 									sub(
 										Liferay.Language.get('x-users'),

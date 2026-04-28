@@ -62,6 +62,9 @@ export default async function shareSnapshotAction({
 					autocompleteURL: AUTOCOMPLETE_URL,
 					closeModal,
 					collaboratorURL: COLLABORATOR_URL,
+					collaboratorsListTitle: Liferay.Language.get(
+						'who-can-see-this-view'
+					),
 					creator: {
 						contentType: 'UserAccount',
 						id: Liferay.ThemeDisplay.getUserId().toString(),

@@ -22,8 +22,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Christian Moura
  */
@@ -44,12 +42,12 @@ public class OpenIdConnectHttpUtilTest {
 		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
-		Assert.assertEquals(
-			"http://localhost:63636/userinfo", httpOptions.getLocation());
-		Assert.assertFalse(httpOptions.isPost());
 		Assert.assertNull(httpOptions.getBody());
 		Assert.assertEquals(
 			"Bearer token", httpOptions.getHeader("Authorization"));
+		Assert.assertEquals(
+			"http://localhost:63636/userinfo", httpOptions.getLocation());
+		Assert.assertFalse(httpOptions.isPost());
 	}
 
 	@Test
@@ -59,26 +57,26 @@ public class OpenIdConnectHttpUtilTest {
 		HTTPRequest httpRequest = new HTTPRequest(
 			HTTPRequest.Method.POST, new URL("http://localhost:63636/token"));
 
-		httpRequest.setEntityContentType(ContentType.APPLICATION_URLENCODED);
 		httpRequest.setBody("grant_type=authorization_code&code=xyz");
+		httpRequest.setEntityContentType(ContentType.APPLICATION_URLENCODED);
 		httpRequest.setHeader("X-Custom", "value");
 
 		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 			httpRequest);
 
-		Assert.assertTrue(httpOptions.isPost());
 		Assert.assertEquals(
 			"http://localhost:63636/token", httpOptions.getLocation());
+		Assert.assertTrue(httpOptions.isPost());
 
 		Http.Body body = httpOptions.getBody();
 
 		Assert.assertNotNull(body);
+		Assert.assertEquals(StringPool.UTF8, body.getCharset());
 		Assert.assertEquals(
 			"grant_type=authorization_code&code=xyz", body.getContent());
 		Assert.assertEquals(
 			ContentType.APPLICATION_URLENCODED.toString(),
 			body.getContentType());
-		Assert.assertEquals(StringPool.UTF8, body.getCharset());
 
 		Map<String, String> headers = httpOptions.getHeaders();
 
@@ -154,51 +152,33 @@ public class OpenIdConnectHttpUtilTest {
 
 		Http.Options httpOptions = new Http.Options();
 
-		Http.Response mockResponse = Mockito.mock(Http.Response.class);
+		Http.Response liferayHttpResponse = new Http.Response();
 
-		Mockito.when(
-			mockResponse.getResponseCode()
-		).thenReturn(
-			200
-		);
+		liferayHttpResponse.setContentType("application/json");
+		liferayHttpResponse.setResponseCode(200);
 
-		Mockito.when(
-			mockResponse.getContentType()
-		).thenReturn(
-			"application/json"
-		);
-
-		httpOptions.setResponse(mockResponse);
+		httpOptions.setResponse(liferayHttpResponse);
 
 		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
 			httpOptions, "{\"sub\":\"subject\"}");
 
-		Assert.assertEquals(200, httpResponse.getStatusCode());
 		Assert.assertEquals("{\"sub\":\"subject\"}", httpResponse.getBody());
 		Assert.assertEquals(
 			"application/json",
 			String.valueOf(httpResponse.getEntityContentType()));
+		Assert.assertEquals(200, httpResponse.getStatusCode());
 	}
 
 	@Test
 	public void testToHTTPResponseWithoutContentType() throws Exception {
 		Http.Options httpOptions = new Http.Options();
 
-		Http.Response mockResponse = Mockito.mock(Http.Response.class);
+		Http.Response liferayHttpResponse = new Http.Response();
 
-		Mockito.when(
-			mockResponse.getResponseCode()
-		).thenReturn(
-			204
-		);
+		liferayHttpResponse.setContentType(null);
+		liferayHttpResponse.setResponseCode(204);
 
-		Mockito.when(
-			mockResponse.getContentType()
-		).thenReturn(
-			null
-		);
-
-		httpOptions.setResponse(mockResponse);
+		httpOptions.setResponse(liferayHttpResponse);
 
 		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
 			httpOptions, StringPool.BLANK);

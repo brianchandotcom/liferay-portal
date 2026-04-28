@@ -123,7 +123,7 @@ public class SharingDLViewFileVersionDisplayContext
 			List<DropdownItem> dropdownItems)
 		throws PortalException {
 
-		int i = 1;
+		int i = 0;
 
 		for (DropdownItem dropdownItem : dropdownItems) {
 			if (dropdownItem instanceof DropdownGroupItem) {
@@ -137,7 +137,7 @@ public class SharingDLViewFileVersionDisplayContext
 				}
 			}
 			else if (Objects.equals(
-						DLUIItemKeys.DOWNLOAD, dropdownItem.get("key"))) {
+						DLUIItemKeys.EDIT, dropdownItem.get("key"))) {
 
 				break;
 			}
@@ -145,7 +145,9 @@ public class SharingDLViewFileVersionDisplayContext
 			i++;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPS-197477")) {
+
 			if (_isSharingEnabled()) {
 				dropdownItems.addAll(
 					Math.min(i, dropdownItems.size()),
@@ -183,7 +185,7 @@ public class SharingDLViewFileVersionDisplayContext
 			List<DropdownItem> dropdownItems)
 		throws PortalException {
 
-		int i = 1;
+		int i = 0;
 
 		for (DropdownItem dropdownItem : dropdownItems) {
 			if (dropdownItem instanceof DropdownGroupItem) {
@@ -197,7 +199,7 @@ public class SharingDLViewFileVersionDisplayContext
 				}
 			}
 			else if (Objects.equals(
-						DLUIItemKeys.DOWNLOAD, dropdownItem.get("key"))) {
+						DLUIItemKeys.EDIT, dropdownItem.get("key"))) {
 
 				break;
 			}
@@ -206,7 +208,9 @@ public class SharingDLViewFileVersionDisplayContext
 		}
 
 		if (i < dropdownItems.size()) {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+			if (FeatureFlagManagerUtil.isEnabled(
+					_themeDisplay.getCompanyId(), "LPS-197477")) {
+
 				if (_isSharingEnabled()) {
 					dropdownItems.addAll(
 						i,

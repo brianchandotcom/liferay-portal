@@ -19,7 +19,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -49,6 +48,7 @@ import java.io.Serializable;
 
 import java.time.LocalDate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -207,7 +207,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	public void testCheckObjectEntryReviewDate() throws Exception {
 		Date date = new Date();
 
-		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
@@ -215,7 +215,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				"reviewDate", date
 			).build());
 
-		ObjectEntryTestUtil.addObjectEntry(
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
@@ -226,25 +226,42 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		_jobExecutorUnsafeRunnable.run();
 
-		List<UserNotificationEvent> userNotificationEvents =
-			_userNotificationEventLocalService.getUserNotificationEvents(
-				objectEntry.getUserId());
+		List<UserNotificationEvent> testUserNotificationEvents =
+			new ArrayList<>();
+
+		for (UserNotificationEvent userNotificationEvent :
+				_userNotificationEventLocalService.getUserNotificationEvents(
+					objectEntry1.getUserId())) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			long classPK = jsonObject.getLong("classPK");
+
+			if ((classPK == objectEntry1.getObjectEntryId()) ||
+				(classPK == objectEntry2.getObjectEntryId())) {
+
+				testUserNotificationEvents.add(userNotificationEvent);
+			}
+		}
 
 		Assert.assertEquals(
-			userNotificationEvents.toString(), 1,
-			userNotificationEvents.size());
-
-		UserNotificationEvent userNotificationEvent =
-			userNotificationEvents.get(0);
+			testUserNotificationEvents.toString(), 1,
+			testUserNotificationEvents.size());
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvent.getPayload());
+			testUserNotificationEvents.get(
+				0
+			).getPayload());
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				"The object entry ", objectEntry.getTitleValue(),
-				" has reached its review date."),
-			jsonObject.get("notificationMessage"));
+			objectEntry1.getObjectEntryId(), jsonObject.getLong("classPK"));
+		Assert.assertEquals(
+			"x-has-reached-its-review-date",
+			jsonObject.getString("notificationMessageKey"));
+		Assert.assertEquals(
+			objectEntry1.getTitleValue(),
+			jsonObject.getString("notificationMessageArg"));
 	}
 
 	@Test

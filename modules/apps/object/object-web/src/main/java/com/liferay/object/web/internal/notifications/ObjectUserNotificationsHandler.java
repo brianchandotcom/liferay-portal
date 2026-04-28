@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.WindowState;
@@ -50,7 +51,8 @@ public class ObjectUserNotificationsHandler
 
 		return _getMessage(
 			JSONFactoryUtil.createJSONObject(
-				userNotificationEvent.getPayload()));
+				userNotificationEvent.getPayload()),
+			serviceContext);
 	}
 
 	@Override
@@ -61,6 +63,12 @@ public class ObjectUserNotificationsHandler
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
+
+		String notificationLink = jsonObject.getString("notificationLink");
+
+		if (Validator.isNotNull(notificationLink)) {
+			return notificationLink;
+		}
 
 		if (GetterUtil.getBoolean(jsonObject.get("exceedsObjectEntryLimit"))) {
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory =
@@ -121,10 +129,23 @@ public class ObjectUserNotificationsHandler
 
 		return _getMessage(
 			JSONFactoryUtil.createJSONObject(
-				userNotificationEvent.getPayload()));
+				userNotificationEvent.getPayload()),
+			serviceContext);
 	}
 
-	private String _getMessage(JSONObject jsonObject) {
+	private String _getMessage(
+		JSONObject jsonObject, ServiceContext serviceContext) {
+
+		String notificationMessageKey = jsonObject.getString(
+			"notificationMessageKey");
+
+		if (Validator.isNotNull(notificationMessageKey)) {
+			return HtmlUtil.escape(
+				serviceContext.translate(
+					notificationMessageKey,
+					jsonObject.getString("notificationMessageArg")));
+		}
+
 		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
 	}
 

@@ -3384,15 +3384,15 @@ public class ObjectEntryLocalServiceImpl
 					WorkflowConstants.ACTION_PUBLISH);
 			}
 
+			String relationshipFieldName =
+				ObjectRelationshipUtil.getObjectRelationshipFieldName(
+					objectDefinition, objectRelationship.getName());
+
 			List<ObjectEntry> relatedObjectEntries = getOneToManyObjectEntries(
 				sourceObjectEntry.getGroupId(),
 				objectRelationship.getObjectRelationshipId(), null, false,
 				sourceObjectEntry.getObjectEntryId(), true, null,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			String relationshipFieldName =
-				ObjectRelationshipUtil.getObjectRelationshipFieldName(
-					objectDefinition, objectRelationship.getName());
 
 			for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
 				Map<String, Serializable> relatedValues =

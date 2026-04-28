@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 
+import java.util.Objects;
+
 /**
  * @author João Victor Alves
  */
@@ -23,14 +25,23 @@ public class VertexAiGeminiStreamingChatModelUtil {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		return VertexAiGeminiStreamingChatModel.builder(
-		).location(
-			vertexAIConfiguration.location()
-		).modelName(
-			vertexAIConfiguration.modelName()
-		).project(
-			vertexAIConfiguration.projectId()
-		).build();
+		String location = vertexAIConfiguration.location();
+
+		VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder
+			builder = VertexAiGeminiStreamingChatModel.builder(
+			).location(
+				location
+			).modelName(
+				vertexAIConfiguration.modelName()
+			).project(
+				vertexAIConfiguration.projectId()
+			);
+
+		if (Objects.equals(location, "global")) {
+			builder.apiEndpoint("aiplatform.googleapis.com");
+		}
+
+		return builder.build();
 	}
 
 }

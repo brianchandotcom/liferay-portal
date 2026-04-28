@@ -40,6 +40,7 @@ import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -71,15 +72,26 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 							VertexAIConfiguration.class,
 							agentContext.getCompanyId());
 
-					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
+					String location = vertexAIConfiguration.location();
+
+					VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder
+						vertexAiGeminiChatModelBuilder =
 							VertexAiGeminiChatModel.builder(
 							).location(
-								vertexAIConfiguration.location()
+								location
 							).modelName(
 								vertexAIConfiguration.modelName()
 							).project(
 								vertexAIConfiguration.projectId()
-							).build()) {
+							);
+
+					if (Objects.equals(location, "global")) {
+						vertexAiGeminiChatModelBuilder.apiEndpoint(
+							"aiplatform.googleapis.com");
+					}
+
+					try (VertexAiGeminiChatModel vertexAiGeminiChatModel =
+							vertexAiGeminiChatModelBuilder.build()) {
 
 						PermissionThreadLocal.setPermissionChecker(
 							permissionChecker);

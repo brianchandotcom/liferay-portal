@@ -157,7 +157,7 @@ public class SharingEntryServiceTest {
 					objectEntry.getObjectEntryId(), _depotEntry.getGroupId()));
 
 			_sharingEntryService.addOrUpdateSharingEntry(
-				null, 0, _user.getUserId(), classNameId,
+				null, 0, 0, _user.getUserId(), classNameId,
 				objectEntry.getObjectEntryId(), _depotEntry.getGroupId(), true,
 				Collections.singletonList(SharingEntryAction.VIEW), null,
 				ServiceContextTestUtil.getServiceContext(
@@ -174,7 +174,7 @@ public class SharingEntryServiceTest {
 		throws Exception {
 
 		SharingEntry sharingEntry = _sharingEntryService.addSharingEntry(
-			null, 0, _user.getUserId(), classNameId,
+			null, 0, 0, _user.getUserId(), classNameId,
 			objectEntry.getObjectEntryId(), _depotEntry.getGroupId(), true,
 			Collections.singletonList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));

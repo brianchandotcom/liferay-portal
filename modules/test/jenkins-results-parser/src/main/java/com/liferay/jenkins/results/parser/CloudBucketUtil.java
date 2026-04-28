@@ -760,6 +760,9 @@ public class CloudBucketUtil {
 				sb.append(configurationName);
 				sb.append(" --quiet || gcloud auth login --cred-file=");
 				sb.append(gcpApplicationCredentialFilePath);
+				sb.append(" --quiet || gcloud auth activate-service-account");
+				sb.append(" --key-file=");
+				sb.append(gcpApplicationCredentialFilePath);
 				sb.append(" --quiet)");
 
 				return sb.toString();

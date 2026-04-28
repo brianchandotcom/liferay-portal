@@ -157,6 +157,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
 		).put(
+			"AIHubModelArmorTemplate", "/ai-hub/model-armor-templates"
+		).put(
 			"AIHubQuota", "/ai-hub/quotas"
 		).put(
 			"APIApplication", "/headless-builder/applications"

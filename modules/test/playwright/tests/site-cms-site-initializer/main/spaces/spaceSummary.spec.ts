@@ -372,3 +372,296 @@ test(
 		}
 	}
 );
+
+test(
+	'Displays at most 8 contents in the space summary page, with the rest in the View All Content page',
+	{tag: '@LPD-85670'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const titles: string[] = [];
+
+		for (let index = 0; index < 9; index++) {
+			titles.push(`Title ${index} ${getRandomString()}`);
+		}
+
+		for (const title of titles) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title,
+				},
+				applicationName,
+				space.name
+			);
+		}
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: titles[titles.length - 1],
+			})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: titles[0],
+			})
+		).not.toBeVisible();
+
+		const visibleCount = await page
+			.getByRole('link', {name: /^Title \d+ /})
+			.count();
+
+		expect(visibleCount).toBeLessThanOrEqual(8);
+
+		await spaceSummaryPage.viewAllContentLink.click();
+
+		for (const title of titles) {
+			await expect(
+				page.getByRole('link', {exact: true, name: title})
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Displays the most recently modified file first in the space summary page',
+	{tag: '@LPD-85670'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const newerFileTitle = `Newer ${getRandomString()}`;
+		const olderFileTitle = `Older ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'SGVsbG8sIHdvcmxkIQ==',
+					name: `older_${getRandomString()}.txt`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: olderFileTitle,
+			},
+			applicationName,
+			space.name
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'SGVsbG8sIHdvcmxkIQ==',
+					name: `newer_${getRandomString()}.txt`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: newerFileTitle,
+			},
+			applicationName,
+			space.name
+		);
+
+		await spaceSummaryPage.goto(spaceName);
+
+		const firstFileTitle = await page
+			.getByRole('link', {name: /Newer|Older/})
+			.first()
+			.innerText();
+
+		expect(firstFileTitle).toContain(newerFileTitle);
+	}
+);
+
+test(
+	'Displays the most recently modified content first in the space summary page',
+	{tag: '@LPD-85670'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const newerContentTitle = `Newer ${getRandomString()}`;
+		const olderContentTitle = `Older ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: olderContentTitle,
+			},
+			applicationName,
+			space.name
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: newerContentTitle,
+			},
+			applicationName,
+			space.name
+		);
+
+		await spaceSummaryPage.goto(spaceName);
+
+		const firstContentTitle = await page
+			.getByRole('link', {name: /Newer|Older/})
+			.first()
+			.innerText();
+
+		expect(firstContentTitle).toContain(newerContentTitle);
+	}
+);
+
+test(
+	'Displays at most 8 files in the space summary page, with the rest in the View All Files page',
+	{tag: '@LPD-85670'},
+	async ({apiHelpers, assetsPage, page, spaceSummaryPage}) => {
+		const applicationName = 'cms/basic-documents';
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const titles: string[] = [];
+
+		for (let index = 0; index < 9; index++) {
+			titles.push(`File ${index} ${getRandomString()}`);
+		}
+
+		for (const title of titles) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'SGVsbG8sIHdvcmxkIQ==',
+						name: `file_${getRandomString()}.txt`,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title,
+				},
+				applicationName,
+				space.name
+			);
+		}
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: titles[titles.length - 1],
+			})
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: titles[0],
+			})
+		).not.toBeVisible();
+
+		const visibleCount = await page
+			.getByRole('link', {name: /^File \d+ /})
+			.count();
+
+		expect(visibleCount).toBeLessThanOrEqual(8);
+
+		await spaceSummaryPage.viewAllFilesLink.click();
+
+		await assetsPage.changeVisualizationMode('Table');
+
+		for (const title of titles) {
+			await expect(
+				page.getByRole('link', {exact: true, name: title})
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Home view caps content at 8 items mixing folders and entries',
+	{tag: '@LPD-85670'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const folderTitles: string[] = [];
+		const entryTitles: string[] = [];
+
+		for (let index = 0; index < 5; index++) {
+			folderTitles.push(`Folder ${index} ${getRandomString()}`);
+			entryTitles.push(`Entry ${index} ${getRandomString()}`);
+		}
+
+		for (const title of folderTitles) {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: space.siteId,
+				title,
+			});
+		}
+
+		for (const title of entryTitles) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title,
+				},
+				applicationName,
+				space.name
+			);
+		}
+
+		await spaceSummaryPage.goto(spaceName);
+
+		const allTitles = [...folderTitles, ...entryTitles];
+
+		await expect(
+			page.getByRole('link', {
+				exact: true,
+				name: allTitles[allTitles.length - 1],
+			})
+		).toBeVisible();
+
+		const visibleCount = await page
+			.getByRole('link', {name: /^(Folder|Entry) \d+ /})
+			.count();
+
+		expect(visibleCount).toBeLessThanOrEqual(8);
+
+		await spaceSummaryPage.viewAllContentLink.click();
+
+		for (const title of allTitles) {
+			await expect(
+				page.getByRole('link', {exact: true, name: title})
+			).toBeVisible();
+		}
+	}
+);

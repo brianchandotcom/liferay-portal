@@ -878,6 +878,13 @@ public class CommerceServiceUpgradeStepRegistrator
 				_companyLocalService, _resourcePermissionLocalService,
 				_roleLocalService));
 
+		registry.register(
+			"15.0.3", "15.0.4",
+			new com.liferay.commerce.internal.upgrade.v15_0_4.
+				CommerceOrderAttachmentRoleUpgradeProcess(
+					_companyLocalService, _resourcePermissionLocalService,
+					_roleLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

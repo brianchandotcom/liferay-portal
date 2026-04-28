@@ -13,7 +13,7 @@ String coverImageURL = ParamUtil.getString(request, "coverImageURL");
 
 String viewEntryURL = ParamUtil.getString(request, "viewEntryURL");
 
-boolean validViewEntryURL = Validator.isNotNull(viewEntryURL) && Validator.isUrl(viewEntryURL);
+boolean validViewEntryURL = Validator.isUrl(viewEntryURL);
 %>
 
 <c:if test="<%= Validator.isURL(coverImageURL) %>">

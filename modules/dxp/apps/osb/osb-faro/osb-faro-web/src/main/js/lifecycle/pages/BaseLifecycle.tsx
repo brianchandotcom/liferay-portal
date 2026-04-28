@@ -19,7 +19,9 @@ const LifecycleOverview = ({groupId}: {groupId: string}) => {
 	const {filters} = useLifecycle();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
-		dataSourceFn: API.lifecycle.fetchOverviewMetrics,
+		dataSourceFn: API.lifecycle.fetchOverviewMetrics as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
 		variables: {
 			country: filters.countryFilter,
 			groupId,
@@ -89,11 +91,11 @@ const BaseLifecycle = () => {
 					</div>
 				</BasePage.SubHeader>
 				<BasePage.Body>
-					<LifecycleOverview groupId={groupId} />
+					<LifecycleOverview groupId={groupId!} />
 
 					<LifecycleAccounts
-						channelId={channelId}
-						groupId={groupId}
+						channelId={channelId!}
+						groupId={groupId!}
 					/>
 				</BasePage.Body>
 			</BasePage>

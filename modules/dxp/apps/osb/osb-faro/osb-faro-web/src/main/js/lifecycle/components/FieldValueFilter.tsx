@@ -82,11 +82,13 @@ const FieldValueFilter = ({
 			entityLabel={entityLabel}
 			label={filters[filterKey]}
 			loading={loading}
-			onSelectionChange={(item: string) =>
+			onSelectionChange={item => {
+				const value = String(item);
+
 				updateFilters({
-					[filterKey]: item === ALL_VALUES_KEY ? '' : item
-				})
-			}
+					[filterKey]: value === ALL_VALUES_KEY ? '' : value
+				});
+			}}
 			searchable
 			selectedKey={filters[filterKey] || ALL_VALUES_KEY}
 			triggerIcon='caret-bottom'

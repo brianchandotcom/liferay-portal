@@ -27,13 +27,15 @@ Fetch the ticket (issue type, current assignee, subtasks) and resolve the **targ
 
 ## 4. Start Work on the Parent
 
-Assign the parent to the user and transition it using the ID below. If the parent is already in an in-progress status by a different user, refuse to continue.
+Assign the parent to the user and apply the transitions below. If the parent is already in an in-progress status by a different user, refuse to continue.
 
-| Parent Type | Destination | Transition ID |
-| ----------- | ---------------------- | ------------- |
+| Parent Type | Destination | Transition IDs |
+| ----------- | -------------- | --------------- |
 | Bug | In Progress | `61` |
-| Story | Ready for Development | `41` |
+| Story | In Development | `41`, then `61` |
 | Task | In Progress | `21` |
+
+For a Story, apply the two transitions in sequence: `41` moves it to **Ready for Development**, which triggers Jira to autocreate the **Technical Task** subtask, then `61` moves it to **In Development**.
 
 ## 5. Start Work on the Child
 

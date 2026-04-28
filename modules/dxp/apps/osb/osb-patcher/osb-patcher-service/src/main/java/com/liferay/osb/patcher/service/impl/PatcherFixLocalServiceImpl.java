@@ -83,8 +83,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 	@Override
 	public PatcherFix addPatcherFix(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String name, String committish,
-			String gitRemoteURL, int type, int status)
+			long patcherProjectVersionId, String committish, String gitRemoteURL,
+			String name, int type, int status)
 		throws Exception {
 
 		PatcherFix patcherFix = patcherFixPersistence.create(
@@ -99,13 +99,13 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setCreateDate(new Date());
 		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
 		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
+		patcherFix.setCommittish(committish);
+		patcherFix.setGitRemoteURL(gitRemoteURL);
 		patcherFix.setKey(
 			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
 		patcherFix.setKeyVersion(PatcherFixConstants.KEY_VERSION_DEFAULT);
-		patcherFix.setName(StringUtil.merge(PatcherUtil.sortTokens(name)));
-		patcherFix.setCommittish(committish);
-		patcherFix.setGitRemoteURL(gitRemoteURL);
 		patcherFix.setLatestFix(true);
+		patcherFix.setName(StringUtil.merge(PatcherUtil.sortTokens(name)));
 		patcherFix.setObsolete(false);
 		patcherFix.setType(type);
 		patcherFix.setStatus(status);

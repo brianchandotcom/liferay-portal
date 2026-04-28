@@ -5,7 +5,7 @@
 
 import ApiHelper, {RequestResult} from '../services/ApiHelper';
 
-export async function getValidateLarFileEndpoint({
+export async function getValidateLarFile({
 	file,
 	groupId,
 	onProgress,

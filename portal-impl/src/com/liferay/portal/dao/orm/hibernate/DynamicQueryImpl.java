@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
 
 /**
  * @author Brian Wing Shun Chan
@@ -157,9 +161,7 @@ public class DynamicQueryImpl implements DynamicQuery {
 
 	@Override
 	public DynamicQuery setProjection(Projection projection) {
-		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
-
-		_detachedCriteria.setProjection(projectionImpl.getWrappedProjection());
+		_detachedCriteria.setProjection(_toHibernateProjection(projection));
 
 		return this;
 	}
@@ -171,6 +173,110 @@ public class DynamicQueryImpl implements DynamicQuery {
 		}
 
 		return super.toString();
+	}
+
+	private org.hibernate.criterion.Projection _toHibernateProjection(
+		Projection projection) {
+
+		if (projection instanceof ProjectionListImpl) {
+			ProjectionListImpl projectionListImpl =
+				(ProjectionListImpl)projection;
+
+			ProjectionList projectionList = Projections.projectionList();
+
+			for (Projection curProjection :
+					projectionListImpl.getProjections()) {
+
+				projectionList.add(_toHibernateProjection(curProjection));
+			}
+
+			return projectionList;
+		}
+
+		if (projection instanceof PropertyImpl) {
+			PropertyImpl propertyImpl = (PropertyImpl)projection;
+
+			if (propertyImpl.isGroup()) {
+				return Projections.groupProperty(
+					propertyImpl.getPropertyName());
+			}
+
+			return Projections.property(propertyImpl.getPropertyName());
+		}
+
+		ProjectionImpl projectionImpl = (ProjectionImpl)projection;
+
+		if (projectionImpl.getAlias() != null) {
+			return Projections.alias(
+				_toHibernateProjection(projectionImpl.getProjection()),
+				projectionImpl.getAlias());
+		}
+
+		if (projectionImpl.getProjection() != null) {
+			return Projections.distinct(
+				_toHibernateProjection(projectionImpl.getProjection()));
+		}
+
+		if (projectionImpl.getSQL() != null) {
+			if (projectionImpl.getGroupBy() != null) {
+				return Projections.sqlGroupProjection(
+					projectionImpl.getSQL(), projectionImpl.getGroupBy(),
+					projectionImpl.getColumnAliases(),
+					_toHibernateTypes(projectionImpl.getTypes()));
+			}
+
+			return Projections.sqlProjection(
+				projectionImpl.getSQL(), projectionImpl.getColumnAliases(),
+				_toHibernateTypes(projectionImpl.getTypes()));
+		}
+
+		return _toHibernateProjection(
+			projectionImpl.getProjectionType(),
+			projectionImpl.getPropertyName());
+	}
+
+	private org.hibernate.criterion.Projection _toHibernateProjection(
+		ProjectionType projectionType, String propertyName) {
+
+		if (projectionType == ProjectionType.AVG) {
+			return Projections.avg(propertyName);
+		}
+		else if (projectionType == ProjectionType.COUNT) {
+			return Projections.count(propertyName);
+		}
+		else if (projectionType == ProjectionType.COUNT_DISTINCT) {
+			return Projections.countDistinct(propertyName);
+		}
+		else if (projectionType == ProjectionType.MAX) {
+			return Projections.max(propertyName);
+		}
+		else if (projectionType == ProjectionType.MIN) {
+			return Projections.min(propertyName);
+		}
+		else if (projectionType == ProjectionType.ROW_COUNT) {
+			return Projections.rowCount();
+		}
+		else if (projectionType == ProjectionType.SUM) {
+			return Projections.sum(propertyName);
+		}
+
+		throw new IllegalStateException(
+			"Unexpected projection type: " + projectionType);
+	}
+
+	private org.hibernate.type.Type[] _toHibernateTypes(Type[] types) {
+		if (ArrayUtil.isEmpty(types)) {
+			return null;
+		}
+
+		org.hibernate.type.Type[] hibernateTypes =
+			new org.hibernate.type.Type[types.length];
+
+		for (int i = 0; i < types.length; i++) {
+			hibernateTypes[i] = TypeTranslator.translate(types[i]);
+		}
+
+		return hibernateTypes;
 	}
 
 	private Criteria _criteria;

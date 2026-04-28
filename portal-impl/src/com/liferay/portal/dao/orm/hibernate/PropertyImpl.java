@@ -5,7 +5,6 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
@@ -18,22 +17,31 @@ import java.util.Collection;
 /**
  * @author Brian Wing Shun Chan
  */
-public class PropertyImpl extends ProjectionImpl implements Property {
+public class PropertyImpl implements Property {
 
-	public PropertyImpl(org.hibernate.criterion.Property property) {
-		super(property);
+	public PropertyImpl(
+		boolean group, org.hibernate.criterion.Property property,
+		String propertyName) {
 
+		_group = group;
 		_property = property;
+		_propertyName = propertyName;
+	}
+
+	public PropertyImpl(
+		org.hibernate.criterion.Property property, String propertyName) {
+
+		this(false, property, propertyName);
 	}
 
 	@Override
 	public Order asc() {
-		return new OrderImpl(true, _property.getPropertyName());
+		return new OrderImpl(true, _propertyName);
 	}
 
 	@Override
 	public Projection avg() {
-		return new ProjectionImpl(_property.avg());
+		return new ProjectionImpl(ProjectionType.AVG, _propertyName);
 	}
 
 	@Override
@@ -43,12 +51,12 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection count() {
-		return new ProjectionImpl(_property.count());
+		return new ProjectionImpl(ProjectionType.COUNT, _propertyName);
 	}
 
 	@Override
 	public Order desc() {
-		return new OrderImpl(false, _property.getPropertyName());
+		return new OrderImpl(false, _propertyName);
 	}
 
 	@Override
@@ -129,7 +137,12 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Property getProperty(String propertyName) {
-		return new PropertyImpl(_property.getProperty(propertyName));
+		return new PropertyImpl(
+			_property.getProperty(propertyName), propertyName);
+	}
+
+	public String getPropertyName() {
+		return _propertyName;
 	}
 
 	public org.hibernate.criterion.Property getWrappedProperty() {
@@ -138,7 +151,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection group() {
-		return new ProjectionImpl(_property.group());
+		return new PropertyImpl(true, _property, _propertyName);
 	}
 
 	@Override
@@ -234,6 +247,10 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 	@Override
 	public Criterion isEmpty() {
 		return new CriterionImpl(_property.isEmpty());
+	}
+
+	public boolean isGroup() {
+		return _group;
 	}
 
 	@Override
@@ -342,12 +359,12 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Projection max() {
-		return new ProjectionImpl(_property.max());
+		return new ProjectionImpl(ProjectionType.MAX, _propertyName);
 	}
 
 	@Override
 	public Projection min() {
-		return new ProjectionImpl(_property.min());
+		return new ProjectionImpl(ProjectionType.MIN, _propertyName);
 	}
 
 	@Override
@@ -386,9 +403,11 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public String toString() {
-		return StringBundler.concat("{_property=", _property, "}");
+		return _propertyName;
 	}
 
+	private final boolean _group;
 	private final org.hibernate.criterion.Property _property;
+	private final String _propertyName;
 
 }

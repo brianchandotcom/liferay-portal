@@ -452,6 +452,7 @@ public class DataFactory {
 				JournalArticle.class.getName());
 		models.add(JournalArticleDisplay.class.getName());
 		models.add(Layout.class.getName());
+		models.add(Layout.class.getName() + "-false");
 		models.add(NavItem.class.getName());
 		models.add(PortletDisplayTemplate.class.getName());
 		models.add(UserPersonalSite.class.getName());
@@ -4587,6 +4588,14 @@ public class DataFactory {
 			friendlyURLEntryModel.getFriendlyURLEntryId());
 
 		return friendlyURLEntryMappingModel;
+	}
+
+	public FriendlyURLEntryModel newFriendlyURLEntryModel(
+		long groupId, long classPK) {
+
+		return newFriendlyURLEntryModel(
+			groupId, getClassNameId(Layout.class.getName() + "-false"),
+			classPK);
 	}
 
 	public FriendlyURLEntryModel newFriendlyURLEntryModel(

@@ -8,12 +8,14 @@ import {Locator, Page} from '@playwright/test';
 export class ModalAddObjectDefinitionPage {
 	readonly objectDefinitionSaveButton: Locator;
 	readonly objectLabelInput: Locator;
+	readonly objectNameInput: Locator;
 	readonly objectPluralLabelInput: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		this.objectDefinitionSaveButton = page.getByText('Save', {exact: true});
 		this.objectLabelInput = page.locator('input[name="label"]');
+		this.objectNameInput = page.locator('input[name="name"]');
 		this.objectPluralLabelInput = page.locator('input[name="pluralLabel"]');
 		this.page = page;
 	}

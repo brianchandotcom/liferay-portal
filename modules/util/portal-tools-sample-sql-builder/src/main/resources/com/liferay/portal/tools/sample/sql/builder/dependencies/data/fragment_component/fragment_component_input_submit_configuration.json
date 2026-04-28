@@ -1,0 +1,99 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "submit",
+					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "previous"
+							},
+							{
+								"value": "next"
+							},
+							{
+								"value": "submit"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "0",
+					"label": "submitted-entry-status",
+					"name": "submittedEntryStatus",
+					"type": "select",
+					"typeOptions": {
+						"dependency": {
+							"type": {
+								"type": "equal",
+								"value": "submit"
+							}
+						},
+						"validValues": [
+							{
+								"label": "approved",
+								"value": "0"
+							},
+							{
+								"label": "draft",
+								"value": "2"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "style",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

@@ -5990,6 +5990,7 @@ public class DataFactory {
 				continue;
 			}
 
+			String configuration = StringPool.BLANK;
 			String css = null;
 			String editValueJSON = null;
 			String html = null;
@@ -6068,6 +6069,8 @@ public class DataFactory {
 						"inputs", fragmentName, "js"));
 
 				type = FragmentConstants.TYPE_INPUT;
+
+				configuration = _getFragmentComponentConfiguration(renderKey);
 			}
 
 			segmentsExperienceId = _getSegmentsExperienceId(
@@ -6076,7 +6079,7 @@ public class DataFactory {
 			originalFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModels.get(1), null, segmentsExperienceId,
-					_escape(css), _escape(html), _escape(js), StringPool.BLANK,
+					_escape(css), _escape(html), _escape(js), configuration,
 					editValueJSON, paragraphRenderNamespace, 0, renderKey,
 					type));
 		}
@@ -6094,7 +6097,9 @@ public class DataFactory {
 						_readFile(
 							_getFragmentComponentInputStream(
 								"inputs", "submit-button", "js"))),
-					StringPool.BLANK,
+					_readFile(
+						"fragment_component/fragment_component_input_submit_" +
+							"configuration.json"),
 					_readFile(
 						"fragment_component" +
 							"/fragment_component_input_submit_editValue.json"),
@@ -9168,6 +9173,30 @@ public class DataFactory {
 		}
 
 		return data;
+	}
+
+	private String _getFragmentComponentConfiguration(String renderKey)
+		throws Exception {
+
+		if (renderKey.equals("INPUTS-select-from-list")) {
+			return StringPool.BLANK;
+		}
+
+		if (renderKey.equals("INPUTS-file-upload")) {
+			renderKey = "file_upload";
+		}
+
+		if (renderKey.equals("INPUTS-rich-text-input")) {
+			renderKey = "rich_text";
+		}
+
+		if (renderKey.equals("INPUTS-text-input")) {
+			renderKey = "text";
+		}
+
+		return _readFile(
+			"fragment_component/fragment_component_input_" + renderKey +
+				"_configuration.json");
 	}
 
 	private InputStream _getFragmentComponentInputStream(

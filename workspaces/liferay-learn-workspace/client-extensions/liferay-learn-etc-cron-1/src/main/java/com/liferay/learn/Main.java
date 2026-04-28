@@ -100,6 +100,7 @@ import org.apache.http.util.EntityUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
@@ -745,16 +746,16 @@ public class Main {
 		CanonicalTreeParser newTreeParser = new CanonicalTreeParser();
 		CanonicalTreeParser oldTreeParser = new CanonicalTreeParser();
 
-		RevCommit newCommit = repository.parseCommit(newRev);
-		RevCommit oldCommit = repository.parseCommit(oldRev);
+		try (ObjectReader objectReader = repository.newObjectReader()) {
+			RevCommit newCommit = repository.parseCommit(newRev);
+			RevCommit oldCommit = repository.parseCommit(oldRev);
 
-		RevTree newCommitTree = newCommit.getTree();
-		RevTree oldCommitTree = oldCommit.getTree();
+			RevTree newCommitTree = newCommit.getTree();
+			RevTree oldCommitTree = oldCommit.getTree();
 
-		newTreeParser.reset(
-			repository.newObjectReader(), newCommitTree.getId());
-		oldTreeParser.reset(
-			repository.newObjectReader(), oldCommitTree.getId());
+			newTreeParser.reset(objectReader, newCommitTree.getId());
+			oldTreeParser.reset(objectReader, oldCommitTree.getId());
+		}
 
 		List<DiffEntry> diffs = git.diff(
 		).setOldTree(

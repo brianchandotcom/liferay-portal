@@ -15,9 +15,8 @@ import {getCollectionOperators} from './operators';
 /**
  * Collections-specific wrapper around the generic ConditionBuilder.
  *
- * Restricts operators to the OData set required by LPD-74731 and serializes
- * the current value into a hidden input so the typeSettings handler picks it
- * up on form submit.
+ * Serializes the current value into a hidden input so the typeSettings handler
+ * picks it up on form submit.
  *
  * @param {Object} props
  * @param {'all'|'any'} [props.initialConditionType='all']
@@ -35,7 +34,10 @@ export default function CollectionFilterBuilder({
 }) {
 	const [conditions, setConditions] = useState(
 		initialConditions?.length
-			? initialConditions
+			? initialConditions.map((condition) => ({
+					...condition,
+					id: generateConditionId(),
+				}))
 			: [{id: generateConditionId()}]
 	);
 
@@ -57,13 +59,20 @@ export default function CollectionFilterBuilder({
 				onChange={handleChange}
 				properties={properties}
 				renderValueInput={DefaultValueInput}
-				showConjunctionPicker
+				showConjunctionPicker={false}
 			/>
 
 			<input
-				name={`${namespace}fieldCriteria`}
+				name={`${namespace}TypeSettingsProperties--conditions--`}
 				type="hidden"
-				value={JSON.stringify({conditionType, conditions})}
+				value={JSON.stringify(
+					conditions
+						.filter(
+							({operatorName, propertyName, value}) =>
+								operatorName && propertyName && value
+						)
+						.map(({_id, ...props}) => props)
+				)}
 			/>
 		</>
 	);

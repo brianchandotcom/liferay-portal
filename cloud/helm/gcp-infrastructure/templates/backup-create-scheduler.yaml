@@ -12,12 +12,6 @@ spec:
         -   {{ .Values.backup.schedule | quote }}
     startingDeadlineSeconds: 300
     workflowSpec:
-        arguments:
-            parameters:
-                -   name: environment-id
-                    value: {{ .Values.environmentId | quote }}
-                -   name: project-id
-                    value: {{ .Values.projectId | quote }}
         ttlStrategy:
             secondsAfterCompletion: 86400
         workflowTemplateRef:

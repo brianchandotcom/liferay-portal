@@ -823,6 +823,103 @@ test(
 );
 
 test(
+	'Bulk move shows an error when the destination already has a same-named content',
+	{tag: '@LPD-86776'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const sourceSpaceName = `Source ${getRandomString()}`;
+		const destinationSpaceName = `Destination ${getRandomString()}`;
+		const destinationFolderName = `Destination ${getRandomString()}`;
+		const sharedTitle = `Content ${getRandomString()}`;
+		const otherTitle = `Content ${getRandomString()}`;
+
+		await test.step('Create source and destination Spaces', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: sourceSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: destinationSpaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		let destinationFolderERC: string;
+
+		await test.step('Create a destination folder in the destination Space', async () => {
+			const folder =
+				await apiHelpers.objectFolder.createObjectEntryFolder({
+					parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					scopeKey: destinationSpaceName,
+					title: destinationFolderName,
+				});
+
+			destinationFolderERC = folder.externalReferenceCode;
+		});
+
+		await test.step('Seed contents in both Spaces with one shared title', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: sharedTitle,
+				},
+				applicationName,
+				sourceSpaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: otherTitle,
+				},
+				applicationName,
+				sourceSpaceName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode:
+						destinationFolderERC,
+					title: sharedTitle,
+				},
+				applicationName,
+				destinationSpaceName
+			);
+		});
+
+		await test.step('Try to bulk move the source contents to the destination folder', async () => {
+			await assetsPage.gotoAll();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: sourceSpaceName})
+				.click();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Contents'})
+				.click();
+
+			await assetsPage.selectItems([sharedTitle, otherTitle]);
+
+			await assetsPage.bulkMoveTo({
+				destinationFolder: destinationFolderName,
+				destinationSpace: destinationSpaceName,
+			});
+		});
+
+		await test.step('Error toast informs the assets could not be moved', async () => {
+			await waitForAlert(
+				page,
+				'Error:Assets could not be moved. Please ensure the name is unique in the destination.',
+				{type: 'danger'}
+			);
+		});
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

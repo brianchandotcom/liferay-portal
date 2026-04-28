@@ -9,7 +9,7 @@ name: markdown-format
 
 # Markdown Formatter
 
-Apply Liferay Markdown conventions to the target file so structure, casing, and prose land consistent and professional.
+Apply Liferay Markdown conventions to the target file so its structure, casing, and prose are consistent and professional.
 
 ## Input
 

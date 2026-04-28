@@ -175,6 +175,9 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	public static final String REMOVE_DOCKER_CONTAINER_TASK_NAME =
 		"removeDockerContainer";
 
+	public static final String REMOVE_STALE_DOCKER_CONTAINER_TASK_NAME =
+		"removeStaleDockerContainer";
+
 	public static final String START_DOCKER_CONTAINER_TASK_NAME =
 		"startDockerContainer";
 
@@ -350,13 +353,21 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		DockerStopContainer dockerStopContainer = _addTaskStopDockerContainer(
 			project);
 
-		DockerRemoveContainer dockerRemoveContainer =
+		DockerRemoveContainer removeDockerContainer =
 			_addTaskRemoveDockerContainer(project, dockerStopContainer);
+
+		_configureDockerRemoveContainer(project, removeDockerContainer);
+
+		DockerRemoveContainer removeStaleDockerContainer =
+			_addTaskRemoveStaleDockerContainer(project);
+
+		_configureDockerRemoveContainer(project, removeStaleDockerContainer);
 
 		DockerCreateContainer dockerCreateContainer =
 			_addTaskCreateDockerContainer(
 				project, workspaceExtension, dockerBuildImage,
-				dockerRemoveContainer, verifyProductTask);
+				removeDockerContainer, removeStaleDockerContainer,
+				verifyProductTask);
 
 		_addTaskStartDockerContainer(project, dockerCreateContainer);
 
@@ -493,16 +504,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private DockerCreateContainer _addTaskCreateDockerContainer(
 		Project project, WorkspaceExtension workspaceExtension,
 		DockerBuildImage dockerBuildImage,
-		DockerRemoveContainer dockerRemoveContainer,
+		DockerRemoveContainer removeDockerContainer,
+		DockerRemoveContainer removeStaleDockerContainer,
 		VerifyProductTask verifyProductTask) {
 
 		DockerCreateContainer dockerCreateContainer = GradleUtil.addTask(
 			project, CREATE_DOCKER_CONTAINER_TASK_NAME,
 			DockerCreateContainer.class);
 
-		dockerCreateContainer.dependsOn(verifyProductTask, dockerBuildImage);
-		dockerCreateContainer.mustRunAfter(
-			verifyProductTask, dockerRemoveContainer);
+		dockerCreateContainer.dependsOn(
+			verifyProductTask, dockerBuildImage, removeStaleDockerContainer);
 
 		File dockerDir = workspaceExtension.getDockerDir();
 
@@ -585,7 +596,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Task cleanTask = GradleUtil.getTask(
 			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
 
-		cleanTask.dependsOn(dockerRemoveContainer);
+		cleanTask.dependsOn(removeDockerContainer);
 
 		return dockerCreateContainer;
 	}
@@ -1261,51 +1272,52 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	private DockerRemoveContainer _addTaskRemoveDockerContainer(
 		Project project, DockerStopContainer stopDockerContainer) {
 
-		DockerRemoveContainer dockerRemoveContainer = GradleUtil.addTask(
+		DockerRemoveContainer removeDockerContainer = GradleUtil.addTask(
 			project, REMOVE_DOCKER_CONTAINER_TASK_NAME,
 			DockerRemoveContainer.class);
 
-		dockerRemoveContainer.setDescription("Removes the Docker container.");
-		dockerRemoveContainer.setGroup(DOCKER_GROUP);
+		removeDockerContainer.dependsOn(stopDockerContainer);
 
-		Property<Boolean> forceProperty = dockerRemoveContainer.getForce();
+		removeDockerContainer.setDescription("Removes the Docker container.");
+		removeDockerContainer.setGroup(DOCKER_GROUP);
 
-		forceProperty.set(true);
+		removeDockerContainer.onError(
+			throwable -> {
+				Logger logger = removeDockerContainer.getLogger();
 
-		Property<Boolean> removeVolumesProperty =
-			dockerRemoveContainer.getRemoveVolumes();
-
-		removeVolumesProperty.set(true);
-
-		dockerRemoveContainer.targetContainerId(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return _getDockerContainerId(project);
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						"No container with ID '{}' found.",
+						_getDockerContainerId(project));
 				}
-
 			});
 
-		dockerRemoveContainer.dependsOn(stopDockerContainer);
+		return removeDockerContainer;
+	}
 
-		dockerRemoveContainer.onError(
-			new Action<Throwable>() {
+	private DockerRemoveContainer _addTaskRemoveStaleDockerContainer(
+		Project project) {
 
-				@Override
-				public void execute(Throwable throwable) {
-					Logger logger = project.getLogger();
+		DockerRemoveContainer removeStaleDockerContainer = GradleUtil.addTask(
+			project, REMOVE_STALE_DOCKER_CONTAINER_TASK_NAME,
+			DockerRemoveContainer.class);
 
-					if (logger.isWarnEnabled()) {
-						logger.warn(
-							"No container with ID '" +
-								_getDockerContainerId(project) + "' found.");
-					}
+		removeStaleDockerContainer.setDescription(
+			"Removes any stale Docker container before creating a new one.");
+		removeStaleDockerContainer.setGroup(DOCKER_GROUP);
+
+		removeStaleDockerContainer.onError(
+			throwable -> {
+				Logger logger = removeStaleDockerContainer.getLogger();
+
+				if (logger.isInfoEnabled()) {
+					logger.info(
+						"No stale container with ID '{}' found.",
+						_getDockerContainerId(project));
 				}
-
 			});
 
-		return dockerRemoveContainer;
+		return removeStaleDockerContainer;
 	}
 
 	private void _addTasksDistBundleArchive(
@@ -1663,6 +1675,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 					}
 
 				}));
+	}
+
+	private void _configureDockerRemoveContainer(
+		Project project, DockerRemoveContainer dockerRemoveContainer) {
+
+		Property<Boolean> forceProperty = dockerRemoveContainer.getForce();
+
+		forceProperty.set(true);
+
+		Property<Boolean> removeVolumesProperty =
+			dockerRemoveContainer.getRemoveVolumes();
+
+		removeVolumesProperty.set(true);
+
+		dockerRemoveContainer.targetContainerId(
+			() -> _getDockerContainerId(project));
 	}
 
 	private void _configureDownloadTask(

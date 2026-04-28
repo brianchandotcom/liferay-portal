@@ -22,4 +22,7 @@ public class AIHubFDSNames {
 	public static final String INSTRUCTION_DEFINITIONS =
 		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-instructionDefinitions";
 
+	public static final String MODEL_ARMOR_TEMPLATES =
+		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-modelArmorTemplates";
+
 }

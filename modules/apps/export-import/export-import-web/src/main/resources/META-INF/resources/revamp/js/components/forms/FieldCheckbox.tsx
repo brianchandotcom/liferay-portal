@@ -7,7 +7,10 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import '../../../css/utilities.scss';
+
 export function FieldCheckbox({
+	bordered = true,
 	checked,
 	description,
 	id,
@@ -16,6 +19,7 @@ export function FieldCheckbox({
 	onChange,
 	...restProps
 }: {
+	bordered?: boolean;
 	checked: boolean;
 	description?: string;
 	id?: string;
@@ -35,9 +39,8 @@ export function FieldCheckbox({
 
 	return (
 		<div
-			className="border mb-2 p-3 rounded text-3"
+			className={`${bordered ? 'border p-3 rounded ' : ''}cursor-pointer mb-2 text-3`}
 			onClick={handleChange}
-			style={{cursor: 'pointer'}}
 		>
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>

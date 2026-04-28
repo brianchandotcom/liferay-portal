@@ -25,6 +25,7 @@ export function FormikFieldCheckbox({
 
 	return (
 		<FieldCheckbox
+			bordered={false}
 			checked={Boolean(values[name])}
 			description={description}
 			id={id}

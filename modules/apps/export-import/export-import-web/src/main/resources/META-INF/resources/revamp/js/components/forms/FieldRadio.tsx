@@ -7,6 +7,8 @@ import {ClayRadio} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import '../../../css/utilities.scss';
+
 export function FieldRadio({
 	checked,
 	description,
@@ -34,11 +36,7 @@ export function FieldRadio({
 	};
 
 	return (
-		<div
-			className="border mb-2 p-3 rounded text-3"
-			onClick={onChange}
-			style={{cursor: 'pointer'}}
-		>
+		<div className="cursor-pointer mb-2 text-3" onClick={onChange}>
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>
 					<div className="pt-1">

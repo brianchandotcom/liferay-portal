@@ -17,3 +17,8 @@ rules:
             -   get
             -   list
             -   watch
+    -   apiGroups: ["gcp.liferay.com"]
+        resources: ["liferayinfrastructures"]
+        verbs:
+            -   get
+            -   list

@@ -5,10 +5,6 @@ metadata:
         component: backup-create-platform
     name: backup-create-cluster-workflow-template
 spec:
-    arguments:
-        parameters:
-            -   name: environment-id
-            -   name: project-id
     artifactGC:
         {{- .Values.argo.workflowSpec.artifactGC | toYaml | nindent 8 }}
     entrypoint: main
@@ -16,17 +12,11 @@ spec:
         {{- .Values.argo.workflowSpec.podGC | toYaml | nindent 8 }}
     serviceAccountName: backup-create-service-account
     templates:
-        -   name: main
-            steps:
-                -   -   name: create-backup
-                        template: create-backup
-                -   -   arguments:
-                            parameters:
-                                -   name: backup-name
-                                    value: "{{ "{{" }}steps.create-backup.outputs.parameters.backup-name}}"
-                        name: wait-for-backup
-                        template: wait-for-backup
-        -   name: create-backup
+        -   inputs:
+                parameters:
+                    -   name: environment-id
+                    -   name: project-id
+            name: create-backup
             outputs:
                 parameters:
                     -   name: backup-name
@@ -46,8 +36,8 @@ spec:
                                 matchLabels:
                                     active: "true"
                                     app: liferay
-                                    environment-id: {{ "{{" }}workflow.parameters.environment-id}}
-                                    project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                    environment-id: {{ "{{" }}inputs.parameters.environment-id}}
+                                    project-id: {{ "{{" }}inputs.parameters.project-id}}
                                     should-back-up: "true"
                         documentLibrary:
                             destination:
@@ -55,9 +45,9 @@ spec:
                                     bucketLookup:
                                         matchLabels:
                                             app: liferay
-                                            environment-id: {{ "{{" }}workflow.parameters.environment-id}}
+                                            environment-id: {{ "{{" }}inputs.parameters.environment-id}}
                                             is-backup-vault: "true"
-                                            project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                            project-id: {{ "{{" }}inputs.parameters.project-id}}
                                 type: gcs
                             source:
                                 gcs:
@@ -65,10 +55,44 @@ spec:
                                         matchLabels:
                                             active: "true"
                                             app: liferay
-                                            environment-id: {{ "{{" }}workflow.parameters.environment-id}}
-                                            project-id: {{ "{{" }}workflow.parameters.project-id}}
+                                            environment-id: {{ "{{" }}inputs.parameters.environment-id}}
+                                            project-id: {{ "{{" }}inputs.parameters.project-id}}
                                             should-back-up: "true"
                                 type: gcs
+        -   name: get-project-id-and-environment-id
+            outputs:
+                parameters:
+                    -   name: environment-id
+                        valueFrom:
+                            path: /tmp/environment-id.txt
+                    -   name: project-id
+                        valueFrom:
+                            path: /tmp/project-id.txt
+            script:
+                command: [sh]
+                image: "{{ .Values.images.helmKubectl.repository }}:{{ .Values.images.helmKubectl.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+                source: |-
+                    {{- tpl (.Files.Get "scripts/get-project-id-and-environment-id.sh") . | nindent 20 }}
+        -   name: main
+            steps:
+                -   -   name: get-project-id-and-environment-id
+                        template: get-project-id-and-environment-id
+                -   -   arguments:
+                            parameters:
+                                -   name: environment-id
+                                    value: "{{ "{{" }}steps.get-project-id-and-environment-id.outputs.parameters.environment-id}}"
+                                -   name: project-id
+                                    value: "{{ "{{" }}steps.get-project-id-and-environment-id.outputs.parameters.project-id}}"
+                        name: create-backup
+                        template: create-backup
+                -   -   arguments:
+                            parameters:
+                                -   name: backup-name
+                                    value: "{{ "{{" }}steps.create-backup.outputs.parameters.backup-name}}"
+                        name: wait-for-backup
+                        template: wait-for-backup
         -   inputs:
                 parameters:
                     -   name: backup-name

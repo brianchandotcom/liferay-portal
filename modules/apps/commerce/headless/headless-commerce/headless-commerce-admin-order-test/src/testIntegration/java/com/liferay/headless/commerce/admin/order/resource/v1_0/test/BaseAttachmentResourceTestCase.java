@@ -179,6 +179,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		attachment.setExternalReferenceCode(regex);
 		attachment.setTitle(regex);
 		attachment.setType(regex);
+		attachment.setTypeLabel(regex);
 		attachment.setUrl(regex);
 
 		String json = AttachmentSerDes.toJSON(attachment);
@@ -192,6 +193,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
 		Assert.assertEquals(regex, attachment.getTitle());
 		Assert.assertEquals(regex, attachment.getType());
+		Assert.assertEquals(regex, attachment.getTypeLabel());
 		Assert.assertEquals(regex, attachment.getUrl());
 	}
 
@@ -2147,6 +2149,14 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (attachment.getTypeLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("url", additionalAssertFieldName)) {
 				if (attachment.getUrl() == null) {
 					valid = false;
@@ -2377,6 +2387,17 @@ public abstract class BaseAttachmentResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						attachment1.getType(), attachment2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getTypeLabel(),
+						attachment2.getTypeLabel())) {
 
 					return false;
 				}
@@ -2781,6 +2802,52 @@ public abstract class BaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("typeLabel")) {
+			Object object = attachment.getTypeLabel();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("url")) {
 			Object object = attachment.getUrl();
 
@@ -2884,6 +2951,8 @@ public abstract class BaseAttachmentResourceTestCase {
 				restricted = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				url = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -3110,4 +3179,4 @@ public abstract class BaseAttachmentResourceTestCase {
 			AttachmentResource _attachmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:760899330
+// LIFERAY-REST-BUILDER-HASH:-1205916924

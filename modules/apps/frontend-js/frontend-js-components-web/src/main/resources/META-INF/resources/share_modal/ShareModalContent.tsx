@@ -107,13 +107,15 @@ function CollaboratorListItem({
 						)}
 					</div>
 
-					<div>
-						<PermissionSelector
-							actionIds={actionIds}
-							onChange={handleChangeUserProperties}
-							options={permissionOptions}
-						/>
-					</div>
+					{permissionOptions.length > 1 ? (
+						<div>
+							<PermissionSelector
+								actionIds={actionIds}
+								onChange={handleChangeUserProperties}
+								options={permissionOptions}
+							/>
+						</div>
+					) : null}
 				</div>
 
 				{showExpirationDate ? (

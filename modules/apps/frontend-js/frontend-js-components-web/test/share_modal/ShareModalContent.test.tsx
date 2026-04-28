@@ -275,6 +275,15 @@ describe('ShareModalContent', () => {
 		).toBeInTheDocument();
 	});
 
+	it('hides the permission selector when only one option is provided', () => {
+		const {queryByLabelText} = renderComponent({
+			...DEFAULT_PROPS,
+			permissionOptions: [{label: 'view', value: 'VIEW'}],
+		});
+
+		expect(queryByLabelText('edit-permissions')).not.toBeInTheDocument();
+	});
+
 	it('renders only the permission options the caller provides', () => {
 		const folderProps = {
 			...DEFAULT_PROPS,

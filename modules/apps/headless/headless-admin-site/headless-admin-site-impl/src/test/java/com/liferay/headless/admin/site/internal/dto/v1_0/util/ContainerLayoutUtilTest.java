@@ -47,11 +47,7 @@ public class ContainerLayoutUtilTest {
 		layout = ContainerLayoutUtil.toLayout(
 			JSONUtil.put("contentDisplay", "flex-row"));
 
-		Assert.assertNotNull(
-			"Layout must not be null when contentDisplay is the only set " +
-				"field; otherwise the FlexRow master page fragment " +
-					"configuration is lost on full Pages export",
-			layout);
+		Assert.assertNotNull(layout);
 		Assert.assertEquals(
 			Layout.ContentDisplay.FLEX_ROW, layout.getContentDisplay());
 

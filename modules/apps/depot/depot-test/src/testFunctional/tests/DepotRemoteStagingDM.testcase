@@ -62,108 +62,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a document in depot can be removed and republished in AP through widget config manual selection when enabling remote staging."
-	@priority = 5
-	@refactordone
-	test CanDeleteDocument {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.doc",
-			groupName = "Test Depot Name",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Test Page",
-			widgetName = "Asset Publisher");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "Document_1.doc",
-			assetType = "Basic Document",
-			depotName = "Test Depot Name");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.doc");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = PropsUtil.get("default.admin.password"),
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_1.doc");
-
-		User.loginPG(
-			nodePort = 8080,
-			password = PropsUtil.get("default.admin.password"),
-			userEmailAddress = "test@liferay.com");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.deleteCP(dmDocumentTitle = "Document_1.doc");
-
-		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
-
-		RecycleBin.deleteCP(
-			assetName = "Document_1.doc",
-			assetType = "Document");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.doc");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive(remoteStaging = "true");
-
-		User.logoutPG();
-
-		User.firstLoginUI(
-			password = PropsUtil.get("default.admin.password"),
-			specificURL = "http://localhost:9080",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.openSitePage(
-			baseURL = "http://localhost:9080",
-			pageName = "Test Page",
-			siteName = "Remote Site");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_1.doc");
-	}
-
 	@description = "This ensures that the image in depot can be removed and republished in open graph when enabling remote staging."
 	@priority = 4
 	@refactordone
@@ -672,6 +570,49 @@ definition {
 			siteName = "Remote Site");
 
 		AssetPublisherPortlet.viewAssetPG(assetTitle = "Document_3.doc");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = PropsUtil.get("default.admin.password"),
+			userEmailAddress = "test@liferay.com");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.deleteCP(dmDocumentTitle = "Document_3.doc");
+
+		DepotNavigator.openDepotRecycleBinAdmin(depotName = "Test Depot Name");
+
+		RecycleBin.deleteCP(
+			assetName = "Document_3.doc",
+			assetType = "Document");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_3.doc");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive(remoteStaging = "true");
+
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = PropsUtil.get("default.admin.password"),
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Test Page",
+			siteName = "Remote Site");
+
+		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_3.doc");
 	}
 
 	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling remote staging."

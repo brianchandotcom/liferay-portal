@@ -612,7 +612,7 @@ public class ObjectDefinitionTreeUtil {
 						objectRelationship.getObjectFieldId2());
 
 				_performActions(
-					false, objectDefinition1, objectEntryLocalService, true,
+					false, objectDefinition1, objectEntryLocalService, false,
 					objectEntry -> _runSQL(
 						objectRelationshipPersistence,
 						StringBundler.concat(

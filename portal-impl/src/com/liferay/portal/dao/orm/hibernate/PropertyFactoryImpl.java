@@ -15,9 +15,7 @@ public class PropertyFactoryImpl implements PropertyFactory {
 
 	@Override
 	public Property forName(String propertyName) {
-		return new PropertyImpl(
-			org.hibernate.criterion.Property.forName(propertyName),
-			propertyName);
+		return new PropertyImpl(propertyName);
 	}
 
 }

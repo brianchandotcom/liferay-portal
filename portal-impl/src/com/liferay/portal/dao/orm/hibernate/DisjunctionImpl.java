@@ -9,36 +9,33 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.Junction;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Raymond Augé
  */
-public class DisjunctionImpl extends CriterionImpl implements Disjunction {
-
-	public DisjunctionImpl(org.hibernate.criterion.Disjunction disjunction) {
-		super(disjunction);
-
-		_disjunction = disjunction;
-	}
+public class DisjunctionImpl implements Disjunction {
 
 	@Override
 	public Junction add(Criterion criterion) {
-		CriterionImpl criterionImpl = (CriterionImpl)criterion;
-
-		_disjunction.add(criterionImpl.getWrappedCriterion());
+		_criterions.add(criterion);
 
 		return this;
 	}
 
-	public org.hibernate.criterion.Disjunction getWrappedDisjunction() {
-		return _disjunction;
+	public List<Criterion> getCriterions() {
+		return _criterions;
 	}
 
 	@Override
 	public String toString() {
-		return StringBundler.concat("{_disjunction=", _disjunction, "}");
+		return StringBundler.concat(
+			"(", StringUtil.merge(_criterions, " or "), ")");
 	}
 
-	private final org.hibernate.criterion.Disjunction _disjunction;
+	private final List<Criterion> _criterions = new ArrayList<>();
 
 }

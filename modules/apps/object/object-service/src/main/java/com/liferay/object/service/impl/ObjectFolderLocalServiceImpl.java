@@ -340,23 +340,25 @@ public class ObjectFolderLocalServiceImpl
 			ObjectFolder objectFolder =
 				objectFolderLocalService.fetchDefaultObjectFolder(companyId);
 
-			if (objectFolder == null) {
-				objectFolder = objectFolderLocalService.addObjectFolder(
-					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
-					_userLocalService.getGuestUserId(companyId),
-					LocalizedMapUtil.getLocalizedMap(
-						ObjectFolderConstants.NAME_DEFAULT),
-					ObjectFolderConstants.NAME_DEFAULT);
-
-				Role guestRole = _roleLocalService.getRole(
-					companyId, RoleConstants.GUEST);
-
-				_resourcePermissionLocalService.setResourcePermissions(
-					companyId, ObjectFolder.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectFolder.getObjectFolderId()),
-					guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
+			if (objectFolder != null) {
+				return;
 			}
+
+			objectFolder = objectFolderLocalService.addObjectFolder(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
+				_userLocalService.getGuestUserId(companyId),
+				LocalizedMapUtil.getLocalizedMap(
+					ObjectFolderConstants.NAME_DEFAULT),
+				ObjectFolderConstants.NAME_DEFAULT);
+
+			Role guestRole = _roleLocalService.getRole(
+				companyId, RoleConstants.GUEST);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				companyId, ObjectFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectFolder.getObjectFolderId()),
+				guestRole.getRoleId(), new String[] {ActionKeys.VIEW});
 		}
 
 	}

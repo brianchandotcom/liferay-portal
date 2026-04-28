@@ -30,7 +30,7 @@ public abstract class BaseExceptionMapper<T extends Throwable>
 		String type = problem.getType();
 
 		if (type != null) {
-			problem.setType(ExceptionMapperUtil.getExceptionType(type));
+			problem.setType(ExceptionMapperUtil.getType(type));
 		}
 
 		return Response.status(

@@ -99,10 +99,11 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				throwable = throwable.getCause();
 			}
 
+			Class<?> clazz = throwable.getClass();
+
 			jsonObject.put(
 				"type",
-				ExceptionMapperUtil.getExceptionType(
-					throwable.getClass().getName()));
+				ExceptionMapperUtil.getType(clazz.getName()));
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(exception);

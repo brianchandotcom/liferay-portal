@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ExceptionMapperUtil {
 
-	public static String getExceptionType(String className) {
+	public static String getType(String className) {
 		if (className == null) {
 			return null;
 		}

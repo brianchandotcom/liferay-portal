@@ -288,6 +288,11 @@ export class PageEditorPage {
 			await this.page.getByLabel(`Add ${name}`).first().focus();
 
 			await this.page.keyboard.press('Enter');
+
+			await expect(
+				this.page.locator('#content').getByText(name, {exact: true})
+			).toBeVisible();
+
 			await this.page.keyboard.press('Enter');
 		}
 

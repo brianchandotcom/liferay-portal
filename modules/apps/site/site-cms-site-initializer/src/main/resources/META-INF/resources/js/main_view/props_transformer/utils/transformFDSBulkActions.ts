@@ -10,7 +10,7 @@ const BULK_ACTION_PERMISSION_KEYS: Record<string, string> = {
 	'copy-to': 'update',
 	'default-permissions': 'permissions',
 	'delete': 'delete',
-	'download': 'download',
+	'download': 'get',
 	'edit-categories': 'edit-categories',
 	'edit-default-permissions-by-role': 'permissions',
 	'edit-permissions-by-role': 'permissions',
@@ -44,6 +44,14 @@ export default function transformFDSBulkActions(
 			} = {}): boolean => {
 				if (allItemsSelectedActive) {
 					return key !== 'download';
+				}
+
+				if (key === 'download') {
+					return (
+						selectedItems?.every((item: any) =>
+							Boolean(item?.embedded?.file?.link?.href)
+						) ?? false
+					);
 				}
 
 				return (

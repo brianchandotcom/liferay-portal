@@ -85,6 +85,11 @@ resource "helm_release" "argocd" {
 						}
 					}
 				}
+				global={
+					networkPolicy={
+						create=true
+					}
+				}
 				installCRDs=true
 				notifications={
 					resources={

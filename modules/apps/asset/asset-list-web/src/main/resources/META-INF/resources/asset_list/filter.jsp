@@ -47,9 +47,13 @@
 					module="{CollectionFilterBuilder} from asset-list-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
+							"initialConditions", editAssetListDisplayContext.getConditions()
+						).put(
 							"namespace", liferayPortletResponse.getNamespace()
 						).put(
-							"properties", new ArrayList<>()
+							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
+						).put(
+							"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
 						).build()
 					%>'
 				/>

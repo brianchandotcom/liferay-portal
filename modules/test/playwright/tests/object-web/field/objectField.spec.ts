@@ -29,6 +29,9 @@ import {postListTypeDefinitionListTypeEntries} from '../utils/postListTypeDefini
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-83570': {enabled: true}, // Phone Number field
+	}),
 	loginTest(),
 	objectPagesTest
 );
@@ -1322,6 +1325,10 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				objectFieldLabel: `multiselectPicklist${getRandomInt()}`,
 			},
 			{
+				objectFieldBusinessType: 'Phone Number',
+				objectFieldLabel: `phoneNumber${getRandomInt()}`,
+			},
+			{
 				objectFieldBusinessType: 'Picklist',
 				objectFieldLabel: `picklist${getRandomInt()}`,
 			},
@@ -2427,6 +2434,84 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			});
 		});
 	});
+
+	test(
+		'can edit the prefix type and prefix for a phone number field',
+		{tag: ['@LPD-83570']},
+		async ({apiHelpers, objectFieldsPage}) => {
+			let objectDefinition: ObjectDefinition;
+			let selectedPrefixType: string;
+			let selectedPrefix: string;
+
+			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
+
+			await test.step('Create required definitions', async () => {
+				const listTypeDefinition =
+					await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+				apiHelpers.data.push({
+					id: listTypeDefinition.id,
+					type: 'listTypeDefinition',
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate to the object definition and add a phone number field', async () => {
+				await objectFieldsPage.goto(objectDefinition.label!['en_US']);
+
+				await objectFieldsPage.addObjectField({
+					objectFieldBusinessType: 'Phone Number',
+					objectFieldLabel,
+				});
+			});
+
+			await test.step('Edit the prefix type and prefix for the phone number field', async () => {
+				await objectFieldsPage.openObjectField(objectFieldLabel);
+
+				await objectFieldsPage.prefixTypeDropdown.click();
+
+				const prefixTypeOption = objectFieldsPage.iframeLocator
+					.getByRole('option', {exact: true, name: 'Fixed'});
+
+				selectedPrefixType = await prefixTypeOption.innerText();
+
+				await prefixTypeOption.click();
+
+				await objectFieldsPage.prefixDropdown.click();
+
+				const prefixOption = objectFieldsPage.iframeLocator
+					.getByRole('option')
+					.nth(1);
+
+				await prefixOption.click();
+
+				selectedPrefix = await objectFieldsPage.prefixDropdown.innerText();
+
+				await objectFieldsPage.saveObjectField();
+			});
+
+			await test.step('Verify the updated prefix type and prefix are saved', async () => {
+				await objectFieldsPage.openObjectField(objectFieldLabel);
+
+				await expect(objectFieldsPage.prefixTypeDropdown).toHaveText(
+					selectedPrefixType
+				);
+
+				await expect(objectFieldsPage.prefixDropdown).toHaveText(
+					selectedPrefix
+				);
+			});
+		}
+	);
 });
 
 test.describe('Manage object fields default value properties', () => {

@@ -76,6 +76,9 @@ components:
                     type: string
                 type:
                     type: string
+                typeLabel:
+                    readOnly: true
+                    type: string
                 url:
                     readOnly: true
                     type: string

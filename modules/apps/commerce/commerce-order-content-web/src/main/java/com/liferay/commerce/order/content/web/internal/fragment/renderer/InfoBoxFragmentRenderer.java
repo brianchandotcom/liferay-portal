@@ -81,6 +81,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -143,6 +144,13 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		String field = _getConfigurationValue(
 			fragmentRendererContext, fragmentEntryLink, "field");
+
+		if (Objects.equals(field, "purchaseOrderDocument") &&
+			FeatureFlagManagerUtil.isEnabled(
+				fragmentEntryLink.getCompanyId(), "LPD-6252")) {
+
+			return;
+		}
 
 		boolean readOnly = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(

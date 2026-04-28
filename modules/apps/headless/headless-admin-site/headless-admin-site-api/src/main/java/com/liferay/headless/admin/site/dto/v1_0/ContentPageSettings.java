@@ -98,6 +98,55 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 	private Supplier<CustomMetaTag[]> _customMetaTagsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The portlet ID of the asset publisher configured as the default for this page, if any."
+	)
+	public String getDefaultAssetPublisherPortletId() {
+		if (_defaultAssetPublisherPortletIdSupplier != null) {
+			defaultAssetPublisherPortletId =
+				_defaultAssetPublisherPortletIdSupplier.get();
+
+			_defaultAssetPublisherPortletIdSupplier = null;
+		}
+
+		return defaultAssetPublisherPortletId;
+	}
+
+	public void setDefaultAssetPublisherPortletId(
+		String defaultAssetPublisherPortletId) {
+
+		this.defaultAssetPublisherPortletId = defaultAssetPublisherPortletId;
+
+		_defaultAssetPublisherPortletIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDefaultAssetPublisherPortletId(
+		UnsafeSupplier<String, Exception>
+			defaultAssetPublisherPortletIdUnsafeSupplier) {
+
+		_defaultAssetPublisherPortletIdSupplier = () -> {
+			try {
+				return defaultAssetPublisherPortletIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The portlet ID of the asset publisher configured as the default for this page, if any."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String defaultAssetPublisherPortletId;
+
+	@JsonIgnore
+	private Supplier<String> _defaultAssetPublisherPortletIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page's Open Graph settings."
 	)
 	@Valid
@@ -233,6 +282,23 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String defaultAssetPublisherPortletId =
+			getDefaultAssetPublisherPortletId();
+
+		if (defaultAssetPublisherPortletId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultAssetPublisherPortletId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(defaultAssetPublisherPortletId));
+
+			sb.append("\"");
 		}
 
 		OpenGraphSettings openGraphSettings = getOpenGraphSettings();
@@ -410,4 +476,4 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-435898202
+// LIFERAY-REST-BUILDER-HASH:-1502679958

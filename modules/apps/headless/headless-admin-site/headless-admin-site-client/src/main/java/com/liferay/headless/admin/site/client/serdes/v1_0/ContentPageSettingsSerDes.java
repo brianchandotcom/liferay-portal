@@ -70,6 +70,22 @@ public class ContentPageSettingsSerDes {
 			sb.append("]");
 		}
 
+		if (contentPageSettings.getDefaultAssetPublisherPortletId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultAssetPublisherPortletId\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					contentPageSettings.getDefaultAssetPublisherPortletId()));
+
+			sb.append("\"");
+		}
+
 		if (contentPageSettings.getOpenGraphSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -164,6 +180,16 @@ public class ContentPageSettingsSerDes {
 				String.valueOf(contentPageSettings.getCustomMetaTags()));
 		}
 
+		if (contentPageSettings.getDefaultAssetPublisherPortletId() == null) {
+			map.put("defaultAssetPublisherPortletId", null);
+		}
+		else {
+			map.put(
+				"defaultAssetPublisherPortletId",
+				String.valueOf(
+					contentPageSettings.getDefaultAssetPublisherPortletId()));
+		}
+
 		if (contentPageSettings.getOpenGraphSettings() == null) {
 			map.put("openGraphSettings", null);
 		}
@@ -236,6 +262,12 @@ public class ContentPageSettingsSerDes {
 			if (Objects.equals(jsonParserFieldName, "customMetaTags")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultAssetPublisherPortletId")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
 				return false;
 			}
@@ -281,6 +313,15 @@ public class ContentPageSettingsSerDes {
 					}
 
 					contentPageSettings.setCustomMetaTags(customMetaTagsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"defaultAssetPublisherPortletId")) {
+
+				if (jsonParserFieldValue != null) {
+					contentPageSettings.setDefaultAssetPublisherPortletId(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
@@ -407,4 +448,4 @@ public class ContentPageSettingsSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:519602977
+// LIFERAY-REST-BUILDER-HASH:-281108124

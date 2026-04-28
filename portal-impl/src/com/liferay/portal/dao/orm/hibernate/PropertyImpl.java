@@ -19,171 +19,146 @@ import java.util.Collection;
  */
 public class PropertyImpl extends ProjectionImpl implements Property {
 
-	public PropertyImpl(
-		org.hibernate.criterion.Property property, String propertyName) {
-
+	public PropertyImpl(String propertyName) {
 		super(ProjectionType.PROPERTY, propertyName);
-
-		_property = property;
-		_propertyName = propertyName;
 	}
 
 	@Override
 	public Order asc() {
-		return new OrderImpl(_propertyName, true);
+		return new OrderImpl(getPropertyName(), true);
 	}
 
 	@Override
 	public Projection avg() {
-		return new ProjectionImpl(ProjectionType.AVG, _propertyName);
+		return new ProjectionImpl(ProjectionType.AVG, getPropertyName());
 	}
 
 	@Override
 	public Criterion between(Object min, Object max) {
-		return new CriterionImpl(_property.between(min, max));
+		return new CriterionImpl(
+			CriterionType.BETWEEN, getPropertyName(), min, max);
 	}
 
 	@Override
 	public Projection count() {
-		return new ProjectionImpl(ProjectionType.COUNT, _propertyName);
+		return new ProjectionImpl(ProjectionType.COUNT, getPropertyName());
 	}
 
 	@Override
 	public Order desc() {
-		return new OrderImpl(_propertyName, false);
+		return new OrderImpl(getPropertyName(), false);
 	}
 
 	@Override
 	public Criterion eq(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.eq(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_EQ, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion eq(Object value) {
-		return new CriterionImpl(_property.eq(value));
+		return new CriterionImpl(CriterionType.EQ, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion eqAll(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.eqAll(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_EQ_ALL, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion eqProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.eqProperty(propertyImpl.getWrappedProperty()));
+		return eqProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion eqProperty(String other) {
-		return new CriterionImpl(_property.eqProperty(other));
+		return new CriterionImpl(
+			CriterionType.EQ_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion ge(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.ge(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GE, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion ge(Object value) {
-		return new CriterionImpl(_property.ge(value));
+		return new CriterionImpl(CriterionType.GE, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion geAll(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.geAll(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GE_ALL, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion geProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.geProperty(propertyImpl.getWrappedProperty()));
+		return geProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion geProperty(String other) {
-		return new CriterionImpl(_property.geProperty(other));
+		return new CriterionImpl(
+			CriterionType.GE_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion geSome(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.geSome(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GE_SOME, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Property getProperty(String propertyName) {
-		return new PropertyImpl(
-			_property.getProperty(propertyName), propertyName);
-	}
-
-	public org.hibernate.criterion.Property getWrappedProperty() {
-		return _property;
+		return new PropertyImpl(propertyName);
 	}
 
 	@Override
 	public Projection group() {
-		return new ProjectionImpl(ProjectionType.GROUP_PROPERTY, _propertyName);
+		return new ProjectionImpl(ProjectionType.GROUP_PROPERTY, getPropertyName());
 	}
 
 	@Override
 	public Criterion gt(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.gt(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GT, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion gt(Object value) {
-		return new CriterionImpl(_property.gt(value));
+		return new CriterionImpl(CriterionType.GT, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion gtAll(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.gtAll(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GT_ALL, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion gtProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.gtProperty(propertyImpl.getWrappedProperty()));
+		return gtProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion gtProperty(String other) {
-		return new CriterionImpl(_property.gtProperty(other));
+		return new CriterionImpl(
+			CriterionType.GT_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion gtSome(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.gtSome(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_GT_SOME, getPropertyName(), subselect);
 	}
 
 	@Override
@@ -193,7 +168,8 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Criterion in(Collection<?> values) {
-		return new CriterionImpl(_property.in(values));
+		return new CriterionImpl(
+			CriterionType.IN, getPropertyName(), values.toArray());
 	}
 
 	@Override
@@ -203,10 +179,8 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Criterion in(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.in(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_IN, getPropertyName(), subselect);
 	}
 
 	@Override
@@ -226,7 +200,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Criterion in(Object[] values) {
-		return new CriterionImpl(_property.in(values));
+		return new CriterionImpl(CriterionType.IN, getPropertyName(), values);
 	}
 
 	@Override
@@ -236,163 +210,144 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 
 	@Override
 	public Criterion isEmpty() {
-		return new CriterionImpl(_property.isEmpty());
+		return new CriterionImpl(CriterionType.IS_EMPTY, getPropertyName());
 	}
 
 	@Override
 	public Criterion isNotEmpty() {
-		return new CriterionImpl(_property.isNotEmpty());
+		return new CriterionImpl(CriterionType.IS_NOT_EMPTY, getPropertyName());
 	}
 
 	@Override
 	public Criterion isNotNull() {
-		return new CriterionImpl(_property.isNotNull());
+		return new CriterionImpl(CriterionType.IS_NOT_NULL, getPropertyName());
 	}
 
 	@Override
 	public Criterion isNull() {
-		return new CriterionImpl(_property.isNull());
+		return new CriterionImpl(CriterionType.IS_NULL, getPropertyName());
 	}
 
 	@Override
 	public Criterion le(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.le(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LE, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion le(Object value) {
-		return new CriterionImpl(_property.le(value));
+		return new CriterionImpl(CriterionType.LE, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion leAll(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.leAll(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LE_ALL, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion leProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.leProperty(propertyImpl.getWrappedProperty()));
+		return leProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion leProperty(String other) {
-		return new CriterionImpl(_property.leProperty(other));
+		return new CriterionImpl(
+			CriterionType.LE_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion leSome(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.leSome(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LE_SOME, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion like(Object value) {
-		return new CriterionImpl(_property.like(value));
+		return new CriterionImpl(CriterionType.LIKE, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion lt(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.lt(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LT, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion lt(Object value) {
-		return new CriterionImpl(_property.lt(value));
+		return new CriterionImpl(CriterionType.LT, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion ltAll(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.ltAll(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LT_ALL, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion ltProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.ltProperty(propertyImpl.getWrappedProperty()));
+		return ltProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion ltProperty(String other) {
-		return new CriterionImpl(_property.ltProperty(other));
+		return new CriterionImpl(
+			CriterionType.LT_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion ltSome(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.ltSome(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_LT_SOME, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Projection max() {
-		return new ProjectionImpl(ProjectionType.MAX, _propertyName);
+		return new ProjectionImpl(ProjectionType.MAX, getPropertyName());
 	}
 
 	@Override
 	public Projection min() {
-		return new ProjectionImpl(ProjectionType.MIN, _propertyName);
+		return new ProjectionImpl(ProjectionType.MIN, getPropertyName());
 	}
 
 	@Override
 	public Criterion ne(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.ne(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_NE, getPropertyName(), subselect);
 	}
 
 	@Override
 	public Criterion ne(Object value) {
-		return new CriterionImpl(_property.ne(value));
+		return new CriterionImpl(CriterionType.NE, getPropertyName(), value);
 	}
 
 	@Override
 	public Criterion neProperty(Property other) {
 		PropertyImpl propertyImpl = (PropertyImpl)other;
 
-		return new CriterionImpl(
-			_property.neProperty(propertyImpl.getWrappedProperty()));
+		return neProperty(propertyImpl.getPropertyName());
 	}
 
 	@Override
 	public Criterion neProperty(String other) {
-		return new CriterionImpl(_property.neProperty(other));
+		return new CriterionImpl(
+			CriterionType.NE_PROPERTY, getPropertyName(), other);
 	}
 
 	@Override
 	public Criterion notIn(DynamicQuery subselect) {
-		DynamicQueryImpl dynamicQueryImpl = (DynamicQueryImpl)subselect;
-
 		return new CriterionImpl(
-			_property.notIn(dynamicQueryImpl.getDetachedCriteria()));
+			CriterionType.SUBQUERY_NOT_IN, getPropertyName(), subselect);
 	}
 
 	@Override
 	public String toString() {
-		return _propertyName;
+		return getPropertyName();
 	}
-
-	private final org.hibernate.criterion.Property _property;
-	private final String _propertyName;
 
 }

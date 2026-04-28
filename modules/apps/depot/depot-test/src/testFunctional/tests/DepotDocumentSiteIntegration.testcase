@@ -229,7 +229,7 @@ definition {
 
 	@description = "This ensures that a document in a depot can be copied to the connected site."
 	@priority = 5
-	test CanCopyDocumentFromDepotToConnectedSite {
+	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnected {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");

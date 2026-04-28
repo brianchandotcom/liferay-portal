@@ -6,11 +6,16 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.exception.CommerceOrderAttachmentTitleException;
+import com.liferay.commerce.exception.CommerceOrderAttachmentTypeException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.service.base.CommerceOrderAttachmentLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,11 +62,12 @@ public class CommerceOrderAttachmentLocalServiceImpl
 			String fileName, InputStream inputStream)
 		throws PortalException {
 
-		_validate(title);
-
 		CommerceOrder commerceOrder =
 			_commerceOrderPersistence.findByPrimaryKey(commerceOrderId);
+
 		User user = _userLocalService.getUser(userId);
+
+		_validate(user.getCompanyId(), title, type);
 
 		FileEntry fileEntry = _addFileEntry(
 			commerceOrder, fileName, inputStream, user);
@@ -196,7 +202,7 @@ public class CommerceOrderAttachmentLocalServiceImpl
 			commerceOrderAttachmentPersistence.findByPrimaryKey(
 				commerceOrderAttachmentId);
 
-		_validate(title);
+		_validate(commerceOrderAttachment.getCompanyId(), title, type);
 
 		commerceOrderAttachment.setPriority(priority);
 		commerceOrderAttachment.setRestricted(restricted);
@@ -266,14 +272,43 @@ public class CommerceOrderAttachmentLocalServiceImpl
 		}
 	}
 
-	private void _validate(String title) throws PortalException {
+	private void _validate(long companyId, String title, String type)
+		throws PortalException {
+
 		if (Validator.isNull(title)) {
 			throw new CommerceOrderAttachmentTitleException();
+		}
+
+		if (Validator.isNull(type)) {
+			return;
+		}
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					"L_COMMERCE_ORDER_ATTACHMENT_TYPES", companyId);
+
+		if (listTypeDefinition == null) {
+			throw new CommerceOrderAttachmentTypeException();
+		}
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				listTypeDefinition.getListTypeDefinitionId(), type);
+
+		if (listTypeEntry == null) {
+			throw new CommerceOrderAttachmentTypeException();
 		}
 	}
 
 	@Reference
 	private CommerceOrderPersistence _commerceOrderPersistence;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

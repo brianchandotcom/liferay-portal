@@ -12,7 +12,7 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeDefinitionService;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -64,7 +64,7 @@ public class CommerceOrderAttachmentTypeSelectionFDSFilter
 
 		try {
 			ListTypeDefinition listTypeDefinition =
-				_listTypeDefinitionService.
+				_listTypeDefinitionLocalService.
 					fetchListTypeDefinitionByExternalReferenceCode(
 						"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
 						CompanyThreadLocal.getCompanyId());
@@ -99,7 +99,7 @@ public class CommerceOrderAttachmentTypeSelectionFDSFilter
 		CommerceOrderAttachmentTypeSelectionFDSFilter.class);
 
 	@Reference
-	private ListTypeDefinitionService _listTypeDefinitionService;
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
 	private ListTypeEntryService _listTypeEntryService;

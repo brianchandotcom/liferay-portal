@@ -11,6 +11,9 @@ package com.liferay.commerce.order.web.internal.constants;
  */
 public class CommerceOrderScreenNavigationConstants {
 
+	public static final String CATEGORY_KEY_COMMERCE_ORDER_ATTACHMENTS =
+		"attachments";
+
 	public static final String CATEGORY_KEY_COMMERCE_ORDER_CUSTOM_FIELDS =
 		"custom-fields";
 

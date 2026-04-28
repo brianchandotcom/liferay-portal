@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend.data.set.view.table;
+package com.liferay.commerce.order.web.internal.frontend.data.set.view.table;
 
-import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
@@ -23,11 +23,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  */
 @Component(
-	property = "frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS,
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ATTACHMENTS,
 	service = FDSView.class
 )
-public class PendingCommerceOrderAttachmentTableFDSView
-	extends BaseTableFDSView {
+public class CommerceOrderAttachmentTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

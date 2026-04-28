@@ -88,7 +88,7 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 
 		PatcherFix patcherFix = _patcherFixLocalService.addPatcherFix(
 			themeDisplay.getUserId(), patcherProductVersionId,
-			patcherProjectVersionId, patcherFixName, committish, gitRemoteURL,
+			patcherProjectVersionId, committish, gitRemoteURL, patcherFixName,
 			type, WorkflowConstants.STATUS_FIX_ADDING);
 
 		List<PatcherBuild> patcherBuilds =

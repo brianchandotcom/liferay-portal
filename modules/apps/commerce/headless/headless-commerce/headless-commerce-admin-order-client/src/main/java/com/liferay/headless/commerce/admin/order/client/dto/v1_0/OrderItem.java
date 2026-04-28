@@ -1178,4 +1178,4 @@ public class OrderItem implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1442883953
+// LIFERAY-REST-BUILDER-HASH:-372821775

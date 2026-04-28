@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.order.internal.graphql.query.v1_0;
 
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
@@ -23,6 +24,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderAccountGroupResource;
@@ -77,6 +79,14 @@ public class Query {
 
 		_accountResourceComponentServiceObjects =
 			accountResourceComponentServiceObjects;
+	}
+
+	public static void setAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<AttachmentResource>
+			attachmentResourceComponentServiceObjects) {
+
+		_attachmentResourceComponentServiceObjects =
+			attachmentResourceComponentServiceObjects;
 	}
 
 	public static void setBillingAddressResourceComponentServiceObjects(
@@ -253,6 +263,103 @@ public class Query {
 			this::_populateResourceContext,
 			accountResource -> accountResource.getOrderRuleAccountAccount(
 				orderRuleAccountId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderAttachment(attachmentId: ___, orderId: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, url}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Attachment orderAttachment(
+			@GraphQLName("orderId") Long orderId,
+			@GraphQLName("attachmentId") Long attachmentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.getOrderAttachment(
+				orderId, attachmentId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderAttachments(filter: ___, orderId: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage orderAttachments(
+			@GraphQLName("orderId") Long orderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.getOrderAttachmentsPage(
+					orderId, search,
+					_filterBiFunction.apply(attachmentResource, filterString),
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(attachmentResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeAttachmentByExternalReferenceCode(attachmentExternalReferenceCode: ___, externalReferenceCode: ___){actions, attachment, dateModified, extension, externalReferenceCode, id, priority, restricted, title, type, url}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Attachment
+			orderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("attachmentExternalReferenceCode") String
+					attachmentExternalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.
+					getOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+						externalReferenceCode,
+						attachmentExternalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {orderByExternalReferenceCodeAttachments(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AttachmentPage orderByExternalReferenceCodeAttachments(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> new AttachmentPage(
+				attachmentResource.
+					getOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, search,
+						_filterBiFunction.apply(
+							attachmentResource, filterString),
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							attachmentResource, sortsString))));
 	}
 
 	/**
@@ -1278,6 +1385,42 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(Order.class)
+	public class GetOrderByExternalReferenceCodeAttachmentsPageTypeExtension {
+
+		public GetOrderByExternalReferenceCodeAttachmentsPageTypeExtension(
+			Order order) {
+
+			_order = order;
+		}
+
+		@GraphQLField
+		public AttachmentPage byExternalReferenceCodeAttachments(
+				@GraphQLName("search") String search,
+				@GraphQLName("filter") String filterString,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource -> new AttachmentPage(
+					attachmentResource.
+						getOrderByExternalReferenceCodeAttachmentsPage(
+							_order.getExternalReferenceCode(), search,
+							_filterBiFunction.apply(
+								attachmentResource, filterString),
+							Pagination.of(page, pageSize),
+							_sortsBiFunction.apply(
+								attachmentResource, sortsString))));
+		}
+
+		private Order _order;
+
+	}
+
+	@GraphQLTypeExtension(Order.class)
 	public class GetOrderByExternalReferenceCodeBillingAddressTypeExtension {
 
 		public GetOrderByExternalReferenceCodeBillingAddressTypeExtension(
@@ -1594,6 +1737,37 @@ public class Query {
 
 	}
 
+	@GraphQLTypeExtension(Order.class)
+	public class
+		GetOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeTypeExtension {
+
+		public GetOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeTypeExtension(
+			Order order) {
+
+			_order = order;
+		}
+
+		@GraphQLField
+		public Attachment
+				byExternalReferenceCodeAttachmentByExternalReferenceCode(
+					@GraphQLName("attachmentExternalReferenceCode") String
+						attachmentExternalReferenceCode)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_attachmentResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				attachmentResource ->
+					attachmentResource.
+						getOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+							_order.getExternalReferenceCode(),
+							attachmentExternalReferenceCode));
+		}
+
+		private Order _order;
+
+	}
+
 	@GraphQLName("AccountPage")
 	public class AccountPage {
 
@@ -1612,6 +1786,39 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<Account> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("AttachmentPage")
+	public class AttachmentPage {
+
+		public AttachmentPage(Page attachmentPage) {
+			actions = attachmentPage.getActions();
+
+			items = attachmentPage.getItems();
+			lastPage = attachmentPage.getLastPage();
+			page = attachmentPage.getPage();
+			pageSize = attachmentPage.getPageSize();
+			totalCount = attachmentPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Attachment> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -2191,6 +2398,23 @@ public class Query {
 		accountResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(AttachmentResource attachmentResource)
+		throws Exception {
+
+		attachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		attachmentResource.setContextCompany(_company);
+		attachmentResource.setContextHttpServletRequest(_httpServletRequest);
+		attachmentResource.setContextHttpServletResponse(_httpServletResponse);
+		attachmentResource.setContextUriInfo(_uriInfo);
+		attachmentResource.setContextUser(_user);
+		attachmentResource.setGroupLocalService(_groupLocalService);
+		attachmentResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		attachmentResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		attachmentResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(
 			BillingAddressResource billingAddressResource)
 		throws Exception {
@@ -2490,6 +2714,8 @@ public class Query {
 
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AttachmentResource>
+		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BillingAddressResource>
 		_billingAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ChannelResource>
@@ -2540,4 +2766,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1993276845
+// LIFERAY-REST-BUILDER-HASH:800298515

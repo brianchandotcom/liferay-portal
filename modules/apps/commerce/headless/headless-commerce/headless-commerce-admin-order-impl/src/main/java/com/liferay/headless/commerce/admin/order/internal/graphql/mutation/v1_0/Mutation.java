@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
@@ -19,6 +20,7 @@ import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderTypeChannel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.TermOrderType;
+import com.liferay.headless.commerce.admin.order.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
@@ -61,6 +63,14 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Mutation {
+
+	public static void setAttachmentResourceComponentServiceObjects(
+		ComponentServiceObjects<AttachmentResource>
+			attachmentResourceComponentServiceObjects) {
+
+		_attachmentResourceComponentServiceObjects =
+			attachmentResourceComponentServiceObjects;
+	}
 
 	public static void setBillingAddressResourceComponentServiceObjects(
 		ComponentServiceObjects<BillingAddressResource>
@@ -172,6 +182,103 @@ public class Mutation {
 
 		_termOrderTypeResourceComponentServiceObjects =
 			termOrderTypeResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public boolean deleteOrderAttachment(
+			@GraphQLName("orderId") Long orderId,
+			@GraphQLName("attachmentId") Long attachmentId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.deleteOrderAttachment(
+				orderId, attachmentId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean
+			deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("attachmentExternalReferenceCode") String
+					attachmentExternalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.
+					deleteOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+						externalReferenceCode,
+						attachmentExternalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Attachment patchOrderAttachment(
+			@GraphQLName("orderId") Long orderId,
+			@GraphQLName("attachmentId") Long attachmentId,
+			@GraphQLName("attachment") Attachment attachment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.patchOrderAttachment(
+				orderId, attachmentId, attachment));
+	}
+
+	@GraphQLField
+	public Attachment
+			patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("attachmentExternalReferenceCode") String
+					attachmentExternalReferenceCode,
+				@GraphQLName("attachment") Attachment attachment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.
+					patchOrderByExternalReferenceCodeAttachmentByExternalReferenceCode(
+						externalReferenceCode, attachmentExternalReferenceCode,
+						attachment));
+	}
+
+	@GraphQLField
+	public Attachment createOrderAttachment(
+			@GraphQLName("orderId") Long orderId,
+			@GraphQLName("attachment") Attachment attachment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.postOrderAttachment(
+				orderId, attachment));
+	}
+
+	@GraphQLField
+	public Attachment createOrderByExternalReferenceCodeAttachment(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("attachment") Attachment attachment)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.postOrderByExternalReferenceCodeAttachment(
+					externalReferenceCode, attachment));
 	}
 
 	@GraphQLField
@@ -1463,6 +1570,25 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(AttachmentResource attachmentResource)
+		throws Exception {
+
+		attachmentResource.setContextAcceptLanguage(_acceptLanguage);
+		attachmentResource.setContextCompany(_company);
+		attachmentResource.setContextHttpServletRequest(_httpServletRequest);
+		attachmentResource.setContextHttpServletResponse(_httpServletResponse);
+		attachmentResource.setContextUriInfo(_uriInfo);
+		attachmentResource.setContextUser(_user);
+		attachmentResource.setGroupLocalService(_groupLocalService);
+		attachmentResource.setRoleLocalService(_roleLocalService);
+
+		attachmentResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		attachmentResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(
 			BillingAddressResource billingAddressResource)
 		throws Exception {
@@ -1740,6 +1866,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<AttachmentResource>
+		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<BillingAddressResource>
 		_billingAddressResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderResource>
@@ -1788,4 +1916,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-385667916
+// LIFERAY-REST-BUILDER-HASH:-157951759

@@ -413,4 +413,4 @@ public class Term implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:903516524
+// LIFERAY-REST-BUILDER-HASH:-103102390

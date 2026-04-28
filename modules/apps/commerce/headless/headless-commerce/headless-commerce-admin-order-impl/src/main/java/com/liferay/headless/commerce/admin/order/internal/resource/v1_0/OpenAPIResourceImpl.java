@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AccountResourceImpl.class);
 
+			add(AttachmentResourceImpl.class);
+
 			add(BillingAddressResourceImpl.class);
 
 			add(ChannelResourceImpl.class);
@@ -124,4 +126,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:2071291712
+// LIFERAY-REST-BUILDER-HASH:1208555059

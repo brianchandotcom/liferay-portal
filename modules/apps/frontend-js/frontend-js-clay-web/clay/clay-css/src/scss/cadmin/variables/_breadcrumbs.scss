@@ -72,8 +72,9 @@ $cadmin-breadcrumb-item: map-deep-merge(
 				content: '',
 				height: $cadmin-breadcrumb-divider-svg-icon-height,
 				left: 0px,
-				margin-top:
-					calc(#{$cadmin-breadcrumb-divider-svg-icon-height} / -2),
+				margin-top: calc(
+						#{$cadmin-breadcrumb-divider-svg-icon-height} / -2
+					),
 				padding: 0px,
 				position: absolute,
 				top: 50%,
@@ -159,6 +160,7 @@ $cadmin-breadcrumb-toggle: () !default;
 $cadmin-breadcrumb-toggle: map-merge(
 	(
 		color: $cadmin-breadcrumb-link-color,
+		margin-top: $cadmin-breadcrumb-padding-y,
 	),
 	$cadmin-breadcrumb-toggle
 );
@@ -166,7 +168,7 @@ $cadmin-breadcrumb-toggle: map-merge(
 $cadmin-breadcrumb-bar: () !default;
 $cadmin-breadcrumb-bar: map-deep-merge(
 	(
-		align-items: center,
+		align-items: flex-start,
 		display: flex,
 	),
 	$cadmin-breadcrumb-bar

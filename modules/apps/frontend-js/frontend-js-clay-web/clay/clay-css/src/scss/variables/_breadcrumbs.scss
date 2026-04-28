@@ -154,6 +154,7 @@ $breadcrumb-toggle: () !default;
 $breadcrumb-toggle: map-merge(
 	(
 		color: $breadcrumb-link-color,
+		margin-top: $breadcrumb-padding-y,
 	),
 	$breadcrumb-toggle
 );
@@ -161,7 +162,7 @@ $breadcrumb-toggle: map-merge(
 $breadcrumb-bar: () !default;
 $breadcrumb-bar: map-deep-merge(
 	(
-		align-items: center,
+		align-items: flex-start,
 		display: flex,
 	),
 	$breadcrumb-bar

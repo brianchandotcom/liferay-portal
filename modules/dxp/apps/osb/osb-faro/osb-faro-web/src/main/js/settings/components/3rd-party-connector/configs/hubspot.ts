@@ -10,7 +10,7 @@ const displayName = Liferay.Language.get('hubspot');
 
 const hubspotConfig: ConnectorConfig = {
 	displayName,
-	endpointPath: '/api/hubspot_accounts',
+	endpointPath: '/api/hubspot_webhooks',
 	entities: [
 		{
 			accessor: 'contacts',

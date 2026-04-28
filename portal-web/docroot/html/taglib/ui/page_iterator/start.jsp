@@ -32,14 +32,14 @@ if (portletURL != null) {
 
 	url = PortalUtil.escapeRedirect(urlArray[0]);
 	urlAnchor = urlArray[1];
-}
 
-if (url != null) {
-	if (url.indexOf(CharPool.QUESTION) == -1) {
-		url += "?";
-	}
-	else if (!url.endsWith("&")) {
-		url += "&";
+	if (Validator.isNotNull(url)) {
+		if (url.indexOf(CharPool.QUESTION) == -1) {
+			url += "?";
+		}
+		else if (!url.endsWith("&")) {
+			url += "&";
+		}
 	}
 }
 

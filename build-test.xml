@@ -211,7 +211,7 @@ passwords.encryption.algorithm=NONE</echo>
 			<basename file="@{src}" property="archive.basename" />
 
 			<if>
-				<matches pattern=".*\.7z$" string="${archive.basename}" />
+				<matches casesensitive="false" pattern=".*\.7z$" string="${archive.basename}" />
 				<then>
 					<if>
 						<os family="mac" />
@@ -232,7 +232,7 @@ passwords.encryption.algorithm=NONE</echo>
 					</if>
 				</then>
 				<elseif>
-					<matches pattern=".*\.tar\.gz$" string="${archive.basename}" />
+					<matches casesensitive="false" pattern=".*\.tar\.gz$" string="${archive.basename}" />
 					<then>
 						<execute>
 							<![CDATA[
@@ -244,7 +244,7 @@ passwords.encryption.algorithm=NONE</echo>
 					</then>
 				</elseif>
 				<elseif>
-					<matches pattern=".*\.zip$" string="${archive.basename}" />
+					<matches casesensitive="false" pattern=".*\.zip$" string="${archive.basename}" />
 					<then>
 						<execute>
 							<![CDATA[
@@ -15672,10 +15672,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<trycatch>
 					<try>
 						<if>
-							<matches casesensitive="false" pattern=".*\.tar\.gz$" string="${legacy.database.file}" />
+							<matches casesensitive="false" pattern=".*\.(7z|tar\.gz|zip)$" string="${legacy.database.file}" />
 							<then>
-								<untar
-									compression="gzip"
+								<decompress
 									dest="${legacy.database.temp.dir}"
 									src="${legacy.database.file}"
 								/>
@@ -15684,15 +15683,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<matches casesensitive="false" pattern=".*\.gz$" string="${legacy.database.file}" />
 								<then>
 									<gunzip
-										dest="${legacy.database.temp.dir}"
-										src="${legacy.database.file}"
-									/>
-								</then>
-							</elseif>
-							<elseif>
-								<matches casesensitive="false" pattern=".*\.zip$" string="${legacy.database.file}" />
-								<then>
-									<unzip
 										dest="${legacy.database.temp.dir}"
 										src="${legacy.database.file}"
 									/>

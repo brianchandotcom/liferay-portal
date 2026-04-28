@@ -162,11 +162,12 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 	private void _updateObjectEntryPermissions(
 		JSONObject jsonObject, long objectEntryId) {
 
+		Map<Long, List<Object>> relatedObjectEntries = _getRelatedObjectEntries(
+			jsonObject.getJSONArray("objectRelationships"), objectEntryId,
+			jsonObject.getString("restContextPath"));
+
 		for (Map.Entry<Long, List<Object>> entry :
-				_getRelatedObjectEntries(
-					jsonObject.getJSONArray("objectRelationships"),
-					objectEntryId, jsonObject.getString("restContextPath")
-				).entrySet()) {
+				relatedObjectEntries.entrySet()) {
 
 			JSONObject objectDefinitionJSONObject = new JSONObject(
 				get(

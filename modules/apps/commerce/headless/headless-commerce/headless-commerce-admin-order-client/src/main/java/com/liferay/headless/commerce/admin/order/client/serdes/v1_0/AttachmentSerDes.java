@@ -175,6 +175,20 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getTypeLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeLabel\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getTypeLabel()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -284,6 +298,13 @@ public class AttachmentSerDes {
 			map.put("type", String.valueOf(attachment.getType()));
 		}
 
+		if (attachment.getTypeLabel() == null) {
+			map.put("typeLabel", null);
+		}
+		else {
+			map.put("typeLabel", String.valueOf(attachment.getTypeLabel()));
+		}
+
 		if (attachment.getUrl() == null) {
 			map.put("url", null);
 		}
@@ -339,6 +360,9 @@ public class AttachmentSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeLabel")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
@@ -408,6 +432,11 @@ public class AttachmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					attachment.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeLabel")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setTypeLabel((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
@@ -496,4 +525,4 @@ public class AttachmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1731301332
+// LIFERAY-REST-BUILDER-HASH:1927273685

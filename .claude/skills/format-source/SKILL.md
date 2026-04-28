@@ -7,7 +7,7 @@ name: format-source
 
 # Format Source
 
-All the code is strictly formatted using source formatter. This is how it works:
+All the code is strictly formatted using the source formatter. This is how it works:
 
 Run for a specific module:
 
@@ -21,7 +21,7 @@ Run across the entire codebase:
 cd <repo-root>/portal-impl && ant format-source-current-branch
 ```
 
-In both cases if there are issues to be fixed, the formatter will list them. Fix them.
+In both cases, if there are issues to be fixed, the formatter will list them. Fix them.
 
 In addition to the automatic formatter, there is a set of manual rules that the formatter does not catch. The full workflow is to run the formatter, apply the manual rules, then rerun the formatter to clean up any fallout from the manual edits.
 

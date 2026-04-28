@@ -134,6 +134,22 @@ describe('ShareModalContent', () => {
 		expect(getByLabelText('set-expiration-date')).toBeInTheDocument();
 	});
 
+	it('replaces the more-options dropdown with a remove button when showAllowResharing is false', () => {
+		const {container, getByLabelText, queryByLabelText} = renderComponent({
+			...DEFAULT_PROPS,
+			showAllowResharing: false,
+		});
+
+		expect(queryByLabelText('more-options')).not.toBeInTheDocument();
+
+		const removeButton = getByLabelText('remove-access');
+
+		expect(removeButton).toBeInTheDocument();
+		expect(
+			container.querySelector('svg.lexicon-icon-times-circle')
+		).toBeInTheDocument();
+	});
+
 	it('hides the expiration date selector when showExpirationDate is false', () => {
 		const {queryByLabelText} = renderComponent({
 			...DEFAULT_PROPS,

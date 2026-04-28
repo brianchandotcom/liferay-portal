@@ -43,6 +43,7 @@ function CollaboratorListItem({
 	onRemoveUser,
 	permissionOptions,
 	share,
+	showAllowResharing = true,
 	showExpirationDate = true,
 	toBeShared,
 	type = COLLABORATOR_TYPE.USER,
@@ -59,6 +60,7 @@ function CollaboratorListItem({
 	onRemoveUser: (user: ShareModalUserAccount | ShareModalUserGroup) => void;
 	permissionOptions: PermissionOption[];
 	share: boolean;
+	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
 	toBeShared?: boolean;
 	type: CollaboratorType;
@@ -167,48 +169,60 @@ function CollaboratorListItem({
 							/>
 						) : null}
 
-						<ClayDropDown
-							hasLeftSymbols={true}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'more-options'
-									)}
-									borderless
-									displayType="secondary"
-									monospaced
-									size="xs"
-									symbol="ellipsis-v"
-								/>
-							}
-						>
-							<ClayDropDown.ItemList>
-								<ClayDropDown.Item
-									aria-label={Liferay.Language.get(
-										'allow-resharing'
-									)}
-									key={`share-${user.id}`}
-									onClick={() =>
-										handleChangeUserProperties({
-											share: !share,
-										})
-									}
-									symbolLeft={share ? 'check-small' : ''}
-								>
-									{Liferay.Language.get('allow-resharing')}
-								</ClayDropDown.Item>
+						{showAllowResharing ? (
+							<ClayDropDown
+								hasLeftSymbols={true}
+								trigger={
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'more-options'
+										)}
+										borderless
+										displayType="secondary"
+										monospaced
+										size="xs"
+										symbol="ellipsis-v"
+									/>
+								}
+							>
+								<ClayDropDown.ItemList>
+									<ClayDropDown.Item
+										aria-label={Liferay.Language.get(
+											'allow-resharing'
+										)}
+										key={`share-${user.id}`}
+										onClick={() =>
+											handleChangeUserProperties({
+												share: !share,
+											})
+										}
+										symbolLeft={share ? 'check-small' : ''}
+									>
+										{Liferay.Language.get('allow-resharing')}
+									</ClayDropDown.Item>
 
-								<ClayDropDown.Item
-									aria-label={Liferay.Language.get(
-										'remove-access'
-									)}
-									key={`remove-${user.id}`}
-									onClick={() => onRemoveUser(user)}
-								>
-									{Liferay.Language.get('remove-access')}
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
+									<ClayDropDown.Item
+										aria-label={Liferay.Language.get(
+											'remove-access'
+										)}
+										key={`remove-${user.id}`}
+										onClick={() => onRemoveUser(user)}
+									>
+										{Liferay.Language.get('remove-access')}
+									</ClayDropDown.Item>
+								</ClayDropDown.ItemList>
+							</ClayDropDown>
+						) : (
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('remove-access')}
+								borderless
+								displayType="secondary"
+								monospaced
+								onClick={() => onRemoveUser(user)}
+								size="xs"
+								symbol="times-circle"
+							/>
+						)}
 					</div>
 				</div>
 			)}
@@ -228,6 +242,7 @@ export default function ShareModalContent({
 	initialCollaborators = [],
 	itemId,
 	permissionOptions,
+	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
 }: {
@@ -242,6 +257,7 @@ export default function ShareModalContent({
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	permissionOptions: PermissionOption[];
+	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
 	title: string;
 }) {
@@ -537,6 +553,7 @@ export default function ShareModalContent({
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}
 										permissionOptions={permissionOptions}
+										showAllowResharing={showAllowResharing}
 										showExpirationDate={showExpirationDate}
 										{...item}
 									/>

@@ -2,7 +2,6 @@
 definition {
 
 	property browser.chrome.version = "139.0";
-	property custom.properties = "feature.flag.LPD-82301=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Questions";
@@ -11,6 +10,20 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		task ("Enable Widget Questions deprecation feature flag") {
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Deprecation",
+				configurationScope = "Virtual Instance Scope");
+
+			FeatureFlag.enableFeatureFlag(
+				configurationScope = "Virtual Instance Scope",
+				featureFlag = "Widget Questions",
+				scope = "Deprecation");
+		}
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

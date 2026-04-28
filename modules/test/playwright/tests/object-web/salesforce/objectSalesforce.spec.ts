@@ -68,99 +68,99 @@ test.beforeEach(async ({instanceSettingsPage, page}) => {
 	});
 });
 
-test(
-	'LPS-162131 Assert CRUD with created custom object using Salesforce storage type',
-	{tag: '@LPS-162131'},
-	async ({apiHelpers, page, viewObjectEntriesPage}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: [
-				{
-					businessType: 'Text',
-					externalReferenceCode: 'Title__c',
-					label: {en_US: 'Title'},
-					name: 'title',
-				},
-			],
+test('Assert CRUD with created custom object using Salesforce storage type', async ({
+	apiHelpers,
+	page,
+	viewObjectEntriesPage,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: [
+			{
+				businessType: 'Text',
+				externalReferenceCode: 'Title__c',
+				label: {en_US: 'Title'},
+				name: 'title',
+			},
+		],
+	});
+
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectDefinitionAPIClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'Playwright_Test__c',
+			label: {en_US: 'Playwright Test'},
+			name: 'PlaywrightTest',
+			objectFields,
+			panelCategoryKey: 'control_panel.object',
+			pluralLabel: {en_US: 'Playwright Tests'},
+			portlet: true,
+			scope: 'company',
+			status: {code: 0},
+			storageType: 'salesforce',
 		});
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
 
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'Playwright_Test__c',
-				label: {en_US: 'Playwright Test'},
-				name: 'PlaywrightTest',
-				objectFields,
-				panelCategoryKey: 'control_panel.object',
-				pluralLabel: {en_US: 'Playwright Tests'},
-				portlet: true,
-				scope: 'company',
-				status: {code: 0},
-				storageType: 'salesforce',
-			});
+	const objectFieldValue = getRandomString();
+	const objectFieldUpdatedValue = getRandomString();
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+	await test.step('Create Object Entry', async () => {
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+		await viewObjectEntriesPage.clickAddObjectEntry(
+			objectDefinition.label['en_US']
+		);
+
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Title',
+			objectFieldValue,
 		});
 
-		const objectFieldValue = getRandomString();
-		const objectFieldUpdatedValue = getRandomString();
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await waitForAlert(page);
+		await viewObjectEntriesPage.backButton.click();
+	});
 
-		await test.step('Create Object Entry', async () => {
-			await viewObjectEntriesPage.goto(objectDefinition.className);
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
+	await test.step('Read Object Entry', async () => {
+		await expect(
+			page.getByRole('cell', {name: objectFieldValue})
+		).toBeVisible();
+	});
 
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldBusinessType: 'Text',
-				objectFieldLabel: 'Title',
-				objectFieldValue,
-			});
+	await test.step('Update Object Entry', async () => {
+		await page.getByRole('button', {name: 'Actions'}).last().click();
+		await page.getByRole('menuitem', {name: 'View'}).click();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-			await waitForAlert(page);
-			await viewObjectEntriesPage.backButton.click();
+		await viewObjectEntriesPage.fillObjectEntry({
+			objectFieldBusinessType: 'Text',
+			objectFieldLabel: 'Title',
+			objectFieldValue: objectFieldUpdatedValue,
 		});
 
-		await test.step('Read Object Entry', async () => {
-			await expect(
-				page.getByRole('cell', {name: objectFieldValue})
-			).toBeVisible();
-		});
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await viewObjectEntriesPage.backButton.click();
 
-		await test.step('Update Object Entry', async () => {
-			await page.getByRole('button', {name: 'Actions'}).last().click();
-			await page.getByRole('menuitem', {name: 'View'}).click();
+		await expect(
+			page.getByRole('cell', {name: objectFieldUpdatedValue})
+		).toBeVisible();
+	});
 
-			await viewObjectEntriesPage.fillObjectEntry({
-				objectFieldBusinessType: 'Text',
-				objectFieldLabel: 'Title',
-				objectFieldValue: objectFieldUpdatedValue,
-			});
+	await test.step('Delete Object Entry', async () => {
+		await viewObjectEntriesPage.frontendDatasetActions.last().click();
+		await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
+		await viewObjectEntriesPage.deletionConfirmationModal
+			.getByRole('button', {name: 'Delete'})
+			.click();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
-			await viewObjectEntriesPage.backButton.click();
-
-			await expect(
-				page.getByRole('cell', {name: objectFieldUpdatedValue})
-			).toBeVisible();
-		});
-
-		await test.step('Delete Object Entry', async () => {
-			await viewObjectEntriesPage.frontendDatasetActions.last().click();
-			await viewObjectEntriesPage.frontendDatasetDeleteAction.click();
-			await viewObjectEntriesPage.deletionConfirmationModal
-				.getByRole('button', {name: 'Delete'})
-				.click();
-
-			await expect(
-				page.getByRole('cell', {name: objectFieldUpdatedValue})
-			).toBeAttached({attached: false});
-		});
-	}
-);
+		await expect(
+			page.getByRole('cell', {name: objectFieldUpdatedValue})
+		).toBeAttached({attached: false});
+	});
+});

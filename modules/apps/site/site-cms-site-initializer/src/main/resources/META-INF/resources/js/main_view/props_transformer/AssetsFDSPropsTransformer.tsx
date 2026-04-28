@@ -9,6 +9,7 @@ import {
 	IView,
 	replaceTokens,
 } from '@liferay/frontend-data-set-web';
+import {getCMSItemSelectorGroupedFilters} from '@liferay/frontend-js-item-selector-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -310,6 +311,7 @@ export default function AssetsFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		groupedFilters: getCMSItemSelectorGroupedFilters('scopeGroupId'),
 		hideManagementBarInEmptyState: true,
 		infoPanelComponent: (items: {items: ISearchAssetObjectEntry[]}) => (
 			<AssetTypeInfoPanel

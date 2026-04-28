@@ -134,12 +134,18 @@ export function getCMSItemSelectorFilters(
 
 /**
  * Returns the grouped filters configuration for CMS Item Selector data sets.
+ *
+ * The space/group filter ID can be customized via spaceFilterId so the same
+ * groupings can be reused by data sets that register the space filter under a
+ * different ID (e.g. the CMS "Contents" FDS uses "scopeGroupId").
  */
-export function getCMSItemSelectorGroupedFilters(): IGroupedFilterConfig[] {
+export function getCMSItemSelectorGroupedFilters(
+	spaceFilterId: 'groupIds' | 'scopeGroupId' = 'groupIds'
+): IGroupedFilterConfig[] {
 	return [
 		{
 			filters: [
-				'groupIds',
+				spaceFilterId,
 				'objectDefinitionExternalReferenceCode',
 				'taxonomyCategoryIds',
 				'keywords',

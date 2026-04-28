@@ -82,6 +82,13 @@ describe('getCMSItemSelectorFilters', () => {
 
 		expect(groupedFilters.length).toBe(2);
 		expect(groupedFilters[0].filters.length).toBe(6);
+		expect(groupedFilters[0].filters[0]).toBe('groupIds');
 		expect(groupedFilters[1].filters.length).toBe(6);
+	});
+
+	it('lets the caller override the space filter id', () => {
+		const groupedFilters = getCMSItemSelectorGroupedFilters('scopeGroupId');
+
+		expect(groupedFilters[0].filters[0]).toBe('scopeGroupId');
 	});
 });

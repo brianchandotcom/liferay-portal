@@ -1,7 +1,5 @@
 argo:
     workflowSpec:
-        artifactGC:
-            strategy: OnWorkflowDeletion
         podGC:
             strategy: OnWorkflowSuccess
         ttlStrategy:

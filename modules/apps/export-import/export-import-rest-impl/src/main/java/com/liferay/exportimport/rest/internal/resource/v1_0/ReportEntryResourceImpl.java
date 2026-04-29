@@ -73,7 +73,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.getBackgroundTask(importProcessId);
 
-		PermissionUtil.checkPermission(
+		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(), backgroundTask.getGroupId());
 
 		Map<String, Serializable> taskContextMap =
@@ -112,7 +112,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 			_exportImportReportEntryLocalService.getExportImportReportEntry(
 				reportEntryId);
 
-		PermissionUtil.checkPermission(
+		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(),
 			exportImportReportEntry.getGroupId());
 

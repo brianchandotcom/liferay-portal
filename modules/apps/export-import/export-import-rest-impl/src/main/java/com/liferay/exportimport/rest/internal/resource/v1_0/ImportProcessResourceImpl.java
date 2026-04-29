@@ -90,7 +90,7 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.getBackgroundTask(importProcessId);
 
-		PermissionUtil.checkPermission(
+		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(), backgroundTask.getGroupId());
 
 		if (!StringUtil.equals(
@@ -145,7 +145,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 
 		long groupId = _getGroupId(scopeKey);
 
-		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), groupId);
 
 		FileEntry fileEntry = _addTempFileEntry(groupId, multipartBody);
 
@@ -178,7 +179,8 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 			Sort[] sorts, Integer status)
 		throws Exception {
 
-		PermissionUtil.checkPermission(contextCompany.getCompanyId(), groupId);
+		PermissionUtil.checkImportPermission(
+			contextCompany.getCompanyId(), groupId);
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(
 			creatorId, groupId, search, status);

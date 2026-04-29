@@ -7,13 +7,12 @@ package com.liferay.ai.hub.cell.rest.internal.resource.v1_0;
 
 import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
 import com.liferay.ai.hub.cell.rest.dto.v1_0.AuthorizationToken;
+import com.liferay.ai.hub.cell.rest.internal.web.cache.AIHubCellAccessTokenWebCacheItem;
 import com.liferay.ai.hub.cell.rest.resource.v1_0.AuthorizationTokenResource;
 import com.liferay.ai.hub.cell.security.JWTTokenUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.Http;
 
 import java.util.concurrent.TimeUnit;
 
@@ -39,22 +38,12 @@ public class AuthorizationTokenResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Http.Options options = new Http.Options();
-
 		AIHubCellConfiguration aiHubCellConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				AIHubCellConfiguration.class, contextCompany.getCompanyId());
 
-		options.addPart("client_id", aiHubCellConfiguration.clientId());
-		options.addPart("client_secret", aiHubCellConfiguration.clientSecret());
-
-		options.addPart("grant_type", "client_credentials");
-		options.setLocation(
-			aiHubCellConfiguration.serviceURL() + "/o/oauth2/token");
-		options.setMethod(Http.Method.POST);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			_http.URLtoString(options));
+		JSONObject jsonObject = AIHubCellAccessTokenWebCacheItem.get(
+			aiHubCellConfiguration, contextCompany.getCompanyId());
 
 		return new AuthorizationToken() {
 			{
@@ -72,11 +61,5 @@ public class AuthorizationTokenResourceImpl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Http _http;
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

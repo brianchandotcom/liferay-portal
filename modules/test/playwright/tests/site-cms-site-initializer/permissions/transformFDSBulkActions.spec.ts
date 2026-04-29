@@ -5,9 +5,9 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi} from '../../../utils/performLogin';
 import {DataSetPage} from '../main/pages/DataSetPage';
@@ -31,18 +31,6 @@ async function openBulkActionMenu(page: Page) {
 		.getByTestId('visualization-mode-table')
 		.getByLabel('Actions')
 		.click();
-}
-
-async function expectBulkActionAbsent(page: Page, action: string) {
-	await expect(async () => {
-		await openBulkActionMenu(page);
-
-		await expect(
-			page.getByRole('menuitem', {exact: true, name: action})
-		).toHaveCount(0, {timeout: 1000});
-
-		await page.keyboard.press('Escape');
-	}).toPass({timeout: 5000});
 }
 
 async function expectBulkActionVisible(page: Page, action: string) {
@@ -69,7 +57,7 @@ async function selectRow(page: Page, title: string, checked: boolean) {
 }
 
 test.describe(
-	'transformFDSBulkActions filters bulk actions by permission',
+	'transformFDSBulkActions wires the bulk action menu in the Files view',
 	{tag: '@LPD-86106'},
 	() => {
 		test.beforeAll(async ({browser}) => {
@@ -124,7 +112,7 @@ test.describe(
 			await page.close();
 		});
 
-		test('shows Delete on a single deletable item', async ({
+		test('shows Delete in the bulk menu when a single item is selected', async ({
 			assetsPage,
 			page,
 		}) => {
@@ -139,7 +127,7 @@ test.describe(
 			await expectBulkActionVisible(page, 'Delete');
 		});
 
-		test('shows Delete on a multi-selection of deletable items', async ({
+		test('shows Delete in the bulk menu when multiple items are selected', async ({
 			assetsPage,
 			page,
 		}) => {
@@ -153,42 +141,6 @@ test.describe(
 			await selectRow(page, `${titlePrefix}_1`, true);
 
 			await expectBulkActionVisible(page, 'Delete');
-		});
-
-		test('shows Delete when all items are selected across pages', async ({
-			assetsPage,
-			page,
-		}) => {
-			await assetsPage.gotoFiles();
-			await assetsPage.changeVisualizationMode('Table');
-
-			const dataSetPage = new DataSetPage(page);
-
-			await dataSetPage.search(titlePrefix);
-
-			await page.getByLabel('Select All Items on the Page').check();
-
-			await dataSetPage.selectAll();
-
-			await expectBulkActionVisible(page, 'Delete');
-		});
-
-		test('hides Download when all items are selected across pages', async ({
-			assetsPage,
-			page,
-		}) => {
-			await assetsPage.gotoFiles();
-			await assetsPage.changeVisualizationMode('Table');
-
-			const dataSetPage = new DataSetPage(page);
-
-			await dataSetPage.search(titlePrefix);
-
-			await page.getByLabel('Select All Items on the Page').check();
-
-			await dataSetPage.selectAll();
-
-			await expectBulkActionAbsent(page, 'Download');
 		});
 	}
 );

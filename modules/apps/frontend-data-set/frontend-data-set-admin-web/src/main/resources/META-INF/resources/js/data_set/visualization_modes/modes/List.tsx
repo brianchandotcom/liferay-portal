@@ -246,7 +246,7 @@ export default function List(props: IDataSetSectionProps) {
 
 	return (
 		<ClayLayout.ContentCol className="c-gap-4 list-visualization-mode">
-			{listSections.every((listSection) => !listSection.field) && (
+			{!listSections.some((listSection) => listSection.field) && (
 				<ClayAlert
 					displayType="info"
 					title={`${Liferay.Language.get('info')}:`}

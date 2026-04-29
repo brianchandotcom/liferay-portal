@@ -672,7 +672,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 
 	return tableSections ? (
 		<ClayLayout.ContentCol className="c-gap-4 table-visualization-mode">
-			{tableSections.length === 0 && (
+			{!tableSections.length && (
 				<ClayAlert
 					displayType="info"
 					title={`${Liferay.Language.get('info')}:`}

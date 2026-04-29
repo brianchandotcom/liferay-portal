@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -41,7 +42,8 @@ public class CaptchaResourceTest extends BaseCaptchaResourceTestCase {
 
 		_captchaResource = CaptchaResource.builder(
 		).endpoint(
-			company.getVirtualHostname(), 8080, "http"
+			company.getVirtualHostname(), PortalUtil.getPortalServerPort(false),
+			"http"
 		).build();
 	}
 

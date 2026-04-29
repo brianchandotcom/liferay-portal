@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Time;
 
@@ -204,7 +205,8 @@ public class HTTPTestUtil {
 		return options;
 	}
 
-	private static String _baseURL = "http://localhost:8080";
+	private static String _baseURL =
+		"http://localhost:" + PortalUtil.getPortalServerPort(false);
 	private static String _credentials =
 		"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
 	private static boolean _modulePath = true;

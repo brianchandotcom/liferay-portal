@@ -8299,8 +8299,8 @@ public class ObjectEntryResourceTest {
 			_addObjectAction(_objectDefinition1), _objectDefinition1,
 			(actionJSONObject, jsonObject, objectAction) -> Assert.assertEquals(
 				StringBundler.concat(
-					"http://localhost:8080/o",
-					_objectDefinition1.getRESTContextPath(),
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/o", _objectDefinition1.getRESTContextPath(),
 					"/by-external-reference-code/",
 					jsonObject.getString("externalReferenceCode"),
 					"/object-actions/", objectAction.getName()),
@@ -8311,8 +8311,8 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1,
 			(actionJSONObject, jsonObject, objectAction) -> Assert.assertEquals(
 				StringBundler.concat(
-					"http://localhost:8080/o",
-					_siteScopedObjectDefinition1.getRESTContextPath(),
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/o", _siteScopedObjectDefinition1.getRESTContextPath(),
 					"/scopes/", _testGroupId, "/by-external-reference-code/",
 					jsonObject.getString("externalReferenceCode"),
 					"/object-actions/", objectAction.getName()),
@@ -16319,11 +16319,13 @@ public class ObjectEntryResourceTest {
 		String objectEntryId, boolean sharingEnabled) {
 
 		String href = StringBundler.concat(
-			"http://localhost:8080/o", objectDefinition.getRESTContextPath(),
-			StringPool.SLASH, objectEntryId);
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			objectEntryId);
 		String scopedEndpoint = StringBundler.concat(
-			"http://localhost:8080/o", objectDefinition.getRESTContextPath(),
-			"/scopes/", _group.getGroupId());
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			objectDefinition.getRESTContextPath(), "/scopes/",
+			_group.getGroupId());
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"copy",
@@ -21319,9 +21321,10 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", taxonomyCategory.getId(),
-						"/taxonomy-categories")
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						taxonomyCategory.getId(), "/taxonomy-categories")
 				).put(
 					"method", "POST"
 				).build()
@@ -21330,8 +21333,10 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", taxonomyCategory.getId())
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						taxonomyCategory.getId())
 				).put(
 					"method", "DELETE"
 				).build()
@@ -21340,8 +21345,10 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", taxonomyCategory.getId())
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						taxonomyCategory.getId())
 				).put(
 					"method", "GET"
 				).build()
@@ -21350,8 +21357,10 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", taxonomyCategory.getId())
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						taxonomyCategory.getId())
 				).put(
 					"method", "PUT"
 				).build()
@@ -21360,8 +21369,10 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", taxonomyCategory.getId())
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						taxonomyCategory.getId())
 				).put(
 					"method", "PATCH"
 				).build()

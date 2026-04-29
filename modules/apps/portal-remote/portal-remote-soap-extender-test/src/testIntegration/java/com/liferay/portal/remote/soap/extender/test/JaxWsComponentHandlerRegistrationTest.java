@@ -7,6 +7,7 @@ package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -31,7 +32,8 @@ public class JaxWsComponentHandlerRegistrationTest extends BaseJaxWsTestCase {
 	@Test
 	public void testHandlerIsRegistered() throws Exception {
 		String greeting = getGreeting(
-			"http://localhost:8080/o/soap-test/greeter?wsdl");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/soap-test/greeter?wsdl");
 
 		Assert.assertTrue(greeting.endsWith("was handled."));
 	}

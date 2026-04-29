@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -48,8 +49,9 @@ public class ExportImportTaskResourceTestUtil {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
 		String path = StringBundler.concat(
-			"http://localhost:8080/o/headless-batch-engine/v1.0/export-task/",
-			className, "/JSON?siteId=", groupId);
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/o/headless-batch-engine/v1.0/export-task/", className,
+			"/JSON?siteId=", groupId);
 
 		if (MapUtil.isNotEmpty(parameters)) {
 			for (Map.Entry<String, String> entry : parameters.entrySet()) {
@@ -75,9 +77,12 @@ public class ExportImportTaskResourceTestUtil {
 			exportTask = ExportTaskSerDes.toDTO(
 				_invoke(
 					"localhost",
-					"http://localhost:8080/o/headless-batch-engine/v1.0" +
-						"/export-task/by-external-reference-code/" +
-							externalReferenceCode));
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-batch-engine/v1.0/export-task",
+						"/by-external-reference-code/",
+						externalReferenceCode)));
 
 			if (Objects.equals(
 					exportTask.getExecuteStatusAsString(), "COMPLETED")) {
@@ -98,9 +103,10 @@ public class ExportImportTaskResourceTestUtil {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0",
-				"/export-task/by-external-reference-code/",
-				externalReferenceCode, "/content"));
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/headless-batch-engine/v1.0/export-task",
+				"/by-external-reference-code/", externalReferenceCode,
+				"/content"));
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 

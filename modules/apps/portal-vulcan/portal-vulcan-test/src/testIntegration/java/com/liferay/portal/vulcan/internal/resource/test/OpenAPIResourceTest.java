@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 
@@ -36,7 +37,8 @@ public class OpenAPIResourceTest {
 	@Test
 	public void testGetOpenAPIServerURL() throws Exception {
 		InputStream inputStream = URLConnectionUtil.getInputStream(
-			"http://localhost:8080/o/headless-delivery/v1.0/openapi.json");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/headless-delivery/v1.0/openapi.json");
 
 		String path = _getPath(inputStream, "/servers/0/url");
 
@@ -47,7 +49,8 @@ public class OpenAPIResourceTest {
 					"WEB_SERVER_PROTOCOL", "https")) {
 
 			inputStream = URLConnectionUtil.getInputStream(
-				"http://localhost:8080/o/headless-delivery/v1.0/openapi.json");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/headless-delivery/v1.0/openapi.json");
 
 			path = _getPath(inputStream, "/servers/0/url");
 

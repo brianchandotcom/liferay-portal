@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -1089,9 +1090,10 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/taxonomy-categories/", getTaxonomyCategory.getId(),
-						"/taxonomy-categories")
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						getTaxonomyCategory.getId(), "/taxonomy-categories")
 				).put(
 					"method", "POST"
 				).build()
@@ -1099,8 +1101,11 @@ public class TaxonomyCategoryResourceTest
 				"delete",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						getTaxonomyCategory.getId())
 				).put(
 					"method", "DELETE"
 				).build()
@@ -1108,8 +1113,11 @@ public class TaxonomyCategoryResourceTest
 				"get",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						getTaxonomyCategory.getId())
 				).put(
 					"method", "GET"
 				).build()
@@ -1117,8 +1125,11 @@ public class TaxonomyCategoryResourceTest
 				"replace",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						getTaxonomyCategory.getId())
 				).put(
 					"method", "PUT"
 				).build()
@@ -1126,8 +1137,11 @@ public class TaxonomyCategoryResourceTest
 				"update",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-categories/" + getTaxonomyCategory.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
+						getTaxonomyCategory.getId())
 				).put(
 					"method", "PATCH"
 				).build()

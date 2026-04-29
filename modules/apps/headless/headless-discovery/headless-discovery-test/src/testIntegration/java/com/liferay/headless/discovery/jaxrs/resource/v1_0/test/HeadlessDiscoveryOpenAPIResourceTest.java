@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -93,7 +94,9 @@ public class HeadlessDiscoveryOpenAPIResourceTest {
 
 	private String _getOpenAPISubpath(String openAPIPath) {
 		String openAPISubpath = StringUtil.removeFirst(
-			openAPIPath, "http://localhost:8080/o/");
+			openAPIPath,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/");
 
 		return StringUtil.replaceLast(openAPISubpath, ".yaml", ".json");
 	}

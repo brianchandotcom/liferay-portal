@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -81,7 +82,9 @@ public class MultipartBodyMessageBodyReaderTest {
 
 	@Test
 	public void testPostMultipart() throws Exception {
-		URL url = new URL("http://localhost:8080/o/test-vulcan/test-class");
+		URL url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/test-vulcan/test-class");
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();

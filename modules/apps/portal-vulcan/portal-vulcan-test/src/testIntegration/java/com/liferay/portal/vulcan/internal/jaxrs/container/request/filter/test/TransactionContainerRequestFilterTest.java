@@ -6,11 +6,13 @@
 package com.liferay.portal.vulcan.internal.jaxrs.container.request.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -105,8 +107,9 @@ public class TransactionContainerRequestFilterTest {
 		Assert.assertEquals(
 			204,
 			_getResponseCode(
-				"http://localhost:8080/o/test-vulcan/commit/" +
-					group.getGroupId()));
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/o/test-vulcan/commit/", group.getGroupId())));
 		Assert.assertNull(GroupLocalServiceUtil.getGroup(group.getGroupId()));
 	}
 
@@ -120,8 +123,11 @@ public class TransactionContainerRequestFilterTest {
 			Assert.assertEquals(
 				500,
 				_getResponseCode(
-					"http://localhost:8080/o/test-vulcan/rollback/" +
-						group.getGroupId() + "?failInExceptionMapper=false"));
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/test-vulcan/rollback/", group.getGroupId(),
+						"?failInExceptionMapper=false")));
 
 			Assert.assertNotNull(
 				GroupLocalServiceUtil.getGroup(group.getGroupId()));
@@ -129,8 +135,11 @@ public class TransactionContainerRequestFilterTest {
 			Assert.assertEquals(
 				500,
 				_getResponseCode(
-					"http://localhost:8080/o/test-vulcan/rollback/" +
-						group.getGroupId() + "?failInExceptionMapper=true"));
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/test-vulcan/rollback/", group.getGroupId(),
+						"?failInExceptionMapper=true")));
 
 			Assert.assertNotNull(
 				GroupLocalServiceUtil.getGroup(group.getGroupId()));

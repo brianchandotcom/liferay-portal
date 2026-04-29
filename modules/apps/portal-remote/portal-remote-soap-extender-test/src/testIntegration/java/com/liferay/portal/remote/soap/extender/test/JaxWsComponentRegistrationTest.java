@@ -7,6 +7,7 @@ package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -35,12 +36,16 @@ public class JaxWsComponentRegistrationTest extends BaseJaxWsTestCase {
 	public void testIsRegistered() throws Exception {
 		Assert.assertEquals(
 			"Greetings.",
-			getGreeting("http://localhost:8080/o/soap-test/greeter?wsdl"));
+			getGreeting(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/soap-test/greeter?wsdl"));
 	}
 
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
-		URL url = new URL("http://localhost:8080/o/soap-test/services");
+		URL url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/soap-test/services");
 
 		URLUtil.toString(url);
 	}

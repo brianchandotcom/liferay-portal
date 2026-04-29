@@ -67,9 +67,12 @@ const Licenses = ({actions, readOnly = false}: LicensesProps) => {
 	const placedOrder = outletContext?.placedOrder;
 	const product = outletContext?.product;
 
-	const keyType = [OrderTypes.CMP, OrderTypes.DXP_APP].includes(
-		placedOrder?.orderTypeExternalReferenceCode as OrderTypes
-	)
+	const keyType = [
+		OrderTypes.CLIENT_EXTENSION,
+		OrderTypes.CMP,
+		OrderTypes.COMPOSITE_APP,
+		OrderTypes.DXP_APP,
+	].includes(placedOrder?.orderTypeExternalReferenceCode as OrderTypes)
 		? 'On-Premise'
 		: 'Cloud';
 

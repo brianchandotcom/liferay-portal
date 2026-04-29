@@ -133,6 +133,18 @@ export class ViewObjectDefinitionsPage {
 		return response.json();
 	}
 
+	async deleteObjectDefinition(label: string, name: string) {
+		await this.clickObjectDefinitionActionButton(label);
+
+		await this.deleteObjectDefinitionOption.click();
+
+		const modal = this.page.getByRole('dialog');
+
+		await modal.getByRole('textbox').fill(name);
+
+		await modal.getByRole('button', {exact: true, name: 'Delete'}).click();
+	}
+
 	async deleteObjectFolder(objectFolderName: string) {
 		await this.objectFolderDeleteFolderOption.click();
 		await this.confirmObjectFolderNameInput.click();

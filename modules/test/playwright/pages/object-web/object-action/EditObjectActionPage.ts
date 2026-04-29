@@ -10,6 +10,7 @@ import {ViewObjectActionsPage} from './ViewObjectActionsPage';
 export class EditObjectActionPage {
 	readonly actionBuilderTab: Locator;
 	readonly actionLabelInput: Locator;
+	readonly basicInfoTab: Locator;
 	readonly checkbox: Locator;
 	readonly enableConditionToggle: Locator;
 	readonly expressionInput: Locator;
@@ -30,6 +31,9 @@ export class EditObjectActionPage {
 		this.actionLabelInput = page
 			.frameLocator('iframe')
 			.getByPlaceholder('Text to translate');
+		this.basicInfoTab = page
+			.frameLocator('iframe')
+			.getByRole('tab', {name: 'Basic Info'});
 		this.checkbox = page.frameLocator('iframe').getByRole('checkbox');
 		this.enableConditionToggle = page
 			.frameLocator('iframe')

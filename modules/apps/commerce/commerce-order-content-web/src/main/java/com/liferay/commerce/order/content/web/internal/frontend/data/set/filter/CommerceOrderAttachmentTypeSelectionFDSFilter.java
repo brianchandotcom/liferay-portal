@@ -11,16 +11,13 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.list.type.model.ListTypeDefinition;
-import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
-import com.liferay.list.type.service.ListTypeEntryService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,35 +56,22 @@ public class CommerceOrderAttachmentTypeSelectionFDSFilter
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.
+				fetchListTypeDefinitionByExternalReferenceCode(
+					"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
+					CompanyThreadLocal.getCompanyId());
 
-		try {
-			ListTypeDefinition listTypeDefinition =
-				_listTypeDefinitionLocalService.
-					fetchListTypeDefinitionByExternalReferenceCode(
-						"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
-						CompanyThreadLocal.getCompanyId());
-
-			if (listTypeDefinition == null) {
-				return selectionFDSFilterItems;
-			}
-
-			for (ListTypeEntry listTypeEntry :
-					_listTypeEntryService.getListTypeEntries(
-						listTypeDefinition.getListTypeDefinitionId(),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-				selectionFDSFilterItems.add(
-					new SelectionFDSFilterItem(
-						listTypeEntry.getName(locale), listTypeEntry.getKey()));
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		if (listTypeDefinition == null) {
+			return Collections.emptyList();
 		}
 
-		return selectionFDSFilterItems;
+		return TransformUtil.transform(
+			_listTypeEntryLocalService.getListTypeEntries(
+				listTypeDefinition.getListTypeDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS),
+			listTypeEntry -> new SelectionFDSFilterItem(
+				listTypeEntry.getName(locale), listTypeEntry.getKey()));
 	}
 
 	@Override
@@ -95,13 +79,10 @@ public class CommerceOrderAttachmentTypeSelectionFDSFilter
 		return false;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrderAttachmentTypeSelectionFDSFilter.class);
-
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Reference
-	private ListTypeEntryService _listTypeEntryService;
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

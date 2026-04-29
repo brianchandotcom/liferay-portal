@@ -35,7 +35,9 @@ export class CommerceAdminOrderAttachmentsPage extends CommerceDNDTablePage {
 			exact: true,
 			name: 'Attachments',
 		});
-		this.addAttachmentMenuItem = page.locator('[data-testid="fdsCreationActionButton"]')
+		this.addAttachmentMenuItem = page.locator(
+			'[data-testid="fdsCreationActionButton"]'
+		);
 		this.deleteConfirmButton = page
 			.getByRole('dialog')
 			.getByRole('button', {exact: true, name: 'Delete'});
@@ -59,9 +61,8 @@ export class CommerceAdminOrderAttachmentsPage extends CommerceDNDTablePage {
 		this.rowByTitle = (title: string) =>
 			page.getByRole('row', {name: title});
 		this.sidePanelFrame = page.frameLocator('.fds-side-panel iframe');
-		this.sidePanelFileInput = this.sidePanelFrame.locator(
-			'input[type="file"]'
-		);
+		this.sidePanelFileInput =
+			this.sidePanelFrame.locator('input[type="file"]');
 		this.sidePanelPriorityInput =
 			this.sidePanelFrame.getByLabel('Priority');
 		this.sidePanelRestrictedCheckbox =

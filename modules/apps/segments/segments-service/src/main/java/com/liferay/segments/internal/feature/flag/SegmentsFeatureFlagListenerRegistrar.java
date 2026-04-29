@@ -9,6 +9,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.GroupModel;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -57,6 +58,9 @@ public class SegmentsFeatureFlagListenerRegistrar {
 	}
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -73,17 +77,21 @@ public class SegmentsFeatureFlagListenerRegistrar {
 		public void onValue(
 			long companyId, String featureFlagKey, boolean enabled) {
 
-			long[] groupIds = TransformUtil.transformToLongArray(
-				_groupLocalService.getGroups(
-					companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
-				GroupModel::getGroupId);
+			_companyLocalService.forEachCompany(
+				company -> {
+					long[] groupIds = TransformUtil.transformToLongArray(
+						_groupLocalService.getGroups(
+							company.getCompanyId(),
+							GroupConstants.ANY_PARENT_GROUP_ID, true),
+						GroupModel::getGroupId);
 
-			if (groupIds.length == 0) {
-				return;
-			}
+					if (groupIds.length == 0) {
+						return;
+					}
 
-			_updateSegmentsEntries(enabled, groupIds);
-			_updateSegmentsExperiences(enabled, groupIds);
+					_updateSegmentsEntries(enabled, groupIds);
+					_updateSegmentsExperiences(enabled, groupIds);
+				});
 		}
 
 		private void _updateSegmentsEntries(boolean active, long[] groupIds) {

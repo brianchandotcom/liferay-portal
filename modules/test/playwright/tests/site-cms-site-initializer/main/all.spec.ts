@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinition,
-	ObjectDefinitionAPI,
-} from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 import {readFileSync} from 'fs';
 import fs from 'fs/promises';
@@ -433,26 +429,25 @@ test(
 			await assetsPage.selectItems(contentTitles);
 		});
 
+		const pickerDialog = assetsPage.getCopyOrMoveDestinationDialog();
+		const notAllowedDialog = page.getByRole('dialog', {
+			name: 'Action not allowed',
+		});
+
 		await test.step('Move To destination picker shows the warning for same-type selection', async () => {
 			await page
 				.getByRole('button', {exact: true, name: 'Move To'})
 				.click();
 
-			const dialog = page.getByRole('dialog', {
-				name: /Move \d+ Items To/,
-			});
-
 			await expect(
-				dialog.getByText(
-					/Only categories and tags also available in the destination will be retained/
-				)
+				pickerDialog.getByText(/will be retained/i)
 			).toBeVisible();
 
-			await dialog
+			await pickerDialog
 				.getByRole('button', {exact: true, name: 'Cancel'})
 				.click();
 
-			await expect(dialog).toBeHidden();
+			await expect(pickerDialog).toBeHidden();
 		});
 
 		await test.step('Copy To destination picker shows the warning for same-type selection', async () => {
@@ -460,21 +455,15 @@ test(
 				.getByRole('button', {exact: true, name: 'Copy To'})
 				.click();
 
-			const dialog = page.getByRole('dialog', {
-				name: /Copy \d+ Items To/,
-			});
-
 			await expect(
-				dialog.getByText(
-					/Only categories and tags also available in the destination will be copied/
-				)
+				pickerDialog.getByText(/will be copied/i)
 			).toBeVisible();
 
-			await dialog
+			await pickerDialog
 				.getByRole('button', {exact: true, name: 'Cancel'})
 				.click();
 
-			await expect(dialog).toBeHidden();
+			await expect(pickerDialog).toBeHidden();
 		});
 
 		await test.step('Also select the file for a mixed-type selection', async () => {
@@ -486,19 +475,15 @@ test(
 				.getByRole('button', {exact: true, name: 'Move To'})
 				.click();
 
-			const dialog = page.getByRole('dialog', {
-				name: 'Action not allowed',
-			});
-
 			await expect(
-				dialog.getByText(
-					/Assets with different content types cannot be moved together/
-				)
+				notAllowedDialog.getByText(/cannot be moved together/i)
 			).toBeVisible();
 
-			await dialog.getByRole('button', {exact: true, name: 'OK'}).click();
+			await notAllowedDialog
+				.getByRole('button', {exact: true, name: 'OK'})
+				.click();
 
-			await expect(dialog).toBeHidden();
+			await expect(notAllowedDialog).toBeHidden();
 		});
 
 		await test.step('Copy To blocks a mixed-type selection with a not-allowed modal', async () => {
@@ -506,19 +491,15 @@ test(
 				.getByRole('button', {exact: true, name: 'Copy To'})
 				.click();
 
-			const dialog = page.getByRole('dialog', {
-				name: 'Action not allowed',
-			});
-
 			await expect(
-				dialog.getByText(
-					/Assets with different content types cannot be copied together/
-				)
+				notAllowedDialog.getByText(/cannot be copied together/i)
 			).toBeVisible();
 
-			await dialog.getByRole('button', {exact: true, name: 'OK'}).click();
+			await notAllowedDialog
+				.getByRole('button', {exact: true, name: 'OK'})
+				.click();
 
-			await expect(dialog).toBeHidden();
+			await expect(notAllowedDialog).toBeHidden();
 		});
 	}
 );
@@ -548,15 +529,7 @@ test(
 		});
 
 		await test.step("Navigate to the Space's Contents", async () => {
-			await assetsPage.gotoAll();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: spaceName})
-				.click();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Contents'})
-				.click();
+			await assetsPage.gotoSpaceContents(spaceName);
 		});
 
 		await test.step('Select both folders and open Move To', async () => {
@@ -568,9 +541,7 @@ test(
 		});
 
 		await test.step('Selected folders are hidden in the destination picker', async () => {
-			const dialog = page.getByRole('dialog', {
-				name: /Move \d+ Items To/,
-			});
+			const dialog = assetsPage.getCopyOrMoveDestinationDialog();
 
 			await dialog.getByLabel(spaceName).click();
 
@@ -598,8 +569,6 @@ test(
 		const sourceSpaceName = `Space ${getRandomString()}`;
 		const destinationSpaceName = `Space ${getRandomString()}`;
 		const destinationFolderName = `Destination ${getRandomString()}`;
-		const structureLabel = `Structure ${getRandomString()}`;
-		const structureName = `Structure${getRandomInt()}`;
 		const contentTitles = [
 			`Content ${getRandomString()}`,
 			`Content ${getRandomString()}`,
@@ -635,53 +604,53 @@ test(
 		let applicationName: string;
 
 		await test.step('Create a content structure available only in the source Space', async () => {
-			const objectDefinitionAPIClient =
-				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+			const definition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionSettings: [
+						{
+							name: 'acceptedGroupExternalReferenceCodes',
+							value: sourceSpaceERC as unknown as object,
+						},
+					],
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: getRandomString(),
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: 'en_US',
+							label: {en_US: 'Title'},
+							localized: true,
+							name: 'title',
+							required: true,
+						},
+					],
+					objectFolderExternalReferenceCode:
+						'L_CMS_CONTENT_STRUCTURES',
+					scope: 'depot',
+					status: {code: 0},
+					titleObjectFieldName: 'title',
+				});
 
-			const definition: ObjectDefinition = {
-				externalReferenceCode: getRandomString(),
-				label: {en_US: structureLabel},
-				name: structureName,
-				objectDefinitionSettings: [
-					{
-						name: 'acceptedGroupExternalReferenceCodes',
-						value: sourceSpaceERC,
-					} as any,
-				],
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						externalReferenceCode: getRandomString(),
-						indexed: true,
-						indexedAsKeyword: false,
-						indexedLanguageId: 'en_US',
-						label: {en_US: 'Title'},
-						localized: true,
-						name: 'title',
-						required: true,
-					},
-				],
-				objectFolderExternalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
-				pluralLabel: {en_US: structureLabel},
-				scope: 'depot',
-				status: {code: 0},
-				titleObjectFieldName: 'title',
-			};
-
-			const {
-				body: {id: structureId, restContextPath},
-			} =
-				await objectDefinitionAPIClient.postObjectDefinition(
-					definition
-				);
+			expect(
+				definition.id,
+				'object definition was created'
+			).toBeDefined();
+			expect(
+				definition.restContextPath,
+				'object definition has a REST context path'
+			).toBeDefined();
 
 			apiHelpers.data.push({
-				id: structureId!,
+				id: definition.id as number,
 				type: 'objectDefinition',
 			});
 
-			applicationName = restContextPath!.replace(/^\/o\//, '');
+			applicationName = (definition.restContextPath as string).replace(
+				/^\/o\//,
+				''
+			);
 		});
 
 		await test.step('Seed two contents in the source Space', async () => {
@@ -779,9 +748,7 @@ test(
 				.click();
 		});
 
-		const dialog = page.getByRole('dialog', {
-			name: `Move ${contentTitle} To`,
-		});
+		const dialog = assetsPage.getCopyOrMoveDestinationDialog();
 
 		await test.step('Inside the destination Space the picker only shows the top-level folder', async () => {
 			await dialog.getByLabel(destinationSpaceName).click();
@@ -891,15 +858,7 @@ test(
 		});
 
 		await test.step('Try to bulk move the source contents to the destination folder', async () => {
-			await assetsPage.gotoAll();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: sourceSpaceName})
-				.click();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Contents'})
-				.click();
+			await assetsPage.gotoSpaceContents(sourceSpaceName);
 
 			await assetsPage.selectItems([sharedTitle, otherTitle]);
 

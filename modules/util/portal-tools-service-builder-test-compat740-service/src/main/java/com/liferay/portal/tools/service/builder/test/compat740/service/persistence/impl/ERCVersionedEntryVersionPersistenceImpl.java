@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ERCVersionedEntryVersionPersistence.class)
 public class ERCVersionedEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<ERCVersionedEntryVersion>
+	extends BasePersistenceImpl
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
 	implements ERCVersionedEntryVersionPersistence {
 
 	/*
@@ -1321,55 +1322,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all erc versioned entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ERCVersionedEntryVersionImpl.class);
-
-		finderCache.clearCache(ERCVersionedEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the erc versioned entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ERCVersionedEntryVersion ercVersionedEntryVersion) {
-		entityCache.removeResult(
-			ERCVersionedEntryVersionImpl.class, ercVersionedEntryVersion);
-	}
-
-	@Override
-	public void clearCache(
-		List<ERCVersionedEntryVersion> ercVersionedEntryVersions) {
-
-		for (ERCVersionedEntryVersion ercVersionedEntryVersion :
-				ercVersionedEntryVersions) {
-
-			entityCache.removeResult(
-				ERCVersionedEntryVersionImpl.class, ercVersionedEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ERCVersionedEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ERCVersionedEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ERCVersionedEntryVersionModelImpl ercVersionedEntryVersionModelImpl) {
 
@@ -1425,48 +1377,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		throws NoSuchERCVersionedEntryVersionException {
 
 		return remove((Serializable)ercVersionedEntryVersionId);
-	}
-
-	/**
-	 * Removes the erc versioned entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the erc versioned entry version
-	 * @return the erc versioned entry version that was removed
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion remove(Serializable primaryKey)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ERCVersionedEntryVersion ercVersionedEntryVersion =
-				(ERCVersionedEntryVersion)session.get(
-					ERCVersionedEntryVersionImpl.class, primaryKey);
-
-			if (ercVersionedEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchERCVersionedEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ercVersionedEntryVersion);
-		}
-		catch (NoSuchERCVersionedEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1606,32 +1516,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		}
 
 		ercVersionedEntryVersion.resetOriginalValues();
-
-		return ercVersionedEntryVersion;
-	}
-
-	/**
-	 * Returns the erc versioned entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the erc versioned entry version
-	 * @return the erc versioned entry version
-	 * @throws NoSuchERCVersionedEntryVersionException if a erc versioned entry version with the primary key could not be found
-	 */
-	@Override
-	public ERCVersionedEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchERCVersionedEntryVersionException {
-
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ercVersionedEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchERCVersionedEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ercVersionedEntryVersion;
 	}
@@ -2211,9 +2095,6 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ercVersionedEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ERCVersionedEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ERCVersionedEntryVersion exists with the key {";
 
@@ -2229,4 +2110,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-623474286
+// LIFERAY-SERVICE-BUILDER-HASH:-1524707033

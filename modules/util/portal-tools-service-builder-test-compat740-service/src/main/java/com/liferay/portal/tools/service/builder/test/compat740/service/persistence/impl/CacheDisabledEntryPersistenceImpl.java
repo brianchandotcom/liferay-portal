@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -60,7 +59,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CacheDisabledEntryPersistence.class)
 public class CacheDisabledEntryPersistenceImpl
-	extends BasePersistenceImpl<CacheDisabledEntry>
+	extends BasePersistenceImpl
+		<CacheDisabledEntry, NoSuchCacheDisabledEntryException>
 	implements CacheDisabledEntryPersistence {
 
 	/*
@@ -215,51 +215,6 @@ public class CacheDisabledEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cache disabled entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(CacheDisabledEntryImpl.class);
-
-		dummyFinderCache.clearCache(CacheDisabledEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cache disabled entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CacheDisabledEntry cacheDisabledEntry) {
-		dummyEntityCache.removeResult(
-			CacheDisabledEntryImpl.class, cacheDisabledEntry);
-	}
-
-	@Override
-	public void clearCache(List<CacheDisabledEntry> cacheDisabledEntries) {
-		for (CacheDisabledEntry cacheDisabledEntry : cacheDisabledEntries) {
-			dummyEntityCache.removeResult(
-				CacheDisabledEntryImpl.class, cacheDisabledEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(CacheDisabledEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(
-				CacheDisabledEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CacheDisabledEntryModelImpl cacheDisabledEntryModelImpl) {
 
@@ -297,48 +252,6 @@ public class CacheDisabledEntryPersistenceImpl
 		throws NoSuchCacheDisabledEntryException {
 
 		return remove((Serializable)cacheDisabledEntryId);
-	}
-
-	/**
-	 * Removes the cache disabled entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cache disabled entry
-	 * @return the cache disabled entry that was removed
-	 * @throws NoSuchCacheDisabledEntryException if a cache disabled entry with the primary key could not be found
-	 */
-	@Override
-	public CacheDisabledEntry remove(Serializable primaryKey)
-		throws NoSuchCacheDisabledEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CacheDisabledEntry cacheDisabledEntry =
-				(CacheDisabledEntry)session.get(
-					CacheDisabledEntryImpl.class, primaryKey);
-
-			if (cacheDisabledEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCacheDisabledEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cacheDisabledEntry);
-		}
-		catch (NoSuchCacheDisabledEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -431,31 +344,6 @@ public class CacheDisabledEntryPersistenceImpl
 		}
 
 		cacheDisabledEntry.resetOriginalValues();
-
-		return cacheDisabledEntry;
-	}
-
-	/**
-	 * Returns the cache disabled entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cache disabled entry
-	 * @return the cache disabled entry
-	 * @throws NoSuchCacheDisabledEntryException if a cache disabled entry with the primary key could not be found
-	 */
-	@Override
-	public CacheDisabledEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCacheDisabledEntryException {
-
-		CacheDisabledEntry cacheDisabledEntry = fetchByPrimaryKey(primaryKey);
-
-		if (cacheDisabledEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCacheDisabledEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cacheDisabledEntry;
 	}
@@ -764,9 +652,6 @@ public class CacheDisabledEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheDisabledEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CacheDisabledEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CacheDisabledEntry exists with the key {";
 
@@ -779,4 +664,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1257589330
+// LIFERAY-SERVICE-BUILDER-HASH:-1038728924

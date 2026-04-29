@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TreeEntryPersistence.class)
 public class TreeEntryPersistenceImpl
-	extends BasePersistenceImpl<TreeEntry> implements TreeEntryPersistence {
+	extends BasePersistenceImpl<TreeEntry, NoSuchTreeEntryException>
+	implements TreeEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -134,48 +134,6 @@ public class TreeEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all tree entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TreeEntryImpl.class);
-
-		finderCache.clearCache(TreeEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the tree entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TreeEntry treeEntry) {
-		entityCache.removeResult(TreeEntryImpl.class, treeEntry);
-	}
-
-	@Override
-	public void clearCache(List<TreeEntry> treeEntries) {
-		for (TreeEntry treeEntry : treeEntries) {
-			entityCache.removeResult(TreeEntryImpl.class, treeEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TreeEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TreeEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new tree entry with the primary key. Does not add the tree entry to the database.
 	 *
 	 * @param treeEntryId the primary key for the new tree entry
@@ -201,47 +159,6 @@ public class TreeEntryPersistenceImpl
 	@Override
 	public TreeEntry remove(long treeEntryId) throws NoSuchTreeEntryException {
 		return remove((Serializable)treeEntryId);
-	}
-
-	/**
-	 * Removes the tree entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the tree entry
-	 * @return the tree entry that was removed
-	 * @throws NoSuchTreeEntryException if a tree entry with the primary key could not be found
-	 */
-	@Override
-	public TreeEntry remove(Serializable primaryKey)
-		throws NoSuchTreeEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TreeEntry treeEntry = (TreeEntry)session.get(
-				TreeEntryImpl.class, primaryKey);
-
-			if (treeEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTreeEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(treeEntry);
-		}
-		catch (NoSuchTreeEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -364,31 +281,6 @@ public class TreeEntryPersistenceImpl
 		}
 
 		treeEntry.resetOriginalValues();
-
-		return treeEntry;
-	}
-
-	/**
-	 * Returns the tree entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the tree entry
-	 * @return the tree entry
-	 * @throws NoSuchTreeEntryException if a tree entry with the primary key could not be found
-	 */
-	@Override
-	public TreeEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTreeEntryException {
-
-		TreeEntry treeEntry = fetchByPrimaryKey(primaryKey);
-
-		if (treeEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTreeEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return treeEntry;
 	}
@@ -970,9 +862,6 @@ public class TreeEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "treeEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TreeEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TreeEntryPersistenceImpl.class);
 
@@ -982,4 +871,4 @@ public class TreeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2019908787
+// LIFERAY-SERVICE-BUILDER-HASH:-1310255445

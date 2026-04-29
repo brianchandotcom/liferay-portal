@@ -1887,4 +1887,4 @@ public class LikeFinderEntryPersistenceImpl
 		LikeFinderEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1489208774
+// LIFERAY-SERVICE-BUILDER-HASH:-1395890077

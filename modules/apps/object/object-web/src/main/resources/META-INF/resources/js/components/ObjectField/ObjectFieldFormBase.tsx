@@ -134,7 +134,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		[
 			{
 				name: 'prefixType',
-				value: 'defineByUser',
+				value: 'definedByUser',
 			},
 		],
 	],

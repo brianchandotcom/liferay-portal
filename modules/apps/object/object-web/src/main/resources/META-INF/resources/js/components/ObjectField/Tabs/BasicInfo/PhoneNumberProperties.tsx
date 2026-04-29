@@ -16,7 +16,7 @@ import {
 } from '../../../../utils/fieldSettings';
 
 export const PREFIX_TYPES = {
-	DEFINE_BY_USER: 'defineByUser',
+	DEFINED_BY_USER: 'definedByUser',
 	FIXED: 'fixed',
 } as const;
 
@@ -136,7 +136,7 @@ export function PhoneNumberProperties({
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const prefix = settings.prefix || '+1';
-	const prefixType = settings.prefixType || PREFIX_TYPES.DEFINE_BY_USER;
+	const prefixType = settings.prefixType || PREFIX_TYPES.DEFINED_BY_USER;
 
 	const selectedCountry =
 		countries.find((country) => `+${country.idd}` === prefix) ||
@@ -148,7 +148,7 @@ export function PhoneNumberProperties({
 			value,
 		});
 
-		if (value === PREFIX_TYPES.DEFINE_BY_USER) {
+		if (value === PREFIX_TYPES.DEFINED_BY_USER) {
 			updatedSettings = updatedSettings.filter(
 				(setting) => setting.name !== 'prefix'
 			);
@@ -192,8 +192,8 @@ export function PhoneNumberProperties({
 
 	const prefixTypeOptions = [
 		{
-			label: Liferay.Language.get('define-by-user'),
-			value: PREFIX_TYPES.DEFINE_BY_USER,
+			label: Liferay.Language.get('defined-by-user'),
+			value: PREFIX_TYPES.DEFINED_BY_USER,
 		},
 		{
 			label: Liferay.Language.get('fixed'),

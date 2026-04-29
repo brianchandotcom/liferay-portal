@@ -19,6 +19,10 @@ variable "ecr_repositories" {
 	type=map(object({ arn=string, url=string }))
 	default={}
 }
+variable "eks_allow_public_access" {
+	default=true
+	type=bool
+}
 variable "eks_api_additional_allowed_cidr_blocks" {
 	default=[]
 	type=list(string)

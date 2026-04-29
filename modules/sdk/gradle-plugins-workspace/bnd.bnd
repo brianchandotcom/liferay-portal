@@ -4,6 +4,7 @@ Bundle-Version: 17.0.1
 Export-Package:\
 	com.liferay.gradle.plugins.gulp,\
 	com.liferay.gradle.plugins.js.module.config.generator,\
+	com.liferay.gradle.plugins.js.transpiler,\
 	com.liferay.gradle.plugins.workspace,\
 	com.liferay.gradle.plugins.workspace.configurator,\
 	com.liferay.gradle.plugins.workspace.task

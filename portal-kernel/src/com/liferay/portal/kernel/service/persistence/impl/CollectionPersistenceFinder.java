@@ -25,7 +25,7 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 
 	@SafeVarargs
 	public CollectionPersistenceFinder(
-		BasePersistenceImpl<T> basePersistenceImpl,
+		BasePersistenceImpl<T, ?> basePersistenceImpl,
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
 		String defaultOrderByJpql, String orderByEntityAlias,

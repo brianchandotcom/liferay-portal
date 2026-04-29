@@ -227,8 +227,8 @@ public class AopConfigurableApplicationContextConfigurator
 			Object bean, String beanName) {
 
 			if (bean instanceof BasePersistenceImpl) {
-				BasePersistenceImpl<?> basePersistenceImpl =
-					(BasePersistenceImpl<?>)bean;
+				BasePersistenceImpl<?, ?> basePersistenceImpl =
+					(BasePersistenceImpl<?, ?>)bean;
 
 				basePersistenceImpl.setDataSource(_dataSource);
 				basePersistenceImpl.setSessionFactory(_sessionFactory);

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -286,7 +287,7 @@ public class FinderCacheImplTest {
 	}
 
 	private static class TestBasePersistence
-		extends BasePersistenceImpl<TestBaseModel> {
+		extends BasePersistenceImpl<TestBaseModel, NoSuchModelException> {
 
 		@Override
 		public TestBaseModel fetchByPrimaryKey(Serializable serializable) {

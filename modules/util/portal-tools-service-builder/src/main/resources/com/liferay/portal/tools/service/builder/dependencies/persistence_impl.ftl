@@ -250,7 +250,7 @@ import org.osgi.service.component.annotations.Reference;
 <#if classDeprecated>
 	@Deprecated
 </#if>
-public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}> implements ${entity.name}Persistence {
+public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.name}<#if serviceBuilder.isVersionGTE_7_4_0()>, ${noSuchEntity}Exception</#if>> implements ${entity.name}Persistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -721,42 +721,44 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return remove((Serializable)${entity.PKVariableName});
 	}
 
-	/**
-	 * Removes the ${entity.humanName} with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ${entity.humanName}
-	 * @return the ${entity.humanName} that was removed
-	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
-	 */
-	@Override
-	public ${entity.name} remove(Serializable primaryKey) throws ${noSuchEntity}Exception {
-		Session session = null;
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Removes the ${entity.humanName} with the primary key from the database. Also notifies the appropriate model listeners.
+		 *
+		 * @param primaryKey the primary key of the ${entity.humanName}
+		 * @return the ${entity.humanName} that was removed
+		 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+		 */
+		@Override
+		public ${entity.name} remove(Serializable primaryKey) throws ${noSuchEntity}Exception {
+			Session session = null;
 
-		try {
-			session = openSession();
+			try {
+				session = openSession();
 
-			${entity.name} ${entity.variableName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
+				${entity.name} ${entity.variableName} = (${entity.name})session.get(${entity.name}Impl.class, primaryKey);
 
-			if (${entity.variableName} == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				if (${entity.variableName} == null) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+					}
+
+					throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				return remove(${entity.variableName});
 			}
-
-			return remove(${entity.variableName});
+			catch (${noSuchEntity}Exception noSuchEntityException) {
+				throw noSuchEntityException;
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
 		}
-		catch (${noSuchEntity}Exception noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
+	</#if>
 
 	@Override
 	protected ${entity.name} removeImpl(${entity.name} ${entity.variableName}) {
@@ -1241,27 +1243,29 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		return ${entity.variableName};
 	}
 
-	/**
-	 * Returns the ${entity.humanName} with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ${entity.humanName}
-	 * @return the ${entity.humanName}
-	 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
-	 */
-	@Override
-	public ${entity.name} findByPrimaryKey(Serializable primaryKey) throws ${noSuchEntity}Exception {
-		${entity.name} ${entity.variableName} = fetchByPrimaryKey(primaryKey);
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Returns the ${entity.humanName} with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
+		 *
+		 * @param primaryKey the primary key of the ${entity.humanName}
+		 * @return the ${entity.humanName}
+		 * @throws ${noSuchEntity}Exception if a ${entity.humanName} with the primary key could not be found
+		 */
+		@Override
+		public ${entity.name} findByPrimaryKey(Serializable primaryKey) throws ${noSuchEntity}Exception {
+			${entity.name} ${entity.variableName} = fetchByPrimaryKey(primaryKey);
 
-		if (${entity.variableName} == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			if (${entity.variableName} == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+				}
+
+				throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new ${noSuchEntity}Exception(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
+			return ${entity.variableName};
 		}
-
-		return ${entity.variableName};
-	}
+	</#if>
 
 	/**
 	 * Returns the ${entity.humanName} with the primary key or throws a <code>${noSuchEntity}Exception</code> if it could not be found.
@@ -3282,7 +3286,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";
 	</#if>
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ${entity.name} exists with the primary key ";
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ${entity.name} exists with the primary key ";
+	</#if>
 
 	<#if entity.entityFinders?size != 0>
 		private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ${entity.name} exists with the key {";

@@ -35,7 +35,7 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 
 	@SafeVarargs
 	protected BasePersistenceFinder(
-		BasePersistenceImpl<T> basePersistenceImpl, String sqlSelectWhere,
+		BasePersistenceImpl<T, ?> basePersistenceImpl, String sqlSelectWhere,
 		FinderColumn<T>... finderColumns) {
 
 		this.basePersistenceImpl = basePersistenceImpl;
@@ -89,7 +89,7 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		}
 	}
 
-	protected final BasePersistenceImpl<T> basePersistenceImpl;
+	protected final BasePersistenceImpl<T, ?> basePersistenceImpl;
 	protected final FinderColumn<T>[] finderColumns;
 	protected final String sqlSelectWhere;
 

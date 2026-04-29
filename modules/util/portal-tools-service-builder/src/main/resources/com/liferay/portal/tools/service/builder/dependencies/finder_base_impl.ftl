@@ -1,5 +1,11 @@
 package ${packagePath}.service.persistence.impl;
 
+<#if serviceBuilder.isVersionGTE_7_4_0()>
+	<#assign noSuchEntity = serviceBuilder.getNoSuchEntityException(entity) />
+
+	import ${apiPackagePath}.exception.${noSuchEntity}Exception;
+</#if>
+
 import ${apiPackagePath}.model.${entity.name};
 import ${apiPackagePath}.service.persistence.${entity.name}Persistence;
 
@@ -37,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 </#if>
 
 public <#if dependencyInjectorDS>abstract </#if>class ${entity.name}FinderBaseImpl
-	extends BasePersistenceImpl<${entity.name}> {
+	extends BasePersistenceImpl<${entity.name}<#if serviceBuilder.isVersionGTE_7_4_0()>, ${noSuchEntity}Exception</#if>> {
 
 	public ${entity.name}FinderBaseImpl() {
 		setModelClass(${entity.name}.class);

@@ -2568,7 +2568,7 @@ public class CTTableMapperTest {
 	}
 
 	private class MockBasePersistence<T extends BaseModel<T>>
-		extends BasePersistenceImpl<T> {
+		extends BasePersistenceImpl<T, NoSuchModelException> {
 
 		@Override
 		public T findByPrimaryKey(Serializable primaryKey)

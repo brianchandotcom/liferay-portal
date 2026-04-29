@@ -16,7 +16,6 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.batch.engine.test.util.BatchEngineTestUtil;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
@@ -139,6 +138,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -159,7 +159,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -232,6 +231,7 @@ import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerResponseFilter;
@@ -6674,7 +6674,7 @@ public class ObjectEntryResourceTest {
 	public void testGetObjectEntryActionsWithSystemSharingDisabled()
 		throws Exception {
 
-		_addCMSGroup();
+		CMSTestUtil.getOrAddGroup(ObjectEntryResourceTest.class);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -7238,110 +7238,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	@TestInfo("LPD-83639")
-	public void testGetObjectEntryFolderShareAction() throws Exception {
-
-		// As creator
-
-		_setUpCMSTestEnvironment();
-
-		_objectEntryFolder = _addObjectEntryFolder(
-			_depotEntry, _user.getUserId(),
-			ServiceContextTestUtil.getServiceContext(
-				_depotEntry.getGroupId(), _user.getUserId()));
-
-		JSONObject jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		// With CMS administrator role
-
-		_setUpCMSTestEnvironment();
-
-		Role role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		_roleLocalService.addUserRole(_user.getUserId(), role.getRoleId());
-
-		jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		// With asset library content reviewer role
-
-		_setUpCMSTestEnvironment();
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
-
-		jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		Assert.assertFalse(jsonObject.has("share"));
-
-		// Without role
-
-		_setUpCMSTestEnvironment();
-
-		jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		Assert.assertFalse(jsonObject.has("share"));
-
-		// With asset library administrator role
-
-		_setUpCMSTestEnvironment();
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
-
-		jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		// For shared object entry folder with asset library content reviewer
-		// role
-
-		_setUpCMSTestEnvironment();
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _user.getUserId(),
-			_classNameLocalService.getClassNameId(
-				_objectEntryFolder.getModelClassName()),
-			_objectEntryFolder.getObjectEntryFolderId(),
-			_depotEntry.getGroupId(), true, List.of(SharingEntryAction.VIEW),
-			null,
-			ServiceContextTestUtil.getServiceContext(
-				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
-
-		jsonObject = _getObjectEntryFolderActionsJSONObject(
-			_objectEntryFolder, _user, _password);
-
-		_sharingEntryLocalService.deleteSharingEntry(
-			sharingEntry.getSharingEntryId());
-
-		Assert.assertTrue(jsonObject.has("share"));
-	}
-
-	@Test
 	public void testGetObjectEntryPermissionsPage() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -7387,104 +7283,120 @@ public class ObjectEntryResourceTest {
 	@Test
 	@TestInfo("LPD-83639")
 	public void testGetObjectEntryShareAction() throws Exception {
+		CMSTestUtil.getOrAddGroup(ObjectEntryResourceTest.class);
 
-		// As creator
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
 
-		_setUpCMSTestEnvironment();
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId());
 
-		_objectEntry6 = _addObjectEntry(
-			_depotEntry, _objectDefinition5, _objectEntryFolder,
-			_user.getUserId(),
-			ServiceContextTestUtil.getServiceContext(
-				_depotEntry.getGroupId(), _user.getUserId()));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(depotEntry.getGroupId());
 
-		JSONObject jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
+		serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
 
-		Assert.assertTrue(jsonObject.has("share"));
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			depotEntry, serviceContext, depotEntry.getUserId());
 
-		// With CMS administrator role
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			depotEntry, objectDefinition, objectEntryFolder, serviceContext,
+			depotEntry.getUserId());
 
-		_setUpCMSTestEnvironment();
+		String password = RandomTestUtil.randomString();
 
-		Role role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		_roleLocalService.addUserRole(_user.getUserId(), role.getRoleId());
-
-		jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		// With asset library content reviewer role
-
-		_setUpCMSTestEnvironment();
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
-
-		jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
-
-		Assert.assertFalse(jsonObject.has("share"));
-
-		// Without role
-
-		_setUpCMSTestEnvironment();
-
-		jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
-
-		Assert.assertFalse(jsonObject.has("share"));
+		User user = _addUser(RandomTestUtil.randomString(), password);
 
 		// With asset library administrator role
 
-		_setUpCMSTestEnvironment();
-
-		role = _roleLocalService.fetchRole(
+		Role role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
 
-		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
+		UserGroupRole userGroupRole =
+			_userGroupRoleLocalService.addUserGroupRole(
+				user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
 
-		jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
+		JSONObject jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry1, user, password);
 
 		Assert.assertTrue(jsonObject.has("share"));
 
-		// For shared object entry with asset library content reviewer role
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
 
-		_setUpCMSTestEnvironment();
+		// With asset library content reviewer role
 
 		role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
 
-		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), _depotEntry.getGroupId(), role.getRoleId());
+		userGroupRole = _userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry1, user, password);
+
+		Assert.assertFalse(jsonObject.has("share"));
+
+		// With asset library content reviewer role and shared object entry
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, _user.getUserId(),
+			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
 			_classNameLocalService.getClassNameId(
-				_objectEntry6.getModelClassName()),
-			_objectEntry6.getObjectEntryId(), _depotEntry.getGroupId(), true,
+				objectEntry1.getModelClassName()),
+			objectEntry1.getObjectEntryId(), depotEntry.getGroupId(), true,
 			List.of(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
-				_depotEntry.getGroupId(), TestPropsValues.getUserId()));
+				depotEntry.getGroupId(), TestPropsValues.getUserId()));
 
-		jsonObject = _getObjectEntryActionsJSONObject(
-			_objectDefinition5, _objectEntry6, _user, _password);
+		jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry1, user, password);
 
 		_sharingEntryLocalService.deleteSharingEntry(
 			sharingEntry.getSharingEntryId());
 
 		Assert.assertTrue(jsonObject.has("share"));
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		// With CMS administrator role
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry1, user, password);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_roleLocalService.deleteUserRole(user.getUserId(), role.getRoleId());
+
+		// With user as creator
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			depotEntry, objectDefinition, objectEntryFolder,
+			ServiceContextTestUtil.getServiceContext(
+				depotEntry.getGroupId(), user.getUserId()),
+			user.getUserId());
+
+		jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry2, user, password);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		// Without role
+
+		jsonObject = _getActionsJSONObject(
+			objectDefinition, objectEntry1, user, password);
+
+		Assert.assertFalse(jsonObject.has("share"));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -8744,7 +8656,7 @@ public class ObjectEntryResourceTest {
 
 		// Company scope
 
-		_addCMSGroup();
+		CMSTestUtil.getOrAddGroup(ObjectEntryResourceTest.class);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			RandomTestUtil.randomLocaleStringMap(),
@@ -15675,36 +15587,6 @@ public class ObjectEntryResourceTest {
 			"siteId");
 	}
 
-	private void _addCMSGroup() throws Exception {
-
-		// These tests require the instance to be created with the feature
-		// flag LPD-17564 enabled. On CI, feature flags are enabled on
-		// demand for each test, but not during instance initialization.
-		// Until the feature flag LPD-17564 is removed, we need an explicit CMS
-		// group creation.
-
-		Group group = _groupLocalService.fetchGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
-		if (group != null) {
-			return;
-		}
-
-		Role role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-		if (role == null) {
-			_roleLocalService.addRole(
-				null, TestPropsValues.getUserId(), null, 0,
-				RoleConstants.SITE_MEMBER, null, null,
-				RoleConstants.TYPE_REGULAR, null, null);
-		}
-
-		GroupTestUtil.addGroup(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, GroupConstants.CMS);
-	}
-
 	private ObjectDefinition _addDepotScopedObjectDefinition()
 		throws Exception {
 
@@ -15798,8 +15680,8 @@ public class ObjectEntryResourceTest {
 
 	private ObjectEntry _addObjectEntry(
 			DepotEntry depotEntry, ObjectDefinition objectDefinition,
-			ObjectEntryFolder objectEntryFolder, long userId,
-			ServiceContext serviceContext)
+			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext,
+			long userId)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
@@ -15816,10 +15698,10 @@ public class ObjectEntryResourceTest {
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
-			DepotEntry depotEntry, long userId, ServiceContext serviceContext)
+			DepotEntry depotEntry, ServiceContext serviceContext, long userId)
 		throws Exception {
 
-		ObjectEntryFolder contentsFolder =
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
@@ -15827,7 +15709,7 @@ public class ObjectEntryResourceTest {
 
 		return _objectEntryFolderLocalService.addObjectEntryFolder(
 			null, depotEntry.getGroupId(), userId,
-			contentsFolder.getObjectEntryFolderId(),
+			objectEntryFolder.getObjectEntryFolderId(),
 			RandomTestUtil.randomString(),
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -16449,6 +16331,32 @@ public class ObjectEntryResourceTest {
 		return responseJSONObject.getJSONObject("actions");
 	}
 
+	private JSONObject _getActionsJSONObject(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			User user, String password)
+		throws Exception {
+
+		AtomicReference<JSONObject> atomicReference = new AtomicReference<>();
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			() -> {
+				JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
+					null,
+					objectDefinition.getRESTContextPath() + StringPool.SLASH +
+						objectEntry.getObjectEntryId(),
+					Http.Method.GET);
+
+				atomicReference.set(
+					responseJSONObject.getJSONObject("actions"));
+			}
+		);
+
+		return atomicReference.get();
+	}
+
 	private Map<String, String> _getActionValue(String href, String method) {
 		return HashMapBuilder.put(
 			"href", href
@@ -16910,27 +16818,6 @@ public class ObjectEntryResourceTest {
 			null, null);
 	}
 
-	private JSONObject _getObjectEntryActionsJSONObject(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			User user, String password)
-		throws Exception {
-
-		return _invokeGetActionsJSONObject(
-			objectDefinition.getRESTContextPath() + StringPool.SLASH +
-				objectEntry.getObjectEntryId(),
-			user, password);
-	}
-
-	private JSONObject _getObjectEntryFolderActionsJSONObject(
-			ObjectEntryFolder objectEntryFolder, User user, String password)
-		throws Exception {
-
-		return _invokeGetActionsJSONObject(
-			"headless-object/v1.0/object-entry-folders/" +
-				objectEntryFolder.getObjectEntryFolderId(),
-			user, password);
-	}
-
 	private JSONObject _getObjectEntryJSONObject(
 			Integer nestedFieldDepth, String nestedFieldName,
 			ObjectDefinition objectDefinition)
@@ -17136,27 +17023,6 @@ public class ObjectEntryResourceTest {
 				setValues(() -> objectEntry);
 			}
 		};
-	}
-
-	private JSONObject _invokeGetActionsJSONObject(
-			String path, User user, String password)
-		throws Exception {
-
-		AtomicReference<JSONObject> actionsAtom = new AtomicReference<>();
-
-		HTTPTestUtil.customize(
-		).withCredentials(
-			user.getEmailAddress(), password
-		).apply(
-			() -> {
-				JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
-					null, path, Http.Method.GET);
-
-				actionsAtom.set(responseJSONObject.getJSONObject("actions"));
-			}
-		);
-
-		return actionsAtom.get();
 	}
 
 	private JSONObject
@@ -17460,48 +17326,6 @@ public class ObjectEntryResourceTest {
 			});
 
 		objectEntry.setProperties(properties);
-	}
-
-	private void _setUpCMSTestEnvironment() throws Exception {
-		_addCMSGroup();
-
-		BatchEngineTestUtil.processBatchEngineUnits(
-			"com.liferay.site.initializer.cms", ObjectEntryResourceTest.class,
-			new String[] {
-				".com.liferay.site.initializer.cms.internal.batch.00.list." +
-					"type.definition",
-				".com.liferay.site.initializer.cms.internal.batch.01.object." +
-					"folder",
-				".com.liferay.site.initializer.cms.internal.batch.02.object." +
-					"definition"
-			});
-
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
-		_objectDefinition5 =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId());
-
-		serviceContext.setAttribute(
-			"friendlyUrlMap", new HashMap<String, String>());
-
-		_objectEntryFolder = _addObjectEntryFolder(
-			_depotEntry, _depotEntry.getUserId(), serviceContext);
-
-		_objectEntry6 = _addObjectEntry(
-			_depotEntry, _objectDefinition5, _objectEntryFolder,
-			_depotEntry.getUserId(), serviceContext);
-
-		_password = RandomTestUtil.randomString();
-
-		_user = _addUser(RandomTestUtil.randomString(), _password);
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {
@@ -22081,8 +21905,6 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private DepotEntry _depotEntry;
-
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
@@ -22131,7 +21953,6 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
 	private ObjectDefinition _objectDefinition4;
-	private ObjectDefinition _objectDefinition5;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -22145,8 +21966,6 @@ public class ObjectEntryResourceTest {
 	private ObjectEntry _objectEntry3;
 	private ObjectEntry _objectEntry4;
 	private ObjectEntry _objectEntry5;
-	private ObjectEntry _objectEntry6;
-	private ObjectEntryFolder _objectEntryFolder;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
@@ -22180,8 +21999,6 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
-	private String _password;
-
 	@Inject
 	private Portal _portal;
 
@@ -22206,7 +22023,6 @@ public class ObjectEntryResourceTest {
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 
-	private User _user;
 	private JSONObject _userAccountJSONObject;
 
 	@Inject

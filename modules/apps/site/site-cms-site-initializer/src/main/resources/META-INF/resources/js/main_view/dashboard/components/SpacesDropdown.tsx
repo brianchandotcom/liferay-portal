@@ -32,6 +32,7 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 	const fetchSpaces = async (keywords: string = '') => {
 		const queryParams = buildQueryString({
+			filter: "type eq 'Space'",
 			keywords,
 		});
 		const endpoint = `${PATH}${queryParams}`;

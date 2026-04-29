@@ -37,6 +37,29 @@ describe('[CMS Dashboard] Components: SpacesDropdown', () => {
 		jest.restoreAllMocks();
 	});
 
+	it('fetches spaces filtered by type Space', async () => {
+		const apiHelperGetSpy = jest.spyOn(ApiHelper, 'get').mockResolvedValue({
+			data: {items: []},
+			error: null,
+		});
+
+		render(<WrappedComponent />);
+
+		fireEvent.click(
+			screen.getByRole('button', {
+				name: 'all-spaces',
+			})
+		);
+
+		await waitForElementToBeRemoved(() => screen.getByTestId('loading'));
+
+		expect(apiHelperGetSpy).toHaveBeenCalledWith(
+			expect.stringContaining(
+				`filter=${encodeURIComponent("type eq 'Space'")}`
+			)
+		);
+	});
+
 	it('renders correctly', async () => {
 		jest.spyOn(ApiHelper, 'get').mockResolvedValue({
 			data: {items: []},

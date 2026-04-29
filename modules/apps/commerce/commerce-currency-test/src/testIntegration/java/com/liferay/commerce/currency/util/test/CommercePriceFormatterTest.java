@@ -139,6 +139,32 @@ public class CommercePriceFormatterTest {
 	}
 
 	@Test
+	public void testFormatCurrencyFractionDigits() throws Exception {
+		_commerceCurrency.setMaxFractionDigits(4);
+		_commerceCurrency.setMinFractionDigits(4);
+
+		String formattedPrice = _commercePriceFormatter.format(
+			_commerceCurrency, false, LocaleUtil.getDefault(), _price);
+
+		Assert.assertEquals("1,234,560.7800", formattedPrice);
+	}
+
+	@Test
+	public void testFormatCurrencySymbol() throws Exception {
+		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.US);
+
+		String formattedPrice = _commercePriceFormatter.format(
+			_commerceCurrency, false, LocaleUtil.getDefault(), _price);
+
+		Assert.assertEquals("1,234,560.78", formattedPrice);
+
+		formattedPrice = _commercePriceFormatter.format(
+			_commerceCurrency, true, LocaleUtil.getDefault(), _price);
+
+		Assert.assertEquals("$1,234,560.78", formattedPrice);
+	}
+
+	@Test
 	public void testParsePriceBigDecimal() throws Exception {
 		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.ITALY);
 

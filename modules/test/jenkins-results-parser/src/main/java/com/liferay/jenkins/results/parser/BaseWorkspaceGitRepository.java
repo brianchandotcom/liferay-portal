@@ -1533,8 +1533,10 @@ public abstract class BaseWorkspaceGitRepository
 		if (!gitWorkingDirectory.localSHAExists(sha) ||
 			!gitWorkingDirectory.refContainsSHA(remoteGitRef.getSHA(), sha)) {
 
-			throw new SHANotReachableException(
-				sha, branchName, remoteGitRef.getRemoteURL());
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"SHA ", sha, " was not found in branch \"", branchName,
+					"\" on ", remoteGitRef.getRemoteURL()));
 		}
 	}
 

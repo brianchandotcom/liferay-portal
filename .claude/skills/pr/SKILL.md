@@ -9,7 +9,7 @@ name: pr
 
 # Create a Pull Request
 
-Create a GitHub pull request for the current branch, transition the linked Jira ticket to review, and record the pull request URL on that ticket. Drive every Jira interaction through the Jira Cloud REST API at `liferay.atlassian.net`, authenticated with `${JIRA_API_USER}` / `${JIRA_API_TOKEN}`.
+Create a GitHub pull request for the current branch, transition the linked Jira ticket to review, and record the pull request URL on that ticket. Drive every Jira interaction through the Jira Cloud REST API at `liferay.atlassian.net`, authenticated with `${JIRA_API_USER}` and `${JIRA_API_TOKEN}`.
 
 ## Preconditions
 
@@ -23,11 +23,11 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 
 ### Branch
 
-The current Git branch, which must contain the commits ready to ship.
+The current Git branch must contain the commits ready to ship.
 
 ### Jira Ticket
 
-A ticket key resolved in priority order:
+Resolve a ticket key in priority order:
 
 1. **User Argument** — when `${ARGUMENTS}` supplies a ticket key, prefer that value.
 
@@ -41,7 +41,7 @@ The ticket key follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and si
 
 ### Target Repository
 
-`<fork-owner>/liferay-portal`. When `${ARGUMENTS}` names a different `org/repo`, use that; otherwise ask the user to choose `<fork-owner>` from one of the team forks:
+The target repository defaults to `<fork-owner>/liferay-portal`. When `${ARGUMENTS}` names a different `org/repo`, use that; otherwise, ask the user to choose `<fork-owner>` from one of the team forks:
 
 - `liferay-ac`
 - `liferay-appsec`
@@ -58,7 +58,7 @@ The ticket key follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and si
 - `liferay-search`
 - `liferay-site-management`
 
-The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`) and the base is `master`.
+The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
 
 ## Expected Output
 
@@ -79,28 +79,28 @@ The body follows this format:
 ```markdown
 https://liferay.atlassian.net/browse/TICKET-ID
 
-# What is being fixed
+## What is being fixed
 
 Explain the problem or bug that motivated the change — what was going
 wrong or what was missing.
 
-# How it is being fixed
+## How it is being fixed
 
 Explain the approach taken across all commits. Describe the key changes
 and the reasoning behind the approach. Write in plain prose rather than
 bullet points.
 
-# Why are there no tests?
+## Why are there no tests?
 
 This optional section is only included when the commits do not add any
 tests. It should contain the rationale provided by the user.
 ```
 
-Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting and proceed once they approve.
+Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
 ### Transitioned Jira Ticket
 
-Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and where the pull request URL is recorded:
+Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the pull request URL is recorded:
 
 | Ticket Type              | Target                               |
 | ------------------------ | ------------------------------------ |

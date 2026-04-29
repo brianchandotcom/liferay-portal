@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -99,6 +100,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -143,7 +146,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				_testCompanyAdminUser.getEmailAddress(),
 				PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -153,7 +156,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -164,7 +167,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				_testCompanyAdminUser.getEmailAddress(),
 				PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).parameter(
@@ -516,10 +519,11 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		createBatchAction.put("method", "POST");
 		createBatchAction.put(
 			"href",
-			"http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/batch".
-				replace(
-					"{assetLibraryExternalReferenceCode}",
-					String.valueOf(assetLibraryExternalReferenceCode)));
+			("http://localhost:" + _portalServerPort +
+				"/o/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/batch").
+					replace(
+						"{assetLibraryExternalReferenceCode}",
+						String.valueOf(assetLibraryExternalReferenceCode)));
 
 		expectedActions.put("createBatch", createBatchAction);
 
@@ -1123,7 +1127,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).parameters(
 			parameters
 		).build();
@@ -1946,7 +1950,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.path(
+			"http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -2268,6 +2273,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			BaseERCAssetLibraryTestEntityResourceTestCase.class);
 
 	private static Format _format;
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
@@ -2276,4 +2282,4 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntityResource _ercAssetLibraryTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1852772072
+// LIFERAY-REST-BUILDER-HASH:500404711

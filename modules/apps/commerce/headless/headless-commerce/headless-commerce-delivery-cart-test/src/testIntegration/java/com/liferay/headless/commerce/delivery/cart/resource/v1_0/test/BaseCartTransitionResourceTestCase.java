@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -83,6 +84,8 @@ public abstract class BaseCartTransitionResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -103,7 +106,7 @@ public abstract class BaseCartTransitionResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -238,8 +241,9 @@ public abstract class BaseCartTransitionResourceTestCase {
 		createBatchAction.put("method", "POST");
 		createBatchAction.put(
 			"href",
-			"http://localhost:8080/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/cart-transitions/batch".
-				replace("{cartId}", String.valueOf(cartId)));
+			("http://localhost:" + _portalServerPort +
+				"/o/headless-commerce-delivery-cart/v1.0/carts/{cartId}/cart-transitions/batch").
+					replace("{cartId}", String.valueOf(cartId)));
 
 		expectedActions.put("createBatch", createBatchAction);
 
@@ -899,7 +903,8 @@ public abstract class BaseCartTransitionResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.path(
+			"http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -1154,6 +1159,7 @@ public abstract class BaseCartTransitionResourceTestCase {
 		LogFactoryUtil.getLog(BaseCartTransitionResourceTestCase.class);
 
 	private static Format _format;
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
@@ -1162,4 +1168,4 @@ public abstract class BaseCartTransitionResourceTestCase {
 		CartTransitionResource _cartTransitionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1043045231
+// LIFERAY-REST-BUILDER-HASH:2119697037

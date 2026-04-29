@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -121,6 +122,8 @@ public abstract class BaseCommentResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -141,7 +144,7 @@ public abstract class BaseCommentResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -151,7 +154,7 @@ public abstract class BaseCommentResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -1232,8 +1235,9 @@ public abstract class BaseCommentResourceTestCase {
 		createBatchAction.put("method", "POST");
 		createBatchAction.put(
 			"href",
-			"http://localhost:8080/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch".
-				replace("{blogPostingId}", String.valueOf(blogPostingId)));
+			("http://localhost:" + _portalServerPort +
+				"/o/headless-delivery/v1.0/blog-postings/{blogPostingId}/comments/batch").
+					replace("{blogPostingId}", String.valueOf(blogPostingId)));
 
 		expectedActions.put("createBatch", createBatchAction);
 
@@ -1721,8 +1725,8 @@ public abstract class BaseCommentResourceTestCase {
 			public StringBuffer getRequestURL() {
 				return new StringBuffer(
 					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
+						"http://localhost:", String.valueOf(_portalServerPort),
+						"/o/v1.0/", RandomTestUtil.randomString(), "/",
 						RandomTestUtil.randomString()));
 			}
 
@@ -1758,8 +1762,9 @@ public abstract class BaseCommentResourceTestCase {
 			@Override
 			public URI getRequestUri() {
 				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
+					StringBundler.concat(
+						"http://localhost:", _portalServerPort, "/o/",
+						applicationPath, resourcePath));
 			}
 
 			@Override
@@ -1779,7 +1784,10 @@ public abstract class BaseCommentResourceTestCase {
 
 			@Override
 			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
+				return URI.create(
+					StringBundler.concat(
+						"http://localhost:", _portalServerPort, "/o/",
+						applicationPath));
 			}
 
 			@Override
@@ -2380,8 +2388,9 @@ public abstract class BaseCommentResourceTestCase {
 		createBatchAction.put("method", "POST");
 		createBatchAction.put(
 			"href",
-			"http://localhost:8080/o/headless-delivery/v1.0/documents/{documentId}/comments/batch".
-				replace("{documentId}", String.valueOf(documentId)));
+			("http://localhost:" + _portalServerPort +
+				"/o/headless-delivery/v1.0/documents/{documentId}/comments/batch").
+					replace("{documentId}", String.valueOf(documentId)));
 
 		expectedActions.put("createBatch", createBatchAction);
 
@@ -3653,10 +3662,11 @@ public abstract class BaseCommentResourceTestCase {
 		createBatchAction.put("method", "POST");
 		createBatchAction.put(
 			"href",
-			"http://localhost:8080/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments/batch".
-				replace(
-					"{structuredContentId}",
-					String.valueOf(structuredContentId)));
+			("http://localhost:" + _portalServerPort +
+				"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/comments/batch").
+					replace(
+						"{structuredContentId}",
+						String.valueOf(structuredContentId)));
 
 		expectedActions.put("createBatch", createBatchAction);
 
@@ -4604,7 +4614,7 @@ public abstract class BaseCommentResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).parameters(
 			parameters
 		).build();
@@ -5582,7 +5592,8 @@ public abstract class BaseCommentResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.path(
+			"http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -5863,6 +5874,7 @@ public abstract class BaseCommentResourceTestCase {
 		LogFactoryUtil.getLog(BaseCommentResourceTestCase.class);
 
 	private static Format _format;
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
@@ -5893,4 +5905,4 @@ public abstract class BaseCommentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1033237060
+// LIFERAY-REST-BUILDER-HASH:960751208

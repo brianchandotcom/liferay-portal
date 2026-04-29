@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -117,6 +118,8 @@ public abstract class BaseCTProcessResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -137,7 +140,7 @@ public abstract class BaseCTProcessResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -147,7 +150,7 @@ public abstract class BaseCTProcessResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -432,8 +435,8 @@ public abstract class BaseCTProcessResourceTestCase {
 			public StringBuffer getRequestURL() {
 				return new StringBuffer(
 					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
+						"http://localhost:", String.valueOf(_portalServerPort),
+						"/o/v1.0/", RandomTestUtil.randomString(), "/",
 						RandomTestUtil.randomString()));
 			}
 
@@ -469,8 +472,9 @@ public abstract class BaseCTProcessResourceTestCase {
 			@Override
 			public URI getRequestUri() {
 				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
+					StringBundler.concat(
+						"http://localhost:", _portalServerPort, "/o/",
+						applicationPath, resourcePath));
 			}
 
 			@Override
@@ -490,7 +494,10 @@ public abstract class BaseCTProcessResourceTestCase {
 
 			@Override
 			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
+				return URI.create(
+					StringBundler.concat(
+						"http://localhost:", _portalServerPort, "/o/",
+						applicationPath));
 			}
 
 			@Override
@@ -1036,7 +1043,7 @@ public abstract class BaseCTProcessResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).parameters(
 			parameters
 		).build();
@@ -1710,7 +1717,8 @@ public abstract class BaseCTProcessResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.path(
+			"http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -1989,6 +1997,7 @@ public abstract class BaseCTProcessResourceTestCase {
 		LogFactoryUtil.getLog(BaseCTProcessResourceTestCase.class);
 
 	private static Format _format;
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
@@ -2019,4 +2028,4 @@ public abstract class BaseCTProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:947755428
+// LIFERAY-REST-BUILDER-HASH:-1922921530

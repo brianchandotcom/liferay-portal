@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -88,6 +89,8 @@ public abstract class BaseContactOrganizationResourceTestCase {
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -108,7 +111,7 @@ public abstract class BaseContactOrganizationResourceTestCase {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -930,7 +933,8 @@ public abstract class BaseContactOrganizationResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:8080/o/graphql");
+		httpInvoker.path(
+			"http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -1186,6 +1190,7 @@ public abstract class BaseContactOrganizationResourceTestCase {
 		LogFactoryUtil.getLog(BaseContactOrganizationResourceTestCase.class);
 
 	private static Format _format;
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
@@ -1194,4 +1199,4 @@ public abstract class BaseContactOrganizationResourceTestCase {
 		ContactOrganizationResource _contactOrganizationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1810955843
+// LIFERAY-REST-BUILDER-HASH:132471849

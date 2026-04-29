@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -37,6 +38,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -111,6 +113,10 @@ public class CPConfigurationUpgradeProcessTest {
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
+		double depth1 = cpDefinition.getDepth();
+
+		double depth2 = depth1 + 100.0;
+
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
@@ -130,6 +136,8 @@ public class CPConfigurationUpgradeProcessTest {
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollection.getCtCollectionId())) {
+
+				cpDefinition.setDepth(depth2);
 
 				_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
 			}
@@ -157,6 +165,25 @@ public class CPConfigurationUpgradeProcessTest {
 			Assert.assertEquals(
 				cpConfigurationEntries.toString(), 2,
 				cpConfigurationEntries.size());
+
+			Map<Long, Double> expectedDepths = HashMapBuilder.put(
+				0L, depth1
+			).put(
+				ctCollection.getCtCollectionId(), depth2
+			).build();
+
+			for (CPConfigurationEntry cpConfigurationEntry :
+					cpConfigurationEntries) {
+
+				long entryCtCollectionId =
+					cpConfigurationEntry.getCtCollectionId();
+
+				Assert.assertTrue(
+					expectedDepths.containsKey(entryCtCollectionId));
+				Assert.assertEquals(
+					expectedDepths.get(entryCtCollectionId),
+					cpConfigurationEntry.getDepth(), 0.0);
+			}
 		}
 	}
 

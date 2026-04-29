@@ -106,12 +106,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryId);
 
 		CollaboratorUtil.deleteCollaborator(
-			objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), collaboratorId,
-			contextCompany.getCompanyId(), _sharingEntryService,
-			_ticketLocalService, type);
+			contextCompany.getCompanyId(), _sharingEntryService, type);
 	}
 
 	@Override
@@ -167,12 +165,10 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_objectDefinition.getObjectDefinitionId());
 
 		CollaboratorUtil.deleteCollaborator(
-			objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), collaboratorId,
-			contextCompany.getCompanyId(), _sharingEntryService,
-			_ticketLocalService, type);
+			contextCompany.getCompanyId(), _sharingEntryService, type);
 	}
 
 	@Override
@@ -219,13 +215,13 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryId);
 
 		return CollaboratorUtil.getCollaborator(
-			contextAcceptLanguage, objectEntry.getModelClassName(),
+			contextAcceptLanguage,
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), collaboratorId,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
-			_dtoConverterRegistry, _sharingEntryService, _ticketLocalService,
-			type, contextUriInfo, contextUser);
+			_dtoConverterRegistry, _sharingEntryService, type, contextUriInfo,
+			contextUser);
 	}
 
 	@Override
@@ -306,13 +302,13 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_objectDefinition.getObjectDefinitionId());
 
 		return CollaboratorUtil.getCollaborator(
-			contextAcceptLanguage, objectEntry.getModelClassName(),
+			contextAcceptLanguage,
 			_classNameLocalService.getClassNameId(
 				objectEntry.getModelClassName()),
 			objectEntry.getObjectEntryId(), collaboratorId,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
-			_dtoConverterRegistry, _sharingEntryService, _ticketLocalService,
-			type, contextUriInfo, contextUser);
+			_dtoConverterRegistry, _sharingEntryService, type, contextUriInfo,
+			contextUser);
 	}
 
 	@Override

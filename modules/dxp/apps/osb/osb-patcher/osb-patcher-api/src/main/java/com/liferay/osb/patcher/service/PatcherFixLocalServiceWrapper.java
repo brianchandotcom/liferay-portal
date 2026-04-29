@@ -77,13 +77,13 @@ public class PatcherFixLocalServiceWrapper
 	@Override
 	public com.liferay.osb.patcher.model.PatcherFix addPatcherFix(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String name, String committish,
-			String gitRemoteURL, int type, int status)
+			long patcherProjectVersionId, String committish,
+			String gitRemoteURL, String name, int type, int status)
 		throws Exception {
 
 		return _patcherFixLocalService.addPatcherFix(
-			userId, patcherProductVersionId, patcherProjectVersionId, name,
-			committish, gitRemoteURL, type, status);
+			userId, patcherProductVersionId, patcherProjectVersionId,
+			committish, gitRemoteURL, name, type, status);
 	}
 
 	/**
@@ -815,4 +815,4 @@ public class PatcherFixLocalServiceWrapper
 	private PatcherFixLocalService _patcherFixLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2075952458
+// LIFERAY-SERVICE-BUILDER-HASH:-233519990

@@ -74,8 +74,8 @@ public interface PatcherFixLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public PatcherFix addPatcherFix(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String name, String committish,
-			String gitRemoteURL, int type, int status)
+			long patcherProjectVersionId, String committish,
+			String gitRemoteURL, String name, int type, int status)
 		throws Exception;
 
 	/**
@@ -476,4 +476,4 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1021463154
+// LIFERAY-SERVICE-BUILDER-HASH:-1938502173

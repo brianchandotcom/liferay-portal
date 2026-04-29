@@ -9,6 +9,8 @@ import com.liferay.ant.bnd.metatype.MetatypePlugin;
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.js.transpiler.JSTranspilerBasePlugin;
+import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -151,6 +153,12 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 			GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);
 			GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
+
+			if (GradleUtil.hasTask(
+					project, NodePlugin.PACKAGE_RUN_BUILD_TASK_NAME)) {
+
+				GradleUtil.applyPlugin(project, JSTranspilerBasePlugin.class);
+			}
 
 			JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
 

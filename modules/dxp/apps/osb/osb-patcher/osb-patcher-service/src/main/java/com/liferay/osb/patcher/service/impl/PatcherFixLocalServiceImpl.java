@@ -56,23 +56,22 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		User user = _userLocalService.getUser(userId);
 
 		patcherFix.setCompanyId(user.getCompanyId());
-		patcherFix.setUserId(user.getUserId());
-		patcherFix.setUserName(user.getFullName());
-
 		patcherFix.setCreateDate(new Date());
-		patcherFix.setModifiedDate(new Date());
-		patcherFix.setPatcherProductVersionId(
-			PatcherProjectVersionUtil.getPatcherProductVersionId(
-				patcherProjectVersionId));
-		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
 		patcherFix.setKey(
 			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
 		patcherFix.setKeyVersion(keyVersion);
 		patcherFix.setLatestFix(true);
+		patcherFix.setModifiedDate(new Date());
 		patcherFix.setName(name);
-		patcherFix.setType(type);
+		patcherFix.setPatcherProductVersionId(
+			PatcherProjectVersionUtil.getPatcherProductVersionId(
+				patcherProjectVersionId));
+		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
 		patcherFix.setStatus(status);
 		patcherFix.setStatusDate(new Date());
+		patcherFix.setType(type);
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
 
 		PatcherFixRelUtil.addPatcherFixRel(
 			patcherFix.getPatcherFixId(), parentPatcherFixIds);
@@ -93,25 +92,24 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		User user = _userLocalService.getUser(userId);
 
-		patcherFix.setCompanyId(user.getCompanyId());
-		patcherFix.setUserId(user.getUserId());
-		patcherFix.setUserName(user.getFullName());
-
-		patcherFix.setCreateDate(new Date());
-		patcherFix.setModifiedDate(new Date());
-		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
-		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
 		patcherFix.setCommittish(committish);
+		patcherFix.setCompanyId(user.getCompanyId());
+		patcherFix.setCreateDate(new Date());
 		patcherFix.setGitRemoteURL(gitRemoteURL);
 		patcherFix.setKey(
 			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
 		patcherFix.setKeyVersion(PatcherFixConstants.KEY_VERSION_DEFAULT);
 		patcherFix.setLatestFix(true);
+		patcherFix.setModifiedDate(new Date());
 		patcherFix.setName(StringUtil.merge(PatcherUtil.sortTokens(name)));
 		patcherFix.setObsolete(false);
-		patcherFix.setType(type);
+		patcherFix.setPatcherProductVersionId(patcherProductVersionId);
+		patcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
 		patcherFix.setStatus(status);
 		patcherFix.setStatusDate(new Date());
+		patcherFix.setType(type);
+		patcherFix.setUserId(user.getUserId());
+		patcherFix.setUserName(user.getFullName());
 
 		return patcherFixPersistence.update(patcherFix);
 	}

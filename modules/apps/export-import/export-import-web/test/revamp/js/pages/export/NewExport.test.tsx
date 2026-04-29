@@ -16,21 +16,6 @@ const renderComponent = () => {
 };
 
 describe('NewExport', () => {
-	beforeAll(() => {
-		global.Liferay = {
-			...global?.Liferay,
-			Language: {
-				...global.Liferay?.Language,
-				get: (key: string) => key,
-			},
-			ThemeDisplay: {
-				...global.Liferay?.ThemeDisplay,
-				getBCP47LanguageId: () => 'en-US',
-				getTimeZone: () => 'UTC',
-			},
-		};
-	});
-
 	it('renders the export form', async () => {
 		const {container} = renderComponent();
 

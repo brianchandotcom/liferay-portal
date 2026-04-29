@@ -16,18 +16,7 @@ import {
 
 describe('DateFilter', () => {
 	beforeAll(() => {
-		global.Liferay = {
-			...global?.Liferay,
-			Language: {
-				...global.Liferay?.Language,
-				get: (key: string) => key,
-			},
-			ThemeDisplay: {
-				...global.Liferay?.ThemeDisplay,
-				getBCP47LanguageId: () => 'en-US',
-				getTimeZone: () => 'UTC',
-			},
-		};
+		global.Liferay.ThemeDisplay.getTimeZone = jest.fn(() => 'UTC');
 	});
 
 	const renderDateFilter = (onApplyFilter = jest.fn()) => {

@@ -6,7 +6,7 @@
 package com.liferay.commerce.order.content.web.internal.frontend.data.set.view.table.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.commerce.constants.CommerceFragmentRendererKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
  * @author Tancredi Covioli
  */
 @RunWith(Arquillian.class)
-public class PlacedCommerceOrderAttachmentTableFDSViewTest {
+public class CommerceOrderAttachmentTableFDSViewTest {
 
 	@ClassRule
 	@Rule
@@ -40,8 +40,7 @@ public class PlacedCommerceOrderAttachmentTableFDSViewTest {
 	@Before
 	public void setUp() throws Exception {
 		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(
-			CommerceFragmentRendererKeys.ORDER_ATTACHMENTS_DATA_SET +
-				"-placedOrderAttachments");
+			CommercePortletKeys.COMMERCE_ORDER + "-attachments");
 
 		FDSView fdsView = fdsViews.get(0);
 

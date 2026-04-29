@@ -2023,8 +2023,7 @@ test(
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const formSubmissionURL =
-			await formBuilderPage.getFormSubmissionURL();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
 		await viewObjectDefinitionsPage.goto();
 

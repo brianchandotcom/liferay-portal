@@ -2252,7 +2252,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await page.keyboard.press('Enter');
 
 			await expect(
-				page.getByRole('link', {name: 'Account', exact: true})
+				page.getByRole('link', {exact: true, name: 'Account'})
 			).toBeVisible();
 
 			await expect(
@@ -2275,7 +2275,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await page.keyboard.press('Enter');
 
 			await expect(
-				page.getByRole('link', {name: 'Account', exact: true})
+				page.getByRole('link', {exact: true, name: 'Account'})
 			).toBeVisible();
 
 			await expect(
@@ -2312,9 +2312,11 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 				objectDefinition.label['en_US']
 			);
 
-			await page.getByRole('menuitem', {
-				name: 'View',
-			}).click();
+			await page
+				.getByRole('menuitem', {
+					name: 'View',
+				})
+				.click();
 
 			await expect(editObjectDetailsPage.detailsTabItem).toBeVisible();
 
@@ -2481,7 +2483,13 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	test(
 		'Verify that the Object visibility in the Page Item Selector changes according to activation status',
 		{tag: '@LPS-139005'},
-		async ({apiHelpers, page, pageEditorPage, site, viewObjectDefinitionsPage}) => {
+		async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			site,
+			viewObjectDefinitionsPage,
+		}) => {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
@@ -2546,7 +2554,12 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	test(
 		'Verify that the Object visibility in the Page Template subtype changes according to activation status',
 		{tag: '@LPS-139005'},
-		async ({apiHelpers, displayPageTemplatesPage, page, viewObjectDefinitionsPage}) => {
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
@@ -2618,7 +2631,13 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	test(
 		'Verify that the Object entry visibility in Page fragments changes according to activation status',
 		{tag: '@LPS-139005'},
-		async ({apiHelpers, page, pageEditorPage, site, viewObjectDefinitionsPage}) => {
+		async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			site,
+			viewObjectDefinitionsPage,
+		}) => {
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});

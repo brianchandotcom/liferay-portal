@@ -45,15 +45,15 @@ public class ObjectEntrySharingEntryDropdownItemContributor
 			return Collections.emptyList();
 		}
 
-		String urlDownload = _getURLDownload(sharingEntry, themeDisplay);
+		String downloadURL = _getDownloadURL(sharingEntry, themeDisplay);
 
-		if (Validator.isNull(urlDownload)) {
+		if (Validator.isNull(downloadURL)) {
 			return Collections.emptyList();
 		}
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				dropdownItem.setHref(urlDownload);
+				dropdownItem.setHref(downloadURL);
 				dropdownItem.setIcon("download");
 				dropdownItem.setLabel(
 					_language.get(themeDisplay.getLocale(), "download"));
@@ -61,7 +61,7 @@ public class ObjectEntrySharingEntryDropdownItemContributor
 		).build();
 	}
 
-	private String _getURLDownload(
+	private String _getDownloadURL(
 		SharingEntry sharingEntry, ThemeDisplay themeDisplay) {
 
 		try {

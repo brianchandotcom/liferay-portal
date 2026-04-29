@@ -54,6 +54,36 @@ public class CookiesConfigurationProviderImpl
 	implements CookiesConfigurationProvider {
 
 	@Override
+	public void forceCookiesPreferenceHandlingReconsent(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws Exception {
+
+		Configuration configuration;
+
+		if (scope == ExtendedObjectClassDefinition.Scope.SYSTEM) {
+			configuration = _configurationAdmin.getConfiguration(
+				CookiesPreferenceHandlingConfiguration.class.getName(), "?");
+		}
+		else {
+			configuration = _getScopedConfiguration(scope, scopePK);
+		}
+
+		if (configuration == null) {
+			return;
+		}
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties == null) {
+			properties = new HashMapDictionary<>();
+		}
+
+		properties.put("modifiedDate", System.currentTimeMillis());
+
+		configuration.update(properties);
+	}
+
+	@Override
 	public String getCompanyConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {

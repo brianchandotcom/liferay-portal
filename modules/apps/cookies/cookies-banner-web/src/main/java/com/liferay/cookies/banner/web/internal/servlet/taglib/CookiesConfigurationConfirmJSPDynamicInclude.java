@@ -7,6 +7,7 @@ package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -98,7 +99,8 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 	}
 
 	private static final Class<?>[] _CONFIGURATION_CLASSES = {
-		CookiesBannerConfiguration.class, CookiesConsentConfiguration.class
+		CookiesBannerConfiguration.class, CookiesConsentConfiguration.class,
+		CookiesPreferenceHandlingConfiguration.class
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -110,7 +112,9 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 	@Reference
 	private Portal _portal;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"
+	)
 	private ServletContext _servletContext;
 
 }

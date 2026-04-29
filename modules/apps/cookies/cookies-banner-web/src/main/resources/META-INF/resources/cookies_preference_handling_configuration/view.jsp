@@ -7,6 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ include file="/force_reconsent_url.jspf" %>
+
 <%
 CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingConfigurationDisplayContext = (CookiesPreferenceHandlingConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT);
 %>
@@ -351,22 +353,16 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			'<portlet:namespace />forcedReconsentButton'
 		);
 
-		var modifiedDate = document.getElementById(
-			'<portlet:namespace />modifiedDate'
-		);
-
-		if (forcedReconsentButton && modifiedDate) {
+		if (forcedReconsentButton) {
 			forcedReconsentButton.addEventListener('click', function (event) {
 				Liferay.Util.openConfirmModal({
 					message:
 						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',
 					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
-							form.reset();
-
-							modifiedDate.value = new Date().getTime();
-
-							form.submit();
+							Liferay.Util.fetch('<%= forceReconsentURL %>', {
+								method: 'POST',
+							}).finally(() => location.reload());
 						}
 					},
 				});
@@ -387,7 +383,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 				form.dataset.skipActivedWarning = 'true';
 
-				form.submit();
+				form.requestSubmit();
 			});
 		}
 
@@ -400,10 +396,6 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				event.preventDefault();
 				event.stopImmediatePropagation();
 				return;
-			}
-
-			if (modifiedDate) {
-				modifiedDate.value = new Date().getTime();
 			}
 
 			var dissentRenewalPeriod = document.getElementById(
@@ -438,67 +430,16 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							modifiedDate.value = new Date().getTime();
+							form.dataset.skipActivedWarning = 'true';
 
-							form.submit();
+							Liferay.Util.fetch('<%= forceReconsentURL %>', {
+								method: 'POST',
+							}).finally(() => form.requestSubmit());
 						}
 					},
 				});
 
 				return;
-			}
-
-			if (
-				form.dataset.skipActivedWarning !== 'true' &&
-				enabled.checked &&
-				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() %>
-			) {
-				event.preventDefault();
-				event.stopImmediatePropagation();
-
-				var checkboxId = '<portlet:namespace />forceReconsentCheckbox';
-
-				Liferay.Util.openModal({
-					bodyHTML:
-						'<p><liferay-ui:message key="these-changes-will-take-effect-immediately-do-you-want-to-continue" /></p>' +
-						'<div class="custom-control custom-checkbox">' +
-						'<input class="custom-control-input" id="' +
-						checkboxId +
-						'" type="checkbox" />' +
-						'<label class="custom-control-label" for="' +
-						checkboxId +
-						'"><liferay-ui:message key="check-if-you-want-to-force-re-consent-to-the-users" /></label>' +
-						'</div>',
-					buttons: [
-						{
-							displayType: 'secondary',
-							label: Liferay.Language.get('cancel'),
-							type: 'cancel',
-						},
-						{
-							autoFocus: true,
-							displayType: 'primary',
-							label: Liferay.Language.get('ok'),
-							onClick: ({processClose}) => {
-								var forceReconsent =
-									document.getElementById(checkboxId)?.checked;
-
-								processClose();
-
-								form.dataset.skipActivedWarning = 'true';
-
-								if (forceReconsent) {
-									modifiedDate.value = new Date().getTime();
-								}
-
-								form.submit();
-							},
-						},
-					],
-					footerCssClass: 'border-0',
-					headerCssClass: 'border-0',
-					role: 'alertdialog',
-				});
 			}
 		});
 	}

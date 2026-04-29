@@ -189,43 +189,54 @@ public class CommercePriceEntryDisplayContext
 		return creationMenu;
 	}
 
-	public String getDiscountLevel1() throws PortalException {
+	public String getDiscountLevel1(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getDiscountLevel1(),
-			cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getDiscountLevel1());
 	}
 
-	public String getDiscountLevel2() throws PortalException {
+	public String getDiscountLevel2(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getDiscountLevel2(),
-			cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getDiscountLevel2());
 	}
 
-	public String getDiscountLevel3() throws PortalException {
+	public String getDiscountLevel3(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getDiscountLevel3(),
-			cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getDiscountLevel3());
 	}
 
-	public String getDiscountLevel4() throws PortalException {
+	public String getDiscountLevel4(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getDiscountLevel4(),
-			cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getDiscountLevel4());
 	}
 
-	public String getPrice() throws PortalException {
+	public String getPrice(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getPrice());
 	}
 
 	public List<FDSActionDropdownItem> getPriceEntriesFDSActionDropdownItems()

@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -30,6 +31,8 @@ import com.liferay.taglib.util.CustomAttributesUtil;
 import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.math.BigDecimal;
 
 /**
  * @author Alessio Antonio Rendina
@@ -173,7 +176,10 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		).build();
 	}
 
-	public String getFormattedPrice() throws PortalException {
+	public String getFormattedDiscount(
+			CommerceCurrency commerceCurrency, BigDecimal discount)
+		throws PortalException {
+
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
@@ -182,7 +188,22 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		}
 
 		return _commercePriceFormatter.format(
-			commerceTierPriceEntry.getPrice(), cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(), discount);
+	}
+
+	public String getFormattedPrice(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commerceTierPriceEntry.getPrice());
 	}
 
 	@Override

@@ -72,7 +72,7 @@ public class CommerceOrderAttachmentSearchPermissionFilterContributor
 							permissionChecker,
 							accountEntry.getAccountEntryGroupId(),
 							CommerceOrderActionKeys.
-								VIEW_OPEN_COMMERCE_ORDERS) ||
+								VIEW_COMMERCE_ORDERS) ||
 						_portletResourcePermission.contains(
 							permissionChecker,
 							accountEntry.getAccountEntryGroupId(),

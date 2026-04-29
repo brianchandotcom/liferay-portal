@@ -19,6 +19,8 @@ interface PhoneNumberProps {
 	onChange?: (event: {target: {value: string}}) => void;
 	onFocus?: (event: React.FocusEvent) => void;
 	predefinedValue?: string;
+	prefix?: string;
+	prefixType?: 'definedByUser' | 'fixed';
 	readOnly?: boolean;
 	value?: string;
 	[key: string]: unknown;
@@ -52,6 +54,8 @@ const PhoneNumber = ({
 	onChange,
 	onFocus,
 	predefinedValue,
+	prefix,
+	prefixType = 'definedByUser',
 	readOnly,
 	value: initialValue,
 	...otherProps
@@ -61,15 +65,23 @@ const PhoneNumber = ({
 		countries[0]
 	);
 
-	const combinedValue = `+${selectedCountry.idd}${localNumber.replace(/\D/g, '')}`;
+	const currentPrefix = prefixType === 'fixed' ? (prefix || '') : `+${selectedCountry.idd}`;
+
+	const combinedValue = `${currentPrefix}${localNumber.replace(/\D/g, '')}`;
 
 	const disabled = readOnly || (otherProps.disabled as boolean);
 
+	const fixedCountry = prefixType === 'fixed' ? countries.find((country) => `+${country.idd}` === prefix) : null;
+
+	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
+
 	const handleValueChange = (country: CountryInfo, number: string) => {
 		if (onChange) {
+			const resolvedPrefix = prefixType === 'fixed' ? (prefix || '') : `+${country.idd}`;
+
 			onChange({
 				target: {
-					value: `+${country.idd}${number.replace(/\D/g, '')}`,
+					value: `${resolvedPrefix}${number.replace(/\D/g, '')}`,
 				},
 			});
 		}
@@ -77,17 +89,28 @@ const PhoneNumber = ({
 
 	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
-		const {countryA2, localNumber} = parsePhoneValue(
-			initialValue || predefinedValue || '',
-			countries
-		);
+		const phoneValue = initialValue || predefinedValue || '';
 
-		const selectedCountry = countries.find(
-			(country) => country.a2 === countryA2
-		);
+		if (prefixType === 'fixed') {
+			if (prefix && phoneValue.startsWith(prefix)) {
+				setLocalNumber(phoneValue.substring(prefix.length));
+			}
+			else {
+				const {localNumber: parsedLocalNumber} = parsePhoneValue(phoneValue, countries);
 
-		setSelectedCountry(selectedCountry || countries[0]);
-		setLocalNumber(localNumber);
+				setLocalNumber(parsedLocalNumber);
+			}
+		}
+		else {
+			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(phoneValue, countries);
+
+			const country = countries.find(
+				(country) => country.a2 === countryA2
+			);
+
+			setSelectedCountry(country || countries[0]);
+			setLocalNumber(parsedLocalNumber);
+		}
 
 		// eslint-disable-next-line react-compiler/react-compiler
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -96,58 +119,70 @@ const PhoneNumber = ({
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
 			<ClayInput.Group>
-				<ClayInput.GroupItem shrink>
-					<Picker
-						as={PickerTrigger}
-						disabled={disabled}
-						items={countries}
-						onSelectionChange={(key) => {
-							const selectedCountry = countries.find(
-								(country) => country.a2 === key
-							);
+				<ClayInput.GroupItem prepend={prefixType === 'fixed'} shrink>
+					{prefixType === 'fixed' ? (
+						<ClayInput.GroupText>
+							{fixedFlagSymbol && (
+								<span className="inline-item inline-item-before">
+									<ClayIcon symbol={fixedFlagSymbol} />
+								</span>
+							)}
 
-							if (selectedCountry) {
-								setSelectedCountry(selectedCountry);
-								handleValueChange(selectedCountry, localNumber);
-							}
-						}}
-						searchable
-						selectedCountry={selectedCountry}
-						selectedKey={selectedCountry.a2}
-					>
-						{(country) => {
-							const flagSymbol = getFlagSymbol(country.a2);
+							{prefix}
+						</ClayInput.GroupText>
+					) : (
+						<Picker
+							as={PickerTrigger}
+							disabled={disabled}
+							items={countries}
+							onSelectionChange={(key) => {
+								const selectedCountry = countries.find(
+									(country) => country.a2 === key
+								);
 
-							return (
-								<Option
-									key={country.a2}
-									textValue={`+${country.idd} ${country.name}`}
-								>
-									<div className="autofit-row">
-										<div className="autofit-col">
-											{flagSymbol && (
-												<ClayIcon symbol={flagSymbol} />
-											)}
+								if (selectedCountry) {
+									setSelectedCountry(selectedCountry);
+									handleValueChange(selectedCountry, localNumber);
+								}
+							}}
+							searchable
+							selectedCountry={selectedCountry}
+							selectedKey={selectedCountry.a2}
+						>
+							{(country) => {
+								const flagSymbol = getFlagSymbol(country.a2);
+
+								return (
+									<Option
+										key={country.a2}
+										textValue={`+${country.idd} ${country.name}`}
+									>
+										<div className="autofit-row">
+											<div className="autofit-col">
+												{flagSymbol && (
+													<ClayIcon symbol={flagSymbol} />
+												)}
+											</div>
+
+											<div
+												className="autofit-col"
+												style={{minWidth: '45px'}}
+											>
+												{`+${country.idd}`}
+											</div>
+
+											<div className="autofit-col autofit-col-expand">
+												{country.name}
+											</div>
 										</div>
-
-										<div
-											className="autofit-col"
-											style={{minWidth: '45px'}}
-										>
-											{`+${country.idd}`}
-										</div>
-
-										<div className="autofit-col autofit-col-expand">
-											{country.name}
-										</div>
-									</div>
-								</Option>
-							);
-						}}
-					</Picker>
+									</Option>
+								);
+							}}
+						</Picker>
+					)}
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem>
+				<ClayInput.GroupItem prepend={prefixType === 'fixed'}>
 					<ClayInput
 						className="ddm-field-text form-control"
 						disabled={disabled}

@@ -162,8 +162,8 @@ public class MySQLDB extends BaseDB {
 
 			preparedStatement.setQueryTimeout(MONITOR_QUERY_TIMEOUT_SECONDS);
 
-			long threshold =
-				(PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD + 999) / 1000;
+			long threshold = (long)Math.ceil(
+				PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD / 1000.0);
 
 			preparedStatement.setLong(1, threshold);
 

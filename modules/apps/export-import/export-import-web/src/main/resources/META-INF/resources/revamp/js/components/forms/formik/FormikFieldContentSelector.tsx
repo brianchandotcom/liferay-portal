@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useFormikContext} from 'formik';
+import {useField, useFormikContext} from 'formik';
 import React from 'react';
 
 import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
@@ -12,24 +12,30 @@ import ContentSelector, {
 } from '../content_selector/ContentSelector';
 
 interface FormikFieldContentSelectorProps {
-	name: string;
-	sections: PortletDataHandlerSection[];
+	'aria-labelledby'?: string;
+	'name': string;
+	'sections': PortletDataHandlerSection[];
 }
 
 export function FormikFieldContentSelector({
+	'aria-labelledby': ariaLabelledby,
 	name,
 	sections,
 }: FormikFieldContentSelectorProps) {
-	const {setFieldValue, values} =
-		useFormikContext<Record<string, ContentSelection | undefined>>();
-
-	const value = values[name];
+	const [field, meta, helpers] = useField<ContentSelection | undefined>(name);
+	const {setFieldTouched} = useFormikContext();
 
 	return (
 		<ContentSelector
-			onChange={(newValue) => setFieldValue(name, newValue)}
+			aria-labelledby={ariaLabelledby}
+			errorMessage={meta.touched && meta.error ? meta.error : undefined}
+			name={name}
+			onChange={(newValue) => {
+				helpers.setValue(newValue);
+				setFieldTouched(name, true, false);
+			}}
 			sections={sections}
-			value={value}
+			value={field.value}
 		/>
 	);
 }

@@ -47,10 +47,8 @@ export class JournalPage {
 			'.article-content-title .input-group-item input'
 		);
 		this.articleContentTextBox = this.page
-			.getByLabel('Content')
-			.getByRole('textbox')
-			.frameLocator('iframe')
-			.locator('.html-editor');
+			.getByTestId('content')
+			.getByRole('textbox', {name: 'Rich Text Editor'});
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

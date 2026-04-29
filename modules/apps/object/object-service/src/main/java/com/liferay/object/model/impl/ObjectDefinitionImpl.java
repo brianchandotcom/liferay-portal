@@ -224,6 +224,20 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public boolean isAllowStandaloneObjectEntry() {
+		if (!isRootDescendantNode()) {
+			return true;
+		}
+
+		return GetterUtil.getBoolean(
+			ObjectDefinitionSettingUtil.getValue(
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+				getObjectDefinitionSettings()),
+			true);
+	}
+
+	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			return true;

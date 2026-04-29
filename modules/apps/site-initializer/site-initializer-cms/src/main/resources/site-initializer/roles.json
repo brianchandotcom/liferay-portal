@@ -142,7 +142,17 @@
 				"scope": 1
 			},
 			{
+				"actionId": "EXPORT_IMPORT_LAYOUTS",
+				"resource": "com.liferay.portal.kernel.model.Group",
+				"scope": 1
+			},
+			{
 				"actionId": "EXPORT_IMPORT_PORTLET_INFO",
+				"resource": "com.liferay.portal.kernel.model.Group",
+				"scope": 1
+			},
+			{
+				"actionId": "MANAGE_STAGING",
 				"resource": "com.liferay.portal.kernel.model.Group",
 				"scope": 1
 			},
@@ -219,6 +229,11 @@
 			{
 				"actionId": "VIEW",
 				"resource": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet",
+				"scope": 1
+			},
+			{
+				"actionId": "CONFIGURATION",
+				"resource": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
 				"scope": 1
 			}
 		],

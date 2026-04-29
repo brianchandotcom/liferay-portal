@@ -30,6 +30,18 @@ export const ASSET_STATUS = {
 
 export type AssetStatus = (typeof ASSET_STATUS)[keyof typeof ASSET_STATUS];
 
+export const ASSET_STATUS_TO_DISPLAY_TYPE = {
+	[ASSET_STATUS.APPROVED]: 'success',
+	[ASSET_STATUS.DENIED]: 'danger',
+	[ASSET_STATUS.DRAFT]: 'secondary',
+	[ASSET_STATUS.EXPIRED]: 'danger',
+	[ASSET_STATUS.IN_TRASH]: 'info',
+	[ASSET_STATUS.INACTIVE]: 'secondary',
+	[ASSET_STATUS.INCOMPLETE]: 'warning',
+	[ASSET_STATUS.PENDING]: 'info',
+	[ASSET_STATUS.SCHEDULED]: 'info',
+} as const;
+
 export const ROOT_FOLDER_ERC = {
 	CONTENTS: 'L_CONTENTS',
 	FILES: 'L_FILES',

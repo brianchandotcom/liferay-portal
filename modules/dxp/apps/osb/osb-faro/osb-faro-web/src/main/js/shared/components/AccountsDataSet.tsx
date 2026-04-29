@@ -144,9 +144,8 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						itemLabel: 'name',
 						label: Liferay.Language.get('industry'),
 						multiple: true,
-						preloadedData: buildSelectionPreloadedData(
-							industryFilter
-						),
+						preloadedData:
+							buildSelectionPreloadedData(industryFilter),
 						type: 'selection'
 					},
 					{
@@ -157,9 +156,8 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						itemLabel: 'name',
 						label: Liferay.Language.get('country'),
 						multiple: true,
-						preloadedData: buildSelectionPreloadedData(
-							countryFilter
-						),
+						preloadedData:
+							buildSelectionPreloadedData(countryFilter),
 						type: 'selection'
 					}
 				]}

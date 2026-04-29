@@ -15,8 +15,10 @@ import {SectionHeader} from 'shared/components/SectionHeader';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
-const LifecycleOverview = ({groupId}: {groupId: string}) => {
+const LifecycleOverview = () => {
 	const {filters} = useLifecycle();
+
+	const {groupId} = useParams();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
 		dataSourceFn: API.lifecycle.fetchOverviewMetrics as (params: {
@@ -33,14 +35,10 @@ const LifecycleOverview = ({groupId}: {groupId: string}) => {
 	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
 };
 
-const LifecycleAccounts = ({
-	channelId,
-	groupId
-}: {
-	channelId: string;
-	groupId: string;
-}) => {
+const LifecycleAccounts = () => {
 	const {filters} = useLifecycle();
+
+	const {channelId, groupId} = useParams();
 
 	return (
 		<>
@@ -50,9 +48,9 @@ const LifecycleAccounts = ({
 			/>
 
 			<AccountsDataSet
-				channelId={channelId}
+				channelId={channelId!}
 				countryFilter={filters.countryFilter}
-				groupId={groupId}
+				groupId={groupId!}
 				industryFilter={filters.industryFilter}
 				lifecycleStageFilter={LifecycleStages.AT_RISK}
 			/>
@@ -91,12 +89,9 @@ const BaseLifecycle = () => {
 					</div>
 				</BasePage.SubHeader>
 				<BasePage.Body>
-					<LifecycleOverview groupId={groupId!} />
+					<LifecycleOverview />
 
-					<LifecycleAccounts
-						channelId={channelId!}
-						groupId={groupId!}
-					/>
+					<LifecycleAccounts />
 				</BasePage.Body>
 			</BasePage>
 		</LifecycleContextProvider>

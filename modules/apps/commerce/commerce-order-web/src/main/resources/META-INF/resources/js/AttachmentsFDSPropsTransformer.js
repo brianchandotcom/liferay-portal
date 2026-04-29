@@ -4,7 +4,7 @@
  */
 
 import {openModal, openToast} from 'frontend-js-components-web';
-import {addParams, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 
 const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 	openModal({

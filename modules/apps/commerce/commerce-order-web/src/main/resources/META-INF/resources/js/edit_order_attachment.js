@@ -53,8 +53,7 @@ export default function (context) {
 			};
 
 			const updateAttachment = (attachment) =>
-				Liferay.Util.fetch(context.addURL,
-				{
+				Liferay.Util.fetch(context.addURL, {
 					body: JSON.stringify(buildBody(attachment)),
 					headers: fetchParams.headers,
 					method: 'POST',
@@ -65,8 +64,7 @@ export default function (context) {
 						});
 					}
 
-					return Liferay.Util.fetch(context.editURL,
-					{
+					return Liferay.Util.fetch(context.editURL, {
 						headers: fetchParams.headers,
 						method: 'DELETE',
 					}).then((response) => {
@@ -80,12 +78,13 @@ export default function (context) {
 
 			const saveAttachment = (attachment) =>
 				Liferay.Util.fetch(
-				context.mode === 'edit' ? context.editURL : context.addURL,
-				{
-					body: JSON.stringify(buildBody(attachment)),
-					headers: fetchParams.headers,
-					method: context.mode === 'edit' ? 'PATCH' : 'POST',
-				}).then((response) => {
+					context.mode === 'edit' ? context.editURL : context.addURL,
+					{
+						body: JSON.stringify(buildBody(attachment)),
+						headers: fetchParams.headers,
+						method: context.mode === 'edit' ? 'PATCH' : 'POST',
+					}
+				).then((response) => {
 					if (!response.ok) {
 						return response.json().then((data) => {
 							return Promise.reject(data);
@@ -114,24 +113,23 @@ export default function (context) {
 					id: context.fdsId,
 				});
 				window.top.Liferay.fire('close-side-panel');
-			}
+			};
 
 			if (newFile) {
 				return readFileAsBase64(newFile)
 					.then((base64) => {
-						if(context.mode === 'edit') {
-							return updateAttachment(base64)
-						} else {
-							return saveAttachment(base64)
+						if (context.mode === 'edit') {
+							return updateAttachment(base64);
+						}
+						else {
+							return saveAttachment(base64);
 						}
 					})
 					.then(handleSuccess)
 					.catch(handleError);
 			}
 
-			return saveAttachment()
-				.then(handleSuccess)
-				.catch(handleError);
+			return saveAttachment().then(handleSuccess).catch(handleError);
 		}
 	);
 }

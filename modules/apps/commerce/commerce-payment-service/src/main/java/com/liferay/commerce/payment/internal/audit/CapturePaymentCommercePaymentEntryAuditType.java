@@ -42,7 +42,7 @@ public class CapturePaymentCommercePaymentEntryAuditType
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntryAudit.getCompanyId(),
 				commercePaymentEntryAudit.getCurrencyCode()),
-			commercePaymentEntryAudit.getAmount(), locale);
+			true, locale, commercePaymentEntryAudit.getAmount());
 	}
 
 	@Override

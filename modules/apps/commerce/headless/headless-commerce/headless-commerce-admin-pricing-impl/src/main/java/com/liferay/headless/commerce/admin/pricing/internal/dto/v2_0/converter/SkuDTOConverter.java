@@ -88,14 +88,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					companyId);
 
 			return _commercePriceFormatter.format(
-				commerceCurrency, BigDecimal.ZERO, locale);
+				commerceCurrency, true, locale, BigDecimal.ZERO);
 		}
 
 		CommercePriceList commercePriceList = priceEntry.getCommercePriceList();
 
 		return _commercePriceFormatter.format(
-			commercePriceList.getCommerceCurrency(), priceEntry.getPrice(),
-			locale);
+			commercePriceList.getCommerceCurrency(), true, locale,
+			priceEntry.getPrice());
 	}
 
 	private double _getPrice(CommercePriceEntry commercePriceEntry) {

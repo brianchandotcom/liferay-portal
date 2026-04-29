@@ -104,10 +104,9 @@ public class CommerceProductOptionValueFDSDataProvider
 			cpDefinitionOptionValueRel -> new ProductOptionValue(
 				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
 				_commercePriceFormatter.format(
-					commerceCurrency,
+					commerceCurrency, true, locale,
 					_getPrice(
-						cpDefinitionOptionValueRel, cpDefinitionOptionRelId),
-					locale),
+						cpDefinitionOptionValueRel, cpDefinitionOptionRelId)),
 				cpDefinitionOptionValueRel.getKey(),
 				cpDefinitionOptionValueRel.getName(
 					_language.getLanguageId(locale)),

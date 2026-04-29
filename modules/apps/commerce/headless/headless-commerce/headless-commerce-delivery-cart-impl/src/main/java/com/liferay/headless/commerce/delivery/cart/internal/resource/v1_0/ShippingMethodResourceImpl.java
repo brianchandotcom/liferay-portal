@@ -167,9 +167,9 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				setAmount(commerceShippingOptionAmount::doubleValue);
 				setAmountFormatted(
 					() -> _commercePriceFormatter.format(
-						commerceContext.getCommerceCurrency(),
-						commerceShippingOption.getAmount(),
-						contextAcceptLanguage.getPreferredLocale()));
+						commerceContext.getCommerceCurrency(), true,
+						contextAcceptLanguage.getPreferredLocale(),
+						commerceShippingOption.getAmount()));
 				setLabel(commerceShippingOption::getName);
 				setName(commerceShippingOption::getKey);
 			}

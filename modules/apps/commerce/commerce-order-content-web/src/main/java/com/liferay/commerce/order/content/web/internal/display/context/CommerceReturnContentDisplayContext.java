@@ -856,8 +856,8 @@ public class CommerceReturnContentDisplayContext {
 		}
 
 		return _commercePriceFormatter.format(
-			commerceCurrency, commerceReturn.getTotalAmount(),
-			_cpRequestHelper.getLocale());
+			commerceCurrency, true, _cpRequestHelper.getLocale(),
+			commerceReturn.getTotalAmount());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

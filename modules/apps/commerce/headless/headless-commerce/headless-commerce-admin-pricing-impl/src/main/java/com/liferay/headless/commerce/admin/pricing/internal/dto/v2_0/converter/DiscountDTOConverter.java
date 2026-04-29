@@ -148,7 +148,8 @@ public class DiscountDTOConverter
 				commerceCurrency.getMinFractionDigits(), amount);
 		}
 
-		return _commercePriceFormatter.format(commerceCurrency, amount, locale);
+		return _commercePriceFormatter.format(
+			commerceCurrency, true, locale, amount);
 	}
 
 	@Reference

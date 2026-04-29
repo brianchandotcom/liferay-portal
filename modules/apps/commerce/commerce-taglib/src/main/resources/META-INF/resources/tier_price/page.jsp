@@ -65,10 +65,10 @@ String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
 						<liferay-ui:csp>
 							<tr class="multiples-row" onclick="<%= randomNamespace %>setQuantity('<%= minQuantity %>');">
 								<td class="price-point-column"><%= minQuantity %></td>
-								<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), priceTotal, themeDisplay.getLocale()) %></td>
+								<td class="msrp-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), true, themeDisplay.getLocale(), priceTotal) %></td>
 								<td class="discount-column table-cell-expand"><%= commercePriceFormatter.format(discountPercent, themeDisplay.getLocale()) %> %</td>
-								<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), savings, themeDisplay.getLocale()) %></td>
-								<td class="table-cell-expand total-column"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), total, themeDisplay.getLocale()) %></td>
+								<td class="savings-column table-cell-expand"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), true, themeDisplay.getLocale(), savings) %></td>
+								<td class="table-cell-expand total-column"><%= commercePriceFormatter.format(commerceContext.getCommerceCurrency(), true, themeDisplay.getLocale(), total) %></td>
 							</tr>
 						</liferay-ui:csp>
 

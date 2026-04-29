@@ -357,7 +357,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 			price = BigDecimal.ZERO;
 		}
 
-		return _commercePriceFormatter.format(commerceCurrency, price, locale);
+		return _commercePriceFormatter.format(
+			commerceCurrency, true, locale, price);
 	}
 
 	private Attachment[] _getAttachments(CommerceOrder commerceOrder)

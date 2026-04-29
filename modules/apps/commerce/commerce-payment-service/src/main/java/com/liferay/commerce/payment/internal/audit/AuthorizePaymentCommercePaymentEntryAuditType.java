@@ -42,7 +42,7 @@ public class AuthorizePaymentCommercePaymentEntryAuditType
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePaymentEntryAudit.getCompanyId(),
 				commercePaymentEntryAudit.getCurrencyCode()),
-			commercePaymentEntryAudit.getAmount(), locale);
+			true, locale, commercePaymentEntryAudit.getAmount());
 	}
 
 	@Override

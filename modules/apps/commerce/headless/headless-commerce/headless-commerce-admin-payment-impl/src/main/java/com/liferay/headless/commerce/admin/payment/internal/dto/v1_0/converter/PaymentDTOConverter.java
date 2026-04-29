@@ -134,7 +134,8 @@ public class PaymentDTOConverter
 			amount = BigDecimal.ZERO;
 		}
 
-		return _commercePriceFormatter.format(commerceCurrency, amount, locale);
+		return _commercePriceFormatter.format(
+			commerceCurrency, true, locale, amount);
 	}
 
 	private Status _toPaymentStatusStatus(

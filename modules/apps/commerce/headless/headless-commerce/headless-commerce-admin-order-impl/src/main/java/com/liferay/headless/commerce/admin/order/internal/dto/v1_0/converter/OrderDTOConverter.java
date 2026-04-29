@@ -831,7 +831,8 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 			price = BigDecimal.ZERO;
 		}
 
-		return _commercePriceFormatter.format(commerceCurrency, price, locale);
+		return _commercePriceFormatter.format(
+			commerceCurrency, true, locale, price);
 	}
 
 	private CommerceOrder _getCommerceOrder(

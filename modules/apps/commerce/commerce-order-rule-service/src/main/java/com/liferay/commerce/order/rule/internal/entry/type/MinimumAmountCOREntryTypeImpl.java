@@ -151,10 +151,10 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 
 		String[] arguments = {
 			_commercePriceFormatter.format(
-				orderCommerceCurrency, orderCurrencyAmount, locale),
+				orderCommerceCurrency, true, locale, orderCurrencyAmount),
 			_commercePriceFormatter.format(
-				orderCommerceCurrency,
-				orderCurrencyAmount.subtract(applyToAmount), locale)
+				orderCommerceCurrency, true, locale,
+				orderCurrencyAmount.subtract(applyToAmount))
 		};
 
 		return _language.format(

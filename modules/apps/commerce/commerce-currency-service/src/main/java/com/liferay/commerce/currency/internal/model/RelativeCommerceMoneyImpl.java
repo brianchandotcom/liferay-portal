@@ -36,7 +36,7 @@ public class RelativeCommerceMoneyImpl extends CommerceMoneyImpl {
 			getCommercePriceFormatter();
 
 		return commercePriceFormatter.formatAsRelative(
-			getCommerceCurrency(), price, locale);
+			getCommerceCurrency(), true, locale, price);
 	}
 
 }

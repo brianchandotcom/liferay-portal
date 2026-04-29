@@ -1613,10 +1613,10 @@ public class CommerceDiscountTargetGrossV2Test {
 		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.US);
 
 		String formattedExpectedPrice = _commercePriceFormatter.format(
-			_commerceCurrency, expectedPrice, LocaleUtil.US);
+			_commerceCurrency, true, LocaleUtil.US, expectedPrice);
 
 		String formattedActualPrice = _commercePriceFormatter.format(
-			_commerceCurrency, actualPrice, LocaleUtil.US);
+			_commerceCurrency, true, LocaleUtil.US, actualPrice);
 
 		Assert.assertEquals(formattedExpectedPrice, formattedActualPrice);
 	}

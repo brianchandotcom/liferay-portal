@@ -146,8 +146,8 @@ public class CommerceReturnEditDisplayContext {
 		CommerceOrder commerceOrder = getCommerceReturnCommerceOrder();
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(), amount,
-			_commerceReturnRequestHelper.getLocale());
+			commerceOrder.getCommerceCurrency(), true,
+			_commerceReturnRequestHelper.getLocale(), amount);
 	}
 
 	public String getCommerceOrderShippingAmountFormatted()
@@ -156,9 +156,9 @@ public class CommerceReturnEditDisplayContext {
 		CommerceOrder commerceOrder = getCommerceReturnCommerceOrder();
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(),
-			commerceOrder.getShippingAmount(),
-			_commerceReturnRequestHelper.getLocale());
+			commerceOrder.getCommerceCurrency(), true,
+			_commerceReturnRequestHelper.getLocale(),
+			commerceOrder.getShippingAmount());
 	}
 
 	public CommerceReturn getCommerceReturn() {

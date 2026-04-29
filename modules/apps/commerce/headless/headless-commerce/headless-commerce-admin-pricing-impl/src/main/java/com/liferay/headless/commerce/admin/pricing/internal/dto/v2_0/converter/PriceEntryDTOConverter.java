@@ -121,7 +121,8 @@ public class PriceEntryDTOConverter
 			price = BigDecimal.ZERO;
 		}
 
-		return _commercePriceFormatter.format(commerceCurrency, price, locale);
+		return _commercePriceFormatter.format(
+			commerceCurrency, true, locale, price);
 	}
 
 	private String _getDiscountLevelFormatted(BigDecimal discountLevel) {

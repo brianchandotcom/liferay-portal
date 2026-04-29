@@ -15663,6 +15663,18 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		<if>
 			<isset property="legacy.database.file" />
 			<then>
+				<for param="legacy.database.leftover.dir">
+					<path>
+						<dirset
+							dir="${liferay.home}"
+							includes="legacy-database-*"
+						/>
+					</path>
+					<sequential>
+						<delete dir="@{legacy.database.leftover.dir}" />
+					</sequential>
+				</for>
+
 				<local name="legacy.database.temp.dir" />
 
 				<tempfile destdir="${liferay.home}" prefix="legacy-database-" property="legacy.database.temp.dir" />

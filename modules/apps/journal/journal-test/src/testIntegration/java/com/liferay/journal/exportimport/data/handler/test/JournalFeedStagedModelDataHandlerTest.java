@@ -327,8 +327,6 @@ public class JournalFeedStagedModelDataHandlerTest
 				JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
 					feed.getUuid(), liveGroup.getGroupId());
 
-			Assert.assertNotNull(importedFeed);
-
 			Assert.assertEquals(
 				targetLayoutFriendlyURL,
 				importedFeed.getTargetLayoutFriendlyUrl());

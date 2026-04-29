@@ -2,16 +2,198 @@
 	"deletedItems": [
 	],
 	"items": {
-		"0cbae591-f145-baca-85ff-e764965d6e50": {
+		"0a0d3f2a-a2b8-bcce-a9f2-6f5e5e2df010": {
 			"children": [
-				"2f4ef67a-fc8d-c674-ba10-3de62d9a4fc6",
-				"934e3831-ba5c-4aa4-79b1-6bb05efc9f18",
-				"4d417480-acf2-d47d-26cd-4c6bbfd2340b",
-				"fdef04d4-30b2-2fa0-de62-acadad79db51",
-				"b13751fa-b2be-108f-50d4-bad452a4459c",
-				"9ba82f91-a9f3-3bab-ca0f-8e6fd3d594af",
-				"e8a5fa06-3783-b76d-a071-79bba44d1237",
-				"fb289145-6f22-2627-56f2-0f7e1455fa6c"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "0a0d3f2a-a2b8-bcce-a9f2-6f5e5e2df010",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"261a158a-2e6e-fec7-e9a6-c0f7b257bae4": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "261a158a-2e6e-fec7-e9a6-c0f7b257bae4",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"3a0b2168-7e27-2fab-8dde-dbf7834bf74c": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "3a0b2168-7e27-2fab-8dde-dbf7834bf74c",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"4464ec98-5d17-e03b-1d6e-3c5b549bc67b": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "4464ec98-5d17-e03b-1d6e-3c5b549bc67b",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"4886f6fe-3932-f0a9-a746-2eefa37438cc": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "4886f6fe-3932-f0a9-a746-2eefa37438cc",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"9ab00146-4c26-cce3-6e2a-85f71eb10d10": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "9ab00146-4c26-cce3-6e2a-85f71eb10d10",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"c3a0ccaf-dec3-e8d7-34be-01c19ffecf9a": {
+			"children": [
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "c3a0ccaf-dec3-e8d7-34be-01c19ffecf9a",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"c4e1ec22-e9bb-1929-6ab3-374a6797e230": {
+			"children": [
+				"0a0d3f2a-a2b8-bcce-a9f2-6f5e5e2df010",
+				"261a158a-2e6e-fec7-e9a6-c0f7b257bae4",
+				"3a0b2168-7e27-2fab-8dde-dbf7834bf74c",
+				"4464ec98-5d17-e03b-1d6e-3c5b549bc67b",
+				"4886f6fe-3932-f0a9-a746-2eefa37438cc",
+				"9ab00146-4c26-cce3-6e2a-85f71eb10d10",
+				"c3a0ccaf-dec3-e8d7-34be-01c19ffecf9a",
+				"e5bb81b0-f97c-e988-deec-4e5611954ffd"
 			],
 			"config": {
 				"classNameId": "${objectDefinitionClassNameId}",
@@ -36,234 +218,52 @@
 					}
 				}
 			},
-			"itemId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"parentId": "0ffb88de-67cc-6db7-5db9-e41e8852bbbd",
+			"itemId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"parentId": "f7654fb4-459e-a9cf-2913-fb748d40d73f",
 			"type": "form"
 		},
-		"0ffb88de-67cc-6db7-5db9-e41e8852bbbd": {
+		"e5bb81b0-f97c-e988-deec-4e5611954ffd": {
 			"children": [
-				"0cbae591-f145-baca-85ff-e764965d6e50"
+			],
+			"config": {
+				"cssClasses": [
+				],
+				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "e5bb81b0-f97c-e988-deec-4e5611954ffd",
+			"parentId": "c4e1ec22-e9bb-1929-6ab3-374a6797e230",
+			"type": "fragment"
+		},
+		"f7654fb4-459e-a9cf-2913-fb748d40d73f": {
+			"children": [
+				"c4e1ec22-e9bb-1929-6ab3-374a6797e230"
 			],
 			"config": {
 			},
-			"itemId": "0ffb88de-67cc-6db7-5db9-e41e8852bbbd",
+			"itemId": "f7654fb4-459e-a9cf-2913-fb748d40d73f",
 			"parentId": "",
 			"type": "root"
-		},
-		"2f4ef67a-fc8d-c674-ba10-3de62d9a4fc6": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "2f4ef67a-fc8d-c674-ba10-3de62d9a4fc6",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"4d417480-acf2-d47d-26cd-4c6bbfd2340b": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "4d417480-acf2-d47d-26cd-4c6bbfd2340b",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"934e3831-ba5c-4aa4-79b1-6bb05efc9f18": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "934e3831-ba5c-4aa4-79b1-6bb05efc9f18",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"9ba82f91-a9f3-3bab-ca0f-8e6fd3d594af": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "9ba82f91-a9f3-3bab-ca0f-8e6fd3d594af",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"b13751fa-b2be-108f-50d4-bad452a4459c": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "b13751fa-b2be-108f-50d4-bad452a4459c",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"e8a5fa06-3783-b76d-a071-79bba44d1237": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "e8a5fa06-3783-b76d-a071-79bba44d1237",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"fb289145-6f22-2627-56f2-0f7e1455fa6c": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "fb289145-6f22-2627-56f2-0f7e1455fa6c",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
-		},
-		"fdef04d4-30b2-2fa0-de62-acadad79db51": {
-			"children": [
-			],
-			"config": {
-				"cssClasses": [
-				],
-				"fragmentEntryLinkId": "${fragmentEntryLinkId}",
-				"landscapeMobile": {
-					"styles": {
-					}
-				},
-				"portraitMobile": {
-					"styles": {
-					}
-				},
-				"styles": {
-				},
-				"tablet": {
-					"styles": {
-					}
-				}
-			},
-			"itemId": "fdef04d4-30b2-2fa0-de62-acadad79db51",
-			"parentId": "0cbae591-f145-baca-85ff-e764965d6e50",
-			"type": "fragment"
 		}
 	},
 	"pageRules": [
 	],
 	"rootItems": {
 		"dropZone": "",
-		"main": "0ffb88de-67cc-6db7-5db9-e41e8852bbbd"
+		"main": "f7654fb4-459e-a9cf-2913-fb748d40d73f"
 	},
-	"version": 1.0
+	"version": 1.1
 }

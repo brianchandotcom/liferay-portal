@@ -183,7 +183,7 @@ const RenderField = ({
 			<div>
 				<label>{label}</label>
 
-				{options.map((option, index) => {
+				{getOptions().map((option, index) => {
 					const optionValue =
 						typeof option === 'string' ? option : option.value;
 

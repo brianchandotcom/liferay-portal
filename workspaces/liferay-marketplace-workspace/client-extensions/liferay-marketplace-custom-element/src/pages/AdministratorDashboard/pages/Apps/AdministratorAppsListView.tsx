@@ -8,11 +8,9 @@ import {ComponentProps} from 'react';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
 import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
-import SearchBuilder from '../../../../core/SearchBuilder';
 import {
 	ProductSpecificationKey,
 	ProductTypeLabels,
-	ProductTypeVocabulary,
 	ProductWorkflowDisplayType,
 	ProductWorkflowStatusLabel,
 } from '../../../../enums/Product';
@@ -41,12 +39,6 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 	managementToolbarProps,
 }) => (
 	<ListView<Product>
-		defaultFilters={{
-			filter: `${SearchBuilder.lambda(
-				'categoryNames',
-				ProductTypeVocabulary.APP
-			)}`,
-		}}
 		id="administrator-apps"
 		managementToolbarProps={{
 			filterSchema: 'administratorApps',

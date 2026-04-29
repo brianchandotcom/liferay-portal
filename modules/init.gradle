@@ -60,7 +60,7 @@ gradle.buildFinished {
 
 	String errorString = errorByteArrayOutputStream.toString()
 
-	if (!errorString.contains("Not a git repository")) {
+	if (!errorString.toLowerCase().contains("not a git repository")) {
 		logger.error errorString
 	}
 

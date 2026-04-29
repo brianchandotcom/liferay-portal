@@ -166,6 +166,89 @@ public class TableReferenceInfoFactoryTest {
 	}
 
 	@Test
+	public void testCompanyModelAddsCompanyParent() {
+		TableReferenceDefinition<CompanyModelExampleTable>
+			tableReferenceDefinition =
+				new TestTableReferenceDefinition<CompanyModelExampleTable>(
+					CompanyModelExampleTable.INSTANCE) {
+
+					@Override
+					public void defineChildTableReferences(
+						ChildTableReferenceInfoBuilder<CompanyModelExampleTable>
+							childTableReferenceInfoBuilder) {
+					}
+
+					@Override
+					public void defineParentTableReferences(
+						ParentTableReferenceInfoBuilder
+							<CompanyModelExampleTable>
+								parentTableReferenceInfoBuilder) {
+
+						parentTableReferenceInfoBuilder.singleColumnReference(
+							CompanyModelExampleTable.INSTANCE.companyIdColumn,
+							CompanyTable.INSTANCE.companyId);
+					}
+
+				};
+
+		TableReferenceInfo<CompanyModelExampleTable> tableReferenceInfo =
+			TableReferenceInfoFactory.create(
+				CompanyModelExampleTable.CLASS_NAME_ID,
+				CompanyModelExampleTable.INSTANCE.companyModelExampleIdColumn,
+				tableReferenceDefinition);
+
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
+
+		Assert.assertEquals(
+			parentTableJoinHoldersMap.toString(), 1,
+			parentTableJoinHoldersMap.size());
+
+		List<TableJoinHolder> companyTableJoinHolders =
+			parentTableJoinHoldersMap.get(CompanyTable.INSTANCE);
+
+		Assert.assertEquals(
+			companyTableJoinHolders.toString(), 1,
+			companyTableJoinHolders.size());
+	}
+
+	@Test
+	public void testCompanyModelOmittedProducesEmptyParents() {
+		TableReferenceDefinition<CompanyModelExampleTable>
+			tableReferenceDefinition =
+				new TestTableReferenceDefinition<CompanyModelExampleTable>(
+					CompanyModelExampleTable.INSTANCE) {
+
+					@Override
+					public void defineChildTableReferences(
+						ChildTableReferenceInfoBuilder<CompanyModelExampleTable>
+							childTableReferenceInfoBuilder) {
+					}
+
+					@Override
+					public void defineParentTableReferences(
+						ParentTableReferenceInfoBuilder
+							<CompanyModelExampleTable>
+								parentTableReferenceInfoBuilder) {
+					}
+
+				};
+
+		TableReferenceInfo<CompanyModelExampleTable> tableReferenceInfo =
+			TableReferenceInfoFactory.create(
+				CompanyModelExampleTable.CLASS_NAME_ID,
+				CompanyModelExampleTable.INSTANCE.companyModelExampleIdColumn,
+				tableReferenceDefinition);
+
+		Map<Table<?>, List<TableJoinHolder>> parentTableJoinHoldersMap =
+			tableReferenceInfo.getParentTableJoinHoldersMap();
+
+		Assert.assertTrue(
+			parentTableJoinHoldersMap.toString(),
+			parentTableJoinHoldersMap.isEmpty());
+	}
+
+	@Test
 	public void testConstructors() {
 		new TableReferenceInfoFactory();
 
@@ -1005,6 +1088,31 @@ public class TableReferenceInfoFactoryTest {
 
 		private BridgeJoinExampleTable() {
 			super("BridgeJoinExample", BridgeJoinExampleTable::new);
+		}
+
+	}
+
+	private static class CompanyModelExampleTable
+		extends BaseTable<CompanyModelExampleTable> {
+
+		public static final long CLASS_NAME_ID = 4;
+
+		public static final CompanyModelExampleTable INSTANCE =
+			new CompanyModelExampleTable();
+
+		public final Column<CompanyModelExampleTable, Long> companyIdColumn =
+			createColumn(
+				"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+		public final Column<CompanyModelExampleTable, Long>
+			companyModelExampleIdColumn = createColumn(
+				"companyModelExampleId", Long.class, Types.BIGINT,
+				Column.FLAG_PRIMARY);
+		public final Column<CompanyModelExampleTable, Long> mvccVersionColumn =
+			createColumn(
+				"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+
+		private CompanyModelExampleTable() {
+			super("CompanyModelExample", CompanyModelExampleTable::new);
 		}
 
 	}

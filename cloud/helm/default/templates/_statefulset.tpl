@@ -177,6 +177,7 @@ spec:
         {{- end }}
     {{- end }}
 {{- if and .statefulset.network .statefulset.network.enabled }}
+{{- $perHost := and .statefulset.network.perHostnameRoutes (gt (len .statefulset.network.hostnames) 0) }}
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy

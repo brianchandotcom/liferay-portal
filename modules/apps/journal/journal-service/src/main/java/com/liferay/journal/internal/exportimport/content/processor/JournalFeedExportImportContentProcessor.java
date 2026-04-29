@@ -137,6 +137,15 @@ public class JournalFeedExportImportContentProcessor
 		feedElement.addAttribute(
 			"targetLayoutERC", targetLayout.getExternalReferenceCode());
 
+		if (targetLayout.getGroupId() != feed.getGroupId()) {
+			Group targetLayoutGroup = _groupLocalService.getGroup(
+				targetLayout.getGroupId());
+
+			feedElement.addAttribute(
+				"targetLayoutGroupERC",
+				targetLayoutGroup.getExternalReferenceCode());
+		}
+
 		return content;
 	}
 
@@ -154,9 +163,25 @@ public class JournalFeedExportImportContentProcessor
 		String targetLayoutERC = feedElement.attributeValue("targetLayoutERC");
 
 		if (Validator.isNotNull(targetLayoutERC)) {
+			long targetLayoutGroupId = portletDataContext.getGroupId();
+
+			String targetLayoutGroupERC = feedElement.attributeValue(
+				"targetLayoutGroupERC");
+
+			if (Validator.isNotNull(targetLayoutGroupERC)) {
+				Group targetLayoutGroup =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						targetLayoutGroupERC,
+						portletDataContext.getCompanyId());
+
+				if (targetLayoutGroup != null) {
+					targetLayoutGroupId = targetLayoutGroup.getGroupId();
+				}
+			}
+
 			Layout targetLayout =
 				_layoutLocalService.getLayoutByExternalReferenceCode(
-					targetLayoutERC, portletDataContext.getGroupId());
+					targetLayoutERC, targetLayoutGroupId);
 
 			Group targetLayoutGroup = _groupLocalService.getGroup(
 				targetLayout.getGroupId());

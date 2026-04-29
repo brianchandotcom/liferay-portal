@@ -331,6 +331,35 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy-and-execute-ant-target-builder">
+		<attribute name="ant.target.file" />
+		<attribute name="ant.target.name" />
+		<attribute name="builder.type" />
+		<attribute name="tooling.dir" />
+
+		<sequential>
+			<if>
+				<available file="@{tooling.dir}" />
+				<then>
+					<gradle-execute dir="@{tooling.dir}" task="deploy">
+						<arg value="clean" />
+					</gradle-execute>
+				</then>
+			</if>
+
+			<exec executable="git">
+				<arg value="add" />
+				<arg value="--all" />
+			</exec>
+
+			<execute-ant-target-builder
+				ant.target.file="@{ant.target.file}"
+				ant.target.name="@{ant.target.name}"
+				builder.type="@{builder.type}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="deploy-release-dependency-modules-post-startup">
 		<sequential>
 			<get-release-dependency-modules
@@ -524,35 +553,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 				</finally>
 			</trycatch>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="deploy-and-execute-ant-target-builder">
-		<attribute name="ant.target.file" />
-		<attribute name="ant.target.name" />
-		<attribute name="builder.type" />
-		<attribute name="tooling.dir" />
-
-		<sequential>
-			<if>
-				<available file="@{tooling.dir}" />
-				<then>
-					<gradle-execute dir="@{tooling.dir}" task="deploy">
-						<arg value="clean" />
-					</gradle-execute>
-				</then>
-			</if>
-
-			<exec executable="git">
-				<arg value="add" />
-				<arg value="--all" />
-			</exec>
-
-			<execute-ant-target-builder
-				ant.target.file="@{ant.target.file}"
-				ant.target.name="@{ant.target.name}"
-				builder.type="@{builder.type}"
-			/>
 		</sequential>
 	</macrodef>
 

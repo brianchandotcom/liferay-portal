@@ -434,12 +434,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 		objectActionLocalService.deleteObjectAction(objectAction);
 
-		_commerceOrderLocalService.deleteCommerceOrder(
-			commerceOrder.getCommerceOrderId());
-
-		_accountEntryLocalService.deleteAccountEntry(
-			_accountEntryLocalService.fetchPersonAccountEntry(
-				TestPropsValues.getUserId()));
+		_deleteCommerceOrder(commerceOrder.getCommerceOrderId());
 	}
 
 	@Test
@@ -536,8 +531,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			_assertNotificationQueueEntryBody(objectFieldValue);
 		}
 		finally {
-			_commerceOrderLocalService.deleteCommerceOrder(
-				commerceOrder.getCommerceOrderId());
+			_deleteCommerceOrder(commerceOrder.getCommerceOrderId());
+
 			objectActionLocalService.deleteObjectAction(objectAction);
 			objectFieldLocalService.deleteObjectField(objectField);
 		}
@@ -2063,6 +2058,14 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 				ObjectActionThreadLocal.class, "_objectEntryIdsMap");
 
 		threadLocal.set(new HashMap<>());
+	}
+
+	private void _deleteCommerceOrder(long commerceOrderId) throws Exception {
+		_commerceOrderLocalService.deleteCommerceOrder(commerceOrderId);
+
+		_accountEntryLocalService.deleteAccountEntry(
+			_accountEntryLocalService.fetchPersonAccountEntry(
+				TestPropsValues.getUserId()));
 	}
 
 	private String _formatDate(Date date) {

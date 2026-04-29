@@ -35,8 +35,10 @@ page import="com.liferay.style.book.web.internal.display.context.EditStyleBookEn
 page import="com.liferay.style.book.web.internal.display.context.ImportStyleBookDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.PreviewFragmentCollectionDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.StyleBookDisplayContext" %><%@
+page import="com.liferay.style.book.web.internal.display.context.StyleBookEditorBreadcrumbDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.StyleBookManagementToolbarDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.frontend.taglib.clay.servlet.taglib.StyleBookVerticalCard" %><%@
+page import="com.liferay.style.book.web.internal.product.navigation.control.menu.StyleBookEditorBreadcrumbProductNavigationControlMenuEntry" %><%@
 page import="com.liferay.style.book.zip.processor.StyleBookEntryZipProcessorImportResultEntry" %>
 
 <%@ page import="jakarta.portlet.PortletRequest" %>

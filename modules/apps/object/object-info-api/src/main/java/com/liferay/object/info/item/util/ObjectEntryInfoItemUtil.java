@@ -67,13 +67,15 @@ public class ObjectEntryInfoItemUtil {
 				false, null, null, null, null, themeDisplay.getLocale(), null,
 				themeDisplay.getUser());
 
-		com.liferay.object.model.ObjectEntry serviceBuilderHeadObjectEntry =
-			ObjectEntryLocalServiceUtil.fetchObjectEntry(
-				serviceBuilderObjectEntry.getHeadObjectEntryId());
+		if (serviceBuilderObjectEntry.getHeadObjectEntryId() > 0) {
+			serviceBuilderObjectEntry =
+				ObjectEntryLocalServiceUtil.fetchObjectEntry(
+					serviceBuilderObjectEntry.getHeadObjectEntryId());
+		}
 
 		ObjectEntryVersion objectEntryVersion =
 			ObjectEntryVersionLocalServiceUtil.fetchObjectEntryVersion(
-				serviceBuilderHeadObjectEntry.getHeadObjectEntryId(),
+				serviceBuilderObjectEntry.getObjectEntryId(),
 				serviceBuilderObjectEntry.getVersion());
 
 		if (objectEntryVersion != null) {
@@ -84,11 +86,11 @@ public class ObjectEntryInfoItemUtil {
 		try {
 			return objectEntryManager.getObjectEntry(
 				themeDisplay.getCompanyId(), dtoConverterContext,
-				serviceBuilderHeadObjectEntry.getExternalReferenceCode(),
+				serviceBuilderObjectEntry.getExternalReferenceCode(),
 				objectDefinition,
 				getScopeKey(
-					serviceBuilderHeadObjectEntry.getGroupId(),
-					objectDefinition, objectScopeProviderRegistry));
+					serviceBuilderObjectEntry.getGroupId(), objectDefinition,
+					objectScopeProviderRegistry));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

@@ -28,7 +28,7 @@ const DXP = ({hasComplimentaryKey}) => {
 		<div className="mr-4">
 			<ActivationKeysTable
 				hasComplimentaryKey={hasComplimentaryKey}
-				initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital'))"
+				initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital') or startswith(productName,'Liferay Self-Hosted'))"
 				oAuthToken={oAuthToken}
 				productName="DXP"
 				project={project}

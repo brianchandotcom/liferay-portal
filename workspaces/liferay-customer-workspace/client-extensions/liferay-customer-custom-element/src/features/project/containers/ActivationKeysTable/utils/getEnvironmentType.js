@@ -7,13 +7,9 @@ import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 
 export function getEnvironmentType(productName) {
-	const formatProductName = productName?.substr(
-		productName?.indexOf(' ') + 1
-	);
+	const formatProductName = productName?.startsWith('Liferay Self-Hosted ')
+		? productName.replace('Liferay Self-Hosted ', '')
+		: productName?.substr(productName.indexOf(' ') + 1);
 
-	const translateProductName = i18n.translate(
-		getKebabCase(formatProductName)
-	);
-
-	return translateProductName;
+	return i18n.translate(getKebabCase(formatProductName));
 }

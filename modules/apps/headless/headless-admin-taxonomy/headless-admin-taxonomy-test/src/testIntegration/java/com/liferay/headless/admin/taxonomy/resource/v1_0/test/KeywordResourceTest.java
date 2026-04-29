@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -220,8 +221,11 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				"delete",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/keywords/" + getKeyword.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/keywords/",
+						getKeyword.getId())
 				).put(
 					"method", "DELETE"
 				).build()
@@ -229,8 +233,11 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				"get",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/keywords/" + getKeyword.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/keywords/",
+						getKeyword.getId())
 				).put(
 					"method", "GET"
 				).build()
@@ -238,8 +245,11 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				"replace",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/keywords/" + getKeyword.getId()
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/keywords/",
+						getKeyword.getId())
 				).put(
 					"method", "PUT"
 				).build()
@@ -248,8 +258,10 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/keywords/", getKeyword.getId(), "/subscribe")
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/keywords/",
+						getKeyword.getId(), "/subscribe")
 				).put(
 					"method", "PUT"
 				).build()
@@ -258,8 +270,10 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/keywords/", getKeyword.getId(), "/unsubscribe")
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/keywords/",
+						getKeyword.getId(), "/unsubscribe")
 				).put(
 					"method", "PUT"
 				).build()
@@ -467,7 +481,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		).authentication(
 			_cmsAdministratorUser.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -516,7 +531,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			).authentication(
 				_spaceContentReviewerUser.getEmailAddress(), "test"
 			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
+				testCompany.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -619,9 +635,10 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords",
-				"/", keyword1.getId(), "/merge?fromKeywordIds=",
-				keyword4.getId(), "&fromKeywordIds=", keyword5.getId()));
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/headless-admin-taxonomy/v1.0/keywords/", keyword1.getId(),
+				"/merge?fromKeywordIds=", keyword4.getId(), "&fromKeywordIds=",
+				keyword5.getId()));
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -784,7 +801,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

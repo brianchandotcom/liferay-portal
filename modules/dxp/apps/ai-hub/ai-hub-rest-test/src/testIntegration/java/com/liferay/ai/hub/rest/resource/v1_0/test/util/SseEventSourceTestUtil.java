@@ -9,6 +9,7 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.io.BufferedReader;
@@ -69,7 +70,10 @@ public class SseEventSourceTestUtil {
 				).header(
 					"Authorization", authorization
 				).uri(
-					URI.create("http://localhost:8080/o/ai-hub/v1.0/" + uri)
+					URI.create(
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) +
+								"/o/ai-hub/v1.0/" + uri)
 				).GET(
 				).build(),
 				HttpResponse.BodyHandlers.ofInputStream());

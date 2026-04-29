@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -165,7 +166,8 @@ public class SiteParamConverterProviderTest {
 			"WebApplicationExceptionMapper";
 
 	private static final String _TEST_BASE_URL =
-		"http://localhost:8080/o/test-vulcan/";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/test-vulcan/";
 
 	@Inject
 	private Portal _portal;

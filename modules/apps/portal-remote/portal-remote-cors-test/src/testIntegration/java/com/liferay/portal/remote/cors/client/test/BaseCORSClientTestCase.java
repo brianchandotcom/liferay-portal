@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.ws.rs.HttpMethod;
@@ -93,8 +94,10 @@ public abstract class BaseCORSClientTestCase {
 		ProcessChannel<String[]> processChannel = processExecutor.execute(
 			builder.build(),
 			new AllowRestrictedHeadersCallable(
-				"http://localhost:8080/o" + urlString, allowedOrigin, method,
-				authenticate));
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/o", urlString),
+				allowedOrigin, method, authenticate));
 
 		Future<String[]> future = processChannel.getProcessNoticeableFuture();
 

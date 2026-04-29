@@ -5,11 +5,13 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.DuplicateExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
@@ -104,8 +106,10 @@ public class CompanyTestEntityResourceImpl
 				"createBatch",
 				HashMapBuilder.put(
 					"href",
-					"http://localhost:8080/o/test/v1.0/company-test-entities" +
-						"/batch"
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/test/v1.0/company-test-entities/batch")
 				).put(
 					"method", "POST"
 				).build()

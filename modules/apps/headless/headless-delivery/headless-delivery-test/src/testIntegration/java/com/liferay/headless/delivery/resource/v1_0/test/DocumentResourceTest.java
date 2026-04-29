@@ -604,7 +604,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), password
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
@@ -686,8 +687,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.POST);
 
 		String href = StringBundler.concat(
-			"http://localhost:8080/o", endpoint, "/",
-			jsonObject.get("externalReferenceCode"));
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			endpoint, "/", jsonObject.get("externalReferenceCode"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
@@ -753,8 +754,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.POST);
 
 		href = StringBundler.concat(
-			"http://localhost:8080/o", endpoint, "/",
-			jsonObject.get("externalReferenceCode"));
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			endpoint, "/", jsonObject.get("externalReferenceCode"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
@@ -830,7 +831,9 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
-		String href = "http://localhost:8080/o" + endpoint;
+		String href = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			endpoint);
 
 		JSONAssert.assertEquals(
 			JSONFactoryUtil.createJSONObject(

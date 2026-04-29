@@ -6,6 +6,7 @@
 package com.liferay.portal.security.auth.verifier.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
@@ -250,20 +252,23 @@ public class AuthVerifierTest {
 	@Test
 	public void testAllowGuest() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/auth-verifier-guest-allowed-false-test" +
-				"/guestAllowed");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-guest-allowed-false-test/guestAllowed"));
 
 		_assertHttpResponseStatusCode(403, url.openConnection());
 
 		url = new URL(
-			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
-				"/guestAllowed");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-guest-allowed-true-test/guestAllowed"));
 
 		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:8080/o/auth-verifier-guest-allowed-default-test" +
-				"/guestAllowed");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-guest-allowed-default-test/guestAllowed"));
 
 		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
 	}
@@ -271,8 +276,9 @@ public class AuthVerifierTest {
 	@Test
 	public void testAllowGuestFailsForInvalidCredentials() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/auth-verifier-guest-allowed-true-test" +
-				"/guestAllowed");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-guest-allowed-true-test/guestAllowed"));
 
 		String credentials = DatatypeConverter.printBase64Binary(
 			"test@liferay.com:wrongpassword".getBytes());
@@ -290,9 +296,10 @@ public class AuthVerifierTest {
 		throws Exception {
 
 		URL url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-missing-test" +
-					"/attemptMatchRelativeToContextPath");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-override-missing-test",
+				"/attemptMatchRelativeToContextPath"));
 
 		Assert.assertEquals("not-matched", URLUtil.toString(url));
 	}
@@ -302,16 +309,18 @@ public class AuthVerifierTest {
 		throws Exception {
 
 		URL url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-not-matched-test" +
-					"/authVerifierMatched");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-override-not-matched-test",
+				"/authVerifierMatched"));
 
 		Assert.assertEquals("not-matched", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-matched-test" +
-					"/authVerifierNotMatched");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-override-matched-test",
+				"/authVerifierNotMatched"));
 
 		Assert.assertEquals("matched", URLUtil.toString(url));
 	}
@@ -319,9 +328,10 @@ public class AuthVerifierTest {
 	@Test
 	public void testAuthVerifierNotMatched() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-missing-test" +
-					"/authVerifierNotMatched");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-override-missing-test",
+				"/authVerifierNotMatched"));
 
 		Assert.assertEquals("not-matched", URLUtil.toString(url));
 	}
@@ -329,8 +339,10 @@ public class AuthVerifierTest {
 	@Test
 	public void testRemoteAccess() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/auth-verifier-filter-tracker-remote-" +
-				"access-test/remoteAccess");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-tracker-remote-access-test",
+				"/remoteAccess"));
 
 		Assert.assertEquals("true", URLUtil.toString(url));
 	}
@@ -338,20 +350,23 @@ public class AuthVerifierTest {
 	@Test
 	public void testRemoteUser() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/auth-verifier-filter-tracker-enabled-" +
-				"test/remoteUser");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-tracker-enabled-test/remoteUser"));
 
 		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:8080/o/auth-verifier-filter-tracker-disabled-" +
-				"test/remoteUser");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-tracker-disabled-test/remoteUser"));
 
 		Assert.assertEquals("no-remote-user", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:8080/o/auth-verifier-filter-tracker-default-" +
-				"test/remoteUser");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-tracker-default-test/remoteUser"));
 
 		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
 	}
@@ -361,8 +376,9 @@ public class AuthVerifierTest {
 		throws Exception {
 
 		URL url = new URL(
-			"http://localhost:8080/o" +
-				"/auth-verifier-filter-override-matched-test");
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/auth-verifier-filter-override-matched-test"));
 
 		Assert.assertEquals("matched", URLUtil.toString(url));
 	}

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -161,9 +162,9 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/o/commerce-payment?groupId=",
-				_commerceChannel.getGroupId(), "&nextStep=", callbackURL,
-				"&uuid=", cart.getOrderUUID()),
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/commerce-payment?groupId=", _commerceChannel.getGroupId(),
+				"&nextStep=", callbackURL, "&uuid=", cart.getOrderUUID()),
 			cartResource.getCartByExternalReferenceCodePaymentUrl(
 				cart.getExternalReferenceCode(), callbackURL));
 	}
@@ -177,9 +178,9 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/o/commerce-payment?groupId=",
-				_commerceChannel.getGroupId(), "&nextStep=", callbackURL,
-				"&uuid=", cart.getOrderUUID()),
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/commerce-payment?groupId=", _commerceChannel.getGroupId(),
+				"&nextStep=", callbackURL, "&uuid=", cart.getOrderUUID()),
 			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
 	}
 

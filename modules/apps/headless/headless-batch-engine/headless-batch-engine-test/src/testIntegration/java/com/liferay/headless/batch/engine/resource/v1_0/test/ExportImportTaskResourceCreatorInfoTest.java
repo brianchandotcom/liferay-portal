@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -355,9 +356,9 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0",
-				"/export-task/com.liferay.object.admin.rest.dto.v1_0.",
-				"ObjectDefinition/JSON?filter=",
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/headless-batch-engine/v1.0/export-task/com.liferay.object.",
+				"admin.rest.dto.v1_0.ObjectDefinition/JSON?filter=",
 				URLCodec.encodeURL(
 					StringBundler.concat(
 						"name in ('", _objectDefinition1.getShortName(), "','",
@@ -376,9 +377,12 @@ public class ExportImportTaskResourceCreatorInfoTest {
 			exportTask = ExportTaskSerDes.toDTO(
 				_invoke(
 					"localhost",
-					"http://localhost:8080/o/headless-batch-engine/v1.0" +
-						"/export-task/by-external-reference-code/" +
-							externalReferenceCode));
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-batch-engine/v1.0/export-task",
+						"/by-external-reference-code/",
+						externalReferenceCode)));
 
 			if (Objects.equals(
 					exportTask.getExecuteStatusAsString(), "COMPLETED")) {
@@ -399,9 +403,10 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0",
-				"/export-task/by-external-reference-code/",
-				externalReferenceCode, "/content"));
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/headless-batch-engine/v1.0/export-task",
+				"/by-external-reference-code/", externalReferenceCode,
+				"/content"));
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 

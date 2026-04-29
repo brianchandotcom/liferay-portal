@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 
@@ -60,8 +62,9 @@ public class ReverseProxyTest {
 
 		URLConnection urlConnection = URLConnectionUtil.createURLConnection(
 			String.format(
-				"http://localhost:8080/o/headless-delivery/v1.0/sites/%s" +
-					"/blog-postings",
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"/o/headless-delivery/v1.0/sites/%s/blog-postings"),
 				TestPropsValues.getGroupId()));
 
 		try (SafeCloseable safeCloseable1 =

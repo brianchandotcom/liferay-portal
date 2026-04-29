@@ -8,24 +8,16 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {ASSET_STATUS, AssetStatus} from '../utils/constants';
+import {
+	ASSET_STATUS,
+	ASSET_STATUS_TO_DISPLAY_TYPE,
+	AssetStatus,
+} from '../utils/constants';
 import {
 	formatExpirationDate,
 	formatExpirationDateLong,
 	isExpiringSoon,
 } from '../utils/expirationStatus';
-
-const assetStatusToDisplayType = {
-	[ASSET_STATUS.APPROVED]: 'success',
-	[ASSET_STATUS.DENIED]: 'danger',
-	[ASSET_STATUS.DRAFT]: 'secondary',
-	[ASSET_STATUS.EXPIRED]: 'danger',
-	[ASSET_STATUS.IN_TRASH]: 'info',
-	[ASSET_STATUS.INACTIVE]: 'secondary',
-	[ASSET_STATUS.INCOMPLETE]: 'warning',
-	[ASSET_STATUS.PENDING]: 'info',
-	[ASSET_STATUS.SCHEDULED]: 'info',
-} as const;
 
 interface StatusLabelProps {
 	expirationDate?: string;
@@ -50,7 +42,9 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 						tabIndex={0}
 						title={formattedDate}
 					>
-						<Label displayType={assetStatusToDisplayType[label]}>
+						<Label
+							displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}
+						>
 							{Liferay.Language.get(label)}
 						</Label>
 					</span>
@@ -61,7 +55,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 
 	if (label !== ASSET_STATUS.APPROVED || !isExpiringSoon(expirationDate)) {
 		return (
-			<Label displayType={assetStatusToDisplayType[label]}>
+			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}>
 				{Liferay.Language.get(label)}
 			</Label>
 		);
@@ -76,7 +70,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 
 	return (
 		<span className="align-items-center c-gap-2 d-flex flex-wrap">
-			<Label displayType={assetStatusToDisplayType[label]}>
+			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}>
 				{Liferay.Language.get(label)}
 			</Label>
 

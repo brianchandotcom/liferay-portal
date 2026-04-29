@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MappingEntryPersistence.class)
 public class MappingEntryPersistenceImpl
-	extends BasePersistenceImpl<MappingEntry>
+	extends BasePersistenceImpl<MappingEntry, NoSuchMappingEntryException>
 	implements MappingEntryPersistence {
 
 	/*
@@ -131,48 +131,6 @@ public class MappingEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all mapping entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MappingEntryImpl.class);
-
-		finderCache.clearCache(MappingEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the mapping entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MappingEntry mappingEntry) {
-		entityCache.removeResult(MappingEntryImpl.class, mappingEntry);
-	}
-
-	@Override
-	public void clearCache(List<MappingEntry> mappingEntries) {
-		for (MappingEntry mappingEntry : mappingEntries) {
-			entityCache.removeResult(MappingEntryImpl.class, mappingEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MappingEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MappingEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new mapping entry with the primary key. Does not add the mapping entry to the database.
 	 *
 	 * @param mappingEntryId the primary key for the new mapping entry
@@ -202,47 +160,6 @@ public class MappingEntryPersistenceImpl
 		throws NoSuchMappingEntryException {
 
 		return remove((Serializable)mappingEntryId);
-	}
-
-	/**
-	 * Removes the mapping entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the mapping entry
-	 * @return the mapping entry that was removed
-	 * @throws NoSuchMappingEntryException if a mapping entry with the primary key could not be found
-	 */
-	@Override
-	public MappingEntry remove(Serializable primaryKey)
-		throws NoSuchMappingEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MappingEntry mappingEntry = (MappingEntry)session.get(
-				MappingEntryImpl.class, primaryKey);
-
-			if (mappingEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMappingEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mappingEntry);
-		}
-		catch (NoSuchMappingEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -309,31 +226,6 @@ public class MappingEntryPersistenceImpl
 		}
 
 		mappingEntry.resetOriginalValues();
-
-		return mappingEntry;
-	}
-
-	/**
-	 * Returns the mapping entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the mapping entry
-	 * @return the mapping entry
-	 * @throws NoSuchMappingEntryException if a mapping entry with the primary key could not be found
-	 */
-	@Override
-	public MappingEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMappingEntryException {
-
-		MappingEntry mappingEntry = fetchByPrimaryKey(primaryKey);
-
-		if (mappingEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMappingEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mappingEntry;
 	}
@@ -963,9 +855,6 @@ public class MappingEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mappingEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MappingEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MappingEntryPersistenceImpl.class);
 
@@ -975,4 +864,4 @@ public class MappingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1228865953
+// LIFERAY-SERVICE-BUILDER-HASH:-1525912787

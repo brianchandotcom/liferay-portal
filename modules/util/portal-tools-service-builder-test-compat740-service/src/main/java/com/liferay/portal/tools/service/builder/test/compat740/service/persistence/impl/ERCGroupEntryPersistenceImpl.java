@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ERCGroupEntryPersistence.class)
 public class ERCGroupEntryPersistenceImpl
-	extends BasePersistenceImpl<ERCGroupEntry>
+	extends BasePersistenceImpl<ERCGroupEntry, NoSuchERCGroupEntryException>
 	implements ERCGroupEntryPersistence {
 
 	/*
@@ -647,48 +647,6 @@ public class ERCGroupEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all erc group entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ERCGroupEntryImpl.class);
-
-		finderCache.clearCache(ERCGroupEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the erc group entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ERCGroupEntry ercGroupEntry) {
-		entityCache.removeResult(ERCGroupEntryImpl.class, ercGroupEntry);
-	}
-
-	@Override
-	public void clearCache(List<ERCGroupEntry> ercGroupEntries) {
-		for (ERCGroupEntry ercGroupEntry : ercGroupEntries) {
-			entityCache.removeResult(ERCGroupEntryImpl.class, ercGroupEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ERCGroupEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ERCGroupEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ERCGroupEntryModelImpl ercGroupEntryModelImpl) {
 
@@ -743,47 +701,6 @@ public class ERCGroupEntryPersistenceImpl
 		throws NoSuchERCGroupEntryException {
 
 		return remove((Serializable)ercGroupEntryId);
-	}
-
-	/**
-	 * Removes the erc group entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the erc group entry
-	 * @return the erc group entry that was removed
-	 * @throws NoSuchERCGroupEntryException if a erc group entry with the primary key could not be found
-	 */
-	@Override
-	public ERCGroupEntry remove(Serializable primaryKey)
-		throws NoSuchERCGroupEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ERCGroupEntry ercGroupEntry = (ERCGroupEntry)session.get(
-				ERCGroupEntryImpl.class, primaryKey);
-
-			if (ercGroupEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchERCGroupEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ercGroupEntry);
-		}
-		catch (NoSuchERCGroupEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -938,31 +855,6 @@ public class ERCGroupEntryPersistenceImpl
 		}
 
 		ercGroupEntry.resetOriginalValues();
-
-		return ercGroupEntry;
-	}
-
-	/**
-	 * Returns the erc group entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the erc group entry
-	 * @return the erc group entry
-	 * @throws NoSuchERCGroupEntryException if a erc group entry with the primary key could not be found
-	 */
-	@Override
-	public ERCGroupEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchERCGroupEntryException {
-
-		ERCGroupEntry ercGroupEntry = fetchByPrimaryKey(primaryKey);
-
-		if (ercGroupEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchERCGroupEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ercGroupEntry;
 	}
@@ -1362,9 +1254,6 @@ public class ERCGroupEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ercGroupEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ERCGroupEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ERCGroupEntry exists with the key {";
 
@@ -1380,4 +1269,4 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542233855
+// LIFERAY-SERVICE-BUILDER-HASH:1636138199

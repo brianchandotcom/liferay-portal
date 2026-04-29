@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MVCCEntryPersistence.class)
 public class MVCCEntryPersistenceImpl
-	extends BasePersistenceImpl<MVCCEntry> implements MVCCEntryPersistence {
+	extends BasePersistenceImpl<MVCCEntry, NoSuchMVCCEntryException>
+	implements MVCCEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -364,48 +364,6 @@ public class MVCCEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all mvcc entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MVCCEntryImpl.class);
-
-		finderCache.clearCache(MVCCEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the mvcc entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MVCCEntry mvccEntry) {
-		entityCache.removeResult(MVCCEntryImpl.class, mvccEntry);
-	}
-
-	@Override
-	public void clearCache(List<MVCCEntry> mvccEntries) {
-		for (MVCCEntry mvccEntry : mvccEntries) {
-			entityCache.removeResult(MVCCEntryImpl.class, mvccEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MVCCEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MVCCEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MVCCEntryModelImpl mvccEntryModelImpl) {
 
@@ -444,47 +402,6 @@ public class MVCCEntryPersistenceImpl
 	@Override
 	public MVCCEntry remove(long mvccEntryId) throws NoSuchMVCCEntryException {
 		return remove((Serializable)mvccEntryId);
-	}
-
-	/**
-	 * Removes the mvcc entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the mvcc entry
-	 * @return the mvcc entry that was removed
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
-	 */
-	@Override
-	public MVCCEntry remove(Serializable primaryKey)
-		throws NoSuchMVCCEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MVCCEntry mvccEntry = (MVCCEntry)session.get(
-				MVCCEntryImpl.class, primaryKey);
-
-			if (mvccEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMVCCEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mvccEntry);
-		}
-		catch (NoSuchMVCCEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -568,31 +485,6 @@ public class MVCCEntryPersistenceImpl
 		}
 
 		mvccEntry.resetOriginalValues();
-
-		return mvccEntry;
-	}
-
-	/**
-	 * Returns the mvcc entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the mvcc entry
-	 * @return the mvcc entry
-	 * @throws NoSuchMVCCEntryException if a mvcc entry with the primary key could not be found
-	 */
-	@Override
-	public MVCCEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMVCCEntryException {
-
-		MVCCEntry mvccEntry = fetchByPrimaryKey(primaryKey);
-
-		if (mvccEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMVCCEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mvccEntry;
 	}
@@ -940,9 +832,6 @@ public class MVCCEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mvccEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MVCCEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MVCCEntry exists with the key {";
 
@@ -955,4 +844,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1245512827
+// LIFERAY-SERVICE-BUILDER-HASH:-1668591179

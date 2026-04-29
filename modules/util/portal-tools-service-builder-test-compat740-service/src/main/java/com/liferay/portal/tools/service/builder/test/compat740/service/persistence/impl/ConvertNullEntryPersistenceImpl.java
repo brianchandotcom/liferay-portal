@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -60,7 +59,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ConvertNullEntryPersistence.class)
 public class ConvertNullEntryPersistenceImpl
-	extends BasePersistenceImpl<ConvertNullEntry>
+	extends BasePersistenceImpl
+		<ConvertNullEntry, NoSuchConvertNullEntryException>
 	implements ConvertNullEntryPersistence {
 
 	/*
@@ -215,51 +215,6 @@ public class ConvertNullEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all convert null entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(ConvertNullEntryImpl.class);
-
-		dummyFinderCache.clearCache(ConvertNullEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the convert null entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ConvertNullEntry convertNullEntry) {
-		dummyEntityCache.removeResult(
-			ConvertNullEntryImpl.class, convertNullEntry);
-	}
-
-	@Override
-	public void clearCache(List<ConvertNullEntry> convertNullEntries) {
-		for (ConvertNullEntry convertNullEntry : convertNullEntries) {
-			dummyEntityCache.removeResult(
-				ConvertNullEntryImpl.class, convertNullEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(ConvertNullEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(
-				ConvertNullEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ConvertNullEntryModelImpl convertNullEntryModelImpl) {
 
@@ -297,47 +252,6 @@ public class ConvertNullEntryPersistenceImpl
 		throws NoSuchConvertNullEntryException {
 
 		return remove((Serializable)convertNullEntryId);
-	}
-
-	/**
-	 * Removes the convert null entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the convert null entry
-	 * @return the convert null entry that was removed
-	 * @throws NoSuchConvertNullEntryException if a convert null entry with the primary key could not be found
-	 */
-	@Override
-	public ConvertNullEntry remove(Serializable primaryKey)
-		throws NoSuchConvertNullEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ConvertNullEntry convertNullEntry = (ConvertNullEntry)session.get(
-				ConvertNullEntryImpl.class, primaryKey);
-
-			if (convertNullEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchConvertNullEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(convertNullEntry);
-		}
-		catch (NoSuchConvertNullEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -425,31 +339,6 @@ public class ConvertNullEntryPersistenceImpl
 		}
 
 		convertNullEntry.resetOriginalValues();
-
-		return convertNullEntry;
-	}
-
-	/**
-	 * Returns the convert null entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the convert null entry
-	 * @return the convert null entry
-	 * @throws NoSuchConvertNullEntryException if a convert null entry with the primary key could not be found
-	 */
-	@Override
-	public ConvertNullEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchConvertNullEntryException {
-
-		ConvertNullEntry convertNullEntry = fetchByPrimaryKey(primaryKey);
-
-		if (convertNullEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchConvertNullEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return convertNullEntry;
 	}
@@ -757,9 +646,6 @@ public class ConvertNullEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "convertNullEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ConvertNullEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ConvertNullEntry exists with the key {";
 
@@ -772,4 +658,4 @@ public class ConvertNullEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:263623172
+// LIFERAY-SERVICE-BUILDER-HASH:-1076750270

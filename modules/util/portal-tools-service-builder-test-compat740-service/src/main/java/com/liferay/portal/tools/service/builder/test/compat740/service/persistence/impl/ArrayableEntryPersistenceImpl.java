@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ArrayableEntryPersistence.class)
 public class ArrayableEntryPersistenceImpl
-	extends BasePersistenceImpl<ArrayableEntry>
+	extends BasePersistenceImpl<ArrayableEntry, NoSuchArrayableEntryException>
 	implements ArrayableEntryPersistence {
 
 	/*
@@ -742,48 +742,6 @@ public class ArrayableEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all arrayable entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ArrayableEntryImpl.class);
-
-		finderCache.clearCache(ArrayableEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the arrayable entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ArrayableEntry arrayableEntry) {
-		entityCache.removeResult(ArrayableEntryImpl.class, arrayableEntry);
-	}
-
-	@Override
-	public void clearCache(List<ArrayableEntry> arrayableEntries) {
-		for (ArrayableEntry arrayableEntry : arrayableEntries) {
-			entityCache.removeResult(ArrayableEntryImpl.class, arrayableEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ArrayableEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ArrayableEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new arrayable entry with the primary key. Does not add the arrayable entry to the database.
 	 *
 	 * @param arrayableEntryId the primary key for the new arrayable entry
@@ -813,47 +771,6 @@ public class ArrayableEntryPersistenceImpl
 		throws NoSuchArrayableEntryException {
 
 		return remove((Serializable)arrayableEntryId);
-	}
-
-	/**
-	 * Removes the arrayable entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the arrayable entry
-	 * @return the arrayable entry that was removed
-	 * @throws NoSuchArrayableEntryException if a arrayable entry with the primary key could not be found
-	 */
-	@Override
-	public ArrayableEntry remove(Serializable primaryKey)
-		throws NoSuchArrayableEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ArrayableEntry arrayableEntry = (ArrayableEntry)session.get(
-				ArrayableEntryImpl.class, primaryKey);
-
-			if (arrayableEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchArrayableEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(arrayableEntry);
-		}
-		catch (NoSuchArrayableEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -938,31 +855,6 @@ public class ArrayableEntryPersistenceImpl
 		}
 
 		arrayableEntry.resetOriginalValues();
-
-		return arrayableEntry;
-	}
-
-	/**
-	 * Returns the arrayable entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the arrayable entry
-	 * @return the arrayable entry
-	 * @throws NoSuchArrayableEntryException if a arrayable entry with the primary key could not be found
-	 */
-	@Override
-	public ArrayableEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchArrayableEntryException {
-
-		ArrayableEntry arrayableEntry = fetchByPrimaryKey(primaryKey);
-
-		if (arrayableEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchArrayableEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return arrayableEntry;
 	}
@@ -1296,9 +1188,6 @@ public class ArrayableEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "arrayableEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ArrayableEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ArrayableEntry exists with the key {";
 
@@ -1314,4 +1203,4 @@ public class ArrayableEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2117028137
+// LIFERAY-SERVICE-BUILDER-HASH:511904829

@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -60,7 +59,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WhereClauseEntryPersistence.class)
 public class WhereClauseEntryPersistenceImpl
-	extends BasePersistenceImpl<WhereClauseEntry>
+	extends BasePersistenceImpl
+		<WhereClauseEntry, NoSuchWhereClauseEntryException>
 	implements WhereClauseEntryPersistence {
 
 	/*
@@ -443,49 +443,6 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all where clause entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WhereClauseEntryImpl.class);
-
-		finderCache.clearCache(WhereClauseEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the where clause entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WhereClauseEntry whereClauseEntry) {
-		entityCache.removeResult(WhereClauseEntryImpl.class, whereClauseEntry);
-	}
-
-	@Override
-	public void clearCache(List<WhereClauseEntry> whereClauseEntries) {
-		for (WhereClauseEntry whereClauseEntry : whereClauseEntries) {
-			entityCache.removeResult(
-				WhereClauseEntryImpl.class, whereClauseEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WhereClauseEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(WhereClauseEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new where clause entry with the primary key. Does not add the where clause entry to the database.
 	 *
 	 * @param whereClauseEntryId the primary key for the new where clause entry
@@ -513,47 +470,6 @@ public class WhereClauseEntryPersistenceImpl
 		throws NoSuchWhereClauseEntryException {
 
 		return remove((Serializable)whereClauseEntryId);
-	}
-
-	/**
-	 * Removes the where clause entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the where clause entry
-	 * @return the where clause entry that was removed
-	 * @throws NoSuchWhereClauseEntryException if a where clause entry with the primary key could not be found
-	 */
-	@Override
-	public WhereClauseEntry remove(Serializable primaryKey)
-		throws NoSuchWhereClauseEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WhereClauseEntry whereClauseEntry = (WhereClauseEntry)session.get(
-				WhereClauseEntryImpl.class, primaryKey);
-
-			if (whereClauseEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWhereClauseEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(whereClauseEntry);
-		}
-		catch (NoSuchWhereClauseEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -639,31 +555,6 @@ public class WhereClauseEntryPersistenceImpl
 		}
 
 		whereClauseEntry.resetOriginalValues();
-
-		return whereClauseEntry;
-	}
-
-	/**
-	 * Returns the where clause entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the where clause entry
-	 * @return the where clause entry
-	 * @throws NoSuchWhereClauseEntryException if a where clause entry with the primary key could not be found
-	 */
-	@Override
-	public WhereClauseEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWhereClauseEntryException {
-
-		WhereClauseEntry whereClauseEntry = fetchByPrimaryKey(primaryKey);
-
-		if (whereClauseEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWhereClauseEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return whereClauseEntry;
 	}
@@ -987,9 +878,6 @@ public class WhereClauseEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "whereClauseEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WhereClauseEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WhereClauseEntry exists with the key {";
 
@@ -1002,4 +890,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1560584258
+// LIFERAY-SERVICE-BUILDER-HASH:967999320

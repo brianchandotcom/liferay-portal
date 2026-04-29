@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TrashEntryPersistence.class)
 public class TrashEntryPersistenceImpl
-	extends BasePersistenceImpl<TrashEntry> implements TrashEntryPersistence {
+	extends BasePersistenceImpl<TrashEntry, NoSuchTrashEntryException>
+	implements TrashEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -128,48 +128,6 @@ public class TrashEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all trash entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TrashEntryImpl.class);
-
-		finderCache.clearCache(TrashEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the trash entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TrashEntry trashEntry) {
-		entityCache.removeResult(TrashEntryImpl.class, trashEntry);
-	}
-
-	@Override
-	public void clearCache(List<TrashEntry> trashEntries) {
-		for (TrashEntry trashEntry : trashEntries) {
-			entityCache.removeResult(TrashEntryImpl.class, trashEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TrashEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TrashEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new trash entry with the primary key. Does not add the trash entry to the database.
 	 *
 	 * @param trashEntryId the primary key for the new trash entry
@@ -199,47 +157,6 @@ public class TrashEntryPersistenceImpl
 		throws NoSuchTrashEntryException {
 
 		return remove((Serializable)trashEntryId);
-	}
-
-	/**
-	 * Removes the trash entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the trash entry
-	 * @return the trash entry that was removed
-	 * @throws NoSuchTrashEntryException if a trash entry with the primary key could not be found
-	 */
-	@Override
-	public TrashEntry remove(Serializable primaryKey)
-		throws NoSuchTrashEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TrashEntry trashEntry = (TrashEntry)session.get(
-				TrashEntryImpl.class, primaryKey);
-
-			if (trashEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTrashEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(trashEntry);
-		}
-		catch (NoSuchTrashEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -345,31 +262,6 @@ public class TrashEntryPersistenceImpl
 		}
 
 		trashEntry.resetOriginalValues();
-
-		return trashEntry;
-	}
-
-	/**
-	 * Returns the trash entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the trash entry
-	 * @return the trash entry
-	 * @throws NoSuchTrashEntryException if a trash entry with the primary key could not be found
-	 */
-	@Override
-	public TrashEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTrashEntryException {
-
-		TrashEntry trashEntry = fetchByPrimaryKey(primaryKey);
-
-		if (trashEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTrashEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return trashEntry;
 	}
@@ -668,9 +560,6 @@ public class TrashEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "trashEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TrashEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrashEntryPersistenceImpl.class);
 
@@ -680,4 +569,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:380649897
+// LIFERAY-SERVICE-BUILDER-HASH:-1856524091

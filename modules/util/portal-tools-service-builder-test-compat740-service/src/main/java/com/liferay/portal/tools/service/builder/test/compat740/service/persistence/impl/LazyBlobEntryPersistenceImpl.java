@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LazyBlobEntryPersistence.class)
 public class LazyBlobEntryPersistenceImpl
-	extends BasePersistenceImpl<LazyBlobEntry>
+	extends BasePersistenceImpl<LazyBlobEntry, NoSuchLazyBlobEntryException>
 	implements LazyBlobEntryPersistence {
 
 	/*
@@ -376,48 +376,6 @@ public class LazyBlobEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all lazy blob entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LazyBlobEntryImpl.class);
-
-		finderCache.clearCache(LazyBlobEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lazy blob entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LazyBlobEntry lazyBlobEntry) {
-		entityCache.removeResult(LazyBlobEntryImpl.class, lazyBlobEntry);
-	}
-
-	@Override
-	public void clearCache(List<LazyBlobEntry> lazyBlobEntries) {
-		for (LazyBlobEntry lazyBlobEntry : lazyBlobEntries) {
-			entityCache.removeResult(LazyBlobEntryImpl.class, lazyBlobEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LazyBlobEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LazyBlobEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LazyBlobEntryModelImpl lazyBlobEntryModelImpl) {
 
@@ -462,47 +420,6 @@ public class LazyBlobEntryPersistenceImpl
 		throws NoSuchLazyBlobEntryException {
 
 		return remove((Serializable)lazyBlobEntryId);
-	}
-
-	/**
-	 * Removes the lazy blob entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lazy blob entry
-	 * @return the lazy blob entry that was removed
-	 * @throws NoSuchLazyBlobEntryException if a lazy blob entry with the primary key could not be found
-	 */
-	@Override
-	public LazyBlobEntry remove(Serializable primaryKey)
-		throws NoSuchLazyBlobEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LazyBlobEntry lazyBlobEntry = (LazyBlobEntry)session.get(
-				LazyBlobEntryImpl.class, primaryKey);
-
-			if (lazyBlobEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLazyBlobEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lazyBlobEntry);
-		}
-		catch (NoSuchLazyBlobEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -600,31 +517,6 @@ public class LazyBlobEntryPersistenceImpl
 		}
 
 		lazyBlobEntry.resetOriginalValues();
-
-		return lazyBlobEntry;
-	}
-
-	/**
-	 * Returns the lazy blob entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lazy blob entry
-	 * @return the lazy blob entry
-	 * @throws NoSuchLazyBlobEntryException if a lazy blob entry with the primary key could not be found
-	 */
-	@Override
-	public LazyBlobEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLazyBlobEntryException {
-
-		LazyBlobEntry lazyBlobEntry = fetchByPrimaryKey(primaryKey);
-
-		if (lazyBlobEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLazyBlobEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lazyBlobEntry;
 	}
@@ -976,9 +868,6 @@ public class LazyBlobEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lazyBlobEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LazyBlobEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LazyBlobEntry exists with the key {";
 
@@ -994,4 +883,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2137192192
+// LIFERAY-SERVICE-BUILDER-HASH:1675980504

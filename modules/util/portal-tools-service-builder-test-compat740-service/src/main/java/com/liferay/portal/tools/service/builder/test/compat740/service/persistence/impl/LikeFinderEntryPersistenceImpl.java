@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LikeFinderEntryPersistence.class)
 public class LikeFinderEntryPersistenceImpl
-	extends BasePersistenceImpl<LikeFinderEntry>
+	extends BasePersistenceImpl<LikeFinderEntry, NoSuchLikeFinderEntryException>
 	implements LikeFinderEntryPersistence {
 
 	/*
@@ -431,49 +430,6 @@ public class LikeFinderEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all like finder entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LikeFinderEntryImpl.class);
-
-		finderCache.clearCache(LikeFinderEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the like finder entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LikeFinderEntry likeFinderEntry) {
-		entityCache.removeResult(LikeFinderEntryImpl.class, likeFinderEntry);
-	}
-
-	@Override
-	public void clearCache(List<LikeFinderEntry> likeFinderEntries) {
-		for (LikeFinderEntry likeFinderEntry : likeFinderEntries) {
-			entityCache.removeResult(
-				LikeFinderEntryImpl.class, likeFinderEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LikeFinderEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LikeFinderEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LikeFinderEntryModelImpl likeFinderEntryModelImpl) {
 
@@ -517,47 +473,6 @@ public class LikeFinderEntryPersistenceImpl
 		throws NoSuchLikeFinderEntryException {
 
 		return remove((Serializable)likeFinderEntryId);
-	}
-
-	/**
-	 * Removes the like finder entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the like finder entry
-	 * @return the like finder entry that was removed
-	 * @throws NoSuchLikeFinderEntryException if a like finder entry with the primary key could not be found
-	 */
-	@Override
-	public LikeFinderEntry remove(Serializable primaryKey)
-		throws NoSuchLikeFinderEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LikeFinderEntry likeFinderEntry = (LikeFinderEntry)session.get(
-				LikeFinderEntryImpl.class, primaryKey);
-
-			if (likeFinderEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLikeFinderEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(likeFinderEntry);
-		}
-		catch (NoSuchLikeFinderEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -645,31 +560,6 @@ public class LikeFinderEntryPersistenceImpl
 		}
 
 		likeFinderEntry.resetOriginalValues();
-
-		return likeFinderEntry;
-	}
-
-	/**
-	 * Returns the like finder entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the like finder entry
-	 * @return the like finder entry
-	 * @throws NoSuchLikeFinderEntryException if a like finder entry with the primary key could not be found
-	 */
-	@Override
-	public LikeFinderEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLikeFinderEntryException {
-
-		LikeFinderEntry likeFinderEntry = fetchByPrimaryKey(primaryKey);
-
-		if (likeFinderEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLikeFinderEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return likeFinderEntry;
 	}
@@ -1036,9 +926,6 @@ public class LikeFinderEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "likeFinderEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LikeFinderEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LikeFinderEntry exists with the key {";
 
@@ -1051,4 +938,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1442231408
+// LIFERAY-SERVICE-BUILDER-HASH:744698806

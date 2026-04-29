@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BasicEntryPersistence.class)
 public class BasicEntryPersistenceImpl
-	extends BasePersistenceImpl<BasicEntry> implements BasicEntryPersistence {
+	extends BasePersistenceImpl<BasicEntry, NoSuchBasicEntryException>
+	implements BasicEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -374,48 +375,6 @@ public class BasicEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all basic entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BasicEntryImpl.class);
-
-		finderCache.clearCache(BasicEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the basic entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BasicEntry basicEntry) {
-		entityCache.removeResult(BasicEntryImpl.class, basicEntry);
-	}
-
-	@Override
-	public void clearCache(List<BasicEntry> basicEntries) {
-		for (BasicEntry basicEntry : basicEntries) {
-			entityCache.removeResult(BasicEntryImpl.class, basicEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BasicEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BasicEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BasicEntryModelImpl basicEntryModelImpl) {
 
@@ -456,47 +415,6 @@ public class BasicEntryPersistenceImpl
 		throws NoSuchBasicEntryException {
 
 		return remove((Serializable)basicEntryId);
-	}
-
-	/**
-	 * Removes the basic entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the basic entry
-	 * @return the basic entry that was removed
-	 * @throws NoSuchBasicEntryException if a basic entry with the primary key could not be found
-	 */
-	@Override
-	public BasicEntry remove(Serializable primaryKey)
-		throws NoSuchBasicEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BasicEntry basicEntry = (BasicEntry)session.get(
-				BasicEntryImpl.class, primaryKey);
-
-			if (basicEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBasicEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(basicEntry);
-		}
-		catch (NoSuchBasicEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -608,31 +526,6 @@ public class BasicEntryPersistenceImpl
 		}
 
 		basicEntry.resetOriginalValues();
-
-		return basicEntry;
-	}
-
-	/**
-	 * Returns the basic entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the basic entry
-	 * @return the basic entry
-	 * @throws NoSuchBasicEntryException if a basic entry with the primary key could not be found
-	 */
-	@Override
-	public BasicEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBasicEntryException {
-
-		BasicEntry basicEntry = fetchByPrimaryKey(primaryKey);
-
-		if (basicEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBasicEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return basicEntry;
 	}
@@ -1315,9 +1208,6 @@ public class BasicEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "basicEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BasicEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BasicEntry exists with the key {";
 
@@ -1330,4 +1220,4 @@ public class BasicEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1749650283
+// LIFERAY-SERVICE-BUILDER-HASH:410943307

@@ -36,8 +36,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -122,7 +125,7 @@ public class CommerceOrderAttachmentModelResourcePermissionTest {
 				RandomTestUtil.nextDouble(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 		Assert.assertFalse(
 			_commerceOrderAttachmentModelResourcePermission.contains(

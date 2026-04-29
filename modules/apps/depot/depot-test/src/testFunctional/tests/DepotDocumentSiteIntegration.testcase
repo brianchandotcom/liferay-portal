@@ -189,7 +189,7 @@ definition {
 
 	@description = "This ensures that a document in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
-	test CanCopyDocumentFromConnectedSiteToDepotAndCannotFromUnconnected {
+	test CanCopyDocumentFromConnectedSiteToDepotAndCannotFromUnconnectedSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -229,7 +229,7 @@ definition {
 
 	@description = "This ensures that a document in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
-	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnected {
+	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnectedSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -280,7 +280,7 @@ definition {
 
 	@description = "This ensures that a folder in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
-	test CanCopyFolderFromConnectedSiteToDepotAndCannotFromUnconnected {
+	test CanCopyFolderFromConnectedSiteToDepotAndCannotFromUnconnectedSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
@@ -332,7 +332,7 @@ definition {
 
 	@description = "This ensures that a folder in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
-	test CanCopyFolderFromDepotToConnectedSiteAndCannotToUnconnected {
+	test CanCopyFolderFromDepotToConnectedSiteAndCannotToUnconnectedSite {
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
 			groupName = "Site Name");

@@ -20,6 +20,7 @@ import java.io.IOException;
 
 import java.nio.file.Files;
 
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.TaskContainer;
@@ -36,6 +37,8 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 
 	@Override
 	public void apply(Project project) {
+		_ensurePackageJsonFile(project);
+
 		super.apply(project);
 
 		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
@@ -119,6 +122,24 @@ public class LiferayWorkspaceYarnPlugin extends YarnPlugin {
 					}
 				}
 			});
+	}
+
+	private void _ensurePackageJsonFile(Project project) {
+		File file = project.file("package.json");
+
+		if (file.exists()) {
+			return;
+		}
+
+		try {
+			String jsonString = "{}";
+
+			Files.write(file.toPath(), jsonString.getBytes());
+		}
+		catch (IOException ioException) {
+			throw new GradleException(
+				"Unable to create root package.json", ioException);
+		}
 	}
 
 }

@@ -3267,17 +3267,24 @@ public class ObjectEntryLocalServiceImpl
 				_objectEntryFolderPersistence.fetchByPrimaryKey(
 					objectEntry.getObjectEntryFolderId());
 
-			if ((objectEntryFolder != null) &&
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS.
-					equals(objectEntryFolder.getExternalReferenceCode())) {
+			if (objectEntryFolder != null) {
+				String folderExternalReferenceCode =
+					objectEntryFolder.getExternalReferenceCode();
 
-				payloadJSONObject.put(
-					"notificationLink",
-					StringBundler.concat(
-						_portal.getPathMain(), GroupConstants.CMS_FRIENDLY_URL,
-						"/edit_content_item?p_l_mode=read&p_p_state=",
-						LiferayWindowState.POP_UP, "&objectEntryId=",
-						objectEntry.getObjectEntryId()));
+				if (ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS.
+						equals(folderExternalReferenceCode) ||
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES.
+						equals(folderExternalReferenceCode)) {
+
+					payloadJSONObject.put(
+						"notificationLink",
+						StringBundler.concat(
+							_portal.getPathMain(),
+							GroupConstants.CMS_FRIENDLY_URL,
+							"/edit_content_item?p_l_mode=read&p_p_state=",
+							LiferayWindowState.POP_UP, "&objectEntryId=",
+							objectEntry.getObjectEntryId()));
+				}
 			}
 
 			_userNotificationEventLocalService.sendUserNotificationEvents(

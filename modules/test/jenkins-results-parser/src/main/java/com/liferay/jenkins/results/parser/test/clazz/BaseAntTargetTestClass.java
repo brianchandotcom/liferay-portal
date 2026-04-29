@@ -154,10 +154,11 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 				_testPropertiesFile);
 
 			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-				testProperties, "testray.main.component.name", antTargetName);
+				testProperties, "testray.main.component.name", false,
+				antTargetName);
 
 			_testrayTeamName = JenkinsResultsParserUtil.getProperty(
-				testProperties, "testray.team.name", antTargetName);
+				testProperties, "testray.team.name", false, antTargetName);
 		}
 		else {
 			_testPropertiesFile = null;

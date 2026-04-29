@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -51,6 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 public class StyleBookEntryLocalServiceImpl
 	extends StyleBookEntryLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry addStyleBookEntry(
 			String externalReferenceCode, long userId, long groupId,
@@ -121,6 +124,7 @@ public class StyleBookEntryLocalServiceImpl
 		return publishDraft(styleBookEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry copyStyleBookEntry(
 			long userId, long groupId, long sourceStyleBookEntryId,
@@ -187,6 +191,7 @@ public class StyleBookEntryLocalServiceImpl
 		return deleteStyleBookEntry(getStyleBookEntry(styleBookEntryId));
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public StyleBookEntry deleteStyleBookEntry(
 			String externalReferenceCode, long groupId)
@@ -323,6 +328,7 @@ public class StyleBookEntryLocalServiceImpl
 			true);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updateDefaultStyleBookEntry(
 			long styleBookEntryId, boolean defaultStyleBookEntry)
@@ -372,6 +378,7 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updateFrontendTokensValues(
 			long styleBookEntryId, String frontendTokensValues)
@@ -395,6 +402,7 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updateName(long styleBookEntryId, String name)
 		throws PortalException {
@@ -419,6 +427,7 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updatePreviewFileEntryId(
 			long styleBookEntryId, long previewFileEntryId,
@@ -453,6 +462,7 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntry;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
 			long userId, long styleBookEntryId, boolean defaultStylebookEntry,
@@ -503,6 +513,7 @@ public class StyleBookEntryLocalServiceImpl
 		return styleBookEntryPersistence.update(styleBookEntry, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String frontendTokensValues, String name,

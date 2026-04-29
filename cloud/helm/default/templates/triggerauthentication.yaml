@@ -1,0 +1,15 @@
+{{- if and .Values.keda.enabled .Values.keda.triggerAuthentication.spec }}
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+    {{- with .Values.keda.triggerAuthentication.annotations }}
+    annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    labels:
+        {{- include "liferay.labels" . | nindent 8 }}
+    name: {{ include "liferay.name" . }}
+    namespace: {{ include "liferay.namespace" . }}
+spec:
+    {{- toYaml .Values.keda.triggerAuthentication.spec | nindent 4 }}
+{{- end }}

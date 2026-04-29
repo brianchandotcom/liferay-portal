@@ -8,6 +8,10 @@
 {{- end }}
 {{- end }}
 
+{{- define "liferay.keda.prometheusServerAddress" -}}
+{{- tpl (.Values.keda.prometheusServerAddress | default "") . -}}
+{{- end }}
+
 {{- define "liferay.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}

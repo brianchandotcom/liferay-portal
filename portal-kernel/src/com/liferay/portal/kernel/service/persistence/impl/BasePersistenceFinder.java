@@ -14,16 +14,6 @@ import com.liferay.portal.kernel.model.BaseModel;
  */
 public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 
-	@SafeVarargs
-	protected BasePersistenceFinder(
-		BasePersistenceImpl<T> basePersistenceImpl, String sqlSelectWhere,
-		FinderColumn<T>... finderColumns) {
-
-		this.basePersistenceImpl = basePersistenceImpl;
-		this.sqlSelectWhere = sqlSelectWhere;
-		this.finderColumns = finderColumns;
-	}
-
 	public String buildNoSuchKeyMessage(String prefix, Object[] values) {
 		StringBundler sb = new StringBundler((finderColumns.length * 3) + 1);
 
@@ -41,6 +31,16 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	@SafeVarargs
+	protected BasePersistenceFinder(
+		BasePersistenceImpl<T> basePersistenceImpl, String sqlSelectWhere,
+		FinderColumn<T>... finderColumns) {
+
+		this.basePersistenceImpl = basePersistenceImpl;
+		this.sqlSelectWhere = sqlSelectWhere;
+		this.finderColumns = finderColumns;
 	}
 
 	protected void bindQueryParams(QueryPos queryPos, Object[] values) {

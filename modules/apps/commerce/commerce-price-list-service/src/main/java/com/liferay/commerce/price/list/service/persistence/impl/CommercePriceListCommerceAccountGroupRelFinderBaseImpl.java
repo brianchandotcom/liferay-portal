@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.price.list.service.persistence.impl;
 
+import com.liferay.commerce.price.list.exception.NoSuchPriceListCommerceAccountGroupRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListCommerceAccountGroupRel;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommercePriceListCommerceAccountGroupRelFinderBaseImpl
-	extends BasePersistenceImpl<CommercePriceListCommerceAccountGroupRel> {
+	extends BasePersistenceImpl
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException> {
 
 	public CommercePriceListCommerceAccountGroupRelFinderBaseImpl() {
 		setModelClass(CommercePriceListCommerceAccountGroupRel.class);
@@ -83,4 +86,4 @@ public abstract class CommercePriceListCommerceAccountGroupRelFinderBaseImpl
 		CommercePriceListCommerceAccountGroupRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1009224878
+// LIFERAY-SERVICE-BUILDER-HASH:-1319968871

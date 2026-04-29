@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMContentPersistence.class)
 public class DDMContentPersistenceImpl
-	extends BasePersistenceImpl<DDMContent> implements DDMContentPersistence {
+	extends BasePersistenceImpl<DDMContent, NoSuchContentException>
+	implements DDMContentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -889,48 +890,6 @@ public class DDMContentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm contents.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMContentImpl.class);
-
-		finderCache.clearCache(DDMContentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm content.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMContent ddmContent) {
-		entityCache.removeResult(DDMContentImpl.class, ddmContent);
-	}
-
-	@Override
-	public void clearCache(List<DDMContent> ddmContents) {
-		for (DDMContent ddmContent : ddmContents) {
-			entityCache.removeResult(DDMContentImpl.class, ddmContent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMContentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMContentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMContentModelImpl ddmContentModelImpl) {
 
@@ -979,47 +938,6 @@ public class DDMContentPersistenceImpl
 	@Override
 	public DDMContent remove(long contentId) throws NoSuchContentException {
 		return remove((Serializable)contentId);
-	}
-
-	/**
-	 * Removes the ddm content with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm content
-	 * @return the ddm content that was removed
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	@Override
-	public DDMContent remove(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMContent ddmContent = (DDMContent)session.get(
-				DDMContentImpl.class, primaryKey);
-
-			if (ddmContent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmContent);
-		}
-		catch (NoSuchContentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1141,31 +1059,6 @@ public class DDMContentPersistenceImpl
 		}
 
 		ddmContent.resetOriginalValues();
-
-		return ddmContent;
-	}
-
-	/**
-	 * Returns the ddm content with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm content
-	 * @return the ddm content
-	 * @throws NoSuchContentException if a ddm content with the primary key could not be found
-	 */
-	@Override
-	public DDMContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		DDMContent ddmContent = fetchByPrimaryKey(primaryKey);
-
-		if (ddmContent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmContent;
 	}
@@ -1854,9 +1747,6 @@ public class DDMContentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmContent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMContent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMContent exists with the key {";
 
@@ -1872,4 +1762,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-510098289
+// LIFERAY-SERVICE-BUILDER-HASH:906693588

@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the undefined default order entry service.
@@ -54,7 +53,8 @@ import java.util.Set;
  * @generated
  */
 public class UndefinedDefaultOrderEntryPersistenceImpl
-	extends BasePersistenceImpl<UndefinedDefaultOrderEntry>
+	extends BasePersistenceImpl
+		<UndefinedDefaultOrderEntry, NoSuchUndefinedDefaultOrderEntryException>
 	implements UndefinedDefaultOrderEntryPersistence {
 
 	/*
@@ -369,58 +369,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all undefined default order entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(UndefinedDefaultOrderEntryImpl.class);
-
-		finderCache.clearCache(UndefinedDefaultOrderEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the undefined default order entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
-
-		entityCache.removeResult(
-			UndefinedDefaultOrderEntryImpl.class, undefinedDefaultOrderEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<UndefinedDefaultOrderEntry> undefinedDefaultOrderEntries) {
-
-		for (UndefinedDefaultOrderEntry undefinedDefaultOrderEntry :
-				undefinedDefaultOrderEntries) {
-
-			entityCache.removeResult(
-				UndefinedDefaultOrderEntryImpl.class,
-				undefinedDefaultOrderEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(UndefinedDefaultOrderEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				UndefinedDefaultOrderEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		UndefinedDefaultOrderEntryModelImpl
 			undefinedDefaultOrderEntryModelImpl) {
@@ -464,50 +412,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 		throws NoSuchUndefinedDefaultOrderEntryException {
 
 		return remove((Serializable)undefinedDefaultOrderEntryId);
-	}
-
-	/**
-	 * Removes the undefined default order entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the undefined default order entry
-	 * @return the undefined default order entry that was removed
-	 * @throws NoSuchUndefinedDefaultOrderEntryException if a undefined default order entry with the primary key could not be found
-	 */
-	@Override
-	public UndefinedDefaultOrderEntry remove(Serializable primaryKey)
-		throws NoSuchUndefinedDefaultOrderEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
-				(UndefinedDefaultOrderEntry)session.get(
-					UndefinedDefaultOrderEntryImpl.class, primaryKey);
-
-			if (undefinedDefaultOrderEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUndefinedDefaultOrderEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(undefinedDefaultOrderEntry);
-		}
-		catch (NoSuchUndefinedDefaultOrderEntryException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -620,32 +524,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 		}
 
 		undefinedDefaultOrderEntry.resetOriginalValues();
-
-		return undefinedDefaultOrderEntry;
-	}
-
-	/**
-	 * Returns the undefined default order entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the undefined default order entry
-	 * @return the undefined default order entry
-	 * @throws NoSuchUndefinedDefaultOrderEntryException if a undefined default order entry with the primary key could not be found
-	 */
-	@Override
-	public UndefinedDefaultOrderEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUndefinedDefaultOrderEntryException {
-
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (undefinedDefaultOrderEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUndefinedDefaultOrderEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return undefinedDefaultOrderEntry;
 	}
@@ -974,9 +852,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"undefinedDefaultOrderEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UndefinedDefaultOrderEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UndefinedDefaultOrderEntry exists with the key {";
 
@@ -989,4 +864,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-762351891
+// LIFERAY-SERVICE-BUILDER-HASH:941314175

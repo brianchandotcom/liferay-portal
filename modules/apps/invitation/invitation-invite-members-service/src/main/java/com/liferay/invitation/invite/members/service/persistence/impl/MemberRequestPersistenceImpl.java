@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MemberRequestPersistence.class)
 public class MemberRequestPersistenceImpl
-	extends BasePersistenceImpl<MemberRequest>
+	extends BasePersistenceImpl<MemberRequest, NoSuchMemberRequestException>
 	implements MemberRequestPersistence {
 
 	/*
@@ -646,48 +646,6 @@ public class MemberRequestPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all member requests.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MemberRequestImpl.class);
-
-		finderCache.clearCache(MemberRequestImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the member request.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MemberRequest memberRequest) {
-		entityCache.removeResult(MemberRequestImpl.class, memberRequest);
-	}
-
-	@Override
-	public void clearCache(List<MemberRequest> memberRequests) {
-		for (MemberRequest memberRequest : memberRequests) {
-			entityCache.removeResult(MemberRequestImpl.class, memberRequest);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MemberRequestImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MemberRequestImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MemberRequestModelImpl memberRequestModelImpl) {
 
@@ -736,47 +694,6 @@ public class MemberRequestPersistenceImpl
 		throws NoSuchMemberRequestException {
 
 		return remove((Serializable)memberRequestId);
-	}
-
-	/**
-	 * Removes the member request with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the member request
-	 * @return the member request that was removed
-	 * @throws NoSuchMemberRequestException if a member request with the primary key could not be found
-	 */
-	@Override
-	public MemberRequest remove(Serializable primaryKey)
-		throws NoSuchMemberRequestException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MemberRequest memberRequest = (MemberRequest)session.get(
-				MemberRequestImpl.class, primaryKey);
-
-			if (memberRequest == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMemberRequestException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(memberRequest);
-		}
-		catch (NoSuchMemberRequestException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -886,31 +803,6 @@ public class MemberRequestPersistenceImpl
 		}
 
 		memberRequest.resetOriginalValues();
-
-		return memberRequest;
-	}
-
-	/**
-	 * Returns the member request with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the member request
-	 * @return the member request
-	 * @throws NoSuchMemberRequestException if a member request with the primary key could not be found
-	 */
-	@Override
-	public MemberRequest findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMemberRequestException {
-
-		MemberRequest memberRequest = fetchByPrimaryKey(primaryKey);
-
-		if (memberRequest == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMemberRequestException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return memberRequest;
 	}
@@ -1311,9 +1203,6 @@ public class MemberRequestPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "memberRequest.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MemberRequest exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MemberRequest exists with the key {";
 
@@ -1329,4 +1218,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:469929421
+// LIFERAY-SERVICE-BUILDER-HASH:-257549124

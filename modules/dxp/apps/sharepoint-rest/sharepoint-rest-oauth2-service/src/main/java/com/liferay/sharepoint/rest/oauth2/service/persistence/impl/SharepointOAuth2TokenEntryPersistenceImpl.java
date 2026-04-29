@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SharepointOAuth2TokenEntryPersistence.class)
 public class SharepointOAuth2TokenEntryPersistenceImpl
-	extends BasePersistenceImpl<SharepointOAuth2TokenEntry>
+	extends BasePersistenceImpl
+		<SharepointOAuth2TokenEntry, NoSuch2TokenEntryException>
 	implements SharepointOAuth2TokenEntryPersistence {
 
 	/*
@@ -393,58 +393,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sharepoint o auth2 token entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SharepointOAuth2TokenEntryImpl.class);
-
-		finderCache.clearCache(SharepointOAuth2TokenEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sharepoint o auth2 token entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-
-		entityCache.removeResult(
-			SharepointOAuth2TokenEntryImpl.class, sharepointOAuth2TokenEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
-
-		for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
-				sharepointOAuth2TokenEntries) {
-
-			entityCache.removeResult(
-				SharepointOAuth2TokenEntryImpl.class,
-				sharepointOAuth2TokenEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SharepointOAuth2TokenEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				SharepointOAuth2TokenEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SharepointOAuth2TokenEntryModelImpl
 			sharepointOAuth2TokenEntryModelImpl) {
@@ -492,48 +440,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		throws NoSuch2TokenEntryException {
 
 		return remove((Serializable)sharepointOAuth2TokenEntryId);
-	}
-
-	/**
-	 * Removes the sharepoint o auth2 token entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sharepoint o auth2 token entry
-	 * @return the sharepoint o auth2 token entry that was removed
-	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry remove(Serializable primaryKey)
-		throws NoSuch2TokenEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
-				(SharepointOAuth2TokenEntry)session.get(
-					SharepointOAuth2TokenEntryImpl.class, primaryKey);
-
-			if (sharepointOAuth2TokenEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuch2TokenEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sharepointOAuth2TokenEntry);
-		}
-		catch (NoSuch2TokenEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -646,32 +552,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		}
 
 		sharepointOAuth2TokenEntry.resetOriginalValues();
-
-		return sharepointOAuth2TokenEntry;
-	}
-
-	/**
-	 * Returns the sharepoint o auth2 token entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sharepoint o auth2 token entry
-	 * @return the sharepoint o auth2 token entry
-	 * @throws NoSuch2TokenEntryException if a sharepoint o auth2 token entry with the primary key could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuch2TokenEntryException {
-
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (sharepointOAuth2TokenEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuch2TokenEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sharepointOAuth2TokenEntry;
 	}
@@ -1033,9 +913,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"sharepointOAuth2TokenEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SharepointOAuth2TokenEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SharepointOAuth2TokenEntry exists with the key {";
 
@@ -1048,4 +925,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1490427058
+// LIFERAY-SERVICE-BUILDER-HASH:509172752

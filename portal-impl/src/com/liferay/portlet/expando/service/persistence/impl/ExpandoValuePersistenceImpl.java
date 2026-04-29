@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 public class ExpandoValuePersistenceImpl
-	extends BasePersistenceImpl<ExpandoValue>
+	extends BasePersistenceImpl<ExpandoValue, NoSuchValueException>
 	implements ExpandoValuePersistence {
 
 	/*
@@ -1691,48 +1691,6 @@ public class ExpandoValuePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all expando values.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ExpandoValueImpl.class);
-
-		FinderCacheUtil.clearCache(ExpandoValueImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the expando value.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ExpandoValue expandoValue) {
-		EntityCacheUtil.removeResult(ExpandoValueImpl.class, expandoValue);
-	}
-
-	@Override
-	public void clearCache(List<ExpandoValue> expandoValues) {
-		for (ExpandoValue expandoValue : expandoValues) {
-			EntityCacheUtil.removeResult(ExpandoValueImpl.class, expandoValue);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ExpandoValueImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ExpandoValueImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ExpandoValueModelImpl expandoValueModelImpl) {
 
@@ -1787,47 +1745,6 @@ public class ExpandoValuePersistenceImpl
 	@Override
 	public ExpandoValue remove(long valueId) throws NoSuchValueException {
 		return remove((Serializable)valueId);
-	}
-
-	/**
-	 * Removes the expando value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the expando value
-	 * @return the expando value that was removed
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	@Override
-	public ExpandoValue remove(Serializable primaryKey)
-		throws NoSuchValueException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExpandoValue expandoValue = (ExpandoValue)session.get(
-				ExpandoValueImpl.class, primaryKey);
-
-			if (expandoValue == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchValueException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(expandoValue);
-		}
-		catch (NoSuchValueException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1921,31 +1838,6 @@ public class ExpandoValuePersistenceImpl
 		}
 
 		expandoValue.resetOriginalValues();
-
-		return expandoValue;
-	}
-
-	/**
-	 * Returns the expando value with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the expando value
-	 * @return the expando value
-	 * @throws NoSuchValueException if a expando value with the primary key could not be found
-	 */
-	@Override
-	public ExpandoValue findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchValueException {
-
-		ExpandoValue expandoValue = fetchByPrimaryKey(primaryKey);
-
-		if (expandoValue == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchValueException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return expandoValue;
 	}
@@ -2744,9 +2636,6 @@ public class ExpandoValuePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoValue.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ExpandoValue exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExpandoValue exists with the key {";
 
@@ -2762,4 +2651,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1182761543
+// LIFERAY-SERVICE-BUILDER-HASH:777524570

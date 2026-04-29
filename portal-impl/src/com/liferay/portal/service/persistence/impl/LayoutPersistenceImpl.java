@@ -82,7 +82,8 @@ import java.util.Set;
  * @generated
  */
 public class LayoutPersistenceImpl
-	extends BasePersistenceImpl<Layout> implements LayoutPersistence {
+	extends BasePersistenceImpl<Layout, NoSuchLayoutException>
+	implements LayoutPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -13094,48 +13095,6 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layouts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Layout layout) {
-		EntityCacheUtil.removeResult(LayoutImpl.class, layout);
-	}
-
-	@Override
-	public void clearCache(List<Layout> layouts) {
-		for (Layout layout : layouts) {
-			EntityCacheUtil.removeResult(LayoutImpl.class, layout);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(LayoutImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(LayoutModelImpl layoutModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -13207,44 +13166,6 @@ public class LayoutPersistenceImpl
 	@Override
 	public Layout remove(long plid) throws NoSuchLayoutException {
 		return remove((Serializable)plid);
-	}
-
-	/**
-	 * Removes the layout with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout
-	 * @return the layout that was removed
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	@Override
-	public Layout remove(Serializable primaryKey) throws NoSuchLayoutException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Layout layout = (Layout)session.get(LayoutImpl.class, primaryKey);
-
-			if (layout == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layout);
-		}
-		catch (NoSuchLayoutException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -13421,31 +13342,6 @@ public class LayoutPersistenceImpl
 		}
 
 		layout.resetOriginalValues();
-
-		return layout;
-	}
-
-	/**
-	 * Returns the layout with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout
-	 * @return the layout
-	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
-	 */
-	@Override
-	public Layout findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutException {
-
-		Layout layout = fetchByPrimaryKey(primaryKey);
-
-		if (layout == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layout;
 	}
@@ -14734,9 +14630,6 @@ public class LayoutPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Layout.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Layout exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Layout exists with the key {";
 
@@ -14758,4 +14651,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-455670070
+// LIFERAY-SERVICE-BUILDER-HASH:1698957613

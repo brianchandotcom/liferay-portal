@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuthClientEntryPersistence.class)
 public class OAuthClientEntryPersistenceImpl
-	extends BasePersistenceImpl<OAuthClientEntry>
+	extends BasePersistenceImpl
+		<OAuthClientEntry, NoSuchOAuthClientEntryException>
 	implements OAuthClientEntryPersistence {
 
 	/*
@@ -2265,49 +2266,6 @@ public class OAuthClientEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all o auth client entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OAuthClientEntryImpl.class);
-
-		finderCache.clearCache(OAuthClientEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the o auth client entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OAuthClientEntry oAuthClientEntry) {
-		entityCache.removeResult(OAuthClientEntryImpl.class, oAuthClientEntry);
-	}
-
-	@Override
-	public void clearCache(List<OAuthClientEntry> oAuthClientEntries) {
-		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
-			entityCache.removeResult(
-				OAuthClientEntryImpl.class, oAuthClientEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OAuthClientEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(OAuthClientEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OAuthClientEntryModelImpl oAuthClientEntryModelImpl) {
 
@@ -2363,47 +2321,6 @@ public class OAuthClientEntryPersistenceImpl
 		throws NoSuchOAuthClientEntryException {
 
 		return remove((Serializable)oAuthClientEntryId);
-	}
-
-	/**
-	 * Removes the o auth client entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the o auth client entry
-	 * @return the o auth client entry that was removed
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	@Override
-	public OAuthClientEntry remove(Serializable primaryKey)
-		throws NoSuchOAuthClientEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OAuthClientEntry oAuthClientEntry = (OAuthClientEntry)session.get(
-				OAuthClientEntryImpl.class, primaryKey);
-
-			if (oAuthClientEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOAuthClientEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(oAuthClientEntry);
-		}
-		catch (NoSuchOAuthClientEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2588,31 +2505,6 @@ public class OAuthClientEntryPersistenceImpl
 		}
 
 		oAuthClientEntry.resetOriginalValues();
-
-		return oAuthClientEntry;
-	}
-
-	/**
-	 * Returns the o auth client entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth client entry
-	 * @return the o auth client entry
-	 * @throws NoSuchOAuthClientEntryException if a o auth client entry with the primary key could not be found
-	 */
-	@Override
-	public OAuthClientEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOAuthClientEntryException {
-
-		OAuthClientEntry oAuthClientEntry = fetchByPrimaryKey(primaryKey);
-
-		if (oAuthClientEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOAuthClientEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return oAuthClientEntry;
 	}
@@ -3135,9 +3027,6 @@ public class OAuthClientEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "OAuthClientEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OAuthClientEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuthClientEntry exists with the key {";
 
@@ -3153,4 +3042,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1369253840
+// LIFERAY-SERVICE-BUILDER-HASH:-1075338764

@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentCollectionPersistence.class)
 public class FragmentCollectionPersistenceImpl
-	extends BasePersistenceImpl<FragmentCollection>
+	extends BasePersistenceImpl<FragmentCollection, NoSuchCollectionException>
 	implements FragmentCollectionPersistence {
 
 	/*
@@ -3385,50 +3385,6 @@ public class FragmentCollectionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all fragment collections.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FragmentCollectionImpl.class);
-
-		finderCache.clearCache(FragmentCollectionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the fragment collection.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FragmentCollection fragmentCollection) {
-		entityCache.removeResult(
-			FragmentCollectionImpl.class, fragmentCollection);
-	}
-
-	@Override
-	public void clearCache(List<FragmentCollection> fragmentCollections) {
-		for (FragmentCollection fragmentCollection : fragmentCollections) {
-			entityCache.removeResult(
-				FragmentCollectionImpl.class, fragmentCollection);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FragmentCollectionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FragmentCollectionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FragmentCollectionModelImpl fragmentCollectionModelImpl) {
 
@@ -3496,48 +3452,6 @@ public class FragmentCollectionPersistenceImpl
 		throws NoSuchCollectionException {
 
 		return remove((Serializable)fragmentCollectionId);
-	}
-
-	/**
-	 * Removes the fragment collection with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the fragment collection
-	 * @return the fragment collection that was removed
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	@Override
-	public FragmentCollection remove(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentCollection fragmentCollection =
-				(FragmentCollection)session.get(
-					FragmentCollectionImpl.class, primaryKey);
-
-			if (fragmentCollection == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCollectionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(fragmentCollection);
-		}
-		catch (NoSuchCollectionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3735,31 +3649,6 @@ public class FragmentCollectionPersistenceImpl
 		}
 
 		fragmentCollection.resetOriginalValues();
-
-		return fragmentCollection;
-	}
-
-	/**
-	 * Returns the fragment collection with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment collection
-	 * @return the fragment collection
-	 * @throws NoSuchCollectionException if a fragment collection with the primary key could not be found
-	 */
-	@Override
-	public FragmentCollection findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		FragmentCollection fragmentCollection = fetchByPrimaryKey(primaryKey);
-
-		if (fragmentCollection == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCollectionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return fragmentCollection;
 	}
@@ -4520,9 +4409,6 @@ public class FragmentCollectionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentCollection.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FragmentCollection exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentCollection exists with the key {";
 
@@ -4538,4 +4424,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:67860496
+// LIFERAY-SERVICE-BUILDER-HASH:-1675797249

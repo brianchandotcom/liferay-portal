@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the user notification delivery service.
@@ -53,7 +52,8 @@ import java.util.Set;
  * @generated
  */
 public class UserNotificationDeliveryPersistenceImpl
-	extends BasePersistenceImpl<UserNotificationDelivery>
+	extends BasePersistenceImpl
+		<UserNotificationDelivery, NoSuchUserNotificationDeliveryException>
 	implements UserNotificationDeliveryPersistence {
 
 	/*
@@ -415,55 +415,6 @@ public class UserNotificationDeliveryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all user notification deliveries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserNotificationDeliveryImpl.class);
-
-		FinderCacheUtil.clearCache(UserNotificationDeliveryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user notification delivery.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserNotificationDelivery userNotificationDelivery) {
-		EntityCacheUtil.removeResult(
-			UserNotificationDeliveryImpl.class, userNotificationDelivery);
-	}
-
-	@Override
-	public void clearCache(
-		List<UserNotificationDelivery> userNotificationDeliveries) {
-
-		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
-
-			EntityCacheUtil.removeResult(
-				UserNotificationDeliveryImpl.class, userNotificationDelivery);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserNotificationDeliveryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				UserNotificationDeliveryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl) {
 
@@ -512,48 +463,6 @@ public class UserNotificationDeliveryPersistenceImpl
 		throws NoSuchUserNotificationDeliveryException {
 
 		return remove((Serializable)userNotificationDeliveryId);
-	}
-
-	/**
-	 * Removes the user notification delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user notification delivery
-	 * @return the user notification delivery that was removed
-	 * @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationDelivery remove(Serializable primaryKey)
-		throws NoSuchUserNotificationDeliveryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserNotificationDelivery userNotificationDelivery =
-				(UserNotificationDelivery)session.get(
-					UserNotificationDeliveryImpl.class, primaryKey);
-
-			if (userNotificationDelivery == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserNotificationDeliveryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userNotificationDelivery);
-		}
-		catch (NoSuchUserNotificationDeliveryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -650,32 +559,6 @@ public class UserNotificationDeliveryPersistenceImpl
 		}
 
 		userNotificationDelivery.resetOriginalValues();
-
-		return userNotificationDelivery;
-	}
-
-	/**
-	 * Returns the user notification delivery with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user notification delivery
-	 * @return the user notification delivery
-	 * @throws NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationDelivery findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserNotificationDeliveryException {
-
-		UserNotificationDelivery userNotificationDelivery = fetchByPrimaryKey(
-			primaryKey);
-
-		if (userNotificationDelivery == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserNotificationDeliveryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userNotificationDelivery;
 	}
@@ -1022,9 +905,6 @@ public class UserNotificationDeliveryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"userNotificationDelivery.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserNotificationDelivery exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserNotificationDelivery exists with the key {";
 
@@ -1037,4 +917,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1298655670
+// LIFERAY-SERVICE-BUILDER-HASH:-1946335760

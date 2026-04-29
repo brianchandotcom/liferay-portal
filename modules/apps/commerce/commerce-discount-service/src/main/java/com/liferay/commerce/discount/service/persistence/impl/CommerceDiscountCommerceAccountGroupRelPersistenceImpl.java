@@ -67,7 +67,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountCommerceAccountGroupRelPersistence.class)
 public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountCommerceAccountGroupRel>
+	extends BasePersistenceImpl
+		<CommerceDiscountCommerceAccountGroupRel,
+		 NoSuchDiscountCommerceAccountGroupRelException>
 	implements CommerceDiscountCommerceAccountGroupRelPersistence {
 
 	/*
@@ -598,65 +600,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce discount commerce account group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(
-			CommerceDiscountCommerceAccountGroupRelImpl.class);
-
-		finderCache.clearCache(
-			CommerceDiscountCommerceAccountGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount commerce account group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel) {
-
-		entityCache.removeResult(
-			CommerceDiscountCommerceAccountGroupRelImpl.class,
-			commerceDiscountCommerceAccountGroupRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceDiscountCommerceAccountGroupRel>
-			commerceDiscountCommerceAccountGroupRels) {
-
-		for (CommerceDiscountCommerceAccountGroupRel
-				commerceDiscountCommerceAccountGroupRel :
-					commerceDiscountCommerceAccountGroupRels) {
-
-			entityCache.removeResult(
-				CommerceDiscountCommerceAccountGroupRelImpl.class,
-				commerceDiscountCommerceAccountGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(
-			CommerceDiscountCommerceAccountGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceDiscountCommerceAccountGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceDiscountCommerceAccountGroupRelModelImpl
 			commerceDiscountCommerceAccountGroupRelModelImpl) {
@@ -710,53 +653,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		throws NoSuchDiscountCommerceAccountGroupRelException {
 
 		return remove((Serializable)commerceDiscountCommerceAccountGroupRelId);
-	}
-
-	/**
-	 * Removes the commerce discount commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount commerce account group rel
-	 * @return the commerce discount commerce account group rel that was removed
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a commerce discount commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel remove(
-			Serializable primaryKey)
-		throws NoSuchDiscountCommerceAccountGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountCommerceAccountGroupRel
-				commerceDiscountCommerceAccountGroupRel =
-					(CommerceDiscountCommerceAccountGroupRel)session.get(
-						CommerceDiscountCommerceAccountGroupRelImpl.class,
-						primaryKey);
-
-			if (commerceDiscountCommerceAccountGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountCommerceAccountGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountCommerceAccountGroupRel);
-		}
-		catch (NoSuchDiscountCommerceAccountGroupRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -890,34 +786,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		}
 
 		commerceDiscountCommerceAccountGroupRel.resetOriginalValues();
-
-		return commerceDiscountCommerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce discount commerce account group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount commerce account group rel
-	 * @return the commerce discount commerce account group rel
-	 * @throws NoSuchDiscountCommerceAccountGroupRelException if a commerce discount commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchDiscountCommerceAccountGroupRelException {
-
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel = fetchByPrimaryKey(
-				primaryKey);
-
-		if (commerceDiscountCommerceAccountGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountCommerceAccountGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountCommerceAccountGroupRel;
 	}
@@ -1344,9 +1212,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceDiscountCommerceAccountGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountCommerceAccountGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountCommerceAccountGroupRel exists with the key {";
 
@@ -1362,4 +1227,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1110443258
+// LIFERAY-SERVICE-BUILDER-HASH:617371287

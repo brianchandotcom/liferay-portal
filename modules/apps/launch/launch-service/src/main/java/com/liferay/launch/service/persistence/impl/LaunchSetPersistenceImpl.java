@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LaunchSetPersistence.class)
 public class LaunchSetPersistenceImpl
-	extends BasePersistenceImpl<LaunchSet> implements LaunchSetPersistence {
+	extends BasePersistenceImpl<LaunchSet, NoSuchLaunchSetException>
+	implements LaunchSetPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1437,48 +1438,6 @@ public class LaunchSetPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all launch sets.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LaunchSetImpl.class);
-
-		finderCache.clearCache(LaunchSetImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the launch set.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LaunchSet launchSet) {
-		entityCache.removeResult(LaunchSetImpl.class, launchSet);
-	}
-
-	@Override
-	public void clearCache(List<LaunchSet> launchSets) {
-		for (LaunchSet launchSet : launchSets) {
-			entityCache.removeResult(LaunchSetImpl.class, launchSet);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LaunchSetImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LaunchSetImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LaunchSetModelImpl launchSetModelImpl) {
 
@@ -1523,47 +1482,6 @@ public class LaunchSetPersistenceImpl
 	@Override
 	public LaunchSet remove(long launchSetId) throws NoSuchLaunchSetException {
 		return remove((Serializable)launchSetId);
-	}
-
-	/**
-	 * Removes the launch set with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the launch set
-	 * @return the launch set that was removed
-	 * @throws NoSuchLaunchSetException if a launch set with the primary key could not be found
-	 */
-	@Override
-	public LaunchSet remove(Serializable primaryKey)
-		throws NoSuchLaunchSetException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LaunchSet launchSet = (LaunchSet)session.get(
-				LaunchSetImpl.class, primaryKey);
-
-			if (launchSet == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLaunchSetException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(launchSet);
-		}
-		catch (NoSuchLaunchSetException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1737,31 +1655,6 @@ public class LaunchSetPersistenceImpl
 		}
 
 		launchSet.resetOriginalValues();
-
-		return launchSet;
-	}
-
-	/**
-	 * Returns the launch set with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the launch set
-	 * @return the launch set
-	 * @throws NoSuchLaunchSetException if a launch set with the primary key could not be found
-	 */
-	@Override
-	public LaunchSet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLaunchSetException {
-
-		LaunchSet launchSet = fetchByPrimaryKey(primaryKey);
-
-		if (launchSet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLaunchSetException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return launchSet;
 	}
@@ -2229,9 +2122,6 @@ public class LaunchSetPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "launchSet.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LaunchSet exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LaunchSet exists with the key {";
 
@@ -2247,4 +2137,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1235811517
+// LIFERAY-SERVICE-BUILDER-HASH:1078797722

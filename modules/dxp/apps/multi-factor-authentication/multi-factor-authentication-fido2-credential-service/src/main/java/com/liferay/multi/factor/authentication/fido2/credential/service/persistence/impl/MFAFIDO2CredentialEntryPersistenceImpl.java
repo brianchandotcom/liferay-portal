@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MFAFIDO2CredentialEntryPersistence.class)
 public class MFAFIDO2CredentialEntryPersistenceImpl
-	extends BasePersistenceImpl<MFAFIDO2CredentialEntry>
+	extends BasePersistenceImpl
+		<MFAFIDO2CredentialEntry, NoSuchMFAFIDO2CredentialEntryException>
 	implements MFAFIDO2CredentialEntryPersistence {
 
 	/*
@@ -544,55 +544,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all mfafido2 credential entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MFAFIDO2CredentialEntryImpl.class);
-
-		finderCache.clearCache(MFAFIDO2CredentialEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the mfafido2 credential entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
-		entityCache.removeResult(
-			MFAFIDO2CredentialEntryImpl.class, mfaFIDO2CredentialEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<MFAFIDO2CredentialEntry> mfaFIDO2CredentialEntries) {
-
-		for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry :
-				mfaFIDO2CredentialEntries) {
-
-			entityCache.removeResult(
-				MFAFIDO2CredentialEntryImpl.class, mfaFIDO2CredentialEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MFAFIDO2CredentialEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				MFAFIDO2CredentialEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MFAFIDO2CredentialEntryModelImpl mfaFIDO2CredentialEntryModelImpl) {
 
@@ -636,48 +587,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		throws NoSuchMFAFIDO2CredentialEntryException {
 
 		return remove((Serializable)mfaFIDO2CredentialEntryId);
-	}
-
-	/**
-	 * Removes the mfafido2 credential entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the mfafido2 credential entry
-	 * @return the mfafido2 credential entry that was removed
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a mfafido2 credential entry with the primary key could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry remove(Serializable primaryKey)
-		throws NoSuchMFAFIDO2CredentialEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry =
-				(MFAFIDO2CredentialEntry)session.get(
-					MFAFIDO2CredentialEntryImpl.class, primaryKey);
-
-			if (mfaFIDO2CredentialEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMFAFIDO2CredentialEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mfaFIDO2CredentialEntry);
-		}
-		catch (NoSuchMFAFIDO2CredentialEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -798,32 +707,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		}
 
 		mfaFIDO2CredentialEntry.resetOriginalValues();
-
-		return mfaFIDO2CredentialEntry;
-	}
-
-	/**
-	 * Returns the mfafido2 credential entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the mfafido2 credential entry
-	 * @return the mfafido2 credential entry
-	 * @throws NoSuchMFAFIDO2CredentialEntryException if a mfafido2 credential entry with the primary key could not be found
-	 */
-	@Override
-	public MFAFIDO2CredentialEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMFAFIDO2CredentialEntryException {
-
-		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (mfaFIDO2CredentialEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMFAFIDO2CredentialEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mfaFIDO2CredentialEntry;
 	}
@@ -1215,9 +1098,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"mfafido2CredentialEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MFAFIDO2CredentialEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MFAFIDO2CredentialEntry exists with the key {";
 
@@ -1230,4 +1110,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:182789990
+// LIFERAY-SERVICE-BUILDER-HASH:2034319922

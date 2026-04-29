@@ -74,7 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoNotificationRecipientPersistence.class)
 public class KaleoNotificationRecipientPersistenceImpl
-	extends BasePersistenceImpl<KaleoNotificationRecipient>
+	extends BasePersistenceImpl
+		<KaleoNotificationRecipient, NoSuchNotificationRecipientException>
 	implements KaleoNotificationRecipientPersistence {
 
 	/*
@@ -653,58 +654,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all kaleo notification recipients.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoNotificationRecipientImpl.class);
-
-		finderCache.clearCache(KaleoNotificationRecipientImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo notification recipient.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		KaleoNotificationRecipient kaleoNotificationRecipient) {
-
-		entityCache.removeResult(
-			KaleoNotificationRecipientImpl.class, kaleoNotificationRecipient);
-	}
-
-	@Override
-	public void clearCache(
-		List<KaleoNotificationRecipient> kaleoNotificationRecipients) {
-
-		for (KaleoNotificationRecipient kaleoNotificationRecipient :
-				kaleoNotificationRecipients) {
-
-			entityCache.removeResult(
-				KaleoNotificationRecipientImpl.class,
-				kaleoNotificationRecipient);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoNotificationRecipientImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				KaleoNotificationRecipientImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo notification recipient with the primary key. Does not add the kaleo notification recipient to the database.
 	 *
 	 * @param kaleoNotificationRecipientId the primary key for the new kaleo notification recipient
@@ -738,48 +687,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 		throws NoSuchNotificationRecipientException {
 
 		return remove((Serializable)kaleoNotificationRecipientId);
-	}
-
-	/**
-	 * Removes the kaleo notification recipient with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo notification recipient
-	 * @return the kaleo notification recipient that was removed
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	@Override
-	public KaleoNotificationRecipient remove(Serializable primaryKey)
-		throws NoSuchNotificationRecipientException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoNotificationRecipient kaleoNotificationRecipient =
-				(KaleoNotificationRecipient)session.get(
-					KaleoNotificationRecipientImpl.class, primaryKey);
-
-			if (kaleoNotificationRecipient == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationRecipientException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoNotificationRecipient);
-		}
-		catch (NoSuchNotificationRecipientException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -908,32 +815,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 		}
 
 		kaleoNotificationRecipient.resetOriginalValues();
-
-		return kaleoNotificationRecipient;
-	}
-
-	/**
-	 * Returns the kaleo notification recipient with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo notification recipient
-	 * @return the kaleo notification recipient
-	 * @throws NoSuchNotificationRecipientException if a kaleo notification recipient with the primary key could not be found
-	 */
-	@Override
-	public KaleoNotificationRecipient findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNotificationRecipientException {
-
-		KaleoNotificationRecipient kaleoNotificationRecipient =
-			fetchByPrimaryKey(primaryKey);
-
-		if (kaleoNotificationRecipient == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationRecipientException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoNotificationRecipient;
 	}
@@ -1614,9 +1495,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoNotificationRecipient.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoNotificationRecipient exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoNotificationRecipient exists with the key {";
 
@@ -1629,4 +1507,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-173502403
+// LIFERAY-SERVICE-BUILDER-HASH:-1881224746

@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectViewFilterColumnPersistence.class)
 public class ObjectViewFilterColumnPersistenceImpl
-	extends BasePersistenceImpl<ObjectViewFilterColumn>
+	extends BasePersistenceImpl
+		<ObjectViewFilterColumn, NoSuchObjectViewFilterColumnException>
 	implements ObjectViewFilterColumnPersistence {
 
 	/*
@@ -764,55 +765,6 @@ public class ObjectViewFilterColumnPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object view filter columns.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectViewFilterColumnImpl.class);
-
-		finderCache.clearCache(ObjectViewFilterColumnImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object view filter column.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectViewFilterColumn objectViewFilterColumn) {
-		entityCache.removeResult(
-			ObjectViewFilterColumnImpl.class, objectViewFilterColumn);
-	}
-
-	@Override
-	public void clearCache(
-		List<ObjectViewFilterColumn> objectViewFilterColumns) {
-
-		for (ObjectViewFilterColumn objectViewFilterColumn :
-				objectViewFilterColumns) {
-
-			entityCache.removeResult(
-				ObjectViewFilterColumnImpl.class, objectViewFilterColumn);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectViewFilterColumnImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ObjectViewFilterColumnImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object view filter column with the primary key. Does not add the object view filter column to the database.
 	 *
 	 * @param objectViewFilterColumnId the primary key for the new object view filter column
@@ -847,48 +799,6 @@ public class ObjectViewFilterColumnPersistenceImpl
 		throws NoSuchObjectViewFilterColumnException {
 
 		return remove((Serializable)objectViewFilterColumnId);
-	}
-
-	/**
-	 * Removes the object view filter column with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object view filter column
-	 * @return the object view filter column that was removed
-	 * @throws NoSuchObjectViewFilterColumnException if a object view filter column with the primary key could not be found
-	 */
-	@Override
-	public ObjectViewFilterColumn remove(Serializable primaryKey)
-		throws NoSuchObjectViewFilterColumnException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectViewFilterColumn objectViewFilterColumn =
-				(ObjectViewFilterColumn)session.get(
-					ObjectViewFilterColumnImpl.class, primaryKey);
-
-			if (objectViewFilterColumn == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectViewFilterColumnException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectViewFilterColumn);
-		}
-		catch (NoSuchObjectViewFilterColumnException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1012,32 +922,6 @@ public class ObjectViewFilterColumnPersistenceImpl
 		}
 
 		objectViewFilterColumn.resetOriginalValues();
-
-		return objectViewFilterColumn;
-	}
-
-	/**
-	 * Returns the object view filter column with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object view filter column
-	 * @return the object view filter column
-	 * @throws NoSuchObjectViewFilterColumnException if a object view filter column with the primary key could not be found
-	 */
-	@Override
-	public ObjectViewFilterColumn findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectViewFilterColumnException {
-
-		ObjectViewFilterColumn objectViewFilterColumn = fetchByPrimaryKey(
-			primaryKey);
-
-		if (objectViewFilterColumn == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectViewFilterColumnException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectViewFilterColumn;
 	}
@@ -1488,9 +1372,6 @@ public class ObjectViewFilterColumnPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"objectViewFilterColumn.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectViewFilterColumn exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectViewFilterColumn exists with the key {";
 
@@ -1506,4 +1387,4 @@ public class ObjectViewFilterColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-107235355
+// LIFERAY-SERVICE-BUILDER-HASH:-1396972776

@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SegmentsExperimentPersistence.class)
 public class SegmentsExperimentPersistenceImpl
-	extends BasePersistenceImpl<SegmentsExperiment>
+	extends BasePersistenceImpl<SegmentsExperiment, NoSuchExperimentException>
 	implements SegmentsExperimentPersistence {
 
 	/*
@@ -1349,50 +1349,6 @@ public class SegmentsExperimentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all segments experiments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SegmentsExperimentImpl.class);
-
-		finderCache.clearCache(SegmentsExperimentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the segments experiment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SegmentsExperiment segmentsExperiment) {
-		entityCache.removeResult(
-			SegmentsExperimentImpl.class, segmentsExperiment);
-	}
-
-	@Override
-	public void clearCache(List<SegmentsExperiment> segmentsExperiments) {
-		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
-			entityCache.removeResult(
-				SegmentsExperimentImpl.class, segmentsExperiment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SegmentsExperimentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SegmentsExperimentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SegmentsExperimentModelImpl segmentsExperimentModelImpl) {
 
@@ -1461,48 +1417,6 @@ public class SegmentsExperimentPersistenceImpl
 		throws NoSuchExperimentException {
 
 		return remove((Serializable)segmentsExperimentId);
-	}
-
-	/**
-	 * Removes the segments experiment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the segments experiment
-	 * @return the segments experiment that was removed
-	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperiment remove(Serializable primaryKey)
-		throws NoSuchExperimentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperiment segmentsExperiment =
-				(SegmentsExperiment)session.get(
-					SegmentsExperimentImpl.class, primaryKey);
-
-			if (segmentsExperiment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchExperimentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(segmentsExperiment);
-		}
-		catch (NoSuchExperimentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1634,31 +1548,6 @@ public class SegmentsExperimentPersistenceImpl
 		}
 
 		segmentsExperiment.resetOriginalValues();
-
-		return segmentsExperiment;
-	}
-
-	/**
-	 * Returns the segments experiment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments experiment
-	 * @return the segments experiment
-	 * @throws NoSuchExperimentException if a segments experiment with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperiment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchExperimentException {
-
-		SegmentsExperiment segmentsExperiment = fetchByPrimaryKey(primaryKey);
-
-		if (segmentsExperiment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchExperimentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return segmentsExperiment;
 	}
@@ -2437,9 +2326,6 @@ public class SegmentsExperimentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SegmentsExperiment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SegmentsExperiment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsExperiment exists with the key {";
 
@@ -2455,4 +2341,4 @@ public class SegmentsExperimentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1550183576
+// LIFERAY-SERVICE-BUILDER-HASH:-1860591757

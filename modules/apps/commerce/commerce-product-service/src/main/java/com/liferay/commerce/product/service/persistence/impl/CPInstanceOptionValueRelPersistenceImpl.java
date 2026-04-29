@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPInstanceOptionValueRelPersistence.class)
 public class CPInstanceOptionValueRelPersistenceImpl
-	extends BasePersistenceImpl<CPInstanceOptionValueRel>
+	extends BasePersistenceImpl
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
 	implements CPInstanceOptionValueRelPersistence {
 
 	/*
@@ -1367,55 +1368,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp instance option value rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPInstanceOptionValueRelImpl.class);
-
-		finderCache.clearCache(CPInstanceOptionValueRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp instance option value rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPInstanceOptionValueRel cpInstanceOptionValueRel) {
-		entityCache.removeResult(
-			CPInstanceOptionValueRelImpl.class, cpInstanceOptionValueRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
-
-		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-				cpInstanceOptionValueRels) {
-
-			entityCache.removeResult(
-				CPInstanceOptionValueRelImpl.class, cpInstanceOptionValueRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPInstanceOptionValueRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPInstanceOptionValueRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPInstanceOptionValueRelModelImpl cpInstanceOptionValueRelModelImpl) {
 
@@ -1491,48 +1443,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		throws NoSuchCPInstanceOptionValueRelException {
 
 		return remove((Serializable)CPInstanceOptionValueRelId);
-	}
-
-	/**
-	 * Removes the cp instance option value rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp instance option value rel
-	 * @return the cp instance option value rel that was removed
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	@Override
-	public CPInstanceOptionValueRel remove(Serializable primaryKey)
-		throws NoSuchCPInstanceOptionValueRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPInstanceOptionValueRel cpInstanceOptionValueRel =
-				(CPInstanceOptionValueRel)session.get(
-					CPInstanceOptionValueRelImpl.class, primaryKey);
-
-			if (cpInstanceOptionValueRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPInstanceOptionValueRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpInstanceOptionValueRel);
-		}
-		catch (NoSuchCPInstanceOptionValueRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1668,32 +1578,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		}
 
 		cpInstanceOptionValueRel.resetOriginalValues();
-
-		return cpInstanceOptionValueRel;
-	}
-
-	/**
-	 * Returns the cp instance option value rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp instance option value rel
-	 * @return the cp instance option value rel
-	 * @throws NoSuchCPInstanceOptionValueRelException if a cp instance option value rel with the primary key could not be found
-	 */
-	@Override
-	public CPInstanceOptionValueRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPInstanceOptionValueRelException {
-
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpInstanceOptionValueRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPInstanceOptionValueRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpInstanceOptionValueRel;
 	}
@@ -2509,9 +2393,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpInstanceOptionValueRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPInstanceOptionValueRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPInstanceOptionValueRel exists with the key {";
 
@@ -2527,4 +2408,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-524949967
+// LIFERAY-SERVICE-BUILDER-HASH:42082218

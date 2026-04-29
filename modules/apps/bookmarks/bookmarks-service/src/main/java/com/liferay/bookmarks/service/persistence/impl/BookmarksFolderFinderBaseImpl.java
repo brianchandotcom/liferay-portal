@@ -5,6 +5,7 @@
 
 package com.liferay.bookmarks.service.persistence.impl;
 
+import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class BookmarksFolderFinderBaseImpl
-	extends BasePersistenceImpl<BookmarksFolder> {
+	extends BasePersistenceImpl<BookmarksFolder, NoSuchFolderException> {
 
 	public BookmarksFolderFinderBaseImpl() {
 		setModelClass(BookmarksFolder.class);
@@ -77,4 +78,4 @@ public abstract class BookmarksFolderFinderBaseImpl
 		BookmarksFolderFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1839939208
+// LIFERAY-SERVICE-BUILDER-HASH:-1084287794

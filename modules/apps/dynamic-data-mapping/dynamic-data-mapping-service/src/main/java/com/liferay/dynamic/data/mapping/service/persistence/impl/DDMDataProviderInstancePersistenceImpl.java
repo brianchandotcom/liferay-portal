@@ -83,7 +83,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMDataProviderInstancePersistence.class)
 public class DDMDataProviderInstancePersistenceImpl
-	extends BasePersistenceImpl<DDMDataProviderInstance>
+	extends BasePersistenceImpl
+		<DDMDataProviderInstance, NoSuchDataProviderInstanceException>
 	implements DDMDataProviderInstancePersistence {
 
 	/*
@@ -1754,55 +1755,6 @@ public class DDMDataProviderInstancePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm data provider instances.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMDataProviderInstanceImpl.class);
-
-		finderCache.clearCache(DDMDataProviderInstanceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm data provider instance.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMDataProviderInstance ddmDataProviderInstance) {
-		entityCache.removeResult(
-			DDMDataProviderInstanceImpl.class, ddmDataProviderInstance);
-	}
-
-	@Override
-	public void clearCache(
-		List<DDMDataProviderInstance> ddmDataProviderInstances) {
-
-		for (DDMDataProviderInstance ddmDataProviderInstance :
-				ddmDataProviderInstances) {
-
-			entityCache.removeResult(
-				DDMDataProviderInstanceImpl.class, ddmDataProviderInstance);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMDataProviderInstanceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DDMDataProviderInstanceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl) {
 
@@ -1856,48 +1808,6 @@ public class DDMDataProviderInstancePersistenceImpl
 		throws NoSuchDataProviderInstanceException {
 
 		return remove((Serializable)dataProviderInstanceId);
-	}
-
-	/**
-	 * Removes the ddm data provider instance with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm data provider instance
-	 * @return the ddm data provider instance that was removed
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance remove(Serializable primaryKey)
-		throws NoSuchDataProviderInstanceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMDataProviderInstance ddmDataProviderInstance =
-				(DDMDataProviderInstance)session.get(
-					DDMDataProviderInstanceImpl.class, primaryKey);
-
-			if (ddmDataProviderInstance == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDataProviderInstanceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmDataProviderInstance);
-		}
-		catch (NoSuchDataProviderInstanceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2032,32 +1942,6 @@ public class DDMDataProviderInstancePersistenceImpl
 		}
 
 		ddmDataProviderInstance.resetOriginalValues();
-
-		return ddmDataProviderInstance;
-	}
-
-	/**
-	 * Returns the ddm data provider instance with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm data provider instance
-	 * @return the ddm data provider instance
-	 * @throws NoSuchDataProviderInstanceException if a ddm data provider instance with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstance findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDataProviderInstanceException {
-
-		DDMDataProviderInstance ddmDataProviderInstance = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ddmDataProviderInstance == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDataProviderInstanceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmDataProviderInstance;
 	}
@@ -2797,9 +2681,6 @@ public class DDMDataProviderInstancePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"DDMDataProviderInstance.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMDataProviderInstance exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMDataProviderInstance exists with the key {";
 
@@ -2815,4 +2696,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-141720531
+// LIFERAY-SERVICE-BUILDER-HASH:-893132304

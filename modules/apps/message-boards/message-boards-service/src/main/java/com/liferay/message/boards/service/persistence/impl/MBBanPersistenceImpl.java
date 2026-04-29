@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBBanPersistence.class)
 public class MBBanPersistenceImpl
-	extends BasePersistenceImpl<MBBan> implements MBBanPersistence {
+	extends BasePersistenceImpl<MBBan, NoSuchBanException>
+	implements MBBanPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1126,48 +1127,6 @@ public class MBBanPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards bans.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBBanImpl.class);
-
-		finderCache.clearCache(MBBanImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards ban.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBBan mbBan) {
-		entityCache.removeResult(MBBanImpl.class, mbBan);
-	}
-
-	@Override
-	public void clearCache(List<MBBan> mbBans) {
-		for (MBBan mbBan : mbBans) {
-			entityCache.removeResult(MBBanImpl.class, mbBan);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBBanImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBBanImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(MBBanModelImpl mbBanModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -1220,44 +1179,6 @@ public class MBBanPersistenceImpl
 	@Override
 	public MBBan remove(long banId) throws NoSuchBanException {
 		return remove((Serializable)banId);
-	}
-
-	/**
-	 * Removes the message boards ban with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards ban
-	 * @return the message boards ban that was removed
-	 * @throws NoSuchBanException if a message boards ban with the primary key could not be found
-	 */
-	@Override
-	public MBBan remove(Serializable primaryKey) throws NoSuchBanException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBBan mbBan = (MBBan)session.get(MBBanImpl.class, primaryKey);
-
-			if (mbBan == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBanException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbBan);
-		}
-		catch (NoSuchBanException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1373,31 +1294,6 @@ public class MBBanPersistenceImpl
 		}
 
 		mbBan.resetOriginalValues();
-
-		return mbBan;
-	}
-
-	/**
-	 * Returns the message boards ban with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards ban
-	 * @return the message boards ban
-	 * @throws NoSuchBanException if a message boards ban with the primary key could not be found
-	 */
-	@Override
-	public MBBan findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBanException {
-
-		MBBan mbBan = fetchByPrimaryKey(primaryKey);
-
-		if (mbBan == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBanException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbBan;
 	}
@@ -2122,9 +2018,6 @@ public class MBBanPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbBan.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBBan exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBBan exists with the key {";
 
@@ -2140,4 +2033,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-816569278
+// LIFERAY-SERVICE-BUILDER-HASH:947119601

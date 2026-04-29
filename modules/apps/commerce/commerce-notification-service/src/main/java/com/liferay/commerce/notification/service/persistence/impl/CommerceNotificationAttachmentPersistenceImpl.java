@@ -71,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceNotificationAttachmentPersistence.class)
 @Deprecated
 public class CommerceNotificationAttachmentPersistenceImpl
-	extends BasePersistenceImpl<CommerceNotificationAttachment>
+	extends BasePersistenceImpl
+		<CommerceNotificationAttachment, NoSuchNotificationAttachmentException>
 	implements CommerceNotificationAttachmentPersistence {
 
 	/*
@@ -741,59 +742,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce notification attachments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceNotificationAttachmentImpl.class);
-
-		finderCache.clearCache(CommerceNotificationAttachmentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce notification attachment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceNotificationAttachment commerceNotificationAttachment) {
-
-		entityCache.removeResult(
-			CommerceNotificationAttachmentImpl.class,
-			commerceNotificationAttachment);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceNotificationAttachment> commerceNotificationAttachments) {
-
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				commerceNotificationAttachments) {
-
-			entityCache.removeResult(
-				CommerceNotificationAttachmentImpl.class,
-				commerceNotificationAttachment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceNotificationAttachmentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceNotificationAttachmentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceNotificationAttachmentModelImpl
 			commerceNotificationAttachmentModelImpl) {
@@ -848,48 +796,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		throws NoSuchNotificationAttachmentException {
 
 		return remove((Serializable)commerceNotificationAttachmentId);
-	}
-
-	/**
-	 * Removes the commerce notification attachment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce notification attachment
-	 * @return the commerce notification attachment that was removed
-	 * @throws NoSuchNotificationAttachmentException if a commerce notification attachment with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment remove(Serializable primaryKey)
-		throws NoSuchNotificationAttachmentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceNotificationAttachment commerceNotificationAttachment =
-				(CommerceNotificationAttachment)session.get(
-					CommerceNotificationAttachmentImpl.class, primaryKey);
-
-			if (commerceNotificationAttachment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationAttachmentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceNotificationAttachment);
-		}
-		catch (NoSuchNotificationAttachmentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1021,33 +927,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		}
 
 		commerceNotificationAttachment.resetOriginalValues();
-
-		return commerceNotificationAttachment;
-	}
-
-	/**
-	 * Returns the commerce notification attachment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce notification attachment
-	 * @return the commerce notification attachment
-	 * @throws NoSuchNotificationAttachmentException if a commerce notification attachment with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationAttachment findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationAttachmentException {
-
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceNotificationAttachment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationAttachmentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceNotificationAttachment;
 	}
@@ -1495,9 +1374,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceNotificationAttachment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceNotificationAttachment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationAttachment exists with the key {";
 
@@ -1516,4 +1392,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:905511543
+// LIFERAY-SERVICE-BUILDER-HASH:-1565985710

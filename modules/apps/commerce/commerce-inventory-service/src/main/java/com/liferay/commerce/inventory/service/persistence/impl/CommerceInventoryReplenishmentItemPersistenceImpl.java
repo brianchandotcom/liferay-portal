@@ -77,7 +77,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceInventoryReplenishmentItemPersistence.class)
 public class CommerceInventoryReplenishmentItemPersistenceImpl
-	extends BasePersistenceImpl<CommerceInventoryReplenishmentItem>
+	extends BasePersistenceImpl
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
 	implements CommerceInventoryReplenishmentItemPersistence {
 
 	/*
@@ -1424,61 +1426,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce inventory replenishment items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceInventoryReplenishmentItemImpl.class);
-
-		finderCache.clearCache(CommerceInventoryReplenishmentItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce inventory replenishment item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
-
-		entityCache.removeResult(
-			CommerceInventoryReplenishmentItemImpl.class,
-			commerceInventoryReplenishmentItem);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceInventoryReplenishmentItem>
-			commerceInventoryReplenishmentItems) {
-
-		for (CommerceInventoryReplenishmentItem
-				commerceInventoryReplenishmentItem :
-					commerceInventoryReplenishmentItems) {
-
-			entityCache.removeResult(
-				CommerceInventoryReplenishmentItemImpl.class,
-				commerceInventoryReplenishmentItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceInventoryReplenishmentItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceInventoryReplenishmentItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceInventoryReplenishmentItemModelImpl
 			commerceInventoryReplenishmentItemModelImpl) {
@@ -1534,52 +1481,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		throws NoSuchInventoryReplenishmentItemException {
 
 		return remove((Serializable)commerceInventoryReplenishmentItemId);
-	}
-
-	/**
-	 * Removes the commerce inventory replenishment item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory replenishment item
-	 * @return the commerce inventory replenishment item that was removed
-	 * @throws NoSuchInventoryReplenishmentItemException if a commerce inventory replenishment item with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem remove(Serializable primaryKey)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceInventoryReplenishmentItem
-				commerceInventoryReplenishmentItem =
-					(CommerceInventoryReplenishmentItem)session.get(
-						CommerceInventoryReplenishmentItemImpl.class,
-						primaryKey);
-
-			if (commerceInventoryReplenishmentItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchInventoryReplenishmentItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceInventoryReplenishmentItem);
-		}
-		catch (NoSuchInventoryReplenishmentItemException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1795,33 +1696,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 		}
 
 		commerceInventoryReplenishmentItem.resetOriginalValues();
-
-		return commerceInventoryReplenishmentItem;
-	}
-
-	/**
-	 * Returns the commerce inventory replenishment item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory replenishment item
-	 * @return the commerce inventory replenishment item
-	 * @throws NoSuchInventoryReplenishmentItemException if a commerce inventory replenishment item with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryReplenishmentItem findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchInventoryReplenishmentItemException {
-
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceInventoryReplenishmentItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchInventoryReplenishmentItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceInventoryReplenishmentItem;
 	}
@@ -2427,9 +2301,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceInventoryReplenishmentItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceInventoryReplenishmentItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceInventoryReplenishmentItem exists with the key {";
 
@@ -2445,4 +2316,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2058226820
+// LIFERAY-SERVICE-BUILDER-HASH:-521855117

@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTMessagePersistence.class)
 public class CTMessagePersistenceImpl
-	extends BasePersistenceImpl<CTMessage> implements CTMessagePersistence {
+	extends BasePersistenceImpl<CTMessage, NoSuchMessageException>
+	implements CTMessagePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -273,48 +273,6 @@ public class CTMessagePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTMessageImpl.class);
-
-		finderCache.clearCache(CTMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTMessage ctMessage) {
-		entityCache.removeResult(CTMessageImpl.class, ctMessage);
-	}
-
-	@Override
-	public void clearCache(List<CTMessage> ctMessages) {
-		for (CTMessage ctMessage : ctMessages) {
-			entityCache.removeResult(CTMessageImpl.class, ctMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTMessageImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct message with the primary key. Does not add the ct message to the database.
 	 *
 	 * @param ctMessageId the primary key for the new ct message
@@ -342,47 +300,6 @@ public class CTMessagePersistenceImpl
 	@Override
 	public CTMessage remove(long ctMessageId) throws NoSuchMessageException {
 		return remove((Serializable)ctMessageId);
-	}
-
-	/**
-	 * Removes the ct message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct message
-	 * @return the ct message that was removed
-	 * @throws NoSuchMessageException if a ct message with the primary key could not be found
-	 */
-	@Override
-	public CTMessage remove(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTMessage ctMessage = (CTMessage)session.get(
-				CTMessageImpl.class, primaryKey);
-
-			if (ctMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctMessage);
-		}
-		catch (NoSuchMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -464,31 +381,6 @@ public class CTMessagePersistenceImpl
 		}
 
 		ctMessage.resetOriginalValues();
-
-		return ctMessage;
-	}
-
-	/**
-	 * Returns the ct message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct message
-	 * @return the ct message
-	 * @throws NoSuchMessageException if a ct message with the primary key could not be found
-	 */
-	@Override
-	public CTMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		CTMessage ctMessage = fetchByPrimaryKey(primaryKey);
-
-		if (ctMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctMessage;
 	}
@@ -822,9 +714,6 @@ public class CTMessagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTMessage exists with the key {";
 
@@ -837,4 +726,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1790301268
+// LIFERAY-SERVICE-BUILDER-HASH:-2107238145

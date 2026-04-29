@@ -71,7 +71,8 @@ import java.util.Set;
  * @generated
  */
 public class IndexEntryPersistenceImpl
-	extends BasePersistenceImpl<IndexEntry> implements IndexEntryPersistence {
+	extends BasePersistenceImpl<IndexEntry, NoSuchIndexEntryException>
+	implements IndexEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1911,48 +1912,6 @@ public class IndexEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all index entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(IndexEntryImpl.class);
-
-		finderCache.clearCache(IndexEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the index entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(IndexEntry indexEntry) {
-		entityCache.removeResult(IndexEntryImpl.class, indexEntry);
-	}
-
-	@Override
-	public void clearCache(List<IndexEntry> indexEntries) {
-		for (IndexEntry indexEntry : indexEntries) {
-			entityCache.removeResult(IndexEntryImpl.class, indexEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(IndexEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(IndexEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		IndexEntryModelImpl indexEntryModelImpl) {
 
@@ -2010,47 +1969,6 @@ public class IndexEntryPersistenceImpl
 		throws NoSuchIndexEntryException {
 
 		return remove((Serializable)indexEntryId);
-	}
-
-	/**
-	 * Removes the index entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the index entry
-	 * @return the index entry that was removed
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	@Override
-	public IndexEntry remove(Serializable primaryKey)
-		throws NoSuchIndexEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			IndexEntry indexEntry = (IndexEntry)session.get(
-				IndexEntryImpl.class, primaryKey);
-
-			if (indexEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchIndexEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(indexEntry);
-		}
-		catch (NoSuchIndexEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2205,31 +2123,6 @@ public class IndexEntryPersistenceImpl
 		}
 
 		indexEntry.resetOriginalValues();
-
-		return indexEntry;
-	}
-
-	/**
-	 * Returns the index entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the index entry
-	 * @return the index entry
-	 * @throws NoSuchIndexEntryException if a index entry with the primary key could not be found
-	 */
-	@Override
-	public IndexEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchIndexEntryException {
-
-		IndexEntry indexEntry = fetchByPrimaryKey(primaryKey);
-
-		if (indexEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchIndexEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return indexEntry;
 	}
@@ -3094,9 +2987,6 @@ public class IndexEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "indexEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No IndexEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No IndexEntry exists with the key {";
 
@@ -3109,4 +2999,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-382426501
+// LIFERAY-SERVICE-BUILDER-HASH:1758710309

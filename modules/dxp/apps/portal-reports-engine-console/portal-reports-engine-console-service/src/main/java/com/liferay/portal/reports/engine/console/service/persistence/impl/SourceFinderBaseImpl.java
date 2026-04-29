@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 import com.liferay.portal.reports.engine.console.service.persistence.impl.constants.ReportsPersistenceConstants;
@@ -26,7 +27,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
+public abstract class SourceFinderBaseImpl
+	extends BasePersistenceImpl<Source, NoSuchSourceException> {
 
 	public SourceFinderBaseImpl() {
 		setModelClass(Source.class);
@@ -76,4 +78,4 @@ public abstract class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
 		SourceFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-219705584
+// LIFERAY-SERVICE-BUILDER-HASH:1840297969

@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroChannelPersistence.class)
 public class FaroChannelPersistenceImpl
-	extends BasePersistenceImpl<FaroChannel> implements FaroChannelPersistence {
+	extends BasePersistenceImpl<FaroChannel, NoSuchFaroChannelException>
+	implements FaroChannelPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -675,48 +675,6 @@ public class FaroChannelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all faro channels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroChannelImpl.class);
-
-		finderCache.clearCache(FaroChannelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro channel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroChannel faroChannel) {
-		entityCache.removeResult(FaroChannelImpl.class, faroChannel);
-	}
-
-	@Override
-	public void clearCache(List<FaroChannel> faroChannels) {
-		for (FaroChannel faroChannel : faroChannels) {
-			entityCache.removeResult(FaroChannelImpl.class, faroChannel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroChannelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroChannelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FaroChannelModelImpl faroChannelModelImpl) {
 
@@ -759,47 +717,6 @@ public class FaroChannelPersistenceImpl
 		throws NoSuchFaroChannelException {
 
 		return remove((Serializable)faroChannelId);
-	}
-
-	/**
-	 * Removes the faro channel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro channel
-	 * @return the faro channel that was removed
-	 * @throws NoSuchFaroChannelException if a faro channel with the primary key could not be found
-	 */
-	@Override
-	public FaroChannel remove(Serializable primaryKey)
-		throws NoSuchFaroChannelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroChannel faroChannel = (FaroChannel)session.get(
-				FaroChannelImpl.class, primaryKey);
-
-			if (faroChannel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroChannelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroChannel);
-		}
-		catch (NoSuchFaroChannelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -884,31 +801,6 @@ public class FaroChannelPersistenceImpl
 		}
 
 		faroChannel.resetOriginalValues();
-
-		return faroChannel;
-	}
-
-	/**
-	 * Returns the faro channel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro channel
-	 * @return the faro channel
-	 * @throws NoSuchFaroChannelException if a faro channel with the primary key could not be found
-	 */
-	@Override
-	public FaroChannel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroChannelException {
-
-		FaroChannel faroChannel = fetchByPrimaryKey(primaryKey);
-
-		if (faroChannel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroChannelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroChannel;
 	}
@@ -1316,9 +1208,6 @@ public class FaroChannelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroChannel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroChannel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroChannel exists with the key {";
 
@@ -1331,4 +1220,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-68757371
+// LIFERAY-SERVICE-BUILDER-HASH:960346488

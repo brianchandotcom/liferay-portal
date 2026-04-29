@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SXPElementPersistence.class)
 public class SXPElementPersistenceImpl
-	extends BasePersistenceImpl<SXPElement> implements SXPElementPersistence {
+	extends BasePersistenceImpl<SXPElement, NoSuchSXPElementException>
+	implements SXPElementPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2491,48 +2492,6 @@ public class SXPElementPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sxp elements.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SXPElementImpl.class);
-
-		finderCache.clearCache(SXPElementImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sxp element.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SXPElement sxpElement) {
-		entityCache.removeResult(SXPElementImpl.class, sxpElement);
-	}
-
-	@Override
-	public void clearCache(List<SXPElement> sxpElements) {
-		for (SXPElement sxpElement : sxpElements) {
-			entityCache.removeResult(SXPElementImpl.class, sxpElement);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SXPElementImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SXPElementImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SXPElementModelImpl sxpElementModelImpl) {
 
@@ -2579,47 +2538,6 @@ public class SXPElementPersistenceImpl
 		throws NoSuchSXPElementException {
 
 		return remove((Serializable)sxpElementId);
-	}
-
-	/**
-	 * Removes the sxp element with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sxp element
-	 * @return the sxp element that was removed
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	@Override
-	public SXPElement remove(Serializable primaryKey)
-		throws NoSuchSXPElementException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SXPElement sxpElement = (SXPElement)session.get(
-				SXPElementImpl.class, primaryKey);
-
-			if (sxpElement == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSXPElementException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sxpElement);
-		}
-		catch (NoSuchSXPElementException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2821,31 +2739,6 @@ public class SXPElementPersistenceImpl
 		}
 
 		sxpElement.resetOriginalValues();
-
-		return sxpElement;
-	}
-
-	/**
-	 * Returns the sxp element with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sxp element
-	 * @return the sxp element
-	 * @throws NoSuchSXPElementException if a sxp element with the primary key could not be found
-	 */
-	@Override
-	public SXPElement findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSXPElementException {
-
-		SXPElement sxpElement = fetchByPrimaryKey(primaryKey);
-
-		if (sxpElement == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSXPElementException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sxpElement;
 	}
@@ -3384,9 +3277,6 @@ public class SXPElementPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SXPElement.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SXPElement exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SXPElement exists with the key {";
 
@@ -3402,4 +3292,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1289878688
+// LIFERAY-SERVICE-BUILDER-HASH:1277384569

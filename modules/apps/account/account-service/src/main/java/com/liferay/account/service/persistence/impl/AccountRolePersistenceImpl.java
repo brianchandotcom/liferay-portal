@@ -55,7 +55,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -76,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountRolePersistence.class)
 public class AccountRolePersistenceImpl
-	extends BasePersistenceImpl<AccountRole> implements AccountRolePersistence {
+	extends BasePersistenceImpl<AccountRole, NoSuchRoleException>
+	implements AccountRolePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2673,48 +2673,6 @@ public class AccountRolePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account roles.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountRoleImpl.class);
-
-		finderCache.clearCache(AccountRoleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account role.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AccountRole accountRole) {
-		entityCache.removeResult(AccountRoleImpl.class, accountRole);
-	}
-
-	@Override
-	public void clearCache(List<AccountRole> accountRoles) {
-		for (AccountRole accountRole : accountRoles) {
-			entityCache.removeResult(AccountRoleImpl.class, accountRole);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountRoleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AccountRoleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountRoleModelImpl accountRoleModelImpl) {
 
@@ -2760,47 +2718,6 @@ public class AccountRolePersistenceImpl
 	@Override
 	public AccountRole remove(long accountRoleId) throws NoSuchRoleException {
 		return remove((Serializable)accountRoleId);
-	}
-
-	/**
-	 * Removes the account role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account role
-	 * @return the account role that was removed
-	 * @throws NoSuchRoleException if a account role with the primary key could not be found
-	 */
-	@Override
-	public AccountRole remove(Serializable primaryKey)
-		throws NoSuchRoleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountRole accountRole = (AccountRole)session.get(
-				AccountRoleImpl.class, primaryKey);
-
-			if (accountRole == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRoleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountRole);
-		}
-		catch (NoSuchRoleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2948,31 +2865,6 @@ public class AccountRolePersistenceImpl
 		}
 
 		accountRole.resetOriginalValues();
-
-		return accountRole;
-	}
-
-	/**
-	 * Returns the account role with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account role
-	 * @return the account role
-	 * @throws NoSuchRoleException if a account role with the primary key could not be found
-	 */
-	@Override
-	public AccountRole findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRoleException {
-
-		AccountRole accountRole = fetchByPrimaryKey(primaryKey);
-
-		if (accountRole == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRoleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountRole;
 	}
@@ -3401,9 +3293,6 @@ public class AccountRolePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AccountRole.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountRole exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountRole exists with the key {";
 
@@ -3416,4 +3305,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1449566502
+// LIFERAY-SERVICE-BUILDER-HASH:-2075580569

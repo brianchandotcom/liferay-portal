@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPSpecificationOptionPersistence.class)
 public class CPSpecificationOptionPersistenceImpl
-	extends BasePersistenceImpl<CPSpecificationOption>
+	extends BasePersistenceImpl
+		<CPSpecificationOption, NoSuchCPSpecificationOptionException>
 	implements CPSpecificationOptionPersistence {
 
 	/*
@@ -1937,53 +1938,6 @@ public class CPSpecificationOptionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp specification options.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPSpecificationOptionImpl.class);
-
-		finderCache.clearCache(CPSpecificationOptionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp specification option.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPSpecificationOption cpSpecificationOption) {
-		entityCache.removeResult(
-			CPSpecificationOptionImpl.class, cpSpecificationOption);
-	}
-
-	@Override
-	public void clearCache(List<CPSpecificationOption> cpSpecificationOptions) {
-		for (CPSpecificationOption cpSpecificationOption :
-				cpSpecificationOptions) {
-
-			entityCache.removeResult(
-				CPSpecificationOptionImpl.class, cpSpecificationOption);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPSpecificationOptionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPSpecificationOptionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPSpecificationOptionModelImpl cpSpecificationOptionModelImpl) {
 
@@ -2044,48 +1998,6 @@ public class CPSpecificationOptionPersistenceImpl
 		throws NoSuchCPSpecificationOptionException {
 
 		return remove((Serializable)CPSpecificationOptionId);
-	}
-
-	/**
-	 * Removes the cp specification option with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp specification option
-	 * @return the cp specification option that was removed
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	@Override
-	public CPSpecificationOption remove(Serializable primaryKey)
-		throws NoSuchCPSpecificationOptionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPSpecificationOption cpSpecificationOption =
-				(CPSpecificationOption)session.get(
-					CPSpecificationOptionImpl.class, primaryKey);
-
-			if (cpSpecificationOption == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPSpecificationOptionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpSpecificationOption);
-		}
-		catch (NoSuchCPSpecificationOptionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2289,32 +2201,6 @@ public class CPSpecificationOptionPersistenceImpl
 		}
 
 		cpSpecificationOption.resetOriginalValues();
-
-		return cpSpecificationOption;
-	}
-
-	/**
-	 * Returns the cp specification option with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp specification option
-	 * @return the cp specification option
-	 * @throws NoSuchCPSpecificationOptionException if a cp specification option with the primary key could not be found
-	 */
-	@Override
-	public CPSpecificationOption findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPSpecificationOptionException {
-
-		CPSpecificationOption cpSpecificationOption = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpSpecificationOption == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPSpecificationOptionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpSpecificationOption;
 	}
@@ -3078,9 +2964,6 @@ public class CPSpecificationOptionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CPSpecificationOption.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPSpecificationOption exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPSpecificationOption exists with the key {";
 
@@ -3096,4 +2979,4 @@ public class CPSpecificationOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:190278975
+// LIFERAY-SERVICE-BUILDER-HASH:-1631072536

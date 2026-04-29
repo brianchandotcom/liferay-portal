@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoProcessLinkPersistence.class)
 public class KaleoProcessLinkPersistenceImpl
-	extends BasePersistenceImpl<KaleoProcessLink>
+	extends BasePersistenceImpl
+		<KaleoProcessLink, NoSuchKaleoProcessLinkException>
 	implements KaleoProcessLinkPersistence {
 
 	/*
@@ -385,49 +385,6 @@ public class KaleoProcessLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo process links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoProcessLinkImpl.class);
-
-		finderCache.clearCache(KaleoProcessLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo process link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoProcessLink kaleoProcessLink) {
-		entityCache.removeResult(KaleoProcessLinkImpl.class, kaleoProcessLink);
-	}
-
-	@Override
-	public void clearCache(List<KaleoProcessLink> kaleoProcessLinks) {
-		for (KaleoProcessLink kaleoProcessLink : kaleoProcessLinks) {
-			entityCache.removeResult(
-				KaleoProcessLinkImpl.class, kaleoProcessLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoProcessLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoProcessLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoProcessLinkModelImpl kaleoProcessLinkModelImpl) {
 
@@ -470,47 +427,6 @@ public class KaleoProcessLinkPersistenceImpl
 		throws NoSuchKaleoProcessLinkException {
 
 		return remove((Serializable)kaleoProcessLinkId);
-	}
-
-	/**
-	 * Removes the kaleo process link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo process link
-	 * @return the kaleo process link that was removed
-	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcessLink remove(Serializable primaryKey)
-		throws NoSuchKaleoProcessLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoProcessLink kaleoProcessLink = (KaleoProcessLink)session.get(
-				KaleoProcessLinkImpl.class, primaryKey);
-
-			if (kaleoProcessLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchKaleoProcessLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoProcessLink);
-		}
-		catch (NoSuchKaleoProcessLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -598,31 +514,6 @@ public class KaleoProcessLinkPersistenceImpl
 		}
 
 		kaleoProcessLink.resetOriginalValues();
-
-		return kaleoProcessLink;
-	}
-
-	/**
-	 * Returns the kaleo process link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo process link
-	 * @return the kaleo process link
-	 * @throws NoSuchKaleoProcessLinkException if a kaleo process link with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcessLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchKaleoProcessLinkException {
-
-		KaleoProcessLink kaleoProcessLink = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoProcessLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchKaleoProcessLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoProcessLink;
 	}
@@ -975,9 +866,6 @@ public class KaleoProcessLinkPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoProcessLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoProcessLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoProcessLink exists with the key {";
 
@@ -990,4 +878,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:51150875
+// LIFERAY-SERVICE-BUILDER-HASH:-231789192

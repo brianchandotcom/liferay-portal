@@ -54,7 +54,7 @@ import java.util.Set;
  * @generated
  */
 public class UserTrackerPathPersistenceImpl
-	extends BasePersistenceImpl<UserTrackerPath>
+	extends BasePersistenceImpl<UserTrackerPath, NoSuchUserTrackerPathException>
 	implements UserTrackerPathPersistence {
 
 	/*
@@ -279,50 +279,6 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all user tracker paths.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserTrackerPathImpl.class);
-
-		FinderCacheUtil.clearCache(UserTrackerPathImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user tracker path.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserTrackerPath userTrackerPath) {
-		EntityCacheUtil.removeResult(
-			UserTrackerPathImpl.class, userTrackerPath);
-	}
-
-	@Override
-	public void clearCache(List<UserTrackerPath> userTrackerPaths) {
-		for (UserTrackerPath userTrackerPath : userTrackerPaths) {
-			EntityCacheUtil.removeResult(
-				UserTrackerPathImpl.class, userTrackerPath);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserTrackerPathImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserTrackerPathImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new user tracker path with the primary key. Does not add the user tracker path to the database.
 	 *
 	 * @param userTrackerPathId the primary key for the new user tracker path
@@ -352,47 +308,6 @@ public class UserTrackerPathPersistenceImpl
 		throws NoSuchUserTrackerPathException {
 
 		return remove((Serializable)userTrackerPathId);
-	}
-
-	/**
-	 * Removes the user tracker path with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user tracker path
-	 * @return the user tracker path that was removed
-	 * @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
-	 */
-	@Override
-	public UserTrackerPath remove(Serializable primaryKey)
-		throws NoSuchUserTrackerPathException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserTrackerPath userTrackerPath = (UserTrackerPath)session.get(
-				UserTrackerPathImpl.class, primaryKey);
-
-			if (userTrackerPath == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserTrackerPathException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userTrackerPath);
-		}
-		catch (NoSuchUserTrackerPathException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -478,31 +393,6 @@ public class UserTrackerPathPersistenceImpl
 		}
 
 		userTrackerPath.resetOriginalValues();
-
-		return userTrackerPath;
-	}
-
-	/**
-	 * Returns the user tracker path with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user tracker path
-	 * @return the user tracker path
-	 * @throws NoSuchUserTrackerPathException if a user tracker path with the primary key could not be found
-	 */
-	@Override
-	public UserTrackerPath findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserTrackerPathException {
-
-		UserTrackerPath userTrackerPath = fetchByPrimaryKey(primaryKey);
-
-		if (userTrackerPath == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserTrackerPathException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userTrackerPath;
 	}
@@ -810,9 +700,6 @@ public class UserTrackerPathPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userTrackerPath.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserTrackerPath exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserTrackerPath exists with the key {";
 
@@ -828,4 +715,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:728140914
+// LIFERAY-SERVICE-BUILDER-HASH:1603655267

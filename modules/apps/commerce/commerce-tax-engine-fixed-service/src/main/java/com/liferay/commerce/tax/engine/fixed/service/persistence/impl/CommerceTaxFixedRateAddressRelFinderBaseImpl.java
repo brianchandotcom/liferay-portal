@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.tax.engine.fixed.service.persistence.impl;
 
+import com.liferay.commerce.tax.engine.fixed.exception.NoSuchTaxFixedRateAddressRelException;
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.CommerceTaxFixedRateAddressRelPersistence;
 import com.liferay.commerce.tax.engine.fixed.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommerceTaxFixedRateAddressRelFinderBaseImpl
-	extends BasePersistenceImpl<CommerceTaxFixedRateAddressRel> {
+	extends BasePersistenceImpl
+		<CommerceTaxFixedRateAddressRel,
+		 NoSuchTaxFixedRateAddressRelException> {
 
 	public CommerceTaxFixedRateAddressRelFinderBaseImpl() {
 		setModelClass(CommerceTaxFixedRateAddressRel.class);
@@ -79,4 +82,4 @@ public abstract class CommerceTaxFixedRateAddressRelFinderBaseImpl
 		CommerceTaxFixedRateAddressRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1236704541
+// LIFERAY-SERVICE-BUILDER-HASH:189273014

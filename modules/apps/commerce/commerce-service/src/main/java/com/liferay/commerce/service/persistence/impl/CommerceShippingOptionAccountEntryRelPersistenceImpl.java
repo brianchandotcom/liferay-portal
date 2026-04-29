@@ -67,7 +67,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShippingOptionAccountEntryRelPersistence.class)
 public class CommerceShippingOptionAccountEntryRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceShippingOptionAccountEntryRel>
+	extends BasePersistenceImpl
+		<CommerceShippingOptionAccountEntryRel,
+		 NoSuchShippingOptionAccountEntryRelException>
 	implements CommerceShippingOptionAccountEntryRelPersistence {
 
 	/*
@@ -750,62 +752,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipping option account entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShippingOptionAccountEntryRelImpl.class);
-
-		finderCache.clearCache(CommerceShippingOptionAccountEntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipping option account entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel) {
-
-		entityCache.removeResult(
-			CommerceShippingOptionAccountEntryRelImpl.class,
-			commerceShippingOptionAccountEntryRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceShippingOptionAccountEntryRel>
-			commerceShippingOptionAccountEntryRels) {
-
-		for (CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel :
-					commerceShippingOptionAccountEntryRels) {
-
-			entityCache.removeResult(
-				CommerceShippingOptionAccountEntryRelImpl.class,
-				commerceShippingOptionAccountEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShippingOptionAccountEntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShippingOptionAccountEntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShippingOptionAccountEntryRelModelImpl
 			commerceShippingOptionAccountEntryRelModelImpl) {
@@ -858,52 +804,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		throws NoSuchShippingOptionAccountEntryRelException {
 
 		return remove((Serializable)CommerceShippingOptionAccountEntryRelId);
-	}
-
-	/**
-	 * Removes the commerce shipping option account entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping option account entry rel
-	 * @return the commerce shipping option account entry rel that was removed
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a commerce shipping option account entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingOptionAccountEntryRel remove(Serializable primaryKey)
-		throws NoSuchShippingOptionAccountEntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel =
-					(CommerceShippingOptionAccountEntryRel)session.get(
-						CommerceShippingOptionAccountEntryRelImpl.class,
-						primaryKey);
-
-			if (commerceShippingOptionAccountEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShippingOptionAccountEntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShippingOptionAccountEntryRel);
-		}
-		catch (NoSuchShippingOptionAccountEntryRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1036,34 +936,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		}
 
 		commerceShippingOptionAccountEntryRel.resetOriginalValues();
-
-		return commerceShippingOptionAccountEntryRel;
-	}
-
-	/**
-	 * Returns the commerce shipping option account entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping option account entry rel
-	 * @return the commerce shipping option account entry rel
-	 * @throws NoSuchShippingOptionAccountEntryRelException if a commerce shipping option account entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingOptionAccountEntryRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchShippingOptionAccountEntryRelException {
-
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel = fetchByPrimaryKey(
-				primaryKey);
-
-		if (commerceShippingOptionAccountEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShippingOptionAccountEntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShippingOptionAccountEntryRel;
 	}
@@ -1519,9 +1391,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShippingOptionAccountEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShippingOptionAccountEntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShippingOptionAccountEntryRel exists with the key {";
 
@@ -1537,4 +1406,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-230281124
+// LIFERAY-SERVICE-BUILDER-HASH:-746390559

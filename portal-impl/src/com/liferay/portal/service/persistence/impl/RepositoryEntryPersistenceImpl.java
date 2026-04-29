@@ -69,7 +69,7 @@ import java.util.Set;
  * @generated
  */
 public class RepositoryEntryPersistenceImpl
-	extends BasePersistenceImpl<RepositoryEntry>
+	extends BasePersistenceImpl<RepositoryEntry, NoSuchRepositoryEntryException>
 	implements RepositoryEntryPersistence {
 
 	/*
@@ -846,50 +846,6 @@ public class RepositoryEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all repository entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RepositoryEntryImpl.class);
-
-		FinderCacheUtil.clearCache(RepositoryEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the repository entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RepositoryEntry repositoryEntry) {
-		EntityCacheUtil.removeResult(
-			RepositoryEntryImpl.class, repositoryEntry);
-	}
-
-	@Override
-	public void clearCache(List<RepositoryEntry> repositoryEntries) {
-		for (RepositoryEntry repositoryEntry : repositoryEntries) {
-			EntityCacheUtil.removeResult(
-				RepositoryEntryImpl.class, repositoryEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RepositoryEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(RepositoryEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RepositoryEntryModelImpl repositoryEntryModelImpl) {
 
@@ -949,47 +905,6 @@ public class RepositoryEntryPersistenceImpl
 		throws NoSuchRepositoryEntryException {
 
 		return remove((Serializable)repositoryEntryId);
-	}
-
-	/**
-	 * Removes the repository entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the repository entry
-	 * @return the repository entry that was removed
-	 * @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 */
-	@Override
-	public RepositoryEntry remove(Serializable primaryKey)
-		throws NoSuchRepositoryEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RepositoryEntry repositoryEntry = (RepositoryEntry)session.get(
-				RepositoryEntryImpl.class, primaryKey);
-
-			if (repositoryEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRepositoryEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(repositoryEntry);
-		}
-		catch (NoSuchRepositoryEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1116,31 +1031,6 @@ public class RepositoryEntryPersistenceImpl
 		}
 
 		repositoryEntry.resetOriginalValues();
-
-		return repositoryEntry;
-	}
-
-	/**
-	 * Returns the repository entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the repository entry
-	 * @return the repository entry
-	 * @throws NoSuchRepositoryEntryException if a repository entry with the primary key could not be found
-	 */
-	@Override
-	public RepositoryEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRepositoryEntryException {
-
-		RepositoryEntry repositoryEntry = fetchByPrimaryKey(primaryKey);
-
-		if (repositoryEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRepositoryEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return repositoryEntry;
 	}
@@ -1789,9 +1679,6 @@ public class RepositoryEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "repositoryEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RepositoryEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RepositoryEntry exists with the key {";
 
@@ -1807,4 +1694,4 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2002328252
+// LIFERAY-SERVICE-BUILDER-HASH:695655158

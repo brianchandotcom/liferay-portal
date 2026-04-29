@@ -47,7 +47,8 @@ import java.util.Set;
  * @generated
  */
 public class TestEntityPersistenceImpl
-	extends BasePersistenceImpl<TestEntity> implements TestEntityPersistence {
+	extends BasePersistenceImpl<TestEntity, NoSuchTestEntityException>
+	implements TestEntityPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -120,48 +121,6 @@ public class TestEntityPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all test entities.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TestEntityImpl.class);
-
-		finderCache.clearCache(TestEntityImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the test entity.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TestEntity testEntity) {
-		entityCache.removeResult(TestEntityImpl.class, testEntity);
-	}
-
-	@Override
-	public void clearCache(List<TestEntity> testEntities) {
-		for (TestEntity testEntity : testEntities) {
-			entityCache.removeResult(TestEntityImpl.class, testEntity);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TestEntityImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TestEntityImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new test entity with the primary key. Does not add the test entity to the database.
 	 *
 	 * @param id the primary key for the new test entity
@@ -187,47 +146,6 @@ public class TestEntityPersistenceImpl
 	@Override
 	public TestEntity remove(long id) throws NoSuchTestEntityException {
 		return remove((Serializable)id);
-	}
-
-	/**
-	 * Removes the test entity with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the test entity
-	 * @return the test entity that was removed
-	 * @throws NoSuchTestEntityException if a test entity with the primary key could not be found
-	 */
-	@Override
-	public TestEntity remove(Serializable primaryKey)
-		throws NoSuchTestEntityException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TestEntity testEntity = (TestEntity)session.get(
-				TestEntityImpl.class, primaryKey);
-
-			if (testEntity == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTestEntityException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(testEntity);
-		}
-		catch (NoSuchTestEntityException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -290,31 +208,6 @@ public class TestEntityPersistenceImpl
 		}
 
 		testEntity.resetOriginalValues();
-
-		return testEntity;
-	}
-
-	/**
-	 * Returns the test entity with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the test entity
-	 * @return the test entity
-	 * @throws NoSuchTestEntityException if a test entity with the primary key could not be found
-	 */
-	@Override
-	public TestEntity findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTestEntityException {
-
-		TestEntity testEntity = fetchByPrimaryKey(primaryKey);
-
-		if (testEntity == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTestEntityException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return testEntity;
 	}
@@ -590,9 +483,6 @@ public class TestEntityPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "testEntity.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TestEntity exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestEntityPersistenceImpl.class);
 
@@ -605,4 +495,4 @@ public class TestEntityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:828953144
+// LIFERAY-SERVICE-BUILDER-HASH:1169144990

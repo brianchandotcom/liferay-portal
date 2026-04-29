@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionInventoryPersistence.class)
 public class CPDefinitionInventoryPersistenceImpl
-	extends BasePersistenceImpl<CPDefinitionInventory>
+	extends BasePersistenceImpl
+		<CPDefinitionInventory, NoSuchCPDefinitionInventoryException>
 	implements CPDefinitionInventoryPersistence {
 
 	/*
@@ -694,55 +695,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definition inventories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionInventoryImpl.class);
-
-		finderCache.clearCache(CPDefinitionInventoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition inventory.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDefinitionInventory cpDefinitionInventory) {
-		entityCache.removeResult(
-			CPDefinitionInventoryImpl.class, cpDefinitionInventory);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDefinitionInventory> cpDefinitionInventories) {
-
-		for (CPDefinitionInventory cpDefinitionInventory :
-				cpDefinitionInventories) {
-
-			entityCache.removeResult(
-				CPDefinitionInventoryImpl.class, cpDefinitionInventory);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionInventoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDefinitionInventoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionInventoryModelImpl cpDefinitionInventoryModelImpl) {
 
@@ -803,48 +755,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		throws NoSuchCPDefinitionInventoryException {
 
 		return remove((Serializable)CPDefinitionInventoryId);
-	}
-
-	/**
-	 * Removes the cp definition inventory with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition inventory
-	 * @return the cp definition inventory that was removed
-	 * @throws NoSuchCPDefinitionInventoryException if a cp definition inventory with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionInventory remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionInventoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionInventory cpDefinitionInventory =
-				(CPDefinitionInventory)session.get(
-					CPDefinitionInventoryImpl.class, primaryKey);
-
-			if (cpDefinitionInventory == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionInventoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinitionInventory);
-		}
-		catch (NoSuchCPDefinitionInventoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -978,32 +888,6 @@ public class CPDefinitionInventoryPersistenceImpl
 		}
 
 		cpDefinitionInventory.resetOriginalValues();
-
-		return cpDefinitionInventory;
-	}
-
-	/**
-	 * Returns the cp definition inventory with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition inventory
-	 * @return the cp definition inventory
-	 * @throws NoSuchCPDefinitionInventoryException if a cp definition inventory with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionInventory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDefinitionInventoryException {
-
-		CPDefinitionInventory cpDefinitionInventory = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpDefinitionInventory == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionInventoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinitionInventory;
 	}
@@ -1679,9 +1563,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpDefinitionInventory.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinitionInventory exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionInventory exists with the key {";
 
@@ -1697,4 +1578,4 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1715489547
+// LIFERAY-SERVICE-BUILDER-HASH:11556727

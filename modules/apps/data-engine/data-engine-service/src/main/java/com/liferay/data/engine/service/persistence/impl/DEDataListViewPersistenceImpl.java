@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DEDataListViewPersistence.class)
 public class DEDataListViewPersistenceImpl
-	extends BasePersistenceImpl<DEDataListView>
+	extends BasePersistenceImpl<DEDataListView, NoSuchDataListViewException>
 	implements DEDataListViewPersistence {
 
 	/*
@@ -928,48 +928,6 @@ public class DEDataListViewPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all de data list views.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DEDataListViewImpl.class);
-
-		finderCache.clearCache(DEDataListViewImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the de data list view.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DEDataListView deDataListView) {
-		entityCache.removeResult(DEDataListViewImpl.class, deDataListView);
-	}
-
-	@Override
-	public void clearCache(List<DEDataListView> deDataListViews) {
-		for (DEDataListView deDataListView : deDataListViews) {
-			entityCache.removeResult(DEDataListViewImpl.class, deDataListView);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DEDataListViewImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DEDataListViewImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DEDataListViewModelImpl deDataListViewModelImpl) {
 
@@ -1021,47 +979,6 @@ public class DEDataListViewPersistenceImpl
 		throws NoSuchDataListViewException {
 
 		return remove((Serializable)deDataListViewId);
-	}
-
-	/**
-	 * Removes the de data list view with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the de data list view
-	 * @return the de data list view that was removed
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	@Override
-	public DEDataListView remove(Serializable primaryKey)
-		throws NoSuchDataListViewException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DEDataListView deDataListView = (DEDataListView)session.get(
-				DEDataListViewImpl.class, primaryKey);
-
-			if (deDataListView == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDataListViewException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(deDataListView);
-		}
-		catch (NoSuchDataListViewException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1187,31 +1104,6 @@ public class DEDataListViewPersistenceImpl
 		}
 
 		deDataListView.resetOriginalValues();
-
-		return deDataListView;
-	}
-
-	/**
-	 * Returns the de data list view with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the de data list view
-	 * @return the de data list view
-	 * @throws NoSuchDataListViewException if a de data list view with the primary key could not be found
-	 */
-	@Override
-	public DEDataListView findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDataListViewException {
-
-		DEDataListView deDataListView = fetchByPrimaryKey(primaryKey);
-
-		if (deDataListView == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDataListViewException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return deDataListView;
 	}
@@ -1920,9 +1812,6 @@ public class DEDataListViewPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "deDataListView.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DEDataListView exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DEDataListView exists with the key {";
 
@@ -1938,4 +1827,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1630623060
+// LIFERAY-SERVICE-BUILDER-HASH:-21193403

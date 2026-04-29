@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlIbSloMessagePersistence.class)
 public class SamlIbSloMessagePersistenceImpl
-	extends BasePersistenceImpl<SamlIbSloMessage>
+	extends BasePersistenceImpl<SamlIbSloMessage, NoSuchIbSloMessageException>
 	implements SamlIbSloMessagePersistence {
 
 	/*
@@ -230,49 +229,6 @@ public class SamlIbSloMessagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml ib slo messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlIbSloMessageImpl.class);
-
-		finderCache.clearCache(SamlIbSloMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml ib slo message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlIbSloMessage samlIbSloMessage) {
-		entityCache.removeResult(SamlIbSloMessageImpl.class, samlIbSloMessage);
-	}
-
-	@Override
-	public void clearCache(List<SamlIbSloMessage> samlIbSloMessages) {
-		for (SamlIbSloMessage samlIbSloMessage : samlIbSloMessages) {
-			entityCache.removeResult(
-				SamlIbSloMessageImpl.class, samlIbSloMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlIbSloMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlIbSloMessageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlIbSloMessageModelImpl samlIbSloMessageModelImpl) {
 
@@ -315,47 +271,6 @@ public class SamlIbSloMessagePersistenceImpl
 		throws NoSuchIbSloMessageException {
 
 		return remove((Serializable)samlIbSloMessageId);
-	}
-
-	/**
-	 * Removes the saml ib slo message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml ib slo message
-	 * @return the saml ib slo message that was removed
-	 * @throws NoSuchIbSloMessageException if a saml ib slo message with the primary key could not be found
-	 */
-	@Override
-	public SamlIbSloMessage remove(Serializable primaryKey)
-		throws NoSuchIbSloMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlIbSloMessage samlIbSloMessage = (SamlIbSloMessage)session.get(
-				SamlIbSloMessageImpl.class, primaryKey);
-
-			if (samlIbSloMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchIbSloMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlIbSloMessage);
-		}
-		catch (NoSuchIbSloMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -458,31 +373,6 @@ public class SamlIbSloMessagePersistenceImpl
 		}
 
 		samlIbSloMessage.resetOriginalValues();
-
-		return samlIbSloMessage;
-	}
-
-	/**
-	 * Returns the saml ib slo message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml ib slo message
-	 * @return the saml ib slo message
-	 * @throws NoSuchIbSloMessageException if a saml ib slo message with the primary key could not be found
-	 */
-	@Override
-	public SamlIbSloMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchIbSloMessageException {
-
-		SamlIbSloMessage samlIbSloMessage = fetchByPrimaryKey(primaryKey);
-
-		if (samlIbSloMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchIbSloMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlIbSloMessage;
 	}
@@ -800,9 +690,6 @@ public class SamlIbSloMessagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlIbSloMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlIbSloMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlIbSloMessage exists with the key {";
 
@@ -815,4 +702,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:535416686
+// LIFERAY-SERVICE-BUILDER-HASH:-1370651077

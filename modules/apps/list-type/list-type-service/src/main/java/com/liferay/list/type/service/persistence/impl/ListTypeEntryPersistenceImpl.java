@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ListTypeEntryPersistence.class)
 public class ListTypeEntryPersistenceImpl
-	extends BasePersistenceImpl<ListTypeEntry>
+	extends BasePersistenceImpl<ListTypeEntry, NoSuchListTypeEntryException>
 	implements ListTypeEntryPersistence {
 
 	/*
@@ -1955,48 +1955,6 @@ public class ListTypeEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all list type entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ListTypeEntryImpl.class);
-
-		finderCache.clearCache(ListTypeEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the list type entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ListTypeEntry listTypeEntry) {
-		entityCache.removeResult(ListTypeEntryImpl.class, listTypeEntry);
-	}
-
-	@Override
-	public void clearCache(List<ListTypeEntry> listTypeEntries) {
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			entityCache.removeResult(ListTypeEntryImpl.class, listTypeEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ListTypeEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ListTypeEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ListTypeEntryModelImpl listTypeEntryModelImpl) {
 
@@ -2052,47 +2010,6 @@ public class ListTypeEntryPersistenceImpl
 		throws NoSuchListTypeEntryException {
 
 		return remove((Serializable)listTypeEntryId);
-	}
-
-	/**
-	 * Removes the list type entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the list type entry
-	 * @return the list type entry that was removed
-	 * @throws NoSuchListTypeEntryException if a list type entry with the primary key could not be found
-	 */
-	@Override
-	public ListTypeEntry remove(Serializable primaryKey)
-		throws NoSuchListTypeEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ListTypeEntry listTypeEntry = (ListTypeEntry)session.get(
-				ListTypeEntryImpl.class, primaryKey);
-
-			if (listTypeEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchListTypeEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(listTypeEntry);
-		}
-		catch (NoSuchListTypeEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2247,31 +2164,6 @@ public class ListTypeEntryPersistenceImpl
 		}
 
 		listTypeEntry.resetOriginalValues();
-
-		return listTypeEntry;
-	}
-
-	/**
-	 * Returns the list type entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the list type entry
-	 * @return the list type entry
-	 * @throws NoSuchListTypeEntryException if a list type entry with the primary key could not be found
-	 */
-	@Override
-	public ListTypeEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchListTypeEntryException {
-
-		ListTypeEntry listTypeEntry = fetchByPrimaryKey(primaryKey);
-
-		if (listTypeEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchListTypeEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return listTypeEntry;
 	}
@@ -2760,9 +2652,6 @@ public class ListTypeEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "listTypeEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ListTypeEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ListTypeEntry exists with the key {";
 
@@ -2778,4 +2667,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1475847062
+// LIFERAY-SERVICE-BUILDER-HASH:-339243746

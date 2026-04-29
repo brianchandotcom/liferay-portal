@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SiteNavigationMenuItemPersistence.class)
 public class SiteNavigationMenuItemPersistenceImpl
-	extends BasePersistenceImpl<SiteNavigationMenuItem>
+	extends BasePersistenceImpl<SiteNavigationMenuItem, NoSuchMenuItemException>
 	implements SiteNavigationMenuItemPersistence {
 
 	/*
@@ -1742,55 +1742,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all site navigation menu items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SiteNavigationMenuItemImpl.class);
-
-		finderCache.clearCache(SiteNavigationMenuItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the site navigation menu item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SiteNavigationMenuItem siteNavigationMenuItem) {
-		entityCache.removeResult(
-			SiteNavigationMenuItemImpl.class, siteNavigationMenuItem);
-	}
-
-	@Override
-	public void clearCache(
-		List<SiteNavigationMenuItem> siteNavigationMenuItems) {
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			entityCache.removeResult(
-				SiteNavigationMenuItemImpl.class, siteNavigationMenuItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SiteNavigationMenuItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				SiteNavigationMenuItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl) {
 
@@ -1852,48 +1803,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		throws NoSuchMenuItemException {
 
 		return remove((Serializable)siteNavigationMenuItemId);
-	}
-
-	/**
-	 * Removes the site navigation menu item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the site navigation menu item
-	 * @return the site navigation menu item that was removed
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem remove(Serializable primaryKey)
-		throws NoSuchMenuItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				(SiteNavigationMenuItem)session.get(
-					SiteNavigationMenuItemImpl.class, primaryKey);
-
-			if (siteNavigationMenuItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMenuItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(siteNavigationMenuItem);
-		}
-		catch (NoSuchMenuItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2097,32 +2006,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		}
 
 		siteNavigationMenuItem.resetOriginalValues();
-
-		return siteNavigationMenuItem;
-	}
-
-	/**
-	 * Returns the site navigation menu item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the site navigation menu item
-	 * @return the site navigation menu item
-	 * @throws NoSuchMenuItemException if a site navigation menu item with the primary key could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMenuItemException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByPrimaryKey(
-			primaryKey);
-
-		if (siteNavigationMenuItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMenuItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return siteNavigationMenuItem;
 	}
@@ -3007,9 +2890,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"siteNavigationMenuItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SiteNavigationMenuItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SiteNavigationMenuItem exists with the key {";
 
@@ -3025,4 +2905,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:13795330
+// LIFERAY-SERVICE-BUILDER-HASH:-1509007245

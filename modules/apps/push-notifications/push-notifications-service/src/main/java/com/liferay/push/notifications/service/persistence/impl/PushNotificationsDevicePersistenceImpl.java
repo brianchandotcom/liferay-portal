@@ -47,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -68,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PushNotificationsDevicePersistence.class)
 public class PushNotificationsDevicePersistenceImpl
-	extends BasePersistenceImpl<PushNotificationsDevice>
+	extends BasePersistenceImpl<PushNotificationsDevice, NoSuchDeviceException>
 	implements PushNotificationsDevicePersistence {
 
 	/*
@@ -880,55 +879,6 @@ public class PushNotificationsDevicePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all push notifications devices.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PushNotificationsDeviceImpl.class);
-
-		finderCache.clearCache(PushNotificationsDeviceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the push notifications device.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PushNotificationsDevice pushNotificationsDevice) {
-		entityCache.removeResult(
-			PushNotificationsDeviceImpl.class, pushNotificationsDevice);
-	}
-
-	@Override
-	public void clearCache(
-		List<PushNotificationsDevice> pushNotificationsDevices) {
-
-		for (PushNotificationsDevice pushNotificationsDevice :
-				pushNotificationsDevices) {
-
-			entityCache.removeResult(
-				PushNotificationsDeviceImpl.class, pushNotificationsDevice);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PushNotificationsDeviceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				PushNotificationsDeviceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl) {
 
@@ -971,48 +921,6 @@ public class PushNotificationsDevicePersistenceImpl
 		throws NoSuchDeviceException {
 
 		return remove((Serializable)pushNotificationsDeviceId);
-	}
-
-	/**
-	 * Removes the push notifications device with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the push notifications device
-	 * @return the push notifications device that was removed
-	 * @throws NoSuchDeviceException if a push notifications device with the primary key could not be found
-	 */
-	@Override
-	public PushNotificationsDevice remove(Serializable primaryKey)
-		throws NoSuchDeviceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PushNotificationsDevice pushNotificationsDevice =
-				(PushNotificationsDevice)session.get(
-					PushNotificationsDeviceImpl.class, primaryKey);
-
-			if (pushNotificationsDevice == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDeviceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(pushNotificationsDevice);
-		}
-		catch (NoSuchDeviceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1123,32 +1031,6 @@ public class PushNotificationsDevicePersistenceImpl
 		}
 
 		pushNotificationsDevice.resetOriginalValues();
-
-		return pushNotificationsDevice;
-	}
-
-	/**
-	 * Returns the push notifications device with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the push notifications device
-	 * @return the push notifications device
-	 * @throws NoSuchDeviceException if a push notifications device with the primary key could not be found
-	 */
-	@Override
-	public PushNotificationsDevice findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDeviceException {
-
-		PushNotificationsDevice pushNotificationsDevice = fetchByPrimaryKey(
-			primaryKey);
-
-		if (pushNotificationsDevice == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDeviceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return pushNotificationsDevice;
 	}
@@ -1497,9 +1379,6 @@ public class PushNotificationsDevicePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"pushNotificationsDevice.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PushNotificationsDevice exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PushNotificationsDevice exists with the key {";
 
@@ -1512,4 +1391,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-708635286
+// LIFERAY-SERVICE-BUILDER-HASH:645117353

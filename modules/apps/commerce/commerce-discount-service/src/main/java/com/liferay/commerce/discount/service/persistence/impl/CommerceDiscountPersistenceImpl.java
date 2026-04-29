@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountPersistence.class)
 public class CommerceDiscountPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscount>
+	extends BasePersistenceImpl<CommerceDiscount, NoSuchDiscountException>
 	implements CommerceDiscountPersistence {
 
 	/*
@@ -3480,49 +3480,6 @@ public class CommerceDiscountPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce discounts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountImpl.class);
-
-		finderCache.clearCache(CommerceDiscountImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceDiscount commerceDiscount) {
-		entityCache.removeResult(CommerceDiscountImpl.class, commerceDiscount);
-	}
-
-	@Override
-	public void clearCache(List<CommerceDiscount> commerceDiscounts) {
-		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
-			entityCache.removeResult(
-				CommerceDiscountImpl.class, commerceDiscount);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceDiscountImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceDiscountModelImpl commerceDiscountModelImpl) {
 
@@ -3578,47 +3535,6 @@ public class CommerceDiscountPersistenceImpl
 		throws NoSuchDiscountException {
 
 		return remove((Serializable)commerceDiscountId);
-	}
-
-	/**
-	 * Removes the commerce discount with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount
-	 * @return the commerce discount that was removed
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscount remove(Serializable primaryKey)
-		throws NoSuchDiscountException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscount commerceDiscount = (CommerceDiscount)session.get(
-				CommerceDiscountImpl.class, primaryKey);
-
-			if (commerceDiscount == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscount);
-		}
-		catch (NoSuchDiscountException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3803,31 +3719,6 @@ public class CommerceDiscountPersistenceImpl
 		}
 
 		commerceDiscount.resetOriginalValues();
-
-		return commerceDiscount;
-	}
-
-	/**
-	 * Returns the commerce discount with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount
-	 * @return the commerce discount
-	 * @throws NoSuchDiscountException if a commerce discount with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscount findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscountException {
-
-		CommerceDiscount commerceDiscount = fetchByPrimaryKey(primaryKey);
-
-		if (commerceDiscount == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscount;
 	}
@@ -4395,9 +4286,6 @@ public class CommerceDiscountPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceDiscount.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscount exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscount exists with the key {";
 
@@ -4413,4 +4301,4 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1875647590
+// LIFERAY-SERVICE-BUILDER-HASH:-577482755

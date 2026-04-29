@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the portal preferences service.
@@ -53,7 +52,7 @@ import java.util.Set;
  * @generated
  */
 public class PortalPreferencesPersistenceImpl
-	extends BasePersistenceImpl<PortalPreferences>
+	extends BasePersistenceImpl<PortalPreferences, NoSuchPreferencesException>
 	implements PortalPreferencesPersistence {
 
 	/*
@@ -369,51 +368,6 @@ public class PortalPreferencesPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all portal preferenceses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PortalPreferencesImpl.class);
-
-		FinderCacheUtil.clearCache(PortalPreferencesImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the portal preferences.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PortalPreferences portalPreferences) {
-		EntityCacheUtil.removeResult(
-			PortalPreferencesImpl.class, portalPreferences);
-	}
-
-	@Override
-	public void clearCache(List<PortalPreferences> portalPreferenceses) {
-		for (PortalPreferences portalPreferences : portalPreferenceses) {
-			EntityCacheUtil.removeResult(
-				PortalPreferencesImpl.class, portalPreferences);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PortalPreferencesImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				PortalPreferencesImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PortalPreferencesModelImpl portalPreferencesModelImpl) {
 
@@ -456,48 +410,6 @@ public class PortalPreferencesPersistenceImpl
 		throws NoSuchPreferencesException {
 
 		return remove((Serializable)portalPreferencesId);
-	}
-
-	/**
-	 * Removes the portal preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the portal preferences
-	 * @return the portal preferences that was removed
-	 * @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferences remove(Serializable primaryKey)
-		throws NoSuchPreferencesException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortalPreferences portalPreferences =
-				(PortalPreferences)session.get(
-					PortalPreferencesImpl.class, primaryKey);
-
-			if (portalPreferences == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPreferencesException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(portalPreferences);
-		}
-		catch (NoSuchPreferencesException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -588,31 +500,6 @@ public class PortalPreferencesPersistenceImpl
 		}
 
 		portalPreferences.resetOriginalValues();
-
-		return portalPreferences;
-	}
-
-	/**
-	 * Returns the portal preferences with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portal preferences
-	 * @return the portal preferences
-	 * @throws NoSuchPreferencesException if a portal preferences with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferences findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPreferencesException {
-
-		PortalPreferences portalPreferences = fetchByPrimaryKey(primaryKey);
-
-		if (portalPreferences == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPreferencesException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return portalPreferences;
 	}
@@ -931,9 +818,6 @@ public class PortalPreferencesPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portalPreferences.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PortalPreferences exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PortalPreferences exists with the key {";
 
@@ -946,4 +830,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1219811562
+// LIFERAY-SERVICE-BUILDER-HASH:710449128

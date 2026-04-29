@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlSpSessionPersistence.class)
 public class SamlSpSessionPersistenceImpl
-	extends BasePersistenceImpl<SamlSpSession>
+	extends BasePersistenceImpl<SamlSpSession, NoSuchSpSessionException>
 	implements SamlSpSessionPersistence {
 
 	/*
@@ -631,48 +631,6 @@ public class SamlSpSessionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml sp sessions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlSpSessionImpl.class);
-
-		finderCache.clearCache(SamlSpSessionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml sp session.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlSpSession samlSpSession) {
-		entityCache.removeResult(SamlSpSessionImpl.class, samlSpSession);
-	}
-
-	@Override
-	public void clearCache(List<SamlSpSession> samlSpSessions) {
-		for (SamlSpSession samlSpSession : samlSpSessions) {
-			entityCache.removeResult(SamlSpSessionImpl.class, samlSpSession);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlSpSessionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlSpSessionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlSpSessionModelImpl samlSpSessionModelImpl) {
 
@@ -717,47 +675,6 @@ public class SamlSpSessionPersistenceImpl
 		throws NoSuchSpSessionException {
 
 		return remove((Serializable)samlSpSessionId);
-	}
-
-	/**
-	 * Removes the saml sp session with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml sp session
-	 * @return the saml sp session that was removed
-	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlSpSession remove(Serializable primaryKey)
-		throws NoSuchSpSessionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlSpSession samlSpSession = (SamlSpSession)session.get(
-				SamlSpSessionImpl.class, primaryKey);
-
-			if (samlSpSession == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSpSessionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlSpSession);
-		}
-		catch (NoSuchSpSessionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -867,31 +784,6 @@ public class SamlSpSessionPersistenceImpl
 		}
 
 		samlSpSession.resetOriginalValues();
-
-		return samlSpSession;
-	}
-
-	/**
-	 * Returns the saml sp session with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml sp session
-	 * @return the saml sp session
-	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlSpSession findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSpSessionException {
-
-		SamlSpSession samlSpSession = fetchByPrimaryKey(primaryKey);
-
-		if (samlSpSession == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSpSessionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlSpSession;
 	}
@@ -1288,9 +1180,6 @@ public class SamlSpSessionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlSpSession.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlSpSession exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlSpSession exists with the key {";
 
@@ -1306,4 +1195,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1000020556
+// LIFERAY-SERVICE-BUILDER-HASH:-1184443261

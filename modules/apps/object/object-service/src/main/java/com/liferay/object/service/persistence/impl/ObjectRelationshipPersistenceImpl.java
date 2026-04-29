@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectRelationshipPersistence.class)
 public class ObjectRelationshipPersistenceImpl
-	extends BasePersistenceImpl<ObjectRelationship>
+	extends BasePersistenceImpl
+		<ObjectRelationship, NoSuchObjectRelationshipException>
 	implements ObjectRelationshipPersistence {
 
 	/*
@@ -3421,50 +3422,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object relationships.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectRelationshipImpl.class);
-
-		finderCache.clearCache(ObjectRelationshipImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object relationship.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectRelationship objectRelationship) {
-		entityCache.removeResult(
-			ObjectRelationshipImpl.class, objectRelationship);
-	}
-
-	@Override
-	public void clearCache(List<ObjectRelationship> objectRelationships) {
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			entityCache.removeResult(
-				ObjectRelationshipImpl.class, objectRelationship);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectRelationshipImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectRelationshipImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectRelationshipModelImpl objectRelationshipModelImpl) {
 
@@ -3540,48 +3497,6 @@ public class ObjectRelationshipPersistenceImpl
 		throws NoSuchObjectRelationshipException {
 
 		return remove((Serializable)objectRelationshipId);
-	}
-
-	/**
-	 * Removes the object relationship with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object relationship
-	 * @return the object relationship that was removed
-	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
-	 */
-	@Override
-	public ObjectRelationship remove(Serializable primaryKey)
-		throws NoSuchObjectRelationshipException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectRelationship objectRelationship =
-				(ObjectRelationship)session.get(
-					ObjectRelationshipImpl.class, primaryKey);
-
-			if (objectRelationship == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectRelationshipException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectRelationship);
-		}
-		catch (NoSuchObjectRelationshipException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3745,31 +3660,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 
 		objectRelationship.resetOriginalValues();
-
-		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object relationship
-	 * @return the object relationship
-	 * @throws NoSuchObjectRelationshipException if a object relationship with the primary key could not be found
-	 */
-	@Override
-	public ObjectRelationship findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectRelationshipException {
-
-		ObjectRelationship objectRelationship = fetchByPrimaryKey(primaryKey);
-
-		if (objectRelationship == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectRelationshipException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectRelationship;
 	}
@@ -4824,9 +4714,6 @@ public class ObjectRelationshipPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectRelationship.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectRelationship exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectRelationship exists with the key {";
 
@@ -4842,4 +4729,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1372330115
+// LIFERAY-SERVICE-BUILDER-HASH:1586925368

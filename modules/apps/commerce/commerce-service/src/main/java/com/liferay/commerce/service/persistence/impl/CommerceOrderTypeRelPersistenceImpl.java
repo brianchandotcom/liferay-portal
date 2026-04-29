@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderTypeRelPersistence.class)
 public class CommerceOrderTypeRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceOrderTypeRel>
+	extends BasePersistenceImpl
+		<CommerceOrderTypeRel, NoSuchOrderTypeRelException>
 	implements CommerceOrderTypeRelPersistence {
 
 	/*
@@ -999,53 +1000,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce order type rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderTypeRelImpl.class);
-
-		finderCache.clearCache(CommerceOrderTypeRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order type rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrderTypeRel commerceOrderTypeRel) {
-		entityCache.removeResult(
-			CommerceOrderTypeRelImpl.class, commerceOrderTypeRel);
-	}
-
-	@Override
-	public void clearCache(List<CommerceOrderTypeRel> commerceOrderTypeRels) {
-		for (CommerceOrderTypeRel commerceOrderTypeRel :
-				commerceOrderTypeRels) {
-
-			entityCache.removeResult(
-				CommerceOrderTypeRelImpl.class, commerceOrderTypeRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderTypeRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceOrderTypeRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceOrderTypeRelModelImpl commerceOrderTypeRelModelImpl) {
 
@@ -1102,48 +1056,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 		throws NoSuchOrderTypeRelException {
 
 		return remove((Serializable)commerceOrderTypeRelId);
-	}
-
-	/**
-	 * Removes the commerce order type rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order type rel
-	 * @return the commerce order type rel that was removed
-	 * @throws NoSuchOrderTypeRelException if a commerce order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel remove(Serializable primaryKey)
-		throws NoSuchOrderTypeRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrderTypeRel commerceOrderTypeRel =
-				(CommerceOrderTypeRel)session.get(
-					CommerceOrderTypeRelImpl.class, primaryKey);
-
-			if (commerceOrderTypeRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderTypeRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrderTypeRel);
-		}
-		catch (NoSuchOrderTypeRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1333,32 +1245,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 		}
 
 		commerceOrderTypeRel.resetOriginalValues();
-
-		return commerceOrderTypeRel;
-	}
-
-	/**
-	 * Returns the commerce order type rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order type rel
-	 * @return the commerce order type rel
-	 * @throws NoSuchOrderTypeRelException if a commerce order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderTypeRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderTypeRelException {
-
-		CommerceOrderTypeRel commerceOrderTypeRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceOrderTypeRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderTypeRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrderTypeRel;
 	}
@@ -1839,9 +1725,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceOrderTypeRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrderTypeRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderTypeRel exists with the key {";
 
@@ -1857,4 +1740,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1852704200
+// LIFERAY-SERVICE-BUILDER-HASH:-155639401

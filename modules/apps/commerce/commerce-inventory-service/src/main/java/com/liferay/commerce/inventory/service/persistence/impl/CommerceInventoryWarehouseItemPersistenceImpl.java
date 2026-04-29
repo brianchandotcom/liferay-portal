@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceInventoryWarehouseItemPersistence.class)
 public class CommerceInventoryWarehouseItemPersistenceImpl
-	extends BasePersistenceImpl<CommerceInventoryWarehouseItem>
+	extends BasePersistenceImpl
+		<CommerceInventoryWarehouseItem, NoSuchInventoryWarehouseItemException>
 	implements CommerceInventoryWarehouseItemPersistence {
 
 	/*
@@ -1197,59 +1198,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce inventory warehouse items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceInventoryWarehouseItemImpl.class);
-
-		finderCache.clearCache(CommerceInventoryWarehouseItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce inventory warehouse item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
-
-		entityCache.removeResult(
-			CommerceInventoryWarehouseItemImpl.class,
-			commerceInventoryWarehouseItem);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems) {
-
-		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
-				commerceInventoryWarehouseItems) {
-
-			entityCache.removeResult(
-				CommerceInventoryWarehouseItemImpl.class,
-				commerceInventoryWarehouseItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceInventoryWarehouseItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceInventoryWarehouseItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceInventoryWarehouseItemModelImpl
 			commerceInventoryWarehouseItemModelImpl) {
@@ -1315,48 +1263,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		throws NoSuchInventoryWarehouseItemException {
 
 		return remove((Serializable)commerceInventoryWarehouseItemId);
-	}
-
-	/**
-	 * Removes the commerce inventory warehouse item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory warehouse item
-	 * @return the commerce inventory warehouse item that was removed
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem remove(Serializable primaryKey)
-		throws NoSuchInventoryWarehouseItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-				(CommerceInventoryWarehouseItem)session.get(
-					CommerceInventoryWarehouseItemImpl.class, primaryKey);
-
-			if (commerceInventoryWarehouseItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchInventoryWarehouseItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceInventoryWarehouseItem);
-		}
-		catch (NoSuchInventoryWarehouseItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1566,33 +1472,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		}
 
 		commerceInventoryWarehouseItem.resetOriginalValues();
-
-		return commerceInventoryWarehouseItem;
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory warehouse item
-	 * @return the commerce inventory warehouse item
-	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryWarehouseItem findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchInventoryWarehouseItemException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceInventoryWarehouseItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchInventoryWarehouseItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceInventoryWarehouseItem;
 	}
@@ -2146,9 +2025,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceInventoryWarehouseItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceInventoryWarehouseItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceInventoryWarehouseItem exists with the key {";
 
@@ -2164,4 +2040,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:648152453
+// LIFERAY-SERVICE-BUILDER-HASH:-1987763116

@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectLayoutTabPersistence.class)
 public class ObjectLayoutTabPersistenceImpl
-	extends BasePersistenceImpl<ObjectLayoutTab>
+	extends BasePersistenceImpl<ObjectLayoutTab, NoSuchObjectLayoutTabException>
 	implements ObjectLayoutTabPersistence {
 
 	/*
@@ -747,49 +747,6 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object layout tabs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectLayoutTabImpl.class);
-
-		finderCache.clearCache(ObjectLayoutTabImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object layout tab.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectLayoutTab objectLayoutTab) {
-		entityCache.removeResult(ObjectLayoutTabImpl.class, objectLayoutTab);
-	}
-
-	@Override
-	public void clearCache(List<ObjectLayoutTab> objectLayoutTabs) {
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			entityCache.removeResult(
-				ObjectLayoutTabImpl.class, objectLayoutTab);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectLayoutTabImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectLayoutTabImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
 	 * @param objectLayoutTabId the primary key for the new object layout tab
@@ -823,47 +780,6 @@ public class ObjectLayoutTabPersistenceImpl
 		throws NoSuchObjectLayoutTabException {
 
 		return remove((Serializable)objectLayoutTabId);
-	}
-
-	/**
-	 * Removes the object layout tab with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object layout tab
-	 * @return the object layout tab that was removed
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutTab remove(Serializable primaryKey)
-		throws NoSuchObjectLayoutTabException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectLayoutTab objectLayoutTab = (ObjectLayoutTab)session.get(
-				ObjectLayoutTabImpl.class, primaryKey);
-
-			if (objectLayoutTab == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectLayoutTabException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectLayoutTab);
-		}
-		catch (NoSuchObjectLayoutTabException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -980,31 +896,6 @@ public class ObjectLayoutTabPersistenceImpl
 		}
 
 		objectLayoutTab.resetOriginalValues();
-
-		return objectLayoutTab;
-	}
-
-	/**
-	 * Returns the object layout tab with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object layout tab
-	 * @return the object layout tab
-	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutTab findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectLayoutTabException {
-
-		ObjectLayoutTab objectLayoutTab = fetchByPrimaryKey(primaryKey);
-
-		if (objectLayoutTab == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectLayoutTabException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectLayoutTab;
 	}
@@ -1439,9 +1330,6 @@ public class ObjectLayoutTabPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectLayoutTab.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectLayoutTab exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectLayoutTab exists with the key {";
 
@@ -1457,4 +1345,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1053033460
+// LIFERAY-SERVICE-BUILDER-HASH:326630905

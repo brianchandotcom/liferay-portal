@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPOptionCategoryPersistence.class)
 public class CPOptionCategoryPersistenceImpl
-	extends BasePersistenceImpl<CPOptionCategory>
+	extends BasePersistenceImpl
+		<CPOptionCategory, NoSuchCPOptionCategoryException>
 	implements CPOptionCategoryPersistence {
 
 	/*
@@ -1544,49 +1545,6 @@ public class CPOptionCategoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp option categories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPOptionCategoryImpl.class);
-
-		finderCache.clearCache(CPOptionCategoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp option category.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPOptionCategory cpOptionCategory) {
-		entityCache.removeResult(CPOptionCategoryImpl.class, cpOptionCategory);
-	}
-
-	@Override
-	public void clearCache(List<CPOptionCategory> cpOptionCategories) {
-		for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
-			entityCache.removeResult(
-				CPOptionCategoryImpl.class, cpOptionCategory);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPOptionCategoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPOptionCategoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPOptionCategoryModelImpl cpOptionCategoryModelImpl) {
 
@@ -1646,47 +1604,6 @@ public class CPOptionCategoryPersistenceImpl
 		throws NoSuchCPOptionCategoryException {
 
 		return remove((Serializable)CPOptionCategoryId);
-	}
-
-	/**
-	 * Removes the cp option category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp option category
-	 * @return the cp option category that was removed
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	@Override
-	public CPOptionCategory remove(Serializable primaryKey)
-		throws NoSuchCPOptionCategoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPOptionCategory cpOptionCategory = (CPOptionCategory)session.get(
-				CPOptionCategoryImpl.class, primaryKey);
-
-			if (cpOptionCategory == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPOptionCategoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpOptionCategory);
-		}
-		catch (NoSuchCPOptionCategoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1879,31 +1796,6 @@ public class CPOptionCategoryPersistenceImpl
 		}
 
 		cpOptionCategory.resetOriginalValues();
-
-		return cpOptionCategory;
-	}
-
-	/**
-	 * Returns the cp option category with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp option category
-	 * @return the cp option category
-	 * @throws NoSuchCPOptionCategoryException if a cp option category with the primary key could not be found
-	 */
-	@Override
-	public CPOptionCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPOptionCategoryException {
-
-		CPOptionCategory cpOptionCategory = fetchByPrimaryKey(primaryKey);
-
-		if (cpOptionCategory == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPOptionCategoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpOptionCategory;
 	}
@@ -2615,9 +2507,6 @@ public class CPOptionCategoryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CPOptionCategory.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPOptionCategory exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPOptionCategory exists with the key {";
 
@@ -2633,4 +2522,4 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-636875492
+// LIFERAY-SERVICE-BUILDER-HASH:-344411654

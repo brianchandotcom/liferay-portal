@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderTypePersistence.class)
 public class CommerceOrderTypePersistenceImpl
-	extends BasePersistenceImpl<CommerceOrderType>
+	extends BasePersistenceImpl<CommerceOrderType, NoSuchOrderTypeException>
 	implements CommerceOrderTypePersistence {
 
 	/*
@@ -2573,50 +2573,6 @@ public class CommerceOrderTypePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce order types.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderTypeImpl.class);
-
-		finderCache.clearCache(CommerceOrderTypeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order type.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrderType commerceOrderType) {
-		entityCache.removeResult(
-			CommerceOrderTypeImpl.class, commerceOrderType);
-	}
-
-	@Override
-	public void clearCache(List<CommerceOrderType> commerceOrderTypes) {
-		for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
-			entityCache.removeResult(
-				CommerceOrderTypeImpl.class, commerceOrderType);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderTypeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceOrderTypeImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceOrderTypeModelImpl commerceOrderTypeModelImpl) {
 
@@ -2663,48 +2619,6 @@ public class CommerceOrderTypePersistenceImpl
 		throws NoSuchOrderTypeException {
 
 		return remove((Serializable)commerceOrderTypeId);
-	}
-
-	/**
-	 * Removes the commerce order type with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order type
-	 * @return the commerce order type that was removed
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderType remove(Serializable primaryKey)
-		throws NoSuchOrderTypeException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrderType commerceOrderType =
-				(CommerceOrderType)session.get(
-					CommerceOrderTypeImpl.class, primaryKey);
-
-			if (commerceOrderType == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderTypeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrderType);
-		}
-		catch (NoSuchOrderTypeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2892,31 +2806,6 @@ public class CommerceOrderTypePersistenceImpl
 		}
 
 		commerceOrderType.resetOriginalValues();
-
-		return commerceOrderType;
-	}
-
-	/**
-	 * Returns the commerce order type with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order type
-	 * @return the commerce order type
-	 * @throws NoSuchOrderTypeException if a commerce order type with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderType findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderTypeException {
-
-		CommerceOrderType commerceOrderType = fetchByPrimaryKey(primaryKey);
-
-		if (commerceOrderType == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderTypeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrderType;
 	}
@@ -3445,9 +3334,6 @@ public class CommerceOrderTypePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceOrderType.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrderType exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderType exists with the key {";
 
@@ -3463,4 +3349,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-248046711
+// LIFERAY-SERVICE-BUILDER-HASH:-1567974352

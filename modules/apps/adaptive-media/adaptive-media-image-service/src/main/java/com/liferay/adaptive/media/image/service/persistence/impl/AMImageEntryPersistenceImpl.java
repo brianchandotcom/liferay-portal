@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AMImageEntryPersistence.class)
 public class AMImageEntryPersistenceImpl
-	extends BasePersistenceImpl<AMImageEntry>
+	extends BasePersistenceImpl<AMImageEntry, NoSuchAMImageEntryException>
 	implements AMImageEntryPersistence {
 
 	/*
@@ -1494,48 +1494,6 @@ public class AMImageEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all am image entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AMImageEntryImpl.class);
-
-		finderCache.clearCache(AMImageEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the am image entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AMImageEntry amImageEntry) {
-		entityCache.removeResult(AMImageEntryImpl.class, amImageEntry);
-	}
-
-	@Override
-	public void clearCache(List<AMImageEntry> amImageEntries) {
-		for (AMImageEntry amImageEntry : amImageEntries) {
-			entityCache.removeResult(AMImageEntryImpl.class, amImageEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AMImageEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AMImageEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AMImageEntryModelImpl amImageEntryModelImpl) {
 
@@ -1595,47 +1553,6 @@ public class AMImageEntryPersistenceImpl
 		throws NoSuchAMImageEntryException {
 
 		return remove((Serializable)amImageEntryId);
-	}
-
-	/**
-	 * Removes the am image entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the am image entry
-	 * @return the am image entry that was removed
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	@Override
-	public AMImageEntry remove(Serializable primaryKey)
-		throws NoSuchAMImageEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AMImageEntry amImageEntry = (AMImageEntry)session.get(
-				AMImageEntryImpl.class, primaryKey);
-
-			if (amImageEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAMImageEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(amImageEntry);
-		}
-		catch (NoSuchAMImageEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1749,31 +1666,6 @@ public class AMImageEntryPersistenceImpl
 		}
 
 		amImageEntry.resetOriginalValues();
-
-		return amImageEntry;
-	}
-
-	/**
-	 * Returns the am image entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the am image entry
-	 * @return the am image entry
-	 * @throws NoSuchAMImageEntryException if a am image entry with the primary key could not be found
-	 */
-	@Override
-	public AMImageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAMImageEntryException {
-
-		AMImageEntry amImageEntry = fetchByPrimaryKey(primaryKey);
-
-		if (amImageEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAMImageEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return amImageEntry;
 	}
@@ -2566,9 +2458,6 @@ public class AMImageEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "amImageEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AMImageEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AMImageEntry exists with the key {";
 
@@ -2584,4 +2473,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2100168742
+// LIFERAY-SERVICE-BUILDER-HASH:432127838

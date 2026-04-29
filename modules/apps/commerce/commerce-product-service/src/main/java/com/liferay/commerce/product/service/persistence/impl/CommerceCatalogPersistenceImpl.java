@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceCatalogPersistence.class)
 public class CommerceCatalogPersistenceImpl
-	extends BasePersistenceImpl<CommerceCatalog>
+	extends BasePersistenceImpl<CommerceCatalog, NoSuchCatalogException>
 	implements CommerceCatalogPersistence {
 
 	/*
@@ -2191,49 +2191,6 @@ public class CommerceCatalogPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce catalogs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceCatalogImpl.class);
-
-		finderCache.clearCache(CommerceCatalogImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce catalog.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceCatalog commerceCatalog) {
-		entityCache.removeResult(CommerceCatalogImpl.class, commerceCatalog);
-	}
-
-	@Override
-	public void clearCache(List<CommerceCatalog> commerceCatalogs) {
-		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-			entityCache.removeResult(
-				CommerceCatalogImpl.class, commerceCatalog);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceCatalogImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceCatalogImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceCatalogModelImpl commerceCatalogModelImpl) {
 
@@ -2285,47 +2242,6 @@ public class CommerceCatalogPersistenceImpl
 		throws NoSuchCatalogException {
 
 		return remove((Serializable)commerceCatalogId);
-	}
-
-	/**
-	 * Removes the commerce catalog with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce catalog
-	 * @return the commerce catalog that was removed
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	@Override
-	public CommerceCatalog remove(Serializable primaryKey)
-		throws NoSuchCatalogException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceCatalog commerceCatalog = (CommerceCatalog)session.get(
-				CommerceCatalogImpl.class, primaryKey);
-
-			if (commerceCatalog == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCatalogException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceCatalog);
-		}
-		catch (NoSuchCatalogException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2517,31 +2433,6 @@ public class CommerceCatalogPersistenceImpl
 		}
 
 		commerceCatalog.resetOriginalValues();
-
-		return commerceCatalog;
-	}
-
-	/**
-	 * Returns the commerce catalog with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce catalog
-	 * @return the commerce catalog
-	 * @throws NoSuchCatalogException if a commerce catalog with the primary key could not be found
-	 */
-	@Override
-	public CommerceCatalog findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCatalogException {
-
-		CommerceCatalog commerceCatalog = fetchByPrimaryKey(primaryKey);
-
-		if (commerceCatalog == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCatalogException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceCatalog;
 	}
@@ -3298,9 +3189,6 @@ public class CommerceCatalogPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceCatalog.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceCatalog exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceCatalog exists with the key {";
 
@@ -3316,4 +3204,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1825587937
+// LIFERAY-SERVICE-BUILDER-HASH:-941398206

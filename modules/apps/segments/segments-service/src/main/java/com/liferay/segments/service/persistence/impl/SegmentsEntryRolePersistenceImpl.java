@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SegmentsEntryRolePersistence.class)
 public class SegmentsEntryRolePersistenceImpl
-	extends BasePersistenceImpl<SegmentsEntryRole>
+	extends BasePersistenceImpl<SegmentsEntryRole, NoSuchEntryRoleException>
 	implements SegmentsEntryRolePersistence {
 
 	/*
@@ -574,50 +574,6 @@ public class SegmentsEntryRolePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all segments entry roles.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SegmentsEntryRoleImpl.class);
-
-		finderCache.clearCache(SegmentsEntryRoleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the segments entry role.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SegmentsEntryRole segmentsEntryRole) {
-		entityCache.removeResult(
-			SegmentsEntryRoleImpl.class, segmentsEntryRole);
-	}
-
-	@Override
-	public void clearCache(List<SegmentsEntryRole> segmentsEntryRoles) {
-		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
-			entityCache.removeResult(
-				SegmentsEntryRoleImpl.class, segmentsEntryRole);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SegmentsEntryRoleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SegmentsEntryRoleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SegmentsEntryRoleModelImpl segmentsEntryRoleModelImpl) {
 
@@ -665,48 +621,6 @@ public class SegmentsEntryRolePersistenceImpl
 		throws NoSuchEntryRoleException {
 
 		return remove((Serializable)segmentsEntryRoleId);
-	}
-
-	/**
-	 * Removes the segments entry role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the segments entry role
-	 * @return the segments entry role that was removed
-	 * @throws NoSuchEntryRoleException if a segments entry role with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntryRole remove(Serializable primaryKey)
-		throws NoSuchEntryRoleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsEntryRole segmentsEntryRole =
-				(SegmentsEntryRole)session.get(
-					SegmentsEntryRoleImpl.class, primaryKey);
-
-			if (segmentsEntryRole == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryRoleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(segmentsEntryRole);
-		}
-		catch (NoSuchEntryRoleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -830,31 +744,6 @@ public class SegmentsEntryRolePersistenceImpl
 		}
 
 		segmentsEntryRole.resetOriginalValues();
-
-		return segmentsEntryRole;
-	}
-
-	/**
-	 * Returns the segments entry role with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments entry role
-	 * @return the segments entry role
-	 * @throws NoSuchEntryRoleException if a segments entry role with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntryRole findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryRoleException {
-
-		SegmentsEntryRole segmentsEntryRole = fetchByPrimaryKey(primaryKey);
-
-		if (segmentsEntryRole == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryRoleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return segmentsEntryRole;
 	}
@@ -1487,9 +1376,6 @@ public class SegmentsEntryRolePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "segmentsEntryRole.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SegmentsEntryRole exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsEntryRole exists with the key {";
 
@@ -1502,4 +1388,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:746670956
+// LIFERAY-SERVICE-BUILDER-HASH:-1489922269

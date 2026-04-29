@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the org labor service.
@@ -52,7 +51,8 @@ import java.util.Set;
  * @generated
  */
 public class OrgLaborPersistenceImpl
-	extends BasePersistenceImpl<OrgLabor> implements OrgLaborPersistence {
+	extends BasePersistenceImpl<OrgLabor, NoSuchOrgLaborException>
+	implements OrgLaborPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -264,48 +264,6 @@ public class OrgLaborPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all org labors.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(OrgLaborImpl.class);
-
-		FinderCacheUtil.clearCache(OrgLaborImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the org labor.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OrgLabor orgLabor) {
-		EntityCacheUtil.removeResult(OrgLaborImpl.class, orgLabor);
-	}
-
-	@Override
-	public void clearCache(List<OrgLabor> orgLabors) {
-		for (OrgLabor orgLabor : orgLabors) {
-			EntityCacheUtil.removeResult(OrgLaborImpl.class, orgLabor);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(OrgLaborImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(OrgLaborImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
 	 *
 	 * @param orgLaborId the primary key for the new org labor
@@ -333,47 +291,6 @@ public class OrgLaborPersistenceImpl
 	@Override
 	public OrgLabor remove(long orgLaborId) throws NoSuchOrgLaborException {
 		return remove((Serializable)orgLaborId);
-	}
-
-	/**
-	 * Removes the org labor with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the org labor
-	 * @return the org labor that was removed
-	 * @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 */
-	@Override
-	public OrgLabor remove(Serializable primaryKey)
-		throws NoSuchOrgLaborException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OrgLabor orgLabor = (OrgLabor)session.get(
-				OrgLaborImpl.class, primaryKey);
-
-			if (orgLabor == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrgLaborException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(orgLabor);
-		}
-		catch (NoSuchOrgLaborException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -455,31 +372,6 @@ public class OrgLaborPersistenceImpl
 		}
 
 		orgLabor.resetOriginalValues();
-
-		return orgLabor;
-	}
-
-	/**
-	 * Returns the org labor with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the org labor
-	 * @return the org labor
-	 * @throws NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 */
-	@Override
-	public OrgLabor findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrgLaborException {
-
-		OrgLabor orgLabor = fetchByPrimaryKey(primaryKey);
-
-		if (orgLabor == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrgLaborException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return orgLabor;
 	}
@@ -779,9 +671,6 @@ public class OrgLaborPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "orgLabor.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OrgLabor exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OrgLabor exists with the key {";
 
@@ -794,4 +683,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:660038059
+// LIFERAY-SERVICE-BUILDER-HASH:-1673729150

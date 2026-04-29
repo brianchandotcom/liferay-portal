@@ -77,7 +77,8 @@ import java.util.Set;
  * @generated
  */
 public class WorkflowDefinitionLinkPersistenceImpl
-	extends BasePersistenceImpl<WorkflowDefinitionLink>
+	extends BasePersistenceImpl
+		<WorkflowDefinitionLink, NoSuchWorkflowDefinitionLinkException>
 	implements WorkflowDefinitionLinkPersistence {
 
 	/*
@@ -2041,55 +2042,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all workflow definition links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(WorkflowDefinitionLinkImpl.class);
-
-		FinderCacheUtil.clearCache(WorkflowDefinitionLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the workflow definition link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WorkflowDefinitionLink workflowDefinitionLink) {
-		EntityCacheUtil.removeResult(
-			WorkflowDefinitionLinkImpl.class, workflowDefinitionLink);
-	}
-
-	@Override
-	public void clearCache(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
-
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				workflowDefinitionLinks) {
-
-			EntityCacheUtil.removeResult(
-				WorkflowDefinitionLinkImpl.class, workflowDefinitionLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(WorkflowDefinitionLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				WorkflowDefinitionLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl) {
 
@@ -2151,48 +2103,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		throws NoSuchWorkflowDefinitionLinkException {
 
 		return remove((Serializable)workflowDefinitionLinkId);
-	}
-
-	/**
-	 * Removes the workflow definition link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the workflow definition link
-	 * @return the workflow definition link that was removed
-	 * @throws NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowDefinitionLink remove(Serializable primaryKey)
-		throws NoSuchWorkflowDefinitionLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WorkflowDefinitionLink workflowDefinitionLink =
-				(WorkflowDefinitionLink)session.get(
-					WorkflowDefinitionLinkImpl.class, primaryKey);
-
-			if (workflowDefinitionLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWorkflowDefinitionLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(workflowDefinitionLink);
-		}
-		catch (NoSuchWorkflowDefinitionLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2396,32 +2306,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 		}
 
 		workflowDefinitionLink.resetOriginalValues();
-
-		return workflowDefinitionLink;
-	}
-
-	/**
-	 * Returns the workflow definition link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the workflow definition link
-	 * @return the workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowDefinitionLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWorkflowDefinitionLinkException {
-
-		WorkflowDefinitionLink workflowDefinitionLink = fetchByPrimaryKey(
-			primaryKey);
-
-		if (workflowDefinitionLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWorkflowDefinitionLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return workflowDefinitionLink;
 	}
@@ -3388,9 +3272,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowDefinitionLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WorkflowDefinitionLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WorkflowDefinitionLink exists with the key {";
 
@@ -3406,4 +3287,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-882863606
+// LIFERAY-SERVICE-BUILDER-HASH:1825689193

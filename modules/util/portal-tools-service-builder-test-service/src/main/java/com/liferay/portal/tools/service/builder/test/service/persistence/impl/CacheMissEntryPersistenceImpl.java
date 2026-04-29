@@ -55,7 +55,7 @@ import java.util.Set;
  * @generated
  */
 public class CacheMissEntryPersistenceImpl
-	extends BasePersistenceImpl<CacheMissEntry>
+	extends BasePersistenceImpl<CacheMissEntry, NoSuchCacheMissEntryException>
 	implements CacheMissEntryPersistence {
 
 	/*
@@ -135,49 +135,6 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cache miss entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(CacheMissEntryImpl.class);
-
-		dummyFinderCache.clearCache(CacheMissEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cache miss entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CacheMissEntry cacheMissEntry) {
-		dummyEntityCache.removeResult(CacheMissEntryImpl.class, cacheMissEntry);
-	}
-
-	@Override
-	public void clearCache(List<CacheMissEntry> cacheMissEntries) {
-		for (CacheMissEntry cacheMissEntry : cacheMissEntries) {
-			dummyEntityCache.removeResult(
-				CacheMissEntryImpl.class, cacheMissEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(CacheMissEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(CacheMissEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cache miss entry with the primary key. Does not add the cache miss entry to the database.
 	 *
 	 * @param cacheMissEntryId the primary key for the new cache miss entry
@@ -205,47 +162,6 @@ public class CacheMissEntryPersistenceImpl
 		throws NoSuchCacheMissEntryException {
 
 		return remove((Serializable)cacheMissEntryId);
-	}
-
-	/**
-	 * Removes the cache miss entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cache miss entry
-	 * @return the cache miss entry that was removed
-	 * @throws NoSuchCacheMissEntryException if a cache miss entry with the primary key could not be found
-	 */
-	@Override
-	public CacheMissEntry remove(Serializable primaryKey)
-		throws NoSuchCacheMissEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CacheMissEntry cacheMissEntry = (CacheMissEntry)session.get(
-				CacheMissEntryImpl.class, primaryKey);
-
-			if (cacheMissEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCacheMissEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cacheMissEntry);
-		}
-		catch (NoSuchCacheMissEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -318,31 +234,6 @@ public class CacheMissEntryPersistenceImpl
 		}
 
 		cacheMissEntry.resetOriginalValues();
-
-		return cacheMissEntry;
-	}
-
-	/**
-	 * Returns the cache miss entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cache miss entry
-	 * @return the cache miss entry
-	 * @throws NoSuchCacheMissEntryException if a cache miss entry with the primary key could not be found
-	 */
-	@Override
-	public CacheMissEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCacheMissEntryException {
-
-		CacheMissEntry cacheMissEntry = fetchByPrimaryKey(primaryKey);
-
-		if (cacheMissEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCacheMissEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cacheMissEntry;
 	}
@@ -842,9 +733,6 @@ public class CacheMissEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheMissEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CacheMissEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CacheMissEntryPersistenceImpl.class);
 
@@ -854,4 +742,4 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1736908027
+// LIFERAY-SERVICE-BUILDER-HASH:-1217345109

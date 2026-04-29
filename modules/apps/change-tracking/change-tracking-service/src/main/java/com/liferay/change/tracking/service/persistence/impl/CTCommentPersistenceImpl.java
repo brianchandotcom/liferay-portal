@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTCommentPersistence.class)
 public class CTCommentPersistenceImpl
-	extends BasePersistenceImpl<CTComment> implements CTCommentPersistence {
+	extends BasePersistenceImpl<CTComment, NoSuchCommentException>
+	implements CTCommentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -420,48 +420,6 @@ public class CTCommentPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct comments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTCommentImpl.class);
-
-		finderCache.clearCache(CTCommentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct comment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTComment ctComment) {
-		entityCache.removeResult(CTCommentImpl.class, ctComment);
-	}
-
-	@Override
-	public void clearCache(List<CTComment> ctComments) {
-		for (CTComment ctComment : ctComments) {
-			entityCache.removeResult(CTCommentImpl.class, ctComment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTCommentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTCommentImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct comment with the primary key. Does not add the ct comment to the database.
 	 *
 	 * @param ctCommentId the primary key for the new ct comment
@@ -489,47 +447,6 @@ public class CTCommentPersistenceImpl
 	@Override
 	public CTComment remove(long ctCommentId) throws NoSuchCommentException {
 		return remove((Serializable)ctCommentId);
-	}
-
-	/**
-	 * Removes the ct comment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct comment
-	 * @return the ct comment that was removed
-	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
-	 */
-	@Override
-	public CTComment remove(Serializable primaryKey)
-		throws NoSuchCommentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTComment ctComment = (CTComment)session.get(
-				CTCommentImpl.class, primaryKey);
-
-			if (ctComment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCommentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctComment);
-		}
-		catch (NoSuchCommentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -634,31 +551,6 @@ public class CTCommentPersistenceImpl
 		}
 
 		ctComment.resetOriginalValues();
-
-		return ctComment;
-	}
-
-	/**
-	 * Returns the ct comment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct comment
-	 * @return the ct comment
-	 * @throws NoSuchCommentException if a ct comment with the primary key could not be found
-	 */
-	@Override
-	public CTComment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCommentException {
-
-		CTComment ctComment = fetchByPrimaryKey(primaryKey);
-
-		if (ctComment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCommentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctComment;
 	}
@@ -1021,9 +913,6 @@ public class CTCommentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctComment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTComment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTComment exists with the key {";
 
@@ -1036,4 +925,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1013498297
+// LIFERAY-SERVICE-BUILDER-HASH:-373437816

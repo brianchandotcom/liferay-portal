@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectFolderPersistence.class)
 public class ObjectFolderPersistenceImpl
-	extends BasePersistenceImpl<ObjectFolder>
+	extends BasePersistenceImpl<ObjectFolder, NoSuchObjectFolderException>
 	implements ObjectFolderPersistence {
 
 	/*
@@ -1470,48 +1470,6 @@ public class ObjectFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectFolderImpl.class);
-
-		finderCache.clearCache(ObjectFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectFolder objectFolder) {
-		entityCache.removeResult(ObjectFolderImpl.class, objectFolder);
-	}
-
-	@Override
-	public void clearCache(List<ObjectFolder> objectFolders) {
-		for (ObjectFolder objectFolder : objectFolders) {
-			entityCache.removeResult(ObjectFolderImpl.class, objectFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectFolderModelImpl objectFolderModelImpl) {
 
@@ -1566,47 +1524,6 @@ public class ObjectFolderPersistenceImpl
 		throws NoSuchObjectFolderException {
 
 		return remove((Serializable)objectFolderId);
-	}
-
-	/**
-	 * Removes the object folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object folder
-	 * @return the object folder that was removed
-	 * @throws NoSuchObjectFolderException if a object folder with the primary key could not be found
-	 */
-	@Override
-	public ObjectFolder remove(Serializable primaryKey)
-		throws NoSuchObjectFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectFolder objectFolder = (ObjectFolder)session.get(
-				ObjectFolderImpl.class, primaryKey);
-
-			if (objectFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectFolder);
-		}
-		catch (NoSuchObjectFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1784,31 +1701,6 @@ public class ObjectFolderPersistenceImpl
 		}
 
 		objectFolder.resetOriginalValues();
-
-		return objectFolder;
-	}
-
-	/**
-	 * Returns the object folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object folder
-	 * @return the object folder
-	 * @throws NoSuchObjectFolderException if a object folder with the primary key could not be found
-	 */
-	@Override
-	public ObjectFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectFolderException {
-
-		ObjectFolder objectFolder = fetchByPrimaryKey(primaryKey);
-
-		if (objectFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectFolder;
 	}
@@ -2259,9 +2151,6 @@ public class ObjectFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "ObjectFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectFolder exists with the key {";
 
@@ -2277,4 +2166,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-808015631
+// LIFERAY-SERVICE-BUILDER-HASH:-315504546

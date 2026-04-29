@@ -84,7 +84,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CSDiagramEntryPersistence.class)
 public class CSDiagramEntryPersistenceImpl
-	extends BasePersistenceImpl<CSDiagramEntry>
+	extends BasePersistenceImpl<CSDiagramEntry, NoSuchCSDiagramEntryException>
 	implements CSDiagramEntryPersistence {
 
 	/*
@@ -854,48 +854,6 @@ public class CSDiagramEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cs diagram entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CSDiagramEntryImpl.class);
-
-		finderCache.clearCache(CSDiagramEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cs diagram entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CSDiagramEntry csDiagramEntry) {
-		entityCache.removeResult(CSDiagramEntryImpl.class, csDiagramEntry);
-	}
-
-	@Override
-	public void clearCache(List<CSDiagramEntry> csDiagramEntries) {
-		for (CSDiagramEntry csDiagramEntry : csDiagramEntries) {
-			entityCache.removeResult(CSDiagramEntryImpl.class, csDiagramEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CSDiagramEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CSDiagramEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CSDiagramEntryModelImpl csDiagramEntryModelImpl) {
 
@@ -951,47 +909,6 @@ public class CSDiagramEntryPersistenceImpl
 		throws NoSuchCSDiagramEntryException {
 
 		return remove((Serializable)CSDiagramEntryId);
-	}
-
-	/**
-	 * Removes the cs diagram entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cs diagram entry
-	 * @return the cs diagram entry that was removed
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramEntry remove(Serializable primaryKey)
-		throws NoSuchCSDiagramEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CSDiagramEntry csDiagramEntry = (CSDiagramEntry)session.get(
-				CSDiagramEntryImpl.class, primaryKey);
-
-			if (csDiagramEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCSDiagramEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(csDiagramEntry);
-		}
-		catch (NoSuchCSDiagramEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1177,31 +1094,6 @@ public class CSDiagramEntryPersistenceImpl
 		}
 
 		csDiagramEntry.resetOriginalValues();
-
-		return csDiagramEntry;
-	}
-
-	/**
-	 * Returns the cs diagram entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cs diagram entry
-	 * @return the cs diagram entry
-	 * @throws NoSuchCSDiagramEntryException if a cs diagram entry with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCSDiagramEntryException {
-
-		CSDiagramEntry csDiagramEntry = fetchByPrimaryKey(primaryKey);
-
-		if (csDiagramEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCSDiagramEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return csDiagramEntry;
 	}
@@ -1884,9 +1776,6 @@ public class CSDiagramEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "csDiagramEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CSDiagramEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CSDiagramEntry exists with the key {";
 
@@ -1899,4 +1788,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1913923991
+// LIFERAY-SERVICE-BUILDER-HASH:-1876647939

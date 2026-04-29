@@ -66,7 +66,8 @@ import java.util.Set;
  * @generated
  */
 public class ImagePersistenceImpl
-	extends BasePersistenceImpl<Image> implements ImagePersistence {
+	extends BasePersistenceImpl<Image, NoSuchImageException>
+	implements ImagePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -299,48 +300,6 @@ public class ImagePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all images.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ImageImpl.class);
-
-		FinderCacheUtil.clearCache(ImageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the image.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Image image) {
-		EntityCacheUtil.removeResult(ImageImpl.class, image);
-	}
-
-	@Override
-	public void clearCache(List<Image> images) {
-		for (Image image : images) {
-			EntityCacheUtil.removeResult(ImageImpl.class, image);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ImageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ImageImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
 	 * @param imageId the primary key for the new image
@@ -368,44 +327,6 @@ public class ImagePersistenceImpl
 	@Override
 	public Image remove(long imageId) throws NoSuchImageException {
 		return remove((Serializable)imageId);
-	}
-
-	/**
-	 * Removes the image with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the image
-	 * @return the image that was removed
-	 * @throws NoSuchImageException if a image with the primary key could not be found
-	 */
-	@Override
-	public Image remove(Serializable primaryKey) throws NoSuchImageException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Image image = (Image)session.get(ImageImpl.class, primaryKey);
-
-			if (image == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchImageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(image);
-		}
-		catch (NoSuchImageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -504,31 +425,6 @@ public class ImagePersistenceImpl
 		}
 
 		image.resetOriginalValues();
-
-		return image;
-	}
-
-	/**
-	 * Returns the image with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the image
-	 * @return the image
-	 * @throws NoSuchImageException if a image with the primary key could not be found
-	 */
-	@Override
-	public Image findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchImageException {
-
-		Image image = fetchByPrimaryKey(primaryKey);
-
-		if (image == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchImageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return image;
 	}
@@ -1059,9 +955,6 @@ public class ImagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "image.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Image exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Image exists with the key {";
 
@@ -1077,4 +970,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1720462882
+// LIFERAY-SERVICE-BUILDER-HASH:808555689

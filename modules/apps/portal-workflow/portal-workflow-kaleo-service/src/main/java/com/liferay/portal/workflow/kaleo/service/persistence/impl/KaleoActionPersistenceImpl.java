@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoActionPersistence.class)
 public class KaleoActionPersistenceImpl
-	extends BasePersistenceImpl<KaleoAction> implements KaleoActionPersistence {
+	extends BasePersistenceImpl<KaleoAction, NoSuchActionException>
+	implements KaleoActionPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1255,48 +1256,6 @@ public class KaleoActionPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all kaleo actions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoActionImpl.class);
-
-		finderCache.clearCache(KaleoActionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo action.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoAction kaleoAction) {
-		entityCache.removeResult(KaleoActionImpl.class, kaleoAction);
-	}
-
-	@Override
-	public void clearCache(List<KaleoAction> kaleoActions) {
-		for (KaleoAction kaleoAction : kaleoActions) {
-			entityCache.removeResult(KaleoActionImpl.class, kaleoAction);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoActionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoActionImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
 	 *
 	 * @param kaleoActionId the primary key for the new kaleo action
@@ -1324,47 +1283,6 @@ public class KaleoActionPersistenceImpl
 	@Override
 	public KaleoAction remove(long kaleoActionId) throws NoSuchActionException {
 		return remove((Serializable)kaleoActionId);
-	}
-
-	/**
-	 * Removes the kaleo action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo action
-	 * @return the kaleo action that was removed
-	 * @throws NoSuchActionException if a kaleo action with the primary key could not be found
-	 */
-	@Override
-	public KaleoAction remove(Serializable primaryKey)
-		throws NoSuchActionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoAction kaleoAction = (KaleoAction)session.get(
-				KaleoActionImpl.class, primaryKey);
-
-			if (kaleoAction == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchActionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoAction);
-		}
-		catch (NoSuchActionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1478,31 +1396,6 @@ public class KaleoActionPersistenceImpl
 		}
 
 		kaleoAction.resetOriginalValues();
-
-		return kaleoAction;
-	}
-
-	/**
-	 * Returns the kaleo action with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo action
-	 * @return the kaleo action
-	 * @throws NoSuchActionException if a kaleo action with the primary key could not be found
-	 */
-	@Override
-	public KaleoAction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchActionException {
-
-		KaleoAction kaleoAction = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoAction == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchActionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoAction;
 	}
@@ -2307,9 +2200,6 @@ public class KaleoActionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoAction.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoAction exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoAction exists with the key {";
 
@@ -2325,4 +2215,4 @@ public class KaleoActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:779658303
+// LIFERAY-SERVICE-BUILDER-HASH:694153422

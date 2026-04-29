@@ -64,7 +64,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationTemplateAttachmentPersistence.class)
 public class NotificationTemplateAttachmentPersistenceImpl
-	extends BasePersistenceImpl<NotificationTemplateAttachment>
+	extends BasePersistenceImpl
+		<NotificationTemplateAttachment,
+		 NoSuchNotificationTemplateAttachmentException>
 	implements NotificationTemplateAttachmentPersistence {
 
 	/*
@@ -409,59 +411,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all notification template attachments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NotificationTemplateAttachmentImpl.class);
-
-		finderCache.clearCache(NotificationTemplateAttachmentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the notification template attachment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		NotificationTemplateAttachment notificationTemplateAttachment) {
-
-		entityCache.removeResult(
-			NotificationTemplateAttachmentImpl.class,
-			notificationTemplateAttachment);
-	}
-
-	@Override
-	public void clearCache(
-		List<NotificationTemplateAttachment> notificationTemplateAttachments) {
-
-		for (NotificationTemplateAttachment notificationTemplateAttachment :
-				notificationTemplateAttachments) {
-
-			entityCache.removeResult(
-				NotificationTemplateAttachmentImpl.class,
-				notificationTemplateAttachment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NotificationTemplateAttachmentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				NotificationTemplateAttachmentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		NotificationTemplateAttachmentModelImpl
 			notificationTemplateAttachmentModelImpl) {
@@ -512,50 +461,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		throws NoSuchNotificationTemplateAttachmentException {
 
 		return remove((Serializable)notificationTemplateAttachmentId);
-	}
-
-	/**
-	 * Removes the notification template attachment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the notification template attachment
-	 * @return the notification template attachment that was removed
-	 * @throws NoSuchNotificationTemplateAttachmentException if a notification template attachment with the primary key could not be found
-	 */
-	@Override
-	public NotificationTemplateAttachment remove(Serializable primaryKey)
-		throws NoSuchNotificationTemplateAttachmentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NotificationTemplateAttachment notificationTemplateAttachment =
-				(NotificationTemplateAttachment)session.get(
-					NotificationTemplateAttachmentImpl.class, primaryKey);
-
-			if (notificationTemplateAttachment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationTemplateAttachmentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(notificationTemplateAttachment);
-		}
-		catch (NoSuchNotificationTemplateAttachmentException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -656,33 +561,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		}
 
 		notificationTemplateAttachment.resetOriginalValues();
-
-		return notificationTemplateAttachment;
-	}
-
-	/**
-	 * Returns the notification template attachment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the notification template attachment
-	 * @return the notification template attachment
-	 * @throws NoSuchNotificationTemplateAttachmentException if a notification template attachment with the primary key could not be found
-	 */
-	@Override
-	public NotificationTemplateAttachment findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationTemplateAttachmentException {
-
-		NotificationTemplateAttachment notificationTemplateAttachment =
-			fetchByPrimaryKey(primaryKey);
-
-		if (notificationTemplateAttachment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationTemplateAttachmentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return notificationTemplateAttachment;
 	}
@@ -1059,9 +937,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"notificationTemplateAttachment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NotificationTemplateAttachment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationTemplateAttachment exists with the key {";
 
@@ -1077,4 +952,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1647685387
+// LIFERAY-SERVICE-BUILDER-HASH:1381994568

@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceListAccountRelPersistence.class)
 public class CommercePriceListAccountRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceListAccountRel>
+	extends BasePersistenceImpl
+		<CommercePriceListAccountRel, NoSuchPriceListAccountRelException>
 	implements CommercePriceListAccountRelPersistence {
 
 	/*
@@ -775,58 +776,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price list account rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceListAccountRelImpl.class);
-
-		finderCache.clearCache(CommercePriceListAccountRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price list account rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePriceListAccountRel commercePriceListAccountRel) {
-
-		entityCache.removeResult(
-			CommercePriceListAccountRelImpl.class, commercePriceListAccountRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePriceListAccountRel> commercePriceListAccountRels) {
-
-		for (CommercePriceListAccountRel commercePriceListAccountRel :
-				commercePriceListAccountRels) {
-
-			entityCache.removeResult(
-				CommercePriceListAccountRelImpl.class,
-				commercePriceListAccountRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceListAccountRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceListAccountRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceListAccountRelModelImpl
 			commercePriceListAccountRelModelImpl) {
@@ -886,48 +835,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 		throws NoSuchPriceListAccountRelException {
 
 		return remove((Serializable)commercePriceListAccountRelId);
-	}
-
-	/**
-	 * Removes the commerce price list account rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price list account rel
-	 * @return the commerce price list account rel that was removed
-	 * @throws NoSuchPriceListAccountRelException if a commerce price list account rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListAccountRel remove(Serializable primaryKey)
-		throws NoSuchPriceListAccountRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceListAccountRel commercePriceListAccountRel =
-				(CommercePriceListAccountRel)session.get(
-					CommercePriceListAccountRelImpl.class, primaryKey);
-
-			if (commercePriceListAccountRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceListAccountRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceListAccountRel);
-		}
-		catch (NoSuchPriceListAccountRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1067,32 +974,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 		}
 
 		commercePriceListAccountRel.resetOriginalValues();
-
-		return commercePriceListAccountRel;
-	}
-
-	/**
-	 * Returns the commerce price list account rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price list account rel
-	 * @return the commerce price list account rel
-	 * @throws NoSuchPriceListAccountRelException if a commerce price list account rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListAccountRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPriceListAccountRelException {
-
-		CommercePriceListAccountRel commercePriceListAccountRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commercePriceListAccountRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceListAccountRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceListAccountRel;
 	}
@@ -1790,9 +1671,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceListAccountRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceListAccountRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceListAccountRel exists with the key {";
 
@@ -1808,4 +1686,4 @@ public class CommercePriceListAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1949862886
+// LIFERAY-SERVICE-BUILDER-HASH:230965763

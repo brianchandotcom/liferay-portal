@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WorkflowMetricsSLADefinitionPersistence.class)
 public class WorkflowMetricsSLADefinitionPersistenceImpl
-	extends BasePersistenceImpl<WorkflowMetricsSLADefinition>
+	extends BasePersistenceImpl
+		<WorkflowMetricsSLADefinition, NoSuchSLADefinitionException>
 	implements WorkflowMetricsSLADefinitionPersistence {
 
 	/*
@@ -1589,59 +1590,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all workflow metrics sla definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WorkflowMetricsSLADefinitionImpl.class);
-
-		finderCache.clearCache(WorkflowMetricsSLADefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the workflow metrics sla definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-
-		entityCache.removeResult(
-			WorkflowMetricsSLADefinitionImpl.class,
-			workflowMetricsSLADefinition);
-	}
-
-	@Override
-	public void clearCache(
-		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions) {
-
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				workflowMetricsSLADefinitions) {
-
-			entityCache.removeResult(
-				WorkflowMetricsSLADefinitionImpl.class,
-				workflowMetricsSLADefinition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WorkflowMetricsSLADefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				WorkflowMetricsSLADefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WorkflowMetricsSLADefinitionModelImpl
 			workflowMetricsSLADefinitionModelImpl) {
@@ -1706,48 +1654,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		throws NoSuchSLADefinitionException {
 
 		return remove((Serializable)workflowMetricsSLADefinitionId);
-	}
-
-	/**
-	 * Removes the workflow metrics sla definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the workflow metrics sla definition
-	 * @return the workflow metrics sla definition that was removed
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinition remove(Serializable primaryKey)
-		throws NoSuchSLADefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-				(WorkflowMetricsSLADefinition)session.get(
-					WorkflowMetricsSLADefinitionImpl.class, primaryKey);
-
-			if (workflowMetricsSLADefinition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSLADefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(workflowMetricsSLADefinition);
-		}
-		catch (NoSuchSLADefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1879,33 +1785,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 		}
 
 		workflowMetricsSLADefinition.resetOriginalValues();
-
-		return workflowMetricsSLADefinition;
-	}
-
-	/**
-	 * Returns the workflow metrics sla definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the workflow metrics sla definition
-	 * @return the workflow metrics sla definition
-	 * @throws NoSuchSLADefinitionException if a workflow metrics sla definition with the primary key could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinition findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchSLADefinitionException {
-
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-			fetchByPrimaryKey(primaryKey);
-
-		if (workflowMetricsSLADefinition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSLADefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return workflowMetricsSLADefinition;
 	}
@@ -2568,9 +2447,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowMetricsSLADefinition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WorkflowMetricsSLADefinition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WorkflowMetricsSLADefinition exists with the key {";
 
@@ -2586,4 +2462,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:589782883
+// LIFERAY-SERVICE-BUILDER-HASH:1890395532

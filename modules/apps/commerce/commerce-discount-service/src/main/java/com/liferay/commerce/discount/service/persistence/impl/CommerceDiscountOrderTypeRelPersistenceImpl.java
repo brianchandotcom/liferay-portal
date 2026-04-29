@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountOrderTypeRelPersistence.class)
 public class CommerceDiscountOrderTypeRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountOrderTypeRel>
+	extends BasePersistenceImpl
+		<CommerceDiscountOrderTypeRel, NoSuchDiscountOrderTypeRelException>
 	implements CommerceDiscountOrderTypeRelPersistence {
 
 	/*
@@ -874,59 +875,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce discount order type rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountOrderTypeRelImpl.class);
-
-		finderCache.clearCache(CommerceDiscountOrderTypeRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount order type rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel) {
-
-		entityCache.removeResult(
-			CommerceDiscountOrderTypeRelImpl.class,
-			commerceDiscountOrderTypeRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels) {
-
-		for (CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel :
-				commerceDiscountOrderTypeRels) {
-
-			entityCache.removeResult(
-				CommerceDiscountOrderTypeRelImpl.class,
-				commerceDiscountOrderTypeRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountOrderTypeRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceDiscountOrderTypeRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceDiscountOrderTypeRelModelImpl
 			commerceDiscountOrderTypeRelModelImpl) {
@@ -981,48 +929,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 		throws NoSuchDiscountOrderTypeRelException {
 
 		return remove((Serializable)commerceDiscountOrderTypeRelId);
-	}
-
-	/**
-	 * Removes the commerce discount order type rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount order type rel
-	 * @return the commerce discount order type rel that was removed
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountOrderTypeRel remove(Serializable primaryKey)
-		throws NoSuchDiscountOrderTypeRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
-				(CommerceDiscountOrderTypeRel)session.get(
-					CommerceDiscountOrderTypeRelImpl.class, primaryKey);
-
-			if (commerceDiscountOrderTypeRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountOrderTypeRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountOrderTypeRel);
-		}
-		catch (NoSuchDiscountOrderTypeRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1154,33 +1060,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 		}
 
 		commerceDiscountOrderTypeRel.resetOriginalValues();
-
-		return commerceDiscountOrderTypeRel;
-	}
-
-	/**
-	 * Returns the commerce discount order type rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount order type rel
-	 * @return the commerce discount order type rel
-	 * @throws NoSuchDiscountOrderTypeRelException if a commerce discount order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountOrderTypeRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchDiscountOrderTypeRelException {
-
-		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceDiscountOrderTypeRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountOrderTypeRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountOrderTypeRel;
 	}
@@ -1649,9 +1528,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceDiscountOrderTypeRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountOrderTypeRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountOrderTypeRel exists with the key {";
 
@@ -1667,4 +1543,4 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:345275233
+// LIFERAY-SERVICE-BUILDER-HASH:-1689056878

@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the web dav props service.
@@ -55,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class WebDAVPropsPersistenceImpl
-	extends BasePersistenceImpl<WebDAVProps> implements WebDAVPropsPersistence {
+	extends BasePersistenceImpl<WebDAVProps, NoSuchWebDAVPropsException>
+	implements WebDAVPropsPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -219,48 +219,6 @@ public class WebDAVPropsPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all web dav propses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(WebDAVPropsImpl.class);
-
-		FinderCacheUtil.clearCache(WebDAVPropsImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the web dav props.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WebDAVProps webDAVProps) {
-		EntityCacheUtil.removeResult(WebDAVPropsImpl.class, webDAVProps);
-	}
-
-	@Override
-	public void clearCache(List<WebDAVProps> webDAVPropses) {
-		for (WebDAVProps webDAVProps : webDAVPropses) {
-			EntityCacheUtil.removeResult(WebDAVPropsImpl.class, webDAVProps);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(WebDAVPropsImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(WebDAVPropsImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WebDAVPropsModelImpl webDAVPropsModelImpl) {
 
@@ -303,47 +261,6 @@ public class WebDAVPropsPersistenceImpl
 		throws NoSuchWebDAVPropsException {
 
 		return remove((Serializable)webDavPropsId);
-	}
-
-	/**
-	 * Removes the web dav props with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the web dav props
-	 * @return the web dav props that was removed
-	 * @throws NoSuchWebDAVPropsException if a web dav props with the primary key could not be found
-	 */
-	@Override
-	public WebDAVProps remove(Serializable primaryKey)
-		throws NoSuchWebDAVPropsException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WebDAVProps webDAVProps = (WebDAVProps)session.get(
-				WebDAVPropsImpl.class, primaryKey);
-
-			if (webDAVProps == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWebDAVPropsException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(webDAVProps);
-		}
-		catch (NoSuchWebDAVPropsException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -452,31 +369,6 @@ public class WebDAVPropsPersistenceImpl
 		}
 
 		webDAVProps.resetOriginalValues();
-
-		return webDAVProps;
-	}
-
-	/**
-	 * Returns the web dav props with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the web dav props
-	 * @return the web dav props
-	 * @throws NoSuchWebDAVPropsException if a web dav props with the primary key could not be found
-	 */
-	@Override
-	public WebDAVProps findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWebDAVPropsException {
-
-		WebDAVProps webDAVProps = fetchByPrimaryKey(primaryKey);
-
-		if (webDAVProps == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWebDAVPropsException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return webDAVProps;
 	}
@@ -758,9 +650,6 @@ public class WebDAVPropsPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "webDAVProps.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WebDAVProps exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WebDAVProps exists with the key {";
 
@@ -773,4 +662,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:935952344
+// LIFERAY-SERVICE-BUILDER-HASH:-1159737844

@@ -79,7 +79,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FriendlyURLEntryPersistence.class)
 public class FriendlyURLEntryPersistenceImpl
-	extends BasePersistenceImpl<FriendlyURLEntry>
+	extends BasePersistenceImpl
+		<FriendlyURLEntry, NoSuchFriendlyURLEntryException>
 	implements FriendlyURLEntryPersistence {
 
 	/*
@@ -1102,49 +1103,6 @@ public class FriendlyURLEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all friendly url entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FriendlyURLEntryImpl.class);
-
-		finderCache.clearCache(FriendlyURLEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the friendly url entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FriendlyURLEntry friendlyURLEntry) {
-		entityCache.removeResult(FriendlyURLEntryImpl.class, friendlyURLEntry);
-	}
-
-	@Override
-	public void clearCache(List<FriendlyURLEntry> friendlyURLEntries) {
-		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
-			entityCache.removeResult(
-				FriendlyURLEntryImpl.class, friendlyURLEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FriendlyURLEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FriendlyURLEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FriendlyURLEntryModelImpl friendlyURLEntryModelImpl) {
 
@@ -1196,47 +1154,6 @@ public class FriendlyURLEntryPersistenceImpl
 		throws NoSuchFriendlyURLEntryException {
 
 		return remove((Serializable)friendlyURLEntryId);
-	}
-
-	/**
-	 * Removes the friendly url entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the friendly url entry
-	 * @return the friendly url entry that was removed
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
-	@Override
-	public FriendlyURLEntry remove(Serializable primaryKey)
-		throws NoSuchFriendlyURLEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FriendlyURLEntry friendlyURLEntry = (FriendlyURLEntry)session.get(
-				FriendlyURLEntryImpl.class, primaryKey);
-
-			if (friendlyURLEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFriendlyURLEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(friendlyURLEntry);
-		}
-		catch (NoSuchFriendlyURLEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1366,31 +1283,6 @@ public class FriendlyURLEntryPersistenceImpl
 		}
 
 		friendlyURLEntry.resetOriginalValues();
-
-		return friendlyURLEntry;
-	}
-
-	/**
-	 * Returns the friendly url entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the friendly url entry
-	 * @return the friendly url entry
-	 * @throws NoSuchFriendlyURLEntryException if a friendly url entry with the primary key could not be found
-	 */
-	@Override
-	public FriendlyURLEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFriendlyURLEntryException {
-
-		FriendlyURLEntry friendlyURLEntry = fetchByPrimaryKey(primaryKey);
-
-		if (friendlyURLEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFriendlyURLEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return friendlyURLEntry;
 	}
@@ -2133,9 +2025,6 @@ public class FriendlyURLEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "friendlyURLEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FriendlyURLEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FriendlyURLEntry exists with the key {";
 
@@ -2151,4 +2040,4 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-401262191
+// LIFERAY-SERVICE-BUILDER-HASH:-1548795697

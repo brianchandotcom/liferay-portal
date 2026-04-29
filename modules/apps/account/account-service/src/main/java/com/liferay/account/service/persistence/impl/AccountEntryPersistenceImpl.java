@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountEntryPersistence.class)
 public class AccountEntryPersistenceImpl
-	extends BasePersistenceImpl<AccountEntry>
+	extends BasePersistenceImpl<AccountEntry, NoSuchEntryException>
 	implements AccountEntryPersistence {
 
 	/*
@@ -2149,48 +2149,6 @@ public class AccountEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountEntryImpl.class);
-
-		finderCache.clearCache(AccountEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AccountEntry accountEntry) {
-		entityCache.removeResult(AccountEntryImpl.class, accountEntry);
-	}
-
-	@Override
-	public void clearCache(List<AccountEntry> accountEntries) {
-		for (AccountEntry accountEntry : accountEntries) {
-			entityCache.removeResult(AccountEntryImpl.class, accountEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AccountEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountEntryModelImpl accountEntryModelImpl) {
 
@@ -2237,47 +2195,6 @@ public class AccountEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)accountEntryId);
-	}
-
-	/**
-	 * Removes the account entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account entry
-	 * @return the account entry that was removed
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	@Override
-	public AccountEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountEntry accountEntry = (AccountEntry)session.get(
-				AccountEntryImpl.class, primaryKey);
-
-			if (accountEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2455,31 +2372,6 @@ public class AccountEntryPersistenceImpl
 		}
 
 		accountEntry.resetOriginalValues();
-
-		return accountEntry;
-	}
-
-	/**
-	 * Returns the account entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account entry
-	 * @return the account entry
-	 * @throws NoSuchEntryException if a account entry with the primary key could not be found
-	 */
-	@Override
-	public AccountEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		AccountEntry accountEntry = fetchByPrimaryKey(primaryKey);
-
-		if (accountEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountEntry;
 	}
@@ -2978,9 +2870,6 @@ public class AccountEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AccountEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountEntry exists with the key {";
 
@@ -2996,4 +2885,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:393335634
+// LIFERAY-SERVICE-BUILDER-HASH:-225615338

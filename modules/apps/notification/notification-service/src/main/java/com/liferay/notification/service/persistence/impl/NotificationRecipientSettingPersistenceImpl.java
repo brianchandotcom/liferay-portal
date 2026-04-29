@@ -69,7 +69,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationRecipientSettingPersistence.class)
 public class NotificationRecipientSettingPersistenceImpl
-	extends BasePersistenceImpl<NotificationRecipientSetting>
+	extends BasePersistenceImpl
+		<NotificationRecipientSetting,
+		 NoSuchNotificationRecipientSettingException>
 	implements NotificationRecipientSettingPersistence {
 
 	/*
@@ -720,59 +722,6 @@ public class NotificationRecipientSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all notification recipient settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NotificationRecipientSettingImpl.class);
-
-		finderCache.clearCache(NotificationRecipientSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the notification recipient setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		NotificationRecipientSetting notificationRecipientSetting) {
-
-		entityCache.removeResult(
-			NotificationRecipientSettingImpl.class,
-			notificationRecipientSetting);
-	}
-
-	@Override
-	public void clearCache(
-		List<NotificationRecipientSetting> notificationRecipientSettings) {
-
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				notificationRecipientSettings) {
-
-			entityCache.removeResult(
-				NotificationRecipientSettingImpl.class,
-				notificationRecipientSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NotificationRecipientSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				NotificationRecipientSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		NotificationRecipientSettingModelImpl
 			notificationRecipientSettingModelImpl) {
@@ -827,50 +776,6 @@ public class NotificationRecipientSettingPersistenceImpl
 		throws NoSuchNotificationRecipientSettingException {
 
 		return remove((Serializable)notificationRecipientSettingId);
-	}
-
-	/**
-	 * Removes the notification recipient setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the notification recipient setting
-	 * @return the notification recipient setting that was removed
-	 * @throws NoSuchNotificationRecipientSettingException if a notification recipient setting with the primary key could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting remove(Serializable primaryKey)
-		throws NoSuchNotificationRecipientSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NotificationRecipientSetting notificationRecipientSetting =
-				(NotificationRecipientSetting)session.get(
-					NotificationRecipientSettingImpl.class, primaryKey);
-
-			if (notificationRecipientSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationRecipientSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(notificationRecipientSetting);
-		}
-		catch (NoSuchNotificationRecipientSettingException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1002,33 +907,6 @@ public class NotificationRecipientSettingPersistenceImpl
 		}
 
 		notificationRecipientSetting.resetOriginalValues();
-
-		return notificationRecipientSetting;
-	}
-
-	/**
-	 * Returns the notification recipient setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the notification recipient setting
-	 * @return the notification recipient setting
-	 * @throws NoSuchNotificationRecipientSettingException if a notification recipient setting with the primary key could not be found
-	 */
-	@Override
-	public NotificationRecipientSetting findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationRecipientSettingException {
-
-		NotificationRecipientSetting notificationRecipientSetting =
-			fetchByPrimaryKey(primaryKey);
-
-		if (notificationRecipientSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationRecipientSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return notificationRecipientSetting;
 	}
@@ -1469,9 +1347,6 @@ public class NotificationRecipientSettingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"notificationRecipientSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NotificationRecipientSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationRecipientSetting exists with the key {";
 
@@ -1487,4 +1362,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-266496303
+// LIFERAY-SERVICE-BUILDER-HASH:-1883503196

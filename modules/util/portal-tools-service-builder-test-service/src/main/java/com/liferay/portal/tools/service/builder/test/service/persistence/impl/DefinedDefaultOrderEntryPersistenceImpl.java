@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the defined default order entry service.
@@ -54,7 +53,8 @@ import java.util.Set;
  * @generated
  */
 public class DefinedDefaultOrderEntryPersistenceImpl
-	extends BasePersistenceImpl<DefinedDefaultOrderEntry>
+	extends BasePersistenceImpl
+		<DefinedDefaultOrderEntry, NoSuchDefinedDefaultOrderEntryException>
 	implements DefinedDefaultOrderEntryPersistence {
 
 	/*
@@ -364,55 +364,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all defined default order entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DefinedDefaultOrderEntryImpl.class);
-
-		finderCache.clearCache(DefinedDefaultOrderEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the defined default order entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DefinedDefaultOrderEntry definedDefaultOrderEntry) {
-		entityCache.removeResult(
-			DefinedDefaultOrderEntryImpl.class, definedDefaultOrderEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<DefinedDefaultOrderEntry> definedDefaultOrderEntries) {
-
-		for (DefinedDefaultOrderEntry definedDefaultOrderEntry :
-				definedDefaultOrderEntries) {
-
-			entityCache.removeResult(
-				DefinedDefaultOrderEntryImpl.class, definedDefaultOrderEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DefinedDefaultOrderEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DefinedDefaultOrderEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DefinedDefaultOrderEntryModelImpl definedDefaultOrderEntryModelImpl) {
 
@@ -453,48 +404,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 		throws NoSuchDefinedDefaultOrderEntryException {
 
 		return remove((Serializable)definedDefaultOrderEntryId);
-	}
-
-	/**
-	 * Removes the defined default order entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the defined default order entry
-	 * @return the defined default order entry that was removed
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a defined default order entry with the primary key could not be found
-	 */
-	@Override
-	public DefinedDefaultOrderEntry remove(Serializable primaryKey)
-		throws NoSuchDefinedDefaultOrderEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DefinedDefaultOrderEntry definedDefaultOrderEntry =
-				(DefinedDefaultOrderEntry)session.get(
-					DefinedDefaultOrderEntryImpl.class, primaryKey);
-
-			if (definedDefaultOrderEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDefinedDefaultOrderEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(definedDefaultOrderEntry);
-		}
-		catch (NoSuchDefinedDefaultOrderEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -606,32 +515,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 		}
 
 		definedDefaultOrderEntry.resetOriginalValues();
-
-		return definedDefaultOrderEntry;
-	}
-
-	/**
-	 * Returns the defined default order entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the defined default order entry
-	 * @return the defined default order entry
-	 * @throws NoSuchDefinedDefaultOrderEntryException if a defined default order entry with the primary key could not be found
-	 */
-	@Override
-	public DefinedDefaultOrderEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDefinedDefaultOrderEntryException {
-
-		DefinedDefaultOrderEntry definedDefaultOrderEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (definedDefaultOrderEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDefinedDefaultOrderEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return definedDefaultOrderEntry;
 	}
@@ -958,9 +841,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"definedDefaultOrderEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DefinedDefaultOrderEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DefinedDefaultOrderEntry exists with the key {";
 
@@ -973,4 +853,4 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1130067013
+// LIFERAY-SERVICE-BUILDER-HASH:-1803290865

@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationQueueEntryPersistence.class)
 public class NotificationQueueEntryPersistenceImpl
-	extends BasePersistenceImpl<NotificationQueueEntry>
+	extends BasePersistenceImpl
+		<NotificationQueueEntry, NoSuchNotificationQueueEntryException>
 	implements NotificationQueueEntryPersistence {
 
 	/*
@@ -1654,55 +1655,6 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all notification queue entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NotificationQueueEntryImpl.class);
-
-		finderCache.clearCache(NotificationQueueEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the notification queue entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(NotificationQueueEntry notificationQueueEntry) {
-		entityCache.removeResult(
-			NotificationQueueEntryImpl.class, notificationQueueEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<NotificationQueueEntry> notificationQueueEntries) {
-
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntries) {
-
-			entityCache.removeResult(
-				NotificationQueueEntryImpl.class, notificationQueueEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NotificationQueueEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				NotificationQueueEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new notification queue entry with the primary key. Does not add the notification queue entry to the database.
 	 *
 	 * @param notificationQueueEntryId the primary key for the new notification queue entry
@@ -1733,48 +1685,6 @@ public class NotificationQueueEntryPersistenceImpl
 		throws NoSuchNotificationQueueEntryException {
 
 		return remove((Serializable)notificationQueueEntryId);
-	}
-
-	/**
-	 * Removes the notification queue entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the notification queue entry
-	 * @return the notification queue entry that was removed
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	@Override
-	public NotificationQueueEntry remove(Serializable primaryKey)
-		throws NoSuchNotificationQueueEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NotificationQueueEntry notificationQueueEntry =
-				(NotificationQueueEntry)session.get(
-					NotificationQueueEntryImpl.class, primaryKey);
-
-			if (notificationQueueEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationQueueEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(notificationQueueEntry);
-		}
-		catch (NoSuchNotificationQueueEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1892,32 +1802,6 @@ public class NotificationQueueEntryPersistenceImpl
 		}
 
 		notificationQueueEntry.resetOriginalValues();
-
-		return notificationQueueEntry;
-	}
-
-	/**
-	 * Returns the notification queue entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the notification queue entry
-	 * @return the notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a notification queue entry with the primary key could not be found
-	 */
-	@Override
-	public NotificationQueueEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNotificationQueueEntryException {
-
-		NotificationQueueEntry notificationQueueEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (notificationQueueEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationQueueEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return notificationQueueEntry;
 	}
@@ -2386,9 +2270,6 @@ public class NotificationQueueEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"NotificationQueueEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NotificationQueueEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationQueueEntry exists with the key {";
 
@@ -2404,4 +2285,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-102021794
+// LIFERAY-SERVICE-BUILDER-HASH:-1994546742

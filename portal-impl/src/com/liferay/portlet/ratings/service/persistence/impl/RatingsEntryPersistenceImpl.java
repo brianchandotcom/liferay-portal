@@ -71,7 +71,7 @@ import java.util.Set;
  * @generated
  */
 public class RatingsEntryPersistenceImpl
-	extends BasePersistenceImpl<RatingsEntry>
+	extends BasePersistenceImpl<RatingsEntry, NoSuchEntryException>
 	implements RatingsEntryPersistence {
 
 	/*
@@ -1474,48 +1474,6 @@ public class RatingsEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ratings entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RatingsEntryImpl.class);
-
-		FinderCacheUtil.clearCache(RatingsEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ratings entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RatingsEntry ratingsEntry) {
-		EntityCacheUtil.removeResult(RatingsEntryImpl.class, ratingsEntry);
-	}
-
-	@Override
-	public void clearCache(List<RatingsEntry> ratingsEntries) {
-		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			EntityCacheUtil.removeResult(RatingsEntryImpl.class, ratingsEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RatingsEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(RatingsEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RatingsEntryModelImpl ratingsEntryModelImpl) {
 
@@ -1566,47 +1524,6 @@ public class RatingsEntryPersistenceImpl
 	@Override
 	public RatingsEntry remove(long entryId) throws NoSuchEntryException {
 		return remove((Serializable)entryId);
-	}
-
-	/**
-	 * Removes the ratings entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ratings entry
-	 * @return the ratings entry that was removed
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	@Override
-	public RatingsEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RatingsEntry ratingsEntry = (RatingsEntry)session.get(
-				RatingsEntryImpl.class, primaryKey);
-
-			if (ratingsEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ratingsEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1730,31 +1647,6 @@ public class RatingsEntryPersistenceImpl
 		}
 
 		ratingsEntry.resetOriginalValues();
-
-		return ratingsEntry;
-	}
-
-	/**
-	 * Returns the ratings entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ratings entry
-	 * @return the ratings entry
-	 * @throws NoSuchEntryException if a ratings entry with the primary key could not be found
-	 */
-	@Override
-	public RatingsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		RatingsEntry ratingsEntry = fetchByPrimaryKey(primaryKey);
-
-		if (ratingsEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ratingsEntry;
 	}
@@ -2443,9 +2335,6 @@ public class RatingsEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ratingsEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RatingsEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RatingsEntry exists with the key {";
 
@@ -2461,4 +2350,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:729388513
+// LIFERAY-SERVICE-BUILDER-HASH:-1847817785

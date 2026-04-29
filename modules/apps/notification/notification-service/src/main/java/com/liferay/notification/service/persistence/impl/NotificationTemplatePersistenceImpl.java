@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationTemplatePersistence.class)
 public class NotificationTemplatePersistenceImpl
-	extends BasePersistenceImpl<NotificationTemplate>
+	extends BasePersistenceImpl
+		<NotificationTemplate, NoSuchNotificationTemplateException>
 	implements NotificationTemplatePersistence {
 
 	/*
@@ -1401,53 +1402,6 @@ public class NotificationTemplatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all notification templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NotificationTemplateImpl.class);
-
-		finderCache.clearCache(NotificationTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the notification template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(NotificationTemplate notificationTemplate) {
-		entityCache.removeResult(
-			NotificationTemplateImpl.class, notificationTemplate);
-	}
-
-	@Override
-	public void clearCache(List<NotificationTemplate> notificationTemplates) {
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplates) {
-
-			entityCache.removeResult(
-				NotificationTemplateImpl.class, notificationTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NotificationTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				NotificationTemplateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		NotificationTemplateModelImpl notificationTemplateModelImpl) {
 
@@ -1495,48 +1449,6 @@ public class NotificationTemplatePersistenceImpl
 		throws NoSuchNotificationTemplateException {
 
 		return remove((Serializable)notificationTemplateId);
-	}
-
-	/**
-	 * Removes the notification template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the notification template
-	 * @return the notification template that was removed
-	 * @throws NoSuchNotificationTemplateException if a notification template with the primary key could not be found
-	 */
-	@Override
-	public NotificationTemplate remove(Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NotificationTemplate notificationTemplate =
-				(NotificationTemplate)session.get(
-					NotificationTemplateImpl.class, primaryKey);
-
-			if (notificationTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(notificationTemplate);
-		}
-		catch (NoSuchNotificationTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1726,32 +1638,6 @@ public class NotificationTemplatePersistenceImpl
 		}
 
 		notificationTemplate.resetOriginalValues();
-
-		return notificationTemplate;
-	}
-
-	/**
-	 * Returns the notification template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the notification template
-	 * @return the notification template
-	 * @throws NoSuchNotificationTemplateException if a notification template with the primary key could not be found
-	 */
-	@Override
-	public NotificationTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		NotificationTemplate notificationTemplate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (notificationTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return notificationTemplate;
 	}
@@ -2201,9 +2087,6 @@ public class NotificationTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"NotificationTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NotificationTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationTemplate exists with the key {";
 
@@ -2219,4 +2102,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1024031264
+// LIFERAY-SERVICE-BUILDER-HASH:-1165723347

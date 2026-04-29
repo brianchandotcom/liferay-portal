@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectLayoutBoxPersistence.class)
 public class ObjectLayoutBoxPersistenceImpl
-	extends BasePersistenceImpl<ObjectLayoutBox>
+	extends BasePersistenceImpl<ObjectLayoutBox, NoSuchObjectLayoutBoxException>
 	implements ObjectLayoutBoxPersistence {
 
 	/*
@@ -597,49 +597,6 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object layout boxes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectLayoutBoxImpl.class);
-
-		finderCache.clearCache(ObjectLayoutBoxImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object layout box.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectLayoutBox objectLayoutBox) {
-		entityCache.removeResult(ObjectLayoutBoxImpl.class, objectLayoutBox);
-	}
-
-	@Override
-	public void clearCache(List<ObjectLayoutBox> objectLayoutBoxes) {
-		for (ObjectLayoutBox objectLayoutBox : objectLayoutBoxes) {
-			entityCache.removeResult(
-				ObjectLayoutBoxImpl.class, objectLayoutBox);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectLayoutBoxImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectLayoutBoxImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object layout box with the primary key. Does not add the object layout box to the database.
 	 *
 	 * @param objectLayoutBoxId the primary key for the new object layout box
@@ -673,47 +630,6 @@ public class ObjectLayoutBoxPersistenceImpl
 		throws NoSuchObjectLayoutBoxException {
 
 		return remove((Serializable)objectLayoutBoxId);
-	}
-
-	/**
-	 * Removes the object layout box with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object layout box
-	 * @return the object layout box that was removed
-	 * @throws NoSuchObjectLayoutBoxException if a object layout box with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutBox remove(Serializable primaryKey)
-		throws NoSuchObjectLayoutBoxException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectLayoutBox objectLayoutBox = (ObjectLayoutBox)session.get(
-				ObjectLayoutBoxImpl.class, primaryKey);
-
-			if (objectLayoutBox == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectLayoutBoxException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectLayoutBox);
-		}
-		catch (NoSuchObjectLayoutBoxException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -830,31 +746,6 @@ public class ObjectLayoutBoxPersistenceImpl
 		}
 
 		objectLayoutBox.resetOriginalValues();
-
-		return objectLayoutBox;
-	}
-
-	/**
-	 * Returns the object layout box with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object layout box
-	 * @return the object layout box
-	 * @throws NoSuchObjectLayoutBoxException if a object layout box with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutBox findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectLayoutBoxException {
-
-		ObjectLayoutBox objectLayoutBox = fetchByPrimaryKey(primaryKey);
-
-		if (objectLayoutBox == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectLayoutBoxException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectLayoutBox;
 	}
@@ -1257,9 +1148,6 @@ public class ObjectLayoutBoxPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectLayoutBox.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectLayoutBox exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectLayoutBox exists with the key {";
 
@@ -1275,4 +1163,4 @@ public class ObjectLayoutBoxPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1890324602
+// LIFERAY-SERVICE-BUILDER-HASH:1378647652

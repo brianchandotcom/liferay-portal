@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.service.persistence.impl;
 
+import com.liferay.commerce.pricing.exception.NoSuchPricingClassCPDefinitionRelException;
 import com.liferay.commerce.pricing.model.CommercePricingClassCPDefinitionRel;
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelPersistence;
 import com.liferay.commerce.pricing.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommercePricingClassCPDefinitionRelFinderBaseImpl
-	extends BasePersistenceImpl<CommercePricingClassCPDefinitionRel> {
+	extends BasePersistenceImpl
+		<CommercePricingClassCPDefinitionRel,
+		 NoSuchPricingClassCPDefinitionRelException> {
 
 	public CommercePricingClassCPDefinitionRelFinderBaseImpl() {
 		setModelClass(CommercePricingClassCPDefinitionRel.class);
@@ -81,4 +84,4 @@ public abstract class CommercePricingClassCPDefinitionRelFinderBaseImpl
 		CommercePricingClassCPDefinitionRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1827650768
+// LIFERAY-SERVICE-BUILDER-HASH:1717947264

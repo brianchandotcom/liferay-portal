@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMTemplateVersionPersistence.class)
 public class DDMTemplateVersionPersistenceImpl
-	extends BasePersistenceImpl<DDMTemplateVersion>
+	extends BasePersistenceImpl
+		<DDMTemplateVersion, NoSuchTemplateVersionException>
 	implements DDMTemplateVersionPersistence {
 
 	/*
@@ -584,50 +585,6 @@ public class DDMTemplateVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm template versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMTemplateVersionImpl.class);
-
-		finderCache.clearCache(DDMTemplateVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm template version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMTemplateVersion ddmTemplateVersion) {
-		entityCache.removeResult(
-			DDMTemplateVersionImpl.class, ddmTemplateVersion);
-	}
-
-	@Override
-	public void clearCache(List<DDMTemplateVersion> ddmTemplateVersions) {
-		for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
-			entityCache.removeResult(
-				DDMTemplateVersionImpl.class, ddmTemplateVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMTemplateVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMTemplateVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl) {
 
@@ -675,48 +632,6 @@ public class DDMTemplateVersionPersistenceImpl
 		throws NoSuchTemplateVersionException {
 
 		return remove((Serializable)templateVersionId);
-	}
-
-	/**
-	 * Removes the ddm template version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm template version
-	 * @return the ddm template version that was removed
-	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplateVersion remove(Serializable primaryKey)
-		throws NoSuchTemplateVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMTemplateVersion ddmTemplateVersion =
-				(DDMTemplateVersion)session.get(
-					DDMTemplateVersionImpl.class, primaryKey);
-
-			if (ddmTemplateVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTemplateVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmTemplateVersion);
-		}
-		catch (NoSuchTemplateVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -832,31 +747,6 @@ public class DDMTemplateVersionPersistenceImpl
 		}
 
 		ddmTemplateVersion.resetOriginalValues();
-
-		return ddmTemplateVersion;
-	}
-
-	/**
-	 * Returns the ddm template version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm template version
-	 * @return the ddm template version
-	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplateVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateVersionException {
-
-		DDMTemplateVersion ddmTemplateVersion = fetchByPrimaryKey(primaryKey);
-
-		if (ddmTemplateVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTemplateVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmTemplateVersion;
 	}
@@ -1499,9 +1389,6 @@ public class DDMTemplateVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmTemplateVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMTemplateVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMTemplateVersion exists with the key {";
 
@@ -1514,4 +1401,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1201726720
+// LIFERAY-SERVICE-BUILDER-HASH:870674639

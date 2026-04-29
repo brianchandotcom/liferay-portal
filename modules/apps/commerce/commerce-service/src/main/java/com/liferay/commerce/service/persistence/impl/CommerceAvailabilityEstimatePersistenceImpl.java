@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceAvailabilityEstimatePersistence.class)
 public class CommerceAvailabilityEstimatePersistenceImpl
-	extends BasePersistenceImpl<CommerceAvailabilityEstimate>
+	extends BasePersistenceImpl
+		<CommerceAvailabilityEstimate, NoSuchAvailabilityEstimateException>
 	implements CommerceAvailabilityEstimatePersistence {
 
 	/*
@@ -1303,59 +1304,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce availability estimates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceAvailabilityEstimateImpl.class);
-
-		finderCache.clearCache(CommerceAvailabilityEstimateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce availability estimate.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-		entityCache.removeResult(
-			CommerceAvailabilityEstimateImpl.class,
-			commerceAvailabilityEstimate);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates) {
-
-		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
-				commerceAvailabilityEstimates) {
-
-			entityCache.removeResult(
-				CommerceAvailabilityEstimateImpl.class,
-				commerceAvailabilityEstimate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceAvailabilityEstimateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceAvailabilityEstimateImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce availability estimate with the primary key. Does not add the commerce availability estimate to the database.
 	 *
 	 * @param commerceAvailabilityEstimateId the primary key for the new commerce availability estimate
@@ -1395,48 +1343,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		throws NoSuchAvailabilityEstimateException {
 
 		return remove((Serializable)commerceAvailabilityEstimateId);
-	}
-
-	/**
-	 * Removes the commerce availability estimate with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce availability estimate
-	 * @return the commerce availability estimate that was removed
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate remove(Serializable primaryKey)
-		throws NoSuchAvailabilityEstimateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-				(CommerceAvailabilityEstimate)session.get(
-					CommerceAvailabilityEstimateImpl.class, primaryKey);
-
-			if (commerceAvailabilityEstimate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAvailabilityEstimateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceAvailabilityEstimate);
-		}
-		catch (NoSuchAvailabilityEstimateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1566,33 +1472,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 		}
 
 		commerceAvailabilityEstimate.resetOriginalValues();
-
-		return commerceAvailabilityEstimate;
-	}
-
-	/**
-	 * Returns the commerce availability estimate with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce availability estimate
-	 * @return the commerce availability estimate
-	 * @throws NoSuchAvailabilityEstimateException if a commerce availability estimate with the primary key could not be found
-	 */
-	@Override
-	public CommerceAvailabilityEstimate findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchAvailabilityEstimateException {
-
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceAvailabilityEstimate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAvailabilityEstimateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceAvailabilityEstimate;
 	}
@@ -2040,9 +1919,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CommerceAvailabilityEstimate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceAvailabilityEstimate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceAvailabilityEstimate exists with the key {";
 
@@ -2058,4 +1934,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1369878077
+// LIFERAY-SERVICE-BUILDER-HASH:1092441558

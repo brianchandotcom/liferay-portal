@@ -88,7 +88,8 @@ import java.util.Set;
  * @generated
  */
 public class GroupPersistenceImpl
-	extends BasePersistenceImpl<Group> implements GroupPersistence {
+	extends BasePersistenceImpl<Group, NoSuchGroupException>
+	implements GroupPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -5558,48 +5559,6 @@ public class GroupPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all groups.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(GroupImpl.class);
-
-		FinderCacheUtil.clearCache(GroupImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the group.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Group group) {
-		EntityCacheUtil.removeResult(GroupImpl.class, group);
-	}
-
-	@Override
-	public void clearCache(List<Group> groups) {
-		for (Group group : groups) {
-			EntityCacheUtil.removeResult(GroupImpl.class, group);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(GroupImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(GroupImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(GroupModelImpl groupModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -5692,44 +5651,6 @@ public class GroupPersistenceImpl
 	@Override
 	public Group remove(long groupId) throws NoSuchGroupException {
 		return remove((Serializable)groupId);
-	}
-
-	/**
-	 * Removes the group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the group
-	 * @return the group that was removed
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	@Override
-	public Group remove(Serializable primaryKey) throws NoSuchGroupException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Group group = (Group)session.get(GroupImpl.class, primaryKey);
-
-			if (group == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchGroupException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(group);
-		}
-		catch (NoSuchGroupException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -5908,31 +5829,6 @@ public class GroupPersistenceImpl
 		}
 
 		group.resetOriginalValues();
-
-		return group;
-	}
-
-	/**
-	 * Returns the group with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the group
-	 * @return the group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	@Override
-	public Group findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchGroupException {
-
-		Group group = fetchByPrimaryKey(primaryKey);
-
-		if (group == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchGroupException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return group;
 	}
@@ -8665,9 +8561,6 @@ public class GroupPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "group_.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Group exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Group exists with the key {";
 
@@ -8683,4 +8576,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1142201651
+// LIFERAY-SERVICE-BUILDER-HASH:377888996

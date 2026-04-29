@@ -47,7 +47,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -68,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTermEntryLocalizationPersistence.class)
 public class CTermEntryLocalizationPersistenceImpl
-	extends BasePersistenceImpl<CTermEntryLocalization>
+	extends BasePersistenceImpl
+		<CTermEntryLocalization, NoSuchCTermEntryLocalizationException>
 	implements CTermEntryLocalizationPersistence {
 
 	/*
@@ -406,55 +406,6 @@ public class CTermEntryLocalizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all c term entry localizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTermEntryLocalizationImpl.class);
-
-		finderCache.clearCache(CTermEntryLocalizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the c term entry localization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTermEntryLocalization cTermEntryLocalization) {
-		entityCache.removeResult(
-			CTermEntryLocalizationImpl.class, cTermEntryLocalization);
-	}
-
-	@Override
-	public void clearCache(
-		List<CTermEntryLocalization> cTermEntryLocalizations) {
-
-		for (CTermEntryLocalization cTermEntryLocalization :
-				cTermEntryLocalizations) {
-
-			entityCache.removeResult(
-				CTermEntryLocalizationImpl.class, cTermEntryLocalization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTermEntryLocalizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CTermEntryLocalizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CTermEntryLocalizationModelImpl cTermEntryLocalizationModelImpl) {
 
@@ -499,48 +450,6 @@ public class CTermEntryLocalizationPersistenceImpl
 		throws NoSuchCTermEntryLocalizationException {
 
 		return remove((Serializable)cTermEntryLocalizationId);
-	}
-
-	/**
-	 * Removes the c term entry localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the c term entry localization
-	 * @return the c term entry localization that was removed
-	 * @throws NoSuchCTermEntryLocalizationException if a c term entry localization with the primary key could not be found
-	 */
-	@Override
-	public CTermEntryLocalization remove(Serializable primaryKey)
-		throws NoSuchCTermEntryLocalizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTermEntryLocalization cTermEntryLocalization =
-				(CTermEntryLocalization)session.get(
-					CTermEntryLocalizationImpl.class, primaryKey);
-
-			if (cTermEntryLocalization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCTermEntryLocalizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cTermEntryLocalization);
-		}
-		catch (NoSuchCTermEntryLocalizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -671,32 +580,6 @@ public class CTermEntryLocalizationPersistenceImpl
 		}
 
 		cTermEntryLocalization.resetOriginalValues();
-
-		return cTermEntryLocalization;
-	}
-
-	/**
-	 * Returns the c term entry localization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the c term entry localization
-	 * @return the c term entry localization
-	 * @throws NoSuchCTermEntryLocalizationException if a c term entry localization with the primary key could not be found
-	 */
-	@Override
-	public CTermEntryLocalization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCTermEntryLocalizationException {
-
-		CTermEntryLocalization cTermEntryLocalization = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cTermEntryLocalization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCTermEntryLocalizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cTermEntryLocalization;
 	}
@@ -1058,9 +941,6 @@ public class CTermEntryLocalizationPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cTermEntryLocalization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTermEntryLocalization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTermEntryLocalization exists with the key {";
 
@@ -1073,4 +953,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:163362388
+// LIFERAY-SERVICE-BUILDER-HASH:-192345943

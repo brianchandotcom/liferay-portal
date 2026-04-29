@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlPeerBindingPersistence.class)
 public class SamlPeerBindingPersistenceImpl
-	extends BasePersistenceImpl<SamlPeerBinding>
+	extends BasePersistenceImpl<SamlPeerBinding, NoSuchPeerBindingException>
 	implements SamlPeerBindingPersistence {
 
 	/*
@@ -502,49 +501,6 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all saml peer bindings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlPeerBindingImpl.class);
-
-		finderCache.clearCache(SamlPeerBindingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml peer binding.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlPeerBinding samlPeerBinding) {
-		entityCache.removeResult(SamlPeerBindingImpl.class, samlPeerBinding);
-	}
-
-	@Override
-	public void clearCache(List<SamlPeerBinding> samlPeerBindings) {
-		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
-			entityCache.removeResult(
-				SamlPeerBindingImpl.class, samlPeerBinding);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlPeerBindingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlPeerBindingImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new saml peer binding with the primary key. Does not add the saml peer binding to the database.
 	 *
 	 * @param samlPeerBindingId the primary key for the new saml peer binding
@@ -574,47 +530,6 @@ public class SamlPeerBindingPersistenceImpl
 		throws NoSuchPeerBindingException {
 
 		return remove((Serializable)samlPeerBindingId);
-	}
-
-	/**
-	 * Removes the saml peer binding with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml peer binding
-	 * @return the saml peer binding that was removed
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	@Override
-	public SamlPeerBinding remove(Serializable primaryKey)
-		throws NoSuchPeerBindingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlPeerBinding samlPeerBinding = (SamlPeerBinding)session.get(
-				SamlPeerBindingImpl.class, primaryKey);
-
-			if (samlPeerBinding == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPeerBindingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlPeerBinding);
-		}
-		catch (NoSuchPeerBindingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -715,31 +630,6 @@ public class SamlPeerBindingPersistenceImpl
 		}
 
 		samlPeerBinding.resetOriginalValues();
-
-		return samlPeerBinding;
-	}
-
-	/**
-	 * Returns the saml peer binding with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml peer binding
-	 * @return the saml peer binding
-	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
-	 */
-	@Override
-	public SamlPeerBinding findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPeerBindingException {
-
-		SamlPeerBinding samlPeerBinding = fetchByPrimaryKey(primaryKey);
-
-		if (samlPeerBinding == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPeerBindingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlPeerBinding;
 	}
@@ -1139,9 +1029,6 @@ public class SamlPeerBindingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlPeerBinding.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlPeerBinding exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlPeerBinding exists with the key {";
 
@@ -1154,4 +1041,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1180934065
+// LIFERAY-SERVICE-BUILDER-HASH:-601926414

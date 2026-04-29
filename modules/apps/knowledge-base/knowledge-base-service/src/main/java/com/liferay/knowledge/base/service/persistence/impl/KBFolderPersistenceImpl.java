@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KBFolderPersistence.class)
 public class KBFolderPersistenceImpl
-	extends BasePersistenceImpl<KBFolder> implements KBFolderPersistence {
+	extends BasePersistenceImpl<KBFolder, NoSuchFolderException>
+	implements KBFolderPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1870,48 +1871,6 @@ public class KBFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kb folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KBFolderImpl.class);
-
-		finderCache.clearCache(KBFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kb folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KBFolder kbFolder) {
-		entityCache.removeResult(KBFolderImpl.class, kbFolder);
-	}
-
-	@Override
-	public void clearCache(List<KBFolder> kbFolders) {
-		for (KBFolder kbFolder : kbFolders) {
-			entityCache.removeResult(KBFolderImpl.class, kbFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KBFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KBFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KBFolderModelImpl kbFolderModelImpl) {
 
@@ -1986,47 +1945,6 @@ public class KBFolderPersistenceImpl
 	@Override
 	public KBFolder remove(long kbFolderId) throws NoSuchFolderException {
 		return remove((Serializable)kbFolderId);
-	}
-
-	/**
-	 * Removes the kb folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kb folder
-	 * @return the kb folder that was removed
-	 * @throws NoSuchFolderException if a kb folder with the primary key could not be found
-	 */
-	@Override
-	public KBFolder remove(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KBFolder kbFolder = (KBFolder)session.get(
-				KBFolderImpl.class, primaryKey);
-
-			if (kbFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kbFolder);
-		}
-		catch (NoSuchFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2204,31 +2122,6 @@ public class KBFolderPersistenceImpl
 		}
 
 		kbFolder.resetOriginalValues();
-
-		return kbFolder;
-	}
-
-	/**
-	 * Returns the kb folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb folder
-	 * @return the kb folder
-	 * @throws NoSuchFolderException if a kb folder with the primary key could not be found
-	 */
-	@Override
-	public KBFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		KBFolder kbFolder = fetchByPrimaryKey(primaryKey);
-
-		if (kbFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kbFolder;
 	}
@@ -3042,9 +2935,6 @@ public class KBFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "KBFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KBFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBFolder exists with the key {";
 
@@ -3060,4 +2950,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1721473923
+// LIFERAY-SERVICE-BUILDER-HASH:1620002782

@@ -81,7 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetListEntrySegmentsEntryRelPersistence.class)
 public class AssetListEntrySegmentsEntryRelPersistenceImpl
-	extends BasePersistenceImpl<AssetListEntrySegmentsEntryRel>
+	extends BasePersistenceImpl
+		<AssetListEntrySegmentsEntryRel, NoSuchEntrySegmentsEntryRelException>
 	implements AssetListEntrySegmentsEntryRelPersistence {
 
 	/*
@@ -1689,59 +1690,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset list entry segments entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetListEntrySegmentsEntryRelImpl.class);
-
-		finderCache.clearCache(AssetListEntrySegmentsEntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset list entry segments entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
-
-		entityCache.removeResult(
-			AssetListEntrySegmentsEntryRelImpl.class,
-			assetListEntrySegmentsEntryRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels) {
-
-		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-				assetListEntrySegmentsEntryRels) {
-
-			entityCache.removeResult(
-				AssetListEntrySegmentsEntryRelImpl.class,
-				assetListEntrySegmentsEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetListEntrySegmentsEntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AssetListEntrySegmentsEntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetListEntrySegmentsEntryRelModelImpl
 			assetListEntrySegmentsEntryRelModelImpl) {
@@ -1811,48 +1759,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		throws NoSuchEntrySegmentsEntryRelException {
 
 		return remove((Serializable)assetListEntrySegmentsEntryRelId);
-	}
-
-	/**
-	 * Removes the asset list entry segments entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset list entry segments entry rel
-	 * @return the asset list entry segments entry rel that was removed
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel remove(Serializable primaryKey)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-				(AssetListEntrySegmentsEntryRel)session.get(
-					AssetListEntrySegmentsEntryRelImpl.class, primaryKey);
-
-			if (assetListEntrySegmentsEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntrySegmentsEntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetListEntrySegmentsEntryRel);
-		}
-		catch (NoSuchEntrySegmentsEntryRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1992,33 +1898,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		}
 
 		assetListEntrySegmentsEntryRel.resetOriginalValues();
-
-		return assetListEntrySegmentsEntryRel;
-	}
-
-	/**
-	 * Returns the asset list entry segments entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset list entry segments entry rel
-	 * @return the asset list entry segments entry rel
-	 * @throws NoSuchEntrySegmentsEntryRelException if a asset list entry segments entry rel with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntrySegmentsEntryRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchEntrySegmentsEntryRelException {
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (assetListEntrySegmentsEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntrySegmentsEntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetListEntrySegmentsEntryRel;
 	}
@@ -2797,9 +2676,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetListEntrySegmentsEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetListEntrySegmentsEntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetListEntrySegmentsEntryRel exists with the key {";
 
@@ -2815,4 +2691,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1968072512
+// LIFERAY-SERVICE-BUILDER-HASH:-856588181

@@ -75,7 +75,8 @@ import java.util.Set;
  * @generated
  */
 public class CountryPersistenceImpl
-	extends BasePersistenceImpl<Country> implements CountryPersistence {
+	extends BasePersistenceImpl<Country, NoSuchCountryException>
+	implements CountryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -4724,48 +4725,6 @@ public class CountryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all countries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(CountryImpl.class);
-
-		FinderCacheUtil.clearCache(CountryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the country.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Country country) {
-		EntityCacheUtil.removeResult(CountryImpl.class, country);
-	}
-
-	@Override
-	public void clearCache(List<Country> countries) {
-		for (Country country : countries) {
-			EntityCacheUtil.removeResult(CountryImpl.class, country);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(CountryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(CountryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(CountryModelImpl countryModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -4833,47 +4792,6 @@ public class CountryPersistenceImpl
 	@Override
 	public Country remove(long countryId) throws NoSuchCountryException {
 		return remove((Serializable)countryId);
-	}
-
-	/**
-	 * Removes the country with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the country
-	 * @return the country that was removed
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	@Override
-	public Country remove(Serializable primaryKey)
-		throws NoSuchCountryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Country country = (Country)session.get(
-				CountryImpl.class, primaryKey);
-
-			if (country == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCountryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(country);
-		}
-		catch (NoSuchCountryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4996,31 +4914,6 @@ public class CountryPersistenceImpl
 		}
 
 		country.resetOriginalValues();
-
-		return country;
-	}
-
-	/**
-	 * Returns the country with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the country
-	 * @return the country
-	 * @throws NoSuchCountryException if a country with the primary key could not be found
-	 */
-	@Override
-	public Country findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCountryException {
-
-		Country country = fetchByPrimaryKey(primaryKey);
-
-		if (country == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCountryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return country;
 	}
@@ -6040,9 +5933,6 @@ public class CountryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Country.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Country exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Country exists with the key {";
 
@@ -6058,4 +5948,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:670028955
+// LIFERAY-SERVICE-BUILDER-HASH:114551447

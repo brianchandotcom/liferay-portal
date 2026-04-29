@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the membership request service.
@@ -55,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class MembershipRequestPersistenceImpl
-	extends BasePersistenceImpl<MembershipRequest>
+	extends BasePersistenceImpl
+		<MembershipRequest, NoSuchMembershipRequestException>
 	implements MembershipRequestPersistence {
 
 	/*
@@ -749,51 +749,6 @@ public class MembershipRequestPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all membership requests.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(MembershipRequestImpl.class);
-
-		FinderCacheUtil.clearCache(MembershipRequestImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the membership request.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MembershipRequest membershipRequest) {
-		EntityCacheUtil.removeResult(
-			MembershipRequestImpl.class, membershipRequest);
-	}
-
-	@Override
-	public void clearCache(List<MembershipRequest> membershipRequests) {
-		for (MembershipRequest membershipRequest : membershipRequests) {
-			EntityCacheUtil.removeResult(
-				MembershipRequestImpl.class, membershipRequest);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(MembershipRequestImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				MembershipRequestImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new membership request with the primary key. Does not add the membership request to the database.
 	 *
 	 * @param membershipRequestId the primary key for the new membership request
@@ -823,48 +778,6 @@ public class MembershipRequestPersistenceImpl
 		throws NoSuchMembershipRequestException {
 
 		return remove((Serializable)membershipRequestId);
-	}
-
-	/**
-	 * Removes the membership request with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the membership request
-	 * @return the membership request that was removed
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	@Override
-	public MembershipRequest remove(Serializable primaryKey)
-		throws NoSuchMembershipRequestException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MembershipRequest membershipRequest =
-				(MembershipRequest)session.get(
-					MembershipRequestImpl.class, primaryKey);
-
-			if (membershipRequest == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMembershipRequestException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(membershipRequest);
-		}
-		catch (NoSuchMembershipRequestException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -968,31 +881,6 @@ public class MembershipRequestPersistenceImpl
 		}
 
 		membershipRequest.resetOriginalValues();
-
-		return membershipRequest;
-	}
-
-	/**
-	 * Returns the membership request with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the membership request
-	 * @return the membership request
-	 * @throws NoSuchMembershipRequestException if a membership request with the primary key could not be found
-	 */
-	@Override
-	public MembershipRequest findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMembershipRequestException {
-
-		MembershipRequest membershipRequest = fetchByPrimaryKey(primaryKey);
-
-		if (membershipRequest == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMembershipRequestException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return membershipRequest;
 	}
@@ -1395,9 +1283,6 @@ public class MembershipRequestPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "membershipRequest.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MembershipRequest exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MembershipRequest exists with the key {";
 
@@ -1410,4 +1295,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:926241996
+// LIFERAY-SERVICE-BUILDER-HASH:-820628933

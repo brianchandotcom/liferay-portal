@@ -79,7 +79,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShipmentItemPersistence.class)
 public class CommerceShipmentItemPersistenceImpl
-	extends BasePersistenceImpl<CommerceShipmentItem>
+	extends BasePersistenceImpl
+		<CommerceShipmentItem, NoSuchShipmentItemException>
 	implements CommerceShipmentItemPersistence {
 
 	/*
@@ -1621,53 +1622,6 @@ public class CommerceShipmentItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipment items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShipmentItemImpl.class);
-
-		finderCache.clearCache(CommerceShipmentItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipment item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceShipmentItem commerceShipmentItem) {
-		entityCache.removeResult(
-			CommerceShipmentItemImpl.class, commerceShipmentItem);
-	}
-
-	@Override
-	public void clearCache(List<CommerceShipmentItem> commerceShipmentItems) {
-		for (CommerceShipmentItem commerceShipmentItem :
-				commerceShipmentItems) {
-
-			entityCache.removeResult(
-				CommerceShipmentItemImpl.class, commerceShipmentItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShipmentItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShipmentItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShipmentItemModelImpl commerceShipmentItemModelImpl) {
 
@@ -1732,48 +1686,6 @@ public class CommerceShipmentItemPersistenceImpl
 		throws NoSuchShipmentItemException {
 
 		return remove((Serializable)commerceShipmentItemId);
-	}
-
-	/**
-	 * Removes the commerce shipment item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipment item
-	 * @return the commerce shipment item that was removed
-	 * @throws NoSuchShipmentItemException if a commerce shipment item with the primary key could not be found
-	 */
-	@Override
-	public CommerceShipmentItem remove(Serializable primaryKey)
-		throws NoSuchShipmentItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShipmentItem commerceShipmentItem =
-				(CommerceShipmentItem)session.get(
-					CommerceShipmentItemImpl.class, primaryKey);
-
-			if (commerceShipmentItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShipmentItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShipmentItem);
-		}
-		catch (NoSuchShipmentItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1963,32 +1875,6 @@ public class CommerceShipmentItemPersistenceImpl
 		}
 
 		commerceShipmentItem.resetOriginalValues();
-
-		return commerceShipmentItem;
-	}
-
-	/**
-	 * Returns the commerce shipment item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipment item
-	 * @return the commerce shipment item
-	 * @throws NoSuchShipmentItemException if a commerce shipment item with the primary key could not be found
-	 */
-	@Override
-	public CommerceShipmentItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchShipmentItemException {
-
-		CommerceShipmentItem commerceShipmentItem = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceShipmentItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShipmentItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShipmentItem;
 	}
@@ -2597,9 +2483,6 @@ public class CommerceShipmentItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShipmentItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShipmentItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShipmentItem exists with the key {";
 
@@ -2615,4 +2498,4 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1566546596
+// LIFERAY-SERVICE-BUILDER-HASH:-496760045

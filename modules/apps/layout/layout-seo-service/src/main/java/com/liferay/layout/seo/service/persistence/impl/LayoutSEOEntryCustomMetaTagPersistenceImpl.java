@@ -71,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutSEOEntryCustomMetaTagPersistence.class)
 public class LayoutSEOEntryCustomMetaTagPersistenceImpl
-	extends BasePersistenceImpl<LayoutSEOEntryCustomMetaTag>
+	extends BasePersistenceImpl
+		<LayoutSEOEntryCustomMetaTag, NoSuchEntryCustomMetaTagException>
 	implements LayoutSEOEntryCustomMetaTagPersistence {
 
 	/*
@@ -329,58 +330,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all layout seo entry custom meta tags.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutSEOEntryCustomMetaTagImpl.class);
-
-		finderCache.clearCache(LayoutSEOEntryCustomMetaTagImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout seo entry custom meta tag.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag) {
-
-		entityCache.removeResult(
-			LayoutSEOEntryCustomMetaTagImpl.class, layoutSEOEntryCustomMetaTag);
-	}
-
-	@Override
-	public void clearCache(
-		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags) {
-
-		for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag :
-				layoutSEOEntryCustomMetaTags) {
-
-			entityCache.removeResult(
-				LayoutSEOEntryCustomMetaTagImpl.class,
-				layoutSEOEntryCustomMetaTag);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutSEOEntryCustomMetaTagImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LayoutSEOEntryCustomMetaTagImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new layout seo entry custom meta tag with the primary key. Does not add the layout seo entry custom meta tag to the database.
 	 *
 	 * @param layoutSEOEntryCustomMetaTagId the primary key for the new layout seo entry custom meta tag
@@ -416,48 +365,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 		throws NoSuchEntryCustomMetaTagException {
 
 		return remove((Serializable)layoutSEOEntryCustomMetaTagId);
-	}
-
-	/**
-	 * Removes the layout seo entry custom meta tag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout seo entry custom meta tag
-	 * @return the layout seo entry custom meta tag that was removed
-	 * @throws NoSuchEntryCustomMetaTagException if a layout seo entry custom meta tag with the primary key could not be found
-	 */
-	@Override
-	public LayoutSEOEntryCustomMetaTag remove(Serializable primaryKey)
-		throws NoSuchEntryCustomMetaTagException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag =
-				(LayoutSEOEntryCustomMetaTag)session.get(
-					LayoutSEOEntryCustomMetaTagImpl.class, primaryKey);
-
-			if (layoutSEOEntryCustomMetaTag == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryCustomMetaTagException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutSEOEntryCustomMetaTag);
-		}
-		catch (NoSuchEntryCustomMetaTagException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -564,32 +471,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 		}
 
 		layoutSEOEntryCustomMetaTag.resetOriginalValues();
-
-		return layoutSEOEntryCustomMetaTag;
-	}
-
-	/**
-	 * Returns the layout seo entry custom meta tag with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout seo entry custom meta tag
-	 * @return the layout seo entry custom meta tag
-	 * @throws NoSuchEntryCustomMetaTagException if a layout seo entry custom meta tag with the primary key could not be found
-	 */
-	@Override
-	public LayoutSEOEntryCustomMetaTag findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryCustomMetaTagException {
-
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag =
-			fetchByPrimaryKey(primaryKey);
-
-		if (layoutSEOEntryCustomMetaTag == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryCustomMetaTagException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutSEOEntryCustomMetaTag;
 	}
@@ -1190,9 +1071,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"layoutSEOEntryCustomMetaTag.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSEOEntryCustomMetaTag exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSEOEntryCustomMetaTag exists with the key {";
 
@@ -1205,4 +1083,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1202445561
+// LIFERAY-SERVICE-BUILDER-HASH:1274292796

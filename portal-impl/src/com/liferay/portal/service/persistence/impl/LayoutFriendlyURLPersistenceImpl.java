@@ -73,7 +73,8 @@ import java.util.Set;
  * @generated
  */
 public class LayoutFriendlyURLPersistenceImpl
-	extends BasePersistenceImpl<LayoutFriendlyURL>
+	extends BasePersistenceImpl
+		<LayoutFriendlyURL, NoSuchLayoutFriendlyURLException>
 	implements LayoutFriendlyURLPersistence {
 
 	/*
@@ -2385,51 +2386,6 @@ public class LayoutFriendlyURLPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout friendly urls.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutFriendlyURLImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutFriendlyURLImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout friendly url.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutFriendlyURL layoutFriendlyURL) {
-		EntityCacheUtil.removeResult(
-			LayoutFriendlyURLImpl.class, layoutFriendlyURL);
-	}
-
-	@Override
-	public void clearCache(List<LayoutFriendlyURL> layoutFriendlyURLs) {
-		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			EntityCacheUtil.removeResult(
-				LayoutFriendlyURLImpl.class, layoutFriendlyURL);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutFriendlyURLImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				LayoutFriendlyURLImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutFriendlyURLModelImpl layoutFriendlyURLModelImpl) {
 
@@ -2499,48 +2455,6 @@ public class LayoutFriendlyURLPersistenceImpl
 		throws NoSuchLayoutFriendlyURLException {
 
 		return remove((Serializable)layoutFriendlyURLId);
-	}
-
-	/**
-	 * Removes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout friendly url
-	 * @return the layout friendly url that was removed
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL remove(Serializable primaryKey)
-		throws NoSuchLayoutFriendlyURLException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutFriendlyURL layoutFriendlyURL =
-				(LayoutFriendlyURL)session.get(
-					LayoutFriendlyURLImpl.class, primaryKey);
-
-			if (layoutFriendlyURL == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutFriendlyURLException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutFriendlyURL);
-		}
-		catch (NoSuchLayoutFriendlyURLException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2670,31 +2584,6 @@ public class LayoutFriendlyURLPersistenceImpl
 		}
 
 		layoutFriendlyURL.resetOriginalValues();
-
-		return layoutFriendlyURL;
-	}
-
-	/**
-	 * Returns the layout friendly url with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout friendly url
-	 * @return the layout friendly url
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
-	 */
-	@Override
-	public LayoutFriendlyURL findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutFriendlyURLException {
-
-		LayoutFriendlyURL layoutFriendlyURL = fetchByPrimaryKey(primaryKey);
-
-		if (layoutFriendlyURL == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutFriendlyURLException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutFriendlyURL;
 	}
@@ -3558,9 +3447,6 @@ public class LayoutFriendlyURLPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutFriendlyURL.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutFriendlyURL exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutFriendlyURL exists with the key {";
 
@@ -3576,4 +3462,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:882678556
+// LIFERAY-SERVICE-BUILDER-HASH:2083243397

@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchEngineImportTaskErrorPersistence.class)
 public class BatchEngineImportTaskErrorPersistenceImpl
-	extends BasePersistenceImpl<BatchEngineImportTaskError>
+	extends BasePersistenceImpl
+		<BatchEngineImportTaskError, NoSuchImportTaskErrorException>
 	implements BatchEngineImportTaskErrorPersistence {
 
 	/*
@@ -298,58 +298,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all batch engine import task errors.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BatchEngineImportTaskErrorImpl.class);
-
-		finderCache.clearCache(BatchEngineImportTaskErrorImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the batch engine import task error.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		BatchEngineImportTaskError batchEngineImportTaskError) {
-
-		entityCache.removeResult(
-			BatchEngineImportTaskErrorImpl.class, batchEngineImportTaskError);
-	}
-
-	@Override
-	public void clearCache(
-		List<BatchEngineImportTaskError> batchEngineImportTaskErrors) {
-
-		for (BatchEngineImportTaskError batchEngineImportTaskError :
-				batchEngineImportTaskErrors) {
-
-			entityCache.removeResult(
-				BatchEngineImportTaskErrorImpl.class,
-				batchEngineImportTaskError);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BatchEngineImportTaskErrorImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				BatchEngineImportTaskErrorImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
 	 * @param batchEngineImportTaskErrorId the primary key for the new batch engine import task error
@@ -383,48 +331,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 		throws NoSuchImportTaskErrorException {
 
 		return remove((Serializable)batchEngineImportTaskErrorId);
-	}
-
-	/**
-	 * Removes the batch engine import task error with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the batch engine import task error
-	 * @return the batch engine import task error that was removed
-	 * @throws NoSuchImportTaskErrorException if a batch engine import task error with the primary key could not be found
-	 */
-	@Override
-	public BatchEngineImportTaskError remove(Serializable primaryKey)
-		throws NoSuchImportTaskErrorException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BatchEngineImportTaskError batchEngineImportTaskError =
-				(BatchEngineImportTaskError)session.get(
-					BatchEngineImportTaskErrorImpl.class, primaryKey);
-
-			if (batchEngineImportTaskError == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchImportTaskErrorException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(batchEngineImportTaskError);
-		}
-		catch (NoSuchImportTaskErrorException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -545,32 +451,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 		}
 
 		batchEngineImportTaskError.resetOriginalValues();
-
-		return batchEngineImportTaskError;
-	}
-
-	/**
-	 * Returns the batch engine import task error with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the batch engine import task error
-	 * @return the batch engine import task error
-	 * @throws NoSuchImportTaskErrorException if a batch engine import task error with the primary key could not be found
-	 */
-	@Override
-	public BatchEngineImportTaskError findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchImportTaskErrorException {
-
-		BatchEngineImportTaskError batchEngineImportTaskError =
-			fetchByPrimaryKey(primaryKey);
-
-		if (batchEngineImportTaskError == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchImportTaskErrorException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return batchEngineImportTaskError;
 	}
@@ -921,9 +801,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"batchEngineImportTaskError.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchEngineImportTaskError exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchEngineImportTaskError exists with the key {";
 
@@ -936,4 +813,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-122127935
+// LIFERAY-SERVICE-BUILDER-HASH:1296589762

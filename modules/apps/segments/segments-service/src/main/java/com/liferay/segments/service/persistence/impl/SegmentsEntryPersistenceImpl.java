@@ -91,7 +91,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SegmentsEntryPersistence.class)
 public class SegmentsEntryPersistenceImpl
-	extends BasePersistenceImpl<SegmentsEntry>
+	extends BasePersistenceImpl<SegmentsEntry, NoSuchEntryException>
 	implements SegmentsEntryPersistence {
 
 	/*
@@ -6273,48 +6273,6 @@ public class SegmentsEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all segments entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SegmentsEntryImpl.class);
-
-		finderCache.clearCache(SegmentsEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the segments entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SegmentsEntry segmentsEntry) {
-		entityCache.removeResult(SegmentsEntryImpl.class, segmentsEntry);
-	}
-
-	@Override
-	public void clearCache(List<SegmentsEntry> segmentsEntries) {
-		for (SegmentsEntry segmentsEntry : segmentsEntries) {
-			entityCache.removeResult(SegmentsEntryImpl.class, segmentsEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SegmentsEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SegmentsEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SegmentsEntryModelImpl segmentsEntryModelImpl) {
 
@@ -6382,47 +6340,6 @@ public class SegmentsEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)segmentsEntryId);
-	}
-
-	/**
-	 * Removes the segments entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the segments entry
-	 * @return the segments entry that was removed
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsEntry segmentsEntry = (SegmentsEntry)session.get(
-				SegmentsEntryImpl.class, primaryKey);
-
-			if (segmentsEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(segmentsEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6609,31 +6526,6 @@ public class SegmentsEntryPersistenceImpl
 		}
 
 		segmentsEntry.resetOriginalValues();
-
-		return segmentsEntry;
-	}
-
-	/**
-	 * Returns the segments entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments entry
-	 * @return the segments entry
-	 * @throws NoSuchEntryException if a segments entry with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		SegmentsEntry segmentsEntry = fetchByPrimaryKey(primaryKey);
-
-		if (segmentsEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return segmentsEntry;
 	}
@@ -7517,9 +7409,6 @@ public class SegmentsEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SegmentsEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SegmentsEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsEntry exists with the key {";
 
@@ -7535,4 +7424,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1597153391
+// LIFERAY-SERVICE-BUILDER-HASH:-1911824261

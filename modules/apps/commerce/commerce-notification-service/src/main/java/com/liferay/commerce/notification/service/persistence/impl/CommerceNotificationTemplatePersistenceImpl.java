@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceNotificationTemplatePersistence.class)
 @Deprecated
 public class CommerceNotificationTemplatePersistenceImpl
-	extends BasePersistenceImpl<CommerceNotificationTemplate>
+	extends BasePersistenceImpl
+		<CommerceNotificationTemplate, NoSuchNotificationTemplateException>
 	implements CommerceNotificationTemplatePersistence {
 
 	/*
@@ -1745,59 +1746,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce notification templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceNotificationTemplateImpl.class);
-
-		finderCache.clearCache(CommerceNotificationTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce notification template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceNotificationTemplate commerceNotificationTemplate) {
-
-		entityCache.removeResult(
-			CommerceNotificationTemplateImpl.class,
-			commerceNotificationTemplate);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceNotificationTemplate> commerceNotificationTemplates) {
-
-		for (CommerceNotificationTemplate commerceNotificationTemplate :
-				commerceNotificationTemplates) {
-
-			entityCache.removeResult(
-				CommerceNotificationTemplateImpl.class,
-				commerceNotificationTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceNotificationTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceNotificationTemplateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceNotificationTemplateModelImpl
 			commerceNotificationTemplateModelImpl) {
@@ -1852,48 +1800,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 		throws NoSuchNotificationTemplateException {
 
 		return remove((Serializable)commerceNotificationTemplateId);
-	}
-
-	/**
-	 * Removes the commerce notification template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce notification template
-	 * @return the commerce notification template that was removed
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate remove(Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceNotificationTemplate commerceNotificationTemplate =
-				(CommerceNotificationTemplate)session.get(
-					CommerceNotificationTemplateImpl.class, primaryKey);
-
-			if (commerceNotificationTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceNotificationTemplate);
-		}
-		catch (NoSuchNotificationTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2025,33 +1931,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 		}
 
 		commerceNotificationTemplate.resetOriginalValues();
-
-		return commerceNotificationTemplate;
-	}
-
-	/**
-	 * Returns the commerce notification template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce notification template
-	 * @return the commerce notification template
-	 * @throws NoSuchNotificationTemplateException if a commerce notification template with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplate findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		CommerceNotificationTemplate commerceNotificationTemplate =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceNotificationTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceNotificationTemplate;
 	}
@@ -2596,9 +2475,6 @@ public class CommerceNotificationTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CommerceNotificationTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceNotificationTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationTemplate exists with the key {";
 
@@ -2614,4 +2490,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-500120167
+// LIFERAY-SERVICE-BUILDER-HASH:980327048

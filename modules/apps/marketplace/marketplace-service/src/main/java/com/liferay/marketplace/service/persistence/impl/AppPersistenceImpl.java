@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AppPersistence.class)
 public class AppPersistenceImpl
-	extends BasePersistenceImpl<App> implements AppPersistence {
+	extends BasePersistenceImpl<App, NoSuchAppException>
+	implements AppPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -798,48 +799,6 @@ public class AppPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all apps.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AppImpl.class);
-
-		finderCache.clearCache(AppImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the app.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(App app) {
-		entityCache.removeResult(AppImpl.class, app);
-	}
-
-	@Override
-	public void clearCache(List<App> apps) {
-		for (App app : apps) {
-			entityCache.removeResult(AppImpl.class, app);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AppImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AppImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(AppModelImpl appModelImpl) {
 		Object[] args = new Object[] {appModelImpl.getRemoteAppId()};
 
@@ -879,44 +838,6 @@ public class AppPersistenceImpl
 	@Override
 	public App remove(long appId) throws NoSuchAppException {
 		return remove((Serializable)appId);
-	}
-
-	/**
-	 * Removes the app with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the app
-	 * @return the app that was removed
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	@Override
-	public App remove(Serializable primaryKey) throws NoSuchAppException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			App app = (App)session.get(AppImpl.class, primaryKey);
-
-			if (app == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAppException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(app);
-		}
-		catch (NoSuchAppException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1027,31 +948,6 @@ public class AppPersistenceImpl
 		}
 
 		app.resetOriginalValues();
-
-		return app;
-	}
-
-	/**
-	 * Returns the app with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the app
-	 * @return the app
-	 * @throws NoSuchAppException if a app with the primary key could not be found
-	 */
-	@Override
-	public App findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAppException {
-
-		App app = fetchByPrimaryKey(primaryKey);
-
-		if (app == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAppException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return app;
 	}
@@ -1487,9 +1383,6 @@ public class AppPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "app.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No App exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No App exists with the key {";
 
@@ -1505,4 +1398,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1447840956
+// LIFERAY-SERVICE-BUILDER-HASH:-965580373

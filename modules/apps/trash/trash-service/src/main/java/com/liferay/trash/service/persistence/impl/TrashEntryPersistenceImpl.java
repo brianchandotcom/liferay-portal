@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TrashEntryPersistence.class)
 public class TrashEntryPersistenceImpl
-	extends BasePersistenceImpl<TrashEntry> implements TrashEntryPersistence {
+	extends BasePersistenceImpl<TrashEntry, NoSuchEntryException>
+	implements TrashEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1067,48 +1068,6 @@ public class TrashEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all trash entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TrashEntryImpl.class);
-
-		finderCache.clearCache(TrashEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the trash entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TrashEntry trashEntry) {
-		entityCache.removeResult(TrashEntryImpl.class, trashEntry);
-	}
-
-	@Override
-	public void clearCache(List<TrashEntry> trashEntries) {
-		for (TrashEntry trashEntry : trashEntries) {
-			entityCache.removeResult(TrashEntryImpl.class, trashEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TrashEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TrashEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		TrashEntryModelImpl trashEntryModelImpl) {
 
@@ -1154,47 +1113,6 @@ public class TrashEntryPersistenceImpl
 	@Override
 	public TrashEntry remove(long entryId) throws NoSuchEntryException {
 		return remove((Serializable)entryId);
-	}
-
-	/**
-	 * Removes the trash entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the trash entry
-	 * @return the trash entry that was removed
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	@Override
-	public TrashEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TrashEntry trashEntry = (TrashEntry)session.get(
-				TrashEntryImpl.class, primaryKey);
-
-			if (trashEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(trashEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1300,31 +1218,6 @@ public class TrashEntryPersistenceImpl
 		}
 
 		trashEntry.resetOriginalValues();
-
-		return trashEntry;
-	}
-
-	/**
-	 * Returns the trash entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the trash entry
-	 * @return the trash entry
-	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
-	 */
-	@Override
-	public TrashEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		TrashEntry trashEntry = fetchByPrimaryKey(primaryKey);
-
-		if (trashEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return trashEntry;
 	}
@@ -2034,9 +1927,6 @@ public class TrashEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "trashEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TrashEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No TrashEntry exists with the key {";
 
@@ -2049,4 +1939,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:906613539
+// LIFERAY-SERVICE-BUILDER-HASH:961175393

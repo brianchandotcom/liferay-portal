@@ -5,6 +5,7 @@
 
 package com.liferay.blogs.service.persistence.impl;
 
+import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.persistence.BlogsEntryPersistence;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class BlogsEntryFinderBaseImpl
-	extends BasePersistenceImpl<BlogsEntry> {
+	extends BasePersistenceImpl<BlogsEntry, NoSuchEntryException> {
 
 	public BlogsEntryFinderBaseImpl() {
 		setModelClass(BlogsEntry.class);
@@ -77,4 +78,4 @@ public abstract class BlogsEntryFinderBaseImpl
 		BlogsEntryFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:104514656
+// LIFERAY-SERVICE-BUILDER-HASH:1470503882

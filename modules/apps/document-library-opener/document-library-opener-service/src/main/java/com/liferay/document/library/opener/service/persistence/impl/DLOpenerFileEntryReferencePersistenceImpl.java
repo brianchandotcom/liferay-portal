@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLOpenerFileEntryReferencePersistence.class)
 public class DLOpenerFileEntryReferencePersistenceImpl
-	extends BasePersistenceImpl<DLOpenerFileEntryReference>
+	extends BasePersistenceImpl
+		<DLOpenerFileEntryReference, NoSuchFileEntryReferenceException>
 	implements DLOpenerFileEntryReferencePersistence {
 
 	/*
@@ -345,58 +346,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all dl opener file entry references.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DLOpenerFileEntryReferenceImpl.class);
-
-		finderCache.clearCache(DLOpenerFileEntryReferenceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dl opener file entry reference.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
-		entityCache.removeResult(
-			DLOpenerFileEntryReferenceImpl.class, dlOpenerFileEntryReference);
-	}
-
-	@Override
-	public void clearCache(
-		List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences) {
-
-		for (DLOpenerFileEntryReference dlOpenerFileEntryReference :
-				dlOpenerFileEntryReferences) {
-
-			entityCache.removeResult(
-				DLOpenerFileEntryReferenceImpl.class,
-				dlOpenerFileEntryReference);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DLOpenerFileEntryReferenceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DLOpenerFileEntryReferenceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLOpenerFileEntryReferenceModelImpl
 			dlOpenerFileEntryReferenceModelImpl) {
@@ -452,48 +401,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		throws NoSuchFileEntryReferenceException {
 
 		return remove((Serializable)dlOpenerFileEntryReferenceId);
-	}
-
-	/**
-	 * Removes the dl opener file entry reference with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dl opener file entry reference
-	 * @return the dl opener file entry reference that was removed
-	 * @throws NoSuchFileEntryReferenceException if a dl opener file entry reference with the primary key could not be found
-	 */
-	@Override
-	public DLOpenerFileEntryReference remove(Serializable primaryKey)
-		throws NoSuchFileEntryReferenceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLOpenerFileEntryReference dlOpenerFileEntryReference =
-				(DLOpenerFileEntryReference)session.get(
-					DLOpenerFileEntryReferenceImpl.class, primaryKey);
-
-			if (dlOpenerFileEntryReference == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileEntryReferenceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlOpenerFileEntryReference);
-		}
-		catch (NoSuchFileEntryReferenceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -616,32 +523,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 		}
 
 		dlOpenerFileEntryReference.resetOriginalValues();
-
-		return dlOpenerFileEntryReference;
-	}
-
-	/**
-	 * Returns the dl opener file entry reference with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dl opener file entry reference
-	 * @return the dl opener file entry reference
-	 * @throws NoSuchFileEntryReferenceException if a dl opener file entry reference with the primary key could not be found
-	 */
-	@Override
-	public DLOpenerFileEntryReference findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileEntryReferenceException {
-
-		DLOpenerFileEntryReference dlOpenerFileEntryReference =
-			fetchByPrimaryKey(primaryKey);
-
-		if (dlOpenerFileEntryReference == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileEntryReferenceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlOpenerFileEntryReference;
 	}
@@ -988,9 +869,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"dlOpenerFileEntryReference.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLOpenerFileEntryReference exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLOpenerFileEntryReference exists with the key {";
 
@@ -1006,4 +884,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:934730459
+// LIFERAY-SERVICE-BUILDER-HASH:1270747256

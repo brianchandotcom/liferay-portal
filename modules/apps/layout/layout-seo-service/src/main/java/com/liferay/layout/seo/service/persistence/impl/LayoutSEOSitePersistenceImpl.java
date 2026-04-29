@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutSEOSitePersistence.class)
 public class LayoutSEOSitePersistenceImpl
-	extends BasePersistenceImpl<LayoutSEOSite>
+	extends BasePersistenceImpl<LayoutSEOSite, NoSuchSiteException>
 	implements LayoutSEOSitePersistence {
 
 	/*
@@ -675,48 +675,6 @@ public class LayoutSEOSitePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout seo sites.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutSEOSiteImpl.class);
-
-		finderCache.clearCache(LayoutSEOSiteImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout seo site.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutSEOSite layoutSEOSite) {
-		entityCache.removeResult(LayoutSEOSiteImpl.class, layoutSEOSite);
-	}
-
-	@Override
-	public void clearCache(List<LayoutSEOSite> layoutSEOSites) {
-		for (LayoutSEOSite layoutSEOSite : layoutSEOSites) {
-			entityCache.removeResult(LayoutSEOSiteImpl.class, layoutSEOSite);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutSEOSiteImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LayoutSEOSiteImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutSEOSiteModelImpl layoutSEOSiteModelImpl) {
 
@@ -773,47 +731,6 @@ public class LayoutSEOSitePersistenceImpl
 		throws NoSuchSiteException {
 
 		return remove((Serializable)layoutSEOSiteId);
-	}
-
-	/**
-	 * Removes the layout seo site with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout seo site
-	 * @return the layout seo site that was removed
-	 * @throws NoSuchSiteException if a layout seo site with the primary key could not be found
-	 */
-	@Override
-	public LayoutSEOSite remove(Serializable primaryKey)
-		throws NoSuchSiteException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSEOSite layoutSEOSite = (LayoutSEOSite)session.get(
-				LayoutSEOSiteImpl.class, primaryKey);
-
-			if (layoutSEOSite == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSiteException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutSEOSite);
-		}
-		catch (NoSuchSiteException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -937,31 +854,6 @@ public class LayoutSEOSitePersistenceImpl
 		}
 
 		layoutSEOSite.resetOriginalValues();
-
-		return layoutSEOSite;
-	}
-
-	/**
-	 * Returns the layout seo site with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout seo site
-	 * @return the layout seo site
-	 * @throws NoSuchSiteException if a layout seo site with the primary key could not be found
-	 */
-	@Override
-	public LayoutSEOSite findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSiteException {
-
-		LayoutSEOSite layoutSEOSite = fetchByPrimaryKey(primaryKey);
-
-		if (layoutSEOSite == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSiteException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutSEOSite;
 	}
@@ -1610,9 +1502,6 @@ public class LayoutSEOSitePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSEOSite.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSEOSite exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSEOSite exists with the key {";
 
@@ -1628,4 +1517,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1281943541
+// LIFERAY-SERVICE-BUILDER-HASH:223865236

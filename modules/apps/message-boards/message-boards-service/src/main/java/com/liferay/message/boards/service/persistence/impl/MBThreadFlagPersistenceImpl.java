@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBThreadFlagPersistence.class)
 public class MBThreadFlagPersistenceImpl
-	extends BasePersistenceImpl<MBThreadFlag>
+	extends BasePersistenceImpl<MBThreadFlag, NoSuchThreadFlagException>
 	implements MBThreadFlagPersistence {
 
 	/*
@@ -992,48 +992,6 @@ public class MBThreadFlagPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards thread flags.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBThreadFlagImpl.class);
-
-		finderCache.clearCache(MBThreadFlagImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards thread flag.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBThreadFlag mbThreadFlag) {
-		entityCache.removeResult(MBThreadFlagImpl.class, mbThreadFlag);
-	}
-
-	@Override
-	public void clearCache(List<MBThreadFlag> mbThreadFlags) {
-		for (MBThreadFlag mbThreadFlag : mbThreadFlags) {
-			entityCache.removeResult(MBThreadFlagImpl.class, mbThreadFlag);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBThreadFlagImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBThreadFlagImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBThreadFlagModelImpl mbThreadFlagModelImpl) {
 
@@ -1093,47 +1051,6 @@ public class MBThreadFlagPersistenceImpl
 		throws NoSuchThreadFlagException {
 
 		return remove((Serializable)threadFlagId);
-	}
-
-	/**
-	 * Removes the message boards thread flag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards thread flag
-	 * @return the message boards thread flag that was removed
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	@Override
-	public MBThreadFlag remove(Serializable primaryKey)
-		throws NoSuchThreadFlagException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBThreadFlag mbThreadFlag = (MBThreadFlag)session.get(
-				MBThreadFlagImpl.class, primaryKey);
-
-			if (mbThreadFlag == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchThreadFlagException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbThreadFlag);
-		}
-		catch (NoSuchThreadFlagException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1257,31 +1174,6 @@ public class MBThreadFlagPersistenceImpl
 		}
 
 		mbThreadFlag.resetOriginalValues();
-
-		return mbThreadFlag;
-	}
-
-	/**
-	 * Returns the message boards thread flag with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards thread flag
-	 * @return the message boards thread flag
-	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
-	 */
-	@Override
-	public MBThreadFlag findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchThreadFlagException {
-
-		MBThreadFlag mbThreadFlag = fetchByPrimaryKey(primaryKey);
-
-		if (mbThreadFlag == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchThreadFlagException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbThreadFlag;
 	}
@@ -1984,9 +1876,6 @@ public class MBThreadFlagPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbThreadFlag.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBThreadFlag exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBThreadFlag exists with the key {";
 
@@ -2002,4 +1891,4 @@ public class MBThreadFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:320528372
+// LIFERAY-SERVICE-BUILDER-HASH:-1594626385

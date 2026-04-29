@@ -46,7 +46,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -67,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePaymentEntryAuditPersistence.class)
 public class CommercePaymentEntryAuditPersistenceImpl
-	extends BasePersistenceImpl<CommercePaymentEntryAudit>
+	extends BasePersistenceImpl
+		<CommercePaymentEntryAudit, NoSuchPaymentEntryAuditException>
 	implements CommercePaymentEntryAuditPersistence {
 
 	/*
@@ -512,57 +512,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce payment entry audits.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePaymentEntryAuditImpl.class);
-
-		finderCache.clearCache(CommercePaymentEntryAuditImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce payment entry audit.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePaymentEntryAudit commercePaymentEntryAudit) {
-
-		entityCache.removeResult(
-			CommercePaymentEntryAuditImpl.class, commercePaymentEntryAudit);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePaymentEntryAudit> commercePaymentEntryAudits) {
-
-		for (CommercePaymentEntryAudit commercePaymentEntryAudit :
-				commercePaymentEntryAudits) {
-
-			entityCache.removeResult(
-				CommercePaymentEntryAuditImpl.class, commercePaymentEntryAudit);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePaymentEntryAuditImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePaymentEntryAuditImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce payment entry audit with the primary key. Does not add the commerce payment entry audit to the database.
 	 *
 	 * @param commercePaymentEntryAuditId the primary key for the new commerce payment entry audit
@@ -594,48 +543,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 		throws NoSuchPaymentEntryAuditException {
 
 		return remove((Serializable)commercePaymentEntryAuditId);
-	}
-
-	/**
-	 * Removes the commerce payment entry audit with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce payment entry audit
-	 * @return the commerce payment entry audit that was removed
-	 * @throws NoSuchPaymentEntryAuditException if a commerce payment entry audit with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentEntryAudit remove(Serializable primaryKey)
-		throws NoSuchPaymentEntryAuditException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePaymentEntryAudit commercePaymentEntryAudit =
-				(CommercePaymentEntryAudit)session.get(
-					CommercePaymentEntryAuditImpl.class, primaryKey);
-
-			if (commercePaymentEntryAudit == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPaymentEntryAuditException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePaymentEntryAudit);
-		}
-		catch (NoSuchPaymentEntryAuditException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -755,32 +662,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 		}
 
 		commercePaymentEntryAudit.resetOriginalValues();
-
-		return commercePaymentEntryAudit;
-	}
-
-	/**
-	 * Returns the commerce payment entry audit with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce payment entry audit
-	 * @return the commerce payment entry audit
-	 * @throws NoSuchPaymentEntryAuditException if a commerce payment entry audit with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentEntryAudit findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPaymentEntryAuditException {
-
-		CommercePaymentEntryAudit commercePaymentEntryAudit = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commercePaymentEntryAudit == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPaymentEntryAuditException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePaymentEntryAudit;
 	}
@@ -1157,9 +1038,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CommercePaymentEntryAudit.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePaymentEntryAudit exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentEntryAudit exists with the key {";
 
@@ -1172,4 +1050,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-887283189
+// LIFERAY-SERVICE-BUILDER-HASH:-1672318114

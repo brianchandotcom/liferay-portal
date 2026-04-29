@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountEntryOrganizationRelPersistence.class)
 public class AccountEntryOrganizationRelPersistenceImpl
-	extends BasePersistenceImpl<AccountEntryOrganizationRel>
+	extends BasePersistenceImpl
+		<AccountEntryOrganizationRel, NoSuchEntryOrganizationRelException>
 	implements AccountEntryOrganizationRelPersistence {
 
 	/*
@@ -545,58 +545,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account entry organization rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountEntryOrganizationRelImpl.class);
-
-		finderCache.clearCache(AccountEntryOrganizationRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account entry organization rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		AccountEntryOrganizationRel accountEntryOrganizationRel) {
-
-		entityCache.removeResult(
-			AccountEntryOrganizationRelImpl.class, accountEntryOrganizationRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels) {
-
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
-
-			entityCache.removeResult(
-				AccountEntryOrganizationRelImpl.class,
-				accountEntryOrganizationRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountEntryOrganizationRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AccountEntryOrganizationRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountEntryOrganizationRelModelImpl
 			accountEntryOrganizationRelModelImpl) {
@@ -646,48 +594,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		throws NoSuchEntryOrganizationRelException {
 
 		return remove((Serializable)accountEntryOrganizationRelId);
-	}
-
-	/**
-	 * Removes the account entry organization rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account entry organization rel
-	 * @return the account entry organization rel that was removed
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel remove(Serializable primaryKey)
-		throws NoSuchEntryOrganizationRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountEntryOrganizationRel accountEntryOrganizationRel =
-				(AccountEntryOrganizationRel)session.get(
-					AccountEntryOrganizationRelImpl.class, primaryKey);
-
-			if (accountEntryOrganizationRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryOrganizationRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountEntryOrganizationRel);
-		}
-		catch (NoSuchEntryOrganizationRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -788,32 +694,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		}
 
 		accountEntryOrganizationRel.resetOriginalValues();
-
-		return accountEntryOrganizationRel;
-	}
-
-	/**
-	 * Returns the account entry organization rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account entry organization rel
-	 * @return the account entry organization rel
-	 * @throws NoSuchEntryOrganizationRelException if a account entry organization rel with the primary key could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryOrganizationRelException {
-
-		AccountEntryOrganizationRel accountEntryOrganizationRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (accountEntryOrganizationRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryOrganizationRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountEntryOrganizationRel;
 	}
@@ -1210,9 +1090,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"accountEntryOrganizationRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountEntryOrganizationRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountEntryOrganizationRel exists with the key {";
 
@@ -1225,4 +1102,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1475432556
+// LIFERAY-SERVICE-BUILDER-HASH:1433392419

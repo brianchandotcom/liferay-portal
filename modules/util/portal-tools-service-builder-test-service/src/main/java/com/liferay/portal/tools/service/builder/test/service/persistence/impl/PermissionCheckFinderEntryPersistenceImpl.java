@@ -56,7 +56,8 @@ import java.util.Set;
  * @generated
  */
 public class PermissionCheckFinderEntryPersistenceImpl
-	extends BasePersistenceImpl<PermissionCheckFinderEntry>
+	extends BasePersistenceImpl
+		<PermissionCheckFinderEntry, NoSuchPermissionCheckFinderEntryException>
 	implements PermissionCheckFinderEntryPersistence {
 
 	/*
@@ -1107,58 +1108,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all permission check finder entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PermissionCheckFinderEntryImpl.class);
-
-		finderCache.clearCache(PermissionCheckFinderEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the permission check finder entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		PermissionCheckFinderEntry permissionCheckFinderEntry) {
-
-		entityCache.removeResult(
-			PermissionCheckFinderEntryImpl.class, permissionCheckFinderEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<PermissionCheckFinderEntry> permissionCheckFinderEntries) {
-
-		for (PermissionCheckFinderEntry permissionCheckFinderEntry :
-				permissionCheckFinderEntries) {
-
-			entityCache.removeResult(
-				PermissionCheckFinderEntryImpl.class,
-				permissionCheckFinderEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PermissionCheckFinderEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				PermissionCheckFinderEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new permission check finder entry with the primary key. Does not add the permission check finder entry to the database.
 	 *
 	 * @param permissionCheckFinderEntryId the primary key for the new permission check finder entry
@@ -1192,50 +1141,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 		throws NoSuchPermissionCheckFinderEntryException {
 
 		return remove((Serializable)permissionCheckFinderEntryId);
-	}
-
-	/**
-	 * Removes the permission check finder entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the permission check finder entry
-	 * @return the permission check finder entry that was removed
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	@Override
-	public PermissionCheckFinderEntry remove(Serializable primaryKey)
-		throws NoSuchPermissionCheckFinderEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PermissionCheckFinderEntry permissionCheckFinderEntry =
-				(PermissionCheckFinderEntry)session.get(
-					PermissionCheckFinderEntryImpl.class, primaryKey);
-
-			if (permissionCheckFinderEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPermissionCheckFinderEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(permissionCheckFinderEntry);
-		}
-		catch (NoSuchPermissionCheckFinderEntryException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1331,32 +1236,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 		}
 
 		permissionCheckFinderEntry.resetOriginalValues();
-
-		return permissionCheckFinderEntry;
-	}
-
-	/**
-	 * Returns the permission check finder entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the permission check finder entry
-	 * @return the permission check finder entry
-	 * @throws NoSuchPermissionCheckFinderEntryException if a permission check finder entry with the primary key could not be found
-	 */
-	@Override
-	public PermissionCheckFinderEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPermissionCheckFinderEntryException {
-
-		PermissionCheckFinderEntry permissionCheckFinderEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (permissionCheckFinderEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPermissionCheckFinderEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return permissionCheckFinderEntry;
 	}
@@ -1699,9 +1578,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"PermissionCheckFinderEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PermissionCheckFinderEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PermissionCheckFinderEntry exists with the key {";
 
@@ -1717,4 +1593,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1237408959
+// LIFERAY-SERVICE-BUILDER-HASH:1413489843

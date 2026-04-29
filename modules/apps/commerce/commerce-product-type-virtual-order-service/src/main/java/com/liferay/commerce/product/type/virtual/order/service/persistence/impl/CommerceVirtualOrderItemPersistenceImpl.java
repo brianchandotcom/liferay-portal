@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceVirtualOrderItemPersistence.class)
 public class CommerceVirtualOrderItemPersistenceImpl
-	extends BasePersistenceImpl<CommerceVirtualOrderItem>
+	extends BasePersistenceImpl
+		<CommerceVirtualOrderItem, NoSuchVirtualOrderItemException>
 	implements CommerceVirtualOrderItemPersistence {
 
 	/*
@@ -652,55 +653,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce virtual order items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceVirtualOrderItemImpl.class);
-
-		finderCache.clearCache(CommerceVirtualOrderItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce virtual order item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceVirtualOrderItem commerceVirtualOrderItem) {
-		entityCache.removeResult(
-			CommerceVirtualOrderItemImpl.class, commerceVirtualOrderItem);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceVirtualOrderItem> commerceVirtualOrderItems) {
-
-		for (CommerceVirtualOrderItem commerceVirtualOrderItem :
-				commerceVirtualOrderItems) {
-
-			entityCache.removeResult(
-				CommerceVirtualOrderItemImpl.class, commerceVirtualOrderItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceVirtualOrderItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceVirtualOrderItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceVirtualOrderItemModelImpl commerceVirtualOrderItemModelImpl) {
 
@@ -757,48 +709,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		throws NoSuchVirtualOrderItemException {
 
 		return remove((Serializable)commerceVirtualOrderItemId);
-	}
-
-	/**
-	 * Removes the commerce virtual order item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce virtual order item
-	 * @return the commerce virtual order item that was removed
-	 * @throws NoSuchVirtualOrderItemException if a commerce virtual order item with the primary key could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem remove(Serializable primaryKey)
-		throws NoSuchVirtualOrderItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceVirtualOrderItem commerceVirtualOrderItem =
-				(CommerceVirtualOrderItem)session.get(
-					CommerceVirtualOrderItemImpl.class, primaryKey);
-
-			if (commerceVirtualOrderItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVirtualOrderItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceVirtualOrderItem);
-		}
-		catch (NoSuchVirtualOrderItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -926,32 +836,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 		}
 
 		commerceVirtualOrderItem.resetOriginalValues();
-
-		return commerceVirtualOrderItem;
-	}
-
-	/**
-	 * Returns the commerce virtual order item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce virtual order item
-	 * @return the commerce virtual order item
-	 * @throws NoSuchVirtualOrderItemException if a commerce virtual order item with the primary key could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchVirtualOrderItemException {
-
-		CommerceVirtualOrderItem commerceVirtualOrderItem = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceVirtualOrderItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVirtualOrderItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceVirtualOrderItem;
 	}
@@ -1364,9 +1248,6 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceVirtualOrderItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceVirtualOrderItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceVirtualOrderItem exists with the key {";
 
@@ -1382,4 +1263,4 @@ public class CommerceVirtualOrderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1926334910
+// LIFERAY-SERVICE-BUILDER-HASH:1245498463

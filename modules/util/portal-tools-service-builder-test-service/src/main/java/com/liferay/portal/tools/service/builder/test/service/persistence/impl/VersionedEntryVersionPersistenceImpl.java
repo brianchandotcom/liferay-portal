@@ -38,7 +38,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the versioned entry version service.
@@ -51,7 +50,8 @@ import java.util.Set;
  * @generated
  */
 public class VersionedEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<VersionedEntryVersion>
+	extends BasePersistenceImpl
+		<VersionedEntryVersion, NoSuchVersionedEntryVersionException>
 	implements VersionedEntryVersionPersistence {
 
 	/*
@@ -691,53 +691,6 @@ public class VersionedEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all versioned entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(VersionedEntryVersionImpl.class);
-
-		finderCache.clearCache(VersionedEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the versioned entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(VersionedEntryVersion versionedEntryVersion) {
-		entityCache.removeResult(
-			VersionedEntryVersionImpl.class, versionedEntryVersion);
-	}
-
-	@Override
-	public void clearCache(List<VersionedEntryVersion> versionedEntryVersions) {
-		for (VersionedEntryVersion versionedEntryVersion :
-				versionedEntryVersions) {
-
-			entityCache.removeResult(
-				VersionedEntryVersionImpl.class, versionedEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(VersionedEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				VersionedEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		VersionedEntryVersionModelImpl versionedEntryVersionModelImpl) {
 
@@ -780,48 +733,6 @@ public class VersionedEntryVersionPersistenceImpl
 		throws NoSuchVersionedEntryVersionException {
 
 		return remove((Serializable)versionedEntryVersionId);
-	}
-
-	/**
-	 * Removes the versioned entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the versioned entry version
-	 * @return the versioned entry version that was removed
-	 * @throws NoSuchVersionedEntryVersionException if a versioned entry version with the primary key could not be found
-	 */
-	@Override
-	public VersionedEntryVersion remove(Serializable primaryKey)
-		throws NoSuchVersionedEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			VersionedEntryVersion versionedEntryVersion =
-				(VersionedEntryVersion)session.get(
-					VersionedEntryVersionImpl.class, primaryKey);
-
-			if (versionedEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVersionedEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(versionedEntryVersion);
-		}
-		catch (NoSuchVersionedEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -916,32 +827,6 @@ public class VersionedEntryVersionPersistenceImpl
 		}
 
 		versionedEntryVersion.resetOriginalValues();
-
-		return versionedEntryVersion;
-	}
-
-	/**
-	 * Returns the versioned entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the versioned entry version
-	 * @return the versioned entry version
-	 * @throws NoSuchVersionedEntryVersionException if a versioned entry version with the primary key could not be found
-	 */
-	@Override
-	public VersionedEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchVersionedEntryVersionException {
-
-		VersionedEntryVersion versionedEntryVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (versionedEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVersionedEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return versionedEntryVersion;
 	}
@@ -1341,9 +1226,6 @@ public class VersionedEntryVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"versionedEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No VersionedEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No VersionedEntryVersion exists with the key {";
 
@@ -1356,4 +1238,4 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1499474737
+// LIFERAY-SERVICE-BUILDER-HASH:261754742

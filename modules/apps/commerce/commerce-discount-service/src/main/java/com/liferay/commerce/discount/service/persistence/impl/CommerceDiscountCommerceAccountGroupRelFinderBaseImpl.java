@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.discount.service.persistence.impl;
 
+import com.liferay.commerce.discount.exception.NoSuchDiscountCommerceAccountGroupRelException;
 import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupRel;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountCommerceAccountGroupRelPersistence;
 import com.liferay.commerce.discount.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommerceDiscountCommerceAccountGroupRelFinderBaseImpl
-	extends BasePersistenceImpl<CommerceDiscountCommerceAccountGroupRel> {
+	extends BasePersistenceImpl
+		<CommerceDiscountCommerceAccountGroupRel,
+		 NoSuchDiscountCommerceAccountGroupRelException> {
 
 	public CommerceDiscountCommerceAccountGroupRelFinderBaseImpl() {
 		setModelClass(CommerceDiscountCommerceAccountGroupRel.class);
@@ -81,4 +84,4 @@ public abstract class CommerceDiscountCommerceAccountGroupRelFinderBaseImpl
 		CommerceDiscountCommerceAccountGroupRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1957429988
+// LIFERAY-SERVICE-BUILDER-HASH:677583177

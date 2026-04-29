@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountRulePersistence.class)
 public class CommerceDiscountRulePersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountRule>
+	extends BasePersistenceImpl
+		<CommerceDiscountRule, NoSuchDiscountRuleException>
 	implements CommerceDiscountRulePersistence {
 
 	/*
@@ -297,53 +298,6 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce discount rules.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountRuleImpl.class);
-
-		finderCache.clearCache(CommerceDiscountRuleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount rule.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceDiscountRule commerceDiscountRule) {
-		entityCache.removeResult(
-			CommerceDiscountRuleImpl.class, commerceDiscountRule);
-	}
-
-	@Override
-	public void clearCache(List<CommerceDiscountRule> commerceDiscountRules) {
-		for (CommerceDiscountRule commerceDiscountRule :
-				commerceDiscountRules) {
-
-			entityCache.removeResult(
-				CommerceDiscountRuleImpl.class, commerceDiscountRule);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountRuleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceDiscountRuleImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	 *
 	 * @param commerceDiscountRuleId the primary key for the new commerce discount rule
@@ -374,48 +328,6 @@ public class CommerceDiscountRulePersistenceImpl
 		throws NoSuchDiscountRuleException {
 
 		return remove((Serializable)commerceDiscountRuleId);
-	}
-
-	/**
-	 * Removes the commerce discount rule with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount rule
-	 * @return the commerce discount rule that was removed
-	 * @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountRule remove(Serializable primaryKey)
-		throws NoSuchDiscountRuleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountRule commerceDiscountRule =
-				(CommerceDiscountRule)session.get(
-					CommerceDiscountRuleImpl.class, primaryKey);
-
-			if (commerceDiscountRule == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountRuleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountRule);
-		}
-		catch (NoSuchDiscountRuleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -531,32 +443,6 @@ public class CommerceDiscountRulePersistenceImpl
 		}
 
 		commerceDiscountRule.resetOriginalValues();
-
-		return commerceDiscountRule;
-	}
-
-	/**
-	 * Returns the commerce discount rule with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount rule
-	 * @return the commerce discount rule
-	 * @throws NoSuchDiscountRuleException if a commerce discount rule with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountRule findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscountRuleException {
-
-		CommerceDiscountRule commerceDiscountRule = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceDiscountRule == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountRuleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountRule;
 	}
@@ -902,9 +788,6 @@ public class CommerceDiscountRulePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceDiscountRule.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountRule exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountRule exists with the key {";
 
@@ -920,4 +803,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1547354012
+// LIFERAY-SERVICE-BUILDER-HASH:2044467931

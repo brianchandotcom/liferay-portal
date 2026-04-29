@@ -78,7 +78,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceListCommerceAccountGroupRelPersistence.class)
 public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceListCommerceAccountGroupRel>
+	extends BasePersistenceImpl
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException>
 	implements CommercePriceListCommerceAccountGroupRelPersistence {
 
 	/*
@@ -815,65 +817,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price list commerce account group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(
-			CommercePriceListCommerceAccountGroupRelImpl.class);
-
-		finderCache.clearCache(
-			CommercePriceListCommerceAccountGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price list commerce account group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel) {
-
-		entityCache.removeResult(
-			CommercePriceListCommerceAccountGroupRelImpl.class,
-			commercePriceListCommerceAccountGroupRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePriceListCommerceAccountGroupRel>
-			commercePriceListCommerceAccountGroupRels) {
-
-		for (CommercePriceListCommerceAccountGroupRel
-				commercePriceListCommerceAccountGroupRel :
-					commercePriceListCommerceAccountGroupRels) {
-
-			entityCache.removeResult(
-				CommercePriceListCommerceAccountGroupRelImpl.class,
-				commercePriceListCommerceAccountGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(
-			CommercePriceListCommerceAccountGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceListCommerceAccountGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceListCommerceAccountGroupRelModelImpl
 			commercePriceListCommerceAccountGroupRelModelImpl) {
@@ -937,53 +880,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
 		return remove((Serializable)commercePriceListCommerceAccountGroupRelId);
-	}
-
-	/**
-	 * Removes the commerce price list commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price list commerce account group rel
-	 * @return the commerce price list commerce account group rel that was removed
-	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a commerce price list commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListCommerceAccountGroupRel remove(
-			Serializable primaryKey)
-		throws NoSuchPriceListCommerceAccountGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceListCommerceAccountGroupRel
-				commercePriceListCommerceAccountGroupRel =
-					(CommercePriceListCommerceAccountGroupRel)session.get(
-						CommercePriceListCommerceAccountGroupRelImpl.class,
-						primaryKey);
-
-			if (commercePriceListCommerceAccountGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceListCommerceAccountGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceListCommerceAccountGroupRel);
-		}
-		catch (NoSuchPriceListCommerceAccountGroupRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1138,34 +1034,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		}
 
 		commercePriceListCommerceAccountGroupRel.resetOriginalValues();
-
-		return commercePriceListCommerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce price list commerce account group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price list commerce account group rel
-	 * @return the commerce price list commerce account group rel
-	 * @throws NoSuchPriceListCommerceAccountGroupRelException if a commerce price list commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListCommerceAccountGroupRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPriceListCommerceAccountGroupRelException {
-
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByPrimaryKey(
-				primaryKey);
-
-		if (commercePriceListCommerceAccountGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceListCommerceAccountGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceListCommerceAccountGroupRel;
 	}
@@ -1897,9 +1765,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceListCommerceAccountGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceListCommerceAccountGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceListCommerceAccountGroupRel exists with the key {";
 
@@ -1917,4 +1782,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1035448985
+// LIFERAY-SERVICE-BUILDER-HASH:-960486068

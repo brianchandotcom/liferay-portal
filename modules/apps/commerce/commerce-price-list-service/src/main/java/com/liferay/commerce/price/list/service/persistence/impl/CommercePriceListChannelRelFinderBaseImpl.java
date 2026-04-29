@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.price.list.service.persistence.impl;
 
+import com.liferay.commerce.price.list.exception.NoSuchPriceListChannelRelException;
 import com.liferay.commerce.price.list.model.CommercePriceListChannelRel;
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelPersistence;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommercePriceListChannelRelFinderBaseImpl
-	extends BasePersistenceImpl<CommercePriceListChannelRel> {
+	extends BasePersistenceImpl
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException> {
 
 	public CommercePriceListChannelRelFinderBaseImpl() {
 		setModelClass(CommercePriceListChannelRel.class);
@@ -79,4 +81,4 @@ public abstract class CommercePriceListChannelRelFinderBaseImpl
 		CommercePriceListChannelRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1245646266
+// LIFERAY-SERVICE-BUILDER-HASH:-35335413

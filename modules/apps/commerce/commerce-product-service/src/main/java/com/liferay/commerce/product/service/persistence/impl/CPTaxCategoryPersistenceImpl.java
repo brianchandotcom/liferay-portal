@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPTaxCategoryPersistence.class)
 public class CPTaxCategoryPersistenceImpl
-	extends BasePersistenceImpl<CPTaxCategory>
+	extends BasePersistenceImpl<CPTaxCategory, NoSuchCPTaxCategoryException>
 	implements CPTaxCategoryPersistence {
 
 	/*
@@ -1432,48 +1432,6 @@ public class CPTaxCategoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp tax categories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPTaxCategoryImpl.class);
-
-		finderCache.clearCache(CPTaxCategoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp tax category.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPTaxCategory cpTaxCategory) {
-		entityCache.removeResult(CPTaxCategoryImpl.class, cpTaxCategory);
-	}
-
-	@Override
-	public void clearCache(List<CPTaxCategory> cpTaxCategories) {
-		for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
-			entityCache.removeResult(CPTaxCategoryImpl.class, cpTaxCategory);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPTaxCategoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPTaxCategoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPTaxCategoryModelImpl cpTaxCategoryModelImpl) {
 
@@ -1525,47 +1483,6 @@ public class CPTaxCategoryPersistenceImpl
 		throws NoSuchCPTaxCategoryException {
 
 		return remove((Serializable)CPTaxCategoryId);
-	}
-
-	/**
-	 * Removes the cp tax category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp tax category
-	 * @return the cp tax category that was removed
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	@Override
-	public CPTaxCategory remove(Serializable primaryKey)
-		throws NoSuchCPTaxCategoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPTaxCategory cpTaxCategory = (CPTaxCategory)session.get(
-				CPTaxCategoryImpl.class, primaryKey);
-
-			if (cpTaxCategory == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPTaxCategoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpTaxCategory);
-		}
-		catch (NoSuchCPTaxCategoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1752,31 +1669,6 @@ public class CPTaxCategoryPersistenceImpl
 		}
 
 		cpTaxCategory.resetOriginalValues();
-
-		return cpTaxCategory;
-	}
-
-	/**
-	 * Returns the cp tax category with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp tax category
-	 * @return the cp tax category
-	 * @throws NoSuchCPTaxCategoryException if a cp tax category with the primary key could not be found
-	 */
-	@Override
-	public CPTaxCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPTaxCategoryException {
-
-		CPTaxCategory cpTaxCategory = fetchByPrimaryKey(primaryKey);
-
-		if (cpTaxCategory == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPTaxCategoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpTaxCategory;
 	}
@@ -2465,9 +2357,6 @@ public class CPTaxCategoryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CPTaxCategory.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPTaxCategory exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPTaxCategory exists with the key {";
 
@@ -2483,4 +2372,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-162237842
+// LIFERAY-SERVICE-BUILDER-HASH:1137755262

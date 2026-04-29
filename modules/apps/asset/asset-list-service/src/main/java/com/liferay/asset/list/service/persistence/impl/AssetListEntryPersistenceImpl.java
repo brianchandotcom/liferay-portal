@@ -91,7 +91,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetListEntryPersistence.class)
 public class AssetListEntryPersistenceImpl
-	extends BasePersistenceImpl<AssetListEntry>
+	extends BasePersistenceImpl<AssetListEntry, NoSuchEntryException>
 	implements AssetListEntryPersistence {
 
 	/*
@@ -9175,48 +9175,6 @@ public class AssetListEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset list entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetListEntryImpl.class);
-
-		finderCache.clearCache(AssetListEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset list entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetListEntry assetListEntry) {
-		entityCache.removeResult(AssetListEntryImpl.class, assetListEntry);
-	}
-
-	@Override
-	public void clearCache(List<AssetListEntry> assetListEntries) {
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			entityCache.removeResult(AssetListEntryImpl.class, assetListEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetListEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AssetListEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetListEntryModelImpl assetListEntryModelImpl) {
 
@@ -9292,47 +9250,6 @@ public class AssetListEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)assetListEntryId);
-	}
-
-	/**
-	 * Removes the asset list entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset list entry
-	 * @return the asset list entry that was removed
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetListEntry assetListEntry = (AssetListEntry)session.get(
-				AssetListEntryImpl.class, primaryKey);
-
-			if (assetListEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetListEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -9521,31 +9438,6 @@ public class AssetListEntryPersistenceImpl
 		}
 
 		assetListEntry.resetOriginalValues();
-
-		return assetListEntry;
-	}
-
-	/**
-	 * Returns the asset list entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset list entry
-	 * @return the asset list entry
-	 * @throws NoSuchEntryException if a asset list entry with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		AssetListEntry assetListEntry = fetchByPrimaryKey(primaryKey);
-
-		if (assetListEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetListEntry;
 	}
@@ -10431,9 +10323,6 @@ public class AssetListEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AssetListEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetListEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetListEntry exists with the key {";
 
@@ -10449,4 +10338,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-956101626
+// LIFERAY-SERVICE-BUILDER-HASH:-1082551772

@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceAddressRestrictionPersistence.class)
 public class CommerceAddressRestrictionPersistenceImpl
-	extends BasePersistenceImpl<CommerceAddressRestriction>
+	extends BasePersistenceImpl
+		<CommerceAddressRestriction, NoSuchAddressRestrictionException>
 	implements CommerceAddressRestrictionPersistence {
 
 	/*
@@ -561,58 +561,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce address restrictions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceAddressRestrictionImpl.class);
-
-		finderCache.clearCache(CommerceAddressRestrictionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce address restriction.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceAddressRestriction commerceAddressRestriction) {
-
-		entityCache.removeResult(
-			CommerceAddressRestrictionImpl.class, commerceAddressRestriction);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceAddressRestriction> commerceAddressRestrictions) {
-
-		for (CommerceAddressRestriction commerceAddressRestriction :
-				commerceAddressRestrictions) {
-
-			entityCache.removeResult(
-				CommerceAddressRestrictionImpl.class,
-				commerceAddressRestriction);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceAddressRestrictionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceAddressRestrictionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceAddressRestrictionModelImpl
 			commerceAddressRestrictionModelImpl) {
@@ -661,48 +609,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		throws NoSuchAddressRestrictionException {
 
 		return remove((Serializable)commerceAddressRestrictionId);
-	}
-
-	/**
-	 * Removes the commerce address restriction with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce address restriction
-	 * @return the commerce address restriction that was removed
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction remove(Serializable primaryKey)
-		throws NoSuchAddressRestrictionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceAddressRestriction commerceAddressRestriction =
-				(CommerceAddressRestriction)session.get(
-					CommerceAddressRestrictionImpl.class, primaryKey);
-
-			if (commerceAddressRestriction == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAddressRestrictionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceAddressRestriction);
-		}
-		catch (NoSuchAddressRestrictionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -825,32 +731,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 		}
 
 		commerceAddressRestriction.resetOriginalValues();
-
-		return commerceAddressRestriction;
-	}
-
-	/**
-	 * Returns the commerce address restriction with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce address restriction
-	 * @return the commerce address restriction
-	 * @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
-	 */
-	@Override
-	public CommerceAddressRestriction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAddressRestrictionException {
-
-		CommerceAddressRestriction commerceAddressRestriction =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceAddressRestriction == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAddressRestrictionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceAddressRestriction;
 	}
@@ -1255,9 +1135,6 @@ public class CommerceAddressRestrictionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceAddressRestriction.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceAddressRestriction exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceAddressRestriction exists with the key {";
 
@@ -1270,4 +1147,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1206510938
+// LIFERAY-SERVICE-BUILDER-HASH:-634770141

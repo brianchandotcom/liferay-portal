@@ -5,6 +5,7 @@
 
 package com.liferay.calendar.service.persistence.impl;
 
+import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CalendarResourceFinderBaseImpl
-	extends BasePersistenceImpl<CalendarResource> {
+	extends BasePersistenceImpl<CalendarResource, NoSuchResourceException> {
 
 	public CalendarResourceFinderBaseImpl() {
 		setModelClass(CalendarResource.class);
@@ -79,4 +80,4 @@ public abstract class CalendarResourceFinderBaseImpl
 		CalendarResourceFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1906652722
+// LIFERAY-SERVICE-BUILDER-HASH:338831337

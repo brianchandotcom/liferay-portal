@@ -37,7 +37,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the rename finder column entry service.
@@ -50,7 +49,8 @@ import java.util.Set;
  * @generated
  */
 public class RenameFinderColumnEntryPersistenceImpl
-	extends BasePersistenceImpl<RenameFinderColumnEntry>
+	extends BasePersistenceImpl
+		<RenameFinderColumnEntry, NoSuchRenameFinderColumnEntryException>
 	implements RenameFinderColumnEntryPersistence {
 
 	/*
@@ -216,55 +216,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all rename finder column entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(RenameFinderColumnEntryImpl.class);
-
-		finderCache.clearCache(RenameFinderColumnEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the rename finder column entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RenameFinderColumnEntry renameFinderColumnEntry) {
-		entityCache.removeResult(
-			RenameFinderColumnEntryImpl.class, renameFinderColumnEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<RenameFinderColumnEntry> renameFinderColumnEntries) {
-
-		for (RenameFinderColumnEntry renameFinderColumnEntry :
-				renameFinderColumnEntries) {
-
-			entityCache.removeResult(
-				RenameFinderColumnEntryImpl.class, renameFinderColumnEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(RenameFinderColumnEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				RenameFinderColumnEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RenameFinderColumnEntryModelImpl renameFinderColumnEntryModelImpl) {
 
@@ -306,48 +257,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 		throws NoSuchRenameFinderColumnEntryException {
 
 		return remove((Serializable)renameFinderColumnEntryId);
-	}
-
-	/**
-	 * Removes the rename finder column entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the rename finder column entry
-	 * @return the rename finder column entry that was removed
-	 * @throws NoSuchRenameFinderColumnEntryException if a rename finder column entry with the primary key could not be found
-	 */
-	@Override
-	public RenameFinderColumnEntry remove(Serializable primaryKey)
-		throws NoSuchRenameFinderColumnEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RenameFinderColumnEntry renameFinderColumnEntry =
-				(RenameFinderColumnEntry)session.get(
-					RenameFinderColumnEntryImpl.class, primaryKey);
-
-			if (renameFinderColumnEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRenameFinderColumnEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(renameFinderColumnEntry);
-		}
-		catch (NoSuchRenameFinderColumnEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -443,32 +352,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 		}
 
 		renameFinderColumnEntry.resetOriginalValues();
-
-		return renameFinderColumnEntry;
-	}
-
-	/**
-	 * Returns the rename finder column entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the rename finder column entry
-	 * @return the rename finder column entry
-	 * @throws NoSuchRenameFinderColumnEntryException if a rename finder column entry with the primary key could not be found
-	 */
-	@Override
-	public RenameFinderColumnEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRenameFinderColumnEntryException {
-
-		RenameFinderColumnEntry renameFinderColumnEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (renameFinderColumnEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRenameFinderColumnEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return renameFinderColumnEntry;
 	}
@@ -764,9 +647,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"renameFinderColumnEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RenameFinderColumnEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RenameFinderColumnEntry exists with the key {";
 
@@ -779,4 +659,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:477702958
+// LIFERAY-SERVICE-BUILDER-HASH:-1263691816

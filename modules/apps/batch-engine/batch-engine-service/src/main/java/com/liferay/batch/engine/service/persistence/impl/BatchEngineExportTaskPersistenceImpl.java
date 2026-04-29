@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchEngineExportTaskPersistence.class)
 public class BatchEngineExportTaskPersistenceImpl
-	extends BasePersistenceImpl<BatchEngineExportTask>
+	extends BasePersistenceImpl
+		<BatchEngineExportTask, NoSuchExportTaskException>
 	implements BatchEngineExportTaskPersistence {
 
 	/*
@@ -866,53 +867,6 @@ public class BatchEngineExportTaskPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all batch engine export tasks.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BatchEngineExportTaskImpl.class);
-
-		finderCache.clearCache(BatchEngineExportTaskImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the batch engine export task.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BatchEngineExportTask batchEngineExportTask) {
-		entityCache.removeResult(
-			BatchEngineExportTaskImpl.class, batchEngineExportTask);
-	}
-
-	@Override
-	public void clearCache(List<BatchEngineExportTask> batchEngineExportTasks) {
-		for (BatchEngineExportTask batchEngineExportTask :
-				batchEngineExportTasks) {
-
-			entityCache.removeResult(
-				BatchEngineExportTaskImpl.class, batchEngineExportTask);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BatchEngineExportTaskImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				BatchEngineExportTaskImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BatchEngineExportTaskModelImpl batchEngineExportTaskModelImpl) {
 
@@ -960,48 +914,6 @@ public class BatchEngineExportTaskPersistenceImpl
 		throws NoSuchExportTaskException {
 
 		return remove((Serializable)batchEngineExportTaskId);
-	}
-
-	/**
-	 * Removes the batch engine export task with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the batch engine export task
-	 * @return the batch engine export task that was removed
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	@Override
-	public BatchEngineExportTask remove(Serializable primaryKey)
-		throws NoSuchExportTaskException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BatchEngineExportTask batchEngineExportTask =
-				(BatchEngineExportTask)session.get(
-					BatchEngineExportTaskImpl.class, primaryKey);
-
-			if (batchEngineExportTask == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchExportTaskException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(batchEngineExportTask);
-		}
-		catch (NoSuchExportTaskException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1203,32 +1115,6 @@ public class BatchEngineExportTaskPersistenceImpl
 		}
 
 		batchEngineExportTask.resetOriginalValues();
-
-		return batchEngineExportTask;
-	}
-
-	/**
-	 * Returns the batch engine export task with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the batch engine export task
-	 * @return the batch engine export task
-	 * @throws NoSuchExportTaskException if a batch engine export task with the primary key could not be found
-	 */
-	@Override
-	public BatchEngineExportTask findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchExportTaskException {
-
-		BatchEngineExportTask batchEngineExportTask = fetchByPrimaryKey(
-			primaryKey);
-
-		if (batchEngineExportTask == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchExportTaskException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return batchEngineExportTask;
 	}
@@ -1689,9 +1575,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"batchEngineExportTask.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchEngineExportTask exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchEngineExportTask exists with the key {";
 
@@ -1707,4 +1590,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:751438680
+// LIFERAY-SERVICE-BUILDER-HASH:171529027

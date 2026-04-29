@@ -69,7 +69,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceVirtualOrderItemFileEntryPersistence.class)
 public class CommerceVirtualOrderItemFileEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceVirtualOrderItemFileEntry>
+	extends BasePersistenceImpl
+		<CommerceVirtualOrderItemFileEntry,
+		 NoSuchVirtualOrderItemFileEntryException>
 	implements CommerceVirtualOrderItemFileEntryPersistence {
 
 	/*
@@ -915,61 +917,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce virtual order item file entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceVirtualOrderItemFileEntryImpl.class);
-
-		finderCache.clearCache(CommerceVirtualOrderItemFileEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce virtual order item file entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry) {
-
-		entityCache.removeResult(
-			CommerceVirtualOrderItemFileEntryImpl.class,
-			commerceVirtualOrderItemFileEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceVirtualOrderItemFileEntry>
-			commerceVirtualOrderItemFileEntries) {
-
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					commerceVirtualOrderItemFileEntries) {
-
-			entityCache.removeResult(
-				CommerceVirtualOrderItemFileEntryImpl.class,
-				commerceVirtualOrderItemFileEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceVirtualOrderItemFileEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceVirtualOrderItemFileEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceVirtualOrderItemFileEntryModelImpl
 			commerceVirtualOrderItemFileEntryModelImpl) {
@@ -1024,50 +971,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		throws NoSuchVirtualOrderItemFileEntryException {
 
 		return remove((Serializable)commerceVirtualOrderItemFileEntryId);
-	}
-
-	/**
-	 * Removes the commerce virtual order item file entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce virtual order item file entry
-	 * @return the commerce virtual order item file entry that was removed
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItemFileEntry remove(Serializable primaryKey)
-		throws NoSuchVirtualOrderItemFileEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry =
-					(CommerceVirtualOrderItemFileEntry)session.get(
-						CommerceVirtualOrderItemFileEntryImpl.class,
-						primaryKey);
-
-			if (commerceVirtualOrderItemFileEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVirtualOrderItemFileEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceVirtualOrderItemFileEntry);
-		}
-		catch (NoSuchVirtualOrderItemFileEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1201,33 +1104,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 		}
 
 		commerceVirtualOrderItemFileEntry.resetOriginalValues();
-
-		return commerceVirtualOrderItemFileEntry;
-	}
-
-	/**
-	 * Returns the commerce virtual order item file entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce virtual order item file entry
-	 * @return the commerce virtual order item file entry
-	 * @throws NoSuchVirtualOrderItemFileEntryException if a commerce virtual order item file entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceVirtualOrderItemFileEntry findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchVirtualOrderItemFileEntryException {
-
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceVirtualOrderItemFileEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVirtualOrderItemFileEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceVirtualOrderItemFileEntry;
 	}
@@ -1714,9 +1590,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceVirtualOrderItemFileEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceVirtualOrderItemFileEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceVirtualOrderItemFileEntry exists with the key {";
 
@@ -1732,4 +1605,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:825976489
+// LIFERAY-SERVICE-BUILDER-HASH:860407429

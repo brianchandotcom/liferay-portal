@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherFixComponentPersistence.class)
 public class PatcherFixComponentPersistenceImpl
-	extends BasePersistenceImpl<PatcherFixComponent>
+	extends BasePersistenceImpl
+		<PatcherFixComponent, NoSuchPatcherFixComponentException>
 	implements PatcherFixComponentPersistence {
 
 	/*
@@ -221,50 +221,6 @@ public class PatcherFixComponentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher fix components.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherFixComponentImpl.class);
-
-		finderCache.clearCache(PatcherFixComponentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher fix component.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherFixComponent patcherFixComponent) {
-		entityCache.removeResult(
-			PatcherFixComponentImpl.class, patcherFixComponent);
-	}
-
-	@Override
-	public void clearCache(List<PatcherFixComponent> patcherFixComponents) {
-		for (PatcherFixComponent patcherFixComponent : patcherFixComponents) {
-			entityCache.removeResult(
-				PatcherFixComponentImpl.class, patcherFixComponent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherFixComponentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherFixComponentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherFixComponentModelImpl patcherFixComponentModelImpl) {
 
@@ -304,48 +260,6 @@ public class PatcherFixComponentPersistenceImpl
 		throws NoSuchPatcherFixComponentException {
 
 		return remove((Serializable)patcherFixComponentId);
-	}
-
-	/**
-	 * Removes the patcher fix component with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher fix component
-	 * @return the patcher fix component that was removed
-	 * @throws NoSuchPatcherFixComponentException if a patcher fix component with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixComponent remove(Serializable primaryKey)
-		throws NoSuchPatcherFixComponentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherFixComponent patcherFixComponent =
-				(PatcherFixComponent)session.get(
-					PatcherFixComponentImpl.class, primaryKey);
-
-			if (patcherFixComponent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherFixComponentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherFixComponent);
-		}
-		catch (NoSuchPatcherFixComponentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -463,31 +377,6 @@ public class PatcherFixComponentPersistenceImpl
 		}
 
 		patcherFixComponent.resetOriginalValues();
-
-		return patcherFixComponent;
-	}
-
-	/**
-	 * Returns the patcher fix component with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher fix component
-	 * @return the patcher fix component
-	 * @throws NoSuchPatcherFixComponentException if a patcher fix component with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixComponent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherFixComponentException {
-
-		PatcherFixComponent patcherFixComponent = fetchByPrimaryKey(primaryKey);
-
-		if (patcherFixComponent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherFixComponentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherFixComponent;
 	}
@@ -802,9 +691,6 @@ public class PatcherFixComponentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "patcherFixComponent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherFixComponent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherFixComponent exists with the key {";
 
@@ -817,4 +703,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:609284320
+// LIFERAY-SERVICE-BUILDER-HASH:-1803113395

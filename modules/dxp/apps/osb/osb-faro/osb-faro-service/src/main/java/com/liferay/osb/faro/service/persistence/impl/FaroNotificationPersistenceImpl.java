@@ -64,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroNotificationPersistence.class)
 public class FaroNotificationPersistenceImpl
-	extends BasePersistenceImpl<FaroNotification>
+	extends BasePersistenceImpl
+		<FaroNotification, NoSuchFaroNotificationException>
 	implements FaroNotificationPersistence {
 
 	/*
@@ -2728,49 +2729,6 @@ public class FaroNotificationPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all faro notifications.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroNotificationImpl.class);
-
-		finderCache.clearCache(FaroNotificationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro notification.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroNotification faroNotification) {
-		entityCache.removeResult(FaroNotificationImpl.class, faroNotification);
-	}
-
-	@Override
-	public void clearCache(List<FaroNotification> faroNotifications) {
-		for (FaroNotification faroNotification : faroNotifications) {
-			entityCache.removeResult(
-				FaroNotificationImpl.class, faroNotification);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroNotificationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroNotificationImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new faro notification with the primary key. Does not add the faro notification to the database.
 	 *
 	 * @param faroNotificationId the primary key for the new faro notification
@@ -2800,47 +2758,6 @@ public class FaroNotificationPersistenceImpl
 		throws NoSuchFaroNotificationException {
 
 		return remove((Serializable)faroNotificationId);
-	}
-
-	/**
-	 * Removes the faro notification with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro notification
-	 * @return the faro notification that was removed
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	@Override
-	public FaroNotification remove(Serializable primaryKey)
-		throws NoSuchFaroNotificationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroNotification faroNotification = (FaroNotification)session.get(
-				FaroNotificationImpl.class, primaryKey);
-
-			if (faroNotification == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroNotificationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroNotification);
-		}
-		catch (NoSuchFaroNotificationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2906,31 +2823,6 @@ public class FaroNotificationPersistenceImpl
 		}
 
 		faroNotification.resetOriginalValues();
-
-		return faroNotification;
-	}
-
-	/**
-	 * Returns the faro notification with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro notification
-	 * @return the faro notification
-	 * @throws NoSuchFaroNotificationException if a faro notification with the primary key could not be found
-	 */
-	@Override
-	public FaroNotification findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroNotificationException {
-
-		FaroNotification faroNotification = fetchByPrimaryKey(primaryKey);
-
-		if (faroNotification == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroNotificationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroNotification;
 	}
@@ -3335,9 +3227,6 @@ public class FaroNotificationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroNotification.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroNotification exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroNotification exists with the key {";
 
@@ -3353,4 +3242,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:310412245
+// LIFERAY-SERVICE-BUILDER-HASH:1184935226

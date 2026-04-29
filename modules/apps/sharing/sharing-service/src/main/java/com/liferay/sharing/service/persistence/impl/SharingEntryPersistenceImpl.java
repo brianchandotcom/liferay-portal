@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SharingEntryPersistence.class)
 public class SharingEntryPersistenceImpl
-	extends BasePersistenceImpl<SharingEntry>
+	extends BasePersistenceImpl<SharingEntry, NoSuchEntryException>
 	implements SharingEntryPersistence {
 
 	/*
@@ -2001,48 +2001,6 @@ public class SharingEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sharing entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SharingEntryImpl.class);
-
-		finderCache.clearCache(SharingEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sharing entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SharingEntry sharingEntry) {
-		entityCache.removeResult(SharingEntryImpl.class, sharingEntry);
-	}
-
-	@Override
-	public void clearCache(List<SharingEntry> sharingEntries) {
-		for (SharingEntry sharingEntry : sharingEntries) {
-			entityCache.removeResult(SharingEntryImpl.class, sharingEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SharingEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SharingEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SharingEntryModelImpl sharingEntryModelImpl) {
 
@@ -2107,47 +2065,6 @@ public class SharingEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)sharingEntryId);
-	}
-
-	/**
-	 * Removes the sharing entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sharing entry
-	 * @return the sharing entry that was removed
-	 * @throws NoSuchEntryException if a sharing entry with the primary key could not be found
-	 */
-	@Override
-	public SharingEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SharingEntry sharingEntry = (SharingEntry)session.get(
-				SharingEntryImpl.class, primaryKey);
-
-			if (sharingEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sharingEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2325,31 +2242,6 @@ public class SharingEntryPersistenceImpl
 		}
 
 		sharingEntry.resetOriginalValues();
-
-		return sharingEntry;
-	}
-
-	/**
-	 * Returns the sharing entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sharing entry
-	 * @return the sharing entry
-	 * @throws NoSuchEntryException if a sharing entry with the primary key could not be found
-	 */
-	@Override
-	public SharingEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		SharingEntry sharingEntry = fetchByPrimaryKey(primaryKey);
-
-		if (sharingEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sharingEntry;
 	}
@@ -3012,9 +2904,6 @@ public class SharingEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "sharingEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SharingEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SharingEntry exists with the key {";
 
@@ -3030,4 +2919,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1372134638
+// LIFERAY-SERVICE-BUILDER-HASH:934591746

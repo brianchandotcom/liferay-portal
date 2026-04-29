@@ -68,7 +68,8 @@ import java.util.Set;
  * @generated
  */
 public class LVEntryPersistenceImpl
-	extends BasePersistenceImpl<LVEntry> implements LVEntryPersistence {
+	extends BasePersistenceImpl<LVEntry, NoSuchLVEntryException>
+	implements LVEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2619,48 +2620,6 @@ public class LVEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all lv entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LVEntryImpl.class);
-
-		finderCache.clearCache(LVEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lv entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LVEntry lvEntry) {
-		entityCache.removeResult(LVEntryImpl.class, lvEntry);
-	}
-
-	@Override
-	public void clearCache(List<LVEntry> lvEntries) {
-		for (LVEntry lvEntry : lvEntries) {
-			entityCache.removeResult(LVEntryImpl.class, lvEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LVEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LVEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(LVEntryModelImpl lvEntryModelImpl) {
 		Object[] args = new Object[] {
 			lvEntryModelImpl.getUuid(), lvEntryModelImpl.getGroupId(),
@@ -2715,47 +2674,6 @@ public class LVEntryPersistenceImpl
 	@Override
 	public LVEntry remove(long lvEntryId) throws NoSuchLVEntryException {
 		return remove((Serializable)lvEntryId);
-	}
-
-	/**
-	 * Removes the lv entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lv entry
-	 * @return the lv entry that was removed
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	@Override
-	public LVEntry remove(Serializable primaryKey)
-		throws NoSuchLVEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LVEntry lvEntry = (LVEntry)session.get(
-				LVEntryImpl.class, primaryKey);
-
-			if (lvEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLVEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lvEntry);
-		}
-		catch (NoSuchLVEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2850,31 +2768,6 @@ public class LVEntryPersistenceImpl
 		}
 
 		lvEntry.resetOriginalValues();
-
-		return lvEntry;
-	}
-
-	/**
-	 * Returns the lv entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lv entry
-	 * @return the lv entry
-	 * @throws NoSuchLVEntryException if a lv entry with the primary key could not be found
-	 */
-	@Override
-	public LVEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLVEntryException {
-
-		LVEntry lvEntry = fetchByPrimaryKey(primaryKey);
-
-		if (lvEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLVEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lvEntry;
 	}
@@ -3825,9 +3718,6 @@ public class LVEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LVEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntry exists with the key {";
 
@@ -3843,4 +3733,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1911046822
+// LIFERAY-SERVICE-BUILDER-HASH:-1158350182

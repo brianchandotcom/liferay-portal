@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionOptionValueRelPersistence.class)
 public class CPDefinitionOptionValueRelPersistenceImpl
-	extends BasePersistenceImpl<CPDefinitionOptionValueRel>
+	extends BasePersistenceImpl
+		<CPDefinitionOptionValueRel, NoSuchCPDefinitionOptionValueRelException>
 	implements CPDefinitionOptionValueRelPersistence {
 
 	/*
@@ -1695,58 +1696,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definition option value rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionOptionValueRelImpl.class);
-
-		finderCache.clearCache(CPDefinitionOptionValueRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition option value rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel) {
-
-		entityCache.removeResult(
-			CPDefinitionOptionValueRelImpl.class, cpDefinitionOptionValueRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels) {
-
-		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
-
-			entityCache.removeResult(
-				CPDefinitionOptionValueRelImpl.class,
-				cpDefinitionOptionValueRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionOptionValueRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDefinitionOptionValueRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionOptionValueRelModelImpl
 			cpDefinitionOptionValueRelModelImpl) {
@@ -1814,50 +1763,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		throws NoSuchCPDefinitionOptionValueRelException {
 
 		return remove((Serializable)CPDefinitionOptionValueRelId);
-	}
-
-	/**
-	 * Removes the cp definition option value rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition option value rel
-	 * @return the cp definition option value rel that was removed
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-				(CPDefinitionOptionValueRel)session.get(
-					CPDefinitionOptionValueRelImpl.class, primaryKey);
-
-			if (cpDefinitionOptionValueRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionOptionValueRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinitionOptionValueRel);
-		}
-		catch (NoSuchCPDefinitionOptionValueRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1994,32 +1899,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 		}
 
 		cpDefinitionOptionValueRel.resetOriginalValues();
-
-		return cpDefinitionOptionValueRel;
-	}
-
-	/**
-	 * Returns the cp definition option value rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition option value rel
-	 * @return the cp definition option value rel
-	 * @throws NoSuchCPDefinitionOptionValueRelException if a cp definition option value rel with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionOptionValueRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDefinitionOptionValueRelException {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (cpDefinitionOptionValueRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionOptionValueRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinitionOptionValueRel;
 	}
@@ -2904,9 +2783,6 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpDefinitionOptionValueRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinitionOptionValueRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionOptionValueRel exists with the key {";
 
@@ -2922,4 +2798,4 @@ public class CPDefinitionOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1859698095
+// LIFERAY-SERVICE-BUILDER-HASH:1210100704

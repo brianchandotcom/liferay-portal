@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMTemplateLinkPersistence.class)
 public class DDMTemplateLinkPersistenceImpl
-	extends BasePersistenceImpl<DDMTemplateLink>
+	extends BasePersistenceImpl<DDMTemplateLink, NoSuchTemplateLinkException>
 	implements DDMTemplateLinkPersistence {
 
 	/*
@@ -413,49 +413,6 @@ public class DDMTemplateLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm template links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMTemplateLinkImpl.class);
-
-		finderCache.clearCache(DDMTemplateLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm template link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMTemplateLink ddmTemplateLink) {
-		entityCache.removeResult(DDMTemplateLinkImpl.class, ddmTemplateLink);
-	}
-
-	@Override
-	public void clearCache(List<DDMTemplateLink> ddmTemplateLinks) {
-		for (DDMTemplateLink ddmTemplateLink : ddmTemplateLinks) {
-			entityCache.removeResult(
-				DDMTemplateLinkImpl.class, ddmTemplateLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMTemplateLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMTemplateLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl) {
 
@@ -503,47 +460,6 @@ public class DDMTemplateLinkPersistenceImpl
 		throws NoSuchTemplateLinkException {
 
 		return remove((Serializable)templateLinkId);
-	}
-
-	/**
-	 * Removes the ddm template link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm template link
-	 * @return the ddm template link that was removed
-	 * @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplateLink remove(Serializable primaryKey)
-		throws NoSuchTemplateLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)session.get(
-				DDMTemplateLinkImpl.class, primaryKey);
-
-			if (ddmTemplateLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTemplateLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmTemplateLink);
-		}
-		catch (NoSuchTemplateLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -639,31 +555,6 @@ public class DDMTemplateLinkPersistenceImpl
 		}
 
 		ddmTemplateLink.resetOriginalValues();
-
-		return ddmTemplateLink;
-	}
-
-	/**
-	 * Returns the ddm template link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm template link
-	 * @return the ddm template link
-	 * @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplateLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateLinkException {
-
-		DDMTemplateLink ddmTemplateLink = fetchByPrimaryKey(primaryKey);
-
-		if (ddmTemplateLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTemplateLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmTemplateLink;
 	}
@@ -1256,9 +1147,6 @@ public class DDMTemplateLinkPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmTemplateLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMTemplateLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMTemplateLink exists with the key {";
 
@@ -1271,4 +1159,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-444933485
+// LIFERAY-SERVICE-BUILDER-HASH:881526954

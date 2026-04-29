@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ExportImportReportEntryPersistence.class)
 public class ExportImportReportEntryPersistenceImpl
-	extends BasePersistenceImpl<ExportImportReportEntry>
+	extends BasePersistenceImpl
+		<ExportImportReportEntry, NoSuchExportImportReportEntryException>
 	implements ExportImportReportEntryPersistence {
 
 	/*
@@ -462,55 +463,6 @@ public class ExportImportReportEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all export import report entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ExportImportReportEntryImpl.class);
-
-		finderCache.clearCache(ExportImportReportEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the export import report entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ExportImportReportEntry exportImportReportEntry) {
-		entityCache.removeResult(
-			ExportImportReportEntryImpl.class, exportImportReportEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<ExportImportReportEntry> exportImportReportEntries) {
-
-		for (ExportImportReportEntry exportImportReportEntry :
-				exportImportReportEntries) {
-
-			entityCache.removeResult(
-				ExportImportReportEntryImpl.class, exportImportReportEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ExportImportReportEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ExportImportReportEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ExportImportReportEntryModelImpl exportImportReportEntryModelImpl) {
 
@@ -559,48 +511,6 @@ public class ExportImportReportEntryPersistenceImpl
 		throws NoSuchExportImportReportEntryException {
 
 		return remove((Serializable)exportImportReportEntryId);
-	}
-
-	/**
-	 * Removes the export import report entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the export import report entry
-	 * @return the export import report entry that was removed
-	 * @throws NoSuchExportImportReportEntryException if a export import report entry with the primary key could not be found
-	 */
-	@Override
-	public ExportImportReportEntry remove(Serializable primaryKey)
-		throws NoSuchExportImportReportEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExportImportReportEntry exportImportReportEntry =
-				(ExportImportReportEntry)session.get(
-					ExportImportReportEntryImpl.class, primaryKey);
-
-			if (exportImportReportEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchExportImportReportEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(exportImportReportEntry);
-		}
-		catch (NoSuchExportImportReportEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -721,32 +631,6 @@ public class ExportImportReportEntryPersistenceImpl
 		}
 
 		exportImportReportEntry.resetOriginalValues();
-
-		return exportImportReportEntry;
-	}
-
-	/**
-	 * Returns the export import report entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the export import report entry
-	 * @return the export import report entry
-	 * @throws NoSuchExportImportReportEntryException if a export import report entry with the primary key could not be found
-	 */
-	@Override
-	public ExportImportReportEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchExportImportReportEntryException {
-
-		ExportImportReportEntry exportImportReportEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (exportImportReportEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchExportImportReportEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return exportImportReportEntry;
 	}
@@ -1136,9 +1020,6 @@ public class ExportImportReportEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"exportImportReportEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ExportImportReportEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExportImportReportEntry exists with the key {";
 
@@ -1154,4 +1035,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-337893324
+// LIFERAY-SERVICE-BUILDER-HASH:-505983776

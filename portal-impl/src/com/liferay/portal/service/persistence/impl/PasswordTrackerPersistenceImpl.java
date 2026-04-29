@@ -57,7 +57,7 @@ import java.util.Set;
  * @generated
  */
 public class PasswordTrackerPersistenceImpl
-	extends BasePersistenceImpl<PasswordTracker>
+	extends BasePersistenceImpl<PasswordTracker, NoSuchPasswordTrackerException>
 	implements PasswordTrackerPersistence {
 
 	/*
@@ -276,50 +276,6 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all password trackers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PasswordTrackerImpl.class);
-
-		FinderCacheUtil.clearCache(PasswordTrackerImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the password tracker.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PasswordTracker passwordTracker) {
-		EntityCacheUtil.removeResult(
-			PasswordTrackerImpl.class, passwordTracker);
-	}
-
-	@Override
-	public void clearCache(List<PasswordTracker> passwordTrackers) {
-		for (PasswordTracker passwordTracker : passwordTrackers) {
-			EntityCacheUtil.removeResult(
-				PasswordTrackerImpl.class, passwordTracker);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PasswordTrackerImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PasswordTrackerImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new password tracker with the primary key. Does not add the password tracker to the database.
 	 *
 	 * @param passwordTrackerId the primary key for the new password tracker
@@ -349,47 +305,6 @@ public class PasswordTrackerPersistenceImpl
 		throws NoSuchPasswordTrackerException {
 
 		return remove((Serializable)passwordTrackerId);
-	}
-
-	/**
-	 * Removes the password tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the password tracker
-	 * @return the password tracker that was removed
-	 * @throws NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
-	 */
-	@Override
-	public PasswordTracker remove(Serializable primaryKey)
-		throws NoSuchPasswordTrackerException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PasswordTracker passwordTracker = (PasswordTracker)session.get(
-				PasswordTrackerImpl.class, primaryKey);
-
-			if (passwordTracker == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPasswordTrackerException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(passwordTracker);
-		}
-		catch (NoSuchPasswordTrackerException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -490,31 +405,6 @@ public class PasswordTrackerPersistenceImpl
 		}
 
 		passwordTracker.resetOriginalValues();
-
-		return passwordTracker;
-	}
-
-	/**
-	 * Returns the password tracker with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the password tracker
-	 * @return the password tracker
-	 * @throws NoSuchPasswordTrackerException if a password tracker with the primary key could not be found
-	 */
-	@Override
-	public PasswordTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPasswordTrackerException {
-
-		PasswordTracker passwordTracker = fetchByPrimaryKey(primaryKey);
-
-		if (passwordTracker == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPasswordTrackerException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return passwordTracker;
 	}
@@ -820,9 +710,6 @@ public class PasswordTrackerPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "passwordTracker.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PasswordTracker exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PasswordTracker exists with the key {";
 
@@ -838,4 +725,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1317170608
+// LIFERAY-SERVICE-BUILDER-HASH:-776210443

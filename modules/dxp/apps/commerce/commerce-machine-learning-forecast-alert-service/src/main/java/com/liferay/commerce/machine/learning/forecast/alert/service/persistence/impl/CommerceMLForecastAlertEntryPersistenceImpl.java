@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceMLForecastAlertEntryPersistence.class)
 public class CommerceMLForecastAlertEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceMLForecastAlertEntry>
+	extends BasePersistenceImpl
+		<CommerceMLForecastAlertEntry, NoSuchMLForecastAlertEntryException>
 	implements CommerceMLForecastAlertEntryPersistence {
 
 	/*
@@ -2657,59 +2658,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce ml forecast alert entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceMLForecastAlertEntryImpl.class);
-
-		finderCache.clearCache(CommerceMLForecastAlertEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce ml forecast alert entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-		entityCache.removeResult(
-			CommerceMLForecastAlertEntryImpl.class,
-			commerceMLForecastAlertEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceMLForecastAlertEntry> commerceMLForecastAlertEntries) {
-
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				commerceMLForecastAlertEntries) {
-
-			entityCache.removeResult(
-				CommerceMLForecastAlertEntryImpl.class,
-				commerceMLForecastAlertEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceMLForecastAlertEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceMLForecastAlertEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceMLForecastAlertEntryModelImpl
 			commerceMLForecastAlertEntryModelImpl) {
@@ -2765,48 +2713,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		throws NoSuchMLForecastAlertEntryException {
 
 		return remove((Serializable)commerceMLForecastAlertEntryId);
-	}
-
-	/**
-	 * Removes the commerce ml forecast alert entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce ml forecast alert entry
-	 * @return the commerce ml forecast alert entry that was removed
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceMLForecastAlertEntry remove(Serializable primaryKey)
-		throws NoSuchMLForecastAlertEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-				(CommerceMLForecastAlertEntry)session.get(
-					CommerceMLForecastAlertEntryImpl.class, primaryKey);
-
-			if (commerceMLForecastAlertEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMLForecastAlertEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceMLForecastAlertEntry);
-		}
-		catch (NoSuchMLForecastAlertEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2938,33 +2844,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		}
 
 		commerceMLForecastAlertEntry.resetOriginalValues();
-
-		return commerceMLForecastAlertEntry;
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce ml forecast alert entry
-	 * @return the commerce ml forecast alert entry
-	 * @throws NoSuchMLForecastAlertEntryException if a commerce ml forecast alert entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceMLForecastAlertEntry findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchMLForecastAlertEntryException {
-
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceMLForecastAlertEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMLForecastAlertEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceMLForecastAlertEntry;
 	}
@@ -3464,9 +3343,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceMLForecastAlertEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceMLForecastAlertEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceMLForecastAlertEntry exists with the key {";
 
@@ -3482,4 +3358,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:261944897
+// LIFERAY-SERVICE-BUILDER-HASH:1304692423

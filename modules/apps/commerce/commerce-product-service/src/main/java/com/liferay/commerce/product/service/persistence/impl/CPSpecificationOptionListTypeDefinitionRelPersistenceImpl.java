@@ -75,7 +75,9 @@ import org.osgi.service.component.annotations.Reference;
 	service = CPSpecificationOptionListTypeDefinitionRelPersistence.class
 )
 public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
-	extends BasePersistenceImpl<CPSpecificationOptionListTypeDefinitionRel>
+	extends BasePersistenceImpl
+		<CPSpecificationOptionListTypeDefinitionRel,
+		 NoSuchCPSpecificationOptionListTypeDefinitionRelException>
 	implements CPSpecificationOptionListTypeDefinitionRelPersistence {
 
 	/*
@@ -653,66 +655,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp specification option list type definition rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(
-			CPSpecificationOptionListTypeDefinitionRelImpl.class);
-
-		finderCache.clearCache(
-			CPSpecificationOptionListTypeDefinitionRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp specification option list type definition rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel) {
-
-		entityCache.removeResult(
-			CPSpecificationOptionListTypeDefinitionRelImpl.class,
-			cpSpecificationOptionListTypeDefinitionRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels) {
-
-		for (CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel :
-					cpSpecificationOptionListTypeDefinitionRels) {
-
-			entityCache.removeResult(
-				CPSpecificationOptionListTypeDefinitionRelImpl.class,
-				cpSpecificationOptionListTypeDefinitionRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(
-			CPSpecificationOptionListTypeDefinitionRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPSpecificationOptionListTypeDefinitionRelImpl.class,
-				primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPSpecificationOptionListTypeDefinitionRelModelImpl
 			cpSpecificationOptionListTypeDefinitionRelModelImpl) {
@@ -773,53 +715,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 
 		return remove(
 			(Serializable)CPSpecificationOptionListTypeDefinitionRelId);
-	}
-
-	/**
-	 * Removes the cp specification option list type definition rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp specification option list type definition rel
-	 * @return the cp specification option list type definition rel that was removed
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a cp specification option list type definition rel with the primary key could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel remove(
-			Serializable primaryKey)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel =
-					(CPSpecificationOptionListTypeDefinitionRel)session.get(
-						CPSpecificationOptionListTypeDefinitionRelImpl.class,
-						primaryKey);
-
-			if (cpSpecificationOptionListTypeDefinitionRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpSpecificationOptionListTypeDefinitionRel);
-		}
-		catch (NoSuchCPSpecificationOptionListTypeDefinitionRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -936,34 +831,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		}
 
 		cpSpecificationOptionListTypeDefinitionRel.resetOriginalValues();
-
-		return cpSpecificationOptionListTypeDefinitionRel;
-	}
-
-	/**
-	 * Returns the cp specification option list type definition rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp specification option list type definition rel
-	 * @return the cp specification option list type definition rel
-	 * @throws NoSuchCPSpecificationOptionListTypeDefinitionRelException if a cp specification option list type definition rel with the primary key could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchCPSpecificationOptionListTypeDefinitionRelException {
-
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel = fetchByPrimaryKey(
-				primaryKey);
-
-		if (cpSpecificationOptionListTypeDefinitionRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPSpecificationOptionListTypeDefinitionRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpSpecificationOptionListTypeDefinitionRel;
 	}
@@ -1662,9 +1529,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpSpecificationOptionListTypeDefinitionRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPSpecificationOptionListTypeDefinitionRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPSpecificationOptionListTypeDefinitionRel exists with the key {";
 
@@ -1680,4 +1544,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1831556349
+// LIFERAY-SERVICE-BUILDER-HASH:-1280466934

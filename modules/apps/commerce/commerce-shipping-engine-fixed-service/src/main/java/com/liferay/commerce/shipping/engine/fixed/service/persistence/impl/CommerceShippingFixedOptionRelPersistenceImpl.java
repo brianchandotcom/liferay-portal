@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShippingFixedOptionRelPersistence.class)
 public class CommerceShippingFixedOptionRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceShippingFixedOptionRel>
+	extends BasePersistenceImpl
+		<CommerceShippingFixedOptionRel, NoSuchShippingFixedOptionRelException>
 	implements CommerceShippingFixedOptionRelPersistence {
 
 	/*
@@ -671,59 +672,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce shipping fixed option rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShippingFixedOptionRelImpl.class);
-
-		finderCache.clearCache(CommerceShippingFixedOptionRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipping fixed option rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
-
-		entityCache.removeResult(
-			CommerceShippingFixedOptionRelImpl.class,
-			commerceShippingFixedOptionRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels) {
-
-		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
-				commerceShippingFixedOptionRels) {
-
-			entityCache.removeResult(
-				CommerceShippingFixedOptionRelImpl.class,
-				commerceShippingFixedOptionRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShippingFixedOptionRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShippingFixedOptionRelImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option rel with the primary key. Does not add the commerce shipping fixed option rel to the database.
 	 *
 	 * @param commerceShippingFixedOptionRelId the primary key for the new commerce shipping fixed option rel
@@ -759,48 +707,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		throws NoSuchShippingFixedOptionRelException {
 
 		return remove((Serializable)commerceShippingFixedOptionRelId);
-	}
-
-	/**
-	 * Removes the commerce shipping fixed option rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option rel
-	 * @return the commerce shipping fixed option rel that was removed
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel remove(Serializable primaryKey)
-		throws NoSuchShippingFixedOptionRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-				(CommerceShippingFixedOptionRel)session.get(
-					CommerceShippingFixedOptionRelImpl.class, primaryKey);
-
-			if (commerceShippingFixedOptionRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShippingFixedOptionRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShippingFixedOptionRel);
-		}
-		catch (NoSuchShippingFixedOptionRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -924,33 +830,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 		}
 
 		commerceShippingFixedOptionRel.resetOriginalValues();
-
-		return commerceShippingFixedOptionRel;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option rel
-	 * @return the commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceShippingFixedOptionRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShippingFixedOptionRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShippingFixedOptionRel;
 	}
@@ -1399,9 +1278,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShippingFixedOptionRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShippingFixedOptionRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShippingFixedOptionRel exists with the key {";
 
@@ -1417,4 +1293,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:222042690
+// LIFERAY-SERVICE-BUILDER-HASH:2114611623

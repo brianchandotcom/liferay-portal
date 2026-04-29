@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTaxCategoryMappingPersistence.class)
 public class CommerceTaxCategoryMappingPersistenceImpl
-	extends BasePersistenceImpl<CommerceTaxCategoryMapping>
+	extends BasePersistenceImpl
+		<CommerceTaxCategoryMapping, NoSuchTaxCategoryMappingException>
 	implements CommerceTaxCategoryMappingPersistence {
 
 	/*
@@ -931,58 +932,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce tax category mappings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTaxCategoryMappingImpl.class);
-
-		finderCache.clearCache(CommerceTaxCategoryMappingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce tax category mapping.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping) {
-
-		entityCache.removeResult(
-			CommerceTaxCategoryMappingImpl.class, commerceTaxCategoryMapping);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceTaxCategoryMapping> commerceTaxCategoryMappings) {
-
-		for (CommerceTaxCategoryMapping commerceTaxCategoryMapping :
-				commerceTaxCategoryMappings) {
-
-			entityCache.removeResult(
-				CommerceTaxCategoryMappingImpl.class,
-				commerceTaxCategoryMapping);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTaxCategoryMappingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTaxCategoryMappingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTaxCategoryMappingModelImpl
 			commerceTaxCategoryMappingModelImpl) {
@@ -1051,48 +1000,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		throws NoSuchTaxCategoryMappingException {
 
 		return remove((Serializable)commerceTaxCategoryMappingId);
-	}
-
-	/**
-	 * Removes the commerce tax category mapping with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce tax category mapping
-	 * @return the commerce tax category mapping that was removed
-	 * @throws NoSuchTaxCategoryMappingException if a commerce tax category mapping with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping remove(Serializable primaryKey)
-		throws NoSuchTaxCategoryMappingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTaxCategoryMapping commerceTaxCategoryMapping =
-				(CommerceTaxCategoryMapping)session.get(
-					CommerceTaxCategoryMappingImpl.class, primaryKey);
-
-			if (commerceTaxCategoryMapping == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaxCategoryMappingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTaxCategoryMapping);
-		}
-		catch (NoSuchTaxCategoryMappingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1294,32 +1201,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 		}
 
 		commerceTaxCategoryMapping.resetOriginalValues();
-
-		return commerceTaxCategoryMapping;
-	}
-
-	/**
-	 * Returns the commerce tax category mapping with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce tax category mapping
-	 * @return the commerce tax category mapping
-	 * @throws NoSuchTaxCategoryMappingException if a commerce tax category mapping with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxCategoryMapping findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaxCategoryMappingException {
-
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceTaxCategoryMapping == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaxCategoryMappingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTaxCategoryMapping;
 	}
@@ -1787,9 +1668,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceTaxCategoryMapping.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTaxCategoryMapping exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTaxCategoryMapping exists with the key {";
 
@@ -1805,4 +1683,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:612557702
+// LIFERAY-SERVICE-BUILDER-HASH:1964777923

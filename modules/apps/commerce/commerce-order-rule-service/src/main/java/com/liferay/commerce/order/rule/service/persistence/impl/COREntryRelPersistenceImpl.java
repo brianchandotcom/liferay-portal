@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = COREntryRelPersistence.class)
 public class COREntryRelPersistenceImpl
-	extends BasePersistenceImpl<COREntryRel> implements COREntryRelPersistence {
+	extends BasePersistenceImpl<COREntryRel, NoSuchCOREntryRelException>
+	implements COREntryRelPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -548,48 +548,6 @@ public class COREntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cor entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(COREntryRelImpl.class);
-
-		finderCache.clearCache(COREntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cor entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(COREntryRel corEntryRel) {
-		entityCache.removeResult(COREntryRelImpl.class, corEntryRel);
-	}
-
-	@Override
-	public void clearCache(List<COREntryRel> corEntryRels) {
-		for (COREntryRel corEntryRel : corEntryRels) {
-			entityCache.removeResult(COREntryRelImpl.class, corEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(COREntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(COREntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		COREntryRelModelImpl corEntryRelModelImpl) {
 
@@ -633,47 +591,6 @@ public class COREntryRelPersistenceImpl
 		throws NoSuchCOREntryRelException {
 
 		return remove((Serializable)COREntryRelId);
-	}
-
-	/**
-	 * Removes the cor entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cor entry rel
-	 * @return the cor entry rel that was removed
-	 * @throws NoSuchCOREntryRelException if a cor entry rel with the primary key could not be found
-	 */
-	@Override
-	public COREntryRel remove(Serializable primaryKey)
-		throws NoSuchCOREntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			COREntryRel corEntryRel = (COREntryRel)session.get(
-				COREntryRelImpl.class, primaryKey);
-
-			if (corEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCOREntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(corEntryRel);
-		}
-		catch (NoSuchCOREntryRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -782,31 +699,6 @@ public class COREntryRelPersistenceImpl
 		}
 
 		corEntryRel.resetOriginalValues();
-
-		return corEntryRel;
-	}
-
-	/**
-	 * Returns the cor entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cor entry rel
-	 * @return the cor entry rel
-	 * @throws NoSuchCOREntryRelException if a cor entry rel with the primary key could not be found
-	 */
-	@Override
-	public COREntryRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCOREntryRelException {
-
-		COREntryRel corEntryRel = fetchByPrimaryKey(primaryKey);
-
-		if (corEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCOREntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return corEntryRel;
 	}
@@ -1190,9 +1082,6 @@ public class COREntryRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "corEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No COREntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No COREntryRel exists with the key {";
 
@@ -1205,4 +1094,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1443949921
+// LIFERAY-SERVICE-BUILDER-HASH:102033728

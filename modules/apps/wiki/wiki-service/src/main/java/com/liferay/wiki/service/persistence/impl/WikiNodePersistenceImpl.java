@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiNodePersistence.class)
 public class WikiNodePersistenceImpl
-	extends BasePersistenceImpl<WikiNode> implements WikiNodePersistence {
+	extends BasePersistenceImpl<WikiNode, NoSuchNodeException>
+	implements WikiNodePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1832,48 +1833,6 @@ public class WikiNodePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all wiki nodes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WikiNodeImpl.class);
-
-		finderCache.clearCache(WikiNodeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the wiki node.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WikiNode wikiNode) {
-		entityCache.removeResult(WikiNodeImpl.class, wikiNode);
-	}
-
-	@Override
-	public void clearCache(List<WikiNode> wikiNodes) {
-		for (WikiNode wikiNode : wikiNodes) {
-			entityCache.removeResult(WikiNodeImpl.class, wikiNode);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WikiNodeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(WikiNodeImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WikiNodeModelImpl wikiNodeModelImpl) {
 
@@ -1937,45 +1896,6 @@ public class WikiNodePersistenceImpl
 	@Override
 	public WikiNode remove(long nodeId) throws NoSuchNodeException {
 		return remove((Serializable)nodeId);
-	}
-
-	/**
-	 * Removes the wiki node with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the wiki node
-	 * @return the wiki node that was removed
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	@Override
-	public WikiNode remove(Serializable primaryKey) throws NoSuchNodeException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WikiNode wikiNode = (WikiNode)session.get(
-				WikiNodeImpl.class, primaryKey);
-
-			if (wikiNode == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNodeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(wikiNode);
-		}
-		catch (NoSuchNodeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2153,31 +2073,6 @@ public class WikiNodePersistenceImpl
 		}
 
 		wikiNode.resetOriginalValues();
-
-		return wikiNode;
-	}
-
-	/**
-	 * Returns the wiki node with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the wiki node
-	 * @return the wiki node
-	 * @throws NoSuchNodeException if a wiki node with the primary key could not be found
-	 */
-	@Override
-	public WikiNode findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNodeException {
-
-		WikiNode wikiNode = fetchByPrimaryKey(primaryKey);
-
-		if (wikiNode == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNodeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return wikiNode;
 	}
@@ -2986,9 +2881,6 @@ public class WikiNodePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiNode.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WikiNode exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WikiNode exists with the key {";
 
@@ -3004,4 +2896,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:61025149
+// LIFERAY-SERVICE-BUILDER-HASH:234673396

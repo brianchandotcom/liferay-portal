@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoNodePersistence.class)
 public class KaleoNodePersistenceImpl
-	extends BasePersistenceImpl<KaleoNode> implements KaleoNodePersistence {
+	extends BasePersistenceImpl<KaleoNode, NoSuchNodeException>
+	implements KaleoNodePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -657,48 +658,6 @@ public class KaleoNodePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all kaleo nodes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoNodeImpl.class);
-
-		finderCache.clearCache(KaleoNodeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo node.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoNode kaleoNode) {
-		entityCache.removeResult(KaleoNodeImpl.class, kaleoNode);
-	}
-
-	@Override
-	public void clearCache(List<KaleoNode> kaleoNodes) {
-		for (KaleoNode kaleoNode : kaleoNodes) {
-			entityCache.removeResult(KaleoNodeImpl.class, kaleoNode);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoNodeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoNodeImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo node with the primary key. Does not add the kaleo node to the database.
 	 *
 	 * @param kaleoNodeId the primary key for the new kaleo node
@@ -726,47 +685,6 @@ public class KaleoNodePersistenceImpl
 	@Override
 	public KaleoNode remove(long kaleoNodeId) throws NoSuchNodeException {
 		return remove((Serializable)kaleoNodeId);
-	}
-
-	/**
-	 * Removes the kaleo node with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo node
-	 * @return the kaleo node that was removed
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
-	 */
-	@Override
-	public KaleoNode remove(Serializable primaryKey)
-		throws NoSuchNodeException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoNode kaleoNode = (KaleoNode)session.get(
-				KaleoNodeImpl.class, primaryKey);
-
-			if (kaleoNode == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNodeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoNode);
-		}
-		catch (NoSuchNodeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -878,31 +796,6 @@ public class KaleoNodePersistenceImpl
 		}
 
 		kaleoNode.resetOriginalValues();
-
-		return kaleoNode;
-	}
-
-	/**
-	 * Returns the kaleo node with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo node
-	 * @return the kaleo node
-	 * @throws NoSuchNodeException if a kaleo node with the primary key could not be found
-	 */
-	@Override
-	public KaleoNode findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNodeException {
-
-		KaleoNode kaleoNode = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoNode == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNodeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoNode;
 	}
@@ -1557,9 +1450,6 @@ public class KaleoNodePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoNode.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoNode exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoNode exists with the key {";
 
@@ -1575,4 +1465,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:813842383
+// LIFERAY-SERVICE-BUILDER-HASH:-1835700648

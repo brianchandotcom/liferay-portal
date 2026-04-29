@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoProcessPersistence.class)
 public class KaleoProcessPersistenceImpl
-	extends BasePersistenceImpl<KaleoProcess>
+	extends BasePersistenceImpl<KaleoProcess, NoSuchKaleoProcessException>
 	implements KaleoProcessPersistence {
 
 	/*
@@ -973,48 +973,6 @@ public class KaleoProcessPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo processes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoProcessImpl.class);
-
-		finderCache.clearCache(KaleoProcessImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo process.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoProcess kaleoProcess) {
-		entityCache.removeResult(KaleoProcessImpl.class, kaleoProcess);
-	}
-
-	@Override
-	public void clearCache(List<KaleoProcess> kaleoProcesses) {
-		for (KaleoProcess kaleoProcess : kaleoProcesses) {
-			entityCache.removeResult(KaleoProcessImpl.class, kaleoProcess);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoProcessImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoProcessImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoProcessModelImpl kaleoProcessModelImpl) {
 
@@ -1065,47 +1023,6 @@ public class KaleoProcessPersistenceImpl
 		throws NoSuchKaleoProcessException {
 
 		return remove((Serializable)kaleoProcessId);
-	}
-
-	/**
-	 * Removes the kaleo process with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo process
-	 * @return the kaleo process that was removed
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcess remove(Serializable primaryKey)
-		throws NoSuchKaleoProcessException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoProcess kaleoProcess = (KaleoProcess)session.get(
-				KaleoProcessImpl.class, primaryKey);
-
-			if (kaleoProcess == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchKaleoProcessException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoProcess);
-		}
-		catch (NoSuchKaleoProcessException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1221,31 +1138,6 @@ public class KaleoProcessPersistenceImpl
 		}
 
 		kaleoProcess.resetOriginalValues();
-
-		return kaleoProcess;
-	}
-
-	/**
-	 * Returns the kaleo process with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo process
-	 * @return the kaleo process
-	 * @throws NoSuchKaleoProcessException if a kaleo process with the primary key could not be found
-	 */
-	@Override
-	public KaleoProcess findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchKaleoProcessException {
-
-		KaleoProcess kaleoProcess = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoProcess == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchKaleoProcessException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoProcess;
 	}
@@ -1694,9 +1586,6 @@ public class KaleoProcessPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "KaleoProcess.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoProcess exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoProcess exists with the key {";
 
@@ -1712,4 +1601,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1069686273
+// LIFERAY-SERVICE-BUILDER-HASH:1433284705

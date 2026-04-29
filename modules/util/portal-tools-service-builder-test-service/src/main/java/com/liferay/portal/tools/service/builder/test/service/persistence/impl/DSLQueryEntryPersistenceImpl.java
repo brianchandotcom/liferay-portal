@@ -32,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the dsl query entry service.
@@ -45,7 +44,7 @@ import java.util.Set;
  * @generated
  */
 public class DSLQueryEntryPersistenceImpl
-	extends BasePersistenceImpl<DSLQueryEntry>
+	extends BasePersistenceImpl<DSLQueryEntry, NoSuchDSLQueryEntryException>
 	implements DSLQueryEntryPersistence {
 
 	/*
@@ -114,48 +113,6 @@ public class DSLQueryEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all dsl query entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DSLQueryEntryImpl.class);
-
-		finderCache.clearCache(DSLQueryEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dsl query entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DSLQueryEntry dslQueryEntry) {
-		entityCache.removeResult(DSLQueryEntryImpl.class, dslQueryEntry);
-	}
-
-	@Override
-	public void clearCache(List<DSLQueryEntry> dslQueryEntries) {
-		for (DSLQueryEntry dslQueryEntry : dslQueryEntries) {
-			entityCache.removeResult(DSLQueryEntryImpl.class, dslQueryEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DSLQueryEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DSLQueryEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new dsl query entry with the primary key. Does not add the dsl query entry to the database.
 	 *
 	 * @param dslQueryEntryId the primary key for the new dsl query entry
@@ -183,47 +140,6 @@ public class DSLQueryEntryPersistenceImpl
 		throws NoSuchDSLQueryEntryException {
 
 		return remove((Serializable)dslQueryEntryId);
-	}
-
-	/**
-	 * Removes the dsl query entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dsl query entry
-	 * @return the dsl query entry that was removed
-	 * @throws NoSuchDSLQueryEntryException if a dsl query entry with the primary key could not be found
-	 */
-	@Override
-	public DSLQueryEntry remove(Serializable primaryKey)
-		throws NoSuchDSLQueryEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DSLQueryEntry dslQueryEntry = (DSLQueryEntry)session.get(
-				DSLQueryEntryImpl.class, primaryKey);
-
-			if (dslQueryEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDSLQueryEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dslQueryEntry);
-		}
-		catch (NoSuchDSLQueryEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -287,31 +203,6 @@ public class DSLQueryEntryPersistenceImpl
 		}
 
 		dslQueryEntry.resetOriginalValues();
-
-		return dslQueryEntry;
-	}
-
-	/**
-	 * Returns the dsl query entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dsl query entry
-	 * @return the dsl query entry
-	 * @throws NoSuchDSLQueryEntryException if a dsl query entry with the primary key could not be found
-	 */
-	@Override
-	public DSLQueryEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDSLQueryEntryException {
-
-		DSLQueryEntry dslQueryEntry = fetchByPrimaryKey(primaryKey);
-
-		if (dslQueryEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDSLQueryEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dslQueryEntry;
 	}
@@ -583,9 +474,6 @@ public class DSLQueryEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dslQueryEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DSLQueryEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DSLQueryEntryPersistenceImpl.class);
 
@@ -595,4 +483,4 @@ public class DSLQueryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1907243457
+// LIFERAY-SERVICE-BUILDER-HASH:1280818145

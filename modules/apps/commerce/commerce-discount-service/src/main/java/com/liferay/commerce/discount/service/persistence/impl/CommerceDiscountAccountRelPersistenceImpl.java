@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountAccountRelPersistence.class)
 public class CommerceDiscountAccountRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountAccountRel>
+	extends BasePersistenceImpl
+		<CommerceDiscountAccountRel, NoSuchDiscountAccountRelException>
 	implements CommerceDiscountAccountRelPersistence {
 
 	/*
@@ -872,58 +873,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce discount account rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountAccountRelImpl.class);
-
-		finderCache.clearCache(CommerceDiscountAccountRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount account rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceDiscountAccountRel commerceDiscountAccountRel) {
-
-		entityCache.removeResult(
-			CommerceDiscountAccountRelImpl.class, commerceDiscountAccountRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceDiscountAccountRel> commerceDiscountAccountRels) {
-
-		for (CommerceDiscountAccountRel commerceDiscountAccountRel :
-				commerceDiscountAccountRels) {
-
-			entityCache.removeResult(
-				CommerceDiscountAccountRelImpl.class,
-				commerceDiscountAccountRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountAccountRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceDiscountAccountRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceDiscountAccountRelModelImpl
 			commerceDiscountAccountRelModelImpl) {
@@ -976,48 +925,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		throws NoSuchDiscountAccountRelException {
 
 		return remove((Serializable)commerceDiscountAccountRelId);
-	}
-
-	/**
-	 * Removes the commerce discount account rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount account rel
-	 * @return the commerce discount account rel that was removed
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountAccountRel remove(Serializable primaryKey)
-		throws NoSuchDiscountAccountRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountAccountRel commerceDiscountAccountRel =
-				(CommerceDiscountAccountRel)session.get(
-					CommerceDiscountAccountRelImpl.class, primaryKey);
-
-			if (commerceDiscountAccountRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountAccountRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountAccountRel);
-		}
-		catch (NoSuchDiscountAccountRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1146,32 +1053,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 		}
 
 		commerceDiscountAccountRel.resetOriginalValues();
-
-		return commerceDiscountAccountRel;
-	}
-
-	/**
-	 * Returns the commerce discount account rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount account rel
-	 * @return the commerce discount account rel
-	 * @throws NoSuchDiscountAccountRelException if a commerce discount account rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountAccountRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscountAccountRelException {
-
-		CommerceDiscountAccountRel commerceDiscountAccountRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceDiscountAccountRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountAccountRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountAccountRel;
 	}
@@ -1638,9 +1519,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceDiscountAccountRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountAccountRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountAccountRel exists with the key {";
 
@@ -1656,4 +1534,4 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2007597193
+// LIFERAY-SERVICE-BUILDER-HASH:1575041196

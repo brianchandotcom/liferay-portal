@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceWishListPersistence.class)
 public class CommerceWishListPersistenceImpl
-	extends BasePersistenceImpl<CommerceWishList>
+	extends BasePersistenceImpl<CommerceWishList, NoSuchWishListException>
 	implements CommerceWishListPersistence {
 
 	/*
@@ -1319,49 +1319,6 @@ public class CommerceWishListPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce wish lists.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceWishListImpl.class);
-
-		finderCache.clearCache(CommerceWishListImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce wish list.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceWishList commerceWishList) {
-		entityCache.removeResult(CommerceWishListImpl.class, commerceWishList);
-	}
-
-	@Override
-	public void clearCache(List<CommerceWishList> commerceWishLists) {
-		for (CommerceWishList commerceWishList : commerceWishLists) {
-			entityCache.removeResult(
-				CommerceWishListImpl.class, commerceWishList);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceWishListImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceWishListImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceWishListModelImpl commerceWishListModelImpl) {
 
@@ -1408,47 +1365,6 @@ public class CommerceWishListPersistenceImpl
 		throws NoSuchWishListException {
 
 		return remove((Serializable)commerceWishListId);
-	}
-
-	/**
-	 * Removes the commerce wish list with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce wish list
-	 * @return the commerce wish list that was removed
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	@Override
-	public CommerceWishList remove(Serializable primaryKey)
-		throws NoSuchWishListException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceWishList commerceWishList = (CommerceWishList)session.get(
-				CommerceWishListImpl.class, primaryKey);
-
-			if (commerceWishList == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWishListException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceWishList);
-		}
-		catch (NoSuchWishListException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1567,31 +1483,6 @@ public class CommerceWishListPersistenceImpl
 		}
 
 		commerceWishList.resetOriginalValues();
-
-		return commerceWishList;
-	}
-
-	/**
-	 * Returns the commerce wish list with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce wish list
-	 * @return the commerce wish list
-	 * @throws NoSuchWishListException if a commerce wish list with the primary key could not be found
-	 */
-	@Override
-	public CommerceWishList findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWishListException {
-
-		CommerceWishList commerceWishList = fetchByPrimaryKey(primaryKey);
-
-		if (commerceWishList == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWishListException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceWishList;
 	}
@@ -2136,9 +2027,6 @@ public class CommerceWishListPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceWishList.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceWishList exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceWishList exists with the key {";
 
@@ -2154,4 +2042,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-46164255
+// LIFERAY-SERVICE-BUILDER-HASH:-1196919506

@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the layout branch service.
@@ -53,7 +52,7 @@ import java.util.Set;
  * @generated
  */
 public class LayoutBranchPersistenceImpl
-	extends BasePersistenceImpl<LayoutBranch>
+	extends BasePersistenceImpl<LayoutBranch, NoSuchLayoutBranchException>
 	implements LayoutBranchPersistence {
 
 	/*
@@ -864,48 +863,6 @@ public class LayoutBranchPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout branches.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutBranchImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutBranchImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout branch.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutBranch layoutBranch) {
-		EntityCacheUtil.removeResult(LayoutBranchImpl.class, layoutBranch);
-	}
-
-	@Override
-	public void clearCache(List<LayoutBranch> layoutBranchs) {
-		for (LayoutBranch layoutBranch : layoutBranchs) {
-			EntityCacheUtil.removeResult(LayoutBranchImpl.class, layoutBranch);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutBranchImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(LayoutBranchImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutBranchModelImpl layoutBranchModelImpl) {
 
@@ -948,47 +905,6 @@ public class LayoutBranchPersistenceImpl
 		throws NoSuchLayoutBranchException {
 
 		return remove((Serializable)layoutBranchId);
-	}
-
-	/**
-	 * Removes the layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout branch
-	 * @return the layout branch that was removed
-	 * @throws NoSuchLayoutBranchException if a layout branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutBranch remove(Serializable primaryKey)
-		throws NoSuchLayoutBranchException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutBranch layoutBranch = (LayoutBranch)session.get(
-				LayoutBranchImpl.class, primaryKey);
-
-			if (layoutBranch == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutBranchException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutBranch);
-		}
-		catch (NoSuchLayoutBranchException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1074,31 +990,6 @@ public class LayoutBranchPersistenceImpl
 		}
 
 		layoutBranch.resetOriginalValues();
-
-		return layoutBranch;
-	}
-
-	/**
-	 * Returns the layout branch with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout branch
-	 * @return the layout branch
-	 * @throws NoSuchLayoutBranchException if a layout branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutBranch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutBranchException {
-
-		LayoutBranch layoutBranch = fetchByPrimaryKey(primaryKey);
-
-		if (layoutBranch == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutBranchException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutBranch;
 	}
@@ -1515,9 +1406,6 @@ public class LayoutBranchPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutBranch.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutBranch exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutBranch exists with the key {";
 
@@ -1530,4 +1418,4 @@ public class LayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1689090486
+// LIFERAY-SERVICE-BUILDER-HASH:-2010207606

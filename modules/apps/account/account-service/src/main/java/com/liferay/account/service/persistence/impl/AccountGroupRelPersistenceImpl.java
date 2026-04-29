@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountGroupRelPersistence.class)
 public class AccountGroupRelPersistenceImpl
-	extends BasePersistenceImpl<AccountGroupRel>
+	extends BasePersistenceImpl<AccountGroupRel, NoSuchGroupRelException>
 	implements AccountGroupRelPersistence {
 
 	/*
@@ -716,49 +715,6 @@ public class AccountGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountGroupRelImpl.class);
-
-		finderCache.clearCache(AccountGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AccountGroupRel accountGroupRel) {
-		entityCache.removeResult(AccountGroupRelImpl.class, accountGroupRel);
-	}
-
-	@Override
-	public void clearCache(List<AccountGroupRel> accountGroupRels) {
-		for (AccountGroupRel accountGroupRel : accountGroupRels) {
-			entityCache.removeResult(
-				AccountGroupRelImpl.class, accountGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AccountGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountGroupRelModelImpl accountGroupRelModelImpl) {
 
@@ -802,47 +758,6 @@ public class AccountGroupRelPersistenceImpl
 		throws NoSuchGroupRelException {
 
 		return remove((Serializable)accountGroupRelId);
-	}
-
-	/**
-	 * Removes the account group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account group rel
-	 * @return the account group rel that was removed
-	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
-	 */
-	@Override
-	public AccountGroupRel remove(Serializable primaryKey)
-		throws NoSuchGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountGroupRel accountGroupRel = (AccountGroupRel)session.get(
-				AccountGroupRelImpl.class, primaryKey);
-
-			if (accountGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountGroupRel);
-		}
-		catch (NoSuchGroupRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -955,31 +870,6 @@ public class AccountGroupRelPersistenceImpl
 		}
 
 		accountGroupRel.resetOriginalValues();
-
-		return accountGroupRel;
-	}
-
-	/**
-	 * Returns the account group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account group rel
-	 * @return the account group rel
-	 * @throws NoSuchGroupRelException if a account group rel with the primary key could not be found
-	 */
-	@Override
-	public AccountGroupRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchGroupRelException {
-
-		AccountGroupRel accountGroupRel = fetchByPrimaryKey(primaryKey);
-
-		if (accountGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountGroupRel;
 	}
@@ -1398,9 +1288,6 @@ public class AccountGroupRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "accountGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountGroupRel exists with the key {";
 
@@ -1413,4 +1300,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:413534540
+// LIFERAY-SERVICE-BUILDER-HASH:-951119129

@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMFormInstanceVersionPersistence.class)
 public class DDMFormInstanceVersionPersistenceImpl
-	extends BasePersistenceImpl<DDMFormInstanceVersion>
+	extends BasePersistenceImpl
+		<DDMFormInstanceVersion, NoSuchFormInstanceVersionException>
 	implements DDMFormInstanceVersionPersistence {
 
 	/*
@@ -606,55 +607,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm form instance versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMFormInstanceVersionImpl.class);
-
-		finderCache.clearCache(DDMFormInstanceVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm form instance version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMFormInstanceVersion ddmFormInstanceVersion) {
-		entityCache.removeResult(
-			DDMFormInstanceVersionImpl.class, ddmFormInstanceVersion);
-	}
-
-	@Override
-	public void clearCache(
-		List<DDMFormInstanceVersion> ddmFormInstanceVersions) {
-
-		for (DDMFormInstanceVersion ddmFormInstanceVersion :
-				ddmFormInstanceVersions) {
-
-			entityCache.removeResult(
-				DDMFormInstanceVersionImpl.class, ddmFormInstanceVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMFormInstanceVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DDMFormInstanceVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl) {
 
@@ -703,48 +655,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 		throws NoSuchFormInstanceVersionException {
 
 		return remove((Serializable)formInstanceVersionId);
-	}
-
-	/**
-	 * Removes the ddm form instance version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance version
-	 * @return the ddm form instance version that was removed
-	 * @throws NoSuchFormInstanceVersionException if a ddm form instance version with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion remove(Serializable primaryKey)
-		throws NoSuchFormInstanceVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMFormInstanceVersion ddmFormInstanceVersion =
-				(DDMFormInstanceVersion)session.get(
-					DDMFormInstanceVersionImpl.class, primaryKey);
-
-			if (ddmFormInstanceVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFormInstanceVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmFormInstanceVersion);
-		}
-		catch (NoSuchFormInstanceVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -862,32 +772,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 		}
 
 		ddmFormInstanceVersion.resetOriginalValues();
-
-		return ddmFormInstanceVersion;
-	}
-
-	/**
-	 * Returns the ddm form instance version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance version
-	 * @return the ddm form instance version
-	 * @throws NoSuchFormInstanceVersionException if a ddm form instance version with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFormInstanceVersionException {
-
-		DDMFormInstanceVersion ddmFormInstanceVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ddmFormInstanceVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFormInstanceVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmFormInstanceVersion;
 	}
@@ -1545,9 +1429,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmFormInstanceVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMFormInstanceVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMFormInstanceVersion exists with the key {";
 
@@ -1563,4 +1444,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-316741417
+// LIFERAY-SERVICE-BUILDER-HASH:1028158704

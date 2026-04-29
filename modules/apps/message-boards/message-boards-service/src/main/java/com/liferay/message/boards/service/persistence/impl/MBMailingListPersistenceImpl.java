@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBMailingListPersistence.class)
 public class MBMailingListPersistenceImpl
-	extends BasePersistenceImpl<MBMailingList>
+	extends BasePersistenceImpl<MBMailingList, NoSuchMailingListException>
 	implements MBMailingListPersistence {
 
 	/*
@@ -843,48 +843,6 @@ public class MBMailingListPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards mailing lists.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBMailingListImpl.class);
-
-		finderCache.clearCache(MBMailingListImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards mailing list.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBMailingList mbMailingList) {
-		entityCache.removeResult(MBMailingListImpl.class, mbMailingList);
-	}
-
-	@Override
-	public void clearCache(List<MBMailingList> mbMailingLists) {
-		for (MBMailingList mbMailingList : mbMailingLists) {
-			entityCache.removeResult(MBMailingListImpl.class, mbMailingList);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBMailingListImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBMailingListImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBMailingListModelImpl mbMailingListModelImpl) {
 
@@ -944,47 +902,6 @@ public class MBMailingListPersistenceImpl
 		throws NoSuchMailingListException {
 
 		return remove((Serializable)mailingListId);
-	}
-
-	/**
-	 * Removes the message boards mailing list with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards mailing list
-	 * @return the message boards mailing list that was removed
-	 * @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 */
-	@Override
-	public MBMailingList remove(Serializable primaryKey)
-		throws NoSuchMailingListException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBMailingList mbMailingList = (MBMailingList)session.get(
-				MBMailingListImpl.class, primaryKey);
-
-			if (mbMailingList == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMailingListException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbMailingList);
-		}
-		catch (NoSuchMailingListException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1108,31 +1025,6 @@ public class MBMailingListPersistenceImpl
 		}
 
 		mbMailingList.resetOriginalValues();
-
-		return mbMailingList;
-	}
-
-	/**
-	 * Returns the message boards mailing list with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards mailing list
-	 * @return the message boards mailing list
-	 * @throws NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	 */
-	@Override
-	public MBMailingList findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMailingListException {
-
-		MBMailingList mbMailingList = fetchByPrimaryKey(primaryKey);
-
-		if (mbMailingList == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMailingListException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbMailingList;
 	}
@@ -1827,9 +1719,6 @@ public class MBMailingListPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbMailingList.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBMailingList exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBMailingList exists with the key {";
 
@@ -1845,4 +1734,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1446545913
+// LIFERAY-SERVICE-BUILDER-HASH:-559572046

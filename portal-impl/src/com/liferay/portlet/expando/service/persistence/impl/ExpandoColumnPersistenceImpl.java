@@ -73,7 +73,7 @@ import java.util.Set;
  * @generated
  */
 public class ExpandoColumnPersistenceImpl
-	extends BasePersistenceImpl<ExpandoColumn>
+	extends BasePersistenceImpl<ExpandoColumn, NoSuchColumnException>
 	implements ExpandoColumnPersistence {
 
 	/*
@@ -1281,49 +1281,6 @@ public class ExpandoColumnPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all expando columns.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ExpandoColumnImpl.class);
-
-		FinderCacheUtil.clearCache(ExpandoColumnImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the expando column.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ExpandoColumn expandoColumn) {
-		EntityCacheUtil.removeResult(ExpandoColumnImpl.class, expandoColumn);
-	}
-
-	@Override
-	public void clearCache(List<ExpandoColumn> expandoColumns) {
-		for (ExpandoColumn expandoColumn : expandoColumns) {
-			EntityCacheUtil.removeResult(
-				ExpandoColumnImpl.class, expandoColumn);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ExpandoColumnImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ExpandoColumnImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ExpandoColumnModelImpl expandoColumnModelImpl) {
 
@@ -1369,47 +1326,6 @@ public class ExpandoColumnPersistenceImpl
 	@Override
 	public ExpandoColumn remove(long columnId) throws NoSuchColumnException {
 		return remove((Serializable)columnId);
-	}
-
-	/**
-	 * Removes the expando column with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the expando column
-	 * @return the expando column that was removed
-	 * @throws NoSuchColumnException if a expando column with the primary key could not be found
-	 */
-	@Override
-	public ExpandoColumn remove(Serializable primaryKey)
-		throws NoSuchColumnException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExpandoColumn expandoColumn = (ExpandoColumn)session.get(
-				ExpandoColumnImpl.class, primaryKey);
-
-			if (expandoColumn == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchColumnException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(expandoColumn);
-		}
-		catch (NoSuchColumnException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1518,31 +1434,6 @@ public class ExpandoColumnPersistenceImpl
 		}
 
 		expandoColumn.resetOriginalValues();
-
-		return expandoColumn;
-	}
-
-	/**
-	 * Returns the expando column with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the expando column
-	 * @return the expando column
-	 * @throws NoSuchColumnException if a expando column with the primary key could not be found
-	 */
-	@Override
-	public ExpandoColumn findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchColumnException {
-
-		ExpandoColumn expandoColumn = fetchByPrimaryKey(primaryKey);
-
-		if (expandoColumn == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchColumnException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return expandoColumn;
 	}
@@ -2144,9 +2035,6 @@ public class ExpandoColumnPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "ExpandoColumn.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ExpandoColumn exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExpandoColumn exists with the key {";
 
@@ -2162,4 +2050,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:355408035
+// LIFERAY-SERVICE-BUILDER-HASH:-1587099140

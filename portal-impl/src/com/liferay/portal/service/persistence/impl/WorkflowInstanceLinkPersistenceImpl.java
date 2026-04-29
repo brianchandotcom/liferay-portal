@@ -66,7 +66,8 @@ import java.util.Set;
  * @generated
  */
 public class WorkflowInstanceLinkPersistenceImpl
-	extends BasePersistenceImpl<WorkflowInstanceLink>
+	extends BasePersistenceImpl
+		<WorkflowInstanceLink, NoSuchWorkflowInstanceLinkException>
 	implements WorkflowInstanceLinkPersistence {
 
 	/*
@@ -808,53 +809,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all workflow instance links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(WorkflowInstanceLinkImpl.class);
-
-		FinderCacheUtil.clearCache(WorkflowInstanceLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the workflow instance link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WorkflowInstanceLink workflowInstanceLink) {
-		EntityCacheUtil.removeResult(
-			WorkflowInstanceLinkImpl.class, workflowInstanceLink);
-	}
-
-	@Override
-	public void clearCache(List<WorkflowInstanceLink> workflowInstanceLinks) {
-		for (WorkflowInstanceLink workflowInstanceLink :
-				workflowInstanceLinks) {
-
-			EntityCacheUtil.removeResult(
-				WorkflowInstanceLinkImpl.class, workflowInstanceLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(WorkflowInstanceLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				WorkflowInstanceLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl) {
 
@@ -903,48 +857,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 		throws NoSuchWorkflowInstanceLinkException {
 
 		return remove((Serializable)workflowInstanceLinkId);
-	}
-
-	/**
-	 * Removes the workflow instance link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the workflow instance link
-	 * @return the workflow instance link that was removed
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink remove(Serializable primaryKey)
-		throws NoSuchWorkflowInstanceLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WorkflowInstanceLink workflowInstanceLink =
-				(WorkflowInstanceLink)session.get(
-					WorkflowInstanceLinkImpl.class, primaryKey);
-
-			if (workflowInstanceLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWorkflowInstanceLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(workflowInstanceLink);
-		}
-		catch (NoSuchWorkflowInstanceLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1070,32 +982,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 		}
 
 		workflowInstanceLink.resetOriginalValues();
-
-		return workflowInstanceLink;
-	}
-
-	/**
-	 * Returns the workflow instance link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the workflow instance link
-	 * @return the workflow instance link
-	 * @throws NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	 */
-	@Override
-	public WorkflowInstanceLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWorkflowInstanceLinkException {
-
-		WorkflowInstanceLink workflowInstanceLink = fetchByPrimaryKey(
-			primaryKey);
-
-		if (workflowInstanceLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWorkflowInstanceLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return workflowInstanceLink;
 	}
@@ -1762,9 +1648,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowInstanceLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WorkflowInstanceLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WorkflowInstanceLink exists with the key {";
 
@@ -1777,4 +1660,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:220078228
+// LIFERAY-SERVICE-BUILDER-HASH:-281469113

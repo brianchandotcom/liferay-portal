@@ -61,7 +61,7 @@ import java.util.Set;
  * @generated
  */
 public class LayoutSetBranchPersistenceImpl
-	extends BasePersistenceImpl<LayoutSetBranch>
+	extends BasePersistenceImpl<LayoutSetBranch, NoSuchLayoutSetBranchException>
 	implements LayoutSetBranchPersistence {
 
 	/*
@@ -1405,50 +1405,6 @@ public class LayoutSetBranchPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout set branches.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutSetBranchImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutSetBranchImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout set branch.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutSetBranch layoutSetBranch) {
-		EntityCacheUtil.removeResult(
-			LayoutSetBranchImpl.class, layoutSetBranch);
-	}
-
-	@Override
-	public void clearCache(List<LayoutSetBranch> layoutSetBranchs) {
-		for (LayoutSetBranch layoutSetBranch : layoutSetBranchs) {
-			EntityCacheUtil.removeResult(
-				LayoutSetBranchImpl.class, layoutSetBranch);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutSetBranchImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(LayoutSetBranchImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutSetBranchModelImpl layoutSetBranchModelImpl) {
 
@@ -1492,47 +1448,6 @@ public class LayoutSetBranchPersistenceImpl
 		throws NoSuchLayoutSetBranchException {
 
 		return remove((Serializable)layoutSetBranchId);
-	}
-
-	/**
-	 * Removes the layout set branch with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout set branch
-	 * @return the layout set branch that was removed
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetBranch remove(Serializable primaryKey)
-		throws NoSuchLayoutSetBranchException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSetBranch layoutSetBranch = (LayoutSetBranch)session.get(
-				LayoutSetBranchImpl.class, primaryKey);
-
-			if (layoutSetBranch == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutSetBranchException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutSetBranch);
-		}
-		catch (NoSuchLayoutSetBranchException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1645,31 +1560,6 @@ public class LayoutSetBranchPersistenceImpl
 		}
 
 		layoutSetBranch.resetOriginalValues();
-
-		return layoutSetBranch;
-	}
-
-	/**
-	 * Returns the layout set branch with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout set branch
-	 * @return the layout set branch
-	 * @throws NoSuchLayoutSetBranchException if a layout set branch with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetBranch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutSetBranchException {
-
-		LayoutSetBranch layoutSetBranch = fetchByPrimaryKey(primaryKey);
-
-		if (layoutSetBranch == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutSetBranchException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutSetBranch;
 	}
@@ -2090,9 +1980,6 @@ public class LayoutSetBranchPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "LayoutSetBranch.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSetBranch exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSetBranch exists with the key {";
 
@@ -2108,4 +1995,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-3806325
+// LIFERAY-SERVICE-BUILDER-HASH:1352113273

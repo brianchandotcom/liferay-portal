@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroPreferencesPersistence.class)
 public class FaroPreferencesPersistenceImpl
-	extends BasePersistenceImpl<FaroPreferences>
+	extends BasePersistenceImpl<FaroPreferences, NoSuchFaroPreferencesException>
 	implements FaroPreferencesPersistence {
 
 	/*
@@ -373,49 +372,6 @@ public class FaroPreferencesPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all faro preferenceses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroPreferencesImpl.class);
-
-		finderCache.clearCache(FaroPreferencesImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro preferences.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroPreferences faroPreferences) {
-		entityCache.removeResult(FaroPreferencesImpl.class, faroPreferences);
-	}
-
-	@Override
-	public void clearCache(List<FaroPreferences> faroPreferenceses) {
-		for (FaroPreferences faroPreferences : faroPreferenceses) {
-			entityCache.removeResult(
-				FaroPreferencesImpl.class, faroPreferences);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroPreferencesImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroPreferencesImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FaroPreferencesModelImpl faroPreferencesModelImpl) {
 
@@ -458,47 +414,6 @@ public class FaroPreferencesPersistenceImpl
 		throws NoSuchFaroPreferencesException {
 
 		return remove((Serializable)faroPreferencesId);
-	}
-
-	/**
-	 * Removes the faro preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro preferences
-	 * @return the faro preferences that was removed
-	 * @throws NoSuchFaroPreferencesException if a faro preferences with the primary key could not be found
-	 */
-	@Override
-	public FaroPreferences remove(Serializable primaryKey)
-		throws NoSuchFaroPreferencesException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroPreferences faroPreferences = (FaroPreferences)session.get(
-				FaroPreferencesImpl.class, primaryKey);
-
-			if (faroPreferences == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroPreferencesException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroPreferences);
-		}
-		catch (NoSuchFaroPreferencesException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -586,31 +501,6 @@ public class FaroPreferencesPersistenceImpl
 		}
 
 		faroPreferences.resetOriginalValues();
-
-		return faroPreferences;
-	}
-
-	/**
-	 * Returns the faro preferences with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro preferences
-	 * @return the faro preferences
-	 * @throws NoSuchFaroPreferencesException if a faro preferences with the primary key could not be found
-	 */
-	@Override
-	public FaroPreferences findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroPreferencesException {
-
-		FaroPreferences faroPreferences = fetchByPrimaryKey(primaryKey);
-
-		if (faroPreferences == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroPreferencesException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroPreferences;
 	}
@@ -960,9 +850,6 @@ public class FaroPreferencesPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroPreferences.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroPreferences exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroPreferences exists with the key {";
 
@@ -975,4 +862,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:350915409
+// LIFERAY-SERVICE-BUILDER-HASH:2135319467

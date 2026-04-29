@@ -36,7 +36,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the null convertible entry service.
@@ -49,7 +48,8 @@ import java.util.Set;
  * @generated
  */
 public class NullConvertibleEntryPersistenceImpl
-	extends BasePersistenceImpl<NullConvertibleEntry>
+	extends BasePersistenceImpl
+		<NullConvertibleEntry, NoSuchNullConvertibleEntryException>
 	implements NullConvertibleEntryPersistence {
 
 	/*
@@ -209,53 +209,6 @@ public class NullConvertibleEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all null convertible entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(NullConvertibleEntryImpl.class);
-
-		dummyFinderCache.clearCache(NullConvertibleEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the null convertible entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(NullConvertibleEntry nullConvertibleEntry) {
-		dummyEntityCache.removeResult(
-			NullConvertibleEntryImpl.class, nullConvertibleEntry);
-	}
-
-	@Override
-	public void clearCache(List<NullConvertibleEntry> nullConvertibleEntries) {
-		for (NullConvertibleEntry nullConvertibleEntry :
-				nullConvertibleEntries) {
-
-			dummyEntityCache.removeResult(
-				NullConvertibleEntryImpl.class, nullConvertibleEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(NullConvertibleEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(
-				NullConvertibleEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		NullConvertibleEntryModelImpl nullConvertibleEntryModelImpl) {
 
@@ -294,48 +247,6 @@ public class NullConvertibleEntryPersistenceImpl
 		throws NoSuchNullConvertibleEntryException {
 
 		return remove((Serializable)nullConvertibleEntryId);
-	}
-
-	/**
-	 * Removes the null convertible entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the null convertible entry
-	 * @return the null convertible entry that was removed
-	 * @throws NoSuchNullConvertibleEntryException if a null convertible entry with the primary key could not be found
-	 */
-	@Override
-	public NullConvertibleEntry remove(Serializable primaryKey)
-		throws NoSuchNullConvertibleEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NullConvertibleEntry nullConvertibleEntry =
-				(NullConvertibleEntry)session.get(
-					NullConvertibleEntryImpl.class, primaryKey);
-
-			if (nullConvertibleEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNullConvertibleEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(nullConvertibleEntry);
-		}
-		catch (NoSuchNullConvertibleEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -428,32 +339,6 @@ public class NullConvertibleEntryPersistenceImpl
 		}
 
 		nullConvertibleEntry.resetOriginalValues();
-
-		return nullConvertibleEntry;
-	}
-
-	/**
-	 * Returns the null convertible entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the null convertible entry
-	 * @return the null convertible entry
-	 * @throws NoSuchNullConvertibleEntryException if a null convertible entry with the primary key could not be found
-	 */
-	@Override
-	public NullConvertibleEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNullConvertibleEntryException {
-
-		NullConvertibleEntry nullConvertibleEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (nullConvertibleEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNullConvertibleEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return nullConvertibleEntry;
 	}
@@ -736,9 +621,6 @@ public class NullConvertibleEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"nullConvertibleEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NullConvertibleEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NullConvertibleEntry exists with the key {";
 
@@ -751,4 +633,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:104182807
+// LIFERAY-SERVICE-BUILDER-HASH:1555649827

@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoNodeSettingPersistence.class)
 public class KaleoNodeSettingPersistenceImpl
-	extends BasePersistenceImpl<KaleoNodeSetting>
+	extends BasePersistenceImpl<KaleoNodeSetting, NoSuchNodeSettingException>
 	implements KaleoNodeSettingPersistence {
 
 	/*
@@ -415,49 +415,6 @@ public class KaleoNodeSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo node settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoNodeSettingImpl.class);
-
-		finderCache.clearCache(KaleoNodeSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo node setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoNodeSetting kaleoNodeSetting) {
-		entityCache.removeResult(KaleoNodeSettingImpl.class, kaleoNodeSetting);
-	}
-
-	@Override
-	public void clearCache(List<KaleoNodeSetting> kaleoNodeSettings) {
-		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			entityCache.removeResult(
-				KaleoNodeSettingImpl.class, kaleoNodeSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoNodeSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoNodeSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoNodeSettingModelImpl kaleoNodeSettingModelImpl) {
 
@@ -505,47 +462,6 @@ public class KaleoNodeSettingPersistenceImpl
 		throws NoSuchNodeSettingException {
 
 		return remove((Serializable)kaleoNodeSettingId);
-	}
-
-	/**
-	 * Removes the kaleo node setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo node setting
-	 * @return the kaleo node setting that was removed
-	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
-	 */
-	@Override
-	public KaleoNodeSetting remove(Serializable primaryKey)
-		throws NoSuchNodeSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoNodeSetting kaleoNodeSetting = (KaleoNodeSetting)session.get(
-				KaleoNodeSettingImpl.class, primaryKey);
-
-			if (kaleoNodeSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNodeSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoNodeSetting);
-		}
-		catch (NoSuchNodeSettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -666,31 +582,6 @@ public class KaleoNodeSettingPersistenceImpl
 		}
 
 		kaleoNodeSetting.resetOriginalValues();
-
-		return kaleoNodeSetting;
-	}
-
-	/**
-	 * Returns the kaleo node setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo node setting
-	 * @return the kaleo node setting
-	 * @throws NoSuchNodeSettingException if a kaleo node setting with the primary key could not be found
-	 */
-	@Override
-	public KaleoNodeSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNodeSettingException {
-
-		KaleoNodeSetting kaleoNodeSetting = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoNodeSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNodeSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoNodeSetting;
 	}
@@ -1292,9 +1183,6 @@ public class KaleoNodeSettingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoNodeSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoNodeSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoNodeSetting exists with the key {";
 
@@ -1307,4 +1195,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-781821699
+// LIFERAY-SERVICE-BUILDER-HASH:-734001996

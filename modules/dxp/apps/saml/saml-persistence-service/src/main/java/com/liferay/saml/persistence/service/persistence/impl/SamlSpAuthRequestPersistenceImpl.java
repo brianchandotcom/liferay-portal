@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlSpAuthRequestPersistence.class)
 public class SamlSpAuthRequestPersistenceImpl
-	extends BasePersistenceImpl<SamlSpAuthRequest>
+	extends BasePersistenceImpl<SamlSpAuthRequest, NoSuchSpAuthRequestException>
 	implements SamlSpAuthRequestPersistence {
 
 	/*
@@ -390,50 +389,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml sp auth requests.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlSpAuthRequestImpl.class);
-
-		finderCache.clearCache(SamlSpAuthRequestImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml sp auth request.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlSpAuthRequest samlSpAuthRequest) {
-		entityCache.removeResult(
-			SamlSpAuthRequestImpl.class, samlSpAuthRequest);
-	}
-
-	@Override
-	public void clearCache(List<SamlSpAuthRequest> samlSpAuthRequests) {
-		for (SamlSpAuthRequest samlSpAuthRequest : samlSpAuthRequests) {
-			entityCache.removeResult(
-				SamlSpAuthRequestImpl.class, samlSpAuthRequest);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlSpAuthRequestImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlSpAuthRequestImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl) {
 
@@ -476,48 +431,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		throws NoSuchSpAuthRequestException {
 
 		return remove((Serializable)samlSpAuthnRequestId);
-	}
-
-	/**
-	 * Removes the saml sp auth request with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml sp auth request
-	 * @return the saml sp auth request that was removed
-	 * @throws NoSuchSpAuthRequestException if a saml sp auth request with the primary key could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest remove(Serializable primaryKey)
-		throws NoSuchSpAuthRequestException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlSpAuthRequest samlSpAuthRequest =
-				(SamlSpAuthRequest)session.get(
-					SamlSpAuthRequestImpl.class, primaryKey);
-
-			if (samlSpAuthRequest == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSpAuthRequestException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlSpAuthRequest);
-		}
-		catch (NoSuchSpAuthRequestException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -623,31 +536,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		}
 
 		samlSpAuthRequest.resetOriginalValues();
-
-		return samlSpAuthRequest;
-	}
-
-	/**
-	 * Returns the saml sp auth request with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml sp auth request
-	 * @return the saml sp auth request
-	 * @throws NoSuchSpAuthRequestException if a saml sp auth request with the primary key could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSpAuthRequestException {
-
-		SamlSpAuthRequest samlSpAuthRequest = fetchByPrimaryKey(primaryKey);
-
-		if (samlSpAuthRequest == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSpAuthRequestException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlSpAuthRequest;
 	}
@@ -996,9 +884,6 @@ public class SamlSpAuthRequestPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlSpAuthRequest.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlSpAuthRequest exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlSpAuthRequest exists with the key {";
 
@@ -1011,4 +896,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-362825375
+// LIFERAY-SERVICE-BUILDER-HASH:451188384

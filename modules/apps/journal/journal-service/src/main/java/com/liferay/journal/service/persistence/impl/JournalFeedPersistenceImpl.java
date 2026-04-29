@@ -81,7 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JournalFeedPersistence.class)
 public class JournalFeedPersistenceImpl
-	extends BasePersistenceImpl<JournalFeed> implements JournalFeedPersistence {
+	extends BasePersistenceImpl<JournalFeed, NoSuchFeedException>
+	implements JournalFeedPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1037,48 +1038,6 @@ public class JournalFeedPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all journal feeds.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JournalFeedImpl.class);
-
-		finderCache.clearCache(JournalFeedImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the journal feed.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JournalFeed journalFeed) {
-		entityCache.removeResult(JournalFeedImpl.class, journalFeed);
-	}
-
-	@Override
-	public void clearCache(List<JournalFeed> journalFeeds) {
-		for (JournalFeed journalFeed : journalFeeds) {
-			entityCache.removeResult(JournalFeedImpl.class, journalFeed);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JournalFeedImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(JournalFeedImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JournalFeedModelImpl journalFeedModelImpl) {
 
@@ -1136,47 +1095,6 @@ public class JournalFeedPersistenceImpl
 	@Override
 	public JournalFeed remove(long id) throws NoSuchFeedException {
 		return remove((Serializable)id);
-	}
-
-	/**
-	 * Removes the journal feed with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the journal feed
-	 * @return the journal feed that was removed
-	 * @throws NoSuchFeedException if a journal feed with the primary key could not be found
-	 */
-	@Override
-	public JournalFeed remove(Serializable primaryKey)
-		throws NoSuchFeedException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalFeed journalFeed = (JournalFeed)session.get(
-				JournalFeedImpl.class, primaryKey);
-
-			if (journalFeed == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFeedException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(journalFeed);
-		}
-		catch (NoSuchFeedException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1298,31 +1216,6 @@ public class JournalFeedPersistenceImpl
 		}
 
 		journalFeed.resetOriginalValues();
-
-		return journalFeed;
-	}
-
-	/**
-	 * Returns the journal feed with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal feed
-	 * @return the journal feed
-	 * @throws NoSuchFeedException if a journal feed with the primary key could not be found
-	 */
-	@Override
-	public JournalFeed findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFeedException {
-
-		JournalFeed journalFeed = fetchByPrimaryKey(primaryKey);
-
-		if (journalFeed == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFeedException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return journalFeed;
 	}
@@ -2031,9 +1924,6 @@ public class JournalFeedPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalFeed.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JournalFeed exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalFeed exists with the key {";
 
@@ -2049,4 +1939,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-42493668
+// LIFERAY-SERVICE-BUILDER-HASH:480865359

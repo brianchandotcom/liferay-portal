@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDisplayLayoutPersistence.class)
 public class CPDisplayLayoutPersistenceImpl
-	extends BasePersistenceImpl<CPDisplayLayout>
+	extends BasePersistenceImpl<CPDisplayLayout, NoSuchCPDisplayLayoutException>
 	implements CPDisplayLayoutPersistence {
 
 	/*
@@ -2195,49 +2195,6 @@ public class CPDisplayLayoutPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp display layouts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDisplayLayoutImpl.class);
-
-		finderCache.clearCache(CPDisplayLayoutImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp display layout.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDisplayLayout cpDisplayLayout) {
-		entityCache.removeResult(CPDisplayLayoutImpl.class, cpDisplayLayout);
-	}
-
-	@Override
-	public void clearCache(List<CPDisplayLayout> cpDisplayLayouts) {
-		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
-			entityCache.removeResult(
-				CPDisplayLayoutImpl.class, cpDisplayLayout);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDisplayLayoutImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPDisplayLayoutImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDisplayLayoutModelImpl cpDisplayLayoutModelImpl) {
 
@@ -2298,47 +2255,6 @@ public class CPDisplayLayoutPersistenceImpl
 		throws NoSuchCPDisplayLayoutException {
 
 		return remove((Serializable)CPDisplayLayoutId);
-	}
-
-	/**
-	 * Removes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp display layout
-	 * @return the cp display layout that was removed
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	@Override
-	public CPDisplayLayout remove(Serializable primaryKey)
-		throws NoSuchCPDisplayLayoutException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDisplayLayout cpDisplayLayout = (CPDisplayLayout)session.get(
-				CPDisplayLayoutImpl.class, primaryKey);
-
-			if (cpDisplayLayout == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDisplayLayoutException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDisplayLayout);
-		}
-		catch (NoSuchCPDisplayLayoutException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2465,31 +2381,6 @@ public class CPDisplayLayoutPersistenceImpl
 		}
 
 		cpDisplayLayout.resetOriginalValues();
-
-		return cpDisplayLayout;
-	}
-
-	/**
-	 * Returns the cp display layout with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp display layout
-	 * @return the cp display layout
-	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
-	 */
-	@Override
-	public CPDisplayLayout findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDisplayLayoutException {
-
-		CPDisplayLayout cpDisplayLayout = fetchByPrimaryKey(primaryKey);
-
-		if (cpDisplayLayout == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDisplayLayoutException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDisplayLayout;
 	}
@@ -3345,9 +3236,6 @@ public class CPDisplayLayoutPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpDisplayLayout.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDisplayLayout exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDisplayLayout exists with the key {";
 
@@ -3363,4 +3251,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1148378102
+// LIFERAY-SERVICE-BUILDER-HASH:1358613615

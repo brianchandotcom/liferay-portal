@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherAccountPersistence.class)
 public class PatcherAccountPersistenceImpl
-	extends BasePersistenceImpl<PatcherAccount>
+	extends BasePersistenceImpl<PatcherAccount, NoSuchPatcherAccountException>
 	implements PatcherAccountPersistence {
 
 	/*
@@ -994,48 +994,6 @@ public class PatcherAccountPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher accounts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherAccountImpl.class);
-
-		finderCache.clearCache(PatcherAccountImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher account.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherAccount patcherAccount) {
-		entityCache.removeResult(PatcherAccountImpl.class, patcherAccount);
-	}
-
-	@Override
-	public void clearCache(List<PatcherAccount> patcherAccounts) {
-		for (PatcherAccount patcherAccount : patcherAccounts) {
-			entityCache.removeResult(PatcherAccountImpl.class, patcherAccount);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherAccountImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherAccountImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherAccountModelImpl patcherAccountModelImpl) {
 
@@ -1077,47 +1035,6 @@ public class PatcherAccountPersistenceImpl
 		throws NoSuchPatcherAccountException {
 
 		return remove((Serializable)patcherAccountId);
-	}
-
-	/**
-	 * Removes the patcher account with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher account
-	 * @return the patcher account that was removed
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	@Override
-	public PatcherAccount remove(Serializable primaryKey)
-		throws NoSuchPatcherAccountException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherAccount patcherAccount = (PatcherAccount)session.get(
-				PatcherAccountImpl.class, primaryKey);
-
-			if (patcherAccount == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherAccountException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherAccount);
-		}
-		catch (NoSuchPatcherAccountException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1232,31 +1149,6 @@ public class PatcherAccountPersistenceImpl
 		}
 
 		patcherAccount.resetOriginalValues();
-
-		return patcherAccount;
-	}
-
-	/**
-	 * Returns the patcher account with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher account
-	 * @return the patcher account
-	 * @throws NoSuchPatcherAccountException if a patcher account with the primary key could not be found
-	 */
-	@Override
-	public PatcherAccount findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherAccountException {
-
-		PatcherAccount patcherAccount = fetchByPrimaryKey(primaryKey);
-
-		if (patcherAccount == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherAccountException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherAccount;
 	}
@@ -1993,9 +1885,6 @@ public class PatcherAccountPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PatcherAccount.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherAccount exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherAccount exists with the key {";
 
@@ -2008,4 +1897,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-656008216
+// LIFERAY-SERVICE-BUILDER-HASH:-1183282031

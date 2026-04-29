@@ -63,7 +63,7 @@ import java.util.Set;
  * @generated
  */
 public class UserGroupRolePersistenceImpl
-	extends BasePersistenceImpl<UserGroupRole>
+	extends BasePersistenceImpl<UserGroupRole, NoSuchUserGroupRoleException>
 	implements UserGroupRolePersistence {
 
 	/*
@@ -1052,49 +1052,6 @@ public class UserGroupRolePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all user group roles.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserGroupRoleImpl.class);
-
-		FinderCacheUtil.clearCache(UserGroupRoleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user group role.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserGroupRole userGroupRole) {
-		EntityCacheUtil.removeResult(UserGroupRoleImpl.class, userGroupRole);
-	}
-
-	@Override
-	public void clearCache(List<UserGroupRole> userGroupRoles) {
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			EntityCacheUtil.removeResult(
-				UserGroupRoleImpl.class, userGroupRole);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserGroupRoleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserGroupRoleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		UserGroupRoleModelImpl userGroupRoleModelImpl) {
 
@@ -1143,47 +1100,6 @@ public class UserGroupRolePersistenceImpl
 		throws NoSuchUserGroupRoleException {
 
 		return remove((Serializable)userGroupRoleId);
-	}
-
-	/**
-	 * Removes the user group role with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user group role
-	 * @return the user group role that was removed
-	 * @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
-	 */
-	@Override
-	public UserGroupRole remove(Serializable primaryKey)
-		throws NoSuchUserGroupRoleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserGroupRole userGroupRole = (UserGroupRole)session.get(
-				UserGroupRoleImpl.class, primaryKey);
-
-			if (userGroupRole == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserGroupRoleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userGroupRole);
-		}
-		catch (NoSuchUserGroupRoleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1277,31 +1193,6 @@ public class UserGroupRolePersistenceImpl
 		}
 
 		userGroupRole.resetOriginalValues();
-
-		return userGroupRole;
-	}
-
-	/**
-	 * Returns the user group role with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user group role
-	 * @return the user group role
-	 * @throws NoSuchUserGroupRoleException if a user group role with the primary key could not be found
-	 */
-	@Override
-	public UserGroupRole findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserGroupRoleException {
-
-		UserGroupRole userGroupRole = fetchByPrimaryKey(primaryKey);
-
-		if (userGroupRole == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserGroupRoleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userGroupRole;
 	}
@@ -1979,9 +1870,6 @@ public class UserGroupRolePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userGroupRole.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserGroupRole exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserGroupRole exists with the key {";
 
@@ -1994,4 +1882,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:607289515
+// LIFERAY-SERVICE-BUILDER-HASH:-1063808568

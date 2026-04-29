@@ -38,7 +38,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the redundant index entry service.
@@ -51,7 +50,8 @@ import java.util.Set;
  * @generated
  */
 public class RedundantIndexEntryPersistenceImpl
-	extends BasePersistenceImpl<RedundantIndexEntry>
+	extends BasePersistenceImpl
+		<RedundantIndexEntry, NoSuchRedundantIndexEntryException>
 	implements RedundantIndexEntryPersistence {
 
 	/*
@@ -217,50 +217,6 @@ public class RedundantIndexEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all redundant index entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(RedundantIndexEntryImpl.class);
-
-		finderCache.clearCache(RedundantIndexEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the redundant index entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RedundantIndexEntry redundantIndexEntry) {
-		entityCache.removeResult(
-			RedundantIndexEntryImpl.class, redundantIndexEntry);
-	}
-
-	@Override
-	public void clearCache(List<RedundantIndexEntry> redundantIndexEntries) {
-		for (RedundantIndexEntry redundantIndexEntry : redundantIndexEntries) {
-			entityCache.removeResult(
-				RedundantIndexEntryImpl.class, redundantIndexEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(RedundantIndexEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(RedundantIndexEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RedundantIndexEntryModelImpl redundantIndexEntryModelImpl) {
 
@@ -303,48 +259,6 @@ public class RedundantIndexEntryPersistenceImpl
 		throws NoSuchRedundantIndexEntryException {
 
 		return remove((Serializable)redundantIndexEntryId);
-	}
-
-	/**
-	 * Removes the redundant index entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the redundant index entry
-	 * @return the redundant index entry that was removed
-	 * @throws NoSuchRedundantIndexEntryException if a redundant index entry with the primary key could not be found
-	 */
-	@Override
-	public RedundantIndexEntry remove(Serializable primaryKey)
-		throws NoSuchRedundantIndexEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RedundantIndexEntry redundantIndexEntry =
-				(RedundantIndexEntry)session.get(
-					RedundantIndexEntryImpl.class, primaryKey);
-
-			if (redundantIndexEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRedundantIndexEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(redundantIndexEntry);
-		}
-		catch (NoSuchRedundantIndexEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -437,31 +351,6 @@ public class RedundantIndexEntryPersistenceImpl
 		}
 
 		redundantIndexEntry.resetOriginalValues();
-
-		return redundantIndexEntry;
-	}
-
-	/**
-	 * Returns the redundant index entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the redundant index entry
-	 * @return the redundant index entry
-	 * @throws NoSuchRedundantIndexEntryException if a redundant index entry with the primary key could not be found
-	 */
-	@Override
-	public RedundantIndexEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRedundantIndexEntryException {
-
-		RedundantIndexEntry redundantIndexEntry = fetchByPrimaryKey(primaryKey);
-
-		if (redundantIndexEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRedundantIndexEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return redundantIndexEntry;
 	}
@@ -752,9 +641,6 @@ public class RedundantIndexEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "redundantIndexEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RedundantIndexEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RedundantIndexEntry exists with the key {";
 
@@ -767,4 +653,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1566007671
+// LIFERAY-SERVICE-BUILDER-HASH:1295909825

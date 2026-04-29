@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OpenIdConnectSessionPersistence.class)
 public class OpenIdConnectSessionPersistenceImpl
-	extends BasePersistenceImpl<OpenIdConnectSession>
+	extends BasePersistenceImpl<OpenIdConnectSession, NoSuchSessionException>
 	implements OpenIdConnectSessionPersistence {
 
 	/*
@@ -943,53 +942,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all open ID connect sessions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OpenIdConnectSessionImpl.class);
-
-		finderCache.clearCache(OpenIdConnectSessionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the open ID connect session.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OpenIdConnectSession openIdConnectSession) {
-		entityCache.removeResult(
-			OpenIdConnectSessionImpl.class, openIdConnectSession);
-	}
-
-	@Override
-	public void clearCache(List<OpenIdConnectSession> openIdConnectSessions) {
-		for (OpenIdConnectSession openIdConnectSession :
-				openIdConnectSessions) {
-
-			entityCache.removeResult(
-				OpenIdConnectSessionImpl.class, openIdConnectSession);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OpenIdConnectSessionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				OpenIdConnectSessionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OpenIdConnectSessionModelImpl openIdConnectSessionModelImpl) {
 
@@ -1050,48 +1002,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		throws NoSuchSessionException {
 
 		return remove((Serializable)openIdConnectSessionId);
-	}
-
-	/**
-	 * Removes the open ID connect session with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the open ID connect session
-	 * @return the open ID connect session that was removed
-	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
-	 */
-	@Override
-	public OpenIdConnectSession remove(Serializable primaryKey)
-		throws NoSuchSessionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OpenIdConnectSession openIdConnectSession =
-				(OpenIdConnectSession)session.get(
-					OpenIdConnectSessionImpl.class, primaryKey);
-
-			if (openIdConnectSession == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSessionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(openIdConnectSession);
-		}
-		catch (NoSuchSessionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1199,32 +1109,6 @@ public class OpenIdConnectSessionPersistenceImpl
 		}
 
 		openIdConnectSession.resetOriginalValues();
-
-		return openIdConnectSession;
-	}
-
-	/**
-	 * Returns the open ID connect session with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the open ID connect session
-	 * @return the open ID connect session
-	 * @throws NoSuchSessionException if a open ID connect session with the primary key could not be found
-	 */
-	@Override
-	public OpenIdConnectSession findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSessionException {
-
-		OpenIdConnectSession openIdConnectSession = fetchByPrimaryKey(
-			primaryKey);
-
-		if (openIdConnectSession == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSessionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return openIdConnectSession;
 	}
@@ -1691,9 +1575,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"openIdConnectSession.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OpenIdConnectSession exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OpenIdConnectSession exists with the key {";
 
@@ -1706,4 +1587,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:221858194
+// LIFERAY-SERVICE-BUILDER-HASH:1857121049

@@ -89,7 +89,8 @@ import java.util.Set;
  * @generated
  */
 public class UserGroupPersistenceImpl
-	extends BasePersistenceImpl<UserGroup> implements UserGroupPersistence {
+	extends BasePersistenceImpl<UserGroup, NoSuchUserGroupException>
+	implements UserGroupPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -3017,48 +3018,6 @@ public class UserGroupPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all user groups.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserGroupImpl.class);
-
-		FinderCacheUtil.clearCache(UserGroupImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user group.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserGroup userGroup) {
-		EntityCacheUtil.removeResult(UserGroupImpl.class, userGroup);
-	}
-
-	@Override
-	public void clearCache(List<UserGroup> userGroups) {
-		for (UserGroup userGroup : userGroups) {
-			EntityCacheUtil.removeResult(UserGroupImpl.class, userGroup);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserGroupImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserGroupImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		UserGroupModelImpl userGroupModelImpl) {
 
@@ -3115,47 +3074,6 @@ public class UserGroupPersistenceImpl
 	@Override
 	public UserGroup remove(long userGroupId) throws NoSuchUserGroupException {
 		return remove((Serializable)userGroupId);
-	}
-
-	/**
-	 * Removes the user group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user group
-	 * @return the user group that was removed
-	 * @throws NoSuchUserGroupException if a user group with the primary key could not be found
-	 */
-	@Override
-	public UserGroup remove(Serializable primaryKey)
-		throws NoSuchUserGroupException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserGroup userGroup = (UserGroup)session.get(
-				UserGroupImpl.class, primaryKey);
-
-			if (userGroup == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserGroupException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userGroup);
-		}
-		catch (NoSuchUserGroupException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3345,31 +3263,6 @@ public class UserGroupPersistenceImpl
 		}
 
 		userGroup.resetOriginalValues();
-
-		return userGroup;
-	}
-
-	/**
-	 * Returns the user group with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user group
-	 * @return the user group
-	 * @throws NoSuchUserGroupException if a user group with the primary key could not be found
-	 */
-	@Override
-	public UserGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserGroupException {
-
-		UserGroup userGroup = fetchByPrimaryKey(primaryKey);
-
-		if (userGroup == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserGroupException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userGroup;
 	}
@@ -5101,9 +4994,6 @@ public class UserGroupPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "UserGroup.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserGroup exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserGroup exists with the key {";
 
@@ -5119,4 +5009,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1223564361
+// LIFERAY-SERVICE-BUILDER-HASH:826699434

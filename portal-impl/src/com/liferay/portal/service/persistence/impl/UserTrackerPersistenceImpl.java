@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the user tracker service.
@@ -55,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class UserTrackerPersistenceImpl
-	extends BasePersistenceImpl<UserTracker> implements UserTrackerPersistence {
+	extends BasePersistenceImpl<UserTracker, NoSuchUserTrackerException>
+	implements UserTrackerPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -559,48 +559,6 @@ public class UserTrackerPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all user trackers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserTrackerImpl.class);
-
-		FinderCacheUtil.clearCache(UserTrackerImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user tracker.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserTracker userTracker) {
-		EntityCacheUtil.removeResult(UserTrackerImpl.class, userTracker);
-	}
-
-	@Override
-	public void clearCache(List<UserTracker> userTrackers) {
-		for (UserTracker userTracker : userTrackers) {
-			EntityCacheUtil.removeResult(UserTrackerImpl.class, userTracker);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserTrackerImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserTrackerImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	 *
 	 * @param userTrackerId the primary key for the new user tracker
@@ -630,47 +588,6 @@ public class UserTrackerPersistenceImpl
 		throws NoSuchUserTrackerException {
 
 		return remove((Serializable)userTrackerId);
-	}
-
-	/**
-	 * Removes the user tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user tracker
-	 * @return the user tracker that was removed
-	 * @throws NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 */
-	@Override
-	public UserTracker remove(Serializable primaryKey)
-		throws NoSuchUserTrackerException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserTracker userTracker = (UserTracker)session.get(
-				UserTrackerImpl.class, primaryKey);
-
-			if (userTracker == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserTrackerException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userTracker);
-		}
-		catch (NoSuchUserTrackerException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -768,31 +685,6 @@ public class UserTrackerPersistenceImpl
 		}
 
 		userTracker.resetOriginalValues();
-
-		return userTracker;
-	}
-
-	/**
-	 * Returns the user tracker with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user tracker
-	 * @return the user tracker
-	 * @throws NoSuchUserTrackerException if a user tracker with the primary key could not be found
-	 */
-	@Override
-	public UserTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserTrackerException {
-
-		UserTracker userTracker = fetchByPrimaryKey(primaryKey);
-
-		if (userTracker == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserTrackerException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userTracker;
 	}
@@ -1149,9 +1041,6 @@ public class UserTrackerPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userTracker.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserTracker exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserTracker exists with the key {";
 
@@ -1164,4 +1053,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:827040886
+// LIFERAY-SERVICE-BUILDER-HASH:403418137

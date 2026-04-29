@@ -5,6 +5,7 @@
 
 package com.liferay.message.boards.service.persistence.impl;
 
+import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class MBCategoryFinderBaseImpl
-	extends BasePersistenceImpl<MBCategory> {
+	extends BasePersistenceImpl<MBCategory, NoSuchCategoryException> {
 
 	public MBCategoryFinderBaseImpl() {
 		setModelClass(MBCategory.class);
@@ -77,4 +78,4 @@ public abstract class MBCategoryFinderBaseImpl
 		MBCategoryFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:403547828
+// LIFERAY-SERVICE-BUILDER-HASH:813311147

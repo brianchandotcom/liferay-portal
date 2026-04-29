@@ -73,7 +73,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JSONStorageEntryPersistence.class)
 public class JSONStorageEntryPersistenceImpl
-	extends BasePersistenceImpl<JSONStorageEntry>
+	extends BasePersistenceImpl
+		<JSONStorageEntry, NoSuchJSONStorageEntryException>
 	implements JSONStorageEntryPersistence {
 
 	/*
@@ -895,49 +896,6 @@ public class JSONStorageEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all json storage entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JSONStorageEntryImpl.class);
-
-		finderCache.clearCache(JSONStorageEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the json storage entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JSONStorageEntry jsonStorageEntry) {
-		entityCache.removeResult(JSONStorageEntryImpl.class, jsonStorageEntry);
-	}
-
-	@Override
-	public void clearCache(List<JSONStorageEntry> jsonStorageEntries) {
-		for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-			entityCache.removeResult(
-				JSONStorageEntryImpl.class, jsonStorageEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JSONStorageEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(JSONStorageEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JSONStorageEntryModelImpl jsonStorageEntryModelImpl) {
 
@@ -989,47 +947,6 @@ public class JSONStorageEntryPersistenceImpl
 		throws NoSuchJSONStorageEntryException {
 
 		return remove((Serializable)jsonStorageEntryId);
-	}
-
-	/**
-	 * Removes the json storage entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the json storage entry
-	 * @return the json storage entry that was removed
-	 * @throws NoSuchJSONStorageEntryException if a json storage entry with the primary key could not be found
-	 */
-	@Override
-	public JSONStorageEntry remove(Serializable primaryKey)
-		throws NoSuchJSONStorageEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JSONStorageEntry jsonStorageEntry = (JSONStorageEntry)session.get(
-				JSONStorageEntryImpl.class, primaryKey);
-
-			if (jsonStorageEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchJSONStorageEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(jsonStorageEntry);
-		}
-		catch (NoSuchJSONStorageEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1125,31 +1042,6 @@ public class JSONStorageEntryPersistenceImpl
 		}
 
 		jsonStorageEntry.resetOriginalValues();
-
-		return jsonStorageEntry;
-	}
-
-	/**
-	 * Returns the json storage entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the json storage entry
-	 * @return the json storage entry
-	 * @throws NoSuchJSONStorageEntryException if a json storage entry with the primary key could not be found
-	 */
-	@Override
-	public JSONStorageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchJSONStorageEntryException {
-
-		JSONStorageEntry jsonStorageEntry = fetchByPrimaryKey(primaryKey);
-
-		if (jsonStorageEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchJSONStorageEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return jsonStorageEntry;
 	}
@@ -1902,9 +1794,6 @@ public class JSONStorageEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "jsonStorageEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JSONStorageEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JSONStorageEntry exists with the key {";
 
@@ -1920,4 +1809,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:28032305
+// LIFERAY-SERVICE-BUILDER-HASH:264739963

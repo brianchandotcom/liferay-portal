@@ -77,7 +77,7 @@ import java.util.Set;
  * @generated
  */
 public class EmailAddressPersistenceImpl
-	extends BasePersistenceImpl<EmailAddress>
+	extends BasePersistenceImpl<EmailAddress, NoSuchEmailAddressException>
 	implements EmailAddressPersistence {
 
 	/*
@@ -1463,48 +1463,6 @@ public class EmailAddressPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all email addresses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(EmailAddressImpl.class);
-
-		FinderCacheUtil.clearCache(EmailAddressImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the email address.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(EmailAddress emailAddress) {
-		EntityCacheUtil.removeResult(EmailAddressImpl.class, emailAddress);
-	}
-
-	@Override
-	public void clearCache(List<EmailAddress> emailAddresses) {
-		for (EmailAddress emailAddress : emailAddresses) {
-			EntityCacheUtil.removeResult(EmailAddressImpl.class, emailAddress);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(EmailAddressImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(EmailAddressImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		EmailAddressModelImpl emailAddressModelImpl) {
 
@@ -1556,47 +1514,6 @@ public class EmailAddressPersistenceImpl
 		throws NoSuchEmailAddressException {
 
 		return remove((Serializable)emailAddressId);
-	}
-
-	/**
-	 * Removes the email address with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the email address
-	 * @return the email address that was removed
-	 * @throws NoSuchEmailAddressException if a email address with the primary key could not be found
-	 */
-	@Override
-	public EmailAddress remove(Serializable primaryKey)
-		throws NoSuchEmailAddressException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			EmailAddress emailAddress = (EmailAddress)session.get(
-				EmailAddressImpl.class, primaryKey);
-
-			if (emailAddress == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEmailAddressException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(emailAddress);
-		}
-		catch (NoSuchEmailAddressException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1782,31 +1699,6 @@ public class EmailAddressPersistenceImpl
 		}
 
 		emailAddress.resetOriginalValues();
-
-		return emailAddress;
-	}
-
-	/**
-	 * Returns the email address with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the email address
-	 * @return the email address
-	 * @throws NoSuchEmailAddressException if a email address with the primary key could not be found
-	 */
-	@Override
-	public EmailAddress findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEmailAddressException {
-
-		EmailAddress emailAddress = fetchByPrimaryKey(primaryKey);
-
-		if (emailAddress == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEmailAddressException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return emailAddress;
 	}
@@ -2580,9 +2472,6 @@ public class EmailAddressPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "emailAddress.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No EmailAddress exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No EmailAddress exists with the key {";
 
@@ -2598,4 +2487,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:845875749
+// LIFERAY-SERVICE-BUILDER-HASH:2007799237

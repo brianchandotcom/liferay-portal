@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ViewCountEntryPersistence.class)
 public class ViewCountEntryPersistenceImpl
-	extends BasePersistenceImpl<ViewCountEntry>
+	extends BasePersistenceImpl<ViewCountEntry, NoSuchEntryException>
 	implements ViewCountEntryPersistence {
 
 	/*
@@ -291,48 +291,6 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all view count entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ViewCountEntryImpl.class);
-
-		finderCache.clearCache(ViewCountEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the view count entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ViewCountEntry viewCountEntry) {
-		entityCache.removeResult(ViewCountEntryImpl.class, viewCountEntry);
-	}
-
-	@Override
-	public void clearCache(List<ViewCountEntry> viewCountEntries) {
-		for (ViewCountEntry viewCountEntry : viewCountEntries) {
-			entityCache.removeResult(ViewCountEntryImpl.class, viewCountEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ViewCountEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ViewCountEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new view count entry with the primary key. Does not add the view count entry to the database.
 	 *
 	 * @param viewCountEntryPK the primary key for the new view count entry
@@ -362,47 +320,6 @@ public class ViewCountEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)viewCountEntryPK);
-	}
-
-	/**
-	 * Removes the view count entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the view count entry
-	 * @return the view count entry that was removed
-	 * @throws NoSuchEntryException if a view count entry with the primary key could not be found
-	 */
-	@Override
-	public ViewCountEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ViewCountEntry viewCountEntry = (ViewCountEntry)session.get(
-				ViewCountEntryImpl.class, primaryKey);
-
-			if (viewCountEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(viewCountEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -487,31 +404,6 @@ public class ViewCountEntryPersistenceImpl
 		}
 
 		viewCountEntry.resetOriginalValues();
-
-		return viewCountEntry;
-	}
-
-	/**
-	 * Returns the view count entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the view count entry
-	 * @return the view count entry
-	 * @throws NoSuchEntryException if a view count entry with the primary key could not be found
-	 */
-	@Override
-	public ViewCountEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		ViewCountEntry viewCountEntry = fetchByPrimaryKey(primaryKey);
-
-		if (viewCountEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return viewCountEntry;
 	}
@@ -853,9 +745,6 @@ public class ViewCountEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "viewCountEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ViewCountEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ViewCountEntry exists with the key {";
 
@@ -871,4 +760,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1790222448
+// LIFERAY-SERVICE-BUILDER-HASH:2043987316

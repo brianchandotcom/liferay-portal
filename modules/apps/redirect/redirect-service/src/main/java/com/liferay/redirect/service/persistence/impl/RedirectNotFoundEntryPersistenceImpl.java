@@ -50,7 +50,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -71,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = RedirectNotFoundEntryPersistence.class)
 public class RedirectNotFoundEntryPersistenceImpl
-	extends BasePersistenceImpl<RedirectNotFoundEntry>
+	extends BasePersistenceImpl
+		<RedirectNotFoundEntry, NoSuchNotFoundEntryException>
 	implements RedirectNotFoundEntryPersistence {
 
 	/*
@@ -389,55 +389,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all redirect not found entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(RedirectNotFoundEntryImpl.class);
-
-		finderCache.clearCache(RedirectNotFoundEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the redirect not found entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RedirectNotFoundEntry redirectNotFoundEntry) {
-		entityCache.removeResult(
-			RedirectNotFoundEntryImpl.class, redirectNotFoundEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<RedirectNotFoundEntry> redirectNotFoundEntries) {
-
-		for (RedirectNotFoundEntry redirectNotFoundEntry :
-				redirectNotFoundEntries) {
-
-			entityCache.removeResult(
-				RedirectNotFoundEntryImpl.class, redirectNotFoundEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(RedirectNotFoundEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				RedirectNotFoundEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RedirectNotFoundEntryModelImpl redirectNotFoundEntryModelImpl) {
 
@@ -481,48 +432,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 		throws NoSuchNotFoundEntryException {
 
 		return remove((Serializable)redirectNotFoundEntryId);
-	}
-
-	/**
-	 * Removes the redirect not found entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the redirect not found entry
-	 * @return the redirect not found entry that was removed
-	 * @throws NoSuchNotFoundEntryException if a redirect not found entry with the primary key could not be found
-	 */
-	@Override
-	public RedirectNotFoundEntry remove(Serializable primaryKey)
-		throws NoSuchNotFoundEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RedirectNotFoundEntry redirectNotFoundEntry =
-				(RedirectNotFoundEntry)session.get(
-					RedirectNotFoundEntryImpl.class, primaryKey);
-
-			if (redirectNotFoundEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotFoundEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(redirectNotFoundEntry);
-		}
-		catch (NoSuchNotFoundEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -669,32 +578,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 		}
 
 		redirectNotFoundEntry.resetOriginalValues();
-
-		return redirectNotFoundEntry;
-	}
-
-	/**
-	 * Returns the redirect not found entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the redirect not found entry
-	 * @return the redirect not found entry
-	 * @throws NoSuchNotFoundEntryException if a redirect not found entry with the primary key could not be found
-	 */
-	@Override
-	public RedirectNotFoundEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNotFoundEntryException {
-
-		RedirectNotFoundEntry redirectNotFoundEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (redirectNotFoundEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotFoundEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return redirectNotFoundEntry;
 	}
@@ -1051,9 +934,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"redirectNotFoundEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RedirectNotFoundEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RedirectNotFoundEntry exists with the key {";
 
@@ -1066,4 +946,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-262646192
+// LIFERAY-SERVICE-BUILDER-HASH:908749652

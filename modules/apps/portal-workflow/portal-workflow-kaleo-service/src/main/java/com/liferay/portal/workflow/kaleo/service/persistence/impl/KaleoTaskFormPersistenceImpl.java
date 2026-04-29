@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoTaskFormPersistence.class)
 public class KaleoTaskFormPersistenceImpl
-	extends BasePersistenceImpl<KaleoTaskForm>
+	extends BasePersistenceImpl<KaleoTaskForm, NoSuchTaskFormException>
 	implements KaleoTaskFormPersistence {
 
 	/*
@@ -901,48 +901,6 @@ public class KaleoTaskFormPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo task forms.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoTaskFormImpl.class);
-
-		finderCache.clearCache(KaleoTaskFormImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo task form.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoTaskForm kaleoTaskForm) {
-		entityCache.removeResult(KaleoTaskFormImpl.class, kaleoTaskForm);
-	}
-
-	@Override
-	public void clearCache(List<KaleoTaskForm> kaleoTaskForms) {
-		for (KaleoTaskForm kaleoTaskForm : kaleoTaskForms) {
-			entityCache.removeResult(KaleoTaskFormImpl.class, kaleoTaskForm);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoTaskFormImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoTaskFormImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoTaskFormModelImpl kaleoTaskFormModelImpl) {
 
@@ -990,47 +948,6 @@ public class KaleoTaskFormPersistenceImpl
 		throws NoSuchTaskFormException {
 
 		return remove((Serializable)kaleoTaskFormId);
-	}
-
-	/**
-	 * Removes the kaleo task form with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo task form
-	 * @return the kaleo task form that was removed
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskForm remove(Serializable primaryKey)
-		throws NoSuchTaskFormException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTaskForm kaleoTaskForm = (KaleoTaskForm)session.get(
-				KaleoTaskFormImpl.class, primaryKey);
-
-			if (kaleoTaskForm == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaskFormException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoTaskForm);
-		}
-		catch (NoSuchTaskFormException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1148,31 +1065,6 @@ public class KaleoTaskFormPersistenceImpl
 		}
 
 		kaleoTaskForm.resetOriginalValues();
-
-		return kaleoTaskForm;
-	}
-
-	/**
-	 * Returns the kaleo task form with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo task form
-	 * @return the kaleo task form
-	 * @throws NoSuchTaskFormException if a kaleo task form with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskForm findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaskFormException {
-
-		KaleoTaskForm kaleoTaskForm = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoTaskForm == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaskFormException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoTaskForm;
 	}
@@ -1874,9 +1766,6 @@ public class KaleoTaskFormPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTaskForm.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoTaskForm exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTaskForm exists with the key {";
 
@@ -1889,4 +1778,4 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-880409354
+// LIFERAY-SERVICE-BUILDER-HASH:-1365245431

@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountEntryUserRelPersistence.class)
 public class AccountEntryUserRelPersistenceImpl
-	extends BasePersistenceImpl<AccountEntryUserRel>
+	extends BasePersistenceImpl
+		<AccountEntryUserRel, NoSuchEntryUserRelException>
 	implements AccountEntryUserRelPersistence {
 
 	/*
@@ -534,50 +534,6 @@ public class AccountEntryUserRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account entry user rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountEntryUserRelImpl.class);
-
-		finderCache.clearCache(AccountEntryUserRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account entry user rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AccountEntryUserRel accountEntryUserRel) {
-		entityCache.removeResult(
-			AccountEntryUserRelImpl.class, accountEntryUserRel);
-	}
-
-	@Override
-	public void clearCache(List<AccountEntryUserRel> accountEntryUserRels) {
-		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
-			entityCache.removeResult(
-				AccountEntryUserRelImpl.class, accountEntryUserRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountEntryUserRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AccountEntryUserRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountEntryUserRelModelImpl accountEntryUserRelModelImpl) {
 
@@ -620,48 +576,6 @@ public class AccountEntryUserRelPersistenceImpl
 		throws NoSuchEntryUserRelException {
 
 		return remove((Serializable)accountEntryUserRelId);
-	}
-
-	/**
-	 * Removes the account entry user rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account entry user rel
-	 * @return the account entry user rel that was removed
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	@Override
-	public AccountEntryUserRel remove(Serializable primaryKey)
-		throws NoSuchEntryUserRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountEntryUserRel accountEntryUserRel =
-				(AccountEntryUserRel)session.get(
-					AccountEntryUserRelImpl.class, primaryKey);
-
-			if (accountEntryUserRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryUserRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountEntryUserRel);
-		}
-		catch (NoSuchEntryUserRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -754,31 +668,6 @@ public class AccountEntryUserRelPersistenceImpl
 		}
 
 		accountEntryUserRel.resetOriginalValues();
-
-		return accountEntryUserRel;
-	}
-
-	/**
-	 * Returns the account entry user rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account entry user rel
-	 * @return the account entry user rel
-	 * @throws NoSuchEntryUserRelException if a account entry user rel with the primary key could not be found
-	 */
-	@Override
-	public AccountEntryUserRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryUserRelException {
-
-		AccountEntryUserRel accountEntryUserRel = fetchByPrimaryKey(primaryKey);
-
-		if (accountEntryUserRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryUserRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountEntryUserRel;
 	}
@@ -1166,9 +1055,6 @@ public class AccountEntryUserRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "accountEntryUserRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountEntryUserRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountEntryUserRel exists with the key {";
 
@@ -1181,4 +1067,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-257954470
+// LIFERAY-SERVICE-BUILDER-HASH:-1085874279

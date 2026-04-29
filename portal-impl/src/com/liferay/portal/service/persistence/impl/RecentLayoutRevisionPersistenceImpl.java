@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the recent layout revision service.
@@ -53,7 +52,8 @@ import java.util.Set;
  * @generated
  */
 public class RecentLayoutRevisionPersistenceImpl
-	extends BasePersistenceImpl<RecentLayoutRevision>
+	extends BasePersistenceImpl
+		<RecentLayoutRevision, NoSuchRecentLayoutRevisionException>
 	implements RecentLayoutRevisionPersistence {
 
 	/*
@@ -687,53 +687,6 @@ public class RecentLayoutRevisionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all recent layout revisions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RecentLayoutRevisionImpl.class);
-
-		FinderCacheUtil.clearCache(RecentLayoutRevisionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the recent layout revision.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RecentLayoutRevision recentLayoutRevision) {
-		EntityCacheUtil.removeResult(
-			RecentLayoutRevisionImpl.class, recentLayoutRevision);
-	}
-
-	@Override
-	public void clearCache(List<RecentLayoutRevision> recentLayoutRevisions) {
-		for (RecentLayoutRevision recentLayoutRevision :
-				recentLayoutRevisions) {
-
-			EntityCacheUtil.removeResult(
-				RecentLayoutRevisionImpl.class, recentLayoutRevision);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RecentLayoutRevisionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				RecentLayoutRevisionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RecentLayoutRevisionModelImpl recentLayoutRevisionModelImpl) {
 
@@ -778,48 +731,6 @@ public class RecentLayoutRevisionPersistenceImpl
 		throws NoSuchRecentLayoutRevisionException {
 
 		return remove((Serializable)recentLayoutRevisionId);
-	}
-
-	/**
-	 * Removes the recent layout revision with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the recent layout revision
-	 * @return the recent layout revision that was removed
-	 * @throws NoSuchRecentLayoutRevisionException if a recent layout revision with the primary key could not be found
-	 */
-	@Override
-	public RecentLayoutRevision remove(Serializable primaryKey)
-		throws NoSuchRecentLayoutRevisionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RecentLayoutRevision recentLayoutRevision =
-				(RecentLayoutRevision)session.get(
-					RecentLayoutRevisionImpl.class, primaryKey);
-
-			if (recentLayoutRevision == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRecentLayoutRevisionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(recentLayoutRevision);
-		}
-		catch (NoSuchRecentLayoutRevisionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -912,32 +823,6 @@ public class RecentLayoutRevisionPersistenceImpl
 		}
 
 		recentLayoutRevision.resetOriginalValues();
-
-		return recentLayoutRevision;
-	}
-
-	/**
-	 * Returns the recent layout revision with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the recent layout revision
-	 * @return the recent layout revision
-	 * @throws NoSuchRecentLayoutRevisionException if a recent layout revision with the primary key could not be found
-	 */
-	@Override
-	public RecentLayoutRevision findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRecentLayoutRevisionException {
-
-		RecentLayoutRevision recentLayoutRevision = fetchByPrimaryKey(
-			primaryKey);
-
-		if (recentLayoutRevision == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRecentLayoutRevisionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return recentLayoutRevision;
 	}
@@ -1326,9 +1211,6 @@ public class RecentLayoutRevisionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"recentLayoutRevision.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RecentLayoutRevision exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RecentLayoutRevision exists with the key {";
 
@@ -1341,4 +1223,4 @@ public class RecentLayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2123043429
+// LIFERAY-SERVICE-BUILDER-HASH:-65060840

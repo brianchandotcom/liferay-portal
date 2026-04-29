@@ -66,7 +66,8 @@ import java.util.Set;
  * @generated
  */
 public class SystemEventPersistenceImpl
-	extends BasePersistenceImpl<SystemEvent> implements SystemEventPersistence {
+	extends BasePersistenceImpl<SystemEvent, NoSuchSystemEventException>
+	implements SystemEventPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -859,48 +860,6 @@ public class SystemEventPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all system events.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SystemEventImpl.class);
-
-		FinderCacheUtil.clearCache(SystemEventImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the system event.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SystemEvent systemEvent) {
-		EntityCacheUtil.removeResult(SystemEventImpl.class, systemEvent);
-	}
-
-	@Override
-	public void clearCache(List<SystemEvent> systemEvents) {
-		for (SystemEvent systemEvent : systemEvents) {
-			EntityCacheUtil.removeResult(SystemEventImpl.class, systemEvent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SystemEventImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(SystemEventImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new system event with the primary key. Does not add the system event to the database.
 	 *
 	 * @param systemEventId the primary key for the new system event
@@ -930,47 +889,6 @@ public class SystemEventPersistenceImpl
 		throws NoSuchSystemEventException {
 
 		return remove((Serializable)systemEventId);
-	}
-
-	/**
-	 * Removes the system event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the system event
-	 * @return the system event that was removed
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	@Override
-	public SystemEvent remove(Serializable primaryKey)
-		throws NoSuchSystemEventException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SystemEvent systemEvent = (SystemEvent)session.get(
-				SystemEventImpl.class, primaryKey);
-
-			if (systemEvent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSystemEventException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(systemEvent);
-		}
-		catch (NoSuchSystemEventException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1074,31 +992,6 @@ public class SystemEventPersistenceImpl
 		}
 
 		systemEvent.resetOriginalValues();
-
-		return systemEvent;
-	}
-
-	/**
-	 * Returns the system event with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the system event
-	 * @return the system event
-	 * @throws NoSuchSystemEventException if a system event with the primary key could not be found
-	 */
-	@Override
-	public SystemEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSystemEventException {
-
-		SystemEvent systemEvent = fetchByPrimaryKey(primaryKey);
-
-		if (systemEvent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSystemEventException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return systemEvent;
 	}
@@ -1762,9 +1655,6 @@ public class SystemEventPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "systemEvent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SystemEvent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SystemEvent exists with the key {";
 
@@ -1780,4 +1670,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1784643704
+// LIFERAY-SERVICE-BUILDER-HASH:-1454418641

@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LockPersistence.class)
 public class LockPersistenceImpl
-	extends BasePersistenceImpl<Lock> implements LockPersistence {
+	extends BasePersistenceImpl<Lock, NoSuchLockException>
+	implements LockPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1140,48 +1141,6 @@ public class LockPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all locks.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LockImpl.class);
-
-		finderCache.clearCache(LockImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lock.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Lock lock) {
-		entityCache.removeResult(LockImpl.class, lock);
-	}
-
-	@Override
-	public void clearCache(List<Lock> locks) {
-		for (Lock lock : locks) {
-			entityCache.removeResult(LockImpl.class, lock);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LockImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LockImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(LockModelImpl lockModelImpl) {
 		Object[] args = new Object[] {
 			lockModelImpl.getClassName(), lockModelImpl.getKey()
@@ -1222,44 +1181,6 @@ public class LockPersistenceImpl
 	@Override
 	public Lock remove(long lockId) throws NoSuchLockException {
 		return remove((Serializable)lockId);
-	}
-
-	/**
-	 * Removes the lock with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lock
-	 * @return the lock that was removed
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	@Override
-	public Lock remove(Serializable primaryKey) throws NoSuchLockException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Lock lock = (Lock)session.get(LockImpl.class, primaryKey);
-
-			if (lock == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLockException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lock);
-		}
-		catch (NoSuchLockException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1362,31 +1283,6 @@ public class LockPersistenceImpl
 		}
 
 		lock.resetOriginalValues();
-
-		return lock;
-	}
-
-	/**
-	 * Returns the lock with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lock
-	 * @return the lock
-	 * @throws NoSuchLockException if a lock with the primary key could not be found
-	 */
-	@Override
-	public Lock findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLockException {
-
-		Lock lock = fetchByPrimaryKey(primaryKey);
-
-		if (lock == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLockException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lock;
 	}
@@ -1891,9 +1787,6 @@ public class LockPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lock_.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Lock exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Lock exists with the key {";
 
@@ -1909,4 +1802,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1676122354
+// LIFERAY-SERVICE-BUILDER-HASH:-2104561671

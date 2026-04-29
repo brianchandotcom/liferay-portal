@@ -56,7 +56,8 @@ import java.util.Set;
  * @generated
  */
 public class UserNotificationEventPersistenceImpl
-	extends BasePersistenceImpl<UserNotificationEvent>
+	extends BasePersistenceImpl
+		<UserNotificationEvent, NoSuchUserNotificationEventException>
 	implements UserNotificationEventPersistence {
 
 	/*
@@ -3690,53 +3691,6 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all user notification events.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserNotificationEventImpl.class);
-
-		FinderCacheUtil.clearCache(UserNotificationEventImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user notification event.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserNotificationEvent userNotificationEvent) {
-		EntityCacheUtil.removeResult(
-			UserNotificationEventImpl.class, userNotificationEvent);
-	}
-
-	@Override
-	public void clearCache(List<UserNotificationEvent> userNotificationEvents) {
-		for (UserNotificationEvent userNotificationEvent :
-				userNotificationEvents) {
-
-			EntityCacheUtil.removeResult(
-				UserNotificationEventImpl.class, userNotificationEvent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserNotificationEventImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				UserNotificationEventImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new user notification event with the primary key. Does not add the user notification event to the database.
 	 *
 	 * @param userNotificationEventId the primary key for the new user notification event
@@ -3771,48 +3725,6 @@ public class UserNotificationEventPersistenceImpl
 		throws NoSuchUserNotificationEventException {
 
 		return remove((Serializable)userNotificationEventId);
-	}
-
-	/**
-	 * Removes the user notification event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user notification event
-	 * @return the user notification event that was removed
-	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationEvent remove(Serializable primaryKey)
-		throws NoSuchUserNotificationEventException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserNotificationEvent userNotificationEvent =
-				(UserNotificationEvent)session.get(
-					UserNotificationEventImpl.class, primaryKey);
-
-			if (userNotificationEvent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserNotificationEventException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userNotificationEvent);
-		}
-		catch (NoSuchUserNotificationEventException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3911,32 +3823,6 @@ public class UserNotificationEventPersistenceImpl
 		}
 
 		userNotificationEvent.resetOriginalValues();
-
-		return userNotificationEvent;
-	}
-
-	/**
-	 * Returns the user notification event with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user notification event
-	 * @return the user notification event
-	 * @throws NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	 */
-	@Override
-	public UserNotificationEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserNotificationEventException {
-
-		UserNotificationEvent userNotificationEvent = fetchByPrimaryKey(
-			primaryKey);
-
-		if (userNotificationEvent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserNotificationEventException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userNotificationEvent;
 	}
@@ -5126,9 +5012,6 @@ public class UserNotificationEventPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"userNotificationEvent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserNotificationEvent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserNotificationEvent exists with the key {";
 
@@ -5144,4 +5027,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1236976237
+// LIFERAY-SERVICE-BUILDER-HASH:-36472064

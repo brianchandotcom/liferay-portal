@@ -83,7 +83,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SavedContentEntryPersistence.class)
 public class SavedContentEntryPersistenceImpl
-	extends BasePersistenceImpl<SavedContentEntry>
+	extends BasePersistenceImpl
+		<SavedContentEntry, NoSuchSavedContentEntryException>
 	implements SavedContentEntryPersistence {
 
 	/*
@@ -3410,50 +3411,6 @@ public class SavedContentEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saved content entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SavedContentEntryImpl.class);
-
-		finderCache.clearCache(SavedContentEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saved content entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SavedContentEntry savedContentEntry) {
-		entityCache.removeResult(
-			SavedContentEntryImpl.class, savedContentEntry);
-	}
-
-	@Override
-	public void clearCache(List<SavedContentEntry> savedContentEntries) {
-		for (SavedContentEntry savedContentEntry : savedContentEntries) {
-			entityCache.removeResult(
-				SavedContentEntryImpl.class, savedContentEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SavedContentEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SavedContentEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SavedContentEntryModelImpl savedContentEntryModelImpl) {
 
@@ -3525,48 +3482,6 @@ public class SavedContentEntryPersistenceImpl
 		throws NoSuchSavedContentEntryException {
 
 		return remove((Serializable)savedContentEntryId);
-	}
-
-	/**
-	 * Removes the saved content entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saved content entry
-	 * @return the saved content entry that was removed
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	@Override
-	public SavedContentEntry remove(Serializable primaryKey)
-		throws NoSuchSavedContentEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SavedContentEntry savedContentEntry =
-				(SavedContentEntry)session.get(
-					SavedContentEntryImpl.class, primaryKey);
-
-			if (savedContentEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSavedContentEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(savedContentEntry);
-		}
-		catch (NoSuchSavedContentEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3696,31 +3611,6 @@ public class SavedContentEntryPersistenceImpl
 		}
 
 		savedContentEntry.resetOriginalValues();
-
-		return savedContentEntry;
-	}
-
-	/**
-	 * Returns the saved content entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saved content entry
-	 * @return the saved content entry
-	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
-	 */
-	@Override
-	public SavedContentEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSavedContentEntryException {
-
-		SavedContentEntry savedContentEntry = fetchByPrimaryKey(primaryKey);
-
-		if (savedContentEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSavedContentEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return savedContentEntry;
 	}
@@ -4692,9 +4582,6 @@ public class SavedContentEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SavedContentEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SavedContentEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SavedContentEntry exists with the key {";
 
@@ -4710,4 +4597,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:765849643
+// LIFERAY-SERVICE-BUILDER-HASH:1178649983

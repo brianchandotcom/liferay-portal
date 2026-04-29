@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectFieldSettingPersistence.class)
 public class ObjectFieldSettingPersistenceImpl
-	extends BasePersistenceImpl<ObjectFieldSetting>
+	extends BasePersistenceImpl
+		<ObjectFieldSetting, NoSuchObjectFieldSettingException>
 	implements ObjectFieldSettingPersistence {
 
 	/*
@@ -696,50 +697,6 @@ public class ObjectFieldSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object field settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectFieldSettingImpl.class);
-
-		finderCache.clearCache(ObjectFieldSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object field setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectFieldSetting objectFieldSetting) {
-		entityCache.removeResult(
-			ObjectFieldSettingImpl.class, objectFieldSetting);
-	}
-
-	@Override
-	public void clearCache(List<ObjectFieldSetting> objectFieldSettings) {
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			entityCache.removeResult(
-				ObjectFieldSettingImpl.class, objectFieldSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectFieldSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectFieldSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectFieldSettingModelImpl objectFieldSettingModelImpl) {
 
@@ -786,48 +743,6 @@ public class ObjectFieldSettingPersistenceImpl
 		throws NoSuchObjectFieldSettingException {
 
 		return remove((Serializable)objectFieldSettingId);
-	}
-
-	/**
-	 * Removes the object field setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object field setting
-	 * @return the object field setting that was removed
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectFieldSetting remove(Serializable primaryKey)
-		throws NoSuchObjectFieldSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectFieldSetting objectFieldSetting =
-				(ObjectFieldSetting)session.get(
-					ObjectFieldSettingImpl.class, primaryKey);
-
-			if (objectFieldSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectFieldSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectFieldSetting);
-		}
-		catch (NoSuchObjectFieldSettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -951,31 +866,6 @@ public class ObjectFieldSettingPersistenceImpl
 		}
 
 		objectFieldSetting.resetOriginalValues();
-
-		return objectFieldSetting;
-	}
-
-	/**
-	 * Returns the object field setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object field setting
-	 * @return the object field setting
-	 * @throws NoSuchObjectFieldSettingException if a object field setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectFieldSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectFieldSettingException {
-
-		ObjectFieldSetting objectFieldSetting = fetchByPrimaryKey(primaryKey);
-
-		if (objectFieldSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectFieldSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectFieldSetting;
 	}
@@ -1396,9 +1286,6 @@ public class ObjectFieldSettingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectFieldSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectFieldSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectFieldSetting exists with the key {";
 
@@ -1414,4 +1301,4 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237826962
+// LIFERAY-SERVICE-BUILDER-HASH:-1959162405

@@ -91,7 +91,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutPageTemplateEntryPersistence.class)
 public class LayoutPageTemplateEntryPersistenceImpl
-	extends BasePersistenceImpl<LayoutPageTemplateEntry>
+	extends BasePersistenceImpl
+		<LayoutPageTemplateEntry, NoSuchPageTemplateEntryException>
 	implements LayoutPageTemplateEntryPersistence {
 
 	/*
@@ -14041,55 +14042,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout page template entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutPageTemplateEntryImpl.class);
-
-		finderCache.clearCache(LayoutPageTemplateEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout page template entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		entityCache.removeResult(
-			LayoutPageTemplateEntryImpl.class, layoutPageTemplateEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries) {
-
-		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-				layoutPageTemplateEntries) {
-
-			entityCache.removeResult(
-				LayoutPageTemplateEntryImpl.class, layoutPageTemplateEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutPageTemplateEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LayoutPageTemplateEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutPageTemplateEntryModelImpl layoutPageTemplateEntryModelImpl) {
 
@@ -14178,48 +14130,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		throws NoSuchPageTemplateEntryException {
 
 		return remove((Serializable)layoutPageTemplateEntryId);
-	}
-
-	/**
-	 * Removes the layout page template entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout page template entry
-	 * @return the layout page template entry that was removed
-	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry remove(Serializable primaryKey)
-		throws NoSuchPageTemplateEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				(LayoutPageTemplateEntry)session.get(
-					LayoutPageTemplateEntryImpl.class, primaryKey);
-
-			if (layoutPageTemplateEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPageTemplateEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutPageTemplateEntry);
-		}
-		catch (NoSuchPageTemplateEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -14425,32 +14335,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		layoutPageTemplateEntry.resetOriginalValues();
-
-		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout page template entry
-	 * @return the layout page template entry
-	 * @throws NoSuchPageTemplateEntryException if a layout page template entry with the primary key could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPageTemplateEntryException {
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (layoutPageTemplateEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPageTemplateEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutPageTemplateEntry;
 	}
@@ -16197,9 +16081,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"LayoutPageTemplateEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutPageTemplateEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutPageTemplateEntry exists with the key {";
 
@@ -16215,4 +16096,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1672285788
+// LIFERAY-SERVICE-BUILDER-HASH:1370333478

@@ -82,7 +82,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = COREntryPersistence.class)
 public class COREntryPersistenceImpl
-	extends BasePersistenceImpl<COREntry> implements COREntryPersistence {
+	extends BasePersistenceImpl<COREntry, NoSuchCOREntryException>
+	implements COREntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2996,48 +2997,6 @@ public class COREntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cor entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(COREntryImpl.class);
-
-		finderCache.clearCache(COREntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cor entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(COREntry corEntry) {
-		entityCache.removeResult(COREntryImpl.class, corEntry);
-	}
-
-	@Override
-	public void clearCache(List<COREntry> corEntries) {
-		for (COREntry corEntry : corEntries) {
-			entityCache.removeResult(COREntryImpl.class, corEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(COREntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(COREntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		COREntryModelImpl corEntryModelImpl) {
 
@@ -3081,47 +3040,6 @@ public class COREntryPersistenceImpl
 	@Override
 	public COREntry remove(long COREntryId) throws NoSuchCOREntryException {
 		return remove((Serializable)COREntryId);
-	}
-
-	/**
-	 * Removes the cor entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cor entry
-	 * @return the cor entry that was removed
-	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
-	 */
-	@Override
-	public COREntry remove(Serializable primaryKey)
-		throws NoSuchCOREntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			COREntry corEntry = (COREntry)session.get(
-				COREntryImpl.class, primaryKey);
-
-			if (corEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCOREntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(corEntry);
-		}
-		catch (NoSuchCOREntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3294,31 +3212,6 @@ public class COREntryPersistenceImpl
 		}
 
 		corEntry.resetOriginalValues();
-
-		return corEntry;
-	}
-
-	/**
-	 * Returns the cor entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cor entry
-	 * @return the cor entry
-	 * @throws NoSuchCOREntryException if a cor entry with the primary key could not be found
-	 */
-	@Override
-	public COREntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCOREntryException {
-
-		COREntry corEntry = fetchByPrimaryKey(primaryKey);
-
-		if (corEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCOREntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return corEntry;
 	}
@@ -3868,9 +3761,6 @@ public class COREntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "COREntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No COREntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No COREntry exists with the key {";
 
@@ -3886,4 +3776,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:952394686
+// LIFERAY-SERVICE-BUILDER-HASH:-1129343350

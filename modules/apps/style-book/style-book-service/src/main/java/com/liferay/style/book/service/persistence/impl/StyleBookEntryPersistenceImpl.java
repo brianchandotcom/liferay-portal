@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = StyleBookEntryPersistence.class)
 public class StyleBookEntryPersistenceImpl
-	extends BasePersistenceImpl<StyleBookEntry>
+	extends BasePersistenceImpl<StyleBookEntry, NoSuchEntryException>
 	implements StyleBookEntryPersistence {
 
 	/*
@@ -3901,48 +3901,6 @@ public class StyleBookEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all style book entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(StyleBookEntryImpl.class);
-
-		finderCache.clearCache(StyleBookEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the style book entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(StyleBookEntry styleBookEntry) {
-		entityCache.removeResult(StyleBookEntryImpl.class, styleBookEntry);
-	}
-
-	@Override
-	public void clearCache(List<StyleBookEntry> styleBookEntries) {
-		for (StyleBookEntry styleBookEntry : styleBookEntries) {
-			entityCache.removeResult(StyleBookEntryImpl.class, styleBookEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(StyleBookEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(StyleBookEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		StyleBookEntryModelImpl styleBookEntryModelImpl) {
 
@@ -4018,47 +3976,6 @@ public class StyleBookEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)styleBookEntryId);
-	}
-
-	/**
-	 * Removes the style book entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the style book entry
-	 * @return the style book entry that was removed
-	 * @throws NoSuchEntryException if a style book entry with the primary key could not be found
-	 */
-	@Override
-	public StyleBookEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StyleBookEntry styleBookEntry = (StyleBookEntry)session.get(
-				StyleBookEntryImpl.class, primaryKey);
-
-			if (styleBookEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(styleBookEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4247,31 +4164,6 @@ public class StyleBookEntryPersistenceImpl
 		}
 
 		styleBookEntry.resetOriginalValues();
-
-		return styleBookEntry;
-	}
-
-	/**
-	 * Returns the style book entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the style book entry
-	 * @return the style book entry
-	 * @throws NoSuchEntryException if a style book entry with the primary key could not be found
-	 */
-	@Override
-	public StyleBookEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		StyleBookEntry styleBookEntry = fetchByPrimaryKey(primaryKey);
-
-		if (styleBookEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return styleBookEntry;
 	}
@@ -5600,9 +5492,6 @@ public class StyleBookEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "styleBookEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No StyleBookEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No StyleBookEntry exists with the key {";
 
@@ -5618,4 +5507,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:125110814
+// LIFERAY-SERVICE-BUILDER-HASH:2052769106

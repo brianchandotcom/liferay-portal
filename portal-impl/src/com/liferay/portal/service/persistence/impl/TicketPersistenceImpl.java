@@ -58,7 +58,8 @@ import java.util.Set;
  * @generated
  */
 public class TicketPersistenceImpl
-	extends BasePersistenceImpl<Ticket> implements TicketPersistence {
+	extends BasePersistenceImpl<Ticket, NoSuchTicketException>
+	implements TicketPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -743,48 +744,6 @@ public class TicketPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all tickets.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(TicketImpl.class);
-
-		FinderCacheUtil.clearCache(TicketImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ticket.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Ticket ticket) {
-		EntityCacheUtil.removeResult(TicketImpl.class, ticket);
-	}
-
-	@Override
-	public void clearCache(List<Ticket> tickets) {
-		for (Ticket ticket : tickets) {
-			EntityCacheUtil.removeResult(TicketImpl.class, ticket);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(TicketImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(TicketImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(TicketModelImpl ticketModelImpl) {
 		Object[] args = new Object[] {ticketModelImpl.getKey()};
 
@@ -819,44 +778,6 @@ public class TicketPersistenceImpl
 	@Override
 	public Ticket remove(long ticketId) throws NoSuchTicketException {
 		return remove((Serializable)ticketId);
-	}
-
-	/**
-	 * Removes the ticket with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ticket
-	 * @return the ticket that was removed
-	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
-	 */
-	@Override
-	public Ticket remove(Serializable primaryKey) throws NoSuchTicketException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Ticket ticket = (Ticket)session.get(TicketImpl.class, primaryKey);
-
-			if (ticket == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTicketException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ticket);
-		}
-		catch (NoSuchTicketException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -954,31 +875,6 @@ public class TicketPersistenceImpl
 		}
 
 		ticket.resetOriginalValues();
-
-		return ticket;
-	}
-
-	/**
-	 * Returns the ticket with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ticket
-	 * @return the ticket
-	 * @throws NoSuchTicketException if a ticket with the primary key could not be found
-	 */
-	@Override
-	public Ticket findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTicketException {
-
-		Ticket ticket = fetchByPrimaryKey(primaryKey);
-
-		if (ticket == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTicketException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ticket;
 	}
@@ -1389,9 +1285,6 @@ public class TicketPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ticket.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Ticket exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Ticket exists with the key {";
 
@@ -1407,4 +1300,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:673964652
+// LIFERAY-SERVICE-BUILDER-HASH:-700402217

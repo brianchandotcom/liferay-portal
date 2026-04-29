@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetAutoTaggerEntryPersistence.class)
 public class AssetAutoTaggerEntryPersistenceImpl
-	extends BasePersistenceImpl<AssetAutoTaggerEntry>
+	extends BasePersistenceImpl<AssetAutoTaggerEntry, NoSuchEntryException>
 	implements AssetAutoTaggerEntryPersistence {
 
 	/*
@@ -580,53 +580,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset auto tagger entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetAutoTaggerEntryImpl.class);
-
-		finderCache.clearCache(AssetAutoTaggerEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset auto tagger entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetAutoTaggerEntry assetAutoTaggerEntry) {
-		entityCache.removeResult(
-			AssetAutoTaggerEntryImpl.class, assetAutoTaggerEntry);
-	}
-
-	@Override
-	public void clearCache(List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
-		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-				assetAutoTaggerEntries) {
-
-			entityCache.removeResult(
-				AssetAutoTaggerEntryImpl.class, assetAutoTaggerEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetAutoTaggerEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AssetAutoTaggerEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl) {
 
@@ -675,48 +628,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)assetAutoTaggerEntryId);
-	}
-
-	/**
-	 * Removes the asset auto tagger entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset auto tagger entry
-	 * @return the asset auto tagger entry that was removed
-	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetAutoTaggerEntry assetAutoTaggerEntry =
-				(AssetAutoTaggerEntry)session.get(
-					AssetAutoTaggerEntryImpl.class, primaryKey);
-
-			if (assetAutoTaggerEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetAutoTaggerEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -842,32 +753,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		}
 
 		assetAutoTaggerEntry.resetOriginalValues();
-
-		return assetAutoTaggerEntry;
-	}
-
-	/**
-	 * Returns the asset auto tagger entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset auto tagger entry
-	 * @return the asset auto tagger entry
-	 * @throws NoSuchEntryException if a asset auto tagger entry with the primary key could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		AssetAutoTaggerEntry assetAutoTaggerEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (assetAutoTaggerEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetAutoTaggerEntry;
 	}
@@ -1507,9 +1392,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetAutoTaggerEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetAutoTaggerEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetAutoTaggerEntry exists with the key {";
 
@@ -1522,4 +1404,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:773501524
+// LIFERAY-SERVICE-BUILDER-HASH:18755684

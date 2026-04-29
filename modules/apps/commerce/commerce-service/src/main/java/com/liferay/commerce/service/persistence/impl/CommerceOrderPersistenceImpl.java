@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderPersistence.class)
 public class CommerceOrderPersistenceImpl
-	extends BasePersistenceImpl<CommerceOrder>
+	extends BasePersistenceImpl<CommerceOrder, NoSuchOrderException>
 	implements CommerceOrderPersistence {
 
 	/*
@@ -3642,48 +3642,6 @@ public class CommerceOrderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce orders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderImpl.class);
-
-		finderCache.clearCache(CommerceOrderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrder commerceOrder) {
-		entityCache.removeResult(CommerceOrderImpl.class, commerceOrder);
-	}
-
-	@Override
-	public void clearCache(List<CommerceOrder> commerceOrders) {
-		for (CommerceOrder commerceOrder : commerceOrders) {
-			entityCache.removeResult(CommerceOrderImpl.class, commerceOrder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceOrderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceOrderModelImpl commerceOrderModelImpl) {
 
@@ -3738,47 +3696,6 @@ public class CommerceOrderPersistenceImpl
 		throws NoSuchOrderException {
 
 		return remove((Serializable)commerceOrderId);
-	}
-
-	/**
-	 * Removes the commerce order with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order
-	 * @return the commerce order that was removed
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrder remove(Serializable primaryKey)
-		throws NoSuchOrderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrder commerceOrder = (CommerceOrder)session.get(
-				CommerceOrderImpl.class, primaryKey);
-
-			if (commerceOrder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrder);
-		}
-		catch (NoSuchOrderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3992,31 +3909,6 @@ public class CommerceOrderPersistenceImpl
 		}
 
 		commerceOrder.resetOriginalValues();
-
-		return commerceOrder;
-	}
-
-	/**
-	 * Returns the commerce order with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order
-	 * @return the commerce order
-	 * @throws NoSuchOrderException if a commerce order with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderException {
-
-		CommerceOrder commerceOrder = fetchByPrimaryKey(primaryKey);
-
-		if (commerceOrder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrder;
 	}
@@ -4799,9 +4691,6 @@ public class CommerceOrderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceOrder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrder exists with the key {";
 
@@ -4840,4 +4729,4 @@ public class CommerceOrderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1961456469
+// LIFERAY-SERVICE-BUILDER-HASH:1479688154

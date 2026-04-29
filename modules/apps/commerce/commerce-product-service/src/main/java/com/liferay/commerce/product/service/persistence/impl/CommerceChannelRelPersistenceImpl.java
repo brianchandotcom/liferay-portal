@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceChannelRelPersistence.class)
 public class CommerceChannelRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceChannelRel>
+	extends BasePersistenceImpl<CommerceChannelRel, NoSuchChannelRelException>
 	implements CommerceChannelRelPersistence {
 
 	/*
@@ -606,50 +606,6 @@ public class CommerceChannelRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce channel rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceChannelRelImpl.class);
-
-		finderCache.clearCache(CommerceChannelRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce channel rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceChannelRel commerceChannelRel) {
-		entityCache.removeResult(
-			CommerceChannelRelImpl.class, commerceChannelRel);
-	}
-
-	@Override
-	public void clearCache(List<CommerceChannelRel> commerceChannelRels) {
-		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
-			entityCache.removeResult(
-				CommerceChannelRelImpl.class, commerceChannelRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceChannelRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceChannelRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceChannelRelModelImpl commerceChannelRelModelImpl) {
 
@@ -698,48 +654,6 @@ public class CommerceChannelRelPersistenceImpl
 		throws NoSuchChannelRelException {
 
 		return remove((Serializable)commerceChannelRelId);
-	}
-
-	/**
-	 * Removes the commerce channel rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce channel rel
-	 * @return the commerce channel rel that was removed
-	 * @throws NoSuchChannelRelException if a commerce channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceChannelRel remove(Serializable primaryKey)
-		throws NoSuchChannelRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceChannelRel commerceChannelRel =
-				(CommerceChannelRel)session.get(
-					CommerceChannelRelImpl.class, primaryKey);
-
-			if (commerceChannelRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchChannelRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceChannelRel);
-		}
-		catch (NoSuchChannelRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -865,31 +779,6 @@ public class CommerceChannelRelPersistenceImpl
 		}
 
 		commerceChannelRel.resetOriginalValues();
-
-		return commerceChannelRel;
-	}
-
-	/**
-	 * Returns the commerce channel rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce channel rel
-	 * @return the commerce channel rel
-	 * @throws NoSuchChannelRelException if a commerce channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceChannelRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchChannelRelException {
-
-		CommerceChannelRel commerceChannelRel = fetchByPrimaryKey(primaryKey);
-
-		if (commerceChannelRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchChannelRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceChannelRel;
 	}
@@ -1534,9 +1423,6 @@ public class CommerceChannelRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceChannelRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceChannelRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceChannelRel exists with the key {";
 
@@ -1549,4 +1435,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2140694556
+// LIFERAY-SERVICE-BUILDER-HASH:-1024329197

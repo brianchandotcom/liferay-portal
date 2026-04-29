@@ -87,7 +87,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KBTemplatePersistence.class)
 public class KBTemplatePersistenceImpl
-	extends BasePersistenceImpl<KBTemplate> implements KBTemplatePersistence {
+	extends BasePersistenceImpl<KBTemplate, NoSuchTemplateException>
+	implements KBTemplatePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -938,48 +939,6 @@ public class KBTemplatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kb templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KBTemplateImpl.class);
-
-		finderCache.clearCache(KBTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kb template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KBTemplate kbTemplate) {
-		entityCache.removeResult(KBTemplateImpl.class, kbTemplate);
-	}
-
-	@Override
-	public void clearCache(List<KBTemplate> kbTemplates) {
-		for (KBTemplate kbTemplate : kbTemplates) {
-			entityCache.removeResult(KBTemplateImpl.class, kbTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KBTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KBTemplateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KBTemplateModelImpl kbTemplateModelImpl) {
 
@@ -1028,47 +987,6 @@ public class KBTemplatePersistenceImpl
 	@Override
 	public KBTemplate remove(long kbTemplateId) throws NoSuchTemplateException {
 		return remove((Serializable)kbTemplateId);
-	}
-
-	/**
-	 * Removes the kb template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kb template
-	 * @return the kb template that was removed
-	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
-	 */
-	@Override
-	public KBTemplate remove(Serializable primaryKey)
-		throws NoSuchTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KBTemplate kbTemplate = (KBTemplate)session.get(
-				KBTemplateImpl.class, primaryKey);
-
-			if (kbTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kbTemplate);
-		}
-		catch (NoSuchTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1215,31 +1133,6 @@ public class KBTemplatePersistenceImpl
 		}
 
 		kbTemplate.resetOriginalValues();
-
-		return kbTemplate;
-	}
-
-	/**
-	 * Returns the kb template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb template
-	 * @return the kb template
-	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
-	 */
-	@Override
-	public KBTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateException {
-
-		KBTemplate kbTemplate = fetchByPrimaryKey(primaryKey);
-
-		if (kbTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kbTemplate;
 	}
@@ -1922,9 +1815,6 @@ public class KBTemplatePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "KBTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KBTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBTemplate exists with the key {";
 
@@ -1940,4 +1830,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-665016694
+// LIFERAY-SERVICE-BUILDER-HASH:1228198579

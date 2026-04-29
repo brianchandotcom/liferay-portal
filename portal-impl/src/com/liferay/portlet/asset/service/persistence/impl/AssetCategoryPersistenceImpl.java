@@ -82,7 +82,7 @@ import java.util.Set;
  * @generated
  */
 public class AssetCategoryPersistenceImpl
-	extends BasePersistenceImpl<AssetCategory>
+	extends BasePersistenceImpl<AssetCategory, NoSuchCategoryException>
 	implements AssetCategoryPersistence {
 
 	/*
@@ -5769,49 +5769,6 @@ public class AssetCategoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset categories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetCategoryImpl.class);
-
-		FinderCacheUtil.clearCache(AssetCategoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset category.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetCategory assetCategory) {
-		EntityCacheUtil.removeResult(AssetCategoryImpl.class, assetCategory);
-	}
-
-	@Override
-	public void clearCache(List<AssetCategory> assetCategories) {
-		for (AssetCategory assetCategory : assetCategories) {
-			EntityCacheUtil.removeResult(
-				AssetCategoryImpl.class, assetCategory);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AssetCategoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(AssetCategoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetCategoryModelImpl assetCategoryModelImpl) {
 
@@ -5880,47 +5837,6 @@ public class AssetCategoryPersistenceImpl
 		throws NoSuchCategoryException {
 
 		return remove((Serializable)categoryId);
-	}
-
-	/**
-	 * Removes the asset category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset category
-	 * @return the asset category that was removed
-	 * @throws NoSuchCategoryException if a asset category with the primary key could not be found
-	 */
-	@Override
-	public AssetCategory remove(Serializable primaryKey)
-		throws NoSuchCategoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetCategory assetCategory = (AssetCategory)session.get(
-				AssetCategoryImpl.class, primaryKey);
-
-			if (assetCategory == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCategoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetCategory);
-		}
-		catch (NoSuchCategoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6107,31 +6023,6 @@ public class AssetCategoryPersistenceImpl
 		}
 
 		assetCategory.resetOriginalValues();
-
-		return assetCategory;
-	}
-
-	/**
-	 * Returns the asset category with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset category
-	 * @return the asset category
-	 * @throws NoSuchCategoryException if a asset category with the primary key could not be found
-	 */
-	@Override
-	public AssetCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCategoryException {
-
-		AssetCategory assetCategory = fetchByPrimaryKey(primaryKey);
-
-		if (assetCategory == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCategoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetCategory;
 	}
@@ -7124,9 +7015,6 @@ public class AssetCategoryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AssetCategory.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetCategory exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetCategory exists with the key {";
 
@@ -7142,4 +7030,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1117810473
+// LIFERAY-SERVICE-BUILDER-HASH:873662451

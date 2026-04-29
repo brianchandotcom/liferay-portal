@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTermEntryRelPersistence.class)
 public class CommerceTermEntryRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceTermEntryRel>
+	extends BasePersistenceImpl
+		<CommerceTermEntryRel, NoSuchTermEntryRelException>
 	implements CommerceTermEntryRelPersistence {
 
 	/*
@@ -569,53 +569,6 @@ public class CommerceTermEntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce term entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTermEntryRelImpl.class);
-
-		finderCache.clearCache(CommerceTermEntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce term entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceTermEntryRel commerceTermEntryRel) {
-		entityCache.removeResult(
-			CommerceTermEntryRelImpl.class, commerceTermEntryRel);
-	}
-
-	@Override
-	public void clearCache(List<CommerceTermEntryRel> commerceTermEntryRels) {
-		for (CommerceTermEntryRel commerceTermEntryRel :
-				commerceTermEntryRels) {
-
-			entityCache.removeResult(
-				CommerceTermEntryRelImpl.class, commerceTermEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTermEntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTermEntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTermEntryRelModelImpl commerceTermEntryRelModelImpl) {
 
@@ -660,48 +613,6 @@ public class CommerceTermEntryRelPersistenceImpl
 		throws NoSuchTermEntryRelException {
 
 		return remove((Serializable)commerceTermEntryRelId);
-	}
-
-	/**
-	 * Removes the commerce term entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce term entry rel
-	 * @return the commerce term entry rel that was removed
-	 * @throws NoSuchTermEntryRelException if a commerce term entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel remove(Serializable primaryKey)
-		throws NoSuchTermEntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTermEntryRel commerceTermEntryRel =
-				(CommerceTermEntryRel)session.get(
-					CommerceTermEntryRelImpl.class, primaryKey);
-
-			if (commerceTermEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTermEntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTermEntryRel);
-		}
-		catch (NoSuchTermEntryRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -819,32 +730,6 @@ public class CommerceTermEntryRelPersistenceImpl
 		}
 
 		commerceTermEntryRel.resetOriginalValues();
-
-		return commerceTermEntryRel;
-	}
-
-	/**
-	 * Returns the commerce term entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce term entry rel
-	 * @return the commerce term entry rel
-	 * @throws NoSuchTermEntryRelException if a commerce term entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceTermEntryRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTermEntryRelException {
-
-		CommerceTermEntryRel commerceTermEntryRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceTermEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTermEntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTermEntryRel;
 	}
@@ -1240,9 +1125,6 @@ public class CommerceTermEntryRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceTermEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTermEntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTermEntryRel exists with the key {";
 
@@ -1255,4 +1137,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1044415297
+// LIFERAY-SERVICE-BUILDER-HASH:784557750

@@ -73,7 +73,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MicroblogsEntryPersistence.class)
 public class MicroblogsEntryPersistenceImpl
-	extends BasePersistenceImpl<MicroblogsEntry>
+	extends BasePersistenceImpl<MicroblogsEntry, NoSuchEntryException>
 	implements MicroblogsEntryPersistence {
 
 	/*
@@ -7504,49 +7504,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all microblogs entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MicroblogsEntryImpl.class);
-
-		finderCache.clearCache(MicroblogsEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the microblogs entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MicroblogsEntry microblogsEntry) {
-		entityCache.removeResult(MicroblogsEntryImpl.class, microblogsEntry);
-	}
-
-	@Override
-	public void clearCache(List<MicroblogsEntry> microblogsEntries) {
-		for (MicroblogsEntry microblogsEntry : microblogsEntries) {
-			entityCache.removeResult(
-				MicroblogsEntryImpl.class, microblogsEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MicroblogsEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MicroblogsEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
 	 *
 	 * @param microblogsEntryId the primary key for the new microblogs entry
@@ -7576,47 +7533,6 @@ public class MicroblogsEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)microblogsEntryId);
-	}
-
-	/**
-	 * Removes the microblogs entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the microblogs entry
-	 * @return the microblogs entry that was removed
-	 * @throws NoSuchEntryException if a microblogs entry with the primary key could not be found
-	 */
-	@Override
-	public MicroblogsEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MicroblogsEntry microblogsEntry = (MicroblogsEntry)session.get(
-				MicroblogsEntryImpl.class, primaryKey);
-
-			if (microblogsEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(microblogsEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -7727,31 +7643,6 @@ public class MicroblogsEntryPersistenceImpl
 		}
 
 		microblogsEntry.resetOriginalValues();
-
-		return microblogsEntry;
-	}
-
-	/**
-	 * Returns the microblogs entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the microblogs entry
-	 * @return the microblogs entry
-	 * @throws NoSuchEntryException if a microblogs entry with the primary key could not be found
-	 */
-	@Override
-	public MicroblogsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		MicroblogsEntry microblogsEntry = fetchByPrimaryKey(primaryKey);
-
-		if (microblogsEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return microblogsEntry;
 	}
@@ -8480,9 +8371,6 @@ public class MicroblogsEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "MicroblogsEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MicroblogsEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MicroblogsEntry exists with the key {";
 
@@ -8498,4 +8386,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:297850781
+// LIFERAY-SERVICE-BUILDER-HASH:99290687

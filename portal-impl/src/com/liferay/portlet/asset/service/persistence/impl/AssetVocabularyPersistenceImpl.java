@@ -82,7 +82,7 @@ import java.util.Set;
  * @generated
  */
 public class AssetVocabularyPersistenceImpl
-	extends BasePersistenceImpl<AssetVocabulary>
+	extends BasePersistenceImpl<AssetVocabulary, NoSuchVocabularyException>
 	implements AssetVocabularyPersistence {
 
 	/*
@@ -3787,50 +3787,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset vocabularies.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetVocabularyImpl.class);
-
-		FinderCacheUtil.clearCache(AssetVocabularyImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset vocabulary.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetVocabulary assetVocabulary) {
-		EntityCacheUtil.removeResult(
-			AssetVocabularyImpl.class, assetVocabulary);
-	}
-
-	@Override
-	public void clearCache(List<AssetVocabulary> assetVocabularies) {
-		for (AssetVocabulary assetVocabulary : assetVocabularies) {
-			EntityCacheUtil.removeResult(
-				AssetVocabularyImpl.class, assetVocabulary);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AssetVocabularyImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(AssetVocabularyImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetVocabularyModelImpl assetVocabularyModelImpl) {
 
@@ -3898,47 +3854,6 @@ public class AssetVocabularyPersistenceImpl
 		throws NoSuchVocabularyException {
 
 		return remove((Serializable)vocabularyId);
-	}
-
-	/**
-	 * Removes the asset vocabulary with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset vocabulary
-	 * @return the asset vocabulary that was removed
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabulary remove(Serializable primaryKey)
-		throws NoSuchVocabularyException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetVocabulary assetVocabulary = (AssetVocabulary)session.get(
-				AssetVocabularyImpl.class, primaryKey);
-
-			if (assetVocabulary == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVocabularyException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetVocabulary);
-		}
-		catch (NoSuchVocabularyException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4128,31 +4043,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 
 		assetVocabulary.resetOriginalValues();
-
-		return assetVocabulary;
-	}
-
-	/**
-	 * Returns the asset vocabulary with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset vocabulary
-	 * @return the asset vocabulary
-	 * @throws NoSuchVocabularyException if a asset vocabulary with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabulary findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchVocabularyException {
-
-		AssetVocabulary assetVocabulary = fetchByPrimaryKey(primaryKey);
-
-		if (assetVocabulary == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVocabularyException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetVocabulary;
 	}
@@ -4896,9 +4786,6 @@ public class AssetVocabularyPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AssetVocabulary.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetVocabulary exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetVocabulary exists with the key {";
 
@@ -4914,4 +4801,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2126216766
+// LIFERAY-SERVICE-BUILDER-HASH:575798326

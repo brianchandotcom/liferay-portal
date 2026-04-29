@@ -55,7 +55,8 @@ import java.util.Set;
  * @generated
  */
 public class PortletPersistenceImpl
-	extends BasePersistenceImpl<Portlet> implements PortletPersistence {
+	extends BasePersistenceImpl<Portlet, NoSuchPortletException>
+	implements PortletPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -366,48 +367,6 @@ public class PortletPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all portlets.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PortletImpl.class);
-
-		FinderCacheUtil.clearCache(PortletImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the portlet.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Portlet portlet) {
-		EntityCacheUtil.removeResult(PortletImpl.class, portlet);
-	}
-
-	@Override
-	public void clearCache(List<Portlet> portlets) {
-		for (Portlet portlet : portlets) {
-			EntityCacheUtil.removeResult(PortletImpl.class, portlet);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PortletImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PortletImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(PortletModelImpl portletModelImpl) {
 		Object[] args = new Object[] {
 			portletModelImpl.getCompanyId(), portletModelImpl.getPortletId()
@@ -445,47 +404,6 @@ public class PortletPersistenceImpl
 	@Override
 	public Portlet remove(long id) throws NoSuchPortletException {
 		return remove((Serializable)id);
-	}
-
-	/**
-	 * Removes the portlet with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the portlet
-	 * @return the portlet that was removed
-	 * @throws NoSuchPortletException if a portlet with the primary key could not be found
-	 */
-	@Override
-	public Portlet remove(Serializable primaryKey)
-		throws NoSuchPortletException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Portlet portlet = (Portlet)session.get(
-				PortletImpl.class, primaryKey);
-
-			if (portlet == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPortletException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(portlet);
-		}
-		catch (NoSuchPortletException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -569,31 +487,6 @@ public class PortletPersistenceImpl
 		}
 
 		portlet.resetOriginalValues();
-
-		return portlet;
-	}
-
-	/**
-	 * Returns the portlet with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portlet
-	 * @return the portlet
-	 * @throws NoSuchPortletException if a portlet with the primary key could not be found
-	 */
-	@Override
-	public Portlet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPortletException {
-
-		Portlet portlet = fetchByPrimaryKey(primaryKey);
-
-		if (portlet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPortletException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return portlet;
 	}
@@ -912,9 +805,6 @@ public class PortletPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portlet.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Portlet exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Portlet exists with the key {";
 
@@ -930,4 +820,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1575887985
+// LIFERAY-SERVICE-BUILDER-HASH:1111960454

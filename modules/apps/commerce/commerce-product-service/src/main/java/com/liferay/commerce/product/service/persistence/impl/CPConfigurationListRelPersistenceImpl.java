@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPConfigurationListRelPersistence.class)
 public class CPConfigurationListRelPersistenceImpl
-	extends BasePersistenceImpl<CPConfigurationListRel>
+	extends BasePersistenceImpl
+		<CPConfigurationListRel, NoSuchCPConfigurationListRelException>
 	implements CPConfigurationListRelPersistence {
 
 	/*
@@ -618,55 +619,6 @@ public class CPConfigurationListRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp configuration list rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPConfigurationListRelImpl.class);
-
-		finderCache.clearCache(CPConfigurationListRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp configuration list rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPConfigurationListRel cpConfigurationListRel) {
-		entityCache.removeResult(
-			CPConfigurationListRelImpl.class, cpConfigurationListRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPConfigurationListRel> cpConfigurationListRels) {
-
-		for (CPConfigurationListRel cpConfigurationListRel :
-				cpConfigurationListRels) {
-
-			entityCache.removeResult(
-				CPConfigurationListRelImpl.class, cpConfigurationListRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPConfigurationListRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPConfigurationListRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPConfigurationListRelModelImpl cpConfigurationListRelModelImpl) {
 
@@ -716,48 +668,6 @@ public class CPConfigurationListRelPersistenceImpl
 		throws NoSuchCPConfigurationListRelException {
 
 		return remove((Serializable)CPConfigurationListRelId);
-	}
-
-	/**
-	 * Removes the cp configuration list rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp configuration list rel
-	 * @return the cp configuration list rel that was removed
-	 * @throws NoSuchCPConfigurationListRelException if a cp configuration list rel with the primary key could not be found
-	 */
-	@Override
-	public CPConfigurationListRel remove(Serializable primaryKey)
-		throws NoSuchCPConfigurationListRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPConfigurationListRel cpConfigurationListRel =
-				(CPConfigurationListRel)session.get(
-					CPConfigurationListRelImpl.class, primaryKey);
-
-			if (cpConfigurationListRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPConfigurationListRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpConfigurationListRel);
-		}
-		catch (NoSuchCPConfigurationListRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -885,32 +795,6 @@ public class CPConfigurationListRelPersistenceImpl
 		}
 
 		cpConfigurationListRel.resetOriginalValues();
-
-		return cpConfigurationListRel;
-	}
-
-	/**
-	 * Returns the cp configuration list rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp configuration list rel
-	 * @return the cp configuration list rel
-	 * @throws NoSuchCPConfigurationListRelException if a cp configuration list rel with the primary key could not be found
-	 */
-	@Override
-	public CPConfigurationListRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPConfigurationListRelException {
-
-		CPConfigurationListRel cpConfigurationListRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpConfigurationListRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPConfigurationListRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpConfigurationListRel;
 	}
@@ -1572,9 +1456,6 @@ public class CPConfigurationListRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpConfigurationListRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPConfigurationListRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPConfigurationListRel exists with the key {";
 
@@ -1587,4 +1468,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2097148005
+// LIFERAY-SERVICE-BUILDER-HASH:-265189292

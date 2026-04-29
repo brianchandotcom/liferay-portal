@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
+import com.liferay.commerce.exception.NoSuchSubscriptionEntryException;
 import com.liferay.commerce.model.CommerceSubscriptionEntry;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
 import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommerceSubscriptionEntryFinderBaseImpl
-	extends BasePersistenceImpl<CommerceSubscriptionEntry> {
+	extends BasePersistenceImpl
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException> {
 
 	public CommerceSubscriptionEntryFinderBaseImpl() {
 		setModelClass(CommerceSubscriptionEntry.class);
@@ -80,4 +82,4 @@ public abstract class CommerceSubscriptionEntryFinderBaseImpl
 		CommerceSubscriptionEntryFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-683180184
+// LIFERAY-SERVICE-BUILDER-HASH:1802561412

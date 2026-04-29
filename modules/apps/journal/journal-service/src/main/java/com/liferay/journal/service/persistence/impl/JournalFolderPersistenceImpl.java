@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JournalFolderPersistence.class)
 public class JournalFolderPersistenceImpl
-	extends BasePersistenceImpl<JournalFolder>
+	extends BasePersistenceImpl<JournalFolder, NoSuchFolderException>
 	implements JournalFolderPersistence {
 
 	/*
@@ -3036,48 +3036,6 @@ public class JournalFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all journal folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JournalFolderImpl.class);
-
-		finderCache.clearCache(JournalFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the journal folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JournalFolder journalFolder) {
-		entityCache.removeResult(JournalFolderImpl.class, journalFolder);
-	}
-
-	@Override
-	public void clearCache(List<JournalFolder> journalFolders) {
-		for (JournalFolder journalFolder : journalFolders) {
-			entityCache.removeResult(JournalFolderImpl.class, journalFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JournalFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(JournalFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JournalFolderModelImpl journalFolderModelImpl) {
 
@@ -3152,47 +3110,6 @@ public class JournalFolderPersistenceImpl
 	@Override
 	public JournalFolder remove(long folderId) throws NoSuchFolderException {
 		return remove((Serializable)folderId);
-	}
-
-	/**
-	 * Removes the journal folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the journal folder
-	 * @return the journal folder that was removed
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	@Override
-	public JournalFolder remove(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalFolder journalFolder = (JournalFolder)session.get(
-				JournalFolderImpl.class, primaryKey);
-
-			if (journalFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(journalFolder);
-		}
-		catch (NoSuchFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3379,31 +3296,6 @@ public class JournalFolderPersistenceImpl
 		}
 
 		journalFolder.resetOriginalValues();
-
-		return journalFolder;
-	}
-
-	/**
-	 * Returns the journal folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal folder
-	 * @return the journal folder
-	 * @throws NoSuchFolderException if a journal folder with the primary key could not be found
-	 */
-	@Override
-	public JournalFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		JournalFolder journalFolder = fetchByPrimaryKey(primaryKey);
-
-		if (journalFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return journalFolder;
 	}
@@ -4352,9 +4244,6 @@ public class JournalFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JournalFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalFolder exists with the key {";
 
@@ -4370,4 +4259,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-856242895
+// LIFERAY-SERVICE-BUILDER-HASH:-1585829314

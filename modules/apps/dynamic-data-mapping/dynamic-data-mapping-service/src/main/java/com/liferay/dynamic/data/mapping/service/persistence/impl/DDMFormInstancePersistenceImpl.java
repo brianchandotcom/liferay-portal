@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMFormInstancePersistence.class)
 public class DDMFormInstancePersistenceImpl
-	extends BasePersistenceImpl<DDMFormInstance>
+	extends BasePersistenceImpl<DDMFormInstance, NoSuchFormInstanceException>
 	implements DDMFormInstancePersistence {
 
 	/*
@@ -1679,49 +1679,6 @@ public class DDMFormInstancePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm form instances.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMFormInstanceImpl.class);
-
-		finderCache.clearCache(DDMFormInstanceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm form instance.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMFormInstance ddmFormInstance) {
-		entityCache.removeResult(DDMFormInstanceImpl.class, ddmFormInstance);
-	}
-
-	@Override
-	public void clearCache(List<DDMFormInstance> ddmFormInstances) {
-		for (DDMFormInstance ddmFormInstance : ddmFormInstances) {
-			entityCache.removeResult(
-				DDMFormInstanceImpl.class, ddmFormInstance);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMFormInstanceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMFormInstanceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMFormInstanceModelImpl ddmFormInstanceModelImpl) {
 
@@ -1778,47 +1735,6 @@ public class DDMFormInstancePersistenceImpl
 		throws NoSuchFormInstanceException {
 
 		return remove((Serializable)formInstanceId);
-	}
-
-	/**
-	 * Removes the ddm form instance with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance
-	 * @return the ddm form instance that was removed
-	 * @throws NoSuchFormInstanceException if a ddm form instance with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstance remove(Serializable primaryKey)
-		throws NoSuchFormInstanceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMFormInstance ddmFormInstance = (DDMFormInstance)session.get(
-				DDMFormInstanceImpl.class, primaryKey);
-
-			if (ddmFormInstance == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFormInstanceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmFormInstance);
-		}
-		catch (NoSuchFormInstanceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1945,31 +1861,6 @@ public class DDMFormInstancePersistenceImpl
 		}
 
 		ddmFormInstance.resetOriginalValues();
-
-		return ddmFormInstance;
-	}
-
-	/**
-	 * Returns the ddm form instance with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance
-	 * @return the ddm form instance
-	 * @throws NoSuchFormInstanceException if a ddm form instance with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstance findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFormInstanceException {
-
-		DDMFormInstance ddmFormInstance = fetchByPrimaryKey(primaryKey);
-
-		if (ddmFormInstance == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFormInstanceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmFormInstance;
 	}
@@ -2672,9 +2563,6 @@ public class DDMFormInstancePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMFormInstance.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMFormInstance exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMFormInstance exists with the key {";
 
@@ -2690,4 +2578,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-670353065
+// LIFERAY-SERVICE-BUILDER-HASH:-290597040

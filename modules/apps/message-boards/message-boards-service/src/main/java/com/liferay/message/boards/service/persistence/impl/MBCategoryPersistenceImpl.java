@@ -91,7 +91,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBCategoryPersistence.class)
 public class MBCategoryPersistenceImpl
-	extends BasePersistenceImpl<MBCategory> implements MBCategoryPersistence {
+	extends BasePersistenceImpl<MBCategory, NoSuchCategoryException>
+	implements MBCategoryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -7740,48 +7741,6 @@ public class MBCategoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards categories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBCategoryImpl.class);
-
-		finderCache.clearCache(MBCategoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards category.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBCategory mbCategory) {
-		entityCache.removeResult(MBCategoryImpl.class, mbCategory);
-	}
-
-	@Override
-	public void clearCache(List<MBCategory> mbCategories) {
-		for (MBCategory mbCategory : mbCategories) {
-			entityCache.removeResult(MBCategoryImpl.class, mbCategory);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBCategoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBCategoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBCategoryModelImpl mbCategoryModelImpl) {
 
@@ -7846,47 +7805,6 @@ public class MBCategoryPersistenceImpl
 	@Override
 	public MBCategory remove(long categoryId) throws NoSuchCategoryException {
 		return remove((Serializable)categoryId);
-	}
-
-	/**
-	 * Removes the message boards category with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards category
-	 * @return the message boards category that was removed
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	@Override
-	public MBCategory remove(Serializable primaryKey)
-		throws NoSuchCategoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBCategory mbCategory = (MBCategory)session.get(
-				MBCategoryImpl.class, primaryKey);
-
-			if (mbCategory == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCategoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbCategory);
-		}
-		catch (NoSuchCategoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -8069,31 +7987,6 @@ public class MBCategoryPersistenceImpl
 		}
 
 		mbCategory.resetOriginalValues();
-
-		return mbCategory;
-	}
-
-	/**
-	 * Returns the message boards category with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards category
-	 * @return the message boards category
-	 * @throws NoSuchCategoryException if a message boards category with the primary key could not be found
-	 */
-	@Override
-	public MBCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCategoryException {
-
-		MBCategory mbCategory = fetchByPrimaryKey(primaryKey);
-
-		if (mbCategory == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCategoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbCategory;
 	}
@@ -9023,9 +8916,6 @@ public class MBCategoryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "MBCategory.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBCategory exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBCategory exists with the key {";
 
@@ -9041,4 +8931,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1803279651
+// LIFERAY-SERVICE-BUILDER-HASH:513761719

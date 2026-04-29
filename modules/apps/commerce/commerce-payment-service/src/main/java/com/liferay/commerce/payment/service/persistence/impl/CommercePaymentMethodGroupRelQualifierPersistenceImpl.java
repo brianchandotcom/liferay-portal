@@ -67,7 +67,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePaymentMethodGroupRelQualifierPersistence.class)
 public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
-	extends BasePersistenceImpl<CommercePaymentMethodGroupRelQualifier>
+	extends BasePersistenceImpl
+		<CommercePaymentMethodGroupRelQualifier,
+		 NoSuchPaymentMethodGroupRelQualifierException>
 	implements CommercePaymentMethodGroupRelQualifierPersistence {
 
 	/*
@@ -643,65 +645,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce payment method group rel qualifiers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(
-			CommercePaymentMethodGroupRelQualifierImpl.class);
-
-		finderCache.clearCache(
-			CommercePaymentMethodGroupRelQualifierImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce payment method group rel qualifier.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier) {
-
-		entityCache.removeResult(
-			CommercePaymentMethodGroupRelQualifierImpl.class,
-			commercePaymentMethodGroupRelQualifier);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePaymentMethodGroupRelQualifier>
-			commercePaymentMethodGroupRelQualifiers) {
-
-		for (CommercePaymentMethodGroupRelQualifier
-				commercePaymentMethodGroupRelQualifier :
-					commercePaymentMethodGroupRelQualifiers) {
-
-			entityCache.removeResult(
-				CommercePaymentMethodGroupRelQualifierImpl.class,
-				commercePaymentMethodGroupRelQualifier);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(
-			CommercePaymentMethodGroupRelQualifierImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePaymentMethodGroupRelQualifierImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePaymentMethodGroupRelQualifierModelImpl
 			commercePaymentMethodGroupRelQualifierModelImpl) {
@@ -755,53 +698,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		throws NoSuchPaymentMethodGroupRelQualifierException {
 
 		return remove((Serializable)commercePaymentMethodGroupRelQualifierId);
-	}
-
-	/**
-	 * Removes the commerce payment method group rel qualifier with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce payment method group rel qualifier
-	 * @return the commerce payment method group rel qualifier that was removed
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a commerce payment method group rel qualifier with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier remove(
-			Serializable primaryKey)
-		throws NoSuchPaymentMethodGroupRelQualifierException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePaymentMethodGroupRelQualifier
-				commercePaymentMethodGroupRelQualifier =
-					(CommercePaymentMethodGroupRelQualifier)session.get(
-						CommercePaymentMethodGroupRelQualifierImpl.class,
-						primaryKey);
-
-			if (commercePaymentMethodGroupRelQualifier == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPaymentMethodGroupRelQualifierException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePaymentMethodGroupRelQualifier);
-		}
-		catch (NoSuchPaymentMethodGroupRelQualifierException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -935,34 +831,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 		}
 
 		commercePaymentMethodGroupRelQualifier.resetOriginalValues();
-
-		return commercePaymentMethodGroupRelQualifier;
-	}
-
-	/**
-	 * Returns the commerce payment method group rel qualifier with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce payment method group rel qualifier
-	 * @return the commerce payment method group rel qualifier
-	 * @throws NoSuchPaymentMethodGroupRelQualifierException if a commerce payment method group rel qualifier with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRelQualifier findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPaymentMethodGroupRelQualifierException {
-
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier = fetchByPrimaryKey(
-				primaryKey);
-
-		if (commercePaymentMethodGroupRelQualifier == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPaymentMethodGroupRelQualifierException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePaymentMethodGroupRelQualifier;
 	}
@@ -1400,9 +1268,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePaymentMethodGroupRelQualifier.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePaymentMethodGroupRelQualifier exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentMethodGroupRelQualifier exists with the key {";
 
@@ -1421,4 +1286,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1318358752
+// LIFERAY-SERVICE-BUILDER-HASH:1095778585

@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoDefinitionPersistence.class)
 public class KaleoDefinitionPersistenceImpl
-	extends BasePersistenceImpl<KaleoDefinition>
+	extends BasePersistenceImpl<KaleoDefinition, NoSuchDefinitionException>
 	implements KaleoDefinitionPersistence {
 
 	/*
@@ -1900,49 +1900,6 @@ public class KaleoDefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoDefinitionImpl.class);
-
-		finderCache.clearCache(KaleoDefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoDefinition kaleoDefinition) {
-		entityCache.removeResult(KaleoDefinitionImpl.class, kaleoDefinition);
-	}
-
-	@Override
-	public void clearCache(List<KaleoDefinition> kaleoDefinitions) {
-		for (KaleoDefinition kaleoDefinition : kaleoDefinitions) {
-			entityCache.removeResult(
-				KaleoDefinitionImpl.class, kaleoDefinition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoDefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoDefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoDefinitionModelImpl kaleoDefinitionModelImpl) {
 
@@ -2028,47 +1985,6 @@ public class KaleoDefinitionPersistenceImpl
 		throws NoSuchDefinitionException {
 
 		return remove((Serializable)kaleoDefinitionId);
-	}
-
-	/**
-	 * Removes the kaleo definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo definition
-	 * @return the kaleo definition that was removed
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	@Override
-	public KaleoDefinition remove(Serializable primaryKey)
-		throws NoSuchDefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoDefinition kaleoDefinition = (KaleoDefinition)session.get(
-				KaleoDefinitionImpl.class, primaryKey);
-
-			if (kaleoDefinition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoDefinition);
-		}
-		catch (NoSuchDefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2260,31 +2176,6 @@ public class KaleoDefinitionPersistenceImpl
 		}
 
 		kaleoDefinition.resetOriginalValues();
-
-		return kaleoDefinition;
-	}
-
-	/**
-	 * Returns the kaleo definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo definition
-	 * @return the kaleo definition
-	 * @throws NoSuchDefinitionException if a kaleo definition with the primary key could not be found
-	 */
-	@Override
-	public KaleoDefinition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDefinitionException {
-
-		KaleoDefinition kaleoDefinition = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoDefinition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoDefinition;
 	}
@@ -3176,9 +3067,6 @@ public class KaleoDefinitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoDefinition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoDefinition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoDefinition exists with the key {";
 
@@ -3194,4 +3082,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-355801461
+// LIFERAY-SERVICE-BUILDER-HASH:-2066813886

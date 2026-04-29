@@ -62,7 +62,7 @@ import java.util.Set;
  * @generated
  */
 public class LVEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<LVEntryVersion>
+	extends BasePersistenceImpl<LVEntryVersion, NoSuchLVEntryVersionException>
 	implements LVEntryVersionPersistence {
 
 	/*
@@ -1860,48 +1860,6 @@ public class LVEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all lv entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LVEntryVersionImpl.class);
-
-		finderCache.clearCache(LVEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lv entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LVEntryVersion lvEntryVersion) {
-		entityCache.removeResult(LVEntryVersionImpl.class, lvEntryVersion);
-	}
-
-	@Override
-	public void clearCache(List<LVEntryVersion> lvEntryVersions) {
-		for (LVEntryVersion lvEntryVersion : lvEntryVersions) {
-			entityCache.removeResult(LVEntryVersionImpl.class, lvEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LVEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LVEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LVEntryVersionModelImpl lvEntryVersionModelImpl) {
 
@@ -1962,47 +1920,6 @@ public class LVEntryVersionPersistenceImpl
 		throws NoSuchLVEntryVersionException {
 
 		return remove((Serializable)lvEntryVersionId);
-	}
-
-	/**
-	 * Removes the lv entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lv entry version
-	 * @return the lv entry version that was removed
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryVersion remove(Serializable primaryKey)
-		throws NoSuchLVEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LVEntryVersion lvEntryVersion = (LVEntryVersion)session.get(
-				LVEntryVersionImpl.class, primaryKey);
-
-			if (lvEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLVEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lvEntryVersion);
-		}
-		catch (NoSuchLVEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2096,31 +2013,6 @@ public class LVEntryVersionPersistenceImpl
 		}
 
 		lvEntryVersion.resetOriginalValues();
-
-		return lvEntryVersion;
-	}
-
-	/**
-	 * Returns the lv entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lv entry version
-	 * @return the lv entry version
-	 * @throws NoSuchLVEntryVersionException if a lv entry version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLVEntryVersionException {
-
-		LVEntryVersion lvEntryVersion = fetchByPrimaryKey(primaryKey);
-
-		if (lvEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLVEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lvEntryVersion;
 	}
@@ -3132,9 +3024,6 @@ public class LVEntryVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LVEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntryVersion exists with the key {";
 
@@ -3150,4 +3039,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1740061008
+// LIFERAY-SERVICE-BUILDER-HASH:-996081559

@@ -63,7 +63,8 @@ import java.util.Set;
  * @generated
  */
 public class SocialActivityAchievementPersistenceImpl
-	extends BasePersistenceImpl<SocialActivityAchievement>
+	extends BasePersistenceImpl
+		<SocialActivityAchievement, NoSuchActivityAchievementException>
 	implements SocialActivityAchievementPersistence {
 
 	/*
@@ -1123,57 +1124,6 @@ public class SocialActivityAchievementPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social activity achievements.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialActivityAchievementImpl.class);
-
-		FinderCacheUtil.clearCache(SocialActivityAchievementImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social activity achievement.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		SocialActivityAchievement socialActivityAchievement) {
-
-		EntityCacheUtil.removeResult(
-			SocialActivityAchievementImpl.class, socialActivityAchievement);
-	}
-
-	@Override
-	public void clearCache(
-		List<SocialActivityAchievement> socialActivityAchievements) {
-
-		for (SocialActivityAchievement socialActivityAchievement :
-				socialActivityAchievements) {
-
-			EntityCacheUtil.removeResult(
-				SocialActivityAchievementImpl.class, socialActivityAchievement);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialActivityAchievementImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				SocialActivityAchievementImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl) {
 
@@ -1225,48 +1175,6 @@ public class SocialActivityAchievementPersistenceImpl
 		throws NoSuchActivityAchievementException {
 
 		return remove((Serializable)activityAchievementId);
-	}
-
-	/**
-	 * Removes the social activity achievement with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social activity achievement
-	 * @return the social activity achievement that was removed
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityAchievement remove(Serializable primaryKey)
-		throws NoSuchActivityAchievementException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivityAchievement socialActivityAchievement =
-				(SocialActivityAchievement)session.get(
-					SocialActivityAchievementImpl.class, primaryKey);
-
-			if (socialActivityAchievement == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchActivityAchievementException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialActivityAchievement);
-		}
-		catch (NoSuchActivityAchievementException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1371,32 +1279,6 @@ public class SocialActivityAchievementPersistenceImpl
 		}
 
 		socialActivityAchievement.resetOriginalValues();
-
-		return socialActivityAchievement;
-	}
-
-	/**
-	 * Returns the social activity achievement with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social activity achievement
-	 * @return the social activity achievement
-	 * @throws NoSuchActivityAchievementException if a social activity achievement with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityAchievement findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchActivityAchievementException {
-
-		SocialActivityAchievement socialActivityAchievement = fetchByPrimaryKey(
-			primaryKey);
-
-		if (socialActivityAchievement == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchActivityAchievementException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialActivityAchievement;
 	}
@@ -2122,9 +2004,6 @@ public class SocialActivityAchievementPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"socialActivityAchievement.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialActivityAchievement exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialActivityAchievement exists with the key {";
 
@@ -2137,4 +2016,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1345318168
+// LIFERAY-SERVICE-BUILDER-HASH:-684228107

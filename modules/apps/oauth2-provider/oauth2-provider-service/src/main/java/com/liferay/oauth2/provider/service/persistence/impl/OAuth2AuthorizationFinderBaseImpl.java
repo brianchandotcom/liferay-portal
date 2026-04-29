@@ -5,6 +5,7 @@
 
 package com.liferay.oauth2.provider.service.persistence.impl;
 
+import com.liferay.oauth2.provider.exception.NoSuchOAuth2AuthorizationException;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.persistence.OAuth2AuthorizationPersistence;
 import com.liferay.oauth2.provider.service.persistence.impl.constants.OAuthTwoPersistenceConstants;
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class OAuth2AuthorizationFinderBaseImpl
-	extends BasePersistenceImpl<OAuth2Authorization> {
+	extends BasePersistenceImpl
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException> {
 
 	public OAuth2AuthorizationFinderBaseImpl() {
 		setModelClass(OAuth2Authorization.class);
@@ -78,4 +80,4 @@ public abstract class OAuth2AuthorizationFinderBaseImpl
 		OAuth2AuthorizationFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1663582989
+// LIFERAY-SERVICE-BUILDER-HASH:39575408

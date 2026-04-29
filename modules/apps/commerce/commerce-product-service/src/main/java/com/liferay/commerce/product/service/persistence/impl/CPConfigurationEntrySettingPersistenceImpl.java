@@ -78,7 +78,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPConfigurationEntrySettingPersistence.class)
 public class CPConfigurationEntrySettingPersistenceImpl
-	extends BasePersistenceImpl<CPConfigurationEntrySetting>
+	extends BasePersistenceImpl
+		<CPConfigurationEntrySetting,
+		 NoSuchCPConfigurationEntrySettingException>
 	implements CPConfigurationEntrySettingPersistence {
 
 	/*
@@ -872,58 +874,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp configuration entry settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPConfigurationEntrySettingImpl.class);
-
-		finderCache.clearCache(CPConfigurationEntrySettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp configuration entry setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting) {
-
-		entityCache.removeResult(
-			CPConfigurationEntrySettingImpl.class, cpConfigurationEntrySetting);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPConfigurationEntrySetting> cpConfigurationEntrySettings) {
-
-		for (CPConfigurationEntrySetting cpConfigurationEntrySetting :
-				cpConfigurationEntrySettings) {
-
-			entityCache.removeResult(
-				CPConfigurationEntrySettingImpl.class,
-				cpConfigurationEntrySetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPConfigurationEntrySettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPConfigurationEntrySettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPConfigurationEntrySettingModelImpl
 			cpConfigurationEntrySettingModelImpl) {
@@ -993,50 +943,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 		throws NoSuchCPConfigurationEntrySettingException {
 
 		return remove((Serializable)CPConfigurationEntrySettingId);
-	}
-
-	/**
-	 * Removes the cp configuration entry setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp configuration entry setting
-	 * @return the cp configuration entry setting that was removed
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting remove(Serializable primaryKey)
-		throws NoSuchCPConfigurationEntrySettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPConfigurationEntrySetting cpConfigurationEntrySetting =
-				(CPConfigurationEntrySetting)session.get(
-					CPConfigurationEntrySettingImpl.class, primaryKey);
-
-			if (cpConfigurationEntrySetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPConfigurationEntrySettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpConfigurationEntrySetting);
-		}
-		catch (NoSuchCPConfigurationEntrySettingException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1176,32 +1082,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 		}
 
 		cpConfigurationEntrySetting.resetOriginalValues();
-
-		return cpConfigurationEntrySetting;
-	}
-
-	/**
-	 * Returns the cp configuration entry setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp configuration entry setting
-	 * @return the cp configuration entry setting
-	 * @throws NoSuchCPConfigurationEntrySettingException if a cp configuration entry setting with the primary key could not be found
-	 */
-	@Override
-	public CPConfigurationEntrySetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPConfigurationEntrySettingException {
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			fetchByPrimaryKey(primaryKey);
-
-		if (cpConfigurationEntrySetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPConfigurationEntrySettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpConfigurationEntrySetting;
 	}
@@ -1918,9 +1798,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpConfigurationEntrySetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPConfigurationEntrySetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPConfigurationEntrySetting exists with the key {";
 
@@ -1936,4 +1813,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-862784069
+// LIFERAY-SERVICE-BUILDER-HASH:-20805582

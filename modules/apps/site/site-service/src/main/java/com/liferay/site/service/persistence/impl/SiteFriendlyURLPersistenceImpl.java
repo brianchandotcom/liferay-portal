@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SiteFriendlyURLPersistence.class)
 public class SiteFriendlyURLPersistenceImpl
-	extends BasePersistenceImpl<SiteFriendlyURL>
+	extends BasePersistenceImpl<SiteFriendlyURL, NoSuchFriendlyURLException>
 	implements SiteFriendlyURLPersistence {
 
 	/*
@@ -1022,49 +1022,6 @@ public class SiteFriendlyURLPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all site friendly urls.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SiteFriendlyURLImpl.class);
-
-		finderCache.clearCache(SiteFriendlyURLImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the site friendly url.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SiteFriendlyURL siteFriendlyURL) {
-		entityCache.removeResult(SiteFriendlyURLImpl.class, siteFriendlyURL);
-	}
-
-	@Override
-	public void clearCache(List<SiteFriendlyURL> siteFriendlyURLs) {
-		for (SiteFriendlyURL siteFriendlyURL : siteFriendlyURLs) {
-			entityCache.removeResult(
-				SiteFriendlyURLImpl.class, siteFriendlyURL);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SiteFriendlyURLImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SiteFriendlyURLImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SiteFriendlyURLModelImpl siteFriendlyURLModelImpl) {
 
@@ -1137,47 +1094,6 @@ public class SiteFriendlyURLPersistenceImpl
 		throws NoSuchFriendlyURLException {
 
 		return remove((Serializable)siteFriendlyURLId);
-	}
-
-	/**
-	 * Removes the site friendly url with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the site friendly url
-	 * @return the site friendly url that was removed
-	 * @throws NoSuchFriendlyURLException if a site friendly url with the primary key could not be found
-	 */
-	@Override
-	public SiteFriendlyURL remove(Serializable primaryKey)
-		throws NoSuchFriendlyURLException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SiteFriendlyURL siteFriendlyURL = (SiteFriendlyURL)session.get(
-				SiteFriendlyURLImpl.class, primaryKey);
-
-			if (siteFriendlyURL == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFriendlyURLException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(siteFriendlyURL);
-		}
-		catch (NoSuchFriendlyURLException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1296,31 +1212,6 @@ public class SiteFriendlyURLPersistenceImpl
 		}
 
 		siteFriendlyURL.resetOriginalValues();
-
-		return siteFriendlyURL;
-	}
-
-	/**
-	 * Returns the site friendly url with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the site friendly url
-	 * @return the site friendly url
-	 * @throws NoSuchFriendlyURLException if a site friendly url with the primary key could not be found
-	 */
-	@Override
-	public SiteFriendlyURL findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFriendlyURLException {
-
-		SiteFriendlyURL siteFriendlyURL = fetchByPrimaryKey(primaryKey);
-
-		if (siteFriendlyURL == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFriendlyURLException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return siteFriendlyURL;
 	}
@@ -1791,9 +1682,6 @@ public class SiteFriendlyURLPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "siteFriendlyURL.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SiteFriendlyURL exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SiteFriendlyURL exists with the key {";
 
@@ -1809,4 +1697,4 @@ public class SiteFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2131832465
+// LIFERAY-SERVICE-BUILDER-HASH:-831712940

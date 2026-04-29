@@ -66,7 +66,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceInventoryBookedQuantityPersistence.class)
 public class CommerceInventoryBookedQuantityPersistenceImpl
-	extends BasePersistenceImpl<CommerceInventoryBookedQuantity>
+	extends BasePersistenceImpl
+		<CommerceInventoryBookedQuantity,
+		 NoSuchInventoryBookedQuantityException>
 	implements CommerceInventoryBookedQuantityPersistence {
 
 	/*
@@ -628,60 +630,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce inventory booked quantities.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceInventoryBookedQuantityImpl.class);
-
-		finderCache.clearCache(CommerceInventoryBookedQuantityImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce inventory booked quantity.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
-
-		entityCache.removeResult(
-			CommerceInventoryBookedQuantityImpl.class,
-			commerceInventoryBookedQuantity);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities) {
-
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				commerceInventoryBookedQuantities) {
-
-			entityCache.removeResult(
-				CommerceInventoryBookedQuantityImpl.class,
-				commerceInventoryBookedQuantity);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceInventoryBookedQuantityImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceInventoryBookedQuantityImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce inventory booked quantity with the primary key. Does not add the commerce inventory booked quantity to the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key for the new commerce inventory booked quantity
@@ -717,48 +665,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		throws NoSuchInventoryBookedQuantityException {
 
 		return remove((Serializable)commerceInventoryBookedQuantityId);
-	}
-
-	/**
-	 * Removes the commerce inventory booked quantity with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory booked quantity
-	 * @return the commerce inventory booked quantity that was removed
-	 * @throws NoSuchInventoryBookedQuantityException if a commerce inventory booked quantity with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity remove(Serializable primaryKey)
-		throws NoSuchInventoryBookedQuantityException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-				(CommerceInventoryBookedQuantity)session.get(
-					CommerceInventoryBookedQuantityImpl.class, primaryKey);
-
-			if (commerceInventoryBookedQuantity == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchInventoryBookedQuantityException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceInventoryBookedQuantity);
-		}
-		catch (NoSuchInventoryBookedQuantityException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -884,33 +790,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 		}
 
 		commerceInventoryBookedQuantity.resetOriginalValues();
-
-		return commerceInventoryBookedQuantity;
-	}
-
-	/**
-	 * Returns the commerce inventory booked quantity with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory booked quantity
-	 * @return the commerce inventory booked quantity
-	 * @throws NoSuchInventoryBookedQuantityException if a commerce inventory booked quantity with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryBookedQuantity findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchInventoryBookedQuantityException {
-
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceInventoryBookedQuantity == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchInventoryBookedQuantityException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceInventoryBookedQuantity;
 	}
@@ -1334,9 +1213,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceInventoryBookedQuantity.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceInventoryBookedQuantity exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceInventoryBookedQuantity exists with the key {";
 
@@ -1352,4 +1228,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:620266579
+// LIFERAY-SERVICE-BUILDER-HASH:-1604241729

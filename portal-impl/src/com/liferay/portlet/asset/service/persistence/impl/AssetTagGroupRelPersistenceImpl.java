@@ -66,7 +66,7 @@ import java.util.Set;
  * @generated
  */
 public class AssetTagGroupRelPersistenceImpl
-	extends BasePersistenceImpl<AssetTagGroupRel>
+	extends BasePersistenceImpl<AssetTagGroupRel, NoSuchTagGroupRelException>
 	implements AssetTagGroupRelPersistence {
 
 	/*
@@ -991,51 +991,6 @@ public class AssetTagGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset tag group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetTagGroupRelImpl.class);
-
-		FinderCacheUtil.clearCache(AssetTagGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset tag group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetTagGroupRel assetTagGroupRel) {
-		EntityCacheUtil.removeResult(
-			AssetTagGroupRelImpl.class, assetTagGroupRel);
-	}
-
-	@Override
-	public void clearCache(List<AssetTagGroupRel> assetTagGroupRels) {
-		for (AssetTagGroupRel assetTagGroupRel : assetTagGroupRels) {
-			EntityCacheUtil.removeResult(
-				AssetTagGroupRelImpl.class, assetTagGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AssetTagGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				AssetTagGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetTagGroupRelModelImpl assetTagGroupRelModelImpl) {
 
@@ -1095,47 +1050,6 @@ public class AssetTagGroupRelPersistenceImpl
 		throws NoSuchTagGroupRelException {
 
 		return remove((Serializable)assetTagGroupRelId);
-	}
-
-	/**
-	 * Removes the asset tag group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset tag group rel
-	 * @return the asset tag group rel that was removed
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	@Override
-	public AssetTagGroupRel remove(Serializable primaryKey)
-		throws NoSuchTagGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetTagGroupRel assetTagGroupRel = (AssetTagGroupRel)session.get(
-				AssetTagGroupRelImpl.class, primaryKey);
-
-			if (assetTagGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTagGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetTagGroupRel);
-		}
-		catch (NoSuchTagGroupRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1237,31 +1151,6 @@ public class AssetTagGroupRelPersistenceImpl
 		}
 
 		assetTagGroupRel.resetOriginalValues();
-
-		return assetTagGroupRel;
-	}
-
-	/**
-	 * Returns the asset tag group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset tag group rel
-	 * @return the asset tag group rel
-	 * @throws NoSuchTagGroupRelException if a asset tag group rel with the primary key could not be found
-	 */
-	@Override
-	public AssetTagGroupRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTagGroupRelException {
-
-		AssetTagGroupRel assetTagGroupRel = fetchByPrimaryKey(primaryKey);
-
-		if (assetTagGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTagGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetTagGroupRel;
 	}
@@ -1924,9 +1813,6 @@ public class AssetTagGroupRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTagGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetTagGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetTagGroupRel exists with the key {";
 
@@ -1942,4 +1828,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1420736200
+// LIFERAY-SERVICE-BUILDER-HASH:-796102187

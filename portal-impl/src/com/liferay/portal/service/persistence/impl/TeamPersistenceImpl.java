@@ -79,7 +79,8 @@ import java.util.Set;
  * @generated
  */
 public class TeamPersistenceImpl
-	extends BasePersistenceImpl<Team> implements TeamPersistence {
+	extends BasePersistenceImpl<Team, NoSuchTeamException>
+	implements TeamPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1176,48 +1177,6 @@ public class TeamPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all teams.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(TeamImpl.class);
-
-		FinderCacheUtil.clearCache(TeamImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the team.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Team team) {
-		EntityCacheUtil.removeResult(TeamImpl.class, team);
-	}
-
-	@Override
-	public void clearCache(List<Team> teams) {
-		for (Team team : teams) {
-			EntityCacheUtil.removeResult(TeamImpl.class, team);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(TeamImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(TeamImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(TeamModelImpl teamModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -1271,44 +1230,6 @@ public class TeamPersistenceImpl
 	@Override
 	public Team remove(long teamId) throws NoSuchTeamException {
 		return remove((Serializable)teamId);
-	}
-
-	/**
-	 * Removes the team with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the team
-	 * @return the team that was removed
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	@Override
-	public Team remove(Serializable primaryKey) throws NoSuchTeamException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Team team = (Team)session.get(TeamImpl.class, primaryKey);
-
-			if (team == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTeamException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(team);
-		}
-		catch (NoSuchTeamException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1430,31 +1351,6 @@ public class TeamPersistenceImpl
 		}
 
 		team.resetOriginalValues();
-
-		return team;
-	}
-
-	/**
-	 * Returns the team with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the team
-	 * @return the team
-	 * @throws NoSuchTeamException if a team with the primary key could not be found
-	 */
-	@Override
-	public Team findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTeamException {
-
-		Team team = fetchByPrimaryKey(primaryKey);
-
-		if (team == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTeamException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return team;
 	}
@@ -2812,9 +2708,6 @@ public class TeamPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Team.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Team exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Team exists with the key {";
 
@@ -2830,4 +2723,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:304838380
+// LIFERAY-SERVICE-BUILDER-HASH:1957387299

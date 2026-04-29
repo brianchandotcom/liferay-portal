@@ -73,7 +73,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PLOEntryPersistence.class)
 public class PLOEntryPersistenceImpl
-	extends BasePersistenceImpl<PLOEntry> implements PLOEntryPersistence {
+	extends BasePersistenceImpl<PLOEntry, NoSuchPLOEntryException>
+	implements PLOEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -704,48 +705,6 @@ public class PLOEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all plo entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PLOEntryImpl.class);
-
-		finderCache.clearCache(PLOEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the plo entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PLOEntry ploEntry) {
-		entityCache.removeResult(PLOEntryImpl.class, ploEntry);
-	}
-
-	@Override
-	public void clearCache(List<PLOEntry> ploEntries) {
-		for (PLOEntry ploEntry : ploEntries) {
-			entityCache.removeResult(PLOEntryImpl.class, ploEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PLOEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PLOEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PLOEntryModelImpl ploEntryModelImpl) {
 
@@ -785,47 +744,6 @@ public class PLOEntryPersistenceImpl
 	@Override
 	public PLOEntry remove(long ploEntryId) throws NoSuchPLOEntryException {
 		return remove((Serializable)ploEntryId);
-	}
-
-	/**
-	 * Removes the plo entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the plo entry
-	 * @return the plo entry that was removed
-	 * @throws NoSuchPLOEntryException if a plo entry with the primary key could not be found
-	 */
-	@Override
-	public PLOEntry remove(Serializable primaryKey)
-		throws NoSuchPLOEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PLOEntry ploEntry = (PLOEntry)session.get(
-				PLOEntryImpl.class, primaryKey);
-
-			if (ploEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPLOEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ploEntry);
-		}
-		catch (NoSuchPLOEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -957,31 +875,6 @@ public class PLOEntryPersistenceImpl
 		}
 
 		ploEntry.resetOriginalValues();
-
-		return ploEntry;
-	}
-
-	/**
-	 * Returns the plo entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the plo entry
-	 * @return the plo entry
-	 * @throws NoSuchPLOEntryException if a plo entry with the primary key could not be found
-	 */
-	@Override
-	public PLOEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPLOEntryException {
-
-		PLOEntry ploEntry = fetchByPrimaryKey(primaryKey);
-
-		if (ploEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPLOEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ploEntry;
 	}
@@ -1402,9 +1295,6 @@ public class PLOEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ploEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PLOEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PLOEntry exists with the key {";
 
@@ -1420,4 +1310,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1465605612
+// LIFERAY-SERVICE-BUILDER-HASH:1291967586

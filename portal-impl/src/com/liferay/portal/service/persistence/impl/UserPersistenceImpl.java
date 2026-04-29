@@ -90,7 +90,8 @@ import java.util.Set;
  * @generated
  */
 public class UserPersistenceImpl
-	extends BasePersistenceImpl<User> implements UserPersistence {
+	extends BasePersistenceImpl<User, NoSuchUserException>
+	implements UserPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -3876,48 +3877,6 @@ public class UserPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all users.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserImpl.class);
-
-		FinderCacheUtil.clearCache(UserImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(User user) {
-		EntityCacheUtil.removeResult(UserImpl.class, user);
-	}
-
-	@Override
-	public void clearCache(List<User> users) {
-		for (User user : users) {
-			EntityCacheUtil.removeResult(UserImpl.class, user);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(UserModelImpl userModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -3991,44 +3950,6 @@ public class UserPersistenceImpl
 	@Override
 	public User remove(long userId) throws NoSuchUserException {
 		return remove((Serializable)userId);
-	}
-
-	/**
-	 * Removes the user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user
-	 * @return the user that was removed
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	@Override
-	public User remove(Serializable primaryKey) throws NoSuchUserException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			User user = (User)session.get(UserImpl.class, primaryKey);
-
-			if (user == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(user);
-		}
-		catch (NoSuchUserException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4219,31 +4140,6 @@ public class UserPersistenceImpl
 		}
 
 		user.resetOriginalValues();
-
-		return user;
-	}
-
-	/**
-	 * Returns the user with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user
-	 * @return the user
-	 * @throws NoSuchUserException if a user with the primary key could not be found
-	 */
-	@Override
-	public User findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserException {
-
-		User user = fetchByPrimaryKey(primaryKey);
-
-		if (user == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return user;
 	}
@@ -6891,9 +6787,6 @@ public class UserPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "user.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No User exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No User exists with the key {";
 
@@ -6909,4 +6802,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:199693202
+// LIFERAY-SERVICE-BUILDER-HASH:1814112593

@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContactsCardTemplatePersistence.class)
 public class ContactsCardTemplatePersistenceImpl
-	extends BasePersistenceImpl<ContactsCardTemplate>
+	extends BasePersistenceImpl
+		<ContactsCardTemplate, NoSuchContactsCardTemplateException>
 	implements ContactsCardTemplatePersistence {
 
 	/*
@@ -289,53 +290,6 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all contacts card templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ContactsCardTemplateImpl.class);
-
-		finderCache.clearCache(ContactsCardTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the contacts card template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ContactsCardTemplate contactsCardTemplate) {
-		entityCache.removeResult(
-			ContactsCardTemplateImpl.class, contactsCardTemplate);
-	}
-
-	@Override
-	public void clearCache(List<ContactsCardTemplate> contactsCardTemplates) {
-		for (ContactsCardTemplate contactsCardTemplate :
-				contactsCardTemplates) {
-
-			entityCache.removeResult(
-				ContactsCardTemplateImpl.class, contactsCardTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ContactsCardTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ContactsCardTemplateImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new contacts card template with the primary key. Does not add the contacts card template to the database.
 	 *
 	 * @param contactsCardTemplateId the primary key for the new contacts card template
@@ -366,48 +320,6 @@ public class ContactsCardTemplatePersistenceImpl
 		throws NoSuchContactsCardTemplateException {
 
 		return remove((Serializable)contactsCardTemplateId);
-	}
-
-	/**
-	 * Removes the contacts card template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the contacts card template
-	 * @return the contacts card template that was removed
-	 * @throws NoSuchContactsCardTemplateException if a contacts card template with the primary key could not be found
-	 */
-	@Override
-	public ContactsCardTemplate remove(Serializable primaryKey)
-		throws NoSuchContactsCardTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ContactsCardTemplate contactsCardTemplate =
-				(ContactsCardTemplate)session.get(
-					ContactsCardTemplateImpl.class, primaryKey);
-
-			if (contactsCardTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContactsCardTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(contactsCardTemplate);
-		}
-		catch (NoSuchContactsCardTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -498,32 +410,6 @@ public class ContactsCardTemplatePersistenceImpl
 		}
 
 		contactsCardTemplate.resetOriginalValues();
-
-		return contactsCardTemplate;
-	}
-
-	/**
-	 * Returns the contacts card template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the contacts card template
-	 * @return the contacts card template
-	 * @throws NoSuchContactsCardTemplateException if a contacts card template with the primary key could not be found
-	 */
-	@Override
-	public ContactsCardTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContactsCardTemplateException {
-
-		ContactsCardTemplate contactsCardTemplate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (contactsCardTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContactsCardTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return contactsCardTemplate;
 	}
@@ -868,9 +754,6 @@ public class ContactsCardTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"contactsCardTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ContactsCardTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ContactsCardTemplate exists with the key {";
 
@@ -886,4 +769,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1092515340
+// LIFERAY-SERVICE-BUILDER-HASH:1836121273

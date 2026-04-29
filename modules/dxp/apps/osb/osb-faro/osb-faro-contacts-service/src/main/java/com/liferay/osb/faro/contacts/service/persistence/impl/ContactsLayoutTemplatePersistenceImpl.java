@@ -63,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ContactsLayoutTemplatePersistence.class)
 public class ContactsLayoutTemplatePersistenceImpl
-	extends BasePersistenceImpl<ContactsLayoutTemplate>
+	extends BasePersistenceImpl
+		<ContactsLayoutTemplate, NoSuchContactsLayoutTemplateException>
 	implements ContactsLayoutTemplatePersistence {
 
 	/*
@@ -447,55 +448,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all contacts layout templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ContactsLayoutTemplateImpl.class);
-
-		finderCache.clearCache(ContactsLayoutTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the contacts layout template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ContactsLayoutTemplate contactsLayoutTemplate) {
-		entityCache.removeResult(
-			ContactsLayoutTemplateImpl.class, contactsLayoutTemplate);
-	}
-
-	@Override
-	public void clearCache(
-		List<ContactsLayoutTemplate> contactsLayoutTemplates) {
-
-		for (ContactsLayoutTemplate contactsLayoutTemplate :
-				contactsLayoutTemplates) {
-
-			entityCache.removeResult(
-				ContactsLayoutTemplateImpl.class, contactsLayoutTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ContactsLayoutTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ContactsLayoutTemplateImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new contacts layout template with the primary key. Does not add the contacts layout template to the database.
 	 *
 	 * @param contactsLayoutTemplateId the primary key for the new contacts layout template
@@ -526,48 +478,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 		throws NoSuchContactsLayoutTemplateException {
 
 		return remove((Serializable)contactsLayoutTemplateId);
-	}
-
-	/**
-	 * Removes the contacts layout template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the contacts layout template
-	 * @return the contacts layout template that was removed
-	 * @throws NoSuchContactsLayoutTemplateException if a contacts layout template with the primary key could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate remove(Serializable primaryKey)
-		throws NoSuchContactsLayoutTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ContactsLayoutTemplate contactsLayoutTemplate =
-				(ContactsLayoutTemplate)session.get(
-					ContactsLayoutTemplateImpl.class, primaryKey);
-
-			if (contactsLayoutTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContactsLayoutTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(contactsLayoutTemplate);
-		}
-		catch (NoSuchContactsLayoutTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -660,32 +570,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 		}
 
 		contactsLayoutTemplate.resetOriginalValues();
-
-		return contactsLayoutTemplate;
-	}
-
-	/**
-	 * Returns the contacts layout template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the contacts layout template
-	 * @return the contacts layout template
-	 * @throws NoSuchContactsLayoutTemplateException if a contacts layout template with the primary key could not be found
-	 */
-	@Override
-	public ContactsLayoutTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContactsLayoutTemplateException {
-
-		ContactsLayoutTemplate contactsLayoutTemplate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (contactsLayoutTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContactsLayoutTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return contactsLayoutTemplate;
 	}
@@ -1067,9 +951,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"contactsLayoutTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ContactsLayoutTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ContactsLayoutTemplate exists with the key {";
 
@@ -1085,4 +966,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1035521809
+// LIFERAY-SERVICE-BUILDER-HASH:-882858538

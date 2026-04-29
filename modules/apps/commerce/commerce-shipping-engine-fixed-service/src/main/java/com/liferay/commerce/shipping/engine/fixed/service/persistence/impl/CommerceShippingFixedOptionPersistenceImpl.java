@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShippingFixedOptionPersistence.class)
 public class CommerceShippingFixedOptionPersistenceImpl
-	extends BasePersistenceImpl<CommerceShippingFixedOption>
+	extends BasePersistenceImpl
+		<CommerceShippingFixedOption, NoSuchShippingFixedOptionException>
 	implements CommerceShippingFixedOptionPersistence {
 
 	/*
@@ -409,58 +410,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipping fixed options.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShippingFixedOptionImpl.class);
-
-		finderCache.clearCache(CommerceShippingFixedOptionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipping fixed option.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
-
-		entityCache.removeResult(
-			CommerceShippingFixedOptionImpl.class, commerceShippingFixedOption);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions) {
-
-		for (CommerceShippingFixedOption commerceShippingFixedOption :
-				commerceShippingFixedOptions) {
-
-			entityCache.removeResult(
-				CommerceShippingFixedOptionImpl.class,
-				commerceShippingFixedOption);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShippingFixedOptionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShippingFixedOptionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShippingFixedOptionModelImpl
 			commerceShippingFixedOptionModelImpl) {
@@ -510,48 +459,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		throws NoSuchShippingFixedOptionException {
 
 		return remove((Serializable)commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Removes the commerce shipping fixed option with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option
-	 * @return the commerce shipping fixed option that was removed
-	 * @throws NoSuchShippingFixedOptionException if a commerce shipping fixed option with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOption remove(Serializable primaryKey)
-		throws NoSuchShippingFixedOptionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingFixedOption commerceShippingFixedOption =
-				(CommerceShippingFixedOption)session.get(
-					CommerceShippingFixedOptionImpl.class, primaryKey);
-
-			if (commerceShippingFixedOption == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShippingFixedOptionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShippingFixedOption);
-		}
-		catch (NoSuchShippingFixedOptionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -677,32 +584,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		}
 
 		commerceShippingFixedOption.resetOriginalValues();
-
-		return commerceShippingFixedOption;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option
-	 * @return the commerce shipping fixed option
-	 * @throws NoSuchShippingFixedOptionException if a commerce shipping fixed option with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOption findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchShippingFixedOptionException {
-
-		CommerceShippingFixedOption commerceShippingFixedOption =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceShippingFixedOption == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShippingFixedOptionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShippingFixedOption;
 	}
@@ -1076,9 +957,6 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShippingFixedOption.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShippingFixedOption exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShippingFixedOption exists with the key {";
 
@@ -1094,4 +972,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-545032094
+// LIFERAY-SERVICE-BUILDER-HASH:313048827

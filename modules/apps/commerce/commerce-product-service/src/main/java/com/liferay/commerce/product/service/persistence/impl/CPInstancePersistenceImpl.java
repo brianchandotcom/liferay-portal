@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPInstancePersistence.class)
 public class CPInstancePersistenceImpl
-	extends BasePersistenceImpl<CPInstance> implements CPInstancePersistence {
+	extends BasePersistenceImpl<CPInstance, NoSuchCPInstanceException>
+	implements CPInstancePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -3003,48 +3004,6 @@ public class CPInstancePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp instances.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPInstanceImpl.class);
-
-		finderCache.clearCache(CPInstanceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp instance.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPInstance cpInstance) {
-		entityCache.removeResult(CPInstanceImpl.class, cpInstance);
-	}
-
-	@Override
-	public void clearCache(List<CPInstance> cpInstances) {
-		for (CPInstance cpInstance : cpInstances) {
-			entityCache.removeResult(CPInstanceImpl.class, cpInstance);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPInstanceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPInstanceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPInstanceModelImpl cpInstanceModelImpl) {
 
@@ -3119,47 +3078,6 @@ public class CPInstancePersistenceImpl
 		throws NoSuchCPInstanceException {
 
 		return remove((Serializable)CPInstanceId);
-	}
-
-	/**
-	 * Removes the cp instance with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp instance
-	 * @return the cp instance that was removed
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	@Override
-	public CPInstance remove(Serializable primaryKey)
-		throws NoSuchCPInstanceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPInstance cpInstance = (CPInstance)session.get(
-				CPInstanceImpl.class, primaryKey);
-
-			if (cpInstance == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPInstanceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpInstance);
-		}
-		catch (NoSuchCPInstanceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3343,31 +3261,6 @@ public class CPInstancePersistenceImpl
 		}
 
 		cpInstance.resetOriginalValues();
-
-		return cpInstance;
-	}
-
-	/**
-	 * Returns the cp instance with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp instance
-	 * @return the cp instance
-	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
-	 */
-	@Override
-	public CPInstance findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPInstanceException {
-
-		CPInstance cpInstance = fetchByPrimaryKey(primaryKey);
-
-		if (cpInstance == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPInstanceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpInstance;
 	}
@@ -4425,9 +4318,6 @@ public class CPInstancePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CPInstance.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPInstance exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPInstance exists with the key {";
 
@@ -4443,4 +4333,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:679845760
+// LIFERAY-SERVICE-BUILDER-HASH:-1821686019

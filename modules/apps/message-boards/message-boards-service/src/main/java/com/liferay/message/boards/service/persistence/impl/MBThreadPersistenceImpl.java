@@ -92,7 +92,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBThreadPersistence.class)
 public class MBThreadPersistenceImpl
-	extends BasePersistenceImpl<MBThread> implements MBThreadPersistence {
+	extends BasePersistenceImpl<MBThread, NoSuchThreadException>
+	implements MBThreadPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -7184,48 +7185,6 @@ public class MBThreadPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards threads.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBThreadImpl.class);
-
-		finderCache.clearCache(MBThreadImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards thread.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBThread mbThread) {
-		entityCache.removeResult(MBThreadImpl.class, mbThread);
-	}
-
-	@Override
-	public void clearCache(List<MBThread> mbThreads) {
-		for (MBThread mbThread : mbThreads) {
-			entityCache.removeResult(MBThreadImpl.class, mbThread);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBThreadImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBThreadImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBThreadModelImpl mbThreadModelImpl) {
 
@@ -7279,47 +7238,6 @@ public class MBThreadPersistenceImpl
 	@Override
 	public MBThread remove(long threadId) throws NoSuchThreadException {
 		return remove((Serializable)threadId);
-	}
-
-	/**
-	 * Removes the message boards thread with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards thread
-	 * @return the message boards thread that was removed
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	@Override
-	public MBThread remove(Serializable primaryKey)
-		throws NoSuchThreadException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBThread mbThread = (MBThread)session.get(
-				MBThreadImpl.class, primaryKey);
-
-			if (mbThread == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchThreadException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbThread);
-		}
-		catch (NoSuchThreadException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -7462,31 +7380,6 @@ public class MBThreadPersistenceImpl
 		}
 
 		mbThread.resetOriginalValues();
-
-		return mbThread;
-	}
-
-	/**
-	 * Returns the message boards thread with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards thread
-	 * @return the message boards thread
-	 * @throws NoSuchThreadException if a message boards thread with the primary key could not be found
-	 */
-	@Override
-	public MBThread findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchThreadException {
-
-		MBThread mbThread = fetchByPrimaryKey(primaryKey);
-
-		if (mbThread == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchThreadException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbThread;
 	}
@@ -8457,9 +8350,6 @@ public class MBThreadPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "MBThread.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBThread exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBThread exists with the key {";
 
@@ -8475,4 +8365,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:131997732
+// LIFERAY-SERVICE-BUILDER-HASH:1421711835

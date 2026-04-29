@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectDefinitionSettingPersistence.class)
 public class ObjectDefinitionSettingPersistenceImpl
-	extends BasePersistenceImpl<ObjectDefinitionSetting>
+	extends BasePersistenceImpl
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
 	implements ObjectDefinitionSettingPersistence {
 
 	/*
@@ -1040,55 +1041,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object definition settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectDefinitionSettingImpl.class);
-
-		finderCache.clearCache(ObjectDefinitionSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object definition setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectDefinitionSetting objectDefinitionSetting) {
-		entityCache.removeResult(
-			ObjectDefinitionSettingImpl.class, objectDefinitionSetting);
-	}
-
-	@Override
-	public void clearCache(
-		List<ObjectDefinitionSetting> objectDefinitionSettings) {
-
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				objectDefinitionSettings) {
-
-			entityCache.removeResult(
-				ObjectDefinitionSettingImpl.class, objectDefinitionSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectDefinitionSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ObjectDefinitionSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectDefinitionSettingModelImpl objectDefinitionSettingModelImpl) {
 
@@ -1136,48 +1088,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 		throws NoSuchObjectDefinitionSettingException {
 
 		return remove((Serializable)objectDefinitionSettingId);
-	}
-
-	/**
-	 * Removes the object definition setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object definition setting
-	 * @return the object definition setting that was removed
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting remove(Serializable primaryKey)
-		throws NoSuchObjectDefinitionSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectDefinitionSetting objectDefinitionSetting =
-				(ObjectDefinitionSetting)session.get(
-					ObjectDefinitionSettingImpl.class, primaryKey);
-
-			if (objectDefinitionSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectDefinitionSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectDefinitionSetting);
-		}
-		catch (NoSuchObjectDefinitionSettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1304,32 +1214,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 		}
 
 		objectDefinitionSetting.resetOriginalValues();
-
-		return objectDefinitionSetting;
-	}
-
-	/**
-	 * Returns the object definition setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object definition setting
-	 * @return the object definition setting
-	 * @throws NoSuchObjectDefinitionSettingException if a object definition setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectDefinitionSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectDefinitionSettingException {
-
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByPrimaryKey(
-			primaryKey);
-
-		if (objectDefinitionSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectDefinitionSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectDefinitionSetting;
 	}
@@ -1836,9 +1720,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"objectDefinitionSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectDefinitionSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectDefinitionSetting exists with the key {";
 
@@ -1854,4 +1735,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:564694398
+// LIFERAY-SERVICE-BUILDER-HASH:-520910317

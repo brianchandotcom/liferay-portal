@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderNotePersistence.class)
 public class CommerceOrderNotePersistenceImpl
-	extends BasePersistenceImpl<CommerceOrderNote>
+	extends BasePersistenceImpl<CommerceOrderNote, NoSuchOrderNoteException>
 	implements CommerceOrderNotePersistence {
 
 	/*
@@ -965,50 +965,6 @@ public class CommerceOrderNotePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce order notes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderNoteImpl.class);
-
-		finderCache.clearCache(CommerceOrderNoteImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order note.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrderNote commerceOrderNote) {
-		entityCache.removeResult(
-			CommerceOrderNoteImpl.class, commerceOrderNote);
-	}
-
-	@Override
-	public void clearCache(List<CommerceOrderNote> commerceOrderNotes) {
-		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
-			entityCache.removeResult(
-				CommerceOrderNoteImpl.class, commerceOrderNote);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderNoteImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceOrderNoteImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceOrderNoteModelImpl commerceOrderNoteModelImpl) {
 
@@ -1063,48 +1019,6 @@ public class CommerceOrderNotePersistenceImpl
 		throws NoSuchOrderNoteException {
 
 		return remove((Serializable)commerceOrderNoteId);
-	}
-
-	/**
-	 * Removes the commerce order note with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order note
-	 * @return the commerce order note that was removed
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderNote remove(Serializable primaryKey)
-		throws NoSuchOrderNoteException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrderNote commerceOrderNote =
-				(CommerceOrderNote)session.get(
-					CommerceOrderNoteImpl.class, primaryKey);
-
-			if (commerceOrderNote == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderNoteException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrderNote);
-		}
-		catch (NoSuchOrderNoteException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1292,31 +1206,6 @@ public class CommerceOrderNotePersistenceImpl
 		}
 
 		commerceOrderNote.resetOriginalValues();
-
-		return commerceOrderNote;
-	}
-
-	/**
-	 * Returns the commerce order note with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order note
-	 * @return the commerce order note
-	 * @throws NoSuchOrderNoteException if a commerce order note with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderNote findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderNoteException {
-
-		CommerceOrderNote commerceOrderNote = fetchByPrimaryKey(primaryKey);
-
-		if (commerceOrderNote == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderNoteException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrderNote;
 	}
@@ -1783,9 +1672,6 @@ public class CommerceOrderNotePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceOrderNote.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrderNote exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderNote exists with the key {";
 
@@ -1801,4 +1687,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:993634506
+// LIFERAY-SERVICE-BUILDER-HASH:1365275241

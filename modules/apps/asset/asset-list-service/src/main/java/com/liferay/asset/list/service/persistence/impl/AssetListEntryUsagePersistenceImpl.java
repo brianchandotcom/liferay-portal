@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetListEntryUsagePersistence.class)
 public class AssetListEntryUsagePersistenceImpl
-	extends BasePersistenceImpl<AssetListEntryUsage>
+	extends BasePersistenceImpl<AssetListEntryUsage, NoSuchEntryUsageException>
 	implements AssetListEntryUsagePersistence {
 
 	/*
@@ -1802,50 +1802,6 @@ public class AssetListEntryUsagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset list entry usages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetListEntryUsageImpl.class);
-
-		finderCache.clearCache(AssetListEntryUsageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset list entry usage.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetListEntryUsage assetListEntryUsage) {
-		entityCache.removeResult(
-			AssetListEntryUsageImpl.class, assetListEntryUsage);
-	}
-
-	@Override
-	public void clearCache(List<AssetListEntryUsage> assetListEntryUsages) {
-		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
-			entityCache.removeResult(
-				AssetListEntryUsageImpl.class, assetListEntryUsage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetListEntryUsageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AssetListEntryUsageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetListEntryUsageModelImpl assetListEntryUsageModelImpl) {
 
@@ -1910,48 +1866,6 @@ public class AssetListEntryUsagePersistenceImpl
 		throws NoSuchEntryUsageException {
 
 		return remove((Serializable)assetListEntryUsageId);
-	}
-
-	/**
-	 * Removes the asset list entry usage with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset list entry usage
-	 * @return the asset list entry usage that was removed
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntryUsage remove(Serializable primaryKey)
-		throws NoSuchEntryUsageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetListEntryUsage assetListEntryUsage =
-				(AssetListEntryUsage)session.get(
-					AssetListEntryUsageImpl.class, primaryKey);
-
-			if (assetListEntryUsage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryUsageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetListEntryUsage);
-		}
-		catch (NoSuchEntryUsageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2083,31 +1997,6 @@ public class AssetListEntryUsagePersistenceImpl
 		}
 
 		assetListEntryUsage.resetOriginalValues();
-
-		return assetListEntryUsage;
-	}
-
-	/**
-	 * Returns the asset list entry usage with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset list entry usage
-	 * @return the asset list entry usage
-	 * @throws NoSuchEntryUsageException if a asset list entry usage with the primary key could not be found
-	 */
-	@Override
-	public AssetListEntryUsage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryUsageException {
-
-		AssetListEntryUsage assetListEntryUsage = fetchByPrimaryKey(primaryKey);
-
-		if (assetListEntryUsage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryUsageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetListEntryUsage;
 	}
@@ -3034,9 +2923,6 @@ public class AssetListEntryUsagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetListEntryUsage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetListEntryUsage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetListEntryUsage exists with the key {";
 
@@ -3052,4 +2938,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086929248
+// LIFERAY-SERVICE-BUILDER-HASH:1556533031

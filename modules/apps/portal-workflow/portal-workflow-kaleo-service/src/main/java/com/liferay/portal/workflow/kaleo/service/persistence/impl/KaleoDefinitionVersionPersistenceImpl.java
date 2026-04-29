@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoDefinitionVersionPersistence.class)
 public class KaleoDefinitionVersionPersistenceImpl
-	extends BasePersistenceImpl<KaleoDefinitionVersion>
+	extends BasePersistenceImpl
+		<KaleoDefinitionVersion, NoSuchDefinitionVersionException>
 	implements KaleoDefinitionVersionPersistence {
 
 	/*
@@ -614,55 +615,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo definition versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoDefinitionVersionImpl.class);
-
-		finderCache.clearCache(KaleoDefinitionVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo definition version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		entityCache.removeResult(
-			KaleoDefinitionVersionImpl.class, kaleoDefinitionVersion);
-	}
-
-	@Override
-	public void clearCache(
-		List<KaleoDefinitionVersion> kaleoDefinitionVersions) {
-
-		for (KaleoDefinitionVersion kaleoDefinitionVersion :
-				kaleoDefinitionVersions) {
-
-			entityCache.removeResult(
-				KaleoDefinitionVersionImpl.class, kaleoDefinitionVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoDefinitionVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				KaleoDefinitionVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoDefinitionVersionModelImpl kaleoDefinitionVersionModelImpl) {
 
@@ -712,48 +664,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 		throws NoSuchDefinitionVersionException {
 
 		return remove((Serializable)kaleoDefinitionVersionId);
-	}
-
-	/**
-	 * Removes the kaleo definition version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo definition version
-	 * @return the kaleo definition version that was removed
-	 * @throws NoSuchDefinitionVersionException if a kaleo definition version with the primary key could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion remove(Serializable primaryKey)
-		throws NoSuchDefinitionVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				(KaleoDefinitionVersion)session.get(
-					KaleoDefinitionVersionImpl.class, primaryKey);
-
-			if (kaleoDefinitionVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDefinitionVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoDefinitionVersion);
-		}
-		catch (NoSuchDefinitionVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -881,32 +791,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 		}
 
 		kaleoDefinitionVersion.resetOriginalValues();
-
-		return kaleoDefinitionVersion;
-	}
-
-	/**
-	 * Returns the kaleo definition version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo definition version
-	 * @return the kaleo definition version
-	 * @throws NoSuchDefinitionVersionException if a kaleo definition version with the primary key could not be found
-	 */
-	@Override
-	public KaleoDefinitionVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDefinitionVersionException {
-
-		KaleoDefinitionVersion kaleoDefinitionVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (kaleoDefinitionVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDefinitionVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoDefinitionVersion;
 	}
@@ -1570,9 +1454,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoDefinitionVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoDefinitionVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoDefinitionVersion exists with the key {";
 
@@ -1585,4 +1466,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-445164111
+// LIFERAY-SERVICE-BUILDER-HASH:-1713424066

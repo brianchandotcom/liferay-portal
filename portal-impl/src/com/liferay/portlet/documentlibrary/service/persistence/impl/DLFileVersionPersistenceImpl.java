@@ -75,7 +75,7 @@ import java.util.Set;
  * @generated
  */
 public class DLFileVersionPersistenceImpl
-	extends BasePersistenceImpl<DLFileVersion>
+	extends BasePersistenceImpl<DLFileVersion, NoSuchFileVersionException>
 	implements DLFileVersionPersistence {
 
 	/*
@@ -3388,49 +3388,6 @@ public class DLFileVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library file versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(DLFileVersionImpl.class);
-
-		FinderCacheUtil.clearCache(DLFileVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library file version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFileVersion dlFileVersion) {
-		EntityCacheUtil.removeResult(DLFileVersionImpl.class, dlFileVersion);
-	}
-
-	@Override
-	public void clearCache(List<DLFileVersion> dlFileVersions) {
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			EntityCacheUtil.removeResult(
-				DLFileVersionImpl.class, dlFileVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(DLFileVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(DLFileVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFileVersionModelImpl dlFileVersionModelImpl) {
 
@@ -3490,47 +3447,6 @@ public class DLFileVersionPersistenceImpl
 		throws NoSuchFileVersionException {
 
 		return remove((Serializable)fileVersionId);
-	}
-
-	/**
-	 * Removes the document library file version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library file version
-	 * @return the document library file version that was removed
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	@Override
-	public DLFileVersion remove(Serializable primaryKey)
-		throws NoSuchFileVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFileVersion dlFileVersion = (DLFileVersion)session.get(
-				DLFileVersionImpl.class, primaryKey);
-
-			if (dlFileVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFileVersion);
-		}
-		catch (NoSuchFileVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3654,31 +3570,6 @@ public class DLFileVersionPersistenceImpl
 		}
 
 		dlFileVersion.resetOriginalValues();
-
-		return dlFileVersion;
-	}
-
-	/**
-	 * Returns the document library file version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library file version
-	 * @return the document library file version
-	 * @throws NoSuchFileVersionException if a document library file version with the primary key could not be found
-	 */
-	@Override
-	public DLFileVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileVersionException {
-
-		DLFileVersion dlFileVersion = fetchByPrimaryKey(primaryKey);
-
-		if (dlFileVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFileVersion;
 	}
@@ -4635,9 +4526,6 @@ public class DLFileVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFileVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileVersion exists with the key {";
 
@@ -4653,4 +4541,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-249932718
+// LIFERAY-SERVICE-BUILDER-HASH:1136151621

@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMFieldAttributePersistence.class)
 public class DDMFieldAttributePersistenceImpl
-	extends BasePersistenceImpl<DDMFieldAttribute>
+	extends BasePersistenceImpl
+		<DDMFieldAttribute, NoSuchFieldAttributeException>
 	implements DDMFieldAttributePersistence {
 
 	/*
@@ -1462,50 +1463,6 @@ public class DDMFieldAttributePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm field attributes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMFieldAttributeImpl.class);
-
-		finderCache.clearCache(DDMFieldAttributeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm field attribute.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMFieldAttribute ddmFieldAttribute) {
-		entityCache.removeResult(
-			DDMFieldAttributeImpl.class, ddmFieldAttribute);
-	}
-
-	@Override
-	public void clearCache(List<DDMFieldAttribute> ddmFieldAttributes) {
-		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-			entityCache.removeResult(
-				DDMFieldAttributeImpl.class, ddmFieldAttribute);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMFieldAttributeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMFieldAttributeImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMFieldAttributeModelImpl ddmFieldAttributeModelImpl) {
 
@@ -1554,48 +1511,6 @@ public class DDMFieldAttributePersistenceImpl
 		throws NoSuchFieldAttributeException {
 
 		return remove((Serializable)fieldAttributeId);
-	}
-
-	/**
-	 * Removes the ddm field attribute with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm field attribute
-	 * @return the ddm field attribute that was removed
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	@Override
-	public DDMFieldAttribute remove(Serializable primaryKey)
-		throws NoSuchFieldAttributeException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMFieldAttribute ddmFieldAttribute =
-				(DDMFieldAttribute)session.get(
-					DDMFieldAttributeImpl.class, primaryKey);
-
-			if (ddmFieldAttribute == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFieldAttributeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmFieldAttribute);
-		}
-		catch (NoSuchFieldAttributeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1694,31 +1609,6 @@ public class DDMFieldAttributePersistenceImpl
 		}
 
 		ddmFieldAttribute.resetOriginalValues();
-
-		return ddmFieldAttribute;
-	}
-
-	/**
-	 * Returns the ddm field attribute with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm field attribute
-	 * @return the ddm field attribute
-	 * @throws NoSuchFieldAttributeException if a ddm field attribute with the primary key could not be found
-	 */
-	@Override
-	public DDMFieldAttribute findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFieldAttributeException {
-
-		DDMFieldAttribute ddmFieldAttribute = fetchByPrimaryKey(primaryKey);
-
-		if (ddmFieldAttribute == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFieldAttributeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmFieldAttribute;
 	}
@@ -2417,9 +2307,6 @@ public class DDMFieldAttributePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmFieldAttribute.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMFieldAttribute exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMFieldAttribute exists with the key {";
 
@@ -2432,4 +2319,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1723644239
+// LIFERAY-SERVICE-BUILDER-HASH:-654215510

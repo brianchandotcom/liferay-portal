@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AkismetEntryPersistence.class)
 public class AkismetEntryPersistenceImpl
-	extends BasePersistenceImpl<AkismetEntry>
+	extends BasePersistenceImpl<AkismetEntry, NoSuchAkismetEntryException>
 	implements AkismetEntryPersistence {
 
 	/*
@@ -382,48 +382,6 @@ public class AkismetEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all akismet entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AkismetEntryImpl.class);
-
-		finderCache.clearCache(AkismetEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the akismet entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AkismetEntry akismetEntry) {
-		entityCache.removeResult(AkismetEntryImpl.class, akismetEntry);
-	}
-
-	@Override
-	public void clearCache(List<AkismetEntry> akismetEntries) {
-		for (AkismetEntry akismetEntry : akismetEntries) {
-			entityCache.removeResult(AkismetEntryImpl.class, akismetEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AkismetEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AkismetEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AkismetEntryModelImpl akismetEntryModelImpl) {
 
@@ -464,47 +422,6 @@ public class AkismetEntryPersistenceImpl
 		throws NoSuchAkismetEntryException {
 
 		return remove((Serializable)akismetEntryId);
-	}
-
-	/**
-	 * Removes the akismet entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the akismet entry
-	 * @return the akismet entry that was removed
-	 * @throws NoSuchAkismetEntryException if a akismet entry with the primary key could not be found
-	 */
-	@Override
-	public AkismetEntry remove(Serializable primaryKey)
-		throws NoSuchAkismetEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AkismetEntry akismetEntry = (AkismetEntry)session.get(
-				AkismetEntryImpl.class, primaryKey);
-
-			if (akismetEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAkismetEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(akismetEntry);
-		}
-		catch (NoSuchAkismetEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -605,31 +522,6 @@ public class AkismetEntryPersistenceImpl
 		}
 
 		akismetEntry.resetOriginalValues();
-
-		return akismetEntry;
-	}
-
-	/**
-	 * Returns the akismet entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the akismet entry
-	 * @return the akismet entry
-	 * @throws NoSuchAkismetEntryException if a akismet entry with the primary key could not be found
-	 */
-	@Override
-	public AkismetEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAkismetEntryException {
-
-		AkismetEntry akismetEntry = fetchByPrimaryKey(primaryKey);
-
-		if (akismetEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAkismetEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return akismetEntry;
 	}
@@ -976,9 +868,6 @@ public class AkismetEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "akismetEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AkismetEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AkismetEntry exists with the key {";
 
@@ -994,4 +883,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:354118478
+// LIFERAY-SERVICE-BUILDER-HASH:2013317856

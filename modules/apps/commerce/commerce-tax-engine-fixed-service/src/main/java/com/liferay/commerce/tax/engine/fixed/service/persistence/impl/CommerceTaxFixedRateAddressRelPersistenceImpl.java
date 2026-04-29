@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTaxFixedRateAddressRelPersistence.class)
 public class CommerceTaxFixedRateAddressRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceTaxFixedRateAddressRel>
+	extends BasePersistenceImpl
+		<CommerceTaxFixedRateAddressRel, NoSuchTaxFixedRateAddressRelException>
 	implements CommerceTaxFixedRateAddressRelPersistence {
 
 	/*
@@ -604,59 +605,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce tax fixed rate address rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTaxFixedRateAddressRelImpl.class);
-
-		finderCache.clearCache(CommerceTaxFixedRateAddressRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce tax fixed rate address rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-
-		entityCache.removeResult(
-			CommerceTaxFixedRateAddressRelImpl.class,
-			commerceTaxFixedRateAddressRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels) {
-
-		for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-				commerceTaxFixedRateAddressRels) {
-
-			entityCache.removeResult(
-				CommerceTaxFixedRateAddressRelImpl.class,
-				commerceTaxFixedRateAddressRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTaxFixedRateAddressRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTaxFixedRateAddressRelImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce tax fixed rate address rel with the primary key. Does not add the commerce tax fixed rate address rel to the database.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key for the new commerce tax fixed rate address rel
@@ -692,48 +640,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		throws NoSuchTaxFixedRateAddressRelException {
 
 		return remove((Serializable)commerceTaxFixedRateAddressRelId);
-	}
-
-	/**
-	 * Removes the commerce tax fixed rate address rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce tax fixed rate address rel
-	 * @return the commerce tax fixed rate address rel that was removed
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel remove(Serializable primaryKey)
-		throws NoSuchTaxFixedRateAddressRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-				(CommerceTaxFixedRateAddressRel)session.get(
-					CommerceTaxFixedRateAddressRelImpl.class, primaryKey);
-
-			if (commerceTaxFixedRateAddressRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaxFixedRateAddressRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTaxFixedRateAddressRel);
-		}
-		catch (NoSuchTaxFixedRateAddressRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -857,33 +763,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 		}
 
 		commerceTaxFixedRateAddressRel.resetOriginalValues();
-
-		return commerceTaxFixedRateAddressRel;
-	}
-
-	/**
-	 * Returns the commerce tax fixed rate address rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce tax fixed rate address rel
-	 * @return the commerce tax fixed rate address rel
-	 * @throws NoSuchTaxFixedRateAddressRelException if a commerce tax fixed rate address rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRateAddressRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchTaxFixedRateAddressRelException {
-
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceTaxFixedRateAddressRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaxFixedRateAddressRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTaxFixedRateAddressRel;
 	}
@@ -1303,9 +1182,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceTaxFixedRateAddressRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTaxFixedRateAddressRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTaxFixedRateAddressRel exists with the key {";
 
@@ -1321,4 +1197,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:278932718
+// LIFERAY-SERVICE-BUILDER-HASH:-1706641239

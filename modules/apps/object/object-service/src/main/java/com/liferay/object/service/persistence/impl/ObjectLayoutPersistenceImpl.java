@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectLayoutPersistence.class)
 public class ObjectLayoutPersistenceImpl
-	extends BasePersistenceImpl<ObjectLayout>
+	extends BasePersistenceImpl<ObjectLayout, NoSuchObjectLayoutException>
 	implements ObjectLayoutPersistence {
 
 	/*
@@ -927,48 +927,6 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object layouts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectLayoutImpl.class);
-
-		finderCache.clearCache(ObjectLayoutImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object layout.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectLayout objectLayout) {
-		entityCache.removeResult(ObjectLayoutImpl.class, objectLayout);
-	}
-
-	@Override
-	public void clearCache(List<ObjectLayout> objectLayouts) {
-		for (ObjectLayout objectLayout : objectLayouts) {
-			entityCache.removeResult(ObjectLayoutImpl.class, objectLayout);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectLayoutImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectLayoutImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object layout with the primary key. Does not add the object layout to the database.
 	 *
 	 * @param objectLayoutId the primary key for the new object layout
@@ -1002,47 +960,6 @@ public class ObjectLayoutPersistenceImpl
 		throws NoSuchObjectLayoutException {
 
 		return remove((Serializable)objectLayoutId);
-	}
-
-	/**
-	 * Removes the object layout with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object layout
-	 * @return the object layout that was removed
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayout remove(Serializable primaryKey)
-		throws NoSuchObjectLayoutException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectLayout objectLayout = (ObjectLayout)session.get(
-				ObjectLayoutImpl.class, primaryKey);
-
-			if (objectLayout == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectLayoutException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectLayout);
-		}
-		catch (NoSuchObjectLayoutException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1156,31 +1073,6 @@ public class ObjectLayoutPersistenceImpl
 		}
 
 		objectLayout.resetOriginalValues();
-
-		return objectLayout;
-	}
-
-	/**
-	 * Returns the object layout with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object layout
-	 * @return the object layout
-	 * @throws NoSuchObjectLayoutException if a object layout with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayout findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectLayoutException {
-
-		ObjectLayout objectLayout = fetchByPrimaryKey(primaryKey);
-
-		if (objectLayout == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectLayoutException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectLayout;
 	}
@@ -1647,9 +1539,6 @@ public class ObjectLayoutPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectLayout.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectLayout exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectLayout exists with the key {";
 
@@ -1665,4 +1554,4 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1323117611
+// LIFERAY-SERVICE-BUILDER-HASH:-63931826

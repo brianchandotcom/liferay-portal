@@ -70,7 +70,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchPlannerPlanPersistence.class)
 public class BatchPlannerPlanPersistenceImpl
-	extends BasePersistenceImpl<BatchPlannerPlan>
+	extends BasePersistenceImpl<BatchPlannerPlan, NoSuchPlanException>
 	implements BatchPlannerPlanPersistence {
 
 	/*
@@ -2434,49 +2434,6 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all batch planner plans.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BatchPlannerPlanImpl.class);
-
-		finderCache.clearCache(BatchPlannerPlanImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the batch planner plan.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BatchPlannerPlan batchPlannerPlan) {
-		entityCache.removeResult(BatchPlannerPlanImpl.class, batchPlannerPlan);
-	}
-
-	@Override
-	public void clearCache(List<BatchPlannerPlan> batchPlannerPlans) {
-		for (BatchPlannerPlan batchPlannerPlan : batchPlannerPlans) {
-			entityCache.removeResult(
-				BatchPlannerPlanImpl.class, batchPlannerPlan);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BatchPlannerPlanImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BatchPlannerPlanImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new batch planner plan with the primary key. Does not add the batch planner plan to the database.
 	 *
 	 * @param batchPlannerPlanId the primary key for the new batch planner plan
@@ -2506,47 +2463,6 @@ public class BatchPlannerPlanPersistenceImpl
 		throws NoSuchPlanException {
 
 		return remove((Serializable)batchPlannerPlanId);
-	}
-
-	/**
-	 * Removes the batch planner plan with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the batch planner plan
-	 * @return the batch planner plan that was removed
-	 * @throws NoSuchPlanException if a batch planner plan with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerPlan remove(Serializable primaryKey)
-		throws NoSuchPlanException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)session.get(
-				BatchPlannerPlanImpl.class, primaryKey);
-
-			if (batchPlannerPlan == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPlanException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(batchPlannerPlan);
-		}
-		catch (NoSuchPlanException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2657,31 +2573,6 @@ public class BatchPlannerPlanPersistenceImpl
 		}
 
 		batchPlannerPlan.resetOriginalValues();
-
-		return batchPlannerPlan;
-	}
-
-	/**
-	 * Returns the batch planner plan with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the batch planner plan
-	 * @return the batch planner plan
-	 * @throws NoSuchPlanException if a batch planner plan with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerPlan findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPlanException {
-
-		BatchPlannerPlan batchPlannerPlan = fetchByPrimaryKey(primaryKey);
-
-		if (batchPlannerPlan == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPlanException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return batchPlannerPlan;
 	}
@@ -3214,9 +3105,6 @@ public class BatchPlannerPlanPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "BatchPlannerPlan.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchPlannerPlan exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchPlannerPlan exists with the key {";
 
@@ -3232,4 +3120,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:6216216
+// LIFERAY-SERVICE-BUILDER-HASH:-1459858745

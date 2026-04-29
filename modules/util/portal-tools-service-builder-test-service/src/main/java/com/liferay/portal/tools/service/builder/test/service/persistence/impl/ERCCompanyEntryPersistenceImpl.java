@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 public class ERCCompanyEntryPersistenceImpl
-	extends BasePersistenceImpl<ERCCompanyEntry>
+	extends BasePersistenceImpl<ERCCompanyEntry, NoSuchERCCompanyEntryException>
 	implements ERCCompanyEntryPersistence {
 
 	/*
@@ -544,49 +544,6 @@ public class ERCCompanyEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all erc company entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ERCCompanyEntryImpl.class);
-
-		finderCache.clearCache(ERCCompanyEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the erc company entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ERCCompanyEntry ercCompanyEntry) {
-		entityCache.removeResult(ERCCompanyEntryImpl.class, ercCompanyEntry);
-	}
-
-	@Override
-	public void clearCache(List<ERCCompanyEntry> ercCompanyEntries) {
-		for (ERCCompanyEntry ercCompanyEntry : ercCompanyEntries) {
-			entityCache.removeResult(
-				ERCCompanyEntryImpl.class, ercCompanyEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ERCCompanyEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ERCCompanyEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ERCCompanyEntryModelImpl ercCompanyEntryModelImpl) {
 
@@ -633,47 +590,6 @@ public class ERCCompanyEntryPersistenceImpl
 		throws NoSuchERCCompanyEntryException {
 
 		return remove((Serializable)ercCompanyEntryId);
-	}
-
-	/**
-	 * Removes the erc company entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the erc company entry
-	 * @return the erc company entry that was removed
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	@Override
-	public ERCCompanyEntry remove(Serializable primaryKey)
-		throws NoSuchERCCompanyEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ERCCompanyEntry ercCompanyEntry = (ERCCompanyEntry)session.get(
-				ERCCompanyEntryImpl.class, primaryKey);
-
-			if (ercCompanyEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchERCCompanyEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ercCompanyEntry);
-		}
-		catch (NoSuchERCCompanyEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -832,31 +748,6 @@ public class ERCCompanyEntryPersistenceImpl
 		}
 
 		ercCompanyEntry.resetOriginalValues();
-
-		return ercCompanyEntry;
-	}
-
-	/**
-	 * Returns the erc company entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the erc company entry
-	 * @return the erc company entry
-	 * @throws NoSuchERCCompanyEntryException if a erc company entry with the primary key could not be found
-	 */
-	@Override
-	public ERCCompanyEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchERCCompanyEntryException {
-
-		ERCCompanyEntry ercCompanyEntry = fetchByPrimaryKey(primaryKey);
-
-		if (ercCompanyEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchERCCompanyEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ercCompanyEntry;
 	}
@@ -1215,9 +1106,6 @@ public class ERCCompanyEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ercCompanyEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ERCCompanyEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ERCCompanyEntry exists with the key {";
 
@@ -1233,4 +1121,4 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1078017348
+// LIFERAY-SERVICE-BUILDER-HASH:-1689473570

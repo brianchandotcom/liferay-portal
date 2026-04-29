@@ -72,7 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TrashVersionPersistence.class)
 public class TrashVersionPersistenceImpl
-	extends BasePersistenceImpl<TrashVersion>
+	extends BasePersistenceImpl<TrashVersion, NoSuchVersionException>
 	implements TrashVersionPersistence {
 
 	/*
@@ -575,48 +575,6 @@ public class TrashVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all trash versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TrashVersionImpl.class);
-
-		finderCache.clearCache(TrashVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the trash version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TrashVersion trashVersion) {
-		entityCache.removeResult(TrashVersionImpl.class, trashVersion);
-	}
-
-	@Override
-	public void clearCache(List<TrashVersion> trashVersions) {
-		for (TrashVersion trashVersion : trashVersions) {
-			entityCache.removeResult(TrashVersionImpl.class, trashVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TrashVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TrashVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		TrashVersionModelImpl trashVersionModelImpl) {
 
@@ -662,47 +620,6 @@ public class TrashVersionPersistenceImpl
 	@Override
 	public TrashVersion remove(long versionId) throws NoSuchVersionException {
 		return remove((Serializable)versionId);
-	}
-
-	/**
-	 * Removes the trash version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the trash version
-	 * @return the trash version that was removed
-	 * @throws NoSuchVersionException if a trash version with the primary key could not be found
-	 */
-	@Override
-	public TrashVersion remove(Serializable primaryKey)
-		throws NoSuchVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TrashVersion trashVersion = (TrashVersion)session.get(
-				TrashVersionImpl.class, primaryKey);
-
-			if (trashVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(trashVersion);
-		}
-		catch (NoSuchVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -796,31 +713,6 @@ public class TrashVersionPersistenceImpl
 		}
 
 		trashVersion.resetOriginalValues();
-
-		return trashVersion;
-	}
-
-	/**
-	 * Returns the trash version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the trash version
-	 * @return the trash version
-	 * @throws NoSuchVersionException if a trash version with the primary key could not be found
-	 */
-	@Override
-	public TrashVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchVersionException {
-
-		TrashVersion trashVersion = fetchByPrimaryKey(primaryKey);
-
-		if (trashVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return trashVersion;
 	}
@@ -1439,9 +1331,6 @@ public class TrashVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "trashVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TrashVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No TrashVersion exists with the key {";
 
@@ -1454,4 +1343,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1661611210
+// LIFERAY-SERVICE-BUILDER-HASH:909180121

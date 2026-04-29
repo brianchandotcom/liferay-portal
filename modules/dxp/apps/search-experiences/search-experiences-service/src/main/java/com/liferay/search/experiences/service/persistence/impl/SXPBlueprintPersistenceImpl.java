@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SXPBlueprintPersistence.class)
 public class SXPBlueprintPersistenceImpl
-	extends BasePersistenceImpl<SXPBlueprint>
+	extends BasePersistenceImpl<SXPBlueprint, NoSuchSXPBlueprintException>
 	implements SXPBlueprintPersistence {
 
 	/*
@@ -1376,48 +1376,6 @@ public class SXPBlueprintPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sxp blueprints.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SXPBlueprintImpl.class);
-
-		finderCache.clearCache(SXPBlueprintImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sxp blueprint.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SXPBlueprint sxpBlueprint) {
-		entityCache.removeResult(SXPBlueprintImpl.class, sxpBlueprint);
-	}
-
-	@Override
-	public void clearCache(List<SXPBlueprint> sxpBlueprints) {
-		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-			entityCache.removeResult(SXPBlueprintImpl.class, sxpBlueprint);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SXPBlueprintImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SXPBlueprintImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SXPBlueprintModelImpl sxpBlueprintModelImpl) {
 
@@ -1464,47 +1422,6 @@ public class SXPBlueprintPersistenceImpl
 		throws NoSuchSXPBlueprintException {
 
 		return remove((Serializable)sxpBlueprintId);
-	}
-
-	/**
-	 * Removes the sxp blueprint with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sxp blueprint
-	 * @return the sxp blueprint that was removed
-	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
-	 */
-	@Override
-	public SXPBlueprint remove(Serializable primaryKey)
-		throws NoSuchSXPBlueprintException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SXPBlueprint sxpBlueprint = (SXPBlueprint)session.get(
-				SXPBlueprintImpl.class, primaryKey);
-
-			if (sxpBlueprint == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSXPBlueprintException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sxpBlueprint);
-		}
-		catch (NoSuchSXPBlueprintException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1708,31 +1625,6 @@ public class SXPBlueprintPersistenceImpl
 		}
 
 		sxpBlueprint.resetOriginalValues();
-
-		return sxpBlueprint;
-	}
-
-	/**
-	 * Returns the sxp blueprint with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sxp blueprint
-	 * @return the sxp blueprint
-	 * @throws NoSuchSXPBlueprintException if a sxp blueprint with the primary key could not be found
-	 */
-	@Override
-	public SXPBlueprint findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSXPBlueprintException {
-
-		SXPBlueprint sxpBlueprint = fetchByPrimaryKey(primaryKey);
-
-		if (sxpBlueprint == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSXPBlueprintException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sxpBlueprint;
 	}
@@ -2169,9 +2061,6 @@ public class SXPBlueprintPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SXPBlueprint.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SXPBlueprint exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SXPBlueprint exists with the key {";
 
@@ -2187,4 +2076,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:314689529
+// LIFERAY-SERVICE-BUILDER-HASH:203098186

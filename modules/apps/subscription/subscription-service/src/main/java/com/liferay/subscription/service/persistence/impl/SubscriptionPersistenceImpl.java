@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SubscriptionPersistence.class)
 public class SubscriptionPersistenceImpl
-	extends BasePersistenceImpl<Subscription>
+	extends BasePersistenceImpl<Subscription, NoSuchSubscriptionException>
 	implements SubscriptionPersistence {
 
 	/*
@@ -1772,48 +1772,6 @@ public class SubscriptionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all subscriptions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SubscriptionImpl.class);
-
-		finderCache.clearCache(SubscriptionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the subscription.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Subscription subscription) {
-		entityCache.removeResult(SubscriptionImpl.class, subscription);
-	}
-
-	@Override
-	public void clearCache(List<Subscription> subscriptions) {
-		for (Subscription subscription : subscriptions) {
-			entityCache.removeResult(SubscriptionImpl.class, subscription);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SubscriptionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SubscriptionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SubscriptionModelImpl subscriptionModelImpl) {
 
@@ -1863,47 +1821,6 @@ public class SubscriptionPersistenceImpl
 		throws NoSuchSubscriptionException {
 
 		return remove((Serializable)subscriptionId);
-	}
-
-	/**
-	 * Removes the subscription with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the subscription
-	 * @return the subscription that was removed
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	@Override
-	public Subscription remove(Serializable primaryKey)
-		throws NoSuchSubscriptionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Subscription subscription = (Subscription)session.get(
-				SubscriptionImpl.class, primaryKey);
-
-			if (subscription == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSubscriptionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(subscription);
-		}
-		catch (NoSuchSubscriptionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2021,31 +1938,6 @@ public class SubscriptionPersistenceImpl
 		}
 
 		subscription.resetOriginalValues();
-
-		return subscription;
-	}
-
-	/**
-	 * Returns the subscription with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the subscription
-	 * @return the subscription
-	 * @throws NoSuchSubscriptionException if a subscription with the primary key could not be found
-	 */
-	@Override
-	public Subscription findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSubscriptionException {
-
-		Subscription subscription = fetchByPrimaryKey(primaryKey);
-
-		if (subscription == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSubscriptionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return subscription;
 	}
@@ -2832,9 +2724,6 @@ public class SubscriptionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "subscription.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Subscription exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Subscription exists with the key {";
 
@@ -2847,4 +2736,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1515446536
+// LIFERAY-SERVICE-BUILDER-HASH:1995597533

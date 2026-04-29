@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the layout revision service.
@@ -56,7 +55,7 @@ import java.util.Set;
  * @generated
  */
 public class LayoutRevisionPersistenceImpl
-	extends BasePersistenceImpl<LayoutRevision>
+	extends BasePersistenceImpl<LayoutRevision, NoSuchLayoutRevisionException>
 	implements LayoutRevisionPersistence {
 
 	/*
@@ -2439,49 +2438,6 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all layout revisions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutRevisionImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutRevisionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout revision.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutRevision layoutRevision) {
-		EntityCacheUtil.removeResult(LayoutRevisionImpl.class, layoutRevision);
-	}
-
-	@Override
-	public void clearCache(List<LayoutRevision> layoutRevisions) {
-		for (LayoutRevision layoutRevision : layoutRevisions) {
-			EntityCacheUtil.removeResult(
-				LayoutRevisionImpl.class, layoutRevision);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutRevisionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(LayoutRevisionImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new layout revision with the primary key. Does not add the layout revision to the database.
 	 *
 	 * @param layoutRevisionId the primary key for the new layout revision
@@ -2511,47 +2467,6 @@ public class LayoutRevisionPersistenceImpl
 		throws NoSuchLayoutRevisionException {
 
 		return remove((Serializable)layoutRevisionId);
-	}
-
-	/**
-	 * Removes the layout revision with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout revision
-	 * @return the layout revision that was removed
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	@Override
-	public LayoutRevision remove(Serializable primaryKey)
-		throws NoSuchLayoutRevisionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutRevision layoutRevision = (LayoutRevision)session.get(
-				LayoutRevisionImpl.class, primaryKey);
-
-			if (layoutRevision == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutRevisionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutRevision);
-		}
-		catch (NoSuchLayoutRevisionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2661,31 +2576,6 @@ public class LayoutRevisionPersistenceImpl
 		}
 
 		layoutRevision.resetOriginalValues();
-
-		return layoutRevision;
-	}
-
-	/**
-	 * Returns the layout revision with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout revision
-	 * @return the layout revision
-	 * @throws NoSuchLayoutRevisionException if a layout revision with the primary key could not be found
-	 */
-	@Override
-	public LayoutRevision findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutRevisionException {
-
-		LayoutRevision layoutRevision = fetchByPrimaryKey(primaryKey);
-
-		if (layoutRevision == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutRevisionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutRevision;
 	}
@@ -3391,9 +3281,6 @@ public class LayoutRevisionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutRevision.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutRevision exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutRevision exists with the key {";
 
@@ -3406,4 +3293,4 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1007706155
+// LIFERAY-SERVICE-BUILDER-HASH:481901024

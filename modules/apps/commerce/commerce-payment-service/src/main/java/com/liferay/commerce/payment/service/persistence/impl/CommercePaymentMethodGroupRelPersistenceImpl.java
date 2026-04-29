@@ -70,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePaymentMethodGroupRelPersistence.class)
 public class CommercePaymentMethodGroupRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePaymentMethodGroupRel>
+	extends BasePersistenceImpl
+		<CommercePaymentMethodGroupRel, NoSuchPaymentMethodGroupRelException>
 	implements CommercePaymentMethodGroupRelPersistence {
 
 	/*
@@ -998,59 +999,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce payment method group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePaymentMethodGroupRelImpl.class);
-
-		finderCache.clearCache(CommercePaymentMethodGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce payment method group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
-
-		entityCache.removeResult(
-			CommercePaymentMethodGroupRelImpl.class,
-			commercePaymentMethodGroupRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels) {
-
-		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
-				commercePaymentMethodGroupRels) {
-
-			entityCache.removeResult(
-				CommercePaymentMethodGroupRelImpl.class,
-				commercePaymentMethodGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePaymentMethodGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePaymentMethodGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePaymentMethodGroupRelModelImpl
 			commercePaymentMethodGroupRelModelImpl) {
@@ -1101,48 +1049,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		throws NoSuchPaymentMethodGroupRelException {
 
 		return remove((Serializable)commercePaymentMethodGroupRelId);
-	}
-
-	/**
-	 * Removes the commerce payment method group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce payment method group rel
-	 * @return the commerce payment method group rel that was removed
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel remove(Serializable primaryKey)
-		throws NoSuchPaymentMethodGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-				(CommercePaymentMethodGroupRel)session.get(
-					CommercePaymentMethodGroupRelImpl.class, primaryKey);
-
-			if (commercePaymentMethodGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPaymentMethodGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePaymentMethodGroupRel);
-		}
-		catch (NoSuchPaymentMethodGroupRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1268,33 +1174,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 		}
 
 		commercePaymentMethodGroupRel.resetOriginalValues();
-
-		return commercePaymentMethodGroupRel;
-	}
-
-	/**
-	 * Returns the commerce payment method group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce payment method group rel
-	 * @return the commerce payment method group rel
-	 * @throws NoSuchPaymentMethodGroupRelException if a commerce payment method group rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentMethodGroupRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPaymentMethodGroupRelException {
-
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commercePaymentMethodGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPaymentMethodGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePaymentMethodGroupRel;
 	}
@@ -1728,9 +1607,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CommercePaymentMethodGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePaymentMethodGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentMethodGroupRel exists with the key {";
 
@@ -1746,4 +1622,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:667835426
+// LIFERAY-SERVICE-BUILDER-HASH:-1075377989

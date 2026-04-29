@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetDisplayPageEntryPersistence.class)
 public class AssetDisplayPageEntryPersistenceImpl
-	extends BasePersistenceImpl<AssetDisplayPageEntry>
+	extends BasePersistenceImpl
+		<AssetDisplayPageEntry, NoSuchDisplayPageEntryException>
 	implements AssetDisplayPageEntryPersistence {
 
 	/*
@@ -1216,55 +1217,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset display page entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetDisplayPageEntryImpl.class);
-
-		finderCache.clearCache(AssetDisplayPageEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset display page entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetDisplayPageEntry assetDisplayPageEntry) {
-		entityCache.removeResult(
-			AssetDisplayPageEntryImpl.class, assetDisplayPageEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<AssetDisplayPageEntry> assetDisplayPageEntries) {
-
-		for (AssetDisplayPageEntry assetDisplayPageEntry :
-				assetDisplayPageEntries) {
-
-			entityCache.removeResult(
-				AssetDisplayPageEntryImpl.class, assetDisplayPageEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetDisplayPageEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AssetDisplayPageEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetDisplayPageEntryModelImpl assetDisplayPageEntryModelImpl) {
 
@@ -1326,48 +1278,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 		throws NoSuchDisplayPageEntryException {
 
 		return remove((Serializable)assetDisplayPageEntryId);
-	}
-
-	/**
-	 * Removes the asset display page entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset display page entry
-	 * @return the asset display page entry that was removed
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry remove(Serializable primaryKey)
-		throws NoSuchDisplayPageEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetDisplayPageEntry assetDisplayPageEntry =
-				(AssetDisplayPageEntry)session.get(
-					AssetDisplayPageEntryImpl.class, primaryKey);
-
-			if (assetDisplayPageEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDisplayPageEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetDisplayPageEntry);
-		}
-		catch (NoSuchDisplayPageEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1501,32 +1411,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 		}
 
 		assetDisplayPageEntry.resetOriginalValues();
-
-		return assetDisplayPageEntry;
-	}
-
-	/**
-	 * Returns the asset display page entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset display page entry
-	 * @return the asset display page entry
-	 * @throws NoSuchDisplayPageEntryException if a asset display page entry with the primary key could not be found
-	 */
-	@Override
-	public AssetDisplayPageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDisplayPageEntryException {
-
-		AssetDisplayPageEntry assetDisplayPageEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (assetDisplayPageEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDisplayPageEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetDisplayPageEntry;
 	}
@@ -2304,9 +2188,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetDisplayPageEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetDisplayPageEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetDisplayPageEntry exists with the key {";
 
@@ -2322,4 +2203,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1097984502
+// LIFERAY-SERVICE-BUILDER-HASH:-1033569178

@@ -57,7 +57,8 @@ import java.util.Set;
  * @generated
  */
 public class CompanyPersistenceImpl
-	extends BasePersistenceImpl<Company> implements CompanyPersistence {
+	extends BasePersistenceImpl<Company, NoSuchCompanyException>
+	implements CompanyPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -366,48 +367,6 @@ public class CompanyPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all companies.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(CompanyImpl.class);
-
-		FinderCacheUtil.clearCache(CompanyImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the company.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Company company) {
-		EntityCacheUtil.removeResult(CompanyImpl.class, company);
-	}
-
-	@Override
-	public void clearCache(List<Company> companies) {
-		for (Company company : companies) {
-			EntityCacheUtil.removeResult(CompanyImpl.class, company);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(CompanyImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(CompanyImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(CompanyModelImpl companyModelImpl) {
 		Object[] args = new Object[] {companyModelImpl.getWebId()};
 
@@ -441,47 +400,6 @@ public class CompanyPersistenceImpl
 	@Override
 	public Company remove(long companyId) throws NoSuchCompanyException {
 		return remove((Serializable)companyId);
-	}
-
-	/**
-	 * Removes the company with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the company
-	 * @return the company that was removed
-	 * @throws NoSuchCompanyException if a company with the primary key could not be found
-	 */
-	@Override
-	public Company remove(Serializable primaryKey)
-		throws NoSuchCompanyException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Company company = (Company)session.get(
-				CompanyImpl.class, primaryKey);
-
-			if (company == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCompanyException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(company);
-		}
-		catch (NoSuchCompanyException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -588,31 +506,6 @@ public class CompanyPersistenceImpl
 		}
 
 		company.resetOriginalValues();
-
-		return company;
-	}
-
-	/**
-	 * Returns the company with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the company
-	 * @return the company
-	 * @throws NoSuchCompanyException if a company with the primary key could not be found
-	 */
-	@Override
-	public Company findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCompanyException {
-
-		Company company = fetchByPrimaryKey(primaryKey);
-
-		if (company == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCompanyException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return company;
 	}
@@ -927,9 +820,6 @@ public class CompanyPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "company.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Company exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Company exists with the key {";
 
@@ -945,4 +835,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1907594973
+// LIFERAY-SERVICE-BUILDER-HASH:-707855033

@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DefinitionPersistence.class)
 public class DefinitionPersistenceImpl
-	extends BasePersistenceImpl<Definition> implements DefinitionPersistence {
+	extends BasePersistenceImpl<Definition, NoSuchDefinitionException>
+	implements DefinitionPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1023,48 +1024,6 @@ public class DefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DefinitionImpl.class);
-
-		finderCache.clearCache(DefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Definition definition) {
-		entityCache.removeResult(DefinitionImpl.class, definition);
-	}
-
-	@Override
-	public void clearCache(List<Definition> definitions) {
-		for (Definition definition : definitions) {
-			entityCache.removeResult(DefinitionImpl.class, definition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DefinitionModelImpl definitionModelImpl) {
 
@@ -1110,47 +1069,6 @@ public class DefinitionPersistenceImpl
 		throws NoSuchDefinitionException {
 
 		return remove((Serializable)definitionId);
-	}
-
-	/**
-	 * Removes the definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the definition
-	 * @return the definition that was removed
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	@Override
-	public Definition remove(Serializable primaryKey)
-		throws NoSuchDefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Definition definition = (Definition)session.get(
-				DefinitionImpl.class, primaryKey);
-
-			if (definition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(definition);
-		}
-		catch (NoSuchDefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1265,31 +1183,6 @@ public class DefinitionPersistenceImpl
 		}
 
 		definition.resetOriginalValues();
-
-		return definition;
-	}
-
-	/**
-	 * Returns the definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the definition
-	 * @return the definition
-	 * @throws NoSuchDefinitionException if a definition with the primary key could not be found
-	 */
-	@Override
-	public Definition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDefinitionException {
-
-		Definition definition = fetchByPrimaryKey(primaryKey);
-
-		if (definition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return definition;
 	}
@@ -1754,9 +1647,6 @@ public class DefinitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Definition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Definition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Definition exists with the key {";
 
@@ -1772,4 +1662,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-49285614
+// LIFERAY-SERVICE-BUILDER-HASH:-1748346857

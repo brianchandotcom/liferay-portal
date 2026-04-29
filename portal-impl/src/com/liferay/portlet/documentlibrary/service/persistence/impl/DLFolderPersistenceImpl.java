@@ -86,7 +86,8 @@ import java.util.Set;
  * @generated
  */
 public class DLFolderPersistenceImpl
-	extends BasePersistenceImpl<DLFolder> implements DLFolderPersistence {
+	extends BasePersistenceImpl<DLFolder, NoSuchFolderException>
+	implements DLFolderPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -5668,48 +5669,6 @@ public class DLFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(DLFolderImpl.class);
-
-		FinderCacheUtil.clearCache(DLFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFolder dlFolder) {
-		EntityCacheUtil.removeResult(DLFolderImpl.class, dlFolder);
-	}
-
-	@Override
-	public void clearCache(List<DLFolder> dlFolders) {
-		for (DLFolder dlFolder : dlFolders) {
-			EntityCacheUtil.removeResult(DLFolderImpl.class, dlFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(DLFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(DLFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFolderModelImpl dlFolderModelImpl) {
 
@@ -5783,47 +5742,6 @@ public class DLFolderPersistenceImpl
 	@Override
 	public DLFolder remove(long folderId) throws NoSuchFolderException {
 		return remove((Serializable)folderId);
-	}
-
-	/**
-	 * Removes the document library folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library folder
-	 * @return the document library folder that was removed
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	@Override
-	public DLFolder remove(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFolder dlFolder = (DLFolder)session.get(
-				DLFolderImpl.class, primaryKey);
-
-			if (dlFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFolder);
-		}
-		catch (NoSuchFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6006,31 +5924,6 @@ public class DLFolderPersistenceImpl
 		}
 
 		dlFolder.resetOriginalValues();
-
-		return dlFolder;
-	}
-
-	/**
-	 * Returns the document library folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library folder
-	 * @return the document library folder
-	 * @throws NoSuchFolderException if a document library folder with the primary key could not be found
-	 */
-	@Override
-	public DLFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		DLFolder dlFolder = fetchByPrimaryKey(primaryKey);
-
-		if (dlFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFolder;
 	}
@@ -7644,9 +7537,6 @@ public class DLFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFolder exists with the key {";
 
@@ -7662,4 +7552,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:209435461
+// LIFERAY-SERVICE-BUILDER-HASH:-1262106816

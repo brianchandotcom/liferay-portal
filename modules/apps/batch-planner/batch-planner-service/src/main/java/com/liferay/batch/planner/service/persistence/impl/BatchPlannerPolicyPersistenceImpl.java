@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchPlannerPolicyPersistence.class)
 public class BatchPlannerPolicyPersistenceImpl
-	extends BasePersistenceImpl<BatchPlannerPolicy>
+	extends BasePersistenceImpl<BatchPlannerPolicy, NoSuchPolicyException>
 	implements BatchPlannerPolicyPersistence {
 
 	/*
@@ -391,50 +390,6 @@ public class BatchPlannerPolicyPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all batch planner policies.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BatchPlannerPolicyImpl.class);
-
-		finderCache.clearCache(BatchPlannerPolicyImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the batch planner policy.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BatchPlannerPolicy batchPlannerPolicy) {
-		entityCache.removeResult(
-			BatchPlannerPolicyImpl.class, batchPlannerPolicy);
-	}
-
-	@Override
-	public void clearCache(List<BatchPlannerPolicy> batchPlannerPolicies) {
-		for (BatchPlannerPolicy batchPlannerPolicy : batchPlannerPolicies) {
-			entityCache.removeResult(
-				BatchPlannerPolicyImpl.class, batchPlannerPolicy);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BatchPlannerPolicyImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BatchPlannerPolicyImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BatchPlannerPolicyModelImpl batchPlannerPolicyModelImpl) {
 
@@ -477,48 +432,6 @@ public class BatchPlannerPolicyPersistenceImpl
 		throws NoSuchPolicyException {
 
 		return remove((Serializable)batchPlannerPolicyId);
-	}
-
-	/**
-	 * Removes the batch planner policy with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the batch planner policy
-	 * @return the batch planner policy that was removed
-	 * @throws NoSuchPolicyException if a batch planner policy with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerPolicy remove(Serializable primaryKey)
-		throws NoSuchPolicyException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BatchPlannerPolicy batchPlannerPolicy =
-				(BatchPlannerPolicy)session.get(
-					BatchPlannerPolicyImpl.class, primaryKey);
-
-			if (batchPlannerPolicy == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPolicyException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(batchPlannerPolicy);
-		}
-		catch (NoSuchPolicyException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -636,31 +549,6 @@ public class BatchPlannerPolicyPersistenceImpl
 		}
 
 		batchPlannerPolicy.resetOriginalValues();
-
-		return batchPlannerPolicy;
-	}
-
-	/**
-	 * Returns the batch planner policy with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the batch planner policy
-	 * @return the batch planner policy
-	 * @throws NoSuchPolicyException if a batch planner policy with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerPolicy findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPolicyException {
-
-		BatchPlannerPolicy batchPlannerPolicy = fetchByPrimaryKey(primaryKey);
-
-		if (batchPlannerPolicy == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPolicyException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return batchPlannerPolicy;
 	}
@@ -1016,9 +904,6 @@ public class BatchPlannerPolicyPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "batchPlannerPolicy.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchPlannerPolicy exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchPlannerPolicy exists with the key {";
 
@@ -1031,4 +916,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1265449969
+// LIFERAY-SERVICE-BUILDER-HASH:-1193752385

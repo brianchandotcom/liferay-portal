@@ -8,6 +8,7 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.phone.n
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueUtil;
@@ -48,6 +49,24 @@ public class PhoneNumberDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"localizedObjectField", localizedObjectField
+		).put(
+			"predefinedValue",
+			() -> {
+				LocalizedValue predefinedValue =
+					(LocalizedValue)ddmFormField.getProperty("predefinedValue");
+
+				if (predefinedValue == null) {
+					return null;
+				}
+
+				return predefinedValue.getString(
+					ddmFormFieldRenderingContext.getLocale());
+			}
+		).put(
+			"prefix", GetterUtil.getString(ddmFormField.getProperty("prefix"))
+		).put(
+			"prefixType",
+			GetterUtil.getString(ddmFormField.getProperty("prefixType"))
 		).put(
 			"value",
 			() -> {

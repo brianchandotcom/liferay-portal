@@ -7,7 +7,6 @@ export {default as checkSegmentLink} from './CheckSegmentLink';
 export {default as checkValidChannel} from './CheckValidChannel';
 export {default as optional} from './Optional';
 export {default as redirectIf} from './RedirectIf';
-export {default as withAccount} from './WithAccount';
 export {default as withAction} from './WithAction';
 export {default as withBaseResults} from './WithBaseResults';
 export {default as withCurrentUser} from './WithCurrentUser';

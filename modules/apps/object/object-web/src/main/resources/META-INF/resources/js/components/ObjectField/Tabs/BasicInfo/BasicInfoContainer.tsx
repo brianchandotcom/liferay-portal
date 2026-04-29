@@ -162,7 +162,6 @@ export function BasicInfoContainer({
 			{values.businessType === 'PhoneNumber' && (
 				<PhoneNumberProperties
 					countries={countries}
-					disabled={disableFieldFormBase}
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}

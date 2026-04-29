@@ -127,7 +127,6 @@ const PickerTrigger = React.forwardRef<
 
 export function PhoneNumberProperties({
 	countries,
-	disabled,
 	objectFieldSettings,
 	onSubmit,
 	setValues,
@@ -204,7 +203,6 @@ export function PhoneNumberProperties({
 	return (
 		<>
 			<SingleSelect
-				disabled={disabled}
 				items={prefixTypeOptions}
 				label={Liferay.Language.get('prefix-type')}
 				onSelectionChange={(value) =>
@@ -220,7 +218,6 @@ export function PhoneNumberProperties({
 
 						<Picker
 							as={PickerTrigger}
-							disabled={disabled}
 							items={countries}
 							onSelectionChange={(key) => {
 								const selectedCountry = countries.find(

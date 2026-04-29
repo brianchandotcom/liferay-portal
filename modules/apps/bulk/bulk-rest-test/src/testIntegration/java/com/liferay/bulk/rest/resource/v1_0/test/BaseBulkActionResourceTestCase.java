@@ -29,6 +29,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.PermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ResetPermissionObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.RestoreObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.StatusObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.UpdateObjectValuesBulkSelectionAction;
 import com.liferay.bulk.rest.client.http.HttpInvoker;
@@ -1972,6 +1973,15 @@ public abstract class BaseBulkActionResourceTestCase {
 				return bulkAction;
 			},
 			() -> {
+				RestoreObjectBulkSelectionAction bulkAction =
+					new RestoreObjectBulkSelectionAction();
+
+				bulkAction.setType(
+					BulkAction.Type.create("RestoreObjectBulkSelectionAction"));
+
+				return bulkAction;
+			},
+			() -> {
 				StatusObjectBulkSelectionAction bulkAction =
 					new StatusObjectBulkSelectionAction();
 
@@ -2236,4 +2246,4 @@ public abstract class BaseBulkActionResourceTestCase {
 		_bulkActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1341992760
+// LIFERAY-REST-BUILDER-HASH:-1463695251

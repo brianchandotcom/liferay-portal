@@ -29,6 +29,6 @@ public class InvalidGitCommitSHAFailureMessageGenerator
 	private static final String _TOKEN_SHA = "SHA";
 
 	private static final String _TOKEN_WAS_NOT_FOUND_IN_BRANCH =
-		" was not found in branch '";
+		" was not found in branch \"";
 
 }

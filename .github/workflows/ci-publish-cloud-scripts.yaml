@@ -2,12 +2,62 @@ defaults:
     run:
         shell: bash
 jobs:
+    delete-pr-bootstrap:
+        if: |
+            github.event.action == 'closed' &&
+            github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' &&
+            github.event_name == 'pull_request' &&
+            github.repository == 'cloudnative-team/liferay-portal'
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v2
+                with:
+                    service_account: ${{secrets.GCP_SA}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+            -   name: Set up Google Cloud CLI
+                uses: google-github-actions/setup-gcloud@v2
+                with:
+                    project_id: ${{secrets.GCP_PROJECT_ID}}
+            -   env:
+                    BUCKET: liferay-cloud-native-bootstrap-nonprd
+                    PR_NUMBER: ${{github.event.pull_request.number}}
+                    PROVIDER: ${{matrix.provider}}
+                name: Delete preview bootstrap scripts for closed PR
+                run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    PATTERN="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
+
+                    echo "Searching for ${PATTERN}."
+
+                    if gcloud storage ls "${PATTERN}" > /dev/null 2>&1
+                    then
+                        echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
+
+                        gcloud storage rm "${PATTERN}"
+                    else
+                        echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
+                    fi
+        strategy:
+            matrix:
+                provider:
+                    -   aws
+                    -   gcp
     publish-liferay-aws-bootstrap:
-        if: ${{github.repository == 'liferay/liferay-portal'}}
+        env:
+            IS_PR: ${{github.event_name == 'pull_request'}}
+        if: |
+            (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:
@@ -21,19 +71,33 @@ jobs:
                 run: |
                     CURRENT_VERSION="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"
 
+                    if [[ "${IS_PR}" == "true" ]]
+                    then
+                        SHORT_SHA=$(git rev-parse --short HEAD)
+
+                        CURRENT_VERSION="${CURRENT_VERSION}-pr-${{github.event.pull_request.number}}-g${SHORT_SHA}"
+
+                        BUCKET="liferay-cloud-native-bootstrap-nonprd"
+                    else
+                        BUCKET="liferay-cloud-native-bootstrap"
+                    fi
+
                     echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
-                    GCS_PATH="gs://liferay-cloud-native-bootstrap/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
+                    GCS_PATH="gs://${BUCKET}/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
 
                     echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
             -   id: verify_version
                 name: Verify version
                 run: |
-                    if ! gsutil --quiet stat ${GCS_PATH}
+                    if [[ "${IS_PR}" == "true" ]]
+                    then
+                        echo "Overwriting preview ${CURRENT_VERSION} if it exists."
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    elif ! gsutil --quiet stat ${GCS_PATH}
                     then
                         echo "Verified version ${CURRENT_VERSION}."
-
-                        echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
@@ -60,11 +124,17 @@ jobs:
                         /tmp/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz \
                         ${GCS_PATH}
     publish-liferay-gcp-bootstrap:
-        if: ${{github.repository == 'liferay/liferay-portal'}}
+        env:
+            IS_PR: ${{github.event_name == 'pull_request'}}
+        if: |
+            (github.event_name == 'push' && github.repository == 'liferay/liferay-portal') ||
+            (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal')
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:
@@ -78,19 +148,33 @@ jobs:
                 run: |
                     CURRENT_VERSION="$(jq -r '."liferay-gcp-bootstrap"' ./cloud/scripts/versions.json)"
 
+                    if [[ "${IS_PR}" == "true" ]]
+                    then
+                        SHORT_SHA=$(git rev-parse --short HEAD)
+
+                        CURRENT_VERSION="${CURRENT_VERSION}-pr-${{github.event.pull_request.number}}-g${SHORT_SHA}"
+
+                        BUCKET="liferay-cloud-native-bootstrap-nonprd"
+                    else
+                        BUCKET="liferay-cloud-native-bootstrap"
+                    fi
+
                     echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
-                    GCS_PATH="gs://liferay-cloud-native-bootstrap/bootstrap/liferay-gcp-bootstrap/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz"
+                    GCS_PATH="gs://${BUCKET}/bootstrap/liferay-gcp-bootstrap/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz"
 
                     echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
             -   id: verify_version
                 name: Verify version
                 run: |
-                    if ! gsutil --quiet stat ${GCS_PATH}
+                    if [[ "${IS_PR}" == "true" ]]
+                    then
+                        echo "Overwriting preview ${CURRENT_VERSION} if it exists."
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    elif ! gsutil --quiet stat ${GCS_PATH}
                     then
                         echo "Verified version ${CURRENT_VERSION}."
-
-                        echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
@@ -116,6 +200,19 @@ jobs:
                         /tmp/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz \
                         ${GCS_PATH}
 on:
+    pull_request:
+        branches:
+            -   master
+        paths:
+            -   .github/workflows/ci-publish-cloud-scripts.yaml
+            -   cloud/scripts/**
+            -   cloud/terraform/aws/**
+            -   cloud/terraform/gcp/**
+        types:
+            -   closed
+            -   opened
+            -   reopened
+            -   synchronize
     push:
         branches:
             -   master

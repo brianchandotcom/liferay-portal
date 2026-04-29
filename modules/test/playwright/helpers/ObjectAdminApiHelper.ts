@@ -35,6 +35,14 @@ export class ObjectAdminApiHelper {
 		);
 	}
 
+	async getObjectDefinitionByName(name: string): Promise<ObjectDefinition> {
+		const {items} = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/object-definitions?filter=name eq '${name}'`
+		);
+
+		return items[0];
+	}
+
 	async postObjectDefinitionObjectFieldBatch(
 		objectDefinitionId: number,
 		objectFields: Partial<ObjectField>[]

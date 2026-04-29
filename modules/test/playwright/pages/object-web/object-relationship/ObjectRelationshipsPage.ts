@@ -18,7 +18,9 @@ export class ObjectRelationshipsPage {
 	readonly inheritanceModalDisableButton: Locator;
 	readonly inheritanceModalHeader: Locator;
 	readonly inheritanceWarningMessage: Locator;
+	readonly labelInput: Locator;
 	readonly multipleParentInheritanceErrorMessage: Locator;
+	readonly page: Page;
 	readonly relationshipTabItem: Locator;
 	readonly saveObjectRelationshipButton: Locator;
 	readonly viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
@@ -52,11 +54,15 @@ export class ObjectRelationshipsPage {
 			.getByText(
 				'Error:Unable to bind the object definitions when the child object definition is bound to another object definition'
 			);
+		this.labelInput = page
+			.frameLocator('iframe')
+			.getByLabel('LabelMandatory');
 		this.multipleParentInheritanceErrorMessage = page
 			.frameLocator('iframe')
 			.getByText(
 				'Error:You cannot enable inheritance because there are already child entries in the regular relationship.'
 			);
+		this.page = page;
 		this.relationshipTabItem = page.getByRole('link', {
 			name: 'Relationships',
 		});
@@ -64,6 +70,21 @@ export class ObjectRelationshipsPage {
 			.frameLocator('iframe')
 			.getByRole('button', {name: 'Save'});
 		this.viewObjectDefinitionsPage = new ViewObjectDefinitionsPage(page);
+	}
+
+	async deleteObjectRelationship(label: string, name: string) {
+		await this.page
+			.getByRole('row', {name: label})
+			.getByRole('button', {name: 'Actions'})
+			.click();
+
+		await this.deleteObjectRelationshipOption.click();
+
+		const modal = this.page.getByRole('dialog');
+
+		await modal.getByRole('textbox').fill(name);
+
+		await modal.getByRole('button', {exact: true, name: 'Delete'}).click();
 	}
 
 	async goto(objectDefinitionLabel: string, objectFolderLabel?: string) {

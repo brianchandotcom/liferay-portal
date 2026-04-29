@@ -16358,11 +16358,24 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<propertycopy from="database.${database.type}.url" name="custom.sql.url" silent="true" />
 				<propertycopy from="database.${database.type}.username" name="custom.sql.username" silent="true" />
 
-				<sql classpath="${app.server.shielded-container-lib.portal.dir}/${custom.sql.driver.jar}" driver="${custom.sql.driver}" onerror="continue" output="output.txt" password="${custom.sql.password}" print="true" url="${custom.sql.url}" userid="${custom.sql.username}">
-					<![CDATA[
-						${custom.sql.statement}
-					]]>
-				</sql>
+				<delete failonerror="false" file="output.txt" />
+
+				<for delimiter="${line.separator}" list="${custom.sql.statement}" param="sql.statement">
+					<sequential>
+						<if>
+							<not>
+								<equals arg1="@{sql.statement}" arg2="" trim="true" />
+							</not>
+							<then>
+								<sql append="true" classpath="${app.server.shielded-container-lib.portal.dir}/${custom.sql.driver.jar}" driver="${custom.sql.driver}" onerror="continue" output="output.txt" password="${custom.sql.password}" print="true" url="${custom.sql.url}" userid="${custom.sql.username}">
+									<![CDATA[
+										@{sql.statement}
+									]]>
+								</sql>
+							</then>
+						</if>
+					</sequential>
+				</for>
 			</then>
 		</if>
 

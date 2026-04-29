@@ -9,10 +9,12 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {getTempDir} from '../../../utils/temp';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import postSingleApproverCopy from '../../portal-workflow-kaleo-designer-web/main/utils/postSingleApproverCopy';
 import {structureBuilderPagesTest} from '../structure-builder/fixtures/structureBuilderPagesTest';
@@ -464,6 +466,81 @@ test(
 		await expect(page.locator('.modal-title')).toHaveText(
 			'Import Content Structures'
 		);
+	}
+);
+
+test(
+	'CMS Administrator can export and import content structures',
+	{tag: '@LPD-87533'},
+	async ({apiHelpers, page, structuresPage}) => {
+		let larFilePath: string;
+
+		await test.step('Log in as a CMS Administrator', async () => {
+			const user = await addCMSAdministrator(apiHelpers);
+
+			await performUserSwitch(page, user.alternateName);
+		});
+
+		await test.step('Export content structures and download the LAR', async () => {
+			await structuresPage.openMenuItem('Export');
+
+			await expect(page.locator('.modal-title')).toHaveText(
+				'Export Content Structures'
+			);
+
+			const exportDialog = page
+				.getByRole('dialog', {name: 'Export Content Structures'})
+				.frameLocator('iframe');
+
+			await exportDialog
+				.getByRole('button', {exact: true, name: 'Export'})
+				.click();
+
+			await expect(
+				exportDialog.getByRole('cell', {name: 'In Progress'}).first()
+			).toBeVisible();
+
+			await expect(
+				exportDialog.getByRole('cell', {name: 'Successful'}).first()
+			).toBeVisible({timeout: 30000});
+
+			const downloadPromise = page.waitForEvent('download');
+
+			await exportDialog
+				.getByRole('link', {name: /\.lar/i})
+				.first()
+				.click();
+
+			const download = await downloadPromise;
+
+			larFilePath = `${getTempDir()}/${download.suggestedFilename()}`;
+
+			await download.saveAs(larFilePath);
+		});
+
+		await test.step('Import the downloaded LAR back', async () => {
+			await structuresPage.openMenuItem('Import');
+
+			await expect(page.locator('.modal-title')).toHaveText(
+				'Import Content Structures'
+			);
+
+			const importDialog = page
+				.getByRole('dialog', {name: 'Import Content Structures'})
+				.frameLocator('iframe');
+
+			await importDialog
+				.locator('input[type="file"]')
+				.setInputFiles(larFilePath);
+
+			await importDialog.getByRole('button', {name: 'Continue'}).click();
+
+			await importDialog.getByRole('button', {name: 'Import'}).click();
+
+			await expect(
+				importDialog.getByRole('cell', {name: 'Successful'}).first()
+			).toBeVisible({timeout: 30000});
+		});
 	}
 );
 

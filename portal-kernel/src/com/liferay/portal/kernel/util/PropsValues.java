@@ -2396,7 +2396,7 @@ public class PropsValues {
 	public static final long UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD),
-			300000L);
+			300000);
 
 	public static final String UPGRADE_REPORT_DIR = GetterUtil.getString(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIR));

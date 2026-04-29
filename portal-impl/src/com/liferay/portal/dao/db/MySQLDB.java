@@ -169,13 +169,11 @@ public class MySQLDB extends BaseDB {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
+					long duration = TimeUnit.SECONDS.toMillis(
+						resultSet.getLong("duration"));
 					String id = resultSet.getString("id");
 					String query = resultSet.getString("query");
 					String schema = resultSet.getString("schemaName");
-
-					long duration = TimeUnit.SECONDS.toMillis(
-						resultSet.getLong("duration"));
-
 					String state = resultSet.getString("state");
 
 					lockedQueryInfos.add(

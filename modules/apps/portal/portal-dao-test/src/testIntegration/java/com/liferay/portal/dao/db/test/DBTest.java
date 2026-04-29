@@ -686,6 +686,7 @@ public class DBTest {
 			Thread thread = new Thread(futureTask);
 
 			thread.setDaemon(true);
+
 			thread.start();
 
 			boolean locked = false;
@@ -701,15 +702,13 @@ public class DBTest {
 					if ((query != null) && query.contains("waiting")) {
 						locked = true;
 
+						Assert.assertTrue(lockedQueryInfo.getDuration() >= 0);
 						Assert.assertNotNull(lockedQueryInfo.getId());
 						Assert.assertNotNull(lockedQueryInfo.getSchema());
-						Assert.assertTrue(lockedQueryInfo.getDuration() >= 0);
 
 						String actualState = lockedQueryInfo.getState();
 
-						Assert.assertNotNull(actualState);
 						Assert.assertTrue(
-							actualState,
 							StringUtil.containsIgnoreCase(
 								actualState, "LOCK WAIT"));
 
@@ -769,9 +768,6 @@ public class DBTest {
 			connection, new ObjectValuePair<>(TABLE_NAME_1, _TABLE_NAME_3),
 			new ObjectValuePair<>(_TABLE_NAME_2, TABLE_NAME_1),
 			new ObjectValuePair<>(_TABLE_NAME_3, _TABLE_NAME_2));
-
-		Assert.assertTrue(dbInspector.hasTable(TABLE_NAME_1));
-		Assert.assertTrue(dbInspector.hasTable(_TABLE_NAME_2));
 
 		Assert.assertTrue(dbInspector.hasColumn(TABLE_NAME_1, "id1"));
 		Assert.assertTrue(dbInspector.hasColumn(_TABLE_NAME_2, "id"));

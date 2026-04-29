@@ -17,6 +17,7 @@ import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -52,6 +53,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@FeatureFlag("LPD-6252")
 @RunWith(Arquillian.class)
 public class CommerceOrderAttachmentModelResourcePermissionTest {
 
@@ -62,6 +64,8 @@ public class CommerceOrderAttachmentModelResourcePermissionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		CommerceOrderAttachmentTestUtil.initialize(getClass());
+
 		_group = GroupTestUtil.addGroup();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -123,7 +127,7 @@ public class CommerceOrderAttachmentModelResourcePermissionTest {
 				RandomTestUtil.randomString(), _user.getUserId(),
 				_commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.nextDouble(), false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), "invoice",
 				RandomTestUtil.randomString(),
 				new ByteArrayInputStream("Liferay".getBytes()));
 

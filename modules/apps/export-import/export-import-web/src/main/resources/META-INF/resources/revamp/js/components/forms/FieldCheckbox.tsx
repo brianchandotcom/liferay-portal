@@ -30,13 +30,11 @@ export function FieldCheckbox({
 	const labelId = `${fieldId}-label`;
 	const descriptionId = `${fieldId}-description`;
 
-	const handleChange = () => onChange(!checked);
-
 	return (
 		<OptionRow
 			bordered={bordered}
 			description={description}
-			descriptionId={descriptionId}
+			descriptionId={description ? descriptionId : undefined}
 			input={
 				<ClayCheckbox
 					{...restProps}
@@ -44,14 +42,11 @@ export function FieldCheckbox({
 					aria-labelledby={labelId}
 					checked={checked}
 					id={fieldId}
-					onChange={handleChange}
-					onClick={(event) => event.stopPropagation()}
+					onChange={() => onChange(!checked)}
 				/>
 			}
 			label={label}
-			labelHtmlFor={fieldId}
 			labelId={labelId}
-			onClick={handleChange}
 		/>
 	);
 }

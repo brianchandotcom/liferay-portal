@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import classnames from 'classnames';
 import React from 'react';
 
 import '../../../css/utilities.scss';
@@ -14,23 +15,21 @@ export function OptionRow({
 	descriptionId,
 	input,
 	label,
-	labelHtmlFor,
 	labelId,
-	onClick,
 }: {
 	bordered?: boolean;
 	description?: string;
-	descriptionId: string;
+	descriptionId?: string;
 	input: React.ReactNode;
 	label: string;
-	labelHtmlFor: string;
 	labelId: string;
-	onClick: () => void;
 }) {
 	return (
-		<div
-			className={`${bordered ? 'border p-3 rounded ' : ''}cursor-pointer mb-2 text-3`}
-			onClick={onClick}
+		<label
+			className={classnames(
+				'cursor-pointer d-block mb-2 text-3',
+				bordered && 'border p-3 rounded'
+			)}
 		>
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>
@@ -39,14 +38,12 @@ export function OptionRow({
 
 				<ClayLayout.ContentCol expand>
 					<ClayLayout.ContentSection>
-						<label
+						<div
 							className="font-weight-semi-bold mb-0 text-dark"
-							htmlFor={labelHtmlFor}
 							id={labelId}
-							onClick={(event) => event.stopPropagation()}
 						>
 							{label}
-						</label>
+						</div>
 
 						{description && (
 							<div
@@ -59,6 +56,6 @@ export function OptionRow({
 					</ClayLayout.ContentSection>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
-		</div>
+		</label>
 	);
 }

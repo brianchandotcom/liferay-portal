@@ -17,7 +17,10 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -45,6 +48,13 @@ public class ProductConfigurationListResourceTest
 		_masterCPConfigurationList =
 			_cpConfigurationListLocalService.getMasterCPConfigurationList(
 				_commerceCatalog.getGroupId());
+
+		_masterCPConfigurationList.setCreateDate(
+			new Date(System.currentTimeMillis() - Time.MONTH));
+
+		_masterCPConfigurationList =
+			_cpConfigurationListLocalService.updateCPConfigurationList(
+				_masterCPConfigurationList);
 	}
 
 	@Override

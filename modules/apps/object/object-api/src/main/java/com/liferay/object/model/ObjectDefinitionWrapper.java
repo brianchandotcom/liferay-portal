@@ -1056,6 +1056,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public boolean isAllowStandaloneObjectEntry() {
+		return model.isAllowStandaloneObjectEntry();
+	}
+
+	@Override
 	public boolean isApproved() {
 		return model.isApproved();
 	}
@@ -1857,4 +1862,4 @@ public class ObjectDefinitionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-685859469
+// LIFERAY-SERVICE-BUILDER-HASH:-269929950

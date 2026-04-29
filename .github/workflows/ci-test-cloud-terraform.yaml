@@ -3,7 +3,7 @@ defaults:
         shell: bash
 jobs:
     test-cloud-terraform:
-        if: ${{github.repository == 'cloudnative-team/liferay-portal'}}
+        if: ${{(github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal') || (github.event_name == 'push' && github.repository == 'liferay/liferay-portal')}}
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code

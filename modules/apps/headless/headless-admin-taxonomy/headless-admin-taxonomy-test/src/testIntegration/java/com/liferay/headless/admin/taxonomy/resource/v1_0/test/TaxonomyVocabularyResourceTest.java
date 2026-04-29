@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -127,6 +128,10 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
+		String href = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch");
+
 		assertValid(
 			page,
 			HashMapBuilder.<String, Map<String, String>>put(
@@ -134,8 +139,9 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/asset-libraries/",
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/",
 						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 						"/taxonomy-vocabularies")
 				).put(
@@ -146,8 +152,9 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/asset-libraries/",
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/asset-libraries/",
 						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 						"/taxonomy-vocabularies/batch")
 				).put(
@@ -156,18 +163,14 @@ public class TaxonomyVocabularyResourceTest
 			).put(
 				"deleteBatch",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/batch"
+					"href", href
 				).put(
 					"method", "DELETE"
 				).build()
 			).put(
 				"updateBatch",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/batch"
+					"href", href
 				).put(
 					"method", "PUT"
 				).build()
@@ -412,6 +415,10 @@ public class TaxonomyVocabularyResourceTest
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
+		String href = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch");
+
 		assertValid(
 			page,
 			HashMapBuilder.<String, Map<String, String>>put(
@@ -419,8 +426,9 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/sites/",
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/sites/",
 						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
 						"/taxonomy-vocabularies")
 				).put(
@@ -431,8 +439,9 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:8080/o/headless-admin-taxonomy/v1.0",
-						"/sites/",
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false),
+						"/o/headless-admin-taxonomy/v1.0/sites/",
 						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
 						"/taxonomy-vocabularies/batch")
 				).put(
@@ -441,18 +450,14 @@ public class TaxonomyVocabularyResourceTest
 			).put(
 				"deleteBatch",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/batch"
+					"href", href
 				).put(
 					"method", "DELETE"
 				).build()
 			).put(
 				"updateBatch",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/batch"
+					"href", href
 				).put(
 					"method", "PUT"
 				).build()
@@ -467,45 +472,38 @@ public class TaxonomyVocabularyResourceTest
 			taxonomyVocabularyResource.getTaxonomyVocabulary(
 				postTaxonomyVocabulary.getId());
 
+		String href = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
+			getTaxonomyVocabulary.getId());
+
 		assertValid(
 			getTaxonomyVocabulary.getActions(),
 			HashMapBuilder.<String, Map<String, String>>put(
 				"delete",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
+					"href", href
 				).put(
 					"method", "DELETE"
 				).build()
 			).put(
 				"get",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
+					"href", href
 				).put(
 					"method", "GET"
 				).build()
 			).put(
 				"replace",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
+					"href", href
 				).put(
 					"method", "PUT"
 				).build()
 			).put(
 				"update",
 				HashMapBuilder.put(
-					"href",
-					"http://localhost:8080/o/headless-admin-taxonomy/v1.0" +
-						"/taxonomy-vocabularies/" +
-							getTaxonomyVocabulary.getId()
+					"href", href
 				).put(
 					"method", "PATCH"
 				).build()
@@ -589,7 +587,8 @@ public class TaxonomyVocabularyResourceTest
 			).authentication(
 				siteMemberUser.getEmailAddress(), password
 			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
+				testCompany.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();

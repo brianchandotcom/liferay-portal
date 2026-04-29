@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -431,7 +432,8 @@ public class MCPServerServletTest {
 	private McpSyncClient _getMcpSyncClient(String profileName) {
 		return McpClient.sync(
 			HttpClientStreamableHttpTransport.builder(
-				"http://localhost:8080/o/"
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/"
 			).customizeRequest(
 				builder -> builder.header("Authorization", _getAuthorization())
 			).endpoint(

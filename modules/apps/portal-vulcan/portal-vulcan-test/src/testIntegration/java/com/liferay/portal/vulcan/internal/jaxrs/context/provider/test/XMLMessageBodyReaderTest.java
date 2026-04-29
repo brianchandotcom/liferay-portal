@@ -8,6 +8,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.context.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -73,7 +74,8 @@ public class XMLMessageBodyReaderTest {
 	@Test
 	public void testIsReadFromXML() throws Exception {
 		URLConnection urlConnection = URLConnectionUtil.createURLConnection(
-			"http://localhost:8080/o/test-vulcan/test-class");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/test-vulcan/test-class");
 
 		urlConnection.setDoOutput(true);
 		urlConnection.setRequestProperty(

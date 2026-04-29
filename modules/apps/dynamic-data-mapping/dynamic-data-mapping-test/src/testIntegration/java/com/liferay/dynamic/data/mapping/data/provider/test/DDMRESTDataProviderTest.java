@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
@@ -286,7 +287,9 @@ public class DDMRESTDataProviderTest {
 				false, false, null, null, outputParameterId, "$.fullName",
 				"text", null, null,
 				String.format(
-					"http://localhost:8080/o/ddm/get-full-name?name=%s&name=%s",
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/o/ddm/get-full-name?name=%s&name=%s",
 					firstName, lastName)),
 			false);
 

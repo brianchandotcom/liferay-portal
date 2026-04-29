@@ -8,6 +8,7 @@ package com.liferay.portal.remote.jaxrs.whiteboard.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -105,26 +106,35 @@ public class JaxRsComponentRegistrationTest {
 	@Test
 	public void testIsRegistered() throws Exception {
 		URL url = new URL(
-			"http://localhost:8080/o/rest-test/greeter1/sayHello");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/rest-test/greeter1/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
-		url = new URL("http://localhost:8080/o/rest-test/greeter2/sayHello");
+		url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/rest-test/greeter2/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
-		url = new URL("http://localhost:8080/o/rest-test/greeter3/sayHello");
+		url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/rest-test/greeter3/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
-		url = new URL("http://localhost:8080/o/rest-test/greeter3/addon");
+		url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/rest-test/greeter3/addon");
 
 		Assert.assertEquals("addon", URLUtil.toString(url));
 	}
 
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
-		URL url = new URL("http://localhost:8080/o/soap-test/services");
+		URL url = new URL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/soap-test/services");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.OFF)) {

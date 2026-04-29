@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.Inject;
@@ -1058,8 +1059,9 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/o/headless-admin-workflow/v1.0",
-				"/workflow-tasks/", workflowTask.getId(), "/change-transition"),
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/o/headless-admin-workflow/v1.0/workflow-tasks/",
+				workflowTask.getId(), "/change-transition"),
 			MapUtil.getString(actions.get("workflow_join"), "href"));
 		Assert.assertEquals(
 			"Join", MapUtil.getString(actions.get("workflow_join"), "label"));

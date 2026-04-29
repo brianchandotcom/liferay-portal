@@ -108,6 +108,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -565,7 +566,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
 		).locale(
 			LocaleUtil.SPAIN
 		).build();
@@ -703,7 +705,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				public StringBuffer getRequestURL() {
 					return new StringBuffer(
 						StringBundler.concat(
-							"http://localhost:8080/o/v1.0/",
+							"http://localhost:",
+							PortalUtil.getPortalServerPort(false), "/o/v1.0/",
 							RandomTestUtil.randomString(), "/",
 							RandomTestUtil.randomString()));
 				}
@@ -735,7 +738,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				@Override
 				public URI getBaseUri() {
 					return URI.create(
-						"http://localhost:8080/o/" + _applicationPath);
+						StringBundler.concat(
+							"http://localhost:",
+							PortalUtil.getPortalServerPort(false), "/o/",
+							_applicationPath));
 				}
 
 				@Override
@@ -805,8 +811,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				@Override
 				public URI getRequestUri() {
 					return URI.create(
-						"http://localhost:8080/o/" + _applicationPath +
-							_resourcePath);
+						StringBundler.concat(
+							"http://localhost:",
+							PortalUtil.getPortalServerPort(false), "/o/",
+							_applicationPath, _resourcePath));
 				}
 
 				@Override

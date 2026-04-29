@@ -38,6 +38,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -420,8 +422,10 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			JSONUtil.put(
 				apiApplicationURL,
 				JSONUtil.put(
-					"http://localhost:8080/o/c/" + _API_BASE_URL +
-						"/openapi.yaml")
+					StringBundler.concat(
+						"http://localhost:",
+						PortalUtil.getPortalServerPort(false), "/o/c/",
+						_API_BASE_URL, "/openapi.yaml"))
 			).toString(),
 			jsonObject.toString(), JSONCompareMode.LENIENT);
 

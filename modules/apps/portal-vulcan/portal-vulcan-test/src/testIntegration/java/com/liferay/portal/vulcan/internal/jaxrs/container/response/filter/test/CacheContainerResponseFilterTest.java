@@ -7,6 +7,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.container.response.filter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 
@@ -74,7 +75,8 @@ public class CacheContainerResponseFilterTest {
 	public void testCache() throws Exception {
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)URLConnectionUtil.createURLConnection(
-				"http://localhost:8080/o/test-vulcan-cache/test");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/test-vulcan-cache/test");
 
 		Assert.assertEquals(
 			"no-cache, no-store",

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -102,7 +103,8 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		_userResource = builder.authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			company.getVirtualHostname(), 8080, "http"
+			company.getVirtualHostname(), PortalUtil.getPortalServerPort(false),
+			"http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

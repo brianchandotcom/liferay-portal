@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -115,7 +116,10 @@ public class EntityExtensionTest {
 		int usersCount = UserLocalServiceUtil.getUsersCount();
 
 		Assert.assertEquals(
-			200, _getResponseCode("http://localhost:8080/o/test-vulcan/test"));
+			200,
+			_getResponseCode(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/test-vulcan/test"));
 
 		Assert.assertEquals(
 			usersCount + 1, UserLocalServiceUtil.getUsersCount());
@@ -141,7 +145,10 @@ public class EntityExtensionTest {
 
 			Assert.assertEquals(
 				500,
-				_getResponseCode("http://localhost:8080/o/test-vulcan/test"));
+				_getResponseCode(
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/o/test-vulcan/test"));
 		}
 
 		Assert.assertEquals(usersCount, UserLocalServiceUtil.getUsersCount());

@@ -7,6 +7,7 @@ package com.liferay.portal.remote.soap.extender.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -32,7 +33,9 @@ public class JaxWsApiRegistrationTest extends BaseJaxWsTestCase {
 	public void testGreeter() throws Exception {
 		Assert.assertEquals(
 			"Greetings.",
-			getGreeting("http://localhost:8080/o/soap-test/greeterApi?wsdl"));
+			getGreeting(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/o/soap-test/greeterApi?wsdl"));
 	}
 
 	@Override

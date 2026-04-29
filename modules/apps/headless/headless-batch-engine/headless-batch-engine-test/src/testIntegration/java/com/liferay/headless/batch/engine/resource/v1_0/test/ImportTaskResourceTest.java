@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -203,7 +204,8 @@ public class ImportTaskResourceTest {
 		).authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			company.getVirtualHostname(), 8080, "http"
+			company.getVirtualHostname(), PortalUtil.getPortalServerPort(false),
+			"http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

@@ -25,50 +25,10 @@ import java.util.Map;
  */
 public class OpenIdConnectHttpUtil {
 
-	public static Http.Options toHttpOptions(HTTPRequest httpRequest) {
-		Http.Options httpOptions = new Http.Options();
-
-		Map<String, List<String>> headerMap = httpRequest.getHeaderMap();
-
-		if (headerMap != null) {
-			for (Map.Entry<String, List<String>> entry : headerMap.entrySet()) {
-				for (String value : entry.getValue()) {
-					httpOptions.addHeader(entry.getKey(), value);
-				}
-			}
-		}
-
-		String requestBody = httpRequest.getBody();
-
-		if (Validator.isNotNull(requestBody)) {
-			ContentType entityContentType = httpRequest.getEntityContentType();
-
-			String contentType =
-				(entityContentType == null) ?
-					"application/x-www-form-urlencoded" :
-						entityContentType.toString();
-
-			httpOptions.setBody(requestBody, contentType, StringPool.UTF8);
-		}
-
-		httpOptions.setLocation(String.valueOf(httpRequest.getURL()));
-
-		if (HTTPRequest.Method.POST.equals(httpRequest.getMethod())) {
-			httpOptions.setPost(true);
-		}
-
-		int connectTimeout = httpRequest.getConnectTimeout();
-		int readTimeout = httpRequest.getReadTimeout();
-
-		if ((connectTimeout > 0) || (readTimeout > 0)) {
-			httpOptions.setTimeout(Math.max(connectTimeout, readTimeout));
-		}
-
-		return httpOptions;
-	}
-
-	public static HTTPResponse toHTTPResponse(Http.Options httpOptions)
+	public static HTTPResponse send(HTTPRequest httpRequest)
 		throws IOException, ParseException {
+
+		Http.Options httpOptions = _toHttpOptions(httpRequest);
 
 		String responseJSON = HttpUtil.URLtoString(httpOptions);
 
@@ -86,6 +46,48 @@ public class OpenIdConnectHttpUtil {
 		}
 
 		return httpResponse;
+	}
+
+	private static Http.Options _toHttpOptions(HTTPRequest httpRequest) {
+		Http.Options httpOptions = new Http.Options();
+
+		Map<String, List<String>> headerMap = httpRequest.getHeaderMap();
+
+		if (headerMap != null) {
+			for (Map.Entry<String, List<String>> entry : headerMap.entrySet()) {
+				for (String value : entry.getValue()) {
+					httpOptions.addHeader(entry.getKey(), value);
+				}
+			}
+		}
+
+		String body = httpRequest.getBody();
+
+		if (Validator.isNotNull(body)) {
+			ContentType entityContentType = httpRequest.getEntityContentType();
+
+			String contentType =
+				(entityContentType == null) ?
+					"application/x-www-form-urlencoded" :
+						entityContentType.toString();
+
+			httpOptions.setBody(body, contentType, StringPool.UTF8);
+		}
+
+		httpOptions.setLocation(String.valueOf(httpRequest.getURL()));
+
+		if (HTTPRequest.Method.POST.equals(httpRequest.getMethod())) {
+			httpOptions.setPost(true);
+		}
+
+		int connectTimeout = httpRequest.getConnectTimeout();
+		int readTimeout = httpRequest.getReadTimeout();
+
+		if ((connectTimeout > 0) || (readTimeout > 0)) {
+			httpOptions.setTimeout(Math.max(connectTimeout, readTimeout));
+		}
+
+		return httpOptions;
 	}
 
 }

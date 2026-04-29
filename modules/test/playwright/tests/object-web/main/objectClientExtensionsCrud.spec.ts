@@ -28,6 +28,7 @@ test(
 	'LPD-78504 Can trigger action with unmodifiable system object definition using client extension',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers, editObjectActionPage, page, viewObjectActionsPage}) => {
+
 		// Corresponds to Poshi test: CanTriggerActionWithUnmodifiableSystemObjectDefinition
 
 		const notificationTemplate =

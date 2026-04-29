@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 
 const test = mergeTests(
@@ -286,8 +287,7 @@ test(
 			);
 
 		const addedEntry = entries.items.find(
-			(item: ObjectEntry) =>
-				item.customTextField === 'Object entry added'
+			(item: ObjectEntry) => item.customTextField === 'Object entry added'
 		);
 
 		expect(addedEntry).toBeTruthy();
@@ -296,56 +296,433 @@ test(
 
 test(
 	'LPD-78504 Can create action Notification using oldValue with On After Add trigger',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		test.fixme(
-			true,
-			'Test requires email/notification verification infrastructure (MockMock/SMTP server)'
+	{tag: ['@LPD-78504', '@LPS-175197']},
+	async ({apiHelpers, site: _site}) => {
+
+		// Migrated from Poshi: CanCreateActionNotificationUsingOldValueWithOnAfterAddTrigger
+
+		const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				`Email Template ${getRandomInt()}`,
+				senderEmail
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: 'customField',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'Custom Field'},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'customField',
+						required: false,
+						system: false,
+						type: 'String',
+					},
+				],
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				objectDefinition.externalReferenceCode!,
+				{
+					active: true,
+					conditionExpression: 'isEmpty(oldValue("customField"))',
+					label: {en_US: 'Notification action when entry is added'},
+					name: 'notifyOnAdd',
+					objectActionExecutorKey: 'notification',
+					objectActionTriggerKey: 'onAfterAdd',
+					parameters: {
+						notificationTemplateId: notificationTemplate.id,
+						type: 'email',
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const applicationName =
+			'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry Test'},
+			applicationName
 		);
+
+		const notificationQueueEntries =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				senderEmail
+			);
+
+		for (const item of notificationQueueEntries.items) {
+			apiHelpers.data.push({
+				id: item.id,
+				type: 'notificationQueueEntry',
+			});
+		}
+
+		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 	}
 );
 
 test(
 	'LPD-78504 Can create action Notification using oldValue with On After Delete trigger',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		test.fixme(
-			true,
-			'Test requires email/notification verification infrastructure (MockMock/SMTP server)'
+	{tag: ['@LPD-78504', '@LPS-175192']},
+	async ({apiHelpers, site: _site}) => {
+
+		// Migrated from Poshi: CanCreateActionNotificationUsingOldValueWithOnAfterDeleteTrigger
+
+		const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				`Email Template ${getRandomInt()}`,
+				senderEmail
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: 'customField',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'Custom Field'},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'customField',
+						required: false,
+						system: false,
+						type: 'String',
+					},
+				],
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				objectDefinition.externalReferenceCode!,
+				{
+					active: true,
+					conditionExpression:
+						'oldValue("customField") == "Entry Test"',
+					label: {en_US: 'Notification action when entry is deleted'},
+					name: 'notifyOnDelete',
+					objectActionExecutorKey: 'notification',
+					objectActionTriggerKey: 'onAfterDelete',
+					parameters: {
+						notificationTemplateId: notificationTemplate.id,
+						type: 'email',
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const applicationName =
+			'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+		const entry = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry Test'},
+			applicationName
 		);
+
+		await apiHelpers.objectEntry.deleteObjectEntry(
+			applicationName,
+			String(entry.id)
+		);
+
+		const notificationQueueEntries =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				senderEmail
+			);
+
+		for (const item of notificationQueueEntries.items) {
+			apiHelpers.data.push({
+				id: item.id,
+				type: 'notificationQueueEntry',
+			});
+		}
+
+		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 	}
 );
 
 test(
 	'LPD-78504 Can create action Notification using oldValue with On After Update trigger',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		test.fixme(
-			true,
-			'Test requires email/notification verification infrastructure (MockMock/SMTP server)'
+	{tag: ['@LPD-78504', '@LPS-175191']},
+	async ({apiHelpers, site: _site}) => {
+
+		// Migrated from Poshi: CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTrigger
+
+		const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				`Email Template ${getRandomInt()}`,
+				senderEmail
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						externalReferenceCode: 'customField',
+						indexed: true,
+						indexedAsKeyword: false,
+						indexedLanguageId: '',
+						label: {en_US: 'Custom Field'},
+						listTypeDefinitionId: 0,
+						localized: false,
+						name: 'customField',
+						required: false,
+						system: false,
+						type: 'String',
+					},
+				],
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				objectDefinition.externalReferenceCode!,
+				{
+					active: true,
+					conditionExpression:
+						'oldValue("customField") == "Entry Test"',
+					label: {en_US: 'Notification action when entry is updated'},
+					name: 'notifyOnUpdate',
+					objectActionExecutorKey: 'notification',
+					objectActionTriggerKey: 'onAfterUpdate',
+					parameters: {
+						notificationTemplateId: notificationTemplate.id,
+						type: 'email',
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const applicationName =
+			'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+		const entry = await apiHelpers.objectEntry.postObjectEntry(
+			{customField: 'Entry Test'},
+			applicationName
 		);
+
+		await apiHelpers.objectEntry.patchObjectEntry(
+			{customField: 'Entry Test Edited'},
+			applicationName,
+			Number(entry.id)
+		);
+
+		const notificationQueueEntries =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				senderEmail
+			);
+
+		for (const item of notificationQueueEntries.items) {
+			apiHelpers.data.push({
+				id: item.id,
+				type: 'notificationQueueEntry',
+			});
+		}
+
+		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 	}
 );
 
 test(
 	'LPD-78504 Can create action Notification using oldValue with On After Update trigger on Account Object',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		test.fixme(
-			true,
-			'Test requires email/notification verification infrastructure (MockMock/SMTP server)'
+	{tag: ['@LPD-78504', '@LPS-178410']},
+	async ({apiHelpers, site: _site}) => {
+
+		// Migrated from Poshi: CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnAccountObject
+
+		const senderEmail = `sender${getRandomInt()}@liferay.com`;
+		const accountName = `Accounts Name Test ${getRandomInt()}`;
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				`Email Template ${getRandomInt()}`,
+				senderEmail
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_ACCOUNT',
+				{
+					active: true,
+					conditionExpression: `oldValue("name") == "${accountName}"`,
+					label: {
+						en_US: 'Notification action when account is updated',
+					},
+					name: `notifyOnAccountUpdate${getRandomInt()}`,
+					objectActionExecutorKey: 'notification',
+					objectActionTriggerKey: 'onAfterUpdate',
+					parameters: {
+						notificationTemplateId: notificationTemplate.id,
+						type: 'email',
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: accountName,
+			type: 'person',
+		});
+
+		await apiHelpers.patch(
+			`${apiHelpers.baseUrl}headless-admin-user/v1.0/accounts/${account.id}`,
+			{name: `${accountName} Edited`}
 		);
+
+		const notificationQueueEntries =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				senderEmail
+			);
+
+		for (const item of notificationQueueEntries.items) {
+			apiHelpers.data.push({
+				id: item.id,
+				type: 'notificationQueueEntry',
+			});
+		}
+
+		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 	}
 );
 
 test(
 	'LPD-78504 Can create action Notification using oldValue with On After Update trigger on User Object',
-	{tag: '@LPD-78504'},
-	async ({apiHelpers: _apiHelpers, page: _page, site: _site}) => {
-		test.fixme(
-			true,
-			'Test requires email/notification verification infrastructure (MockMock/SMTP server)'
-		);
+	{tag: ['@LPD-78504', '@LPS-178415']},
+	async ({apiHelpers, site: _site}) => {
+
+		// Migrated from Poshi: CanCreateActionNotificationUsingOldValueWithOnAfterUpdateTriggerOnUserObject
+
+		const senderEmail = `sender${getRandomInt()}@liferay.com`;
+		const givenName = `userfn${getRandomInt()}`;
+
+		const notificationTemplate =
+			await apiHelpers.notification.postRandomNotificationTemplate(
+				`Email Template ${getRandomInt()}`,
+				senderEmail
+			);
+
+		apiHelpers.data.push({
+			id: notificationTemplate.id,
+			type: 'notificationTemplate',
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_USER',
+				{
+					active: true,
+					conditionExpression: `oldValue("givenName") == "${givenName}"`,
+					label: {
+						en_US: 'Notification action when first name is edited',
+					},
+					name: `notifyOnUserUpdate${getRandomInt()}`,
+					objectActionExecutorKey: 'notification',
+					objectActionTriggerKey: 'onAfterUpdate',
+					parameters: {
+						notificationTemplateId: notificationTemplate.id,
+						type: 'email',
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const userAccount = await apiHelpers.headlessAdminUser.postUserAccount({
+			givenName,
+		});
+
+		await apiHelpers.headlessAdminUser.patchUserAccount(userAccount, {
+			givenName: `edit${givenName}`,
+		});
+
+		const notificationQueueEntries =
+			await apiHelpers.notification.getNotificationQueueEntriesPage(
+				senderEmail
+			);
+
+		for (const item of notificationQueueEntries.items) {
+			apiHelpers.data.push({
+				id: item.id,
+				type: 'notificationQueueEntry',
+			});
+		}
+
+		expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 	}
 );
 
@@ -561,8 +938,7 @@ test(
 			);
 
 		const addedEntry = entries.items.find(
-			(item: ObjectEntry) =>
-				item.customTextField === 'Object entry added'
+			(item: ObjectEntry) => item.customTextField === 'Object entry added'
 		);
 
 		expect(addedEntry).toBeTruthy();
@@ -627,8 +1003,9 @@ test(
 			type: 'objectDefinition',
 		});
 
-		const objectValidationRuleAPIClient =
-			await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
+		);
 
 		const {body: objectValidationRule} =
 			await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(

@@ -19,6 +19,7 @@ deletionProtection: true
 enabled: true
 endpoints: {}
 environmentId: ""
+externalSecretCreationPolicy: Owner
 forceDestroy: false
 gateway:
     className: ""
@@ -89,6 +90,7 @@ search:
             readOnlyRootFilesystem: false
         version: 8.12.0
         volumeSize: 10Gi
+secrets: []
 secretStoreName: ""
 storage:
     enableVersioning: true

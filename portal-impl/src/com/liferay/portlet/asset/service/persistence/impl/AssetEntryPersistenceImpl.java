@@ -405,6 +405,164 @@ public class AssetEntryPersistenceImpl
 		}
 	}
 
+	private FinderPath _finderPathWithPaginationFindByClassUuid;
+	private FinderPath _finderPathWithoutPaginationFindByClassUuid;
+	private FinderPath _finderPathCountByClassUuid;
+	private CollectionPersistenceFinder<AssetEntry>
+		_collectionPersistenceFinderByClassUuid;
+
+	/**
+	 * Returns all the asset entries where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @return the matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByClassUuid(String classUuid) {
+		return findByClassUuid(
+			classUuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @return the range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end) {
+
+		return findByClassUuid(classUuid, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator) {
+
+		return findByClassUuid(
+			classUuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					AssetEntry.class)) {
+
+			return _collectionPersistenceFinderByClassUuid.find(
+				FinderCacheUtil.getFinderCache(), new Object[] {classUuid},
+				start, end, orderByComparator, useFinderCache);
+		}
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry
+	 * @throws NoSuchEntryException if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry findByClassUuid_First(
+			String classUuid, OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		AssetEntry assetEntry = fetchByClassUuid_First(
+			classUuid, orderByComparator);
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByClassUuid.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classUuid}));
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry fetchByClassUuid_First(
+		String classUuid, OrderByComparator<AssetEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByClassUuid.fetchFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {classUuid},
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset entries where classUuid = &#63; from the database.
+	 *
+	 * @param classUuid the class uuid
+	 */
+	@Override
+	public void removeByClassUuid(String classUuid) {
+		_collectionPersistenceFinderByClassUuid.remove(
+			FinderCacheUtil.getFinderCache(), new Object[] {classUuid});
+	}
+
+	/**
+	 * Returns the number of asset entries where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @return the number of matching asset entries
+	 */
+	@Override
+	public int countByClassUuid(String classUuid) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					AssetEntry.class)) {
+
+			return _collectionPersistenceFinderByClassUuid.count(
+				FinderCacheUtil.getFinderCache(), new Object[] {classUuid});
+		}
+	}
+
 	private FinderPath _finderPathWithPaginationFindByVisible;
 	private FinderPath _finderPathWithoutPaginationFindByVisible;
 	private FinderPath _finderPathCountByVisible;
@@ -2931,6 +3089,35 @@ public class AssetEntryPersistenceImpl
 				new FinderColumn<>(
 					"assetEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AssetEntry::getCompanyId));
+
+		_finderPathWithPaginationFindByClassUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByClassUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"classUuid"}, true);
+
+		_finderPathWithoutPaginationFindByClassUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByClassUuid",
+			new String[] {String.class.getName()}, new String[] {"classUuid"},
+			true);
+
+		_finderPathCountByClassUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassUuid",
+			new String[] {String.class.getName()}, new String[] {"classUuid"},
+			false);
+
+		_collectionPersistenceFinderByClassUuid =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByClassUuid,
+				_finderPathWithoutPaginationFindByClassUuid,
+				_finderPathCountByClassUuid, _SQL_SELECT_ASSETENTRY_WHERE,
+				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
+				_ORDER_BY_ENTITY_ALIAS,
+				new FinderColumn<>(
+					"assetEntry.", "classUuid", FinderColumn.Type.STRING, "=",
+					true, true, AssetEntry::getClassUuid));
 
 		_finderPathWithPaginationFindByVisible = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVisible",

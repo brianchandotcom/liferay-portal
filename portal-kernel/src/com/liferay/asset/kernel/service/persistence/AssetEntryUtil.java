@@ -353,6 +353,127 @@ public class AssetEntryUtil {
 	}
 
 	/**
+	 * Returns all the asset entries where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @return the matching asset entries
+	 */
+	public static List<AssetEntry> findByClassUuid(String classUuid) {
+		return getPersistence().findByClassUuid(classUuid);
+	}
+
+	/**
+	 * Returns a range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @return the range of matching asset entries
+	 */
+	public static List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end) {
+
+		return getPersistence().findByClassUuid(classUuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entries
+	 */
+	public static List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator) {
+
+		return getPersistence().findByClassUuid(
+			classUuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where classUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classUuid the class uuid
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching asset entries
+	 */
+	public static List<AssetEntry> findByClassUuid(
+		String classUuid, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByClassUuid(
+			classUuid, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry
+	 * @throws NoSuchEntryException if a matching asset entry could not be found
+	 */
+	public static AssetEntry findByClassUuid_First(
+			String classUuid, OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.asset.kernel.exception.NoSuchEntryException {
+
+		return getPersistence().findByClassUuid_First(
+			classUuid, orderByComparator);
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	public static AssetEntry fetchByClassUuid_First(
+		String classUuid, OrderByComparator<AssetEntry> orderByComparator) {
+
+		return getPersistence().fetchByClassUuid_First(
+			classUuid, orderByComparator);
+	}
+
+	/**
+	 * Removes all the asset entries where classUuid = &#63; from the database.
+	 *
+	 * @param classUuid the class uuid
+	 */
+	public static void removeByClassUuid(String classUuid) {
+		getPersistence().removeByClassUuid(classUuid);
+	}
+
+	/**
+	 * Returns the number of asset entries where classUuid = &#63;.
+	 *
+	 * @param classUuid the class uuid
+	 * @return the number of matching asset entries
+	 */
+	public static int countByClassUuid(String classUuid) {
+		return getPersistence().countByClassUuid(classUuid);
+	}
+
+	/**
 	 * Returns all the asset entries where visible = &#63;.
 	 *
 	 * @param visible the visible
@@ -1781,4 +1902,4 @@ public class AssetEntryUtil {
 	private static volatile AssetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-902887787
+// LIFERAY-SERVICE-BUILDER-HASH:1923050177

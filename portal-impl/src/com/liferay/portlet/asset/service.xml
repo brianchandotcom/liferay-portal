@@ -142,6 +142,9 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
+		<finder name="ClassUuid" return-type="Collection">
+			<finder-column name="classUuid" />
+		</finder>
 		<finder name="Visible" return-type="Collection">
 			<finder-column name="visible" />
 		</finder>

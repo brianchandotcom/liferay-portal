@@ -231,102 +231,6 @@ definition {
 		OpenGraph.viewNoPreviewImage(imageName = "Document_2.jpg");
 	}
 
-	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging. Skip the instance for performance improvement."
-	@priority = 4
-	@refactordone
-	test CanEditBlogCoverImage {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		for (var num : list "1,2") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "Document_${num}.jpg",
-				groupName = "Test Depot Name-staging",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_${num}.jpg");
-		}
-
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
-		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
-
-		Staging.publishToLive();
-
-		Blogs.addEntryWithCoverImageFromDepot(
-			depotName = "Test Depot Name",
-			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Blogs Entry Subtitle",
-			entryTitle = "Blogs Entry Title",
-			imageFileName = "Document_2.jpg",
-			siteURLKey = "site-name-staging");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Test Page",
-			site = "false",
-			widgetName = "Blogs");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
-
-		Blogs.clickEllipsisItemPG(
-			entryTitle = "Blogs Entry Title",
-			item = "Edit");
-
-		MouseOver(
-			key_text = "picture",
-			locator1 = "Icon#ANY");
-
-		AssertVisible(
-			key_content = "Change Image",
-			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-
-		BlogsNavigator.gotoBrowseImage();
-
-		ItemSelector.selectRepositoryImage(
-			depotName = "Test Depot Name",
-			imageFileName = "Document_1.jpg",
-			navTab = "Documents and Media");
-
-		Button.clickPublish();
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		Navigator.openSitePage(
-			pageName = "Test Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
-	}
-
 	@description = "This ensures that an image in depot can be replaced or removed and republished in AP through widget config manual selection when enabling local staging. Skip the instance for performance improvement."
 	@e2e
 	@priority = 5
@@ -573,6 +477,102 @@ definition {
 			key_imageFileName = "Document_2.jpg",
 			key_webContentTitle = "Web Content Title",
 			locator1 = "WCD#WEB_CONTENT_IMAGE");
+	}
+
+	@description = "This ensures that the blog image from a depot can be edited and republished when enabling local staging. Skip the instance for performance improvement."
+	@priority = 4
+	@refactordone
+	test CanEditBlogCoverImage {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		for (var num : list "1,2") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${num}.jpg",
+				groupName = "Test Depot Name-staging",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${num}.jpg");
+		}
+
+		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+
+		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
+
+		Staging.publishToLive();
+
+		Blogs.addEntryWithCoverImageFromDepot(
+			depotName = "Test Depot Name",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			imageFileName = "Document_2.jpg",
+			siteURLKey = "site-name-staging");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name (Staging)",
+			layoutName = "Test Page",
+			site = "false",
+			widgetName = "Blogs");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_2.jpg");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		Portlet.mouseOverPortletTitle(portletTitleName = "Blogs");
+
+		Blogs.clickEllipsisItemPG(
+			entryTitle = "Blogs Entry Title",
+			item = "Edit");
+
+		MouseOver(
+			key_text = "picture",
+			locator1 = "Icon#ANY");
+
+		AssertVisible(
+			key_content = "Change Image",
+			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+		BlogsNavigator.gotoBrowseImage();
+
+		ItemSelector.selectRepositoryImage(
+			depotName = "Test Depot Name",
+			imageFileName = "Document_1.jpg",
+			navTab = "Documents and Media");
+
+		Button.clickPublish();
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		Navigator.openSitePage(
+			pageName = "Test Page",
+			siteName = "Site Name");
+
+		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 	}
 
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling local staging."

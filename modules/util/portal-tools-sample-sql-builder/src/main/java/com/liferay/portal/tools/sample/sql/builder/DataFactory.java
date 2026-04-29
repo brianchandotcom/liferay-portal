@@ -5680,12 +5680,12 @@ public class DataFactory {
 
 			if (layoutModel.getPlid() == fragmentEntryLinkModel.getPlid()) {
 				correspondingFragmentEntryLinkModel = fragmentEntryLinkModel;
-			}
 
-			data = StringUtil.replaceFirst(
-				data, "${fragmentEntryLinkId}",
-				String.valueOf(
-					fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				data = StringUtil.replaceFirst(
+					data, "${fragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+			}
 		}
 
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(

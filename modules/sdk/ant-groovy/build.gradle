@@ -1,0 +1,25 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+afterEvaluate {
+	configurations.findByName("portalTest")?.dependencies?.clear()
+	configurations.findByName("portalTestSnapshot")?.dependencies?.clear()
+}
+
+clean {
+	ext {
+		cleanDeployed = false
+	}
+}
+
+dependencies {
+	api group: "org.codehaus.groovy", name: "groovy", version: "3.0.21"
+	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
+	testImplementation group: "junit", name: "junit", version: "4.13.1"
+	testImplementation group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.14"
+	testImplementation group: "org.apache.ant", name: "ant-launcher", version: "1.10.14"
+}
+
+liferay {
+	deployDir = file("../../../lib/development")
+}

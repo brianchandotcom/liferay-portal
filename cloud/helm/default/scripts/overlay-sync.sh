@@ -57,6 +57,7 @@ function _log_json {
 	script_name=$(basename "${0}")
 
 	local severity="${2:-INFO}"
+
 	local timestamp
 
 	timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")

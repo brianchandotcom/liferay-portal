@@ -350,6 +350,12 @@ public class MarketplaceUtil {
 		throws IOException {
 
 		for (Map.Entry<String, Properties> entry : propertiesMap.entrySet()) {
+			Properties properties = entry.getValue();
+
+			if (properties == null) {
+				continue;
+			}
+
 			String key = entry.getKey();
 
 			int lastPathIndex = StringUtil.lastIndexOfAny(
@@ -365,6 +371,8 @@ public class MarketplaceUtil {
 
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
+
+			properties.store(byteArrayOutputStream, null);
 
 			zipOutputStream.write(byteArrayOutputStream.toByteArray());
 

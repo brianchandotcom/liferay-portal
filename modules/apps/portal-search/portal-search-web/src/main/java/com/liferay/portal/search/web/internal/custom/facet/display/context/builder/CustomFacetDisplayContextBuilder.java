@@ -462,9 +462,10 @@ public class CustomFacetDisplayContextBuilder {
 		rangeURL = HttpComponentsUtil.removeParameter(rangeURL, _parameterName);
 		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, _parameterName + "From", from);
-
-		return HttpComponentsUtil.setParameter(
+		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, _parameterName + "To", to);
+
+		return HttpComponentsUtil.sortParameters(rangeURL);
 	}
 
 	private TermCollector _getCustomRangeTermCollector(boolean selected) {
@@ -501,9 +502,10 @@ public class CustomFacetDisplayContextBuilder {
 		rangeURL = HttpComponentsUtil.removeParameter(rangeURL, _parameterName);
 		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, _parameterName + "From", 0);
-
-		return HttpComponentsUtil.setParameter(
+		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, _parameterName + "To", 0);
+
+		return HttpComponentsUtil.sortParameters(rangeURL);
 	}
 
 	private long _getDisplayStyleGroupId() {
@@ -545,8 +547,10 @@ public class CustomFacetDisplayContextBuilder {
 			rangeURL, _parameterName + "From");
 		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _parameterName + "To");
+		rangeURL = HttpComponentsUtil.setParameter(
+			rangeURL, _parameterName, label);
 
-		return HttpComponentsUtil.setParameter(rangeURL, _parameterName, label);
+		return HttpComponentsUtil.sortParameters(rangeURL);
 	}
 
 	private JSONArray _getRangesJSONArray() {
@@ -573,7 +577,7 @@ public class CustomFacetDisplayContextBuilder {
 		termsURL = HttpComponentsUtil.setParameter(
 			termsURL, _parameterName, term);
 
-		return termsURL;
+		return HttpComponentsUtil.sortParameters(termsURL);
 	}
 
 	private boolean _isCustomRangeSelected() {

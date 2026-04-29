@@ -642,8 +642,15 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		String slaveLabel = null;
 
 		try {
-			slaveLabel = JenkinsResultsParserUtil.getBuildProperty(
-				"jenkins.osb.jenkins.web.slave.label", getBatchJobName(),
+
+			// Pass useBasePropertyAsDefault=false so an unmatched job name does
+			// not silently fall back to the unsuffixed
+			// jenkins.osb.jenkins.web.slave.label, which would shadow the
+			// minimum-RAM lookup below.
+
+			slaveLabel = JenkinsResultsParserUtil.getProperty(
+				JenkinsResultsParserUtil.getBuildProperties(),
+				"jenkins.osb.jenkins.web.slave.label", false, getBatchJobName(),
 				getTestSuiteName());
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {

@@ -4676,7 +4676,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return CustomSQLUtil.keywords(name);
 		}
 
-		if (StringUtil.wildcardMatches(
+		Group guestGroup = fetchGroup(companyId, GroupConstants.GUEST);
+
+		String lowerCaseGuestDescriptiveName = StringPool.BLANK;
+
+		if (guestGroup != null) {
+			try {
+				String guestDescriptiveName = guestGroup.getDescriptiveName(
+					LocaleUtil.getMostRelevantLocale());
+
+				lowerCaseGuestDescriptiveName = StringUtil.toLowerCase(
+					guestDescriptiveName);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		if (lowerCaseGuestDescriptiveName.contains(
+				StringUtil.toLowerCase(name)) ||
+			StringUtil.wildcardMatches(
 				company.getName(), name, CharPool.UNDERLINE, CharPool.PERCENT,
 				CharPool.BACK_SLASH, false)) {
 

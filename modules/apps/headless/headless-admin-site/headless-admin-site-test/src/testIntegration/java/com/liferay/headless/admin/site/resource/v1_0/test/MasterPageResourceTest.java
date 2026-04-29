@@ -132,15 +132,16 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				postMasterPage.getExternalReferenceCode()));
 
-		MasterPage liveGroupMasterPage = testPostSiteMasterPage_addMasterPage(
-			randomMasterPage());
+		MasterPage liveGroupMasterPage =
+			testGetSiteMasterPagesPage_addMasterPage(
+				irrelevantGroup.getExternalReferenceCode(), randomMasterPage());
 
-		_enableLocalStaging();
+		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() -> masterPageResource.deleteSiteMasterPage(
-				testGroup.getExternalReferenceCode(),
+				irrelevantGroup.getExternalReferenceCode(),
 				liveGroupMasterPage.getExternalReferenceCode()));
 	}
 
@@ -632,10 +633,14 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	private void _enableLocalStaging() throws Exception {
+		_enableLocalStaging(testGroup);
+	}
+
+	private void _enableLocalStaging(Group group) throws Exception {
 		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
+			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
+				group, TestPropsValues.getUserId()));
 	}
 
 	private PageElement _getContainerPageElement() {

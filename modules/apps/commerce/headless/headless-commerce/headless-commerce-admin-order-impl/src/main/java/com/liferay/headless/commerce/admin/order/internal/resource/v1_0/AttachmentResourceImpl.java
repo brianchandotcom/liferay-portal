@@ -222,7 +222,7 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 				GetterUtil.get(attachment.getPriority(), 0.0),
 				GetterUtil.get(attachment.getRestricted(), false),
 				attachment.getTitle(), attachment.getType(),
-				attachment.getTitle(),
+				GetterUtil.get(attachment.getFileName(), attachment.getTitle()),
 				new ByteArrayInputStream(
 					Base64.decode(attachment.getAttachment()))));
 	}
@@ -365,6 +365,14 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 					});
 				setExternalReferenceCode(
 					commerceOrderAttachment::getExternalReferenceCode);
+				setFileName(
+					() -> {
+						if (fileEntry == null) {
+							return null;
+						}
+
+						return fileEntry.getFileName();
+					});
 				setId(commerceOrderAttachment::getCommerceOrderAttachmentId);
 				setPriority(commerceOrderAttachment::getPriority);
 				setRestricted(commerceOrderAttachment::isRestricted);

@@ -16,7 +16,7 @@ String viewEntryURL = ParamUtil.getString(request, "viewEntryURL");
 boolean validViewEntryURL = Validator.isUrl(viewEntryURL);
 %>
 
-<c:if test="<%= Validator.isURL(coverImageURL) %>">
+<c:if test="<%= Validator.isUrl(coverImageURL) %>">
 	<c:if test="<%= validViewEntryURL %>">
 		<a href="<%= HtmlUtil.escapeHREF(viewEntryURL) %>">
 	</c:if>

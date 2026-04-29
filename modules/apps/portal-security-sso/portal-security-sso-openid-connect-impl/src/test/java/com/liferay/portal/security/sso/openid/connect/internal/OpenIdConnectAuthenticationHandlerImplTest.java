@@ -8,6 +8,7 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -16,9 +17,6 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import java.net.SocketTimeoutException;
 import java.net.URI;
@@ -30,7 +28,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Tamas Biro
@@ -66,119 +66,51 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 	}
 
 	@Test
-	public void testRequestUserInfoJSONFailsOnTimeout() throws Exception {
-		OIDCProviderMetadata oidcProviderMetadata = Mockito.mock(
-			OIDCProviderMetadata.class);
+	public void testRequestUserInfoJSON() throws Exception {
+		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
+				HttpUtil.class)) {
 
-		Mockito.when(
-			oidcProviderMetadata.getUserInfoEndpointURI()
-		).thenReturn(
-			new URI("http://172.17.0.3:18080/")
-		);
-
-		OpenIdConnectAuthenticationHandlerImpl
-			openIdConnectAuthenticationHandlerImpl =
-				new OpenIdConnectAuthenticationHandlerImpl();
-
-		Http http = Mockito.mock(Http.class);
-
-		Mockito.when(
-			http.URLtoString(Mockito.any(Http.Options.class))
-		).thenThrow(
-			new SocketTimeoutException("Read timed out")
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			openIdConnectAuthenticationHandlerImpl, "_http", http);
-
-		AccessToken accessToken = AccessToken.parse(
-			JSONObjectUtils.parse(
-				"{\"access_token\": \"test\", \"token_type\":\"Bearer\"}"));
-
-		try {
-			Method requestUserInfoJSONMethod = ReflectionTestUtil.getMethod(
-				OpenIdConnectAuthenticationHandlerImpl.class,
-				"_requestUserInfoJSON", AccessToken.class,
-				OIDCProviderMetadata.class);
-
-			requestUserInfoJSONMethod.invoke(
-				openIdConnectAuthenticationHandlerImpl, accessToken,
-				oidcProviderMetadata);
-		}
-		catch (InvocationTargetException invocationTargetException) {
-			Throwable throwable = invocationTargetException.getCause();
-
-			Assert.assertEquals(
-				OpenIdConnectServiceException.UserInfoException.class,
-				throwable.getClass());
-		}
-	}
-
-	@Test
-	public void testRequestUserInfoJSONSuccess() throws Exception {
-		OIDCProviderMetadata oidcProviderMetadata = Mockito.mock(
-			OIDCProviderMetadata.class);
-
-		Mockito.when(
-			oidcProviderMetadata.getUserInfoEndpointURI()
-		).thenReturn(
-			new URI("http://172.17.0.3:18080/")
-		);
-
-		OpenIdConnectAuthenticationHandlerImpl
-			openIdConnectAuthenticationHandlerImpl =
-				new OpenIdConnectAuthenticationHandlerImpl();
-
-		Http http = Mockito.mock(Http.class);
-
-		Mockito.when(
-			http.URLtoString(Mockito.any(Http.Options.class))
-		).thenAnswer(
-			invocation -> {
+			Answer<String> answer = invocation -> {
 				Http.Options options = invocation.getArgument(0);
 
-				Http.Response mockResponse = Mockito.mock(Http.Response.class);
+				Http.Response httpResponse = new Http.Response();
 
-				Mockito.when(
-					mockResponse.getResponseCode()
-				).thenReturn(
-					200
-				);
+				httpResponse.setResponseCode(200);
+				httpResponse.setContentType("application/json");
 
-				Mockito.when(
-					mockResponse.getContentType()
-				).thenReturn(
-					"application/json"
-				);
-
-				options.setResponse(mockResponse);
+				options.setResponse(httpResponse);
 
 				return "{\"sub\":\"subject\",\"email\":\"test@example.com\"}";
+			};
+
+			httpUtilMockedStatic.when(
+				() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
+			).thenAnswer(
+				answer
+			).thenThrow(
+				new SocketTimeoutException("Read timed out")
+			);
+
+			String userInfoJSON = _requestUserInfoJSON();
+
+			Assert.assertNotNull(userInfoJSON);
+			Assert.assertTrue(
+				userInfoJSON, userInfoJSON.contains("\"sub\":\"subject\""));
+			Assert.assertTrue(
+				userInfoJSON,
+				userInfoJSON.contains("\"email\":\"test@example.com\""));
+
+			try {
+				_requestUserInfoJSON();
+
+				Assert.fail();
 			}
-		);
+			catch (OpenIdConnectServiceException.UserInfoException
+						userInfoException) {
 
-		ReflectionTestUtil.setFieldValue(
-			openIdConnectAuthenticationHandlerImpl, "_http", http);
-
-		AccessToken accessToken = AccessToken.parse(
-			JSONObjectUtils.parse(
-				"{\"access_token\": \"test\", \"token_type\":\"Bearer\"}"));
-
-		Method requestUserInfoJSONMethod = ReflectionTestUtil.getMethod(
-			OpenIdConnectAuthenticationHandlerImpl.class,
-			"_requestUserInfoJSON", AccessToken.class,
-			OIDCProviderMetadata.class);
-
-		String userInfoJSON = (String)requestUserInfoJSONMethod.invoke(
-			openIdConnectAuthenticationHandlerImpl, accessToken,
-			oidcProviderMetadata);
-
-		Assert.assertNotNull(userInfoJSON);
-		Assert.assertTrue(
-			userInfoJSON, userInfoJSON.contains("\"sub\":\"subject\""));
-		Assert.assertTrue(
-			userInfoJSON,
-			userInfoJSON.contains("\"email\":\"test@example.com\""));
+				Assert.assertNotNull(userInfoException);
+			}
+		}
 	}
 
 	private Map<String, Object> _getUserInfoClaims(String claimSetJSON)
@@ -198,6 +130,30 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 		return openIdConnectAuthenticationHandlerImpl.getUserInfoClaims(
 			mockJWT);
+	}
+
+	private String _requestUserInfoJSON() throws Exception {
+		OIDCProviderMetadata oidcProviderMetadata = Mockito.mock(
+			OIDCProviderMetadata.class);
+
+		Mockito.when(
+			oidcProviderMetadata.getUserInfoEndpointURI()
+		).thenReturn(
+			new URI("http://172.17.0.3:18080/")
+		);
+
+		OpenIdConnectAuthenticationHandlerImpl
+			openIdConnectAuthenticationHandlerImpl =
+				new OpenIdConnectAuthenticationHandlerImpl();
+
+		AccessToken accessToken = AccessToken.parse(
+			JSONObjectUtils.parse(
+				"{\"access_token\": \"test\", \"token_type\":\"Bearer\"}"));
+
+		return ReflectionTestUtil.invoke(
+			openIdConnectAuthenticationHandlerImpl, "_requestUserInfoJSON",
+			new Class<?>[] {AccessToken.class, OIDCProviderMetadata.class},
+			accessToken, oidcProviderMetadata);
 	}
 
 }

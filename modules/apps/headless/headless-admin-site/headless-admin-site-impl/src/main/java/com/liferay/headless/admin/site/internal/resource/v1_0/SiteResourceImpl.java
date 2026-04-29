@@ -70,10 +70,8 @@ import jakarta.ws.rs.core.Response;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -329,46 +327,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				"site", true
 			).build();
 
-		List<Group> groups = _groupService.search(
-			contextCompany.getCompanyId(), classNameIds, search, null, params,
-			true, pagination.getStartPosition(), pagination.getEndPosition(),
-			new GroupNameComparator());
-		int searchCount = _groupService.searchCount(
-			contextCompany.getCompanyId(), classNameIds, search, params);
-
-		if (Validator.isNotNull(search)) {
-			Group guestGroup = _groupLocalService.fetchGroup(
-				contextCompany.getCompanyId(), GroupConstants.GUEST);
-
-			if (guestGroup != null) {
-				boolean alreadyIncluded = groups.contains(guestGroup);
-				boolean shouldBeIncluded = _descriptiveNameContains(
-					guestGroup, search,
-					contextAcceptLanguage.getPreferredLocale());
-
-				if (alreadyIncluded && !shouldBeIncluded) {
-					groups = new ArrayList<>(groups);
-
-					groups.remove(guestGroup);
-
-					searchCount--;
-				}
-				else if (!alreadyIncluded && shouldBeIncluded) {
-					if (pagination.getStartPosition() == 0) {
-						List<Group> mergedGroups = new ArrayList<>(
-							groups.size() + 1);
-
-						mergedGroups.add(guestGroup);
-						mergedGroups.addAll(groups);
-
-						groups = mergedGroups;
-					}
-
-					searchCount++;
-				}
-			}
-		}
-
 		return Page.of(
 			HashMapBuilder.put(
 				"create",
@@ -385,7 +343,15 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					ActionKeys.DELETE, "deleteSiteBatch", Group.class.getName(),
 					null)
 			).build(),
-			transform(groups, this::_toSite), pagination, searchCount);
+			transform(
+				_groupService.search(
+					contextCompany.getCompanyId(), classNameIds, search, null,
+					params, true, pagination.getStartPosition(),
+					pagination.getEndPosition(), new GroupNameComparator()),
+				this::_toSite),
+			pagination,
+			_groupService.searchCount(
+				contextCompany.getCompanyId(), classNameIds, search, params));
 	}
 
 	@Override
@@ -557,16 +523,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		return group;
-	}
-
-	private boolean _descriptiveNameContains(
-			Group group, String search, Locale locale)
-		throws Exception {
-
-		String descriptiveName = StringUtil.toLowerCase(
-			group.getDescriptiveName(locale), locale);
-
-		return descriptiveName.contains(StringUtil.toLowerCase(search, locale));
 	}
 
 	private Map<Locale, String> _getDescriptionMap(Site site) {

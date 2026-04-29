@@ -16,6 +16,10 @@ public class Account {
 		return _accountName;
 	}
 
+	public String getAccountType() {
+		return _accountType;
+	}
+
 	public Double getAnnualRevenue() {
 		return _annualRevenue;
 	}
@@ -52,8 +56,16 @@ public class Account {
 		return new Date(_modifiedDate.getTime());
 	}
 
+	public String getWebsite() {
+		return _website;
+	}
+
 	public void setAccountName(String accountName) {
 		_accountName = accountName;
+	}
+
+	public void setAccountType(String accountType) {
+		_accountType = accountType;
 	}
 
 	public void setAnnualRevenue(Double annualRevenue) {
@@ -88,7 +100,12 @@ public class Account {
 		}
 	}
 
+	public void setWebsite(String website) {
+		_website = website;
+	}
+
 	private String _accountName;
+	private String _accountType;
 	private Double _annualRevenue;
 	private String _country;
 	private String _id;
@@ -96,5 +113,6 @@ public class Account {
 	private Date _lastActivityDate;
 	private String _lifecycleStage;
 	private Date _modifiedDate;
+	private String _website;
 
 }

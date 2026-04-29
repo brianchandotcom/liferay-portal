@@ -21,6 +21,7 @@ public class AccountDisplay {
 
 	public AccountDisplay(Account account) {
 		_accountName = account.getAccountName();
+		_accountType = account.getAccountType();
 		_annualRevenue = account.getAnnualRevenue();
 		_country = account.getCountry();
 		_id = account.getId();
@@ -28,9 +29,11 @@ public class AccountDisplay {
 		_lastActivityDate = account.getLastActivityDate();
 		_lifecycleStage = account.getLifecycleStage();
 		_modifiedDate = account.getModifiedDate();
+		_website = account.getWebsite();
 	}
 
 	private String _accountName;
+	private String _accountType;
 	private Double _annualRevenue;
 	private String _country;
 	private String _id;
@@ -43,5 +46,7 @@ public class AccountDisplay {
 
 	@JsonProperty("lastEnriched")
 	private Date _modifiedDate;
+
+	private String _website;
 
 }

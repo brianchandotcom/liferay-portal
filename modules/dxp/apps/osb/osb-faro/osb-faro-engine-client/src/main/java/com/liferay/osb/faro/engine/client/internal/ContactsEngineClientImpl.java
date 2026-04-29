@@ -565,7 +565,7 @@ public class ContactsEngineClientImpl
 	public Account getAccount(FaroProject faroProject, String id)
 		throws FaroEngineClientException {
 
-		return get(faroProject, Rels.ACCOUNT, id, Account.class);
+		return get(faroProject, Rels.ACCOUNTS, id, Account.class);
 	}
 
 	@Override

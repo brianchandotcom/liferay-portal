@@ -6770,8 +6770,8 @@ public class JenkinsResultsParserUtil {
 			combine(
 				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
 				" repository at ", cacheDirPath,
-				". Set CACHE_DIR to a directory containing a ",
-				JENKINS_REPOSITORY_NAME, " checkout."));
+				". Set the environment variable \"CACHE_DIR\" to a directory ",
+				"containing a ", JENKINS_REPOSITORY_NAME, " checkout."));
 	}
 
 	private static String _getCanonicalPath(File canonicalFile) {

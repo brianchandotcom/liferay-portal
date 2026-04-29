@@ -9,6 +9,7 @@ type Options = {
 	autoClose?: boolean;
 	closeText?: string;
 	exact?: boolean;
+	first?: boolean;
 	timeout?: number;
 	type?: 'success' | 'info' | 'warning' | 'danger';
 };
@@ -27,18 +28,22 @@ export async function waitForAlert(
 		autoClose = true,
 		closeText = 'Close',
 		exact = false,
+		first = false,
 		timeout,
 		type = 'success',
 	}: Options = {
 		autoClose: true,
 		closeText: 'Close',
 		exact: false,
+		first: false,
 		type: 'success',
 	}
 ) {
-	const alert = parent.locator(CSS_CLASSES[type], {
+	const matchingAlerts = parent.locator(CSS_CLASSES[type], {
 		hasText: text,
 	});
+
+	const alert = first ? matchingAlerts.first() : matchingAlerts;
 
 	if (timeout) {
 		await alert.waitFor({timeout});

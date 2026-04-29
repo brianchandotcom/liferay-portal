@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.rest.dto.v1_0;
+package com.liferay.headless.object.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +31,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 /**
- * @author Javier Gamarra
+ * @author Alicia García
  * @generated
  */
 @Generated("")
@@ -91,136 +91,6 @@ public class SystemProperties implements Serializable {
 	@JsonIgnore
 	private Supplier<CollaboratorBrief> _collaboratorBriefSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public ObjectDefinitionBrief getObjectDefinitionBrief() {
-		if (_objectDefinitionBriefSupplier != null) {
-			objectDefinitionBrief = _objectDefinitionBriefSupplier.get();
-
-			_objectDefinitionBriefSupplier = null;
-		}
-
-		return objectDefinitionBrief;
-	}
-
-	public void setObjectDefinitionBrief(
-		ObjectDefinitionBrief objectDefinitionBrief) {
-
-		this.objectDefinitionBrief = objectDefinitionBrief;
-
-		_objectDefinitionBriefSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setObjectDefinitionBrief(
-		UnsafeSupplier<ObjectDefinitionBrief, Exception>
-			objectDefinitionBriefUnsafeSupplier) {
-
-		_objectDefinitionBriefSupplier = () -> {
-			try {
-				return objectDefinitionBriefUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ObjectDefinitionBrief objectDefinitionBrief;
-
-	@JsonIgnore
-	private Supplier<ObjectDefinitionBrief> _objectDefinitionBriefSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public com.liferay.portal.vulcan.scope.Scope getScope() {
-		if (_scopeSupplier != null) {
-			scope = _scopeSupplier.get();
-
-			_scopeSupplier = null;
-		}
-
-		return scope;
-	}
-
-	public void setScope(com.liferay.portal.vulcan.scope.Scope scope) {
-		this.scope = scope;
-
-		_scopeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setScope(
-		UnsafeSupplier<com.liferay.portal.vulcan.scope.Scope, Exception>
-			scopeUnsafeSupplier) {
-
-		_scopeSupplier = () -> {
-			try {
-				return scopeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected com.liferay.portal.vulcan.scope.Scope scope;
-
-	@JsonIgnore
-	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Version getVersion() {
-		if (_versionSupplier != null) {
-			version = _versionSupplier.get();
-
-			_versionSupplier = null;
-		}
-
-		return version;
-	}
-
-	public void setVersion(Version version) {
-		this.version = version;
-
-		_versionSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setVersion(
-		UnsafeSupplier<Version, Exception> versionUnsafeSupplier) {
-
-		_versionSupplier = () -> {
-			try {
-				return versionUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Version version;
-
-	@JsonIgnore
-	private Supplier<Version> _versionSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -260,43 +130,6 @@ public class SystemProperties implements Serializable {
 			sb.append(String.valueOf(collaboratorBrief));
 		}
 
-		ObjectDefinitionBrief objectDefinitionBrief =
-			getObjectDefinitionBrief();
-
-		if (objectDefinitionBrief != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"objectDefinitionBrief\": ");
-
-			sb.append(String.valueOf(objectDefinitionBrief));
-		}
-
-		com.liferay.portal.vulcan.scope.Scope scope = getScope();
-
-		if (scope != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"scope\": ");
-
-			sb.append(scope);
-		}
-
-		Version version = getVersion();
-
-		if (version != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"version\": ");
-
-			sb.append(String.valueOf(version));
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -304,7 +137,7 @@ public class SystemProperties implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.object.rest.dto.v1_0.SystemProperties",
+		defaultValue = "com.liferay.headless.object.dto.v1_0.SystemProperties",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -398,4 +231,4 @@ public class SystemProperties implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-171984500
+// LIFERAY-REST-BUILDER-HASH:-1225927648

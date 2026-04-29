@@ -1004,6 +1004,49 @@ public class ObjectEntryFolder implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public SystemProperties getSystemProperties() {
+		if (_systemPropertiesSupplier != null) {
+			systemProperties = _systemPropertiesSupplier.get();
+
+			_systemPropertiesSupplier = null;
+		}
+
+		return systemProperties;
+	}
+
+	public void setSystemProperties(SystemProperties systemProperties) {
+		this.systemProperties = systemProperties;
+
+		_systemPropertiesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSystemProperties(
+		UnsafeSupplier<SystemProperties, Exception>
+			systemPropertiesUnsafeSupplier) {
+
+		_systemPropertiesSupplier = () -> {
+			try {
+				return systemPropertiesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SystemProperties systemProperties;
+
+	@JsonIgnore
+	private Supplier<SystemProperties> _systemPropertiesSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The object entry folder's main title/name."
 	)
@@ -1433,6 +1476,18 @@ public class ObjectEntryFolder implements Serializable {
 			sb.append(String.valueOf(status));
 		}
 
+		SystemProperties systemProperties = getSystemProperties();
+
+		if (systemProperties != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"systemProperties\": ");
+
+			sb.append(String.valueOf(systemProperties));
+		}
+
 		String title = getTitle();
 
 		if (title != null) {
@@ -1602,4 +1657,4 @@ public class ObjectEntryFolder implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1836853854
+// LIFERAY-REST-BUILDER-HASH:246424981

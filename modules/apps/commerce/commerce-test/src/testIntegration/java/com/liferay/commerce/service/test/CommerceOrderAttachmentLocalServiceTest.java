@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -48,6 +49,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@FeatureFlag("LPD-6252")
 @RunWith(Arquillian.class)
 public class CommerceOrderAttachmentLocalServiceTest {
 
@@ -97,6 +99,22 @@ public class CommerceOrderAttachmentLocalServiceTest {
 					commerceOrderAttachmentTitleException) {
 
 			Assert.assertNotNull(commerceOrderAttachmentTitleException);
+		}
+
+		try {
+			_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
+				null, _user.getUserId(), _commerceOrder.getCommerceOrderId(),
+				RandomTestUtil.nextDouble(), false,
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(),
+				getClass().getResourceAsStream("dependencies/attachment.txt"));
+
+			Assert.fail();
+		}
+		catch (CommerceOrderAttachmentTypeException
+					commerceOrderAttachmentTypeException) {
+
+			Assert.assertNotNull(commerceOrderAttachmentTypeException);
 		}
 
 		try {
@@ -269,6 +287,20 @@ public class CommerceOrderAttachmentLocalServiceTest {
 					commerceOrderAttachmentTitleException) {
 
 			Assert.assertNotNull(commerceOrderAttachmentTitleException);
+		}
+
+		try {
+			_commerceOrderAttachmentLocalService.updateCommerceOrderAttachment(
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				RandomTestUtil.nextDouble(), false,
+				RandomTestUtil.randomString(), null);
+
+			Assert.fail();
+		}
+		catch (CommerceOrderAttachmentTypeException
+					commerceOrderAttachmentTypeException) {
+
+			Assert.assertNotNull(commerceOrderAttachmentTypeException);
 		}
 
 		try {

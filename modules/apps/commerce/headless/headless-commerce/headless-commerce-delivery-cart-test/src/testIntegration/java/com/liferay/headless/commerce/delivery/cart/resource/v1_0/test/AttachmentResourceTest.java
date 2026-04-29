@@ -50,8 +50,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		CommerceOrderAttachmentTestUtil.initialize(
-			AttachmentResourceTest.class);
+		CommerceOrderAttachmentTestUtil.initialize(getClass());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -116,7 +115,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 					RandomTestUtil.randomString());
 				priority = RandomTestUtil.nextDouble();
 				restricted = RandomTestUtil.randomBoolean();
-				title = RandomTestUtil.randomString() + ".jpg";
+				title = RandomTestUtil.randomString();
 				type = "invoice";
 			}
 		};

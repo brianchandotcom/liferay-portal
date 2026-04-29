@@ -63,6 +63,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
+@FeatureFlag("LPD-6252")
 @RunWith(Arquillian.class)
 @Sync
 public class CommerceOrderAttachmentIndexerTest {
@@ -77,8 +78,7 @@ public class CommerceOrderAttachmentIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CommerceOrderAttachmentTestUtil.initialize(
-			CommerceOrderAttachmentIndexerTest.class);
+		CommerceOrderAttachmentTestUtil.initialize(getClass());
 
 		_group = GroupTestUtil.addGroup();
 

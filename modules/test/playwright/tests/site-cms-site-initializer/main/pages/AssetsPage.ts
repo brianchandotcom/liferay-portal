@@ -138,44 +138,58 @@ export class AssetsPage {
 		await this.dataSetFragmentPage.execBulkItemAction({action});
 	}
 
-	async bulkCopyTo({destinationFolder, destinationSpace}: BulkCopyOrMoveArgs) {
+	async bulkCopyTo(args: BulkCopyOrMoveArgs) {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Copy To'})
 			.click();
 
-		await this.selectCopyOrMoveDestination(
-			destinationSpace,
-			destinationFolder
-		);
+		await this.selectCopyOrMoveDestination(args);
 	}
 
-	async bulkMoveTo({destinationFolder, destinationSpace}: BulkCopyOrMoveArgs) {
+	async bulkMoveTo(args: BulkCopyOrMoveArgs) {
 		await this.page
 			.getByRole('button', {exact: true, name: 'Move To'})
 			.click();
 
-		await this.selectCopyOrMoveDestination(
-			destinationSpace,
-			destinationFolder
-		);
+		await this.selectCopyOrMoveDestination(args);
 	}
 
-	async selectCopyOrMoveDestination(space: string, folder: string) {
-		const dialog = this.page
-			.getByRole('dialog')
-			.filter({hasText: 'Items To'});
+	getCopyOrMoveDestinationDialog() {
+		return this.page.getByRole('dialog', {name: /^(Copy|Move) .+ To$/});
+	}
+
+	async selectCopyOrMoveDestination({
+		destinationFolder,
+		destinationSpace,
+	}: BulkCopyOrMoveArgs) {
+		const dialog = this.getCopyOrMoveDestinationDialog();
 
 		await dialog.waitFor();
 
-		await dialog.getByLabel(space).click();
+		await dialog.getByLabel(destinationSpace).click();
 
 		await dialog
-			.getByRole('radio', {exact: true, name: `Select ${folder}`})
+			.getByRole('radio', {
+				exact: true,
+				name: `Select ${destinationFolder}`,
+			})
 			.click();
 
-		await dialog
-			.getByRole('button', {exact: true, name: 'Select'})
+		await dialog.getByRole('button', {exact: true, name: 'Select'}).click();
+	}
+
+	async gotoSpaceContents(spaceName: string) {
+		await this.gotoAll();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: spaceName})
 			.click();
+
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Contents'})
+			.click();
+
+		await this.page.getByRole('heading', {name: 'Contents'}).waitFor();
 	}
 
 	async execItemAction({action, filter}: ExecItemActionArgs) {

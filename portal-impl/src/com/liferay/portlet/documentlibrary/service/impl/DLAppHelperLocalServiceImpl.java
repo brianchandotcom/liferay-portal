@@ -137,15 +137,21 @@ public class DLAppHelperLocalServiceImpl
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
 		if (fileEntryAssetEntry == null) {
+			Date publishDate = fileEntry.getDisplayDate();
+
+			if (publishDate == null) {
+				publishDate = fileEntry.getCreateDate();
+			}
+
 			fileEntryAssetEntry = _assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, true, false, null, null,
-				fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
-				fileEntry.getMimeType(), fileEntry.getTitle(),
-				fileEntry.getDescription(), null, null, null, 0, 0, null);
+				assetTagNames, true, false, null, null, publishDate,
+				fileEntry.getExpirationDate(), fileEntry.getMimeType(),
+				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
+				null, 0, 0, null);
 		}
 
 		AssetEntry fileVersionAssetEntry = _assetEntryLocalService.fetchEntry(
@@ -167,12 +173,18 @@ public class DLAppHelperLocalServiceImpl
 		assetTagNames = _assetTagLocalService.getTagNames(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
+		Date publishDate = fileEntry.getDisplayDate();
+
+		if (publishDate == null) {
+			publishDate = fileEntry.getCreateDate();
+		}
+
 		fileVersionAssetEntry = _assetEntryLocalService.updateEntry(
 			userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 			fileEntry.getModifiedDate(), DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId(), fileEntry.getUuid(),
 			fileEntryTypeId, assetCategoryIds, assetTagNames, true, false, null,
-			null, fileEntry.getDisplayDate(), fileEntry.getExpirationDate(),
+			null, publishDate, fileEntry.getExpirationDate(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), null, null, null, 0, 0, null);
 
@@ -528,6 +540,10 @@ public class DLAppHelperLocalServiceImpl
 
 			if (visible) {
 				publishDate = fileEntry.getDisplayDate();
+
+				if (publishDate == null) {
+					publishDate = fileEntry.getCreateDate();
+				}
 			}
 
 			assetEntry = _assetEntryLocalService.updateEntry(
@@ -708,6 +724,12 @@ public class DLAppHelperLocalServiceImpl
 							draftAssetEntry.getCategoryIds();
 						String[] assetTagNames = draftAssetEntry.getTagNames();
 
+						Date publishDate = fileEntry.getDisplayDate();
+
+						if (publishDate == null) {
+							publishDate = fileEntry.getCreateDate();
+						}
+
 						AssetEntry assetEntry =
 							_assetEntryLocalService.updateEntry(
 								userId, fileEntry.getGroupId(),
@@ -717,8 +739,7 @@ public class DLAppHelperLocalServiceImpl
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
 								assetTagNames, true, true, null, null,
-								fileEntry.getDisplayDate(),
-								fileEntry.getExpirationDate(),
+								publishDate, fileEntry.getExpirationDate(),
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,
@@ -738,11 +759,16 @@ public class DLAppHelperLocalServiceImpl
 					fileEntry.getFileEntryId());
 
 				if (assetEntry != null) {
+					Date publishDate = fileEntry.getDisplayDate();
+
+					if (publishDate == null) {
+						publishDate = assetEntry.getCreateDate();
+					}
+
 					_assetEntryLocalService.updateEntry(
 						assetEntry.getClassName(), assetEntry.getClassPK(),
-						fileEntry.getDisplayDate(),
-						assetEntry.getExpirationDate(), assetEntry.isListable(),
-						true);
+						publishDate, assetEntry.getExpirationDate(),
+						assetEntry.isListable(), true);
 				}
 			}
 

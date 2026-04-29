@@ -139,7 +139,10 @@ export class OAuthClientClientsPage {
 				this.page.getByText('Your request completed successfully')
 			).toBeVisible();
 
-			await this.page.getByLabel('Close').click();
+			await this.page
+				.locator('#ToastAlertContainer')
+				.getByRole('button', {name: 'Close'})
+				.click();
 		}
 	}
 

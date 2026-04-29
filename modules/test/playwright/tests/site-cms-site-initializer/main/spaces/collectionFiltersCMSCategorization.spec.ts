@@ -85,7 +85,10 @@ test(
 		await test.step('Connect space to the site', async () => {
 			await page.goto(PORTLET_URLS.cmsAllSpaces);
 
-			await page.getByRole('cell', {name: 'Actions'}).nth(2).click();
+			await page
+				.getByRole('row', {name: spaceName})
+				.getByRole('button', {name: 'Actions'})
+				.click();
 			await page
 				.getByRole('menuitem', {name: 'View Connected Sites'})
 				.click();

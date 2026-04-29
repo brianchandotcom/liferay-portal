@@ -123,12 +123,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		_testDeleteSitePageTemplate(
 			testGroup, pageTemplate.getExternalReferenceCode());
 
-		_enableLocalStaging();
+		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() -> pageTemplateResource.deleteSitePageTemplate(
-				testGroup.getExternalReferenceCode(),
+				irrelevantGroup.getExternalReferenceCode(),
 				pageTemplate.getExternalReferenceCode()));
 
 		_withCompanyGroupWidgetPageTemplate(
@@ -753,10 +753,14 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _enableLocalStaging() throws Exception {
+		_enableLocalStaging(testGroup);
+	}
+
+	private void _enableLocalStaging(Group group) throws Exception {
 		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
+			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
+				group, TestPropsValues.getUserId()));
 	}
 
 	private ContentPageTemplate _getContentPageTemplate(Group group)

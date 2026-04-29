@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLoca
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -77,14 +78,15 @@ public class PageTemplateSetResourceTest
 
 		PageTemplateSet liveGroupPageTemplateSet =
 			testGetSitePageTemplateSetsPage_addPageTemplateSet(
-				testGroup.getExternalReferenceCode(), randomPageTemplateSet());
+				irrelevantGroup.getExternalReferenceCode(),
+				randomPageTemplateSet());
 
-		_enableLocalStaging();
+		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() -> pageTemplateSetResource.deleteSitePageTemplateSet(
-				testGroup.getExternalReferenceCode(),
+				irrelevantGroup.getExternalReferenceCode(),
 				liveGroupPageTemplateSet.getExternalReferenceCode()));
 	}
 
@@ -344,10 +346,14 @@ public class PageTemplateSetResourceTest
 	}
 
 	private void _enableLocalStaging() throws Exception {
+		_enableLocalStaging(testGroup);
+	}
+
+	private void _enableLocalStaging(Group group) throws Exception {
 		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
+			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
+				group, TestPropsValues.getUserId()));
 	}
 
 	private void _postSitePageTemplateSetWithInvalidKey(

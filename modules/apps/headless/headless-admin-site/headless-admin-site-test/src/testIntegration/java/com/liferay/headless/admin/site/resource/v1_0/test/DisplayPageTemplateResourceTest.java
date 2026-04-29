@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -174,15 +175,16 @@ public class DisplayPageTemplateResourceTest
 				postDisplayPageTemplate.getExternalReferenceCode()));
 
 		DisplayPageTemplate liveGroupDisplayPageTemplate =
-			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
+			testGetSiteDisplayPageTemplatesPage_addDisplayPageTemplate(
+				irrelevantGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplate());
 
-		_enableLocalStaging();
+		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() -> displayPageTemplateResource.deleteSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(),
+				irrelevantGroup.getExternalReferenceCode(),
 				liveGroupDisplayPageTemplate.getExternalReferenceCode()));
 	}
 
@@ -719,10 +721,14 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private void _enableLocalStaging() throws Exception {
+		_enableLocalStaging(testGroup);
+	}
+
+	private void _enableLocalStaging(Group group) throws Exception {
 		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
+			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
+				group, TestPropsValues.getUserId()));
 	}
 
 	private ClassSubtypeReference _getClassSubtypeReference(String className) {

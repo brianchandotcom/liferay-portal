@@ -131,24 +131,15 @@ public class OpenIdConnectTokenRequestUtilTest {
 			_oidcTokens
 		);
 
-		Answer<String> successfulResponseAnswer = invocation -> {
+		Answer<String> answer = invocation -> {
 			Http.Options options = invocation.getArgument(0);
 
-			Http.Response mockResponse = Mockito.mock(Http.Response.class);
+			Http.Response httpResponse = new Http.Response();
 
-			Mockito.when(
-				mockResponse.getResponseCode()
-			).thenReturn(
-				200
-			);
+			httpResponse.setResponseCode(200);
+			httpResponse.setContentType("application/json");
 
-			Mockito.when(
-				mockResponse.getContentType()
-			).thenReturn(
-				"application/json"
-			);
-
-			options.setResponse(mockResponse);
+			options.setResponse(httpResponse);
 
 			return "{}";
 		};
@@ -156,9 +147,9 @@ public class OpenIdConnectTokenRequestUtilTest {
 		_httpUtilMockedStatic.when(
 			() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
 		).thenAnswer(
-			successfulResponseAnswer
+			answer
 		).thenAnswer(
-			successfulResponseAnswer
+			answer
 		).thenThrow(
 			new SocketTimeoutException("Read timed out")
 		);

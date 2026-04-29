@@ -47,19 +47,6 @@ public class AntTargetBatchBuildTestrayCaseResult
 	}
 
 	@Override
-	public String getTeamName() {
-		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
-
-		String teamName = baseAntTargetTestClass.getTestrayTeamName();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(teamName)) {
-			return super.getTeamName();
-		}
-
-		return teamName;
-	}
-
-	@Override
 	public long getDuration() {
 		TestReport testReport = _getAntTargetTestReport();
 
@@ -212,6 +199,19 @@ public class AntTargetBatchBuildTestrayCaseResult
 		}
 
 		return Status.PASSED;
+	}
+
+	@Override
+	public String getTeamName() {
+		BaseAntTargetTestClass baseAntTargetTestClass = getTestClass();
+
+		String teamName = baseAntTargetTestClass.getTestrayTeamName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(teamName)) {
+			return super.getTeamName();
+		}
+
+		return teamName;
 	}
 
 	public TestClassReport getTestClassReport() {

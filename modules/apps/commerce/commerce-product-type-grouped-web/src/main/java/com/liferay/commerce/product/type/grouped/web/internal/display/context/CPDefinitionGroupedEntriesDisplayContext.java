@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -59,7 +60,7 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		_cpDefinitionGroupedEntryService = cpDefinitionGroupedEntryService;
 		_itemSelector = itemSelector;
 
-		setDefaultOrderByCol("priority");
+		setDefaultOrderByCol(Field.PRIORITY);
 		setDefaultOrderByType("asc");
 	}
 
@@ -90,8 +91,8 @@ public class CPDefinitionGroupedEntriesDisplayContext
 
 		Sort sort = null;
 
-		if (orderByCol.equals("priority")) {
-			sort = SortFactoryUtil.create("priority_Number_sortable", reverse);
+		if (orderByCol.equals(Field.PRIORITY)) {
+			sort = SortFactoryUtil.create(Field.PRIORITY, reverse);
 		}
 		else if (orderByCol.equals("quantity")) {
 			sort = SortFactoryUtil.create("quantity_Number_sortable", reverse);

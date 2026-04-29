@@ -87,9 +87,13 @@ test('The navigation menu creator could add child item via keyboard', async ({
 
 	await page.keyboard.press('Enter');
 
-	await page.keyboard.press('ArrowRight');
+	await page
+		.getByRole('menuitem', {exact: true, name: 'Add Child'})
+		.press('ArrowRight');
 
-	await page.keyboard.press('Enter');
+	await page
+		.getByRole('menuitem', {exact: true, name: 'Blogs Entry'})
+		.press('Enter');
 
 	await expect(
 		page
@@ -97,14 +101,6 @@ test('The navigation menu creator could add child item via keyboard', async ({
 			.locator('div')
 			.filter({hasText: 'Select Blogs Entry'})
 	).toBeVisible();
-
-	for (let i = 1; i <= 6; i++) {
-		await page.keyboard.press('Tab');
-	}
-
-	await page.waitForTimeout(300);
-
-	await page.keyboard.press('Enter');
 
 	await navigationMenusPage.blogsModal
 		.getByRole('button', {name: `Select ${blog.friendlyUrlPath}`})
@@ -460,7 +456,9 @@ test('The navigation menu creator could add sibling item via keyboard', async ({
 
 	await page.keyboard.press('Enter');
 
-	await page.keyboard.press('Enter');
+	await page
+		.getByRole('menuitem', {exact: true, name: 'Blogs Entry'})
+		.press('Enter');
 
 	await navigationMenusPage.blogsModal
 		.getByLabel('Select View, Currently')

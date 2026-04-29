@@ -98,7 +98,9 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 			jsonObject.put("ant_target_name", _antTargetName);
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(_testrayMainComponentName)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(
+				_testrayMainComponentName)) {
+
 			jsonObject.put(
 				"testray_main_component_name", _testrayMainComponentName);
 		}
@@ -152,10 +154,10 @@ public abstract class BaseAntTargetTestClass extends BaseTestClass {
 				_testPropertiesFile);
 
 			_testrayMainComponentName = JenkinsResultsParserUtil.getProperty(
-				testProperties, "testray.main.component.name", _antTargetName);
+				testProperties, "testray.main.component.name", antTargetName);
 
 			_testrayTeamName = JenkinsResultsParserUtil.getProperty(
-				testProperties, "testray.team.name", _antTargetName);
+				testProperties, "testray.team.name", antTargetName);
 		}
 		else {
 			_testPropertiesFile = null;

@@ -144,7 +144,9 @@ test(
 
 			await fileInput.setInputFiles(downloadPath);
 
-			await page.getByRole('button', {name: 'Import'}).click();
+			await page
+				.getByRole('button', {exact: true, name: 'Import'})
+				.click();
 
 			await expect(
 				page.getByText(
@@ -257,7 +259,7 @@ test(
 
 		await fileInput.setInputFiles(invalidFilePath);
 
-		await page.getByRole('button', {name: 'Import'}).click();
+		await page.getByRole('button', {exact: true, name: 'Import'}).click();
 
 		await expect(page.getByText(/error|invalid|failed/i)).toBeVisible({
 			timeout: 10000,

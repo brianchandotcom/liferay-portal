@@ -15,6 +15,7 @@ export class VisualizationModesPage {
 	private readonly container: Locator;
 	readonly dataSetPage: DataSetPage;
 	readonly fieldSelectModalPage: FieldSelectModalPage;
+	readonly infoAlert: Locator;
 	readonly listVisualizationModeContainer: Locator;
 	readonly page: Page;
 	readonly tableVisualizationModeContainer: Locator;
@@ -35,6 +36,9 @@ export class VisualizationModesPage {
 		this.container = page.locator('.visualization-modes');
 		this.dataSetPage = new DataSetPage(page);
 		this.fieldSelectModalPage = new FieldSelectModalPage(page);
+		this.infoAlert = page
+			.getByRole('alert')
+			.getByText('Info:This visualization mode will not be shown');
 		this.listVisualizationModeContainer = page.locator(
 			'.list-visualization-mode'
 		);

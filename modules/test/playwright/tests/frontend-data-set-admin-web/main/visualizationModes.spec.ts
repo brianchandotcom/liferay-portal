@@ -84,11 +84,7 @@ test('Configure cards visualization mode @LPD-10735', async ({
 	});
 
 	await test.step('Check info alert is visible when no fields are assigned', async () => {
-		await expect(
-			visualizationModesPage.cardsVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeVisible();
+		await expect(visualizationModesPage.infoAlert).toBeVisible();
 	});
 
 	await test.step('Assign a field to title section', async () => {
@@ -119,11 +115,7 @@ test('Configure cards visualization mode @LPD-10735', async ({
 	});
 
 	await test.step('Check info alert is hidden after a field is assigned', async () => {
-		await expect(
-			visualizationModesPage.cardsVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeHidden();
+		await expect(visualizationModesPage.infoAlert).toBeHidden();
 	});
 
 	await test.step('Edit field to title section', async () => {
@@ -275,11 +267,7 @@ test('Configure list visualization mode @LPD-10735', async ({
 	});
 
 	await test.step('Check info alert is visible when no fields are assigned', async () => {
-		await expect(
-			visualizationModesPage.listVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeVisible();
+		await expect(visualizationModesPage.infoAlert).toBeVisible();
 	});
 
 	await test.step('Assign a field to title section', async () => {
@@ -309,11 +297,7 @@ test('Configure list visualization mode @LPD-10735', async ({
 	});
 
 	await test.step('Check info alert is hidden after a field is assigned', async () => {
-		await expect(
-			visualizationModesPage.listVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeHidden();
+		await expect(visualizationModesPage.infoAlert).toBeHidden();
 	});
 
 	await test.step('Edit field to title section', async () => {
@@ -453,11 +437,7 @@ test('Configure table visualization mode @LPD-11049', async ({
 	});
 
 	await test.step('Check info alert is visible when no fields are added', async () => {
-		await expect(
-			visualizationModesPage.tableVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeVisible();
+		await expect(visualizationModesPage.infoAlert).toBeVisible();
 	});
 
 	await test.step('Add fields from field selection tree', async () => {
@@ -483,11 +463,7 @@ test('Configure table visualization mode @LPD-11049', async ({
 	});
 
 	await test.step('Check info alert is hidden after fields are added', async () => {
-		await expect(
-			visualizationModesPage.tableVisualizationModeContainer.locator(
-				'.alert'
-			)
-		).toBeHidden();
+		await expect(visualizationModesPage.infoAlert).toBeHidden();
 	});
 
 	await test.step('Add fields from text input', async () => {

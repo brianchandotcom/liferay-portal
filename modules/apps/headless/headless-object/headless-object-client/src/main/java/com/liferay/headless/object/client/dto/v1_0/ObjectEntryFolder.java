@@ -495,6 +495,28 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Status status;
 
+	public SystemProperties getSystemProperties() {
+		return systemProperties;
+	}
+
+	public void setSystemProperties(SystemProperties systemProperties) {
+		this.systemProperties = systemProperties;
+	}
+
+	public void setSystemProperties(
+		UnsafeSupplier<SystemProperties, Exception>
+			systemPropertiesUnsafeSupplier) {
+
+		try {
+			systemProperties = systemPropertiesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SystemProperties systemProperties;
+
 	public String getTitle() {
 		return title;
 	}
@@ -610,4 +632,4 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-419774078
+// LIFERAY-REST-BUILDER-HASH:2138765215

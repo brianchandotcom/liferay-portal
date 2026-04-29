@@ -130,11 +130,7 @@ definition {
 		}
 
 		task ("Navigate to Web Content admin") {
-			ApplicationsMenu.gotoSite(site = "Test Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				portlet = "Web Content");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Expand the Recycle Bin category") {

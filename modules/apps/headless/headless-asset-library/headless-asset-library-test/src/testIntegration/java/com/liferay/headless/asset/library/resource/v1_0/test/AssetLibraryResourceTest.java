@@ -126,11 +126,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			List<AssetLibrary> assetLibraries =
 				(List<AssetLibrary>)page.getItems();
 
+			AssetLibrary filteredAssetLibrary = assetLibraries.get(0);
+
 			Assert.assertEquals(
-				assetLibrary.getSiteId(),
-				assetLibraries.get(
-					0
-				).getSiteId());
+				assetLibrary.getSiteId(), filteredAssetLibrary.getSiteId());
 		}
 		finally {
 			assetLibraryResource.deleteAssetLibrary(

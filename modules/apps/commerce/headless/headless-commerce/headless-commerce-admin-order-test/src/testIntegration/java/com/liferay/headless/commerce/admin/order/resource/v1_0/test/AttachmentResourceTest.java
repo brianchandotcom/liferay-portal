@@ -162,6 +162,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 						"dependencies/image.jpg"));
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				fileName = RandomTestUtil.randomString();
 				priority = RandomTestUtil.nextDouble();
 				restricted = RandomTestUtil.randomBoolean();
 				title = RandomTestUtil.randomString();

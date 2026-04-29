@@ -4,6 +4,7 @@
  */
 
 export {default as AddStyleBookModalContent} from './AddStyleBookModalContent';
+export {default as StyleBookEditorBreadcrumb} from './StyleBookEditorBreadcrumb';
 export {default as StyleBookManagementToolbarPropsTransformer} from './StyleBookManagementToolbarPropsTransformer';
 export {default as StylebookEntryActionDropdownPropsTransformer} from './StylebookEntryActionDropdownPropsTransformer';
 export {default as FragmentCollectionPreview} from './fragment-collection-preview/FragmentCollectionPreview';

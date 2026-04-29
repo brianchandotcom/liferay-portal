@@ -187,7 +187,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a document in a connected site can be copied to the depot."
+	@description = "This ensures that a document in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentFromConnectedSiteToDepotAndCannotFromUnconnected {
 		JSONDepot.connectSite(
@@ -227,7 +227,7 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
-	@description = "This ensures that a document in a depot can be copied to the connected site."
+	@description = "This ensures that a document in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyDocumentFromDepotToConnectedSiteAndCannotToUnconnected {
 		JSONDepot.connectSite(
@@ -278,7 +278,7 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title 2");
 	}
 
-	@description = "This ensures that a folder in a connected site can be copied to the depot."
+	@description = "This ensures that a folder in a site can be copied to the depot when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyFolderFromConnectedSiteToDepotAndCannotFromUnconnected {
 		JSONDepot.connectSite(
@@ -330,7 +330,7 @@ definition {
 		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
-	@description = "This ensures that a folder in a depot can be copied to the connected site."
+	@description = "This ensures that a folder in a depot can be copied to a site when connected, but not when unconnected."
 	@priority = 5
 	test CanCopyFolderFromDepotToConnectedSiteAndCannotToUnconnected {
 		JSONDepot.connectSite(

@@ -62,7 +62,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the blog image from a depot can be edited and republished when enabling remote staging."
+	@description = "This ensures that the blog image from a depot can be edited or removed and republished when enabling remote staging."
 	@priority = 4
 	@refactordone
 	test CanEditAndDeleteBlogCoverImage {
@@ -218,7 +218,7 @@ definition {
 		BlogsEntry.viewCoverImage(uploadFileName = "Document_1.jpg");
 	}
 
-	@description = "This ensures that document in depot can be replaced and republished in AP through widget config manual selection when enabling remote staging."
+	@description = "This ensures that a document in depot can be replaced or removed and republished in AP through widget config manual selection when enabling remote staging."
 	@priority = 5
 	@refactordone
 	test CanEditAndDeleteDocument {
@@ -360,7 +360,7 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_3.doc");
 	}
 
-	@description = "This ensures that the open graph image from a depot can be edited and republished when enabling remote staging."
+	@description = "This ensures that the open graph image from a depot can be edited or removed and republished when enabling remote staging."
 	@priority = 5
 	@refactordone
 	test CanEditAndDeleteOpenGraphImage {
@@ -541,7 +541,7 @@ definition {
 		OpenGraph.viewNoOpenGraphProperties(ogPropertyList = '''og:image" content="http://localhost:9080/documents/${groupId}/0/Document_2.jpg"''');
 	}
 
-	@description = "This ensures that the image in depot can be replaced and republished in web content when enabling remote staging."
+	@description = "This ensures that the image in depot can be replaced or removed and republished in web content when enabling remote staging."
 	@priority = 4
 	@refactordone
 	test CanEditAndDeleteWCImage {

@@ -93,7 +93,6 @@ public class ObjectActionProductPurchaseRestController
 		}
 
 		if (Objects.equals(orderTypeExternalReferenceCode, "CLOUD_APP") ||
-			Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
 			Objects.equals(
 				orderTypeExternalReferenceCode, "LOW_CODE_CONFIGURATION") ||
 			Objects.equals(orderTypeExternalReferenceCode, "OTHER")) {
@@ -105,6 +104,7 @@ public class ObjectActionProductPurchaseRestController
 
 		if (Objects.equals(
 				orderTypeExternalReferenceCode, "CLIENT_EXTENSION") ||
+			Objects.equals(orderTypeExternalReferenceCode, "COMPOSITE_APP") ||
 			Objects.equals(
 				order.getOrderTypeExternalReferenceCode(), "DXP_APP")) {
 

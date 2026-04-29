@@ -11,7 +11,6 @@ import com.liferay.gradle.plugins.defaults.internal.LicenseReportDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayBaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPatcherPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayCIPlugin;
-import com.liferay.gradle.plugins.defaults.internal.LiferayProfileDXPPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.MavenPublishDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.NodeDefaultsPlugin;
@@ -50,14 +49,6 @@ public class LiferayDefaultsPlugin extends LiferayPlugin {
 			if (relengDir != null) {
 				LiferayRelengPlugin.INSTANCE.apply(project);
 			}
-		}
-
-		String projectPath = project.getPath();
-
-		if (projectPath.startsWith(":dxp:") &&
-			!CIUtil.isRunningInCIEnvironment()) {
-
-			LiferayProfileDXPPlugin.INSTANCE.apply(project);
 		}
 
 		if (CIUtil.isRunningInCIEnvironment()) {

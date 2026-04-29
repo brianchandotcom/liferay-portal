@@ -241,7 +241,7 @@ test('Can trigger object action as a client extension', async ({
 		whenOption: 'On After Add',
 	});
 
-	viewObjectEntriesPage.goto(objectDefinition.className);
+	await viewObjectEntriesPage.goto(objectDefinition.className);
 
 	await viewObjectEntriesPage.clickAddObjectEntry(
 		objectDefinition.label['en_US']

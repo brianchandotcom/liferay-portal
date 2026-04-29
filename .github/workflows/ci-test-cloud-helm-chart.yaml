@@ -8,14 +8,39 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            -   name: Create Kind cluster
-                run: kind create cluster
-            -   name: Run Helm test
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+            -   name: Set up Kubeconform
+                uses: bmuschko/setup-kubeconform@v1
+                with:
+                    kubeconform-version: "0.7.0"
+            -   name: Update Helm dependencies
+                run: helm dependency update --skip-refresh
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Lint Helm chart
+                run: helm lint .
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Render and validate Helm chart
                 run: |
-                    helm upgrade -i liferay --wait .
+                    set -o pipefail
 
-                    helm test liferay
-                working-directory: ./cloud/helm
+                    helm template liferay . | kubeconform --strict --summary \
+                        -schema-location default \
+                        -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+                        -skip ClusterProviderConfig,LiferayInfrastructure
+                working-directory: ./cloud/helm/${{matrix.chart}}
+        strategy:
+            fail-fast: false
+            matrix:
+                chart:
+                    -   aws
+                    -   aws-infrastructure
+                    -   aws-infrastructure-provider
+                    -   aws-marketplace
+                    -   default
+                    -   gcp
+                    -   gcp-infrastructure
+                    -   gcp-infrastructure-provider
 on:
     pull_request:
         paths:

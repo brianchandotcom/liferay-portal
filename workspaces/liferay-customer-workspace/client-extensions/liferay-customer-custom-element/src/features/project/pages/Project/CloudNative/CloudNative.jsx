@@ -23,7 +23,7 @@ import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestTo
 import i18n from '~/utils/I18n';
 
 const CloudNative = () => {
-	const [{project, subscriptionGroups, userAccount}, dispatch] =
+	const [{hasExperienceSubscription, project, subscriptionGroups}, dispatch] =
 		useAppContext();
 
 	const [oAuthToken, setOAuthToken] = useState();
@@ -137,7 +137,9 @@ const CloudNative = () => {
 										/>
 									</ClayTable.Cell>
 
-									<ClayTable.Cell className={`${headerClass} text-center`}>
+									<ClayTable.Cell
+										className={`${headerClass} text-center`}
+									>
 										{i18n.translate('download')}
 									</ClayTable.Cell>
 								</ClayTable.Row>
@@ -159,6 +161,24 @@ const CloudNative = () => {
 										cloudNativeEnvironment.productionSubscriptionUuid
 									}
 								/>
+
+								{!hasExperienceSubscription && (
+									<EnvironmentRow
+										handleAlertStatus={handleAlertStatus}
+										label="uat"
+										nodes={
+											cloudNativeEnvironment.maxClusterNodes
+										}
+										oAuthToken={oAuthToken}
+										projectName={project.name}
+										provisioningServerAPI={
+											provisioningServerAPI
+										}
+										uuid={
+											cloudNativeEnvironment.productionSubscriptionUuid
+										}
+									/>
+								)}
 
 								<EnvironmentRow
 									handleAlertStatus={handleAlertStatus}

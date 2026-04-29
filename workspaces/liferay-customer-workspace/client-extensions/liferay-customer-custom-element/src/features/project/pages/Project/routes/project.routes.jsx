@@ -216,7 +216,7 @@ const ProjectRoutes = () => {
 							<Route
 								element={
 									<DeactivateKeysTable
-										initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital'))"
+										initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital') or startswith(productName,'Liferay Self-Hosted'))"
 										productName={PRODUCT_TYPES.dxp}
 									/>
 								}

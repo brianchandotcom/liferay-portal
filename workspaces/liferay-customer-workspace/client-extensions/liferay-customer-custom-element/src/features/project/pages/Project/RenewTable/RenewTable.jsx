@@ -37,7 +37,7 @@ const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 	const [renewKeysFilterChecked, setRenewKeysFilterChecked] = useState('');
 
 	const initialFilter = isDXPTable
-		? "(startswith(productName,'DXP') or startswith(productName,'Digital'))"
+		? "(startswith(productName,'DXP') or startswith(productName,'Digital') or startswith(productName,'Liferay Self-Hosted'))"
 		: "startswith(productName,'Portal')";
 
 	return (

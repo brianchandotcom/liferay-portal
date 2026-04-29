@@ -192,6 +192,7 @@ export default class AppPublish extends BaseAppPublish {
 	async syncProfile() {
 		const {
 			_product,
+			build: {appType},
 			catalog,
 			profile: {areas, categories, description, file, name, tags},
 			references: {vocabulariesAndCategories},
@@ -235,10 +236,21 @@ export default class AppPublish extends BaseAppPublish {
 			return _product;
 		}
 
+		const compatibleOfferingCategories =
+			vocabulariesAndCategories[
+				ProductVocabulary.LIFERAY_PLATFORM_OFFERING
+			]?.categories ?? [];
+		const platformOfferingLabels = getOfferingTypes(appType);
+		const compatibleOfferings = compatibleOfferingCategories
+			.filter(({label}: {label: string}) =>
+				platformOfferingLabels.includes(label as ProductOfferingTypes)
+			)
+			.map(normalizeCategory);
+
 		const product =
 			await HeadlessCommerceAdminCatalogImpl.createVirtualProduct({
 				catalogId: catalog.id,
-				categories: productCategories,
+				categories: [...productCategories, ...compatibleOfferings],
 				description,
 				name,
 				...this.getProductStatus(),
@@ -285,24 +297,6 @@ export default class AppPublish extends BaseAppPublish {
 		const {
 			build: {appType, resourceRequirements},
 		} = this.context;
-
-		const {
-			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
-				compatibleOfferingVocabulary,
-		} = this.context.references.vocabulariesAndCategories;
-
-		const platformOfferingLabels = getOfferingTypes(appType);
-
-		const compatibleOfferingCategories =
-			compatibleOfferingVocabulary.categories ?? [];
-
-		const compatibleOfferings = compatibleOfferingCategories
-			.filter(({label}: {label: string}) =>
-				platformOfferingLabels.includes(label as ProductOfferingTypes)
-			)
-			.map(normalizeCategory);
-
-		this.temporary.compatibleOfferings = compatibleOfferings;
 
 		const specifications = [
 			{
@@ -443,6 +437,7 @@ export default class AppPublish extends BaseAppPublish {
 	}
 
 	public async sync(config: ProductConfig) {
+		const isNewProduct = !this.context._product;
 		let product;
 
 		this.config = config;
@@ -472,7 +467,9 @@ export default class AppPublish extends BaseAppPublish {
 				}
 			}
 
-			await this.updateProduct(product);
+			if (!isNewProduct) {
+				await this.updateProduct(product);
+			}
 		}
 		catch (error) {
 			console.error(error);

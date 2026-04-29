@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -77,6 +78,11 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+import java.lang.reflect.ParameterizedType;
+
 import java.math.BigDecimal;
 
 import java.sql.Blob;
@@ -115,10 +121,49 @@ import javax.sql.DataSource;
  * @author Shuyang Zhou
  * @author Peter Fellwock
  */
-public class BasePersistenceImpl<T extends BaseModel<T>>
-	implements BasePersistence<T>, SessionFactory {
+public class BasePersistenceImpl
+	<T extends BaseModel<T>, E extends NoSuchModelException>
+		implements BasePersistence<T>, SessionFactory {
 
 	public static final String COUNT_COLUMN_NAME = "COUNT_VALUE";
+
+	public BasePersistenceImpl() {
+		Class<?> exceptionClass = NoSuchModelException.class;
+
+		Class<?> clazz = getClass();
+
+		while (clazz.getSuperclass() != BasePersistenceImpl.class) {
+			clazz = clazz.getSuperclass();
+		}
+
+		java.lang.reflect.Type genericSuperclass = clazz.getGenericSuperclass();
+
+		if (genericSuperclass instanceof ParameterizedType) {
+			ParameterizedType parameterizedType =
+				(ParameterizedType)genericSuperclass;
+
+			java.lang.reflect.Type typeArgument =
+				parameterizedType.getActualTypeArguments()[1];
+
+			if (typeArgument instanceof Class<?>) {
+				exceptionClass = (Class<?>)typeArgument;
+			}
+		}
+
+		try {
+			MethodHandle methodHandle = MethodHandles.lookup(
+			).unreflectConstructor(
+				exceptionClass.getConstructor(String.class)
+			);
+
+			_noSuchModelExceptionMethodHandle = methodHandle.asType(
+				_NEW_NO_SUCH_MODEL_EXCEPTION_METHOD_TYPE);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw ReflectionUtil.<RuntimeException>throwException(
+				reflectiveOperationException);
+		}
+	}
 
 	public void cacheResult(List<T> models) {
 		throw new UnsupportedOperationException();
@@ -524,10 +569,22 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModelException {
+	public T findByPrimaryKey(Serializable primaryKey) throws E {
+		T model = fetchByPrimaryKey(primaryKey);
 
-		throw new UnsupportedOperationException();
+		if (model == null) {
+			String message = StringBundler.concat(
+				"No ", _modelClass.getSimpleName(),
+				" exists with the primary key ", primaryKey);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(message);
+			}
+
+			throw newNoSuchModelException(message);
+		}
+
+		return model;
 	}
 
 	@Override
@@ -667,8 +724,38 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	public T remove(Serializable primaryKey) throws NoSuchModelException {
-		throw new UnsupportedOperationException();
+	@SuppressWarnings("unchecked")
+	public T remove(Serializable primaryKey) throws E {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			T model = (T)session.get(_modelImplClass, primaryKey);
+
+			if (model == null) {
+				String message = StringBundler.concat(
+					"No ", _modelClass.getSimpleName(),
+					" exists with the primary key ", primaryKey);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(message);
+				}
+
+				throw newNoSuchModelException(message);
+			}
+
+			return remove(model);
+		}
+		catch (NoSuchModelException noSuchModelException) {
+			throw (E)noSuchModelException;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override
@@ -962,6 +1049,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		return _permissionsInMemoryFilterEnabled;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected E newNoSuchModelException(String message) {
+		try {
+			return (E)_noSuchModelExceptionMethodHandle.invokeExact(message);
+		}
+		catch (Throwable throwable) {
+			return ReflectionUtil.throwException(throwable);
+		}
 	}
 
 	/**
@@ -1265,6 +1362,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return queryTable.getDslQuery();
 	}
 
+	private static final MethodType _NEW_NO_SUCH_MODEL_EXCEPTION_METHOD_TYPE =
+		MethodType.methodType(NoSuchModelException.class, String.class);
+
 	private static final boolean _PERMISSIONS_IN_MEMORY_FILTER_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get("permissions.in.memory.filter.enabled"), true);
@@ -1307,6 +1407,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;
 	private ModelPKType _modelPKType = ModelPKType.COMPOUND;
+	private final MethodHandle _noSuchModelExceptionMethodHandle;
 	private Boolean _permissionsInMemoryFilterEnabled;
 	private SessionFactory _sessionFactory;
 	private Table<?> _table;

@@ -2200,7 +2200,7 @@ public class TableMapperTest {
 	}
 
 	private class MockBasePersistence<T extends BaseModel<T>>
-		extends BasePersistenceImpl<T> {
+		extends BasePersistenceImpl<T, NoSuchModelException> {
 
 		public MockBasePersistence(Class<T> clazz) {
 			setModelClass(clazz);

@@ -22,7 +22,7 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 
 	@SafeVarargs
 	public UniquePersistenceFinder(
-		BasePersistenceImpl<T> basePersistenceImpl, FinderPath fetchPath,
+		BasePersistenceImpl<T, ?> basePersistenceImpl, FinderPath fetchPath,
 		String sqlSelectWhere, FinderColumn<T>... finderColumns) {
 
 		super(basePersistenceImpl, sqlSelectWhere, finderColumns);

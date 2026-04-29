@@ -23,7 +23,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 	extends NestedSetsTreeManager<T> {
 
 	public PersistenceNestedSetsTreeManager(
-		BasePersistenceImpl<?> basePersistenceImpl, String tableName,
+		BasePersistenceImpl<?, ?> basePersistenceImpl, String tableName,
 		String entityName, Class<?> entityImplClass, String primaryKeyName,
 		String nestedSetsTreeNodeScopeIdName, String nestedSetsTreeNodeLeftName,
 		String nestedSetsTreeNodeRightName) {
@@ -407,7 +407,7 @@ public class PersistenceNestedSetsTreeManager<T extends NestedSetsTreeNodeModel>
 		}
 	}
 
-	private final BasePersistenceImpl<?> _basePersistenceImpl;
+	private final BasePersistenceImpl<?, ?> _basePersistenceImpl;
 	private final Class<?> _entityImplClass;
 	private final String _entityName;
 	private final String _nestedSetsTreeNodeLeftName;

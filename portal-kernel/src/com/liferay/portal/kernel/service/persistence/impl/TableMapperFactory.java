@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.internal.service.persistence.TableMapperImpl;
 import com.liferay.portal.kernel.internal.service.persistence.change.tracking.CTTableMapper;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -106,7 +107,7 @@ public class TableMapperFactory {
 		new ConcurrentHashMap<>();
 
 	private static class RejectingBasePersistenceImpl<T extends BaseModel<T>>
-		extends BasePersistenceImpl<T> {
+		extends BasePersistenceImpl<T, NoSuchModelException> {
 
 		@Override
 		public T findByPrimaryKey(Serializable primaryKey) {

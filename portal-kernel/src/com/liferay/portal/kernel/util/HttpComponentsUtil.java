@@ -986,16 +986,32 @@ public class HttpComponentsUtil {
 	}
 
 	public static String sortParameters(String url) {
-		String queryString = getQueryString(url);
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
+		int pos = url.indexOf(CharPool.QUESTION);
+
+		if (pos == -1) {
+			return url;
+		}
+
+		String[] array = PortalUtil.stripURLAnchor(url, StringPool.POUND);
+
+		url = array[0];
+
+		String anchor = array[1];
+
+		String queryString = url.substring(pos + 1);
 
 		if (Validator.isNull(queryString)) {
-			return url;
+			return url + anchor;
 		}
 
 		String sortedQueryString = parameterMapToString(
 			parameterMapFromString(queryString, true), false);
 
-		return StringUtil.replace(url, queryString, sortedQueryString);
+		return url.substring(0, pos + 1) + sortedQueryString + anchor;
 	}
 
 	private static String _shortenURL(

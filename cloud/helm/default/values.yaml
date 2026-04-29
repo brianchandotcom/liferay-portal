@@ -272,7 +272,6 @@ network:
     forceHttpsRedirect: false
     gatewayName: ""
     hostnames: []
-    perHostnameRoutes: false
     securityPolicyAuthorizationSpec: {}
     timeouts: {}
 networkPolicy:

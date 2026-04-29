@@ -1095,20 +1095,13 @@ test(
 		const fromDate = new Date();
 		const toDate = new Date();
 
-		await test.step('Check that the "Add filter" button is disabled if "from" date is a past date', async () => {
-			fromDate.setDate(fromDate.getDate() - 1);
-			await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
-			await expect(addFilterButton).toBeDisabled();
-		});
+		fromDate.setDate(fromDate.getDate() + 1);
 
-		await test.step('Check that the "Add filter" button is enabled if "from" date is today or after', async () => {
-			fromDate.setDate(fromDate.getDate() + 2);
+		await test.step('Set "from" date to a future date', async () => {
 			await fromDateInput.fill(fromDate.toISOString().split('T')[0]);
-			await expect(addFilterButton).toBeEnabled();
 		});
 
 		await test.step('Check that the "Add filter" button is disabled if "to" date is before "from date"', async () => {
-			toDate.setDate(toDate.getDate());
 			await toDateInput.fill(toDate.toISOString().split('T')[0]);
 			await expect(addFilterButton).toBeDisabled();
 		});
@@ -1866,5 +1859,167 @@ test(
 				}
 			}
 		}
+	}
+);
+
+test(
+	'Content can be filtered by Create Date',
+	{tag: ['@LPD-85551', '@LPD-87955']},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Content ${getRandomString()}`;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await assetsPage.gotoAll();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await page.getByRole('menuitem', {name: 'Create Date'}).click();
+
+		const fromDate = new Date();
+		const toDate = new Date();
+
+		fromDate.setDate(fromDate.getDate() - 1);
+
+		await page
+			.getByLabel('From')
+			.fill(fromDate.toISOString().split('T')[0]);
+		await page
+			.getByLabel('To', {exact: true})
+			.fill(toDate.toISOString().split('T')[0]);
+
+		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		await expect(
+			page
+				.getByRole('button', {name: /Create Date:/})
+				.locator('.label-section')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Content can be filtered by Display Date',
+	{tag: ['@LPD-85551', '@LPD-87955']},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Content ${getRandomString()}`;
+
+		const displayDate = new Date();
+
+		displayDate.setDate(displayDate.getDate() + 5);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				displayDate: displayDate.toISOString(),
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await assetsPage.gotoAll();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await page.getByRole('menuitem', {name: 'Display Date'}).click();
+
+		const fromDate = new Date();
+		const toDate = new Date();
+
+		fromDate.setDate(fromDate.getDate() + 4);
+		toDate.setDate(toDate.getDate() + 6);
+
+		await page
+			.getByLabel('From')
+			.fill(fromDate.toISOString().split('T')[0]);
+		await page
+			.getByLabel('To', {exact: true})
+			.fill(toDate.toISOString().split('T')[0]);
+
+		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		await expect(
+			page
+				.getByRole('button', {name: /Display Date:/})
+				.locator('.label-section')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Content can be filtered by Modified Date',
+	{tag: ['@LPD-85551', '@LPD-87955']},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Content ${getRandomString()}`;
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		await assetsPage.gotoAll();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+
+		await page.getByRole('menuitem', {name: 'Modified Date'}).click();
+
+		const fromDate = new Date();
+		const toDate = new Date();
+
+		fromDate.setDate(fromDate.getDate() - 1);
+
+		await page
+			.getByLabel('From')
+			.fill(fromDate.toISOString().split('T')[0]);
+		await page
+			.getByLabel('To', {exact: true})
+			.fill(toDate.toISOString().split('T')[0]);
+
+		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		await expect(
+			page
+				.getByRole('button', {name: /Modified Date:/})
+				.locator('.label-section')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('cell', {exact: true, name: file1Title})
+		).toBeVisible();
 	}
 );

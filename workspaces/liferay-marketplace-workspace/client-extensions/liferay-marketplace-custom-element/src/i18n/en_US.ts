@@ -512,6 +512,8 @@ export default {
 		'Only GIF, JPG, JPEG, and PNG are allowed. Max file size is 5MB.',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR and WAR files are allowed. Max file size is 500MB.',
+	'only-jar-zip-files-are-allowed-max-file-size-is-500mb':
+		'Only JAR and ZIP files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500mb':
 		'Only ZIP files are allowed. Max file size is 500MB.',
 	'oops-something-went-wrong': 'Oops! Something went wrong.',

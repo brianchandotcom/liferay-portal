@@ -7,6 +7,7 @@ package com.liferay.mcp.server.internal.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.mcp.server.internal.configuration.MCPServerConfiguration;
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
 import com.liferay.mcp.server.internal.util.OpenAPIUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -16,6 +17,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -128,7 +131,24 @@ public class MCPServerServlet extends HttpServlet {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+		MCPServerConfiguration mcpServerConfiguration;
+
+		try {
+			mcpServerConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					MCPServerConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311") ||
+			!mcpServerConfiguration.enabled()) {
+
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
@@ -550,6 +570,9 @@ public class MCPServerServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MCPServerServlet.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Http _http;

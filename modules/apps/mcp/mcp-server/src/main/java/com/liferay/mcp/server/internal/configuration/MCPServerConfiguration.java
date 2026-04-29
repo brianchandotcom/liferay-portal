@@ -1,0 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.mcp.server.internal.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+/**
+ * @author Beni Herrero
+ */
+@ExtendedObjectClassDefinition(
+	category = "mcp-server", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
+@Meta.OCD(
+	description = "mcp-server-configuration-description",
+	id = "com.liferay.mcp.server.internal.configuration.MCPServerConfiguration",
+	localization = "content/Language", name = "mcp-server-configuration-name"
+)
+public interface MCPServerConfiguration {
+
+	@Meta.AD(deflt = "false", name = "enabled", required = false)
+	public boolean enabled();
+
+}

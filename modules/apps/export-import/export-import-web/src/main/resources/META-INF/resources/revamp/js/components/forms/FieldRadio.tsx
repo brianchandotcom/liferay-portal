@@ -33,7 +33,7 @@ export function FieldRadio({
 	return (
 		<OptionRow
 			description={description}
-			descriptionId={descriptionId}
+			descriptionId={description ? descriptionId : undefined}
 			input={
 				<ClayRadio
 					{...restProps}
@@ -43,14 +43,11 @@ export function FieldRadio({
 					id={fieldId}
 					name={name}
 					onChange={onChange}
-					onClick={(event) => event.stopPropagation()}
 					value={value}
 				/>
 			}
 			label={label}
-			labelHtmlFor={fieldId}
 			labelId={labelId}
-			onClick={onChange}
 		/>
 	);
 }

@@ -57,7 +57,10 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v4
                 with:
-                    fetch-depth: 0
+                    fetch-depth: 1
+                    sparse-checkout: |
+                        cloud/scripts
+                        cloud/terraform/aws
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:
@@ -134,7 +137,10 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v4
                 with:
-                    fetch-depth: 0
+                    fetch-depth: 1
+                    sparse-checkout: |
+                        cloud/scripts
+                        cloud/terraform/gcp
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:

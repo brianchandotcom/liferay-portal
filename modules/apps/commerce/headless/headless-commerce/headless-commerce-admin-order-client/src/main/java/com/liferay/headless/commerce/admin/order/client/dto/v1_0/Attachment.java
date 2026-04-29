@@ -133,6 +133,27 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
+
+		try {
+			fileName = fileNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String fileName;
+
 	public Long getId() {
 		return id;
 	}
@@ -306,4 +327,4 @@ public class Attachment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-712671693
+// LIFERAY-REST-BUILDER-HASH:-932360699

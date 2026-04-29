@@ -177,6 +177,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		attachment.setAttachment(regex);
 		attachment.setExtension(regex);
 		attachment.setExternalReferenceCode(regex);
+		attachment.setFileName(regex);
 		attachment.setTitle(regex);
 		attachment.setType(regex);
 		attachment.setTypeLabel(regex);
@@ -191,6 +192,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Assert.assertEquals(regex, attachment.getAttachment());
 		Assert.assertEquals(regex, attachment.getExtension());
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
+		Assert.assertEquals(regex, attachment.getFileName());
 		Assert.assertEquals(regex, attachment.getTitle());
 		Assert.assertEquals(regex, attachment.getType());
 		Assert.assertEquals(regex, attachment.getTypeLabel());
@@ -2117,6 +2119,14 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("fileName", additionalAssertFieldName)) {
+				if (attachment.getFileName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("priority", additionalAssertFieldName)) {
 				if (attachment.getPriority() == null) {
 					valid = false;
@@ -2336,6 +2346,16 @@ public abstract class BaseAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						attachment1.getExternalReferenceCode(),
 						attachment2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("fileName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getFileName(), attachment2.getFileName())) {
 
 					return false;
 				}
@@ -2694,6 +2714,52 @@ public abstract class BaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("fileName")) {
+			Object object = attachment.getFileName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2946,6 +3012,8 @@ public abstract class BaseAttachmentResourceTestCase {
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				fileName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
 				restricted = RandomTestUtil.randomBoolean();
@@ -3179,4 +3247,4 @@ public abstract class BaseAttachmentResourceTestCase {
 			AttachmentResource _attachmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1205916924
+// LIFERAY-REST-BUILDER-HASH:-357917006

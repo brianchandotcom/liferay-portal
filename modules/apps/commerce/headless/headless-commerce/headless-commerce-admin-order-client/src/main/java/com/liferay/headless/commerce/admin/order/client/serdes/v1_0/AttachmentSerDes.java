@@ -117,6 +117,20 @@ public class AttachmentSerDes {
 			sb.append("\"");
 		}
 
+		if (attachment.getFileName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachment.getFileName()));
+
+			sb.append("\"");
+		}
+
 		if (attachment.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -263,6 +277,13 @@ public class AttachmentSerDes {
 				String.valueOf(attachment.getExternalReferenceCode()));
 		}
 
+		if (attachment.getFileName() == null) {
+			map.put("fileName", null);
+		}
+		else {
+			map.put("fileName", String.valueOf(attachment.getFileName()));
+		}
+
 		if (attachment.getId() == null) {
 			map.put("id", null);
 		}
@@ -347,6 +368,9 @@ public class AttachmentSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "fileName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -405,6 +429,11 @@ public class AttachmentSerDes {
 				if (jsonParserFieldValue != null) {
 					attachment.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "fileName")) {
+				if (jsonParserFieldValue != null) {
+					attachment.setFileName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -525,4 +554,4 @@ public class AttachmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1927273685
+// LIFERAY-REST-BUILDER-HASH:-835789390

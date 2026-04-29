@@ -115,9 +115,11 @@ function _download_and_extract_files {
 	fi
 
 	curl \
+		--fail \
 		--location \
 		--output "${output_file}" \
 		--silent \
+		--show-error \
 		"${download_base_url}/${output_path}"
 
 	local output_dir="${output_file%.tar.gz}"

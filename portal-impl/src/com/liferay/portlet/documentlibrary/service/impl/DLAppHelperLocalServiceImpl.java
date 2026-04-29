@@ -137,21 +137,15 @@ public class DLAppHelperLocalServiceImpl
 		long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
 		if (fileEntryAssetEntry == null) {
-			Date publishDate = fileEntry.getDisplayDate();
-
-			if (publishDate == null) {
-				publishDate = fileEntry.getCreateDate();
-			}
-
 			fileEntryAssetEntry = _assetEntryLocalService.updateEntry(
 				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 				fileEntry.getModifiedDate(),
 				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				fileEntry.getUuid(), fileEntryTypeId, assetCategoryIds,
-				assetTagNames, true, false, null, null, publishDate,
-				fileEntry.getExpirationDate(), fileEntry.getMimeType(),
-				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
-				null, 0, 0, null);
+				assetTagNames, true, false, null, null,
+				_getPublishDate(fileEntry), fileEntry.getExpirationDate(),
+				fileEntry.getMimeType(), fileEntry.getTitle(),
+				fileEntry.getDescription(), null, null, null, 0, 0, null);
 		}
 
 		AssetEntry fileVersionAssetEntry = _assetEntryLocalService.fetchEntry(
@@ -173,18 +167,12 @@ public class DLAppHelperLocalServiceImpl
 		assetTagNames = _assetTagLocalService.getTagNames(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
-		Date publishDate = fileEntry.getDisplayDate();
-
-		if (publishDate == null) {
-			publishDate = fileEntry.getCreateDate();
-		}
-
 		fileVersionAssetEntry = _assetEntryLocalService.updateEntry(
 			userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
 			fileEntry.getModifiedDate(), DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId(), fileEntry.getUuid(),
 			fileEntryTypeId, assetCategoryIds, assetTagNames, true, false, null,
-			null, publishDate, fileEntry.getExpirationDate(),
+			null, _getPublishDate(fileEntry), fileEntry.getExpirationDate(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), null, null, null, 0, 0, null);
 
@@ -539,11 +527,7 @@ public class DLAppHelperLocalServiceImpl
 			Date publishDate = null;
 
 			if (visible) {
-				publishDate = fileEntry.getDisplayDate();
-
-				if (publishDate == null) {
-					publishDate = fileEntry.getCreateDate();
-				}
+				publishDate = _getPublishDate(fileEntry);
 			}
 
 			assetEntry = _assetEntryLocalService.updateEntry(
@@ -724,12 +708,6 @@ public class DLAppHelperLocalServiceImpl
 							draftAssetEntry.getCategoryIds();
 						String[] assetTagNames = draftAssetEntry.getTagNames();
 
-						Date publishDate = fileEntry.getDisplayDate();
-
-						if (publishDate == null) {
-							publishDate = fileEntry.getCreateDate();
-						}
-
 						AssetEntry assetEntry =
 							_assetEntryLocalService.updateEntry(
 								userId, fileEntry.getGroupId(),
@@ -739,7 +717,8 @@ public class DLAppHelperLocalServiceImpl
 								fileEntry.getFileEntryId(), fileEntry.getUuid(),
 								fileEntryTypeId, assetCategoryIds,
 								assetTagNames, true, true, null, null,
-								publishDate, fileEntry.getExpirationDate(),
+								_getPublishDate(fileEntry),
+								fileEntry.getExpirationDate(),
 								draftAssetEntry.getMimeType(),
 								fileEntry.getTitle(),
 								fileEntry.getDescription(), null, null, null, 0,
@@ -759,16 +738,11 @@ public class DLAppHelperLocalServiceImpl
 					fileEntry.getFileEntryId());
 
 				if (assetEntry != null) {
-					Date publishDate = fileEntry.getDisplayDate();
-
-					if (publishDate == null) {
-						publishDate = assetEntry.getCreateDate();
-					}
-
 					_assetEntryLocalService.updateEntry(
 						assetEntry.getClassName(), assetEntry.getClassPK(),
-						publishDate, assetEntry.getExpirationDate(),
-						assetEntry.isListable(), true);
+						_getPublishDate(fileEntry),
+						assetEntry.getExpirationDate(), assetEntry.isListable(),
+						true);
 				}
 			}
 
@@ -929,6 +903,16 @@ public class DLAppHelperLocalServiceImpl
 
 		_ratingsStatsLocalService.deleteStats(
 			DLFileEntryConstants.getClassName(), fileEntryId);
+	}
+
+	private Date _getPublishDate(FileEntry fileEntry) {
+		Date displayDate = fileEntry.getDisplayDate();
+
+		if (displayDate == null) {
+			return fileEntry.getCreateDate();
+		}
+
+		return displayDate;
 	}
 
 	@BeanReference(type = AssetCategoryLocalService.class)

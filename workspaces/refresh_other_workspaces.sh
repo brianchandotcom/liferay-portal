@@ -17,6 +17,7 @@ function main {
 			--exclude "package.json" \
 			--exclude "README.md" \
 			--exclude "test.properties" \
+			--exclude "yarn.lock" \
 			--exclude "client-extensions" \
 			--exclude "language" \
 			--exclude "modules" \

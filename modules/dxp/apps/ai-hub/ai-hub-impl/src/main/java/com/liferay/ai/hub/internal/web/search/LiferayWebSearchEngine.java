@@ -6,9 +6,7 @@
 package com.liferay.ai.hub.internal.web.search;
 
 import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,12 +41,12 @@ import java.util.Map;
 public class LiferayWebSearchEngine implements WebSearchEngine {
 
 	public LiferayWebSearchEngine(
-		String accessToken, String blueprintExternalReferenceCode,
-		long companyId, String userToken) {
+		String blueprintExternalReferenceCode, long companyId,
+		long oAuth2ApplicationId, String userToken) {
 
-		_accessToken = accessToken;
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
 		_companyId = companyId;
+		_oAuth2ApplicationId = oAuth2ApplicationId;
 		_userToken = userToken;
 	}
 
@@ -67,9 +65,7 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 	private WebSearchResults _search(WebSearchRequest webSearchRequest)
 		throws Exception {
 
-		if (Validator.isNull(_accessToken) ||
-			!_accessToken.startsWith("Bearer ")) {
-
+		if (_oAuth2ApplicationId == 0L) {
 			throw new IllegalArgumentException();
 		}
 
@@ -79,14 +75,9 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader("Liferay-AI-Hub-Cell-On-Behalf-Of", _userToken);
 
-		OAuth2Authorization oAuth2Authorization =
-			OAuth2AuthorizationLocalServiceUtil.
-				getOAuth2AuthorizationByAccessTokenContent(
-					_accessToken.substring(7));
-
 		OAuth2Application oAuth2Application =
 			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(
-				oAuth2Authorization.getOAuth2ApplicationId());
+				_oAuth2ApplicationId);
 
 		String homePageURL = oAuth2Application.getHomePageURL();
 
@@ -155,9 +146,9 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			webSearchOrganicResults);
 	}
 
-	private final String _accessToken;
 	private final String _blueprintExternalReferenceCode;
 	private final long _companyId;
+	private final long _oAuth2ApplicationId;
 	private final String _userToken;
 
 }

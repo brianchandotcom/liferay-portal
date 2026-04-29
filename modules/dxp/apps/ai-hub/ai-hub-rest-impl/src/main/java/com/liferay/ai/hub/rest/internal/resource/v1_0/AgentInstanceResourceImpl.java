@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.agent.OAuth2ApplicationIdResolver;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentInstance;
 import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
@@ -86,16 +87,14 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
 				ServiceContextFactory.getInstance(contextHttpServletRequest)
 			).put(
-				"accessToken",
-				_encryptor.encrypt(
-					contextCompany.getKeyObj(),
-					contextHttpServletRequest.getHeader("Authorization"))
-			).put(
 				"agentDefinitionExternalReferenceCode",
 				agentDefinition.getExternalReferenceCode()
 			).put(
 				"instructionDefinitionScope",
 				agentInstance.getInstructionDefinitionScopeAsString()
+			).put(
+				"oAuth2ApplicationId",
+				_oAuth2ApplicationIdResolver.resolve(contextHttpServletRequest)
 			).put(
 				"outBoundEventName", agentDefinition.getExternalReferenceCode()
 			).put(
@@ -145,6 +144,9 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 
 	@Reference
 	private Encryptor _encryptor;
+
+	@Reference
+	private OAuth2ApplicationIdResolver _oAuth2ApplicationIdResolver;
 
 	@Context
 	private Sse _sse;

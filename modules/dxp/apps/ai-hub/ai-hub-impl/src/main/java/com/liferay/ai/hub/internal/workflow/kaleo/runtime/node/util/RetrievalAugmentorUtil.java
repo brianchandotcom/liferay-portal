@@ -187,12 +187,11 @@ public class RetrievalAugmentorUtil {
 				return WebSearchContentRetriever.builder(
 				).webSearchEngine(
 					new LiferayWebSearchEngine(
-						EncryptorUtil.decrypt(
-							company.getKeyObj(),
-							(String)workflowContext.get("accessToken")),
 						contentRetrieverJSONObject.getString(
 							"blueprintExternalReferenceCode"),
 						companyId,
+						GetterUtil.getLong(
+							workflowContext.get("oAuth2ApplicationId")),
 						EncryptorUtil.decrypt(
 							company.getKeyObj(),
 							(String)workflowContext.get("userToken")))

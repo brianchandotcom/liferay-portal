@@ -22,6 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CookiesConfigurationProvider {
 
+	public void forceCookiesPreferenceHandlingReconsent(
+			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+		throws Exception;
+
 	public String getCompanyConfigurationURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

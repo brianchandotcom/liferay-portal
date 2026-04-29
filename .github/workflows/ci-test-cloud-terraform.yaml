@@ -37,9 +37,11 @@ jobs:
 on:
     pull_request:
         paths:
+            -   .github/workflows/ci-test-cloud-terraform.yaml
             -   cloud/terraform/**
     push:
         branches:
             -   master
         paths:
+            -   .github/workflows/ci-test-cloud-terraform.yaml
             -   cloud/terraform/**

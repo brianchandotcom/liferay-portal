@@ -89,14 +89,15 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 					WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
 					_agentContext.getServiceContext()
 				).put(
-					"accessToken", _agentContext.getAccessToken()
-				).put(
 					"agentDefinitionExternalReferenceCode", _name
 				).put(
 					"instructionDefinitionScope",
 					_agentContext.getInstructionDefinitionScope()
 				).put(
 					"memoryId", _agentContext.getSseEventSinkKey()
+				).put(
+					"oAuth2ApplicationId",
+					_agentContext.getOAuth2ApplicationId()
 				).put(
 					"sseEventSinkKey", _agentContext.getSseEventSinkKey()
 				).put(

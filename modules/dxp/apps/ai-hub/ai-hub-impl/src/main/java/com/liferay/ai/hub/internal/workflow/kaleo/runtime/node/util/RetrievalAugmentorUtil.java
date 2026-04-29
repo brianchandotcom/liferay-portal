@@ -183,11 +183,11 @@ public class RetrievalAugmentorUtil {
 				return WebSearchContentRetriever.builder(
 				).webSearchEngine(
 					new LiferayWebSearchEngine(
-						GetterUtil.getString(
-							workflowContext.get("accessToken")),
 						contentRetrieverJSONObject.getString(
 							"blueprintExternalReferenceCode"),
 						companyId,
+						GetterUtil.getLong(
+							workflowContext.get("oAuth2ApplicationId")),
 						GetterUtil.getString(workflowContext.get("userToken")))
 				).build();
 			}

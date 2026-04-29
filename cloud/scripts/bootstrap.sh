@@ -44,9 +44,22 @@ function _check_utils {
 }
 
 function _download_and_extract_files {
+	local provider="${1}"
+
+	local version="${2}"
+
 	local bucket_name="liferay-cloud-native-bootstrap"
 
-	local prefix="bootstrap/liferay-${1}-bootstrap"
+	local download_base_url="https://cdn.liferay.cloud"
+
+	if [[ "${version}" == *-pr-* ]]
+	then
+		bucket_name="liferay-cloud-native-bootstrap-nonprd"
+
+		download_base_url="https://storage.googleapis.com/${bucket_name}"
+	fi
+
+	local prefix="bootstrap/liferay-${provider}-bootstrap"
 
 	local json
 
@@ -62,8 +75,6 @@ function _download_and_extract_files {
 
 		exit 1
 	fi
-
-	local version="${2}"
 
 	local output_path
 
@@ -107,7 +118,7 @@ function _download_and_extract_files {
 		--location \
 		--output "${output_file}" \
 		--silent \
-		"https://cdn.liferay.cloud/${output_path}"
+		"${download_base_url}/${output_path}"
 
 	local output_dir="${output_file%.tar.gz}"
 

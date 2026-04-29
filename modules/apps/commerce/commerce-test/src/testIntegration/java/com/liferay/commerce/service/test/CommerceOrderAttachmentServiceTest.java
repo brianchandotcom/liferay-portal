@@ -42,6 +42,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -108,7 +110,7 @@ public class CommerceOrderAttachmentServiceTest {
 				RandomTestUtil.nextDouble(), false,
 				RandomTestUtil.randomString(), _TYPE_KEY,
 				RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 			Assert.fail();
 		}
@@ -133,7 +135,7 @@ public class CommerceOrderAttachmentServiceTest {
 				RandomTestUtil.nextDouble(), false,
 				RandomTestUtil.randomString(), _TYPE_KEY,
 				RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 		}
 	}
 
@@ -364,7 +366,7 @@ public class CommerceOrderAttachmentServiceTest {
 			_commerceOrder.getCommerceOrderId(), RandomTestUtil.nextDouble(),
 			restricted, RandomTestUtil.randomString(), _TYPE_KEY,
 			RandomTestUtil.randomString(),
-			getClass().getResourceAsStream("dependencies/attachment.txt"));
+			new ByteArrayInputStream("Liferay".getBytes()));
 	}
 
 	private void _assertMessage(String actionKey, String message, long userId) {

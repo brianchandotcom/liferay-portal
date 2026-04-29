@@ -11,19 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Enable Widget Questions deprecation feature flag") {
-			PortalSettings.openInstanceSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Deprecation",
-				configurationScope = "Virtual Instance Scope");
-
-			FeatureFlag.enableFeatureFlag(
-				configurationScope = "Virtual Instance Scope",
-				featureFlag = "Widget Questions",
-				scope = "Deprecation");
-		}
+		Questions.enableWidgetQuestions();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

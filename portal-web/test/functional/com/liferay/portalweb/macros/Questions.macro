@@ -671,6 +671,21 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro enableWidgetQuestions() {
+		PortalSettings.openInstanceSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Deprecation",
+			configurationScope = "Virtual Instance Scope");
+
+		FeatureFlag.enableFeatureFlag(
+			configurationScope = "Virtual Instance Scope",
+			featureFlag = "Widget Questions",
+			scope = "Deprecation");
+	}
+
+	@summary = "Default summary"
 	macro fillName(nameField = null) {
 		Click(locator1 = "Questions#CREATE_QUESTIONS_NAME_FIELD");
 

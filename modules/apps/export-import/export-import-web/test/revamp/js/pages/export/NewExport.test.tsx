@@ -5,7 +5,7 @@
 
 // eslint-disable-next-line @liferay/portal/no-cross-module-deep-import
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -31,7 +31,7 @@ describe('NewExport', () => {
 		};
 	});
 
-	it('renders the SetupStep', async () => {
+	it('renders the export form', async () => {
 		const {container} = renderComponent();
 
 		const fileNameInput = screen.getByRole('textbox', {
@@ -39,26 +39,18 @@ describe('NewExport', () => {
 		});
 		expect(fileNameInput).toBeInTheDocument();
 
-		const designCheckbox = screen.getByRole('checkbox', {
-			name: /Design/,
-		});
-		expect(designCheckbox).toBeInTheDocument();
+		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
 
-		const continueButton = screen.getByRole('button', {name: /continue/i});
-		await waitFor(() => {
-			expect(continueButton).toBeDisabled();
+		await checkAccessibility({
+			context: {
+				exclude: ['[data-testid="data-selection-section"]'],
+				include: [container],
+			},
 		});
-
-		await checkAccessibility({context: container});
 	});
 
-	it('enables the continue button when the SetupStep is valid', async () => {
+	it('shows a required error on filename when blurred empty', async () => {
 		renderComponent();
-
-		const continueButton = screen.getByRole('button', {name: /continue/i});
-		await waitFor(() => {
-			expect(continueButton).toBeDisabled();
-		});
 
 		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,
@@ -68,28 +60,55 @@ describe('NewExport', () => {
 		fileNameInput.blur();
 
 		await screen.findByText('this-field-is-required');
+	});
 
-		await userEvent.type(fileNameInput, 'test-file');
+	it('keeps the export button disabled while the form is invalid', async () => {
+		renderComponent();
 
-		await waitFor(() => {
-			expect(
-				screen.queryByText('this-field-is-required')
-			).not.toBeInTheDocument();
-		});
-
-		const designCheckbox = await screen.findByRole('checkbox', {
-			name: /Design/,
-		});
-
-		await userEvent.click(designCheckbox);
+		const exportButton = screen.getByRole('button', {name: /^export$/i});
 
 		await waitFor(() => {
-			expect(continueButton).toBeEnabled();
+			expect(exportButton).toBeDisabled();
 		});
 	});
 
-	it('renders the DataSelectionStep (Step 2) and checks accessibility', async () => {
+	it('shows and clears the selection error as contentSelection toggles', async () => {
 		renderComponent();
+
+		const fileNameInput = await screen.findByRole('textbox', {
+			name: /file-name/,
+		});
+		await userEvent.type(fileNameInput, 'test-file');
+
+		const dataSelectionGroup = screen.getByRole('group', {
+			name: 'data-selection',
+		});
+		const checkbox = within(dataSelectionGroup).getAllByRole('checkbox')[0];
+
+		await userEvent.click(checkbox);
+		await userEvent.click(checkbox);
+
+		await screen.findByText(
+			'please-select-at-least-one-entity-type-to-continue'
+		);
+		expect(dataSelectionGroup).toHaveAttribute('aria-invalid', 'true');
+
+		await userEvent.click(checkbox);
+
+		await waitFor(() => {
+			expect(
+				screen.queryByText(
+					'please-select-at-least-one-entity-type-to-continue'
+				)
+			).not.toBeInTheDocument();
+		});
+		expect(dataSelectionGroup).not.toHaveAttribute('aria-invalid');
+	});
+
+	it('enables the export button once filename and contentSelection are set', async () => {
+		renderComponent();
+
+		const exportButton = screen.getByRole('button', {name: /^export$/i});
 
 		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,
@@ -97,20 +116,16 @@ describe('NewExport', () => {
 
 		await userEvent.type(fileNameInput, 'test-file');
 
-		const designCheckbox = await screen.findByRole('checkbox', {
-			name: /Design/,
+		const dataSelectionGroup = screen.getByRole('group', {
+			name: 'data-selection',
 		});
 
-		await userEvent.click(designCheckbox);
-
-		const continueButton = screen.getByRole('button', {name: /continue/i});
+		await userEvent.click(
+			within(dataSelectionGroup).getAllByRole('checkbox')[0]
+		);
 
 		await waitFor(() => {
-			expect(continueButton).toBeEnabled();
+			expect(exportButton).toBeEnabled();
 		});
-
-		await userEvent.click(continueButton);
-
-		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
 	});
 });

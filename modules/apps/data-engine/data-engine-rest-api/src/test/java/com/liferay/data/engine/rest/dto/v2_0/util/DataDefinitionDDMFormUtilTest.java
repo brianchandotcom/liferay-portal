@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -203,6 +204,12 @@ public class DataDefinitionDDMFormUtilTest {
 			new DDMForm(), DataDefinitionDDMFormUtil.toDDMForm(null, null));
 	}
 
+	@Test
+	public void testToDDMFormWithoutDefaultValue() {
+		_testToDDMFormWithoutDefaultValue(Collections.emptyMap());
+		_testToDDMFormWithoutDefaultValue(null);
+	}
+
 	private DataDefinitionField[] _getDataDefinitionFields() {
 		return new DataDefinitionField[] {
 			new DataDefinitionField() {
@@ -319,6 +326,36 @@ public class DataDefinitionDDMFormUtilTest {
 		).when(
 			ddmFormFieldType
 		).getDDMFormFieldTypeSettings();
+	}
+
+	private void _testToDDMFormWithoutDefaultValue(
+		Map<String, Object> defaultValueMap) {
+
+		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
+			new DataDefinition() {
+				{
+					availableLanguageIds = new String[] {"en_US"};
+					dataDefinitionFields = new DataDefinitionField[] {
+						new DataDefinitionField() {
+							{
+								defaultValue = defaultValueMap;
+								fieldType = "text";
+								name = "name1";
+							}
+						}
+					};
+					defaultLanguageId = "en_US";
+				}
+			},
+			_ddmFormFieldTypeServicesRegistry);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Assert.assertEquals(ddmFormFields.toString(), 1, ddmFormFields.size());
+		Assert.assertNull(
+			ddmFormFields.get(
+				0
+			).getPredefinedValue());
 	}
 
 	private void _whenLanguageIsAvailableLocale(Locale locale) {

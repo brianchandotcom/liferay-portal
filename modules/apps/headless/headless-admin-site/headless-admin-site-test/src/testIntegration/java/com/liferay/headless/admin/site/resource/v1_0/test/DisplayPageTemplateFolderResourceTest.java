@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -91,17 +92,17 @@ public class DisplayPageTemplateFolderResourceTest
 
 		DisplayPageTemplateFolder liveGroupDisplayPageTemplateFolder =
 			testGetSiteDisplayPageTemplateFoldersPage_addDisplayPageTemplateFolder(
-				testGroup.getExternalReferenceCode(),
+				irrelevantGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplateFolder());
 
-		_enableLocalStaging();
+		_enableLocalStaging(irrelevantGroup);
 
 		_assertProblemException(
 			"BAD_REQUEST", null,
 			() ->
 				displayPageTemplateFolderResource.
 					deleteSiteDisplayPageTemplateFolder(
-						testGroup.getExternalReferenceCode(),
+						irrelevantGroup.getExternalReferenceCode(),
 						liveGroupDisplayPageTemplateFolder.
 							getExternalReferenceCode()));
 	}
@@ -471,10 +472,14 @@ public class DisplayPageTemplateFolderResourceTest
 	}
 
 	private void _enableLocalStaging() throws Exception {
+		_enableLocalStaging(testGroup);
+	}
+
+	private void _enableLocalStaging(Group group) throws Exception {
 		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
+			TestPropsValues.getUserId(), group, true, false,
 			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
+				group, TestPropsValues.getUserId()));
 	}
 
 	private DisplayPageTemplateFolder _getParentDisplayPageTemplateFolder(

@@ -131,25 +131,6 @@ public class JenkinsResultsParserUtil {
 
 	public static final int PER_PAGE_GITHUB_API_PAGES_SIZE_MAX = 100;
 
-	public static final String URL_CACHE = initCacheURL();
-
-	public static final String[] URLS_BUILD_PROPERTIES_DEFAULT = {
-		URL_CACHE + "/liferay-jenkins-ee/build.properties",
-		URL_CACHE + "/liferay-jenkins-ee/commands/build.properties"
-	};
-
-	public static final String[] URLS_GIT_DIRECTORIES_JSON_DEFAULT = {
-		URL_CACHE + "/liferay-jenkins-ee/git-directories.json"
-	};
-
-	public static final String[] URLS_GIT_WORKING_DIRECTORIES_JSON_DEFAULT = {
-		URL_CACHE + "/liferay-jenkins-ee/git-working-directories.json"
-	};
-
-	public static final String[] URLS_JENKINS_PROPERTIES_DEFAULT = {
-		URL_CACHE + "/liferay-jenkins-ee/jenkins.properties"
-	};
-
 	public static boolean debug;
 
 	public static void addRedactToken(String token) {
@@ -1457,7 +1438,7 @@ public class JenkinsResultsParserUtil {
 			}
 
 			if (_buildPropertiesURLs == null) {
-				_buildPropertiesURLs = URLS_BUILD_PROPERTIES_DEFAULT;
+				_buildPropertiesURLs = _getDefaultBuildPropertiesURLs();
 			}
 
 			Map<String, String> map = System.getenv();
@@ -2628,7 +2609,7 @@ public class JenkinsResultsParserUtil {
 								"not be found. Build properties URLs will be ",
 								"reverted to their default values."));
 
-						setBuildProperties(URLS_BUILD_PROPERTIES_DEFAULT);
+						setBuildProperties(_getDefaultBuildPropertiesURLs());
 
 						_checkCache = false;
 
@@ -2667,10 +2648,9 @@ public class JenkinsResultsParserUtil {
 			return properties;
 		}
 
-		for (String url : URLS_JENKINS_PROPERTIES_DEFAULT) {
-			properties.load(
-				new StringReader(toString(getLocalURL(url), false)));
-		}
+		String url = _getJenkinsRepositoryURL() + "/jenkins.properties";
+
+		properties.load(new StringReader(toString(getLocalURL(url), false)));
 
 		LocalGitRepository localGitRepository =
 			GitRepositoryFactory.getLocalGitRepository(
@@ -6580,31 +6560,6 @@ public class JenkinsResultsParserUtil {
 		return join(",", propertyValues);
 	}
 
-	protected static String initCacheURL() {
-		String cacheDirPath = System.getenv("CACHE_DIR");
-
-		if (cacheDirPath == null) {
-			cacheDirPath = "/opt/dev/projects/github";
-		}
-
-		File cacheDir = new File(cacheDirPath);
-
-		File cacheRepositoryDir = new File(cacheDir, JENKINS_REPOSITORY_NAME);
-
-		if (cacheDir.exists() && cacheRepositoryDir.exists()) {
-			System.out.println("Using " + cacheDirPath + " for cached files");
-
-			return "file://" + cacheDirPath;
-		}
-
-		throw new RuntimeException(
-			combine(
-				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
-				" repository at ", cacheDirPath,
-				". Set CACHE_DIR to a directory containing a ",
-				JENKINS_REPOSITORY_NAME, " checkout."));
-	}
-
 	protected static String urlDependenciesFile;
 
 	static {
@@ -6780,6 +6735,45 @@ public class JenkinsResultsParserUtil {
 		return key;
 	}
 
+	private static synchronized String _getCacheURL() {
+		if (_cacheURL != null) {
+			return _cacheURL;
+		}
+
+		String cacheDirPath = System.getenv("CACHE_DIR");
+
+		if (cacheDirPath == null) {
+			cacheDirPath = "/opt/dev/projects/github";
+		}
+
+		File cacheDir = new File(cacheDirPath);
+
+		File cacheRepositoryDir = new File(cacheDir, JENKINS_REPOSITORY_NAME);
+
+		if (cacheDir.exists() && cacheRepositoryDir.exists()) {
+			System.out.println("Using " + cacheDirPath + " for cached files");
+
+			_cacheURL = "file://" + cacheDirPath;
+
+			return _cacheURL;
+		}
+
+		if (isCINode()) {
+			_cacheURL = _URL_CACHE_MIRROR_DEFAULT;
+
+			System.out.println("Using " + _cacheURL + " for cached files");
+
+			return _cacheURL;
+		}
+
+		throw new RuntimeException(
+			combine(
+				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
+				" repository at ", cacheDirPath,
+				". Set CACHE_DIR to a directory containing a ",
+				JENKINS_REPOSITORY_NAME, " checkout."));
+	}
+
 	private static String _getCanonicalPath(File canonicalFile) {
 		File parentCanonicalFile = canonicalFile.getParentFile();
 
@@ -6793,6 +6787,15 @@ public class JenkinsResultsParserUtil {
 		String parentFileCanonicalPath = _getCanonicalPath(parentCanonicalFile);
 
 		return combine(parentFileCanonicalPath, "/", canonicalFile.getName());
+	}
+
+	private static String[] _getDefaultBuildPropertiesURLs() {
+		String jenkinsRepositoryURL = _getJenkinsRepositoryURL();
+
+		return new String[] {
+			jenkinsRepositoryURL + "/build.properties",
+			jenkinsRepositoryURL + "/commands/build.properties"
+		};
 	}
 
 	private static Pattern _getDistPortalBundleFileNamesPattern(
@@ -6888,26 +6891,23 @@ public class JenkinsResultsParserUtil {
 
 		_gitDirectoriesJSONArray = new JSONArray();
 
-		for (String url : URLS_GIT_DIRECTORIES_JSON_DEFAULT) {
-			JSONArray jsonArray;
+		String url = _getJenkinsRepositoryURL() + "/git-directories.json";
 
-			try {
-				if (url.startsWith("file://")) {
-					jsonArray = new JSONArray(
-						read(new File(url.replace("file://", ""))));
-				}
-				else {
-					jsonArray = toJSONArray(getLocalURL(url), false);
-				}
-			}
-			catch (IOException ioException) {
-				continue;
-			}
+		JSONArray jsonArray = null;
 
-			if (jsonArray == null) {
-				continue;
+		try {
+			if (url.startsWith("file://")) {
+				jsonArray = new JSONArray(
+					read(new File(url.replace("file://", ""))));
 			}
+			else {
+				jsonArray = toJSONArray(getLocalURL(url), false);
+			}
+		}
+		catch (IOException ioException) {
+		}
 
+		if (jsonArray != null) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				_gitDirectoriesJSONArray.put(jsonArray.get(i));
 			}
@@ -6995,26 +6995,24 @@ public class JenkinsResultsParserUtil {
 
 		_gitWorkingDirectoriesJSONArray = new JSONArray();
 
-		for (String url : URLS_GIT_WORKING_DIRECTORIES_JSON_DEFAULT) {
-			JSONArray jsonArray;
+		String url =
+			_getJenkinsRepositoryURL() + "/git-working-directories.json";
 
-			try {
-				if (url.startsWith("file://")) {
-					jsonArray = new JSONArray(
-						read(new File(url.replace("file://", ""))));
-				}
-				else {
-					jsonArray = toJSONArray(getLocalURL(url), false);
-				}
-			}
-			catch (IOException ioException) {
-				continue;
-			}
+		JSONArray jsonArray = null;
 
-			if (jsonArray == null) {
-				continue;
+		try {
+			if (url.startsWith("file://")) {
+				jsonArray = new JSONArray(
+					read(new File(url.replace("file://", ""))));
 			}
+			else {
+				jsonArray = toJSONArray(getLocalURL(url), false);
+			}
+		}
+		catch (IOException ioException) {
+		}
 
+		if (jsonArray != null) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				_gitWorkingDirectoriesJSONArray.put(jsonArray.get(i));
 			}
@@ -7029,6 +7027,10 @@ public class JenkinsResultsParserUtil {
 		return new BasicHTTPAuthorization(
 			getBuildProperty("jenkins.admin.user.token"),
 			getBuildProperty("jenkins.admin.user.name"));
+	}
+
+	private static String _getJenkinsRepositoryURL() {
+		return _getCacheURL() + "/" + JENKINS_REPOSITORY_NAME;
 	}
 
 	private static Set<Set<String>> _getOrderedOptSets(String... opts) {
@@ -7386,6 +7388,9 @@ public class JenkinsResultsParserUtil {
 
 	private static final String _UPSTREAM_USER_NAME_DEFAULT = "liferay";
 
+	private static final String _URL_CACHE_MIRROR_DEFAULT =
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay";
+
 	private static final String _URL_JENKINS_GITHUB_DEFAULT =
 		"https://github.com/liferay/liferay-jenkins-ee/tree/master";
 
@@ -7410,6 +7415,7 @@ public class JenkinsResultsParserUtil {
 		"http(?:|s):\\/\\/(?<masterHostname>test-(?<cohortNumber>[\\d]{1})-" +
 			"(?<masterNumber>[\\d]{1,2})).*(?:|\\.liferay\\.com)\\/+job\\/+" +
 				"(?<jobName>[\\w\\W]*?)\\/+(?<buildNumber>[0-9]*)");
+	private static String _cacheURL;
 	private static Boolean _ciNode;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");

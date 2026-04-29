@@ -9,7 +9,7 @@
 	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
 		"buttonSize": "nm",
 		"buttonType": "primary",
-		"submittedEntryStatus": "approved",
+		"submittedEntryStatus": "0",
 		"type": "submit"
 	}
 }

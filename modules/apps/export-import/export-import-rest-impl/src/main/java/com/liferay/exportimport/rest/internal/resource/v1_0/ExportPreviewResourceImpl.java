@@ -19,6 +19,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerControl;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerSection;
+import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -85,6 +86,9 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 	}
 
 	private ExportPreview _getExportPreview(long groupId) throws Exception {
+		PermissionUtil.checkExportPermission(
+			contextCompany.getCompanyId(), groupId);
+
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
 		Map<String, List<PortletDataHandler>> portletDataHandlersMap =

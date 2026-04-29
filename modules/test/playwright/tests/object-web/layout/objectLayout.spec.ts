@@ -17,6 +17,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch, userData} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {generateObjectEntryValues} from '../utils/generateObjectEntry';
 import {generateObjectFields} from '../utils/generateObjectFields';
@@ -631,5 +632,317 @@ test.describe('Manage custom layouts through object layout tab', () => {
 				page.getByRole('button', {name: 'SEO'})
 			).not.toBeVisible();
 		});
+	});
+
+	test('can update an entry on the relationship tab with update permission', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				panelCategoryKey: 'control_panel.object',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition.externalReferenceCode,
+				{
+					label: {
+						en_US: 'Relationship' + getRandomInt(),
+					},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId1: objectDefinition.id,
+					objectDefinitionId2: objectDefinition.id,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await page.getByRole('link', {name: objectLayoutName}).click();
+
+		await objectLayoutsPage.markAsDefaultButton.check();
+
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectFieldNames: ['textField'],
+			objectLayoutName,
+			objectLayoutRegularBlockName: 'Block 1',
+			objectLayoutTabName: 'Field Tab',
+		});
+
+		await objectLayoutsPage.createObjectRelationshipTab(
+			objectLayoutName,
+			'Relationship Tab',
+			objectRelationship.label['en_US']
+		);
+
+		await waitForAlert(
+			page,
+			'Success:The object layout was updated successfully'
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test'},
+			applicationName
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page
+			.getByRole('row', {name: 'Entry Test'})
+			.getByRole('link')
+			.click();
+
+		await page.getByRole('link', {name: 'Relationship Tab'}).click();
+
+		await page.getByRole('button', {name: 'New'}).first().click();
+
+		await page.getByRole('menuitem', {name: 'Create New'}).click();
+
+		await page.getByLabel('textField').fill('New entry related');
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: String(company.companyId),
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW', 'UPDATE'],
+					primaryKey: String(company.companyId),
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByRole('link', {name: 'Relationship Tab'}).click();
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await page.getByLabel('textField').fill('Entry Updated');
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await expect(
+			page.getByRole('row', {name: 'Entry Updated'})
+		).toBeVisible();
+	});
+
+	test('cannot update an entry on the relationship tab without update permission', async ({
+		apiHelpers,
+		objectLayoutsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				panelCategoryKey: 'control_panel.object',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition.externalReferenceCode,
+				{
+					label: {
+						en_US: 'Relationship' + getRandomInt(),
+					},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition.externalReferenceCode,
+					objectDefinitionId1: objectDefinition.id,
+					objectDefinitionId2: objectDefinition.id,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		const objectLayoutName = getRandomString();
+
+		await objectLayoutsPage.goto(objectDefinition.name);
+
+		await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+		await page.getByRole('link', {name: objectLayoutName}).click();
+
+		await objectLayoutsPage.markAsDefaultButton.check();
+
+		await objectLayoutsPage.createObjectLayoutContent({
+			objectFieldNames: ['textField'],
+			objectLayoutName,
+			objectLayoutRegularBlockName: 'Block 1',
+			objectLayoutTabName: 'Field Tab',
+		});
+
+		await objectLayoutsPage.createObjectRelationshipTab(
+			objectLayoutName,
+			'Relationship Tab',
+			objectRelationship.label['en_US']
+		);
+
+		await waitForAlert(
+			page,
+			'Success:The object layout was updated successfully'
+		);
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'Entry Test'},
+			applicationName
+		);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await page
+			.getByRole('row', {name: 'Entry Test'})
+			.getByRole('link')
+			.click();
+
+		await page.getByRole('link', {name: 'Relationship Tab'}).click();
+
+		await page.getByRole('button', {name: 'New'}).first().click();
+
+		await page.getByRole('menuitem', {name: 'Create New'}).click();
+
+		await page.getByLabel('textField').fill('New entry related');
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await waitForAlert(page);
+
+		const company =
+			await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+				'liferay.com'
+			);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: String(company.companyId),
+					resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: String(company.companyId),
+					resourceName: objectDefinition.className,
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performUserSwitch(page, user.alternateName);
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('textField')).toBeDisabled();
+
+		await expect(viewObjectEntriesPage.saveObjectEntryButton).toBeHidden();
+
+		await page.getByRole('link', {name: 'Relationship Tab'}).click();
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		await expect(page.getByLabel('textField')).toBeDisabled();
+
+		await expect(viewObjectEntriesPage.saveObjectEntryButton).toBeHidden();
 	});
 });

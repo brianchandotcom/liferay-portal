@@ -110,7 +110,8 @@ test(
 		await apiHelpers.headlessCommerceAdminOrderAttachment.postOrderAttachment(
 			order.id,
 			{
-				attachment: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+				attachment:
+					'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
 				priority: 1,
 				title: seededTitle,
 				type: 'invoice',
@@ -163,7 +164,8 @@ test(
 				{
 					buffer: Buffer.from(
 						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-						 'base64'),
+						'base64'
+					),
 					mimeType: 'image/png',
 					name: addedTitle,
 				}
@@ -183,8 +185,10 @@ test(
 				await commerceAdminOrderAttachmentsPage
 					.rowActionsButton(addedTitle)
 					.click();
-				await expect(commerceAdminOrderAttachmentsPage.editRowAction).toBeVisible({timeout: 500});
-			}).toPass({timeout: 5000})
+				await expect(
+					commerceAdminOrderAttachmentsPage.editRowAction
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
 
 			await commerceAdminOrderAttachmentsPage.editRowAction.click();
 
@@ -211,8 +215,10 @@ test(
 				await commerceAdminOrderAttachmentsPage
 					.rowActionsButton(editedTitle)
 					.click();
-				await expect(commerceAdminOrderAttachmentsPage.deleteRowAction).toBeVisible({timeout: 500});
-			}).toPass({timeout: 5000})
+				await expect(
+					commerceAdminOrderAttachmentsPage.deleteRowAction
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
 
 			await commerceAdminOrderAttachmentsPage.deleteRowAction.click();
 
@@ -227,4 +233,3 @@ test(
 		});
 	}
 );
-

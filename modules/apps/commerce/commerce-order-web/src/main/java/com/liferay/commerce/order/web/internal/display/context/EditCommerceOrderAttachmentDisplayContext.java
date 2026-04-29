@@ -10,8 +10,8 @@ import com.liferay.commerce.order.web.internal.display.context.helper.CommerceOr
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
-import com.liferay.list.type.service.ListTypeDefinitionServiceUtil;
-import com.liferay.list.type.service.ListTypeEntryServiceUtil;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -32,10 +32,14 @@ public class EditCommerceOrderAttachmentDisplayContext {
 
 	public EditCommerceOrderAttachmentDisplayContext(
 		CommerceOrderAttachment commerceOrderAttachment, long commerceOrderId,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
+		ListTypeEntryLocalService listTypeEntryLocalService) {
 
 		_commerceOrderAttachment = commerceOrderAttachment;
 		_commerceOrderId = commerceOrderId;
+		_listTypeDefinitionLocalService = listTypeDefinitionLocalService;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
 
 		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
 			httpServletRequest);
@@ -56,7 +60,7 @@ public class EditCommerceOrderAttachmentDisplayContext {
 	public List<ListTypeEntry> getAttachmentTypes() {
 		try {
 			ListTypeDefinition listTypeDefinition =
-				ListTypeDefinitionServiceUtil.
+				_listTypeDefinitionLocalService.
 					fetchListTypeDefinitionByExternalReferenceCode(
 						"L_COMMERCE_ORDER_ATTACHMENT_TYPES",
 						_commerceOrderRequestHelper.getCompanyId());
@@ -65,7 +69,7 @@ public class EditCommerceOrderAttachmentDisplayContext {
 				return Collections.emptyList();
 			}
 
-			return ListTypeEntryServiceUtil.getListTypeEntries(
+			return _listTypeEntryLocalService.getListTypeEntries(
 				listTypeDefinition.getListTypeDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 		}
@@ -174,5 +178,8 @@ public class EditCommerceOrderAttachmentDisplayContext {
 	private final CommerceOrderAttachment _commerceOrderAttachment;
 	private final long _commerceOrderId;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
+	private final ListTypeDefinitionLocalService
+		_listTypeDefinitionLocalService;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

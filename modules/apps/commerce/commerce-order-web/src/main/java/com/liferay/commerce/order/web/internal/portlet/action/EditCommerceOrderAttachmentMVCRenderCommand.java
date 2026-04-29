@@ -9,6 +9,8 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.order.web.internal.display.context.EditCommerceOrderAttachmentDisplayContext;
 import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -61,7 +63,8 @@ public class EditCommerceOrderAttachmentMVCRenderCommand
 			new EditCommerceOrderAttachmentDisplayContext(
 				commerceOrderAttachment,
 				ParamUtil.getLong(renderRequest, "commerceOrderId"),
-				_portal.getHttpServletRequest(renderRequest)));
+				_portal.getHttpServletRequest(renderRequest),
+				_listTypeDefinitionLocalService, _listTypeEntryLocalService));
 
 		return "/commerce_order/edit_commerce_order_attachment.jsp";
 	}
@@ -72,6 +75,12 @@ public class EditCommerceOrderAttachmentMVCRenderCommand
 	@Reference
 	private CommerceOrderAttachmentLocalService
 		_commerceOrderAttachmentLocalService;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private Portal _portal;

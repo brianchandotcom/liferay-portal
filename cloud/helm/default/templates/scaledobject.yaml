@@ -5,27 +5,11 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-    {{- with .Values.keda.annotations }}
-    annotations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
     labels:
         {{- include "liferay.labels" . | nindent 8 }}
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
-    {{- with .Values.keda.advanced }}
-    advanced:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    cooldownPeriod: {{ .Values.keda.cooldownPeriod }}
-    {{- with .Values.keda.fallback }}
-    fallback:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.keda.idleReplicaCount }}
-    idleReplicaCount: {{ . }}
-    {{- end }}
     maxReplicaCount: {{ .Values.keda.maxReplicaCount }}
     minReplicaCount: {{ .Values.keda.minReplicaCount }}
     pollingInterval: {{ .Values.keda.pollingInterval }}

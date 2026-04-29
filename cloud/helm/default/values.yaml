@@ -251,17 +251,7 @@ image:
     tag: latest
 initContainers: []
 keda:
-    annotations: {}
-    cooldownPeriod: 300
     defaultTriggers:
-        -   metadata:
-                metricName: tomcat_request_count
-                query: catalina_globalrequestprocessor_requestcount
-                threshold: "500000"
-        -   metadata:
-                metricName: tomcat_processing_time
-                query: catalina_globalrequestprocessor_processingtime
-                threshold: "144000000"
         -   metadata:
                 metricName: hikari_active_connections
                 query: max({__name__=~"com_zaxxer_hikari_pool_hikaripool_.*_activeconnections"})

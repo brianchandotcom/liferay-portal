@@ -19,7 +19,25 @@ import com.liferay.staging.StagingGroupHelperUtil;
  */
 public class PermissionUtil {
 
-	public static void checkPermission(long companyId, long groupId)
+	public static void checkExportPermission(long companyId, long groupId)
+		throws PortalException {
+
+		_checkPermission(
+			companyId, groupId, ExportImportPortletKeys.COMPANY_EXPORT,
+			ExportImportPortletKeys.EXPORT);
+	}
+
+	public static void checkImportPermission(long companyId, long groupId)
+		throws PortalException {
+
+		_checkPermission(
+			companyId, groupId, ExportImportPortletKeys.COMPANY_IMPORT,
+			ExportImportPortletKeys.IMPORT);
+	}
+
+	private static void _checkPermission(
+			long companyId, long groupId, String companyPortletKey,
+			String portletKey)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -34,14 +52,12 @@ public class PermissionUtil {
 
 		if (stagingGroupHelper.isCompanyGroup(companyId, groupId)) {
 			PortletPermissionUtil.check(
-				PermissionThreadLocal.getPermissionChecker(), groupId,
-				ExportImportPortletKeys.COMPANY_IMPORT,
+				permissionChecker, groupId, companyPortletKey,
 				ActionKeys.ACCESS_IN_CONTROL_PANEL);
 		}
 		else {
 			PortletPermissionUtil.check(
-				PermissionThreadLocal.getPermissionChecker(), groupId,
-				ExportImportPortletKeys.IMPORT,
+				permissionChecker, groupId, portletKey,
 				ActionKeys.ACCESS_IN_CONTROL_PANEL);
 		}
 	}

@@ -36,7 +36,10 @@ type NewAppUploadAppPackagesComponentProps = {
 export const acceptFileTypes = {
 	[ProductType.CLIENT_EXTENSION]: ALLOWED_MIME_TYPES.ZIP,
 	[ProductType.CLOUD]: ALLOWED_MIME_TYPES.ZIP,
-	[ProductType.COMPOSITE_APP]: ALLOWED_MIME_TYPES.ZIP,
+	[ProductType.COMPOSITE_APP]: {
+		...ALLOWED_MIME_TYPES.JAR,
+		...ALLOWED_MIME_TYPES.ZIP,
+	},
 	[ProductType.DXP]: {
 		...ALLOWED_MIME_TYPES.JAR,
 		...ALLOWED_MIME_TYPES.WAR,
@@ -151,9 +154,13 @@ export function NewAppUploadAppPackagesComponent({
 							? i18n.translate(
 									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
-							: i18n.translate(
-									'only-zip-files-are-allowed-max-file-size-is-500mb'
-								)
+							: appType === ProductType.COMPOSITE_APP
+								? i18n.translate(
+										'only-jar-zip-files-are-allowed-max-file-size-is-500mb'
+									)
+								: i18n.translate(
+										'only-zip-files-are-allowed-max-file-size-is-500mb'
+									)
 					}
 					maxFiles={0}
 					maxSize={PUBLISH_APP_UPLOAD_MAX_SIZE}

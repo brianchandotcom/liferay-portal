@@ -75,6 +75,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -321,7 +322,7 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	@PostMapping("/process-publisher-asset-links/{productId}")
-	public void processPublisherAssetLinks(@PathVariable long productId) {
+	public void processPublisherAssetLinks(@PathVariable long productId) throws Exception {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"POST process publisher asset links for product " + productId);
@@ -357,11 +358,12 @@ public class MarketplaceRestController extends BaseRestController {
 					product, productSpecificationsMap, publisherAssetLink);
 			}
 		}
-		catch (Exception exception) {
+		catch (WebClientResponseException webClientResponseException) {
 			_log.error(
 				"Unable to process publisher asset links for product " +
-					productId,
-				exception);
+					productId);
+
+			_log.error(webClientResponseException.getResponseBodyAsString());
 		}
 	}
 

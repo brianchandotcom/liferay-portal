@@ -46,11 +46,16 @@ export class ObjectEntryApiHelper {
 
 	async getObjectDefinitionObjectEntriesByScope(
 		applicationName: string,
-		scopeKey: string
+		scopeKey: string,
+		searchParams?: URLSearchParams
 	) {
-		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}/${applicationName}/scopes/${scopeKey}`
-		);
+		const url = `${this.apiHelpers.baseUrl}${applicationName}/scopes/${scopeKey}`;
+
+		if (searchParams) {
+			return this.apiHelpers.get(`${url}?${searchParams.toString()}`);
+		}
+
+		return this.apiHelpers.get(url);
 	}
 
 	async getObjectEntryByExternalReferenceCode({

@@ -69,7 +69,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WorkflowMetricsSLADefinitionVersionPersistence.class)
 public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
-	extends BasePersistenceImpl<WorkflowMetricsSLADefinitionVersion>
+	extends BasePersistenceImpl
+		<WorkflowMetricsSLADefinitionVersion,
+		 NoSuchSLADefinitionVersionException>
 	implements WorkflowMetricsSLADefinitionVersionPersistence {
 
 	/*
@@ -870,62 +872,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all workflow metrics sla definition versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
-
-		finderCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the workflow metrics sla definition version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion) {
-
-		entityCache.removeResult(
-			WorkflowMetricsSLADefinitionVersionImpl.class,
-			workflowMetricsSLADefinitionVersion);
-	}
-
-	@Override
-	public void clearCache(
-		List<WorkflowMetricsSLADefinitionVersion>
-			workflowMetricsSLADefinitionVersions) {
-
-		for (WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion :
-					workflowMetricsSLADefinitionVersions) {
-
-			entityCache.removeResult(
-				WorkflowMetricsSLADefinitionVersionImpl.class,
-				workflowMetricsSLADefinitionVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WorkflowMetricsSLADefinitionVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				WorkflowMetricsSLADefinitionVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WorkflowMetricsSLADefinitionVersionModelImpl
 			workflowMetricsSLADefinitionVersionModelImpl) {
@@ -991,50 +937,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		throws NoSuchSLADefinitionVersionException {
 
 		return remove((Serializable)workflowMetricsSLADefinitionVersionId);
-	}
-
-	/**
-	 * Removes the workflow metrics sla definition version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the workflow metrics sla definition version
-	 * @return the workflow metrics sla definition version that was removed
-	 * @throws NoSuchSLADefinitionVersionException if a workflow metrics sla definition version with the primary key could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion remove(Serializable primaryKey)
-		throws NoSuchSLADefinitionVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion =
-					(WorkflowMetricsSLADefinitionVersion)session.get(
-						WorkflowMetricsSLADefinitionVersionImpl.class,
-						primaryKey);
-
-			if (workflowMetricsSLADefinitionVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSLADefinitionVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(workflowMetricsSLADefinitionVersion);
-		}
-		catch (NoSuchSLADefinitionVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1172,33 +1074,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		}
 
 		workflowMetricsSLADefinitionVersion.resetOriginalValues();
-
-		return workflowMetricsSLADefinitionVersion;
-	}
-
-	/**
-	 * Returns the workflow metrics sla definition version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the workflow metrics sla definition version
-	 * @return the workflow metrics sla definition version
-	 * @throws NoSuchSLADefinitionVersionException if a workflow metrics sla definition version with the primary key could not be found
-	 */
-	@Override
-	public WorkflowMetricsSLADefinitionVersion findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchSLADefinitionVersionException {
-
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion = fetchByPrimaryKey(primaryKey);
-
-		if (workflowMetricsSLADefinitionVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSLADefinitionVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return workflowMetricsSLADefinitionVersion;
 	}
@@ -1673,9 +1548,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"workflowMetricsSLADefinitionVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WorkflowMetricsSLADefinitionVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WorkflowMetricsSLADefinitionVersion exists with the key {";
 
@@ -1694,4 +1566,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1068320495
+// LIFERAY-SERVICE-BUILDER-HASH:-56696772

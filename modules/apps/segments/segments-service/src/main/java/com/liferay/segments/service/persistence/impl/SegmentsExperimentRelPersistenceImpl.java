@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SegmentsExperimentRelPersistence.class)
 public class SegmentsExperimentRelPersistenceImpl
-	extends BasePersistenceImpl<SegmentsExperimentRel>
+	extends BasePersistenceImpl
+		<SegmentsExperimentRel, NoSuchExperimentRelException>
 	implements SegmentsExperimentRelPersistence {
 
 	/*
@@ -605,53 +606,6 @@ public class SegmentsExperimentRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all segments experiment rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SegmentsExperimentRelImpl.class);
-
-		finderCache.clearCache(SegmentsExperimentRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the segments experiment rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SegmentsExperimentRel segmentsExperimentRel) {
-		entityCache.removeResult(
-			SegmentsExperimentRelImpl.class, segmentsExperimentRel);
-	}
-
-	@Override
-	public void clearCache(List<SegmentsExperimentRel> segmentsExperimentRels) {
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				segmentsExperimentRels) {
-
-			entityCache.removeResult(
-				SegmentsExperimentRelImpl.class, segmentsExperimentRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SegmentsExperimentRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				SegmentsExperimentRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SegmentsExperimentRelModelImpl segmentsExperimentRelModelImpl) {
 
@@ -700,48 +654,6 @@ public class SegmentsExperimentRelPersistenceImpl
 		throws NoSuchExperimentRelException {
 
 		return remove((Serializable)segmentsExperimentRelId);
-	}
-
-	/**
-	 * Removes the segments experiment rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the segments experiment rel
-	 * @return the segments experiment rel that was removed
-	 * @throws NoSuchExperimentRelException if a segments experiment rel with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel remove(Serializable primaryKey)
-		throws NoSuchExperimentRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsExperimentRel segmentsExperimentRel =
-				(SegmentsExperimentRel)session.get(
-					SegmentsExperimentRelImpl.class, primaryKey);
-
-			if (segmentsExperimentRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchExperimentRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(segmentsExperimentRel);
-		}
-		catch (NoSuchExperimentRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -869,32 +781,6 @@ public class SegmentsExperimentRelPersistenceImpl
 		}
 
 		segmentsExperimentRel.resetOriginalValues();
-
-		return segmentsExperimentRel;
-	}
-
-	/**
-	 * Returns the segments experiment rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments experiment rel
-	 * @return the segments experiment rel
-	 * @throws NoSuchExperimentRelException if a segments experiment rel with the primary key could not be found
-	 */
-	@Override
-	public SegmentsExperimentRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchExperimentRelException {
-
-		SegmentsExperimentRel segmentsExperimentRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (segmentsExperimentRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchExperimentRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return segmentsExperimentRel;
 	}
@@ -1545,9 +1431,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"segmentsExperimentRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SegmentsExperimentRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsExperimentRel exists with the key {";
 
@@ -1560,4 +1443,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2027750678
+// LIFERAY-SERVICE-BUILDER-HASH:-474284823

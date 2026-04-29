@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherBuildPersistence.class)
 public class PatcherBuildPersistenceImpl
-	extends BasePersistenceImpl<PatcherBuild>
+	extends BasePersistenceImpl<PatcherBuild, NoSuchPatcherBuildException>
 	implements PatcherBuildPersistence {
 
 	/*
@@ -6785,48 +6785,6 @@ public class PatcherBuildPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher builds.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherBuildImpl.class);
-
-		finderCache.clearCache(PatcherBuildImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher build.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherBuild patcherBuild) {
-		entityCache.removeResult(PatcherBuildImpl.class, patcherBuild);
-	}
-
-	@Override
-	public void clearCache(List<PatcherBuild> patcherBuilds) {
-		for (PatcherBuild patcherBuild : patcherBuilds) {
-			entityCache.removeResult(PatcherBuildImpl.class, patcherBuild);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherBuildImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherBuildImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherBuildModelImpl patcherBuildModelImpl) {
 
@@ -6869,47 +6827,6 @@ public class PatcherBuildPersistenceImpl
 		throws NoSuchPatcherBuildException {
 
 		return remove((Serializable)patcherBuildId);
-	}
-
-	/**
-	 * Removes the patcher build with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher build
-	 * @return the patcher build that was removed
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	@Override
-	public PatcherBuild remove(Serializable primaryKey)
-		throws NoSuchPatcherBuildException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherBuild patcherBuild = (PatcherBuild)session.get(
-				PatcherBuildImpl.class, primaryKey);
-
-			if (patcherBuild == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherBuildException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherBuild);
-		}
-		catch (NoSuchPatcherBuildException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -7025,31 +6942,6 @@ public class PatcherBuildPersistenceImpl
 		}
 
 		patcherBuild.resetOriginalValues();
-
-		return patcherBuild;
-	}
-
-	/**
-	 * Returns the patcher build with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher build
-	 * @return the patcher build
-	 * @throws NoSuchPatcherBuildException if a patcher build with the primary key could not be found
-	 */
-	@Override
-	public PatcherBuild findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherBuildException {
-
-		PatcherBuild patcherBuild = fetchByPrimaryKey(primaryKey);
-
-		if (patcherBuild == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherBuildException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherBuild;
 	}
@@ -8522,9 +8414,6 @@ public class PatcherBuildPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PatcherBuild.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherBuild exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherBuild exists with the key {";
 
@@ -8540,4 +8429,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1891910494
+// LIFERAY-SERVICE-BUILDER-HASH:332782045

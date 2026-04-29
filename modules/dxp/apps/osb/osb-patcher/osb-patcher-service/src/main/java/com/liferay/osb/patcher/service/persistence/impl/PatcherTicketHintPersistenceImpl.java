@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherTicketHintPersistence.class)
 public class PatcherTicketHintPersistenceImpl
-	extends BasePersistenceImpl<PatcherTicketHint>
+	extends BasePersistenceImpl
+		<PatcherTicketHint, NoSuchPatcherTicketHintException>
 	implements PatcherTicketHintPersistence {
 
 	/*
@@ -231,50 +231,6 @@ public class PatcherTicketHintPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher ticket hints.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherTicketHintImpl.class);
-
-		finderCache.clearCache(PatcherTicketHintImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher ticket hint.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherTicketHint patcherTicketHint) {
-		entityCache.removeResult(
-			PatcherTicketHintImpl.class, patcherTicketHint);
-	}
-
-	@Override
-	public void clearCache(List<PatcherTicketHint> patcherTicketHints) {
-		for (PatcherTicketHint patcherTicketHint : patcherTicketHints) {
-			entityCache.removeResult(
-				PatcherTicketHintImpl.class, patcherTicketHint);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherTicketHintImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherTicketHintImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherTicketHintModelImpl patcherTicketHintModelImpl) {
 
@@ -317,48 +273,6 @@ public class PatcherTicketHintPersistenceImpl
 		throws NoSuchPatcherTicketHintException {
 
 		return remove((Serializable)patcherTicketHintId);
-	}
-
-	/**
-	 * Removes the patcher ticket hint with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher ticket hint
-	 * @return the patcher ticket hint that was removed
-	 * @throws NoSuchPatcherTicketHintException if a patcher ticket hint with the primary key could not be found
-	 */
-	@Override
-	public PatcherTicketHint remove(Serializable primaryKey)
-		throws NoSuchPatcherTicketHintException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherTicketHint patcherTicketHint =
-				(PatcherTicketHint)session.get(
-					PatcherTicketHintImpl.class, primaryKey);
-
-			if (patcherTicketHint == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherTicketHintException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherTicketHint);
-		}
-		catch (NoSuchPatcherTicketHintException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -474,31 +388,6 @@ public class PatcherTicketHintPersistenceImpl
 		}
 
 		patcherTicketHint.resetOriginalValues();
-
-		return patcherTicketHint;
-	}
-
-	/**
-	 * Returns the patcher ticket hint with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher ticket hint
-	 * @return the patcher ticket hint
-	 * @throws NoSuchPatcherTicketHintException if a patcher ticket hint with the primary key could not be found
-	 */
-	@Override
-	public PatcherTicketHint findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherTicketHintException {
-
-		PatcherTicketHint patcherTicketHint = fetchByPrimaryKey(primaryKey);
-
-		if (patcherTicketHint == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherTicketHintException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherTicketHint;
 	}
@@ -816,9 +705,6 @@ public class PatcherTicketHintPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "patcherTicketHint.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherTicketHint exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherTicketHint exists with the key {";
 
@@ -831,4 +717,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:381360485
+// LIFERAY-SERVICE-BUILDER-HASH:-1355360878

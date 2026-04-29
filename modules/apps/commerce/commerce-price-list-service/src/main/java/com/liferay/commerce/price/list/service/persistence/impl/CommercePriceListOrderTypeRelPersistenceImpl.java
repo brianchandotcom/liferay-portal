@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceListOrderTypeRelPersistence.class)
 public class CommercePriceListOrderTypeRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceListOrderTypeRel>
+	extends BasePersistenceImpl
+		<CommercePriceListOrderTypeRel, NoSuchPriceListOrderTypeRelException>
 	implements CommercePriceListOrderTypeRelPersistence {
 
 	/*
@@ -778,59 +779,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price list order type rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceListOrderTypeRelImpl.class);
-
-		finderCache.clearCache(CommercePriceListOrderTypeRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price list order type rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel) {
-
-		entityCache.removeResult(
-			CommercePriceListOrderTypeRelImpl.class,
-			commercePriceListOrderTypeRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels) {
-
-		for (CommercePriceListOrderTypeRel commercePriceListOrderTypeRel :
-				commercePriceListOrderTypeRels) {
-
-			entityCache.removeResult(
-				CommercePriceListOrderTypeRelImpl.class,
-				commercePriceListOrderTypeRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceListOrderTypeRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceListOrderTypeRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceListOrderTypeRelModelImpl
 			commercePriceListOrderTypeRelModelImpl) {
@@ -891,48 +839,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		throws NoSuchPriceListOrderTypeRelException {
 
 		return remove((Serializable)commercePriceListOrderTypeRelId);
-	}
-
-	/**
-	 * Removes the commerce price list order type rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price list order type rel
-	 * @return the commerce price list order type rel that was removed
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListOrderTypeRel remove(Serializable primaryKey)
-		throws NoSuchPriceListOrderTypeRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceListOrderTypeRel commercePriceListOrderTypeRel =
-				(CommercePriceListOrderTypeRel)session.get(
-					CommercePriceListOrderTypeRelImpl.class, primaryKey);
-
-			if (commercePriceListOrderTypeRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceListOrderTypeRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceListOrderTypeRel);
-		}
-		catch (NoSuchPriceListOrderTypeRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1072,33 +978,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 		}
 
 		commercePriceListOrderTypeRel.resetOriginalValues();
-
-		return commercePriceListOrderTypeRel;
-	}
-
-	/**
-	 * Returns the commerce price list order type rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price list order type rel
-	 * @return the commerce price list order type rel
-	 * @throws NoSuchPriceListOrderTypeRelException if a commerce price list order type rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListOrderTypeRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPriceListOrderTypeRelException {
-
-		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commercePriceListOrderTypeRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceListOrderTypeRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceListOrderTypeRel;
 	}
@@ -1798,9 +1677,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceListOrderTypeRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceListOrderTypeRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceListOrderTypeRel exists with the key {";
 
@@ -1816,4 +1692,4 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-776138022
+// LIFERAY-SERVICE-BUILDER-HASH:-10148899

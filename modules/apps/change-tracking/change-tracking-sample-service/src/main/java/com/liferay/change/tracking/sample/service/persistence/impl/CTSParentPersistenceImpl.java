@@ -71,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTSParentPersistence.class)
 public class CTSParentPersistenceImpl
-	extends BasePersistenceImpl<CTSParent> implements CTSParentPersistence {
+	extends BasePersistenceImpl<CTSParent, NoSuchCTSParentException>
+	implements CTSParentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -471,48 +472,6 @@ public class CTSParentPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cts parents.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTSParentImpl.class);
-
-		finderCache.clearCache(CTSParentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cts parent.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTSParent ctsParent) {
-		entityCache.removeResult(CTSParentImpl.class, ctsParent);
-	}
-
-	@Override
-	public void clearCache(List<CTSParent> ctsParents) {
-		for (CTSParent ctsParent : ctsParents) {
-			entityCache.removeResult(CTSParentImpl.class, ctsParent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTSParentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTSParentImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cts parent with the primary key. Does not add the cts parent to the database.
 	 *
 	 * @param ctsParentId the primary key for the new cts parent
@@ -540,47 +499,6 @@ public class CTSParentPersistenceImpl
 	@Override
 	public CTSParent remove(long ctsParentId) throws NoSuchCTSParentException {
 		return remove((Serializable)ctsParentId);
-	}
-
-	/**
-	 * Removes the cts parent with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cts parent
-	 * @return the cts parent that was removed
-	 * @throws NoSuchCTSParentException if a cts parent with the primary key could not be found
-	 */
-	@Override
-	public CTSParent remove(Serializable primaryKey)
-		throws NoSuchCTSParentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSParent ctsParent = (CTSParent)session.get(
-				CTSParentImpl.class, primaryKey);
-
-			if (ctsParent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCTSParentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctsParent);
-		}
-		catch (NoSuchCTSParentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -669,31 +587,6 @@ public class CTSParentPersistenceImpl
 		}
 
 		ctsParent.resetOriginalValues();
-
-		return ctsParent;
-	}
-
-	/**
-	 * Returns the cts parent with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cts parent
-	 * @return the cts parent
-	 * @throws NoSuchCTSParentException if a cts parent with the primary key could not be found
-	 */
-	@Override
-	public CTSParent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCTSParentException {
-
-		CTSParent ctsParent = fetchByPrimaryKey(primaryKey);
-
-		if (ctsParent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCTSParentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctsParent;
 	}
@@ -1290,9 +1183,6 @@ public class CTSParentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctsParent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTSParent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSParent exists with the key {";
 
@@ -1305,4 +1195,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:182235890
+// LIFERAY-SERVICE-BUILDER-HASH:-473093295

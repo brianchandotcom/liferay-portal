@@ -78,7 +78,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutPageTemplateStructureRelPersistence.class)
 public class LayoutPageTemplateStructureRelPersistenceImpl
-	extends BasePersistenceImpl<LayoutPageTemplateStructureRel>
+	extends BasePersistenceImpl
+		<LayoutPageTemplateStructureRel,
+		 NoSuchPageTemplateStructureRelException>
 	implements LayoutPageTemplateStructureRelPersistence {
 
 	/*
@@ -1097,59 +1099,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout page template structure rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutPageTemplateStructureRelImpl.class);
-
-		finderCache.clearCache(LayoutPageTemplateStructureRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout page template structure rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
-
-		entityCache.removeResult(
-			LayoutPageTemplateStructureRelImpl.class,
-			layoutPageTemplateStructureRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels) {
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			entityCache.removeResult(
-				LayoutPageTemplateStructureRelImpl.class,
-				layoutPageTemplateStructureRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutPageTemplateStructureRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LayoutPageTemplateStructureRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutPageTemplateStructureRelModelImpl
 			layoutPageTemplateStructureRelModelImpl) {
@@ -1221,48 +1170,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		throws NoSuchPageTemplateStructureRelException {
 
 		return remove((Serializable)layoutPageTemplateStructureRelId);
-	}
-
-	/**
-	 * Removes the layout page template structure rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout page template structure rel
-	 * @return the layout page template structure rel that was removed
-	 * @throws NoSuchPageTemplateStructureRelException if a layout page template structure rel with the primary key could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel remove(Serializable primaryKey)
-		throws NoSuchPageTemplateStructureRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-				(LayoutPageTemplateStructureRel)session.get(
-					LayoutPageTemplateStructureRelImpl.class, primaryKey);
-
-			if (layoutPageTemplateStructureRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPageTemplateStructureRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutPageTemplateStructureRel);
-		}
-		catch (NoSuchPageTemplateStructureRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1402,33 +1309,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 		}
 
 		layoutPageTemplateStructureRel.resetOriginalValues();
-
-		return layoutPageTemplateStructureRel;
-	}
-
-	/**
-	 * Returns the layout page template structure rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout page template structure rel
-	 * @return the layout page template structure rel
-	 * @throws NoSuchPageTemplateStructureRelException if a layout page template structure rel with the primary key could not be found
-	 */
-	@Override
-	public LayoutPageTemplateStructureRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPageTemplateStructureRelException {
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (layoutPageTemplateStructureRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPageTemplateStructureRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutPageTemplateStructureRel;
 	}
@@ -2202,9 +2082,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"layoutPageTemplateStructureRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutPageTemplateStructureRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutPageTemplateStructureRel exists with the key {";
 
@@ -2220,4 +2097,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1409674228
+// LIFERAY-SERVICE-BUILDER-HASH:1523218087

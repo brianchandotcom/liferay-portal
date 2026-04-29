@@ -54,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class ServiceComponentPersistenceImpl
-	extends BasePersistenceImpl<ServiceComponent>
+	extends BasePersistenceImpl
+		<ServiceComponent, NoSuchServiceComponentException>
 	implements ServiceComponentPersistence {
 
 	/*
@@ -385,51 +386,6 @@ public class ServiceComponentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all service components.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ServiceComponentImpl.class);
-
-		FinderCacheUtil.clearCache(ServiceComponentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the service component.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ServiceComponent serviceComponent) {
-		EntityCacheUtil.removeResult(
-			ServiceComponentImpl.class, serviceComponent);
-	}
-
-	@Override
-	public void clearCache(List<ServiceComponent> serviceComponents) {
-		for (ServiceComponent serviceComponent : serviceComponents) {
-			EntityCacheUtil.removeResult(
-				ServiceComponentImpl.class, serviceComponent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ServiceComponentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				ServiceComponentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ServiceComponentModelImpl serviceComponentModelImpl) {
 
@@ -470,47 +426,6 @@ public class ServiceComponentPersistenceImpl
 		throws NoSuchServiceComponentException {
 
 		return remove((Serializable)serviceComponentId);
-	}
-
-	/**
-	 * Removes the service component with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the service component
-	 * @return the service component that was removed
-	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
-	 */
-	@Override
-	public ServiceComponent remove(Serializable primaryKey)
-		throws NoSuchServiceComponentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ServiceComponent serviceComponent = (ServiceComponent)session.get(
-				ServiceComponentImpl.class, primaryKey);
-
-			if (serviceComponent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchServiceComponentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(serviceComponent);
-		}
-		catch (NoSuchServiceComponentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -598,31 +513,6 @@ public class ServiceComponentPersistenceImpl
 		}
 
 		serviceComponent.resetOriginalValues();
-
-		return serviceComponent;
-	}
-
-	/**
-	 * Returns the service component with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the service component
-	 * @return the service component
-	 * @throws NoSuchServiceComponentException if a service component with the primary key could not be found
-	 */
-	@Override
-	public ServiceComponent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchServiceComponentException {
-
-		ServiceComponent serviceComponent = fetchByPrimaryKey(primaryKey);
-
-		if (serviceComponent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchServiceComponentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return serviceComponent;
 	}
@@ -945,9 +835,6 @@ public class ServiceComponentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "serviceComponent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ServiceComponent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ServiceComponent exists with the key {";
 
@@ -963,4 +850,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1798283912
+// LIFERAY-SERVICE-BUILDER-HASH:207112267

@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JournalContentSearchPersistence.class)
 public class JournalContentSearchPersistenceImpl
-	extends BasePersistenceImpl<JournalContentSearch>
+	extends BasePersistenceImpl
+		<JournalContentSearch, NoSuchContentSearchException>
 	implements JournalContentSearchPersistence {
 
 	/*
@@ -1685,53 +1686,6 @@ public class JournalContentSearchPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all journal content searches.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JournalContentSearchImpl.class);
-
-		finderCache.clearCache(JournalContentSearchImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the journal content search.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JournalContentSearch journalContentSearch) {
-		entityCache.removeResult(
-			JournalContentSearchImpl.class, journalContentSearch);
-	}
-
-	@Override
-	public void clearCache(List<JournalContentSearch> journalContentSearchs) {
-		for (JournalContentSearch journalContentSearch :
-				journalContentSearchs) {
-
-			entityCache.removeResult(
-				JournalContentSearchImpl.class, journalContentSearch);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JournalContentSearchImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				JournalContentSearchImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JournalContentSearchModelImpl journalContentSearchModelImpl) {
 
@@ -1784,48 +1738,6 @@ public class JournalContentSearchPersistenceImpl
 		throws NoSuchContentSearchException {
 
 		return remove((Serializable)contentSearchId);
-	}
-
-	/**
-	 * Removes the journal content search with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the journal content search
-	 * @return the journal content search that was removed
-	 * @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
-	 */
-	@Override
-	public JournalContentSearch remove(Serializable primaryKey)
-		throws NoSuchContentSearchException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalContentSearch journalContentSearch =
-				(JournalContentSearch)session.get(
-					JournalContentSearchImpl.class, primaryKey);
-
-			if (journalContentSearch == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContentSearchException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(journalContentSearch);
-		}
-		catch (NoSuchContentSearchException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1926,32 +1838,6 @@ public class JournalContentSearchPersistenceImpl
 		}
 
 		journalContentSearch.resetOriginalValues();
-
-		return journalContentSearch;
-	}
-
-	/**
-	 * Returns the journal content search with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal content search
-	 * @return the journal content search
-	 * @throws NoSuchContentSearchException if a journal content search with the primary key could not be found
-	 */
-	@Override
-	public JournalContentSearch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContentSearchException {
-
-		JournalContentSearch journalContentSearch = fetchByPrimaryKey(
-			primaryKey);
-
-		if (journalContentSearch == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContentSearchException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return journalContentSearch;
 	}
@@ -2842,9 +2728,6 @@ public class JournalContentSearchPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"journalContentSearch.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JournalContentSearch exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalContentSearch exists with the key {";
 
@@ -2857,4 +2740,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2105654140
+// LIFERAY-SERVICE-BUILDER-HASH:771393868

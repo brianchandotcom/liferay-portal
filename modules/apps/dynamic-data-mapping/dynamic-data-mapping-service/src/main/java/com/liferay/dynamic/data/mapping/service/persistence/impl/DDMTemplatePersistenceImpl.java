@@ -91,7 +91,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMTemplatePersistence.class)
 public class DDMTemplatePersistenceImpl
-	extends BasePersistenceImpl<DDMTemplate> implements DDMTemplatePersistence {
+	extends BasePersistenceImpl<DDMTemplate, NoSuchTemplateException>
+	implements DDMTemplatePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -5689,48 +5690,6 @@ public class DDMTemplatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMTemplateImpl.class);
-
-		finderCache.clearCache(DDMTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMTemplate ddmTemplate) {
-		entityCache.removeResult(DDMTemplateImpl.class, ddmTemplate);
-	}
-
-	@Override
-	public void clearCache(List<DDMTemplate> ddmTemplates) {
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			entityCache.removeResult(DDMTemplateImpl.class, ddmTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMTemplateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMTemplateModelImpl ddmTemplateModelImpl) {
 
@@ -5802,47 +5761,6 @@ public class DDMTemplatePersistenceImpl
 	@Override
 	public DDMTemplate remove(long templateId) throws NoSuchTemplateException {
 		return remove((Serializable)templateId);
-	}
-
-	/**
-	 * Removes the ddm template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm template
-	 * @return the ddm template that was removed
-	 * @throws NoSuchTemplateException if a ddm template with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplate remove(Serializable primaryKey)
-		throws NoSuchTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMTemplate ddmTemplate = (DDMTemplate)session.get(
-				DDMTemplateImpl.class, primaryKey);
-
-			if (ddmTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmTemplate);
-		}
-		catch (NoSuchTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6026,31 +5944,6 @@ public class DDMTemplatePersistenceImpl
 		}
 
 		ddmTemplate.resetOriginalValues();
-
-		return ddmTemplate;
-	}
-
-	/**
-	 * Returns the ddm template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm template
-	 * @return the ddm template
-	 * @throws NoSuchTemplateException if a ddm template with the primary key could not be found
-	 */
-	@Override
-	public DDMTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateException {
-
-		DDMTemplate ddmTemplate = fetchByPrimaryKey(primaryKey);
-
-		if (ddmTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmTemplate;
 	}
@@ -7146,9 +7039,6 @@ public class DDMTemplatePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMTemplate exists with the key {";
 
@@ -7164,4 +7054,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1906488061
+// LIFERAY-SERVICE-BUILDER-HASH:1870083468

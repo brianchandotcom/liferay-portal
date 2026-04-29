@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ListTypeDefinitionPersistence.class)
 public class ListTypeDefinitionPersistenceImpl
-	extends BasePersistenceImpl<ListTypeDefinition>
+	extends BasePersistenceImpl
+		<ListTypeDefinition, NoSuchListTypeDefinitionException>
 	implements ListTypeDefinitionPersistence {
 
 	/*
@@ -1421,50 +1422,6 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all list type definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ListTypeDefinitionImpl.class);
-
-		finderCache.clearCache(ListTypeDefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the list type definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ListTypeDefinition listTypeDefinition) {
-		entityCache.removeResult(
-			ListTypeDefinitionImpl.class, listTypeDefinition);
-	}
-
-	@Override
-	public void clearCache(List<ListTypeDefinition> listTypeDefinitions) {
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			entityCache.removeResult(
-				ListTypeDefinitionImpl.class, listTypeDefinition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ListTypeDefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ListTypeDefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ListTypeDefinitionModelImpl listTypeDefinitionModelImpl) {
 
@@ -1511,48 +1468,6 @@ public class ListTypeDefinitionPersistenceImpl
 		throws NoSuchListTypeDefinitionException {
 
 		return remove((Serializable)listTypeDefinitionId);
-	}
-
-	/**
-	 * Removes the list type definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the list type definition
-	 * @return the list type definition that was removed
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	@Override
-	public ListTypeDefinition remove(Serializable primaryKey)
-		throws NoSuchListTypeDefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ListTypeDefinition listTypeDefinition =
-				(ListTypeDefinition)session.get(
-					ListTypeDefinitionImpl.class, primaryKey);
-
-			if (listTypeDefinition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchListTypeDefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(listTypeDefinition);
-		}
-		catch (NoSuchListTypeDefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1742,31 +1657,6 @@ public class ListTypeDefinitionPersistenceImpl
 		}
 
 		listTypeDefinition.resetOriginalValues();
-
-		return listTypeDefinition;
-	}
-
-	/**
-	 * Returns the list type definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the list type definition
-	 * @return the list type definition
-	 * @throws NoSuchListTypeDefinitionException if a list type definition with the primary key could not be found
-	 */
-	@Override
-	public ListTypeDefinition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchListTypeDefinitionException {
-
-		ListTypeDefinition listTypeDefinition = fetchByPrimaryKey(primaryKey);
-
-		if (listTypeDefinition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchListTypeDefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return listTypeDefinition;
 	}
@@ -2211,9 +2101,6 @@ public class ListTypeDefinitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "ListTypeDefinition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ListTypeDefinition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ListTypeDefinition exists with the key {";
 
@@ -2229,4 +2116,4 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-727598327
+// LIFERAY-SERVICE-BUILDER-HASH:-268651112

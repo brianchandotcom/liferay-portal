@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -20,7 +21,8 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
+public class GroupFinderBaseImpl
+	extends BasePersistenceImpl<Group, NoSuchGroupException> {
 
 	public GroupFinderBaseImpl() {
 		setModelClass(Group.class);
@@ -64,4 +66,4 @@ public class GroupFinderBaseImpl extends BasePersistenceImpl<Group> {
 		GroupFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1346907397
+// LIFERAY-SERVICE-BUILDER-HASH:1800936027

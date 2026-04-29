@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceListChannelRelPersistence.class)
 public class CommercePriceListChannelRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceListChannelRel>
+	extends BasePersistenceImpl
+		<CommercePriceListChannelRel, NoSuchPriceListChannelRelException>
 	implements CommercePriceListChannelRelPersistence {
 
 	/*
@@ -775,58 +776,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price list channel rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceListChannelRelImpl.class);
-
-		finderCache.clearCache(CommercePriceListChannelRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price list channel rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePriceListChannelRel commercePriceListChannelRel) {
-
-		entityCache.removeResult(
-			CommercePriceListChannelRelImpl.class, commercePriceListChannelRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePriceListChannelRel> commercePriceListChannelRels) {
-
-		for (CommercePriceListChannelRel commercePriceListChannelRel :
-				commercePriceListChannelRels) {
-
-			entityCache.removeResult(
-				CommercePriceListChannelRelImpl.class,
-				commercePriceListChannelRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceListChannelRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceListChannelRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceListChannelRelModelImpl
 			commercePriceListChannelRelModelImpl) {
@@ -886,48 +835,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		throws NoSuchPriceListChannelRelException {
 
 		return remove((Serializable)CommercePriceListChannelRelId);
-	}
-
-	/**
-	 * Removes the commerce price list channel rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price list channel rel
-	 * @return the commerce price list channel rel that was removed
-	 * @throws NoSuchPriceListChannelRelException if a commerce price list channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel remove(Serializable primaryKey)
-		throws NoSuchPriceListChannelRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceListChannelRel commercePriceListChannelRel =
-				(CommercePriceListChannelRel)session.get(
-					CommercePriceListChannelRelImpl.class, primaryKey);
-
-			if (commercePriceListChannelRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceListChannelRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceListChannelRel);
-		}
-		catch (NoSuchPriceListChannelRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1067,32 +974,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 		}
 
 		commercePriceListChannelRel.resetOriginalValues();
-
-		return commercePriceListChannelRel;
-	}
-
-	/**
-	 * Returns the commerce price list channel rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price list channel rel
-	 * @return the commerce price list channel rel
-	 * @throws NoSuchPriceListChannelRelException if a commerce price list channel rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceListChannelRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPriceListChannelRelException {
-
-		CommercePriceListChannelRel commercePriceListChannelRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commercePriceListChannelRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceListChannelRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceListChannelRel;
 	}
@@ -1790,9 +1671,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceListChannelRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceListChannelRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceListChannelRel exists with the key {";
 
@@ -1808,4 +1686,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1230419820
+// LIFERAY-SERVICE-BUILDER-HASH:950730509

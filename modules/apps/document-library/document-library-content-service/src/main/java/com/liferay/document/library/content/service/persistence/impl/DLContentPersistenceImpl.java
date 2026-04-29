@@ -73,7 +73,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLContentPersistence.class)
 public class DLContentPersistenceImpl
-	extends BasePersistenceImpl<DLContent> implements DLContentPersistence {
+	extends BasePersistenceImpl<DLContent, NoSuchContentException>
+	implements DLContentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -814,48 +815,6 @@ public class DLContentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library contents.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DLContentImpl.class);
-
-		finderCache.clearCache(DLContentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library content.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLContent dlContent) {
-		entityCache.removeResult(DLContentImpl.class, dlContent);
-	}
-
-	@Override
-	public void clearCache(List<DLContent> dlContents) {
-		for (DLContent dlContent : dlContents) {
-			entityCache.removeResult(DLContentImpl.class, dlContent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DLContentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DLContentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLContentModelImpl dlContentModelImpl) {
 
@@ -902,47 +861,6 @@ public class DLContentPersistenceImpl
 	@Override
 	public DLContent remove(long contentId) throws NoSuchContentException {
 		return remove((Serializable)contentId);
-	}
-
-	/**
-	 * Removes the document library content with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library content
-	 * @return the document library content that was removed
-	 * @throws NoSuchContentException if a document library content with the primary key could not be found
-	 */
-	@Override
-	public DLContent remove(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLContent dlContent = (DLContent)session.get(
-				DLContentImpl.class, primaryKey);
-
-			if (dlContent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlContent);
-		}
-		catch (NoSuchContentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1039,31 +957,6 @@ public class DLContentPersistenceImpl
 		}
 
 		dlContent.resetOriginalValues();
-
-		return dlContent;
-	}
-
-	/**
-	 * Returns the document library content with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library content
-	 * @return the document library content
-	 * @throws NoSuchContentException if a document library content with the primary key could not be found
-	 */
-	@Override
-	public DLContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		DLContent dlContent = fetchByPrimaryKey(primaryKey);
-
-		if (dlContent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlContent;
 	}
@@ -1740,9 +1633,6 @@ public class DLContentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlContent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLContent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLContent exists with the key {";
 
@@ -1758,4 +1648,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1844723542
+// LIFERAY-SERVICE-BUILDER-HASH:970847575

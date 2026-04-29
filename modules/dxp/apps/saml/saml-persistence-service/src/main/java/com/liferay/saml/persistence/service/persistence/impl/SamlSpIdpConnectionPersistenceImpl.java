@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlSpIdpConnectionPersistence.class)
 public class SamlSpIdpConnectionPersistenceImpl
-	extends BasePersistenceImpl<SamlSpIdpConnection>
+	extends BasePersistenceImpl
+		<SamlSpIdpConnection, NoSuchSpIdpConnectionException>
 	implements SamlSpIdpConnectionPersistence {
 
 	/*
@@ -387,50 +387,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml sp idp connections.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlSpIdpConnectionImpl.class);
-
-		finderCache.clearCache(SamlSpIdpConnectionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml sp idp connection.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlSpIdpConnection samlSpIdpConnection) {
-		entityCache.removeResult(
-			SamlSpIdpConnectionImpl.class, samlSpIdpConnection);
-	}
-
-	@Override
-	public void clearCache(List<SamlSpIdpConnection> samlSpIdpConnections) {
-		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
-			entityCache.removeResult(
-				SamlSpIdpConnectionImpl.class, samlSpIdpConnection);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlSpIdpConnectionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlSpIdpConnectionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl) {
 
@@ -473,48 +429,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 		throws NoSuchSpIdpConnectionException {
 
 		return remove((Serializable)samlSpIdpConnectionId);
-	}
-
-	/**
-	 * Removes the saml sp idp connection with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml sp idp connection
-	 * @return the saml sp idp connection that was removed
-	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	 */
-	@Override
-	public SamlSpIdpConnection remove(Serializable primaryKey)
-		throws NoSuchSpIdpConnectionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlSpIdpConnection samlSpIdpConnection =
-				(SamlSpIdpConnection)session.get(
-					SamlSpIdpConnectionImpl.class, primaryKey);
-
-			if (samlSpIdpConnection == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSpIdpConnectionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlSpIdpConnection);
-		}
-		catch (NoSuchSpIdpConnectionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -632,31 +546,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 		}
 
 		samlSpIdpConnection.resetOriginalValues();
-
-		return samlSpIdpConnection;
-	}
-
-	/**
-	 * Returns the saml sp idp connection with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml sp idp connection
-	 * @return the saml sp idp connection
-	 * @throws NoSuchSpIdpConnectionException if a saml sp idp connection with the primary key could not be found
-	 */
-	@Override
-	public SamlSpIdpConnection findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSpIdpConnectionException {
-
-		SamlSpIdpConnection samlSpIdpConnection = fetchByPrimaryKey(primaryKey);
-
-		if (samlSpIdpConnection == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSpIdpConnectionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlSpIdpConnection;
 	}
@@ -1011,9 +900,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlSpIdpConnection.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlSpIdpConnection exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlSpIdpConnection exists with the key {";
 
@@ -1026,4 +912,4 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:380269740
+// LIFERAY-SERVICE-BUILDER-HASH:-1696000835

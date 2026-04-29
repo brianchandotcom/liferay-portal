@@ -63,7 +63,8 @@ import java.util.Set;
  * @generated
  */
 public class CountryLocalizationPersistenceImpl
-	extends BasePersistenceImpl<CountryLocalization>
+	extends BasePersistenceImpl
+		<CountryLocalization, NoSuchCountryLocalizationException>
 	implements CountryLocalizationPersistence {
 
 	/*
@@ -413,51 +414,6 @@ public class CountryLocalizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all country localizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(CountryLocalizationImpl.class);
-
-		FinderCacheUtil.clearCache(CountryLocalizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the country localization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CountryLocalization countryLocalization) {
-		EntityCacheUtil.removeResult(
-			CountryLocalizationImpl.class, countryLocalization);
-	}
-
-	@Override
-	public void clearCache(List<CountryLocalization> countryLocalizations) {
-		for (CountryLocalization countryLocalization : countryLocalizations) {
-			EntityCacheUtil.removeResult(
-				CountryLocalizationImpl.class, countryLocalization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(CountryLocalizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				CountryLocalizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CountryLocalizationModelImpl countryLocalizationModelImpl) {
 
@@ -506,48 +462,6 @@ public class CountryLocalizationPersistenceImpl
 		throws NoSuchCountryLocalizationException {
 
 		return remove((Serializable)countryLocalizationId);
-	}
-
-	/**
-	 * Removes the country localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the country localization
-	 * @return the country localization that was removed
-	 * @throws NoSuchCountryLocalizationException if a country localization with the primary key could not be found
-	 */
-	@Override
-	public CountryLocalization remove(Serializable primaryKey)
-		throws NoSuchCountryLocalizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CountryLocalization countryLocalization =
-				(CountryLocalization)session.get(
-					CountryLocalizationImpl.class, primaryKey);
-
-			if (countryLocalization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCountryLocalizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(countryLocalization);
-		}
-		catch (NoSuchCountryLocalizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -648,31 +562,6 @@ public class CountryLocalizationPersistenceImpl
 		}
 
 		countryLocalization.resetOriginalValues();
-
-		return countryLocalization;
-	}
-
-	/**
-	 * Returns the country localization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the country localization
-	 * @return the country localization
-	 * @throws NoSuchCountryLocalizationException if a country localization with the primary key could not be found
-	 */
-	@Override
-	public CountryLocalization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCountryLocalizationException {
-
-		CountryLocalization countryLocalization = fetchByPrimaryKey(primaryKey);
-
-		if (countryLocalization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCountryLocalizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return countryLocalization;
 	}
@@ -1240,9 +1129,6 @@ public class CountryLocalizationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "countryLocalization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CountryLocalization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CountryLocalization exists with the key {";
 
@@ -1255,4 +1141,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-267979028
+// LIFERAY-SERVICE-BUILDER-HASH:-1984940523

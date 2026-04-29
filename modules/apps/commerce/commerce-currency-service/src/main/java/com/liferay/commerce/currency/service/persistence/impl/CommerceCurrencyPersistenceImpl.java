@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceCurrencyPersistence.class)
 public class CommerceCurrencyPersistenceImpl
-	extends BasePersistenceImpl<CommerceCurrency>
+	extends BasePersistenceImpl<CommerceCurrency, NoSuchCurrencyException>
 	implements CommerceCurrencyPersistence {
 
 	/*
@@ -1288,49 +1288,6 @@ public class CommerceCurrencyPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce currencies.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceCurrencyImpl.class);
-
-		finderCache.clearCache(CommerceCurrencyImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce currency.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceCurrency commerceCurrency) {
-		entityCache.removeResult(CommerceCurrencyImpl.class, commerceCurrency);
-	}
-
-	@Override
-	public void clearCache(List<CommerceCurrency> commerceCurrencies) {
-		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			entityCache.removeResult(
-				CommerceCurrencyImpl.class, commerceCurrency);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceCurrencyImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceCurrencyImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceCurrencyModelImpl commerceCurrencyModelImpl) {
 
@@ -1385,47 +1342,6 @@ public class CommerceCurrencyPersistenceImpl
 		throws NoSuchCurrencyException {
 
 		return remove((Serializable)commerceCurrencyId);
-	}
-
-	/**
-	 * Removes the commerce currency with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce currency
-	 * @return the commerce currency that was removed
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	@Override
-	public CommerceCurrency remove(Serializable primaryKey)
-		throws NoSuchCurrencyException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceCurrency commerceCurrency = (CommerceCurrency)session.get(
-				CommerceCurrencyImpl.class, primaryKey);
-
-			if (commerceCurrency == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCurrencyException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceCurrency);
-		}
-		catch (NoSuchCurrencyException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1610,31 +1526,6 @@ public class CommerceCurrencyPersistenceImpl
 		}
 
 		commerceCurrency.resetOriginalValues();
-
-		return commerceCurrency;
-	}
-
-	/**
-	 * Returns the commerce currency with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce currency
-	 * @return the commerce currency
-	 * @throws NoSuchCurrencyException if a commerce currency with the primary key could not be found
-	 */
-	@Override
-	public CommerceCurrency findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCurrencyException {
-
-		CommerceCurrency commerceCurrency = fetchByPrimaryKey(primaryKey);
-
-		if (commerceCurrency == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCurrencyException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceCurrency;
 	}
@@ -2170,9 +2061,6 @@ public class CommerceCurrencyPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceCurrency.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceCurrency exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceCurrency exists with the key {";
 
@@ -2188,4 +2076,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:545388552
+// LIFERAY-SERVICE-BUILDER-HASH:-159941236

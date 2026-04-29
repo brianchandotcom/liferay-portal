@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderPaymentPersistence.class)
 public class CommerceOrderPaymentPersistenceImpl
-	extends BasePersistenceImpl<CommerceOrderPayment>
+	extends BasePersistenceImpl
+		<CommerceOrderPayment, NoSuchOrderPaymentException>
 	implements CommerceOrderPaymentPersistence {
 
 	/*
@@ -286,53 +286,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce order payments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderPaymentImpl.class);
-
-		finderCache.clearCache(CommerceOrderPaymentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order payment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrderPayment commerceOrderPayment) {
-		entityCache.removeResult(
-			CommerceOrderPaymentImpl.class, commerceOrderPayment);
-	}
-
-	@Override
-	public void clearCache(List<CommerceOrderPayment> commerceOrderPayments) {
-		for (CommerceOrderPayment commerceOrderPayment :
-				commerceOrderPayments) {
-
-			entityCache.removeResult(
-				CommerceOrderPaymentImpl.class, commerceOrderPayment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderPaymentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceOrderPaymentImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	 *
 	 * @param commerceOrderPaymentId the primary key for the new commerce order payment
@@ -363,48 +316,6 @@ public class CommerceOrderPaymentPersistenceImpl
 		throws NoSuchOrderPaymentException {
 
 		return remove((Serializable)commerceOrderPaymentId);
-	}
-
-	/**
-	 * Removes the commerce order payment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order payment
-	 * @return the commerce order payment that was removed
-	 * @throws NoSuchOrderPaymentException if a commerce order payment with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderPayment remove(Serializable primaryKey)
-		throws NoSuchOrderPaymentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrderPayment commerceOrderPayment =
-				(CommerceOrderPayment)session.get(
-					CommerceOrderPaymentImpl.class, primaryKey);
-
-			if (commerceOrderPayment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderPaymentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrderPayment);
-		}
-		catch (NoSuchOrderPaymentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -520,32 +431,6 @@ public class CommerceOrderPaymentPersistenceImpl
 		}
 
 		commerceOrderPayment.resetOriginalValues();
-
-		return commerceOrderPayment;
-	}
-
-	/**
-	 * Returns the commerce order payment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order payment
-	 * @return the commerce order payment
-	 * @throws NoSuchOrderPaymentException if a commerce order payment with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderPayment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderPaymentException {
-
-		CommerceOrderPayment commerceOrderPayment = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceOrderPayment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderPaymentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrderPayment;
 	}
@@ -886,9 +771,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceOrderPayment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrderPayment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderPayment exists with the key {";
 
@@ -901,4 +783,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:594710960
+// LIFERAY-SERVICE-BUILDER-HASH:-1599774053

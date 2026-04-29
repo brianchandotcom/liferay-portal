@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 public class SocialActivityPersistenceImpl
-	extends BasePersistenceImpl<SocialActivity>
+	extends BasePersistenceImpl<SocialActivity, NoSuchActivityException>
 	implements SocialActivityPersistence {
 
 	/*
@@ -2149,49 +2149,6 @@ public class SocialActivityPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social activities.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialActivityImpl.class);
-
-		FinderCacheUtil.clearCache(SocialActivityImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social activity.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SocialActivity socialActivity) {
-		EntityCacheUtil.removeResult(SocialActivityImpl.class, socialActivity);
-	}
-
-	@Override
-	public void clearCache(List<SocialActivity> socialActivities) {
-		for (SocialActivity socialActivity : socialActivities) {
-			EntityCacheUtil.removeResult(
-				SocialActivityImpl.class, socialActivity);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialActivityImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(SocialActivityImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialActivityModelImpl socialActivityModelImpl) {
 
@@ -2253,47 +2210,6 @@ public class SocialActivityPersistenceImpl
 		throws NoSuchActivityException {
 
 		return remove((Serializable)activityId);
-	}
-
-	/**
-	 * Removes the social activity with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social activity
-	 * @return the social activity that was removed
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	@Override
-	public SocialActivity remove(Serializable primaryKey)
-		throws NoSuchActivityException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivity socialActivity = (SocialActivity)session.get(
-				SocialActivityImpl.class, primaryKey);
-
-			if (socialActivity == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchActivityException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialActivity);
-		}
-		catch (NoSuchActivityException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2388,31 +2304,6 @@ public class SocialActivityPersistenceImpl
 		}
 
 		socialActivity.resetOriginalValues();
-
-		return socialActivity;
-	}
-
-	/**
-	 * Returns the social activity with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social activity
-	 * @return the social activity
-	 * @throws NoSuchActivityException if a social activity with the primary key could not be found
-	 */
-	@Override
-	public SocialActivity findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchActivityException {
-
-		SocialActivity socialActivity = fetchByPrimaryKey(primaryKey);
-
-		if (socialActivity == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchActivityException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialActivity;
 	}
@@ -3349,9 +3240,6 @@ public class SocialActivityPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivity.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialActivity exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialActivity exists with the key {";
 
@@ -3367,4 +3255,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-161484502
+// LIFERAY-SERVICE-BUILDER-HASH:2020245444

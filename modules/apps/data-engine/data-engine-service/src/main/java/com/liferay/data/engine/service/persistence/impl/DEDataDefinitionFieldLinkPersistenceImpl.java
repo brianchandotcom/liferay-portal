@@ -82,7 +82,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DEDataDefinitionFieldLinkPersistence.class)
 public class DEDataDefinitionFieldLinkPersistenceImpl
-	extends BasePersistenceImpl<DEDataDefinitionFieldLink>
+	extends BasePersistenceImpl
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
 	implements DEDataDefinitionFieldLinkPersistence {
 
 	/*
@@ -2936,57 +2937,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all de data definition field links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DEDataDefinitionFieldLinkImpl.class);
-
-		finderCache.clearCache(DEDataDefinitionFieldLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the de data definition field link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink) {
-
-		entityCache.removeResult(
-			DEDataDefinitionFieldLinkImpl.class, deDataDefinitionFieldLink);
-	}
-
-	@Override
-	public void clearCache(
-		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks) {
-
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				deDataDefinitionFieldLinks) {
-
-			entityCache.removeResult(
-				DEDataDefinitionFieldLinkImpl.class, deDataDefinitionFieldLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DEDataDefinitionFieldLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DEDataDefinitionFieldLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DEDataDefinitionFieldLinkModelImpl deDataDefinitionFieldLinkModelImpl) {
 
@@ -3052,48 +3002,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		throws NoSuchDataDefinitionFieldLinkException {
 
 		return remove((Serializable)deDataDefinitionFieldLinkId);
-	}
-
-	/**
-	 * Removes the de data definition field link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the de data definition field link
-	 * @return the de data definition field link that was removed
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	@Override
-	public DEDataDefinitionFieldLink remove(Serializable primaryKey)
-		throws NoSuchDataDefinitionFieldLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-				(DEDataDefinitionFieldLink)session.get(
-					DEDataDefinitionFieldLinkImpl.class, primaryKey);
-
-			if (deDataDefinitionFieldLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDataDefinitionFieldLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(deDataDefinitionFieldLink);
-		}
-		catch (NoSuchDataDefinitionFieldLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3229,32 +3137,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		}
 
 		deDataDefinitionFieldLink.resetOriginalValues();
-
-		return deDataDefinitionFieldLink;
-	}
-
-	/**
-	 * Returns the de data definition field link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the de data definition field link
-	 * @return the de data definition field link
-	 * @throws NoSuchDataDefinitionFieldLinkException if a de data definition field link with the primary key could not be found
-	 */
-	@Override
-	public DEDataDefinitionFieldLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDataDefinitionFieldLinkException {
-
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByPrimaryKey(
-			primaryKey);
-
-		if (deDataDefinitionFieldLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDataDefinitionFieldLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return deDataDefinitionFieldLink;
 	}
@@ -4099,9 +3981,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"deDataDefinitionFieldLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DEDataDefinitionFieldLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DEDataDefinitionFieldLink exists with the key {";
 
@@ -4117,4 +3996,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1286605643
+// LIFERAY-SERVICE-BUILDER-HASH:2134211338

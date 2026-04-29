@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiPageResourcePersistence.class)
 public class WikiPageResourcePersistenceImpl
-	extends BasePersistenceImpl<WikiPageResource>
+	extends BasePersistenceImpl<WikiPageResource, NoSuchPageResourceException>
 	implements WikiPageResourcePersistence {
 
 	/*
@@ -683,49 +683,6 @@ public class WikiPageResourcePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all wiki page resources.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WikiPageResourceImpl.class);
-
-		finderCache.clearCache(WikiPageResourceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the wiki page resource.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WikiPageResource wikiPageResource) {
-		entityCache.removeResult(WikiPageResourceImpl.class, wikiPageResource);
-	}
-
-	@Override
-	public void clearCache(List<WikiPageResource> wikiPageResources) {
-		for (WikiPageResource wikiPageResource : wikiPageResources) {
-			entityCache.removeResult(
-				WikiPageResourceImpl.class, wikiPageResource);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WikiPageResourceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(WikiPageResourceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WikiPageResourceModelImpl wikiPageResourceModelImpl) {
 
@@ -785,47 +742,6 @@ public class WikiPageResourcePersistenceImpl
 		throws NoSuchPageResourceException {
 
 		return remove((Serializable)resourcePrimKey);
-	}
-
-	/**
-	 * Removes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the wiki page resource
-	 * @return the wiki page resource that was removed
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	@Override
-	public WikiPageResource remove(Serializable primaryKey)
-		throws NoSuchPageResourceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WikiPageResource wikiPageResource = (WikiPageResource)session.get(
-				WikiPageResourceImpl.class, primaryKey);
-
-			if (wikiPageResource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPageResourceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(wikiPageResource);
-		}
-		catch (NoSuchPageResourceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -927,31 +843,6 @@ public class WikiPageResourcePersistenceImpl
 		}
 
 		wikiPageResource.resetOriginalValues();
-
-		return wikiPageResource;
-	}
-
-	/**
-	 * Returns the wiki page resource with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the wiki page resource
-	 * @return the wiki page resource
-	 * @throws NoSuchPageResourceException if a wiki page resource with the primary key could not be found
-	 */
-	@Override
-	public WikiPageResource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPageResourceException {
-
-		WikiPageResource wikiPageResource = fetchByPrimaryKey(primaryKey);
-
-		if (wikiPageResource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPageResourceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return wikiPageResource;
 	}
@@ -1599,9 +1490,6 @@ public class WikiPageResourcePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiPageResource.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WikiPageResource exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WikiPageResource exists with the key {";
 
@@ -1617,4 +1505,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-301643053
+// LIFERAY-SERVICE-BUILDER-HASH:359649594

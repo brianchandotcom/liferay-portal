@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectValidationRulePersistence.class)
 public class ObjectValidationRulePersistenceImpl
-	extends BasePersistenceImpl<ObjectValidationRule>
+	extends BasePersistenceImpl
+		<ObjectValidationRule, NoSuchObjectValidationRuleException>
 	implements ObjectValidationRulePersistence {
 
 	/*
@@ -1381,53 +1382,6 @@ public class ObjectValidationRulePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object validation rules.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectValidationRuleImpl.class);
-
-		finderCache.clearCache(ObjectValidationRuleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object validation rule.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectValidationRule objectValidationRule) {
-		entityCache.removeResult(
-			ObjectValidationRuleImpl.class, objectValidationRule);
-	}
-
-	@Override
-	public void clearCache(List<ObjectValidationRule> objectValidationRules) {
-		for (ObjectValidationRule objectValidationRule :
-				objectValidationRules) {
-
-			entityCache.removeResult(
-				ObjectValidationRuleImpl.class, objectValidationRule);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectValidationRuleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ObjectValidationRuleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectValidationRuleModelImpl objectValidationRuleModelImpl) {
 
@@ -1476,48 +1430,6 @@ public class ObjectValidationRulePersistenceImpl
 		throws NoSuchObjectValidationRuleException {
 
 		return remove((Serializable)objectValidationRuleId);
-	}
-
-	/**
-	 * Removes the object validation rule with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object validation rule
-	 * @return the object validation rule that was removed
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	@Override
-	public ObjectValidationRule remove(Serializable primaryKey)
-		throws NoSuchObjectValidationRuleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectValidationRule objectValidationRule =
-				(ObjectValidationRule)session.get(
-					ObjectValidationRuleImpl.class, primaryKey);
-
-			if (objectValidationRule == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectValidationRuleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectValidationRule);
-		}
-		catch (NoSuchObjectValidationRuleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1681,32 +1593,6 @@ public class ObjectValidationRulePersistenceImpl
 		}
 
 		objectValidationRule.resetOriginalValues();
-
-		return objectValidationRule;
-	}
-
-	/**
-	 * Returns the object validation rule with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object validation rule
-	 * @return the object validation rule
-	 * @throws NoSuchObjectValidationRuleException if a object validation rule with the primary key could not be found
-	 */
-	@Override
-	public ObjectValidationRule findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectValidationRuleException {
-
-		ObjectValidationRule objectValidationRule = fetchByPrimaryKey(
-			primaryKey);
-
-		if (objectValidationRule == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectValidationRuleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectValidationRule;
 	}
@@ -2273,9 +2159,6 @@ public class ObjectValidationRulePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"objectValidationRule.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectValidationRule exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectValidationRule exists with the key {";
 
@@ -2291,4 +2174,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-5827463
+// LIFERAY-SERVICE-BUILDER-HASH:-520415378

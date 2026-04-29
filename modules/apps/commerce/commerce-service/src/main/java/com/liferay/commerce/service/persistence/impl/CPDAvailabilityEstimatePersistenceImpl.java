@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDAvailabilityEstimatePersistence.class)
 public class CPDAvailabilityEstimatePersistenceImpl
-	extends BasePersistenceImpl<CPDAvailabilityEstimate>
+	extends BasePersistenceImpl
+		<CPDAvailabilityEstimate, NoSuchCPDAvailabilityEstimateException>
 	implements CPDAvailabilityEstimatePersistence {
 
 	/*
@@ -711,55 +712,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cpd availability estimates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDAvailabilityEstimateImpl.class);
-
-		finderCache.clearCache(CPDAvailabilityEstimateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cpd availability estimate.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-		entityCache.removeResult(
-			CPDAvailabilityEstimateImpl.class, cpdAvailabilityEstimate);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDAvailabilityEstimate> cpdAvailabilityEstimates) {
-
-		for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-				cpdAvailabilityEstimates) {
-
-			entityCache.removeResult(
-				CPDAvailabilityEstimateImpl.class, cpdAvailabilityEstimate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDAvailabilityEstimateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDAvailabilityEstimateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDAvailabilityEstimateModelImpl cpdAvailabilityEstimateModelImpl) {
 
@@ -807,48 +759,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		throws NoSuchCPDAvailabilityEstimateException {
 
 		return remove((Serializable)CPDAvailabilityEstimateId);
-	}
-
-	/**
-	 * Removes the cpd availability estimate with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cpd availability estimate
-	 * @return the cpd availability estimate that was removed
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate remove(Serializable primaryKey)
-		throws NoSuchCPDAvailabilityEstimateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDAvailabilityEstimate cpdAvailabilityEstimate =
-				(CPDAvailabilityEstimate)session.get(
-					CPDAvailabilityEstimateImpl.class, primaryKey);
-
-			if (cpdAvailabilityEstimate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDAvailabilityEstimateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpdAvailabilityEstimate);
-		}
-		catch (NoSuchCPDAvailabilityEstimateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -975,32 +885,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		}
 
 		cpdAvailabilityEstimate.resetOriginalValues();
-
-		return cpdAvailabilityEstimate;
-	}
-
-	/**
-	 * Returns the cpd availability estimate with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cpd availability estimate
-	 * @return the cpd availability estimate
-	 * @throws NoSuchCPDAvailabilityEstimateException if a cpd availability estimate with the primary key could not be found
-	 */
-	@Override
-	public CPDAvailabilityEstimate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDAvailabilityEstimateException {
-
-		CPDAvailabilityEstimate cpdAvailabilityEstimate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpdAvailabilityEstimate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDAvailabilityEstimateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpdAvailabilityEstimate;
 	}
@@ -1437,9 +1321,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpdAvailabilityEstimate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDAvailabilityEstimate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDAvailabilityEstimate exists with the key {";
 
@@ -1455,4 +1336,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1909024412
+// LIFERAY-SERVICE-BUILDER-HASH:-1162110765

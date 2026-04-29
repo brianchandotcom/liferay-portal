@@ -34,7 +34,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the localized entry service.
@@ -47,7 +46,7 @@ import java.util.Set;
  * @generated
  */
 public class LocalizedEntryPersistenceImpl
-	extends BasePersistenceImpl<LocalizedEntry>
+	extends BasePersistenceImpl<LocalizedEntry, NoSuchLocalizedEntryException>
 	implements LocalizedEntryPersistence {
 
 	/*
@@ -117,48 +116,6 @@ public class LocalizedEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all localized entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LocalizedEntryImpl.class);
-
-		finderCache.clearCache(LocalizedEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the localized entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LocalizedEntry localizedEntry) {
-		entityCache.removeResult(LocalizedEntryImpl.class, localizedEntry);
-	}
-
-	@Override
-	public void clearCache(List<LocalizedEntry> localizedEntries) {
-		for (LocalizedEntry localizedEntry : localizedEntries) {
-			entityCache.removeResult(LocalizedEntryImpl.class, localizedEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LocalizedEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LocalizedEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new localized entry with the primary key. Does not add the localized entry to the database.
 	 *
 	 * @param localizedEntryId the primary key for the new localized entry
@@ -186,47 +143,6 @@ public class LocalizedEntryPersistenceImpl
 		throws NoSuchLocalizedEntryException {
 
 		return remove((Serializable)localizedEntryId);
-	}
-
-	/**
-	 * Removes the localized entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the localized entry
-	 * @return the localized entry that was removed
-	 * @throws NoSuchLocalizedEntryException if a localized entry with the primary key could not be found
-	 */
-	@Override
-	public LocalizedEntry remove(Serializable primaryKey)
-		throws NoSuchLocalizedEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LocalizedEntry localizedEntry = (LocalizedEntry)session.get(
-				LocalizedEntryImpl.class, primaryKey);
-
-			if (localizedEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLocalizedEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(localizedEntry);
-		}
-		catch (NoSuchLocalizedEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -294,31 +210,6 @@ public class LocalizedEntryPersistenceImpl
 		}
 
 		localizedEntry.resetOriginalValues();
-
-		return localizedEntry;
-	}
-
-	/**
-	 * Returns the localized entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the localized entry
-	 * @return the localized entry
-	 * @throws NoSuchLocalizedEntryException if a localized entry with the primary key could not be found
-	 */
-	@Override
-	public LocalizedEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLocalizedEntryException {
-
-		LocalizedEntry localizedEntry = fetchByPrimaryKey(primaryKey);
-
-		if (localizedEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLocalizedEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return localizedEntry;
 	}
@@ -594,9 +485,6 @@ public class LocalizedEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "localizedEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LocalizedEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LocalizedEntryPersistenceImpl.class);
 
@@ -606,4 +494,4 @@ public class LocalizedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1472501602
+// LIFERAY-SERVICE-BUILDER-HASH:-693441512

@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JournalArticleResourcePersistence.class)
 public class JournalArticleResourcePersistenceImpl
-	extends BasePersistenceImpl<JournalArticleResource>
+	extends BasePersistenceImpl
+		<JournalArticleResource, NoSuchArticleResourceException>
 	implements JournalArticleResourcePersistence {
 
 	/*
@@ -858,55 +859,6 @@ public class JournalArticleResourcePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all journal article resources.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JournalArticleResourceImpl.class);
-
-		finderCache.clearCache(JournalArticleResourceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the journal article resource.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JournalArticleResource journalArticleResource) {
-		entityCache.removeResult(
-			JournalArticleResourceImpl.class, journalArticleResource);
-	}
-
-	@Override
-	public void clearCache(
-		List<JournalArticleResource> journalArticleResources) {
-
-		for (JournalArticleResource journalArticleResource :
-				journalArticleResources) {
-
-			entityCache.removeResult(
-				JournalArticleResourceImpl.class, journalArticleResource);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JournalArticleResourceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				JournalArticleResourceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JournalArticleResourceModelImpl journalArticleResourceModelImpl) {
 
@@ -968,48 +920,6 @@ public class JournalArticleResourcePersistenceImpl
 		throws NoSuchArticleResourceException {
 
 		return remove((Serializable)resourcePrimKey);
-	}
-
-	/**
-	 * Removes the journal article resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the journal article resource
-	 * @return the journal article resource that was removed
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	@Override
-	public JournalArticleResource remove(Serializable primaryKey)
-		throws NoSuchArticleResourceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalArticleResource journalArticleResource =
-				(JournalArticleResource)session.get(
-					JournalArticleResourceImpl.class, primaryKey);
-
-			if (journalArticleResource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchArticleResourceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(journalArticleResource);
-		}
-		catch (NoSuchArticleResourceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1118,32 +1028,6 @@ public class JournalArticleResourcePersistenceImpl
 		}
 
 		journalArticleResource.resetOriginalValues();
-
-		return journalArticleResource;
-	}
-
-	/**
-	 * Returns the journal article resource with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal article resource
-	 * @return the journal article resource
-	 * @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
-	 */
-	@Override
-	public JournalArticleResource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchArticleResourceException {
-
-		JournalArticleResource journalArticleResource = fetchByPrimaryKey(
-			primaryKey);
-
-		if (journalArticleResource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchArticleResourceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return journalArticleResource;
 	}
@@ -1836,9 +1720,6 @@ public class JournalArticleResourcePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"journalArticleResource.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JournalArticleResource exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalArticleResource exists with the key {";
 
@@ -1854,4 +1735,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:557549040
+// LIFERAY-SERVICE-BUILDER-HASH:107495685

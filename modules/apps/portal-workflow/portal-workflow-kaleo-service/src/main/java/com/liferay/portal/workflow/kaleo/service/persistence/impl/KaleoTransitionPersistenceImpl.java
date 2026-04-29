@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoTransitionPersistence.class)
 public class KaleoTransitionPersistenceImpl
-	extends BasePersistenceImpl<KaleoTransition>
+	extends BasePersistenceImpl<KaleoTransition, NoSuchTransitionException>
 	implements KaleoTransitionPersistence {
 
 	/*
@@ -852,49 +852,6 @@ public class KaleoTransitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo transitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoTransitionImpl.class);
-
-		finderCache.clearCache(KaleoTransitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo transition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoTransition kaleoTransition) {
-		entityCache.removeResult(KaleoTransitionImpl.class, kaleoTransition);
-	}
-
-	@Override
-	public void clearCache(List<KaleoTransition> kaleoTransitions) {
-		for (KaleoTransition kaleoTransition : kaleoTransitions) {
-			entityCache.removeResult(
-				KaleoTransitionImpl.class, kaleoTransition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoTransitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoTransitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoTransitionModelImpl kaleoTransitionModelImpl) {
 
@@ -950,47 +907,6 @@ public class KaleoTransitionPersistenceImpl
 		throws NoSuchTransitionException {
 
 		return remove((Serializable)kaleoTransitionId);
-	}
-
-	/**
-	 * Removes the kaleo transition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo transition
-	 * @return the kaleo transition that was removed
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	 */
-	@Override
-	public KaleoTransition remove(Serializable primaryKey)
-		throws NoSuchTransitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTransition kaleoTransition = (KaleoTransition)session.get(
-				KaleoTransitionImpl.class, primaryKey);
-
-			if (kaleoTransition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTransitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoTransition);
-		}
-		catch (NoSuchTransitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1111,31 +1027,6 @@ public class KaleoTransitionPersistenceImpl
 		}
 
 		kaleoTransition.resetOriginalValues();
-
-		return kaleoTransition;
-	}
-
-	/**
-	 * Returns the kaleo transition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo transition
-	 * @return the kaleo transition
-	 * @throws NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	 */
-	@Override
-	public KaleoTransition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTransitionException {
-
-		KaleoTransition kaleoTransition = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoTransition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTransitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoTransition;
 	}
@@ -1824,9 +1715,6 @@ public class KaleoTransitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTransition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoTransition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTransition exists with the key {";
 
@@ -1839,4 +1727,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-425830130
+// LIFERAY-SERVICE-BUILDER-HASH:-406047529

@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBSuspiciousActivityPersistence.class)
 public class MBSuspiciousActivityPersistenceImpl
-	extends BasePersistenceImpl<MBSuspiciousActivity>
+	extends BasePersistenceImpl
+		<MBSuspiciousActivity, NoSuchSuspiciousActivityException>
 	implements MBSuspiciousActivityPersistence {
 
 	/*
@@ -1119,53 +1120,6 @@ public class MBSuspiciousActivityPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards suspicious activities.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBSuspiciousActivityImpl.class);
-
-		finderCache.clearCache(MBSuspiciousActivityImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards suspicious activity.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBSuspiciousActivity mbSuspiciousActivity) {
-		entityCache.removeResult(
-			MBSuspiciousActivityImpl.class, mbSuspiciousActivity);
-	}
-
-	@Override
-	public void clearCache(List<MBSuspiciousActivity> mbSuspiciousActivities) {
-		for (MBSuspiciousActivity mbSuspiciousActivity :
-				mbSuspiciousActivities) {
-
-			entityCache.removeResult(
-				MBSuspiciousActivityImpl.class, mbSuspiciousActivity);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBSuspiciousActivityImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				MBSuspiciousActivityImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBSuspiciousActivityModelImpl mbSuspiciousActivityModelImpl) {
 
@@ -1234,48 +1188,6 @@ public class MBSuspiciousActivityPersistenceImpl
 		throws NoSuchSuspiciousActivityException {
 
 		return remove((Serializable)suspiciousActivityId);
-	}
-
-	/**
-	 * Removes the message boards suspicious activity with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards suspicious activity
-	 * @return the message boards suspicious activity that was removed
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	@Override
-	public MBSuspiciousActivity remove(Serializable primaryKey)
-		throws NoSuchSuspiciousActivityException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBSuspiciousActivity mbSuspiciousActivity =
-				(MBSuspiciousActivity)session.get(
-					MBSuspiciousActivityImpl.class, primaryKey);
-
-			if (mbSuspiciousActivity == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSuspiciousActivityException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbSuspiciousActivity);
-		}
-		catch (NoSuchSuspiciousActivityException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1407,32 +1319,6 @@ public class MBSuspiciousActivityPersistenceImpl
 		}
 
 		mbSuspiciousActivity.resetOriginalValues();
-
-		return mbSuspiciousActivity;
-	}
-
-	/**
-	 * Returns the message boards suspicious activity with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards suspicious activity
-	 * @return the message boards suspicious activity
-	 * @throws NoSuchSuspiciousActivityException if a message boards suspicious activity with the primary key could not be found
-	 */
-	@Override
-	public MBSuspiciousActivity findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSuspiciousActivityException {
-
-		MBSuspiciousActivity mbSuspiciousActivity = fetchByPrimaryKey(
-			primaryKey);
-
-		if (mbSuspiciousActivity == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSuspiciousActivityException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbSuspiciousActivity;
 	}
@@ -2173,9 +2059,6 @@ public class MBSuspiciousActivityPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"mbSuspiciousActivity.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBSuspiciousActivity exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBSuspiciousActivity exists with the key {";
 
@@ -2191,4 +2074,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1811241382
+// LIFERAY-SERVICE-BUILDER-HASH:-1303361338

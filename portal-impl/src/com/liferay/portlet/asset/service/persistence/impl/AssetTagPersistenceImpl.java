@@ -85,7 +85,8 @@ import java.util.Set;
  * @generated
  */
 public class AssetTagPersistenceImpl
-	extends BasePersistenceImpl<AssetTag> implements AssetTagPersistence {
+	extends BasePersistenceImpl<AssetTag, NoSuchTagException>
+	implements AssetTagPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2868,48 +2869,6 @@ public class AssetTagPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset tags.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetTagImpl.class);
-
-		FinderCacheUtil.clearCache(AssetTagImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset tag.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetTag assetTag) {
-		EntityCacheUtil.removeResult(AssetTagImpl.class, assetTag);
-	}
-
-	@Override
-	public void clearCache(List<AssetTag> assetTags) {
-		for (AssetTag assetTag : assetTags) {
-			EntityCacheUtil.removeResult(AssetTagImpl.class, assetTag);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AssetTagImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(AssetTagImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetTagModelImpl assetTagModelImpl) {
 
@@ -2966,45 +2925,6 @@ public class AssetTagPersistenceImpl
 	@Override
 	public AssetTag remove(long tagId) throws NoSuchTagException {
 		return remove((Serializable)tagId);
-	}
-
-	/**
-	 * Removes the asset tag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset tag
-	 * @return the asset tag that was removed
-	 * @throws NoSuchTagException if a asset tag with the primary key could not be found
-	 */
-	@Override
-	public AssetTag remove(Serializable primaryKey) throws NoSuchTagException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetTag assetTag = (AssetTag)session.get(
-				AssetTagImpl.class, primaryKey);
-
-			if (assetTag == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTagException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetTag);
-		}
-		catch (NoSuchTagException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3187,31 +3107,6 @@ public class AssetTagPersistenceImpl
 		}
 
 		assetTag.resetOriginalValues();
-
-		return assetTag;
-	}
-
-	/**
-	 * Returns the asset tag with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset tag
-	 * @return the asset tag
-	 * @throws NoSuchTagException if a asset tag with the primary key could not be found
-	 */
-	@Override
-	public AssetTag findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTagException {
-
-		AssetTag assetTag = fetchByPrimaryKey(primaryKey);
-
-		if (assetTag == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTagException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetTag;
 	}
@@ -4242,9 +4137,6 @@ public class AssetTagPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetTag.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetTag exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetTag exists with the key {";
 
@@ -4260,4 +4152,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-108204796
+// LIFERAY-SERVICE-BUILDER-HASH:-998456873

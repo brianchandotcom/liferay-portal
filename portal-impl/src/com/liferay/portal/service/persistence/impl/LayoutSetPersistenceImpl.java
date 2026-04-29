@@ -67,7 +67,8 @@ import java.util.Set;
  * @generated
  */
 public class LayoutSetPersistenceImpl
-	extends BasePersistenceImpl<LayoutSet> implements LayoutSetPersistence {
+	extends BasePersistenceImpl<LayoutSet, NoSuchLayoutSetException>
+	implements LayoutSetPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -937,48 +938,6 @@ public class LayoutSetPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout sets.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutSetImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutSetImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout set.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutSet layoutSet) {
-		EntityCacheUtil.removeResult(LayoutSetImpl.class, layoutSet);
-	}
-
-	@Override
-	public void clearCache(List<LayoutSet> layoutSets) {
-		for (LayoutSet layoutSet : layoutSets) {
-			EntityCacheUtil.removeResult(LayoutSetImpl.class, layoutSet);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutSetImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(LayoutSetImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutSetModelImpl layoutSetModelImpl) {
 
@@ -1024,47 +983,6 @@ public class LayoutSetPersistenceImpl
 	@Override
 	public LayoutSet remove(long layoutSetId) throws NoSuchLayoutSetException {
 		return remove((Serializable)layoutSetId);
-	}
-
-	/**
-	 * Removes the layout set with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout set
-	 * @return the layout set that was removed
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	@Override
-	public LayoutSet remove(Serializable primaryKey)
-		throws NoSuchLayoutSetException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSet layoutSet = (LayoutSet)session.get(
-				LayoutSetImpl.class, primaryKey);
-
-			if (layoutSet == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutSetException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutSet);
-		}
-		catch (NoSuchLayoutSetException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1178,31 +1096,6 @@ public class LayoutSetPersistenceImpl
 		}
 
 		layoutSet.resetOriginalValues();
-
-		return layoutSet;
-	}
-
-	/**
-	 * Returns the layout set with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout set
-	 * @return the layout set
-	 * @throws NoSuchLayoutSetException if a layout set with the primary key could not be found
-	 */
-	@Override
-	public LayoutSet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutSetException {
-
-		LayoutSet layoutSet = fetchByPrimaryKey(primaryKey);
-
-		if (layoutSet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutSetException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutSet;
 	}
@@ -1864,9 +1757,6 @@ public class LayoutSetPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "layoutSet.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSet exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSet exists with the key {";
 
@@ -1882,4 +1772,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1773880181
+// LIFERAY-SERVICE-BUILDER-HASH:-476873596

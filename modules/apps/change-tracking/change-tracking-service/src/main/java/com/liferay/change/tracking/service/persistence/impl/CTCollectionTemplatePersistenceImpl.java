@@ -46,7 +46,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -67,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTCollectionTemplatePersistence.class)
 public class CTCollectionTemplatePersistenceImpl
-	extends BasePersistenceImpl<CTCollectionTemplate>
+	extends BasePersistenceImpl
+		<CTCollectionTemplate, NoSuchCollectionTemplateException>
 	implements CTCollectionTemplatePersistence {
 
 	/*
@@ -489,53 +489,6 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct collection templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTCollectionTemplateImpl.class);
-
-		finderCache.clearCache(CTCollectionTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct collection template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTCollectionTemplate ctCollectionTemplate) {
-		entityCache.removeResult(
-			CTCollectionTemplateImpl.class, ctCollectionTemplate);
-	}
-
-	@Override
-	public void clearCache(List<CTCollectionTemplate> ctCollectionTemplates) {
-		for (CTCollectionTemplate ctCollectionTemplate :
-				ctCollectionTemplates) {
-
-			entityCache.removeResult(
-				CTCollectionTemplateImpl.class, ctCollectionTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTCollectionTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CTCollectionTemplateImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct collection template with the primary key. Does not add the ct collection template to the database.
 	 *
 	 * @param ctCollectionTemplateId the primary key for the new ct collection template
@@ -566,48 +519,6 @@ public class CTCollectionTemplatePersistenceImpl
 		throws NoSuchCollectionTemplateException {
 
 		return remove((Serializable)ctCollectionTemplateId);
-	}
-
-	/**
-	 * Removes the ct collection template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct collection template
-	 * @return the ct collection template that was removed
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	@Override
-	public CTCollectionTemplate remove(Serializable primaryKey)
-		throws NoSuchCollectionTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTCollectionTemplate ctCollectionTemplate =
-				(CTCollectionTemplate)session.get(
-					CTCollectionTemplateImpl.class, primaryKey);
-
-			if (ctCollectionTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCollectionTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctCollectionTemplate);
-		}
-		catch (NoSuchCollectionTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -723,32 +634,6 @@ public class CTCollectionTemplatePersistenceImpl
 		}
 
 		ctCollectionTemplate.resetOriginalValues();
-
-		return ctCollectionTemplate;
-	}
-
-	/**
-	 * Returns the ct collection template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct collection template
-	 * @return the ct collection template
-	 * @throws NoSuchCollectionTemplateException if a ct collection template with the primary key could not be found
-	 */
-	@Override
-	public CTCollectionTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCollectionTemplateException {
-
-		CTCollectionTemplate ctCollectionTemplate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ctCollectionTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCollectionTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctCollectionTemplate;
 	}
@@ -1113,9 +998,6 @@ public class CTCollectionTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CTCollectionTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTCollectionTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTCollectionTemplate exists with the key {";
 
@@ -1128,4 +1010,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1200383941
+// LIFERAY-SERVICE-BUILDER-HASH:420917464

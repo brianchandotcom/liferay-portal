@@ -55,7 +55,7 @@ import java.util.Set;
  * @generated
  */
 public class PluginSettingPersistenceImpl
-	extends BasePersistenceImpl<PluginSetting>
+	extends BasePersistenceImpl<PluginSetting, NoSuchPluginSettingException>
 	implements PluginSettingPersistence {
 
 	/*
@@ -390,49 +390,6 @@ public class PluginSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all plugin settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PluginSettingImpl.class);
-
-		FinderCacheUtil.clearCache(PluginSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the plugin setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PluginSetting pluginSetting) {
-		EntityCacheUtil.removeResult(PluginSettingImpl.class, pluginSetting);
-	}
-
-	@Override
-	public void clearCache(List<PluginSetting> pluginSettings) {
-		for (PluginSetting pluginSetting : pluginSettings) {
-			EntityCacheUtil.removeResult(
-				PluginSettingImpl.class, pluginSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PluginSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PluginSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PluginSettingModelImpl pluginSettingModelImpl) {
 
@@ -476,47 +433,6 @@ public class PluginSettingPersistenceImpl
 		throws NoSuchPluginSettingException {
 
 		return remove((Serializable)pluginSettingId);
-	}
-
-	/**
-	 * Removes the plugin setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the plugin setting
-	 * @return the plugin setting that was removed
-	 * @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	 */
-	@Override
-	public PluginSetting remove(Serializable primaryKey)
-		throws NoSuchPluginSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PluginSetting pluginSetting = (PluginSetting)session.get(
-				PluginSettingImpl.class, primaryKey);
-
-			if (pluginSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPluginSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(pluginSetting);
-		}
-		catch (NoSuchPluginSettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -602,31 +518,6 @@ public class PluginSettingPersistenceImpl
 		}
 
 		pluginSetting.resetOriginalValues();
-
-		return pluginSetting;
-	}
-
-	/**
-	 * Returns the plugin setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the plugin setting
-	 * @return the plugin setting
-	 * @throws NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	 */
-	@Override
-	public PluginSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPluginSettingException {
-
-		PluginSetting pluginSetting = fetchByPrimaryKey(primaryKey);
-
-		if (pluginSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPluginSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return pluginSetting;
 	}
@@ -952,9 +843,6 @@ public class PluginSettingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "pluginSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PluginSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PluginSetting exists with the key {";
 
@@ -970,4 +858,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:846447192
+// LIFERAY-SERVICE-BUILDER-HASH:-620349451

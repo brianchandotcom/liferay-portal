@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionGroupedEntryPersistence.class)
 public class CPDefinitionGroupedEntryPersistenceImpl
-	extends BasePersistenceImpl<CPDefinitionGroupedEntry>
+	extends BasePersistenceImpl
+		<CPDefinitionGroupedEntry, NoSuchCPDefinitionGroupedEntryException>
 	implements CPDefinitionGroupedEntryPersistence {
 
 	/*
@@ -961,55 +962,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definition grouped entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionGroupedEntryImpl.class);
-
-		finderCache.clearCache(CPDefinitionGroupedEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition grouped entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		entityCache.removeResult(
-			CPDefinitionGroupedEntryImpl.class, cpDefinitionGroupedEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries) {
-
-		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
-				cpDefinitionGroupedEntries) {
-
-			entityCache.removeResult(
-				CPDefinitionGroupedEntryImpl.class, cpDefinitionGroupedEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionGroupedEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDefinitionGroupedEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionGroupedEntryModelImpl cpDefinitionGroupedEntryModelImpl) {
 
@@ -1066,48 +1018,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		throws NoSuchCPDefinitionGroupedEntryException {
 
 		return remove((Serializable)CPDefinitionGroupedEntryId);
-	}
-
-	/**
-	 * Removes the cp definition grouped entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition grouped entry
-	 * @return the cp definition grouped entry that was removed
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionGroupedEntry cpDefinitionGroupedEntry =
-				(CPDefinitionGroupedEntry)session.get(
-					CPDefinitionGroupedEntryImpl.class, primaryKey);
-
-			if (cpDefinitionGroupedEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionGroupedEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinitionGroupedEntry);
-		}
-		catch (NoSuchCPDefinitionGroupedEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1235,32 +1145,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 		}
 
 		cpDefinitionGroupedEntry.resetOriginalValues();
-
-		return cpDefinitionGroupedEntry;
-	}
-
-	/**
-	 * Returns the cp definition grouped entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition grouped entry
-	 * @return the cp definition grouped entry
-	 * @throws NoSuchCPDefinitionGroupedEntryException if a cp definition grouped entry with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionGroupedEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDefinitionGroupedEntryException {
-
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cpDefinitionGroupedEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionGroupedEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinitionGroupedEntry;
 	}
@@ -1740,9 +1624,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpDefinitionGroupedEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinitionGroupedEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionGroupedEntry exists with the key {";
 
@@ -1758,4 +1639,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1075739500
+// LIFERAY-SERVICE-BUILDER-HASH:-544730858

@@ -82,7 +82,8 @@ import java.util.Set;
  * @generated
  */
 public class DLFileEntryPersistenceImpl
-	extends BasePersistenceImpl<DLFileEntry> implements DLFileEntryPersistence {
+	extends BasePersistenceImpl<DLFileEntry, NoSuchFileEntryException>
+	implements DLFileEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -7135,48 +7136,6 @@ public class DLFileEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library file entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(DLFileEntryImpl.class);
-
-		FinderCacheUtil.clearCache(DLFileEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library file entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFileEntry dlFileEntry) {
-		EntityCacheUtil.removeResult(DLFileEntryImpl.class, dlFileEntry);
-	}
-
-	@Override
-	public void clearCache(List<DLFileEntry> dlFileEntries) {
-		for (DLFileEntry dlFileEntry : dlFileEntries) {
-			EntityCacheUtil.removeResult(DLFileEntryImpl.class, dlFileEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(DLFileEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(DLFileEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFileEntryModelImpl dlFileEntryModelImpl) {
 
@@ -7263,47 +7222,6 @@ public class DLFileEntryPersistenceImpl
 		throws NoSuchFileEntryException {
 
 		return remove((Serializable)fileEntryId);
-	}
-
-	/**
-	 * Removes the document library file entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library file entry
-	 * @return the document library file entry that was removed
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntry remove(Serializable primaryKey)
-		throws NoSuchFileEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFileEntry dlFileEntry = (DLFileEntry)session.get(
-				DLFileEntryImpl.class, primaryKey);
-
-			if (dlFileEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFileEntry);
-		}
-		catch (NoSuchFileEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -7487,31 +7405,6 @@ public class DLFileEntryPersistenceImpl
 		}
 
 		dlFileEntry.resetOriginalValues();
-
-		return dlFileEntry;
-	}
-
-	/**
-	 * Returns the document library file entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library file entry
-	 * @return the document library file entry
-	 * @throws NoSuchFileEntryException if a document library file entry with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileEntryException {
-
-		DLFileEntry dlFileEntry = fetchByPrimaryKey(primaryKey);
-
-		if (dlFileEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFileEntry;
 	}
@@ -8772,9 +8665,6 @@ public class DLFileEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFileEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFileEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileEntry exists with the key {";
 
@@ -8790,4 +8680,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1330430855
+// LIFERAY-SERVICE-BUILDER-HASH:606913449

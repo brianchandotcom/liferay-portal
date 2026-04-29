@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceWishListItemPersistence.class)
 public class CommerceWishListItemPersistenceImpl
-	extends BasePersistenceImpl<CommerceWishListItem>
+	extends BasePersistenceImpl
+		<CommerceWishListItem, NoSuchWishListItemException>
 	implements CommerceWishListItemPersistence {
 
 	/*
@@ -1036,53 +1036,6 @@ public class CommerceWishListItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce wish list items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceWishListItemImpl.class);
-
-		finderCache.clearCache(CommerceWishListItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce wish list item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceWishListItem commerceWishListItem) {
-		entityCache.removeResult(
-			CommerceWishListItemImpl.class, commerceWishListItem);
-	}
-
-	@Override
-	public void clearCache(List<CommerceWishListItem> commerceWishListItems) {
-		for (CommerceWishListItem commerceWishListItem :
-				commerceWishListItems) {
-
-			entityCache.removeResult(
-				CommerceWishListItemImpl.class, commerceWishListItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceWishListItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceWishListItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceWishListItemModelImpl commerceWishListItemModelImpl) {
 
@@ -1127,48 +1080,6 @@ public class CommerceWishListItemPersistenceImpl
 		throws NoSuchWishListItemException {
 
 		return remove((Serializable)commerceWishListItemId);
-	}
-
-	/**
-	 * Removes the commerce wish list item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce wish list item
-	 * @return the commerce wish list item that was removed
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	@Override
-	public CommerceWishListItem remove(Serializable primaryKey)
-		throws NoSuchWishListItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceWishListItem commerceWishListItem =
-				(CommerceWishListItem)session.get(
-					CommerceWishListItemImpl.class, primaryKey);
-
-			if (commerceWishListItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWishListItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceWishListItem);
-		}
-		catch (NoSuchWishListItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1286,32 +1197,6 @@ public class CommerceWishListItemPersistenceImpl
 		}
 
 		commerceWishListItem.resetOriginalValues();
-
-		return commerceWishListItem;
-	}
-
-	/**
-	 * Returns the commerce wish list item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce wish list item
-	 * @return the commerce wish list item
-	 * @throws NoSuchWishListItemException if a commerce wish list item with the primary key could not be found
-	 */
-	@Override
-	public CommerceWishListItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWishListItemException {
-
-		CommerceWishListItem commerceWishListItem = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceWishListItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWishListItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceWishListItem;
 	}
@@ -1810,9 +1695,6 @@ public class CommerceWishListItemPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceWishListItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceWishListItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceWishListItem exists with the key {";
 
@@ -1825,4 +1707,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-876081336
+// LIFERAY-SERVICE-BUILDER-HASH:1203068259

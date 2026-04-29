@@ -79,7 +79,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = RedirectEntryPersistence.class)
 public class RedirectEntryPersistenceImpl
-	extends BasePersistenceImpl<RedirectEntry>
+	extends BasePersistenceImpl<RedirectEntry, NoSuchEntryException>
 	implements RedirectEntryPersistence {
 
 	/*
@@ -1403,48 +1403,6 @@ public class RedirectEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all redirect entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(RedirectEntryImpl.class);
-
-		finderCache.clearCache(RedirectEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the redirect entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RedirectEntry redirectEntry) {
-		entityCache.removeResult(RedirectEntryImpl.class, redirectEntry);
-	}
-
-	@Override
-	public void clearCache(List<RedirectEntry> redirectEntries) {
-		for (RedirectEntry redirectEntry : redirectEntries) {
-			entityCache.removeResult(RedirectEntryImpl.class, redirectEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(RedirectEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(RedirectEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RedirectEntryModelImpl redirectEntryModelImpl) {
 
@@ -1499,47 +1457,6 @@ public class RedirectEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)redirectEntryId);
-	}
-
-	/**
-	 * Removes the redirect entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the redirect entry
-	 * @return the redirect entry that was removed
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	@Override
-	public RedirectEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RedirectEntry redirectEntry = (RedirectEntry)session.get(
-				RedirectEntryImpl.class, primaryKey);
-
-			if (redirectEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(redirectEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1688,31 +1605,6 @@ public class RedirectEntryPersistenceImpl
 		}
 
 		redirectEntry.resetOriginalValues();
-
-		return redirectEntry;
-	}
-
-	/**
-	 * Returns the redirect entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the redirect entry
-	 * @return the redirect entry
-	 * @throws NoSuchEntryException if a redirect entry with the primary key could not be found
-	 */
-	@Override
-	public RedirectEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		RedirectEntry redirectEntry = fetchByPrimaryKey(primaryKey);
-
-		if (redirectEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return redirectEntry;
 	}
@@ -2194,9 +2086,6 @@ public class RedirectEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "RedirectEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RedirectEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RedirectEntry exists with the key {";
 
@@ -2212,4 +2101,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:228184937
+// LIFERAY-SERVICE-BUILDER-HASH:215828467

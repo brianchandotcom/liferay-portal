@@ -80,7 +80,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShipmentPersistence.class)
 public class CommerceShipmentPersistenceImpl
-	extends BasePersistenceImpl<CommerceShipment>
+	extends BasePersistenceImpl<CommerceShipment, NoSuchShipmentException>
 	implements CommerceShipmentPersistence {
 
 	/*
@@ -2377,49 +2377,6 @@ public class CommerceShipmentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShipmentImpl.class);
-
-		finderCache.clearCache(CommerceShipmentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceShipment commerceShipment) {
-		entityCache.removeResult(CommerceShipmentImpl.class, commerceShipment);
-	}
-
-	@Override
-	public void clearCache(List<CommerceShipment> commerceShipments) {
-		for (CommerceShipment commerceShipment : commerceShipments) {
-			entityCache.removeResult(
-				CommerceShipmentImpl.class, commerceShipment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShipmentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceShipmentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShipmentModelImpl commerceShipmentModelImpl) {
 
@@ -2474,47 +2431,6 @@ public class CommerceShipmentPersistenceImpl
 		throws NoSuchShipmentException {
 
 		return remove((Serializable)commerceShipmentId);
-	}
-
-	/**
-	 * Removes the commerce shipment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipment
-	 * @return the commerce shipment that was removed
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	@Override
-	public CommerceShipment remove(Serializable primaryKey)
-		throws NoSuchShipmentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShipment commerceShipment = (CommerceShipment)session.get(
-				CommerceShipmentImpl.class, primaryKey);
-
-			if (commerceShipment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShipmentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShipment);
-		}
-		catch (NoSuchShipmentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2699,31 +2615,6 @@ public class CommerceShipmentPersistenceImpl
 		}
 
 		commerceShipment.resetOriginalValues();
-
-		return commerceShipment;
-	}
-
-	/**
-	 * Returns the commerce shipment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipment
-	 * @return the commerce shipment
-	 * @throws NoSuchShipmentException if a commerce shipment with the primary key could not be found
-	 */
-	@Override
-	public CommerceShipment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchShipmentException {
-
-		CommerceShipment commerceShipment = fetchByPrimaryKey(primaryKey);
-
-		if (commerceShipment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShipmentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShipment;
 	}
@@ -3196,9 +3087,6 @@ public class CommerceShipmentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceShipment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShipment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShipment exists with the key {";
 
@@ -3214,4 +3102,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1963420219
+// LIFERAY-SERVICE-BUILDER-HASH:1006533478

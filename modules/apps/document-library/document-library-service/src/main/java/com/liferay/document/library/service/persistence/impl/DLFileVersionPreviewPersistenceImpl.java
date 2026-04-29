@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLFileVersionPreviewPersistence.class)
 public class DLFileVersionPreviewPersistenceImpl
-	extends BasePersistenceImpl<DLFileVersionPreview>
+	extends BasePersistenceImpl
+		<DLFileVersionPreview, NoSuchFileVersionPreviewException>
 	implements DLFileVersionPreviewPersistence {
 
 	/*
@@ -702,53 +703,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all dl file version previews.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DLFileVersionPreviewImpl.class);
-
-		finderCache.clearCache(DLFileVersionPreviewImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dl file version preview.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFileVersionPreview dlFileVersionPreview) {
-		entityCache.removeResult(
-			DLFileVersionPreviewImpl.class, dlFileVersionPreview);
-	}
-
-	@Override
-	public void clearCache(List<DLFileVersionPreview> dlFileVersionPreviews) {
-		for (DLFileVersionPreview dlFileVersionPreview :
-				dlFileVersionPreviews) {
-
-			entityCache.removeResult(
-				DLFileVersionPreviewImpl.class, dlFileVersionPreview);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DLFileVersionPreviewImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DLFileVersionPreviewImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFileVersionPreviewModelImpl dlFileVersionPreviewModelImpl) {
 
@@ -806,48 +760,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		throws NoSuchFileVersionPreviewException {
 
 		return remove((Serializable)dlFileVersionPreviewId);
-	}
-
-	/**
-	 * Removes the dl file version preview with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dl file version preview
-	 * @return the dl file version preview that was removed
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	@Override
-	public DLFileVersionPreview remove(Serializable primaryKey)
-		throws NoSuchFileVersionPreviewException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFileVersionPreview dlFileVersionPreview =
-				(DLFileVersionPreview)session.get(
-					DLFileVersionPreviewImpl.class, primaryKey);
-
-			if (dlFileVersionPreview == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileVersionPreviewException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFileVersionPreview);
-		}
-		catch (NoSuchFileVersionPreviewException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -948,32 +860,6 @@ public class DLFileVersionPreviewPersistenceImpl
 		}
 
 		dlFileVersionPreview.resetOriginalValues();
-
-		return dlFileVersionPreview;
-	}
-
-	/**
-	 * Returns the dl file version preview with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dl file version preview
-	 * @return the dl file version preview
-	 * @throws NoSuchFileVersionPreviewException if a dl file version preview with the primary key could not be found
-	 */
-	@Override
-	public DLFileVersionPreview findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileVersionPreviewException {
-
-		DLFileVersionPreview dlFileVersionPreview = fetchByPrimaryKey(
-			primaryKey);
-
-		if (dlFileVersionPreview == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileVersionPreviewException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFileVersionPreview;
 	}
@@ -1637,9 +1523,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"dlFileVersionPreview.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFileVersionPreview exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileVersionPreview exists with the key {";
 
@@ -1652,4 +1535,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:205630360
+// LIFERAY-SERVICE-BUILDER-HASH:1455348223

@@ -55,7 +55,7 @@ import java.util.Set;
  * @generated
  */
 public class UserIdMapperPersistenceImpl
-	extends BasePersistenceImpl<UserIdMapper>
+	extends BasePersistenceImpl<UserIdMapper, NoSuchUserIdMapperException>
 	implements UserIdMapperPersistence {
 
 	/*
@@ -465,48 +465,6 @@ public class UserIdMapperPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all user ID mappers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(UserIdMapperImpl.class);
-
-		FinderCacheUtil.clearCache(UserIdMapperImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the user ID mapper.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UserIdMapper userIdMapper) {
-		EntityCacheUtil.removeResult(UserIdMapperImpl.class, userIdMapper);
-	}
-
-	@Override
-	public void clearCache(List<UserIdMapper> userIdMappers) {
-		for (UserIdMapper userIdMapper : userIdMappers) {
-			EntityCacheUtil.removeResult(UserIdMapperImpl.class, userIdMapper);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(UserIdMapperImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(UserIdMapperImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		UserIdMapperModelImpl userIdMapperModelImpl) {
 
@@ -556,47 +514,6 @@ public class UserIdMapperPersistenceImpl
 		throws NoSuchUserIdMapperException {
 
 		return remove((Serializable)userIdMapperId);
-	}
-
-	/**
-	 * Removes the user ID mapper with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the user ID mapper
-	 * @return the user ID mapper that was removed
-	 * @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 */
-	@Override
-	public UserIdMapper remove(Serializable primaryKey)
-		throws NoSuchUserIdMapperException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UserIdMapper userIdMapper = (UserIdMapper)session.get(
-				UserIdMapperImpl.class, primaryKey);
-
-			if (userIdMapper == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserIdMapperException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(userIdMapper);
-		}
-		catch (NoSuchUserIdMapperException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -682,31 +599,6 @@ public class UserIdMapperPersistenceImpl
 		}
 
 		userIdMapper.resetOriginalValues();
-
-		return userIdMapper;
-	}
-
-	/**
-	 * Returns the user ID mapper with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the user ID mapper
-	 * @return the user ID mapper
-	 * @throws NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 */
-	@Override
-	public UserIdMapper findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserIdMapperException {
-
-		UserIdMapper userIdMapper = fetchByPrimaryKey(primaryKey);
-
-		if (userIdMapper == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserIdMapperException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return userIdMapper;
 	}
@@ -1038,9 +930,6 @@ public class UserIdMapperPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userIdMapper.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UserIdMapper exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserIdMapper exists with the key {";
 
@@ -1056,4 +945,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1100684906
+// LIFERAY-SERVICE-BUILDER-HASH:121418465

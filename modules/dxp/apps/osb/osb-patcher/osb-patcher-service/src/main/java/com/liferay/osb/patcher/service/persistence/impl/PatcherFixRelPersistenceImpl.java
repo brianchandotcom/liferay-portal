@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherFixRelPersistence.class)
 public class PatcherFixRelPersistenceImpl
-	extends BasePersistenceImpl<PatcherFixRel>
+	extends BasePersistenceImpl<PatcherFixRel, NoSuchPatcherFixRelException>
 	implements PatcherFixRelPersistence {
 
 	/*
@@ -433,48 +432,6 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all patcher fix rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherFixRelImpl.class);
-
-		finderCache.clearCache(PatcherFixRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher fix rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherFixRel patcherFixRel) {
-		entityCache.removeResult(PatcherFixRelImpl.class, patcherFixRel);
-	}
-
-	@Override
-	public void clearCache(List<PatcherFixRel> patcherFixRels) {
-		for (PatcherFixRel patcherFixRel : patcherFixRels) {
-			entityCache.removeResult(PatcherFixRelImpl.class, patcherFixRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherFixRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherFixRelImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new patcher fix rel with the primary key. Does not add the patcher fix rel to the database.
 	 *
 	 * @param patcherFixRelId the primary key for the new patcher fix rel
@@ -504,47 +461,6 @@ public class PatcherFixRelPersistenceImpl
 		throws NoSuchPatcherFixRelException {
 
 		return remove((Serializable)patcherFixRelId);
-	}
-
-	/**
-	 * Removes the patcher fix rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher fix rel
-	 * @return the patcher fix rel that was removed
-	 * @throws NoSuchPatcherFixRelException if a patcher fix rel with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixRel remove(Serializable primaryKey)
-		throws NoSuchPatcherFixRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherFixRel patcherFixRel = (PatcherFixRel)session.get(
-				PatcherFixRelImpl.class, primaryKey);
-
-			if (patcherFixRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherFixRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherFixRel);
-		}
-		catch (NoSuchPatcherFixRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -628,31 +544,6 @@ public class PatcherFixRelPersistenceImpl
 		}
 
 		patcherFixRel.resetOriginalValues();
-
-		return patcherFixRel;
-	}
-
-	/**
-	 * Returns the patcher fix rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher fix rel
-	 * @return the patcher fix rel
-	 * @throws NoSuchPatcherFixRelException if a patcher fix rel with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherFixRelException {
-
-		PatcherFixRel patcherFixRel = fetchByPrimaryKey(primaryKey);
-
-		if (patcherFixRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherFixRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherFixRel;
 	}
@@ -1018,9 +909,6 @@ public class PatcherFixRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "patcherFixRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherFixRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherFixRel exists with the key {";
 
@@ -1033,4 +921,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-529075400
+// LIFERAY-SERVICE-BUILDER-HASH:175517343

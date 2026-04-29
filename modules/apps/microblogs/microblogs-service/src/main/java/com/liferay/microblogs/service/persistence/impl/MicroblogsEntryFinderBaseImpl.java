@@ -5,6 +5,7 @@
 
 package com.liferay.microblogs.service.persistence.impl;
 
+import com.liferay.microblogs.exception.NoSuchEntryException;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryPersistence;
 import com.liferay.microblogs.service.persistence.impl.constants.MicroblogsPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class MicroblogsEntryFinderBaseImpl
-	extends BasePersistenceImpl<MicroblogsEntry> {
+	extends BasePersistenceImpl<MicroblogsEntry, NoSuchEntryException> {
 
 	public MicroblogsEntryFinderBaseImpl() {
 		setModelClass(MicroblogsEntry.class);
@@ -77,4 +78,4 @@ public abstract class MicroblogsEntryFinderBaseImpl
 		MicroblogsEntryFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:665527586
+// LIFERAY-SERVICE-BUILDER-HASH:-629846164

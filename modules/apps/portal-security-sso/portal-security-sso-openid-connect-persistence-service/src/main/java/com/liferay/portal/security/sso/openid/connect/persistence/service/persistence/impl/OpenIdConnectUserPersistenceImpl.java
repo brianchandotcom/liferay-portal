@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OpenIdConnectUserPersistence.class)
 public class OpenIdConnectUserPersistenceImpl
-	extends BasePersistenceImpl<OpenIdConnectUser>
+	extends BasePersistenceImpl<OpenIdConnectUser, NoSuchUserException>
 	implements OpenIdConnectUserPersistence {
 
 	/*
@@ -401,50 +400,6 @@ public class OpenIdConnectUserPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all open ID connect users.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OpenIdConnectUserImpl.class);
-
-		finderCache.clearCache(OpenIdConnectUserImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the open ID connect user.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OpenIdConnectUser openIdConnectUser) {
-		entityCache.removeResult(
-			OpenIdConnectUserImpl.class, openIdConnectUser);
-	}
-
-	@Override
-	public void clearCache(List<OpenIdConnectUser> openIdConnectUsers) {
-		for (OpenIdConnectUser openIdConnectUser : openIdConnectUsers) {
-			entityCache.removeResult(
-				OpenIdConnectUserImpl.class, openIdConnectUser);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OpenIdConnectUserImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(OpenIdConnectUserImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OpenIdConnectUserModelImpl openIdConnectUserModelImpl) {
 
@@ -488,48 +443,6 @@ public class OpenIdConnectUserPersistenceImpl
 		throws NoSuchUserException {
 
 		return remove((Serializable)openIdConnectUserId);
-	}
-
-	/**
-	 * Removes the open ID connect user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the open ID connect user
-	 * @return the open ID connect user that was removed
-	 * @throws NoSuchUserException if a open ID connect user with the primary key could not be found
-	 */
-	@Override
-	public OpenIdConnectUser remove(Serializable primaryKey)
-		throws NoSuchUserException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OpenIdConnectUser openIdConnectUser =
-				(OpenIdConnectUser)session.get(
-					OpenIdConnectUserImpl.class, primaryKey);
-
-			if (openIdConnectUser == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUserException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(openIdConnectUser);
-		}
-		catch (NoSuchUserException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -635,31 +548,6 @@ public class OpenIdConnectUserPersistenceImpl
 		}
 
 		openIdConnectUser.resetOriginalValues();
-
-		return openIdConnectUser;
-	}
-
-	/**
-	 * Returns the open ID connect user with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the open ID connect user
-	 * @return the open ID connect user
-	 * @throws NoSuchUserException if a open ID connect user with the primary key could not be found
-	 */
-	@Override
-	public OpenIdConnectUser findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserException {
-
-		OpenIdConnectUser openIdConnectUser = fetchByPrimaryKey(primaryKey);
-
-		if (openIdConnectUser == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUserException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return openIdConnectUser;
 	}
@@ -1018,9 +906,6 @@ public class OpenIdConnectUserPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "openIdConnectUser.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OpenIdConnectUser exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OpenIdConnectUser exists with the key {";
 
@@ -1033,4 +918,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-401989766
+// LIFERAY-SERVICE-BUILDER-HASH:1139322735

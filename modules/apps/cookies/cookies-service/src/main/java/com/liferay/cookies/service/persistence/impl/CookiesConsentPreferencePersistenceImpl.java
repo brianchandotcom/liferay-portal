@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -63,7 +62,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CookiesConsentPreferencePersistence.class)
 public class CookiesConsentPreferencePersistenceImpl
-	extends BasePersistenceImpl<CookiesConsentPreference>
+	extends BasePersistenceImpl
+		<CookiesConsentPreference, NoSuchCookiesConsentPreferenceException>
 	implements CookiesConsentPreferencePersistence {
 
 	/*
@@ -702,55 +702,6 @@ public class CookiesConsentPreferencePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cookies consent preferences.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CookiesConsentPreferenceImpl.class);
-
-		finderCache.clearCache(CookiesConsentPreferenceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cookies consent preference.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CookiesConsentPreference cookiesConsentPreference) {
-		entityCache.removeResult(
-			CookiesConsentPreferenceImpl.class, cookiesConsentPreference);
-	}
-
-	@Override
-	public void clearCache(
-		List<CookiesConsentPreference> cookiesConsentPreferences) {
-
-		for (CookiesConsentPreference cookiesConsentPreference :
-				cookiesConsentPreferences) {
-
-			entityCache.removeResult(
-				CookiesConsentPreferenceImpl.class, cookiesConsentPreference);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CookiesConsentPreferenceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CookiesConsentPreferenceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CookiesConsentPreferenceModelImpl cookiesConsentPreferenceModelImpl) {
 
@@ -796,48 +747,6 @@ public class CookiesConsentPreferencePersistenceImpl
 		throws NoSuchCookiesConsentPreferenceException {
 
 		return remove((Serializable)cookiesConsentPreferenceId);
-	}
-
-	/**
-	 * Removes the cookies consent preference with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cookies consent preference
-	 * @return the cookies consent preference that was removed
-	 * @throws NoSuchCookiesConsentPreferenceException if a cookies consent preference with the primary key could not be found
-	 */
-	@Override
-	public CookiesConsentPreference remove(Serializable primaryKey)
-		throws NoSuchCookiesConsentPreferenceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CookiesConsentPreference cookiesConsentPreference =
-				(CookiesConsentPreference)session.get(
-					CookiesConsentPreferenceImpl.class, primaryKey);
-
-			if (cookiesConsentPreference == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCookiesConsentPreferenceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cookiesConsentPreference);
-		}
-		catch (NoSuchCookiesConsentPreferenceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -934,32 +843,6 @@ public class CookiesConsentPreferencePersistenceImpl
 		}
 
 		cookiesConsentPreference.resetOriginalValues();
-
-		return cookiesConsentPreference;
-	}
-
-	/**
-	 * Returns the cookies consent preference with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cookies consent preference
-	 * @return the cookies consent preference
-	 * @throws NoSuchCookiesConsentPreferenceException if a cookies consent preference with the primary key could not be found
-	 */
-	@Override
-	public CookiesConsentPreference findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCookiesConsentPreferenceException {
-
-		CookiesConsentPreference cookiesConsentPreference = fetchByPrimaryKey(
-			primaryKey);
-
-		if (cookiesConsentPreference == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCookiesConsentPreferenceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cookiesConsentPreference;
 	}
@@ -1389,9 +1272,6 @@ public class CookiesConsentPreferencePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cookiesConsentPreference.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CookiesConsentPreference exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CookiesConsentPreference exists with the key {";
 
@@ -1404,4 +1284,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-456057479
+// LIFERAY-SERVICE-BUILDER-HASH:-1592796928

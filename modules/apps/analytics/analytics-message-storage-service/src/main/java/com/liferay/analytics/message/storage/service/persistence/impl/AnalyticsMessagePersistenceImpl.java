@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AnalyticsMessagePersistence.class)
 public class AnalyticsMessagePersistenceImpl
-	extends BasePersistenceImpl<AnalyticsMessage>
+	extends BasePersistenceImpl<AnalyticsMessage, NoSuchMessageException>
 	implements AnalyticsMessagePersistence {
 
 	/*
@@ -310,49 +310,6 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all analytics messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AnalyticsMessageImpl.class);
-
-		finderCache.clearCache(AnalyticsMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the analytics message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AnalyticsMessage analyticsMessage) {
-		entityCache.removeResult(AnalyticsMessageImpl.class, analyticsMessage);
-	}
-
-	@Override
-	public void clearCache(List<AnalyticsMessage> analyticsMessages) {
-		for (AnalyticsMessage analyticsMessage : analyticsMessages) {
-			entityCache.removeResult(
-				AnalyticsMessageImpl.class, analyticsMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AnalyticsMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AnalyticsMessageImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new analytics message with the primary key. Does not add the analytics message to the database.
 	 *
 	 * @param analyticsMessageId the primary key for the new analytics message
@@ -382,47 +339,6 @@ public class AnalyticsMessagePersistenceImpl
 		throws NoSuchMessageException {
 
 		return remove((Serializable)analyticsMessageId);
-	}
-
-	/**
-	 * Removes the analytics message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the analytics message
-	 * @return the analytics message that was removed
-	 * @throws NoSuchMessageException if a analytics message with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsMessage remove(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnalyticsMessage analyticsMessage = (AnalyticsMessage)session.get(
-				AnalyticsMessageImpl.class, primaryKey);
-
-			if (analyticsMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(analyticsMessage);
-		}
-		catch (NoSuchMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -537,31 +453,6 @@ public class AnalyticsMessagePersistenceImpl
 		}
 
 		analyticsMessage.resetOriginalValues();
-
-		return analyticsMessage;
-	}
-
-	/**
-	 * Returns the analytics message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the analytics message
-	 * @return the analytics message
-	 * @throws NoSuchMessageException if a analytics message with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		AnalyticsMessage analyticsMessage = fetchByPrimaryKey(primaryKey);
-
-		if (analyticsMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return analyticsMessage;
 	}
@@ -1140,9 +1031,6 @@ public class AnalyticsMessagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "analyticsMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AnalyticsMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnalyticsMessage exists with the key {";
 
@@ -1155,4 +1043,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:610261643
+// LIFERAY-SERVICE-BUILDER-HASH:-963662988

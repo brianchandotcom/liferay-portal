@@ -76,7 +76,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectActionPersistence.class)
 public class ObjectActionPersistenceImpl
-	extends BasePersistenceImpl<ObjectAction>
+	extends BasePersistenceImpl<ObjectAction, NoSuchObjectActionException>
 	implements ObjectActionPersistence {
 
 	/*
@@ -1490,48 +1490,6 @@ public class ObjectActionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object actions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectActionImpl.class);
-
-		finderCache.clearCache(ObjectActionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object action.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectAction objectAction) {
-		entityCache.removeResult(ObjectActionImpl.class, objectAction);
-	}
-
-	@Override
-	public void clearCache(List<ObjectAction> objectActions) {
-		for (ObjectAction objectAction : objectActions) {
-			entityCache.removeResult(ObjectActionImpl.class, objectAction);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectActionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectActionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectActionModelImpl objectActionModelImpl) {
 
@@ -1596,47 +1554,6 @@ public class ObjectActionPersistenceImpl
 		throws NoSuchObjectActionException {
 
 		return remove((Serializable)objectActionId);
-	}
-
-	/**
-	 * Removes the object action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object action
-	 * @return the object action that was removed
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	@Override
-	public ObjectAction remove(Serializable primaryKey)
-		throws NoSuchObjectActionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectAction objectAction = (ObjectAction)session.get(
-				ObjectActionImpl.class, primaryKey);
-
-			if (objectAction == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectActionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectAction);
-		}
-		catch (NoSuchObjectActionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1790,31 +1707,6 @@ public class ObjectActionPersistenceImpl
 		}
 
 		objectAction.resetOriginalValues();
-
-		return objectAction;
-	}
-
-	/**
-	 * Returns the object action with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object action
-	 * @return the object action
-	 * @throws NoSuchObjectActionException if a object action with the primary key could not be found
-	 */
-	@Override
-	public ObjectAction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectActionException {
-
-		ObjectAction objectAction = fetchByPrimaryKey(primaryKey);
-
-		if (objectAction == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectActionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectAction;
 	}
@@ -2414,9 +2306,6 @@ public class ObjectActionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectAction.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectAction exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectAction exists with the key {";
 
@@ -2432,4 +2321,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:96719797
+// LIFERAY-SERVICE-BUILDER-HASH:-962045844

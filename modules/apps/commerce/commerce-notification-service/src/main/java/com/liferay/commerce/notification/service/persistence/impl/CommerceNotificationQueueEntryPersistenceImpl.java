@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceNotificationQueueEntryPersistence.class)
 @Deprecated
 public class CommerceNotificationQueueEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceNotificationQueueEntry>
+	extends BasePersistenceImpl
+		<CommerceNotificationQueueEntry, NoSuchNotificationQueueEntryException>
 	implements CommerceNotificationQueueEntryPersistence {
 
 	/*
@@ -960,59 +961,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce notification queue entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceNotificationQueueEntryImpl.class);
-
-		finderCache.clearCache(CommerceNotificationQueueEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce notification queue entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
-
-		entityCache.removeResult(
-			CommerceNotificationQueueEntryImpl.class,
-			commerceNotificationQueueEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries) {
-
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			entityCache.removeResult(
-				CommerceNotificationQueueEntryImpl.class,
-				commerceNotificationQueueEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceNotificationQueueEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceNotificationQueueEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce notification queue entry with the primary key. Does not add the commerce notification queue entry to the database.
 	 *
 	 * @param commerceNotificationQueueEntryId the primary key for the new commerce notification queue entry
@@ -1048,48 +996,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		throws NoSuchNotificationQueueEntryException {
 
 		return remove((Serializable)commerceNotificationQueueEntryId);
-	}
-
-	/**
-	 * Removes the commerce notification queue entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce notification queue entry
-	 * @return the commerce notification queue entry that was removed
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry remove(Serializable primaryKey)
-		throws NoSuchNotificationQueueEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-				(CommerceNotificationQueueEntry)session.get(
-					CommerceNotificationQueueEntryImpl.class, primaryKey);
-
-			if (commerceNotificationQueueEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationQueueEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceNotificationQueueEntry);
-		}
-		catch (NoSuchNotificationQueueEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1213,33 +1119,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 		}
 
 		commerceNotificationQueueEntry.resetOriginalValues();
-
-		return commerceNotificationQueueEntry;
-	}
-
-	/**
-	 * Returns the commerce notification queue entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce notification queue entry
-	 * @return the commerce notification queue entry
-	 * @throws NoSuchNotificationQueueEntryException if a commerce notification queue entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationQueueEntry findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationQueueEntryException {
-
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceNotificationQueueEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationQueueEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceNotificationQueueEntry;
 	}
@@ -1743,9 +1622,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceNotificationQueueEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceNotificationQueueEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationQueueEntry exists with the key {";
 
@@ -1761,4 +1637,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1595447897
+// LIFERAY-SERVICE-BUILDER-HASH:-2069784255

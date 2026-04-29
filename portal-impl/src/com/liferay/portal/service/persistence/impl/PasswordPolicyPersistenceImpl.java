@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 public class PasswordPolicyPersistenceImpl
-	extends BasePersistenceImpl<PasswordPolicy>
+	extends BasePersistenceImpl<PasswordPolicy, NoSuchPasswordPolicyException>
 	implements PasswordPolicyPersistence {
 
 	/*
@@ -1361,49 +1361,6 @@ public class PasswordPolicyPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all password policies.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PasswordPolicyImpl.class);
-
-		FinderCacheUtil.clearCache(PasswordPolicyImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the password policy.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PasswordPolicy passwordPolicy) {
-		EntityCacheUtil.removeResult(PasswordPolicyImpl.class, passwordPolicy);
-	}
-
-	@Override
-	public void clearCache(List<PasswordPolicy> passwordPolicies) {
-		for (PasswordPolicy passwordPolicy : passwordPolicies) {
-			EntityCacheUtil.removeResult(
-				PasswordPolicyImpl.class, passwordPolicy);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PasswordPolicyImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PasswordPolicyImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PasswordPolicyModelImpl passwordPolicyModelImpl) {
 
@@ -1450,47 +1407,6 @@ public class PasswordPolicyPersistenceImpl
 		throws NoSuchPasswordPolicyException {
 
 		return remove((Serializable)passwordPolicyId);
-	}
-
-	/**
-	 * Removes the password policy with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the password policy
-	 * @return the password policy that was removed
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicy remove(Serializable primaryKey)
-		throws NoSuchPasswordPolicyException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PasswordPolicy passwordPolicy = (PasswordPolicy)session.get(
-				PasswordPolicyImpl.class, primaryKey);
-
-			if (passwordPolicy == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPasswordPolicyException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(passwordPolicy);
-		}
-		catch (NoSuchPasswordPolicyException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1608,31 +1524,6 @@ public class PasswordPolicyPersistenceImpl
 		}
 
 		passwordPolicy.resetOriginalValues();
-
-		return passwordPolicy;
-	}
-
-	/**
-	 * Returns the password policy with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the password policy
-	 * @return the password policy
-	 * @throws NoSuchPasswordPolicyException if a password policy with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicy findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPasswordPolicyException {
-
-		PasswordPolicy passwordPolicy = fetchByPrimaryKey(primaryKey);
-
-		if (passwordPolicy == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPasswordPolicyException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return passwordPolicy;
 	}
@@ -2035,9 +1926,6 @@ public class PasswordPolicyPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "PasswordPolicy.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PasswordPolicy exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PasswordPolicy exists with the key {";
 
@@ -2053,4 +1941,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1595427707
+// LIFERAY-SERVICE-BUILDER-HASH:-383150859

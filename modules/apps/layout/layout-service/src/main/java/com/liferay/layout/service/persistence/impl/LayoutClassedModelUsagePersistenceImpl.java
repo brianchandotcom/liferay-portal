@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutClassedModelUsagePersistence.class)
 public class LayoutClassedModelUsagePersistenceImpl
-	extends BasePersistenceImpl<LayoutClassedModelUsage>
+	extends BasePersistenceImpl
+		<LayoutClassedModelUsage, NoSuchLayoutClassedModelUsageException>
 	implements LayoutClassedModelUsagePersistence {
 
 	/*
@@ -3704,55 +3705,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout classed model usages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutClassedModelUsageImpl.class);
-
-		finderCache.clearCache(LayoutClassedModelUsageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout classed model usage.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutClassedModelUsage layoutClassedModelUsage) {
-		entityCache.removeResult(
-			LayoutClassedModelUsageImpl.class, layoutClassedModelUsage);
-	}
-
-	@Override
-	public void clearCache(
-		List<LayoutClassedModelUsage> layoutClassedModelUsages) {
-
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				layoutClassedModelUsages) {
-
-			entityCache.removeResult(
-				LayoutClassedModelUsageImpl.class, layoutClassedModelUsage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutClassedModelUsageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LayoutClassedModelUsageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutClassedModelUsageModelImpl layoutClassedModelUsageModelImpl) {
 
@@ -3821,48 +3773,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 		throws NoSuchLayoutClassedModelUsageException {
 
 		return remove((Serializable)layoutClassedModelUsageId);
-	}
-
-	/**
-	 * Removes the layout classed model usage with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout classed model usage
-	 * @return the layout classed model usage that was removed
-	 * @throws NoSuchLayoutClassedModelUsageException if a layout classed model usage with the primary key could not be found
-	 */
-	@Override
-	public LayoutClassedModelUsage remove(Serializable primaryKey)
-		throws NoSuchLayoutClassedModelUsageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutClassedModelUsage layoutClassedModelUsage =
-				(LayoutClassedModelUsage)session.get(
-					LayoutClassedModelUsageImpl.class, primaryKey);
-
-			if (layoutClassedModelUsage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutClassedModelUsageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutClassedModelUsage);
-		}
-		catch (NoSuchLayoutClassedModelUsageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3997,32 +3907,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 		}
 
 		layoutClassedModelUsage.resetOriginalValues();
-
-		return layoutClassedModelUsage;
-	}
-
-	/**
-	 * Returns the layout classed model usage with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout classed model usage
-	 * @return the layout classed model usage
-	 * @throws NoSuchLayoutClassedModelUsageException if a layout classed model usage with the primary key could not be found
-	 */
-	@Override
-	public LayoutClassedModelUsage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutClassedModelUsageException {
-
-		LayoutClassedModelUsage layoutClassedModelUsage = fetchByPrimaryKey(
-			primaryKey);
-
-		if (layoutClassedModelUsage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutClassedModelUsageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutClassedModelUsage;
 	}
@@ -4932,9 +4816,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"layoutClassedModelUsage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutClassedModelUsage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutClassedModelUsage exists with the key {";
 
@@ -4950,4 +4831,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1426798266
+// LIFERAY-SERVICE-BUILDER-HASH:-1235852129

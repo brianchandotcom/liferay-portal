@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuth2AuthorizationPersistence.class)
 public class OAuth2AuthorizationPersistenceImpl
-	extends BasePersistenceImpl<OAuth2Authorization>
+	extends BasePersistenceImpl
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
 	implements OAuth2AuthorizationPersistence {
 
 	/*
@@ -963,50 +964,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all o auth2 authorizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OAuth2AuthorizationImpl.class);
-
-		finderCache.clearCache(OAuth2AuthorizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the o auth2 authorization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OAuth2Authorization oAuth2Authorization) {
-		entityCache.removeResult(
-			OAuth2AuthorizationImpl.class, oAuth2Authorization);
-	}
-
-	@Override
-	public void clearCache(List<OAuth2Authorization> oAuth2Authorizations) {
-		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
-			entityCache.removeResult(
-				OAuth2AuthorizationImpl.class, oAuth2Authorization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OAuth2AuthorizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(OAuth2AuthorizationImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new o auth2 authorization with the primary key. Does not add the o auth2 authorization to the database.
 	 *
 	 * @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
@@ -1036,48 +993,6 @@ public class OAuth2AuthorizationPersistenceImpl
 		throws NoSuchOAuth2AuthorizationException {
 
 		return remove((Serializable)oAuth2AuthorizationId);
-	}
-
-	/**
-	 * Removes the o auth2 authorization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the o auth2 authorization
-	 * @return the o auth2 authorization that was removed
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Authorization remove(Serializable primaryKey)
-		throws NoSuchOAuth2AuthorizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OAuth2Authorization oAuth2Authorization =
-				(OAuth2Authorization)session.get(
-					OAuth2AuthorizationImpl.class, primaryKey);
-
-			if (oAuth2Authorization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOAuth2AuthorizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(oAuth2Authorization);
-		}
-		catch (NoSuchOAuth2AuthorizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1187,31 +1102,6 @@ public class OAuth2AuthorizationPersistenceImpl
 		}
 
 		oAuth2Authorization.resetOriginalValues();
-
-		return oAuth2Authorization;
-	}
-
-	/**
-	 * Returns the o auth2 authorization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 authorization
-	 * @return the o auth2 authorization
-	 * @throws NoSuchOAuth2AuthorizationException if a o auth2 authorization with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Authorization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOAuth2AuthorizationException {
-
-		OAuth2Authorization oAuth2Authorization = fetchByPrimaryKey(primaryKey);
-
-		if (oAuth2Authorization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOAuth2AuthorizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return oAuth2Authorization;
 	}
@@ -2063,9 +1953,6 @@ public class OAuth2AuthorizationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuth2Authorization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OAuth2Authorization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2Authorization exists with the key {";
 
@@ -2081,4 +1968,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-36284531
+// LIFERAY-SERVICE-BUILDER-HASH:711758962

@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.service.persistence.impl;
 
+import com.liferay.commerce.product.exception.NoSuchCPInstanceOptionValueRelException;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelPersistence;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CPInstanceOptionValueRelFinderBaseImpl
-	extends BasePersistenceImpl<CPInstanceOptionValueRel> {
+	extends BasePersistenceImpl
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException> {
 
 	public CPInstanceOptionValueRelFinderBaseImpl() {
 		setModelClass(CPInstanceOptionValueRel.class);
@@ -78,4 +80,4 @@ public abstract class CPInstanceOptionValueRelFinderBaseImpl
 		CPInstanceOptionValueRelFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-222760313
+// LIFERAY-SERVICE-BUILDER-HASH:-197512608

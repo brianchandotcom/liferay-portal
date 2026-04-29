@@ -57,7 +57,8 @@ import java.util.Set;
  * @generated
  */
 public class ReleasePersistenceImpl
-	extends BasePersistenceImpl<Release> implements ReleasePersistence {
+	extends BasePersistenceImpl<Release, NoSuchReleaseException>
+	implements ReleasePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -319,48 +320,6 @@ public class ReleasePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all releases.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ReleaseImpl.class);
-
-		FinderCacheUtil.clearCache(ReleaseImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the release.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Release release) {
-		EntityCacheUtil.removeResult(ReleaseImpl.class, release);
-	}
-
-	@Override
-	public void clearCache(List<Release> releases) {
-		for (Release release : releases) {
-			EntityCacheUtil.removeResult(ReleaseImpl.class, release);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ReleaseImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ReleaseImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(ReleaseModelImpl releaseModelImpl) {
 		Object[] args = new Object[] {releaseModelImpl.getServletContextName()};
 
@@ -394,47 +353,6 @@ public class ReleasePersistenceImpl
 	@Override
 	public Release remove(long releaseId) throws NoSuchReleaseException {
 		return remove((Serializable)releaseId);
-	}
-
-	/**
-	 * Removes the release with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the release
-	 * @return the release that was removed
-	 * @throws NoSuchReleaseException if a release with the primary key could not be found
-	 */
-	@Override
-	public Release remove(Serializable primaryKey)
-		throws NoSuchReleaseException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Release release = (Release)session.get(
-				ReleaseImpl.class, primaryKey);
-
-			if (release == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchReleaseException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(release);
-		}
-		catch (NoSuchReleaseException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -541,31 +459,6 @@ public class ReleasePersistenceImpl
 		}
 
 		release.resetOriginalValues();
-
-		return release;
-	}
-
-	/**
-	 * Returns the release with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the release
-	 * @return the release
-	 * @throws NoSuchReleaseException if a release with the primary key could not be found
-	 */
-	@Override
-	public Release findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchReleaseException {
-
-		Release release = fetchByPrimaryKey(primaryKey);
-
-		if (release == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchReleaseException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return release;
 	}
@@ -845,9 +738,6 @@ public class ReleasePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "release_.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Release exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Release exists with the key {";
 
@@ -863,4 +753,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-201614037
+// LIFERAY-SERVICE-BUILDER-HASH:-1980473918

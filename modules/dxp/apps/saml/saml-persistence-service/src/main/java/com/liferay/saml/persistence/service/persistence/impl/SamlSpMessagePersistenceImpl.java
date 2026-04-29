@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlSpMessagePersistence.class)
 public class SamlSpMessagePersistenceImpl
-	extends BasePersistenceImpl<SamlSpMessage>
+	extends BasePersistenceImpl<SamlSpMessage, NoSuchSpMessageException>
 	implements SamlSpMessagePersistence {
 
 	/*
@@ -390,48 +389,6 @@ public class SamlSpMessagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml sp messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlSpMessageImpl.class);
-
-		finderCache.clearCache(SamlSpMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml sp message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlSpMessage samlSpMessage) {
-		entityCache.removeResult(SamlSpMessageImpl.class, samlSpMessage);
-	}
-
-	@Override
-	public void clearCache(List<SamlSpMessage> samlSpMessages) {
-		for (SamlSpMessage samlSpMessage : samlSpMessages) {
-			entityCache.removeResult(SamlSpMessageImpl.class, samlSpMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlSpMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlSpMessageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlSpMessageModelImpl samlSpMessageModelImpl) {
 
@@ -474,47 +431,6 @@ public class SamlSpMessagePersistenceImpl
 		throws NoSuchSpMessageException {
 
 		return remove((Serializable)samlSpMessageId);
-	}
-
-	/**
-	 * Removes the saml sp message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml sp message
-	 * @return the saml sp message that was removed
-	 * @throws NoSuchSpMessageException if a saml sp message with the primary key could not be found
-	 */
-	@Override
-	public SamlSpMessage remove(Serializable primaryKey)
-		throws NoSuchSpMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlSpMessage samlSpMessage = (SamlSpMessage)session.get(
-				SamlSpMessageImpl.class, primaryKey);
-
-			if (samlSpMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSpMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlSpMessage);
-		}
-		catch (NoSuchSpMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -614,31 +530,6 @@ public class SamlSpMessagePersistenceImpl
 		}
 
 		samlSpMessage.resetOriginalValues();
-
-		return samlSpMessage;
-	}
-
-	/**
-	 * Returns the saml sp message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml sp message
-	 * @return the saml sp message
-	 * @throws NoSuchSpMessageException if a saml sp message with the primary key could not be found
-	 */
-	@Override
-	public SamlSpMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSpMessageException {
-
-		SamlSpMessage samlSpMessage = fetchByPrimaryKey(primaryKey);
-
-		if (samlSpMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSpMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlSpMessage;
 	}
@@ -982,9 +873,6 @@ public class SamlSpMessagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlSpMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlSpMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlSpMessage exists with the key {";
 
@@ -997,4 +885,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1722051104
+// LIFERAY-SERVICE-BUILDER-HASH:2137037315

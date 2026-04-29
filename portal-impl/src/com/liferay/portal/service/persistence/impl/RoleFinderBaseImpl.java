@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -20,7 +21,8 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
+public class RoleFinderBaseImpl
+	extends BasePersistenceImpl<Role, NoSuchRoleException> {
 
 	public RoleFinderBaseImpl() {
 		setModelClass(Role.class);
@@ -64,4 +66,4 @@ public class RoleFinderBaseImpl extends BasePersistenceImpl<Role> {
 		RoleFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1173672971
+// LIFERAY-SERVICE-BUILDER-HASH:-1453475561

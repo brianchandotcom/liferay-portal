@@ -64,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLSyncEventPersistence.class)
 public class DLSyncEventPersistenceImpl
-	extends BasePersistenceImpl<DLSyncEvent> implements DLSyncEventPersistence {
+	extends BasePersistenceImpl<DLSyncEvent, NoSuchEventException>
+	implements DLSyncEventPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -364,48 +365,6 @@ public class DLSyncEventPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all dl sync events.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DLSyncEventImpl.class);
-
-		finderCache.clearCache(DLSyncEventImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dl sync event.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLSyncEvent dlSyncEvent) {
-		entityCache.removeResult(DLSyncEventImpl.class, dlSyncEvent);
-	}
-
-	@Override
-	public void clearCache(List<DLSyncEvent> dlSyncEvents) {
-		for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
-			entityCache.removeResult(DLSyncEventImpl.class, dlSyncEvent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DLSyncEventImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DLSyncEventImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLSyncEventModelImpl dlSyncEventModelImpl) {
 
@@ -443,47 +402,6 @@ public class DLSyncEventPersistenceImpl
 	@Override
 	public DLSyncEvent remove(long syncEventId) throws NoSuchEventException {
 		return remove((Serializable)syncEventId);
-	}
-
-	/**
-	 * Removes the dl sync event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dl sync event
-	 * @return the dl sync event that was removed
-	 * @throws NoSuchEventException if a dl sync event with the primary key could not be found
-	 */
-	@Override
-	public DLSyncEvent remove(Serializable primaryKey)
-		throws NoSuchEventException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLSyncEvent dlSyncEvent = (DLSyncEvent)session.get(
-				DLSyncEventImpl.class, primaryKey);
-
-			if (dlSyncEvent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEventException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlSyncEvent);
-		}
-		catch (NoSuchEventException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -568,31 +486,6 @@ public class DLSyncEventPersistenceImpl
 		}
 
 		dlSyncEvent.resetOriginalValues();
-
-		return dlSyncEvent;
-	}
-
-	/**
-	 * Returns the dl sync event with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dl sync event
-	 * @return the dl sync event
-	 * @throws NoSuchEventException if a dl sync event with the primary key could not be found
-	 */
-	@Override
-	public DLSyncEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEventException {
-
-		DLSyncEvent dlSyncEvent = fetchByPrimaryKey(primaryKey);
-
-		if (dlSyncEvent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEventException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlSyncEvent;
 	}
@@ -935,9 +828,6 @@ public class DLSyncEventPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlSyncEvent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLSyncEvent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLSyncEvent exists with the key {";
 
@@ -953,4 +843,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-131535236
+// LIFERAY-SERVICE-BUILDER-HASH:1742269463

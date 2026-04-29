@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.product.service.persistence.impl;
 
+import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.persistence.CPInstancePersistence;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CPInstanceFinderBaseImpl
-	extends BasePersistenceImpl<CPInstance> {
+	extends BasePersistenceImpl<CPInstance, NoSuchCPInstanceException> {
 
 	public CPInstanceFinderBaseImpl() {
 		setModelClass(CPInstance.class);
@@ -79,4 +80,4 @@ public abstract class CPInstanceFinderBaseImpl
 		CPInstanceFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:670720695
+// LIFERAY-SERVICE-BUILDER-HASH:-1492419216

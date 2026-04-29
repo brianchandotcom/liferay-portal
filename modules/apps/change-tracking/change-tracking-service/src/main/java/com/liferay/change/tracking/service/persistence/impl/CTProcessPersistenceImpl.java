@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTProcessPersistence.class)
 public class CTProcessPersistenceImpl
-	extends BasePersistenceImpl<CTProcess> implements CTProcessPersistence {
+	extends BasePersistenceImpl<CTProcess, NoSuchProcessException>
+	implements CTProcessPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1194,48 +1195,6 @@ public class CTProcessPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct processes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTProcessImpl.class);
-
-		finderCache.clearCache(CTProcessImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct process.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTProcess ctProcess) {
-		entityCache.removeResult(CTProcessImpl.class, ctProcess);
-	}
-
-	@Override
-	public void clearCache(List<CTProcess> ctProcesses) {
-		for (CTProcess ctProcess : ctProcesses) {
-			entityCache.removeResult(CTProcessImpl.class, ctProcess);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTProcessImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTProcessImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *
 	 * @param ctProcessId the primary key for the new ct process
@@ -1263,47 +1222,6 @@ public class CTProcessPersistenceImpl
 	@Override
 	public CTProcess remove(long ctProcessId) throws NoSuchProcessException {
 		return remove((Serializable)ctProcessId);
-	}
-
-	/**
-	 * Removes the ct process with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct process
-	 * @return the ct process that was removed
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	@Override
-	public CTProcess remove(Serializable primaryKey)
-		throws NoSuchProcessException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTProcess ctProcess = (CTProcess)session.get(
-				CTProcessImpl.class, primaryKey);
-
-			if (ctProcess == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchProcessException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctProcess);
-		}
-		catch (NoSuchProcessException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1399,31 +1317,6 @@ public class CTProcessPersistenceImpl
 		}
 
 		ctProcess.resetOriginalValues();
-
-		return ctProcess;
-	}
-
-	/**
-	 * Returns the ct process with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct process
-	 * @return the ct process
-	 * @throws NoSuchProcessException if a ct process with the primary key could not be found
-	 */
-	@Override
-	public CTProcess findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchProcessException {
-
-		CTProcess ctProcess = fetchByPrimaryKey(primaryKey);
-
-		if (ctProcess == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchProcessException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctProcess;
 	}
@@ -1845,9 +1738,6 @@ public class CTProcessPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CTProcess.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTProcess exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTProcess exists with the key {";
 
@@ -1863,4 +1753,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1568609010
+// LIFERAY-SERVICE-BUILDER-HASH:1825121290

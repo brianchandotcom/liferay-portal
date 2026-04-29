@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
 @Deprecated
 public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	extends BasePersistenceImpl
-		<CommerceNotificationTemplateCommerceAccountGroupRel>
+		<CommerceNotificationTemplateCommerceAccountGroupRel,
+		 NoSuchNotificationTemplateCommerceAccountGroupRelException>
 	implements CommerceNotificationTemplateCommerceAccountGroupRelPersistence {
 
 	/*
@@ -641,66 +642,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce notification template commerce account group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class);
-
-		finderCache.clearCache(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce notification template commerce account group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel) {
-
-		entityCache.removeResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-			commerceNotificationTemplateCommerceAccountGroupRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceNotificationTemplateCommerceAccountGroupRel>
-			commerceNotificationTemplateCommerceAccountGroupRels) {
-
-		for (CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel :
-					commerceNotificationTemplateCommerceAccountGroupRels) {
-
-			entityCache.removeResult(
-				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-				commerceNotificationTemplateCommerceAccountGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-				primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 			commerceNotificationTemplateCommerceAccountGroupRelModelImpl) {
@@ -756,54 +697,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		return remove(
 			(Serializable)
 				commerceNotificationTemplateCommerceAccountGroupRelId);
-	}
-
-	/**
-	 * Removes the commerce notification template commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce notification template commerce account group rel
-	 * @return the commerce notification template commerce account group rel that was removed
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a commerce notification template commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel remove(
-			Serializable primaryKey)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel =
-					(CommerceNotificationTemplateCommerceAccountGroupRel)
-						session.get(
-							CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-							primaryKey);
-
-			if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceNotificationTemplateCommerceAccountGroupRel);
-		}
-		catch (NoSuchNotificationTemplateCommerceAccountGroupRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -951,34 +844,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 
 		commerceNotificationTemplateCommerceAccountGroupRel.
 			resetOriginalValues();
-
-		return commerceNotificationTemplateCommerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce notification template commerce account group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce notification template commerce account group rel
-	 * @return the commerce notification template commerce account group rel
-	 * @throws NoSuchNotificationTemplateCommerceAccountGroupRelException if a commerce notification template commerce account group rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceNotificationTemplateCommerceAccountGroupRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationTemplateCommerceAccountGroupRelException {
-
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel =
-				fetchByPrimaryKey(primaryKey);
-
-		if (commerceNotificationTemplateCommerceAccountGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationTemplateCommerceAccountGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceNotificationTemplateCommerceAccountGroupRel;
 	}
@@ -1425,9 +1290,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceNotificationTemplateCommerceAccountGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceNotificationTemplateCommerceAccountGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationTemplateCommerceAccountGroupRel exists with the key {";
 
@@ -1444,4 +1306,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1399333212
+// LIFERAY-SERVICE-BUILDER-HASH:-2076017729

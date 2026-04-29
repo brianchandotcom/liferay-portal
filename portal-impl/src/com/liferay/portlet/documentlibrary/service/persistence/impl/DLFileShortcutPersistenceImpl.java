@@ -80,7 +80,7 @@ import java.util.Set;
  * @generated
  */
 public class DLFileShortcutPersistenceImpl
-	extends BasePersistenceImpl<DLFileShortcut>
+	extends BasePersistenceImpl<DLFileShortcut, NoSuchFileShortcutException>
 	implements DLFileShortcutPersistence {
 
 	/*
@@ -2811,49 +2811,6 @@ public class DLFileShortcutPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library file shortcuts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(DLFileShortcutImpl.class);
-
-		FinderCacheUtil.clearCache(DLFileShortcutImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library file shortcut.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFileShortcut dlFileShortcut) {
-		EntityCacheUtil.removeResult(DLFileShortcutImpl.class, dlFileShortcut);
-	}
-
-	@Override
-	public void clearCache(List<DLFileShortcut> dlFileShortcuts) {
-		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
-			EntityCacheUtil.removeResult(
-				DLFileShortcutImpl.class, dlFileShortcut);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(DLFileShortcutImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(DLFileShortcutImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFileShortcutModelImpl dlFileShortcutModelImpl) {
 
@@ -2913,47 +2870,6 @@ public class DLFileShortcutPersistenceImpl
 		throws NoSuchFileShortcutException {
 
 		return remove((Serializable)fileShortcutId);
-	}
-
-	/**
-	 * Removes the document library file shortcut with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library file shortcut
-	 * @return the document library file shortcut that was removed
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	@Override
-	public DLFileShortcut remove(Serializable primaryKey)
-		throws NoSuchFileShortcutException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFileShortcut dlFileShortcut = (DLFileShortcut)session.get(
-				DLFileShortcutImpl.class, primaryKey);
-
-			if (dlFileShortcut == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileShortcutException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFileShortcut);
-		}
-		catch (NoSuchFileShortcutException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3142,31 +3058,6 @@ public class DLFileShortcutPersistenceImpl
 		}
 
 		dlFileShortcut.resetOriginalValues();
-
-		return dlFileShortcut;
-	}
-
-	/**
-	 * Returns the document library file shortcut with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library file shortcut
-	 * @return the document library file shortcut
-	 * @throws NoSuchFileShortcutException if a document library file shortcut with the primary key could not be found
-	 */
-	@Override
-	public DLFileShortcut findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileShortcutException {
-
-		DLFileShortcut dlFileShortcut = fetchByPrimaryKey(primaryKey);
-
-		if (dlFileShortcut == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileShortcutException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFileShortcut;
 	}
@@ -4048,9 +3939,6 @@ public class DLFileShortcutPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFileShortcut.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFileShortcut exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileShortcut exists with the key {";
 
@@ -4066,4 +3954,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1535352841
+// LIFERAY-SERVICE-BUILDER-HASH:-830395514

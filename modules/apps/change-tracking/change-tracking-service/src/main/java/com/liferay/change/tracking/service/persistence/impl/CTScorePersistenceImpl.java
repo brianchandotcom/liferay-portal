@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTScorePersistence.class)
 public class CTScorePersistenceImpl
-	extends BasePersistenceImpl<CTScore> implements CTScorePersistence {
+	extends BasePersistenceImpl<CTScore, NoSuchScoreException>
+	implements CTScorePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -214,48 +214,6 @@ public class CTScorePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ct scores.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTScoreImpl.class);
-
-		finderCache.clearCache(CTScoreImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct score.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTScore ctScore) {
-		entityCache.removeResult(CTScoreImpl.class, ctScore);
-	}
-
-	@Override
-	public void clearCache(List<CTScore> ctScores) {
-		for (CTScore ctScore : ctScores) {
-			entityCache.removeResult(CTScoreImpl.class, ctScore);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTScoreImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTScoreImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(CTScoreModelImpl ctScoreModelImpl) {
 		Object[] args = new Object[] {ctScoreModelImpl.getCtCollectionId()};
 
@@ -291,45 +249,6 @@ public class CTScorePersistenceImpl
 	@Override
 	public CTScore remove(long ctScoreId) throws NoSuchScoreException {
 		return remove((Serializable)ctScoreId);
-	}
-
-	/**
-	 * Removes the ct score with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct score
-	 * @return the ct score that was removed
-	 * @throws NoSuchScoreException if a ct score with the primary key could not be found
-	 */
-	@Override
-	public CTScore remove(Serializable primaryKey) throws NoSuchScoreException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTScore ctScore = (CTScore)session.get(
-				CTScoreImpl.class, primaryKey);
-
-			if (ctScore == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchScoreException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctScore);
-		}
-		catch (NoSuchScoreException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -412,31 +331,6 @@ public class CTScorePersistenceImpl
 		}
 
 		ctScore.resetOriginalValues();
-
-		return ctScore;
-	}
-
-	/**
-	 * Returns the ct score with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct score
-	 * @return the ct score
-	 * @throws NoSuchScoreException if a ct score with the primary key could not be found
-	 */
-	@Override
-	public CTScore findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchScoreException {
-
-		CTScore ctScore = fetchByPrimaryKey(primaryKey);
-
-		if (ctScore == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchScoreException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctScore;
 	}
@@ -751,9 +645,6 @@ public class CTScorePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctScore.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTScore exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTScore exists with the key {";
 
@@ -766,4 +657,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-640872711
+// LIFERAY-SERVICE-BUILDER-HASH:-1914884230

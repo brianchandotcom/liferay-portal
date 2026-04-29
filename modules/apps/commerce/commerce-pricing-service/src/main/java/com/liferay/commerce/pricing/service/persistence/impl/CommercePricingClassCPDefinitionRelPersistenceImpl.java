@@ -76,7 +76,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePricingClassCPDefinitionRelPersistence.class)
 public class CommercePricingClassCPDefinitionRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePricingClassCPDefinitionRel>
+	extends BasePersistenceImpl
+		<CommercePricingClassCPDefinitionRel,
+		 NoSuchPricingClassCPDefinitionRelException>
 	implements CommercePricingClassCPDefinitionRelPersistence {
 
 	/*
@@ -632,62 +634,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce pricing class cp definition rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePricingClassCPDefinitionRelImpl.class);
-
-		finderCache.clearCache(CommercePricingClassCPDefinitionRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce pricing class cp definition rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel) {
-
-		entityCache.removeResult(
-			CommercePricingClassCPDefinitionRelImpl.class,
-			commercePricingClassCPDefinitionRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePricingClassCPDefinitionRel>
-			commercePricingClassCPDefinitionRels) {
-
-		for (CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel :
-					commercePricingClassCPDefinitionRels) {
-
-			entityCache.removeResult(
-				CommercePricingClassCPDefinitionRelImpl.class,
-				commercePricingClassCPDefinitionRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePricingClassCPDefinitionRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePricingClassCPDefinitionRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePricingClassCPDefinitionRelModelImpl
 			commercePricingClassCPDefinitionRelModelImpl) {
@@ -746,52 +692,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		throws NoSuchPricingClassCPDefinitionRelException {
 
 		return remove((Serializable)CommercePricingClassCPDefinitionRelId);
-	}
-
-	/**
-	 * Removes the commerce pricing class cp definition rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce pricing class cp definition rel
-	 * @return the commerce pricing class cp definition rel that was removed
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a commerce pricing class cp definition rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel remove(Serializable primaryKey)
-		throws NoSuchPricingClassCPDefinitionRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel =
-					(CommercePricingClassCPDefinitionRel)session.get(
-						CommercePricingClassCPDefinitionRelImpl.class,
-						primaryKey);
-
-			if (commercePricingClassCPDefinitionRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPricingClassCPDefinitionRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePricingClassCPDefinitionRel);
-		}
-		catch (NoSuchPricingClassCPDefinitionRelException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -934,33 +834,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		}
 
 		commercePricingClassCPDefinitionRel.resetOriginalValues();
-
-		return commercePricingClassCPDefinitionRel;
-	}
-
-	/**
-	 * Returns the commerce pricing class cp definition rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce pricing class cp definition rel
-	 * @return the commerce pricing class cp definition rel
-	 * @throws NoSuchPricingClassCPDefinitionRelException if a commerce pricing class cp definition rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePricingClassCPDefinitionRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchPricingClassCPDefinitionRelException {
-
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel = fetchByPrimaryKey(primaryKey);
-
-		if (commercePricingClassCPDefinitionRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPricingClassCPDefinitionRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePricingClassCPDefinitionRel;
 	}
@@ -1647,9 +1520,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePricingClassCPDefinitionRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePricingClassCPDefinitionRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePricingClassCPDefinitionRel exists with the key {";
 
@@ -1665,4 +1535,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-832494934
+// LIFERAY-SERVICE-BUILDER-HASH:1413330907

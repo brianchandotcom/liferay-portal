@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTSGrandParentPersistence.class)
 public class CTSGrandParentPersistenceImpl
-	extends BasePersistenceImpl<CTSGrandParent>
+	extends BasePersistenceImpl<CTSGrandParent, NoSuchCTSGrandParentException>
 	implements CTSGrandParentPersistence {
 
 	/*
@@ -275,48 +274,6 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cts grand parents.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTSGrandParentImpl.class);
-
-		finderCache.clearCache(CTSGrandParentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cts grand parent.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTSGrandParent ctsGrandParent) {
-		entityCache.removeResult(CTSGrandParentImpl.class, ctsGrandParent);
-	}
-
-	@Override
-	public void clearCache(List<CTSGrandParent> ctsGrandParents) {
-		for (CTSGrandParent ctsGrandParent : ctsGrandParents) {
-			entityCache.removeResult(CTSGrandParentImpl.class, ctsGrandParent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTSGrandParentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTSGrandParentImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cts grand parent with the primary key. Does not add the cts grand parent to the database.
 	 *
 	 * @param ctsGrandParentId the primary key for the new cts grand parent
@@ -346,47 +303,6 @@ public class CTSGrandParentPersistenceImpl
 		throws NoSuchCTSGrandParentException {
 
 		return remove((Serializable)ctsGrandParentId);
-	}
-
-	/**
-	 * Removes the cts grand parent with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cts grand parent
-	 * @return the cts grand parent that was removed
-	 * @throws NoSuchCTSGrandParentException if a cts grand parent with the primary key could not be found
-	 */
-	@Override
-	public CTSGrandParent remove(Serializable primaryKey)
-		throws NoSuchCTSGrandParentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSGrandParent ctsGrandParent = (CTSGrandParent)session.get(
-				CTSGrandParentImpl.class, primaryKey);
-
-			if (ctsGrandParent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCTSGrandParentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctsGrandParent);
-		}
-		catch (NoSuchCTSGrandParentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -471,31 +387,6 @@ public class CTSGrandParentPersistenceImpl
 		}
 
 		ctsGrandParent.resetOriginalValues();
-
-		return ctsGrandParent;
-	}
-
-	/**
-	 * Returns the cts grand parent with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cts grand parent
-	 * @return the cts grand parent
-	 * @throws NoSuchCTSGrandParentException if a cts grand parent with the primary key could not be found
-	 */
-	@Override
-	public CTSGrandParent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCTSGrandParentException {
-
-		CTSGrandParent ctsGrandParent = fetchByPrimaryKey(primaryKey);
-
-		if (ctsGrandParent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCTSGrandParentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctsGrandParent;
 	}
@@ -830,9 +721,6 @@ public class CTSGrandParentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctsGrandParent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTSGrandParent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSGrandParent exists with the key {";
 
@@ -845,4 +733,4 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1266548723
+// LIFERAY-SERVICE-BUILDER-HASH:-174438130

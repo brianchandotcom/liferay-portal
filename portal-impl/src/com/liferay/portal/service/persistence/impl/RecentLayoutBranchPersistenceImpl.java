@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the recent layout branch service.
@@ -53,7 +52,8 @@ import java.util.Set;
  * @generated
  */
 public class RecentLayoutBranchPersistenceImpl
-	extends BasePersistenceImpl<RecentLayoutBranch>
+	extends BasePersistenceImpl
+		<RecentLayoutBranch, NoSuchRecentLayoutBranchException>
 	implements RecentLayoutBranchPersistence {
 
 	/*
@@ -680,51 +680,6 @@ public class RecentLayoutBranchPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all recent layout branches.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RecentLayoutBranchImpl.class);
-
-		FinderCacheUtil.clearCache(RecentLayoutBranchImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the recent layout branch.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RecentLayoutBranch recentLayoutBranch) {
-		EntityCacheUtil.removeResult(
-			RecentLayoutBranchImpl.class, recentLayoutBranch);
-	}
-
-	@Override
-	public void clearCache(List<RecentLayoutBranch> recentLayoutBranchs) {
-		for (RecentLayoutBranch recentLayoutBranch : recentLayoutBranchs) {
-			EntityCacheUtil.removeResult(
-				RecentLayoutBranchImpl.class, recentLayoutBranch);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RecentLayoutBranchImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				RecentLayoutBranchImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RecentLayoutBranchModelImpl recentLayoutBranchModelImpl) {
 
@@ -768,48 +723,6 @@ public class RecentLayoutBranchPersistenceImpl
 		throws NoSuchRecentLayoutBranchException {
 
 		return remove((Serializable)recentLayoutBranchId);
-	}
-
-	/**
-	 * Removes the recent layout branch with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the recent layout branch
-	 * @return the recent layout branch that was removed
-	 * @throws NoSuchRecentLayoutBranchException if a recent layout branch with the primary key could not be found
-	 */
-	@Override
-	public RecentLayoutBranch remove(Serializable primaryKey)
-		throws NoSuchRecentLayoutBranchException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RecentLayoutBranch recentLayoutBranch =
-				(RecentLayoutBranch)session.get(
-					RecentLayoutBranchImpl.class, primaryKey);
-
-			if (recentLayoutBranch == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRecentLayoutBranchException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(recentLayoutBranch);
-		}
-		catch (NoSuchRecentLayoutBranchException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -902,31 +815,6 @@ public class RecentLayoutBranchPersistenceImpl
 		}
 
 		recentLayoutBranch.resetOriginalValues();
-
-		return recentLayoutBranch;
-	}
-
-	/**
-	 * Returns the recent layout branch with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the recent layout branch
-	 * @return the recent layout branch
-	 * @throws NoSuchRecentLayoutBranchException if a recent layout branch with the primary key could not be found
-	 */
-	@Override
-	public RecentLayoutBranch findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRecentLayoutBranchException {
-
-		RecentLayoutBranch recentLayoutBranch = fetchByPrimaryKey(primaryKey);
-
-		if (recentLayoutBranch == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRecentLayoutBranchException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return recentLayoutBranch;
 	}
@@ -1311,9 +1199,6 @@ public class RecentLayoutBranchPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "recentLayoutBranch.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RecentLayoutBranch exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RecentLayoutBranch exists with the key {";
 
@@ -1326,4 +1211,4 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:578706833
+// LIFERAY-SERVICE-BUILDER-HASH:302377333

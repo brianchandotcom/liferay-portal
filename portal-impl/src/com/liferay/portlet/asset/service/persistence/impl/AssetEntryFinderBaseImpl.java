@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -14,7 +15,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class AssetEntryFinderBaseImpl extends BasePersistenceImpl<AssetEntry> {
+public class AssetEntryFinderBaseImpl
+	extends BasePersistenceImpl<AssetEntry, NoSuchEntryException> {
 
 	public AssetEntryFinderBaseImpl() {
 		setModelClass(AssetEntry.class);
@@ -44,4 +46,4 @@ public class AssetEntryFinderBaseImpl extends BasePersistenceImpl<AssetEntry> {
 	protected AssetEntryPersistence assetEntryPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1250382208
+// LIFERAY-SERVICE-BUILDER-HASH:-510902992

@@ -74,7 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoTimerPersistence.class)
 public class KaleoTimerPersistenceImpl
-	extends BasePersistenceImpl<KaleoTimer> implements KaleoTimerPersistence {
+	extends BasePersistenceImpl<KaleoTimer, NoSuchTimerException>
+	implements KaleoTimerPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -512,48 +513,6 @@ public class KaleoTimerPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all kaleo timers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoTimerImpl.class);
-
-		finderCache.clearCache(KaleoTimerImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo timer.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoTimer kaleoTimer) {
-		entityCache.removeResult(KaleoTimerImpl.class, kaleoTimer);
-	}
-
-	@Override
-	public void clearCache(List<KaleoTimer> kaleoTimers) {
-		for (KaleoTimer kaleoTimer : kaleoTimers) {
-			entityCache.removeResult(KaleoTimerImpl.class, kaleoTimer);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoTimerImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoTimerImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
 	 *
 	 * @param kaleoTimerId the primary key for the new kaleo timer
@@ -581,47 +540,6 @@ public class KaleoTimerPersistenceImpl
 	@Override
 	public KaleoTimer remove(long kaleoTimerId) throws NoSuchTimerException {
 		return remove((Serializable)kaleoTimerId);
-	}
-
-	/**
-	 * Removes the kaleo timer with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo timer
-	 * @return the kaleo timer that was removed
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	@Override
-	public KaleoTimer remove(Serializable primaryKey)
-		throws NoSuchTimerException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTimer kaleoTimer = (KaleoTimer)session.get(
-				KaleoTimerImpl.class, primaryKey);
-
-			if (kaleoTimer == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTimerException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoTimer);
-		}
-		catch (NoSuchTimerException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -735,31 +653,6 @@ public class KaleoTimerPersistenceImpl
 		}
 
 		kaleoTimer.resetOriginalValues();
-
-		return kaleoTimer;
-	}
-
-	/**
-	 * Returns the kaleo timer with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo timer
-	 * @return the kaleo timer
-	 * @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
-	 */
-	@Override
-	public KaleoTimer findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTimerException {
-
-		KaleoTimer kaleoTimer = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoTimer == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTimerException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoTimer;
 	}
@@ -1393,9 +1286,6 @@ public class KaleoTimerPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTimer.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoTimer exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTimer exists with the key {";
 
@@ -1408,4 +1298,4 @@ public class KaleoTimerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-238912824
+// LIFERAY-SERVICE-BUILDER-HASH:-2087751739

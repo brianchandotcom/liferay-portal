@@ -66,7 +66,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuth2ApplicationScopeAliasesPersistence.class)
 public class OAuth2ApplicationScopeAliasesPersistenceImpl
-	extends BasePersistenceImpl<OAuth2ApplicationScopeAliases>
+	extends BasePersistenceImpl
+		<OAuth2ApplicationScopeAliases,
+		 NoSuchOAuth2ApplicationScopeAliasesException>
 	implements OAuth2ApplicationScopeAliasesPersistence {
 
 	/*
@@ -451,59 +453,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all o auth2 application scope aliaseses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
-
-		finderCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the o auth2 application scope aliases.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
-		entityCache.removeResult(
-			OAuth2ApplicationScopeAliasesImpl.class,
-			oAuth2ApplicationScopeAliases);
-	}
-
-	@Override
-	public void clearCache(
-		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses) {
-
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				oAuth2ApplicationScopeAliaseses) {
-
-			entityCache.removeResult(
-				OAuth2ApplicationScopeAliasesImpl.class,
-				oAuth2ApplicationScopeAliases);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OAuth2ApplicationScopeAliasesImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				OAuth2ApplicationScopeAliasesImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new o auth2 application scope aliases with the primary key. Does not add the o auth2 application scope aliases to the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the primary key for the new o auth2 application scope aliases
@@ -539,50 +488,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		throws NoSuchOAuth2ApplicationScopeAliasesException {
 
 		return remove((Serializable)oAuth2ApplicationScopeAliasesId);
-	}
-
-	/**
-	 * Removes the o auth2 application scope aliases with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the o auth2 application scope aliases
-	 * @return the o auth2 application scope aliases that was removed
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases remove(Serializable primaryKey)
-		throws NoSuchOAuth2ApplicationScopeAliasesException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-				(OAuth2ApplicationScopeAliases)session.get(
-					OAuth2ApplicationScopeAliasesImpl.class, primaryKey);
-
-			if (oAuth2ApplicationScopeAliases == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOAuth2ApplicationScopeAliasesException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(oAuth2ApplicationScopeAliases);
-		}
-		catch (NoSuchOAuth2ApplicationScopeAliasesException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -696,33 +601,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 		}
 
 		oAuth2ApplicationScopeAliases.resetOriginalValues();
-
-		return oAuth2ApplicationScopeAliases;
-	}
-
-	/**
-	 * Returns the o auth2 application scope aliases with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 application scope aliases
-	 * @return the o auth2 application scope aliases
-	 * @throws NoSuchOAuth2ApplicationScopeAliasesException if a o auth2 application scope aliases with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ApplicationScopeAliases findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchOAuth2ApplicationScopeAliasesException {
-
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases =
-			fetchByPrimaryKey(primaryKey);
-
-		if (oAuth2ApplicationScopeAliases == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOAuth2ApplicationScopeAliasesException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return oAuth2ApplicationScopeAliases;
 	}
@@ -1108,9 +986,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"oAuth2ApplicationScopeAliases.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OAuth2ApplicationScopeAliases exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2ApplicationScopeAliases exists with the key {";
 
@@ -1126,4 +1001,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1885529468
+// LIFERAY-SERVICE-BUILDER-HASH:1355264558

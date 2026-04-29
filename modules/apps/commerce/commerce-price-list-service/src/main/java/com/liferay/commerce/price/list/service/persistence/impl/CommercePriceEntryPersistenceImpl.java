@@ -88,7 +88,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceEntryPersistence.class)
 public class CommercePriceEntryPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceEntry>
+	extends BasePersistenceImpl<CommercePriceEntry, NoSuchPriceEntryException>
 	implements CommercePriceEntryPersistence {
 
 	/*
@@ -1983,50 +1983,6 @@ public class CommercePriceEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceEntryImpl.class);
-
-		finderCache.clearCache(CommercePriceEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommercePriceEntry commercePriceEntry) {
-		entityCache.removeResult(
-			CommercePriceEntryImpl.class, commercePriceEntry);
-	}
-
-	@Override
-	public void clearCache(List<CommercePriceEntry> commercePriceEntries) {
-		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
-			entityCache.removeResult(
-				CommercePriceEntryImpl.class, commercePriceEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommercePriceEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceEntryModelImpl commercePriceEntryModelImpl) {
 
@@ -2078,48 +2034,6 @@ public class CommercePriceEntryPersistenceImpl
 		throws NoSuchPriceEntryException {
 
 		return remove((Serializable)commercePriceEntryId);
-	}
-
-	/**
-	 * Removes the commerce price entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price entry
-	 * @return the commerce price entry that was removed
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceEntry remove(Serializable primaryKey)
-		throws NoSuchPriceEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceEntry commercePriceEntry =
-				(CommercePriceEntry)session.get(
-					CommercePriceEntryImpl.class, primaryKey);
-
-			if (commercePriceEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceEntry);
-		}
-		catch (NoSuchPriceEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2317,31 +2231,6 @@ public class CommercePriceEntryPersistenceImpl
 		}
 
 		commercePriceEntry.resetOriginalValues();
-
-		return commercePriceEntry;
-	}
-
-	/**
-	 * Returns the commerce price entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price entry
-	 * @return the commerce price entry
-	 * @throws NoSuchPriceEntryException if a commerce price entry with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPriceEntryException {
-
-		CommercePriceEntry commercePriceEntry = fetchByPrimaryKey(primaryKey);
-
-		if (commercePriceEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceEntry;
 	}
@@ -3282,9 +3171,6 @@ public class CommercePriceEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commercePriceEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceEntry exists with the key {";
 
@@ -3300,4 +3186,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1812807411
+// LIFERAY-SERVICE-BUILDER-HASH:230280701

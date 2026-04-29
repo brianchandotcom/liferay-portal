@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTCollectionPersistence.class)
 public class CTCollectionPersistenceImpl
-	extends BasePersistenceImpl<CTCollection>
+	extends BasePersistenceImpl<CTCollection, NoSuchCollectionException>
 	implements CTCollectionPersistence {
 
 	/*
@@ -3166,48 +3166,6 @@ public class CTCollectionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ct collections.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTCollectionImpl.class);
-
-		finderCache.clearCache(CTCollectionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct collection.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTCollection ctCollection) {
-		entityCache.removeResult(CTCollectionImpl.class, ctCollection);
-	}
-
-	@Override
-	public void clearCache(List<CTCollection> ctCollections) {
-		for (CTCollection ctCollection : ctCollections) {
-			entityCache.removeResult(CTCollectionImpl.class, ctCollection);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTCollectionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTCollectionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CTCollectionModelImpl ctCollectionModelImpl) {
 
@@ -3254,47 +3212,6 @@ public class CTCollectionPersistenceImpl
 		throws NoSuchCollectionException {
 
 		return remove((Serializable)ctCollectionId);
-	}
-
-	/**
-	 * Removes the ct collection with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct collection
-	 * @return the ct collection that was removed
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	@Override
-	public CTCollection remove(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTCollection ctCollection = (CTCollection)session.get(
-				CTCollectionImpl.class, primaryKey);
-
-			if (ctCollection == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCollectionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctCollection);
-		}
-		catch (NoSuchCollectionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3472,31 +3389,6 @@ public class CTCollectionPersistenceImpl
 		}
 
 		ctCollection.resetOriginalValues();
-
-		return ctCollection;
-	}
-
-	/**
-	 * Returns the ct collection with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct collection
-	 * @return the ct collection
-	 * @throws NoSuchCollectionException if a ct collection with the primary key could not be found
-	 */
-	@Override
-	public CTCollection findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		CTCollection ctCollection = fetchByPrimaryKey(primaryKey);
-
-		if (ctCollection == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCollectionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctCollection;
 	}
@@ -4019,9 +3911,6 @@ public class CTCollectionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CTCollection.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTCollection exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTCollection exists with the key {";
 
@@ -4037,4 +3926,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:40017424
+// LIFERAY-SERVICE-BUILDER-HASH:1182768895

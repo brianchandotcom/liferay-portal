@@ -72,7 +72,8 @@ import java.util.Set;
  * @generated
  */
 public class LayoutSetPrototypePersistenceImpl
-	extends BasePersistenceImpl<LayoutSetPrototype>
+	extends BasePersistenceImpl
+		<LayoutSetPrototype, NoSuchLayoutSetPrototypeException>
 	implements LayoutSetPrototypePersistence {
 
 	/*
@@ -1718,51 +1719,6 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all layout set prototypes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(LayoutSetPrototypeImpl.class);
-
-		FinderCacheUtil.clearCache(LayoutSetPrototypeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout set prototype.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutSetPrototype layoutSetPrototype) {
-		EntityCacheUtil.removeResult(
-			LayoutSetPrototypeImpl.class, layoutSetPrototype);
-	}
-
-	@Override
-	public void clearCache(List<LayoutSetPrototype> layoutSetPrototypes) {
-		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
-			EntityCacheUtil.removeResult(
-				LayoutSetPrototypeImpl.class, layoutSetPrototype);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(LayoutSetPrototypeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				LayoutSetPrototypeImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
 	 *
 	 * @param layoutSetPrototypeId the primary key for the new layout set prototype
@@ -1796,48 +1752,6 @@ public class LayoutSetPrototypePersistenceImpl
 		throws NoSuchLayoutSetPrototypeException {
 
 		return remove((Serializable)layoutSetPrototypeId);
-	}
-
-	/**
-	 * Removes the layout set prototype with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout set prototype
-	 * @return the layout set prototype that was removed
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetPrototype remove(Serializable primaryKey)
-		throws NoSuchLayoutSetPrototypeException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutSetPrototype layoutSetPrototype =
-				(LayoutSetPrototype)session.get(
-					LayoutSetPrototypeImpl.class, primaryKey);
-
-			if (layoutSetPrototype == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutSetPrototypeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutSetPrototype);
-		}
-		catch (NoSuchLayoutSetPrototypeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1967,31 +1881,6 @@ public class LayoutSetPrototypePersistenceImpl
 		}
 
 		layoutSetPrototype.resetOriginalValues();
-
-		return layoutSetPrototype;
-	}
-
-	/**
-	 * Returns the layout set prototype with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout set prototype
-	 * @return the layout set prototype
-	 * @throws NoSuchLayoutSetPrototypeException if a layout set prototype with the primary key could not be found
-	 */
-	@Override
-	public LayoutSetPrototype findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutSetPrototypeException {
-
-		LayoutSetPrototype layoutSetPrototype = fetchByPrimaryKey(primaryKey);
-
-		if (layoutSetPrototype == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutSetPrototypeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutSetPrototype;
 	}
@@ -2669,9 +2558,6 @@ public class LayoutSetPrototypePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "LayoutSetPrototype.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutSetPrototype exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSetPrototype exists with the key {";
 
@@ -2687,4 +2573,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2143067281
+// LIFERAY-SERVICE-BUILDER-HASH:1026726404

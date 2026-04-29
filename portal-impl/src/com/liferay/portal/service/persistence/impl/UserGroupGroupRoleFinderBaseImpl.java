@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.service.persistence.UserGroupGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -15,7 +16,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @generated
  */
 public class UserGroupGroupRoleFinderBaseImpl
-	extends BasePersistenceImpl<UserGroupGroupRole> {
+	extends BasePersistenceImpl
+		<UserGroupGroupRole, NoSuchUserGroupGroupRoleException> {
 
 	public UserGroupGroupRoleFinderBaseImpl() {
 		setModelClass(UserGroupGroupRole.class);
@@ -45,4 +47,4 @@ public class UserGroupGroupRoleFinderBaseImpl
 	protected UserGroupGroupRolePersistence userGroupGroupRolePersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1177871610
+// LIFERAY-SERVICE-BUILDER-HASH:120875526

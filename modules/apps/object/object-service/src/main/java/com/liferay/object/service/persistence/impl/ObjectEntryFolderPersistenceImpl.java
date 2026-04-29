@@ -79,7 +79,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectEntryFolderPersistence.class)
 public class ObjectEntryFolderPersistenceImpl
-	extends BasePersistenceImpl<ObjectEntryFolder>
+	extends BasePersistenceImpl
+		<ObjectEntryFolder, NoSuchObjectEntryFolderException>
 	implements ObjectEntryFolderPersistence {
 
 	/*
@@ -2055,50 +2056,6 @@ public class ObjectEntryFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object entry folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectEntryFolderImpl.class);
-
-		finderCache.clearCache(ObjectEntryFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object entry folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectEntryFolder objectEntryFolder) {
-		entityCache.removeResult(
-			ObjectEntryFolderImpl.class, objectEntryFolder);
-	}
-
-	@Override
-	public void clearCache(List<ObjectEntryFolder> objectEntryFolders) {
-		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
-			entityCache.removeResult(
-				ObjectEntryFolderImpl.class, objectEntryFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectEntryFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectEntryFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectEntryFolderModelImpl objectEntryFolderModelImpl) {
 
@@ -2154,48 +2111,6 @@ public class ObjectEntryFolderPersistenceImpl
 		throws NoSuchObjectEntryFolderException {
 
 		return remove((Serializable)objectEntryFolderId);
-	}
-
-	/**
-	 * Removes the object entry folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object entry folder
-	 * @return the object entry folder that was removed
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntryFolder remove(Serializable primaryKey)
-		throws NoSuchObjectEntryFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectEntryFolder objectEntryFolder =
-				(ObjectEntryFolder)session.get(
-					ObjectEntryFolderImpl.class, primaryKey);
-
-			if (objectEntryFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectEntryFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectEntryFolder);
-		}
-		catch (NoSuchObjectEntryFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2357,31 +2272,6 @@ public class ObjectEntryFolderPersistenceImpl
 		}
 
 		objectEntryFolder.resetOriginalValues();
-
-		return objectEntryFolder;
-	}
-
-	/**
-	 * Returns the object entry folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object entry folder
-	 * @return the object entry folder
-	 * @throws NoSuchObjectEntryFolderException if a object entry folder with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntryFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectEntryFolderException {
-
-		ObjectEntryFolder objectEntryFolder = fetchByPrimaryKey(primaryKey);
-
-		if (objectEntryFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectEntryFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectEntryFolder;
 	}
@@ -2945,9 +2835,6 @@ public class ObjectEntryFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "ObjectEntryFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectEntryFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectEntryFolder exists with the key {";
 
@@ -2963,4 +2850,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2044014876
+// LIFERAY-SERVICE-BUILDER-HASH:-677029869

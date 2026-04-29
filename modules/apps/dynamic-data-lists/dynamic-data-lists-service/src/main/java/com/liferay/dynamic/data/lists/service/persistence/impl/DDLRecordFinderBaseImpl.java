@@ -5,6 +5,7 @@
 
 package com.liferay.dynamic.data.lists.service.persistence.impl;
 
+import com.liferay.dynamic.data.lists.exception.NoSuchRecordException;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class DDLRecordFinderBaseImpl
-	extends BasePersistenceImpl<DDLRecord> {
+	extends BasePersistenceImpl<DDLRecord, NoSuchRecordException> {
 
 	public DDLRecordFinderBaseImpl() {
 		setModelClass(DDLRecord.class);
@@ -77,4 +78,4 @@ public abstract class DDLRecordFinderBaseImpl
 		DDLRecordFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1105059004
+// LIFERAY-SERVICE-BUILDER-HASH:-392212929

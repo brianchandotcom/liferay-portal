@@ -47,7 +47,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -68,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BackgroundTaskPersistence.class)
 public class BackgroundTaskPersistenceImpl
-	extends BasePersistenceImpl<BackgroundTask>
+	extends BasePersistenceImpl<BackgroundTask, NoSuchBackgroundTaskException>
 	implements BackgroundTaskPersistence {
 
 	/*
@@ -5411,48 +5410,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all background tasks.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BackgroundTaskImpl.class);
-
-		finderCache.clearCache(BackgroundTaskImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the background task.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BackgroundTask backgroundTask) {
-		entityCache.removeResult(BackgroundTaskImpl.class, backgroundTask);
-	}
-
-	@Override
-	public void clearCache(List<BackgroundTask> backgroundTasks) {
-		for (BackgroundTask backgroundTask : backgroundTasks) {
-			entityCache.removeResult(BackgroundTaskImpl.class, backgroundTask);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BackgroundTaskImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BackgroundTaskImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new background task with the primary key. Does not add the background task to the database.
 	 *
 	 * @param backgroundTaskId the primary key for the new background task
@@ -5482,47 +5439,6 @@ public class BackgroundTaskPersistenceImpl
 		throws NoSuchBackgroundTaskException {
 
 		return remove((Serializable)backgroundTaskId);
-	}
-
-	/**
-	 * Removes the background task with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the background task
-	 * @return the background task that was removed
-	 * @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
-	 */
-	@Override
-	public BackgroundTask remove(Serializable primaryKey)
-		throws NoSuchBackgroundTaskException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BackgroundTask backgroundTask = (BackgroundTask)session.get(
-				BackgroundTaskImpl.class, primaryKey);
-
-			if (backgroundTask == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBackgroundTaskException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(backgroundTask);
-		}
-		catch (NoSuchBackgroundTaskException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -5632,31 +5548,6 @@ public class BackgroundTaskPersistenceImpl
 		}
 
 		backgroundTask.resetOriginalValues();
-
-		return backgroundTask;
-	}
-
-	/**
-	 * Returns the background task with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the background task
-	 * @return the background task
-	 * @throws NoSuchBackgroundTaskException if a background task with the primary key could not be found
-	 */
-	@Override
-	public BackgroundTask findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBackgroundTaskException {
-
-		BackgroundTask backgroundTask = fetchByPrimaryKey(primaryKey);
-
-		if (backgroundTask == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBackgroundTaskException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return backgroundTask;
 	}
@@ -6306,9 +6197,6 @@ public class BackgroundTaskPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "backgroundTask.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BackgroundTask exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BackgroundTask exists with the key {";
 
@@ -6321,4 +6209,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1053527990
+// LIFERAY-SERVICE-BUILDER-HASH:1003445195

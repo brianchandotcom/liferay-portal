@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenPersistence;
 import com.liferay.portal.workflow.kaleo.service.persistence.impl.constants.KaleoPersistenceConstants;
@@ -21,7 +22,8 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class KaleoTaskInstanceTokenFinderBaseImpl
-	extends BasePersistenceImpl<KaleoTaskInstanceToken> {
+	extends BasePersistenceImpl
+		<KaleoTaskInstanceToken, NoSuchTaskInstanceTokenException> {
 
 	public KaleoTaskInstanceTokenFinderBaseImpl() {
 		setModelClass(KaleoTaskInstanceToken.class);
@@ -58,4 +60,4 @@ public abstract class KaleoTaskInstanceTokenFinderBaseImpl
 		kaleoTaskInstanceTokenPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-215734200
+// LIFERAY-SERVICE-BUILDER-HASH:-880705092

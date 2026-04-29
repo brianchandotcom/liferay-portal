@@ -5,6 +5,7 @@
 
 package com.liferay.calendar.service.persistence.impl;
 
+import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.persistence.CalendarBookingPersistence;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CalendarBookingFinderBaseImpl
-	extends BasePersistenceImpl<CalendarBooking> {
+	extends BasePersistenceImpl<CalendarBooking, NoSuchBookingException> {
 
 	public CalendarBookingFinderBaseImpl() {
 		setModelClass(CalendarBooking.class);
@@ -77,4 +78,4 @@ public abstract class CalendarBookingFinderBaseImpl
 		CalendarBookingFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1600080638
+// LIFERAY-SERVICE-BUILDER-HASH:1536411545

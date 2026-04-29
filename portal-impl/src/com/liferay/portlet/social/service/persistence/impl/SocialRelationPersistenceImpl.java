@@ -66,7 +66,7 @@ import java.util.Set;
  * @generated
  */
 public class SocialRelationPersistenceImpl
-	extends BasePersistenceImpl<SocialRelation>
+	extends BasePersistenceImpl<SocialRelation, NoSuchRelationException>
 	implements SocialRelationPersistence {
 
 	/*
@@ -1883,49 +1883,6 @@ public class SocialRelationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social relations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialRelationImpl.class);
-
-		FinderCacheUtil.clearCache(SocialRelationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social relation.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SocialRelation socialRelation) {
-		EntityCacheUtil.removeResult(SocialRelationImpl.class, socialRelation);
-	}
-
-	@Override
-	public void clearCache(List<SocialRelation> socialRelations) {
-		for (SocialRelation socialRelation : socialRelations) {
-			EntityCacheUtil.removeResult(
-				SocialRelationImpl.class, socialRelation);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialRelationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(SocialRelationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialRelationModelImpl socialRelationModelImpl) {
 
@@ -1978,47 +1935,6 @@ public class SocialRelationPersistenceImpl
 		throws NoSuchRelationException {
 
 		return remove((Serializable)relationId);
-	}
-
-	/**
-	 * Removes the social relation with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social relation
-	 * @return the social relation that was removed
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	@Override
-	public SocialRelation remove(Serializable primaryKey)
-		throws NoSuchRelationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialRelation socialRelation = (SocialRelation)session.get(
-				SocialRelationImpl.class, primaryKey);
-
-			if (socialRelation == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRelationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialRelation);
-		}
-		catch (NoSuchRelationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2119,31 +2035,6 @@ public class SocialRelationPersistenceImpl
 		}
 
 		socialRelation.resetOriginalValues();
-
-		return socialRelation;
-	}
-
-	/**
-	 * Returns the social relation with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social relation
-	 * @return the social relation
-	 * @throws NoSuchRelationException if a social relation with the primary key could not be found
-	 */
-	@Override
-	public SocialRelation findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRelationException {
-
-		SocialRelation socialRelation = fetchByPrimaryKey(primaryKey);
-
-		if (socialRelation == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRelationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialRelation;
 	}
@@ -2981,9 +2872,6 @@ public class SocialRelationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialRelation.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialRelation exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialRelation exists with the key {";
 
@@ -2999,4 +2887,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1918030846
+// LIFERAY-SERVICE-BUILDER-HASH:1867825461

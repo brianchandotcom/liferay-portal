@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AccountGroupPersistence.class)
 public class AccountGroupPersistenceImpl
-	extends BasePersistenceImpl<AccountGroup>
+	extends BasePersistenceImpl<AccountGroup, NoSuchGroupException>
 	implements AccountGroupPersistence {
 
 	/*
@@ -3701,48 +3701,6 @@ public class AccountGroupPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all account groups.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AccountGroupImpl.class);
-
-		finderCache.clearCache(AccountGroupImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the account group.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AccountGroup accountGroup) {
-		entityCache.removeResult(AccountGroupImpl.class, accountGroup);
-	}
-
-	@Override
-	public void clearCache(List<AccountGroup> accountGroups) {
-		for (AccountGroup accountGroup : accountGroups) {
-			entityCache.removeResult(AccountGroupImpl.class, accountGroup);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AccountGroupImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AccountGroupImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AccountGroupModelImpl accountGroupModelImpl) {
 
@@ -3789,47 +3747,6 @@ public class AccountGroupPersistenceImpl
 		throws NoSuchGroupException {
 
 		return remove((Serializable)accountGroupId);
-	}
-
-	/**
-	 * Removes the account group with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the account group
-	 * @return the account group that was removed
-	 * @throws NoSuchGroupException if a account group with the primary key could not be found
-	 */
-	@Override
-	public AccountGroup remove(Serializable primaryKey)
-		throws NoSuchGroupException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AccountGroup accountGroup = (AccountGroup)session.get(
-				AccountGroupImpl.class, primaryKey);
-
-			if (accountGroup == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchGroupException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(accountGroup);
-		}
-		catch (NoSuchGroupException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4007,31 +3924,6 @@ public class AccountGroupPersistenceImpl
 		}
 
 		accountGroup.resetOriginalValues();
-
-		return accountGroup;
-	}
-
-	/**
-	 * Returns the account group with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the account group
-	 * @return the account group
-	 * @throws NoSuchGroupException if a account group with the primary key could not be found
-	 */
-	@Override
-	public AccountGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchGroupException {
-
-		AccountGroup accountGroup = fetchByPrimaryKey(primaryKey);
-
-		if (accountGroup == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchGroupException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return accountGroup;
 	}
@@ -4568,9 +4460,6 @@ public class AccountGroupPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "AccountGroup.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AccountGroup exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountGroup exists with the key {";
 
@@ -4586,4 +4475,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:250038445
+// LIFERAY-SERVICE-BUILDER-HASH:212517808

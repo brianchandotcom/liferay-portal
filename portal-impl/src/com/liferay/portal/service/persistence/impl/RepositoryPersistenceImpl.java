@@ -77,7 +77,8 @@ import java.util.Set;
  * @generated
  */
 public class RepositoryPersistenceImpl
-	extends BasePersistenceImpl<Repository> implements RepositoryPersistence {
+	extends BasePersistenceImpl<Repository, NoSuchRepositoryException>
+	implements RepositoryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1111,48 +1112,6 @@ public class RepositoryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all repositories.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RepositoryImpl.class);
-
-		FinderCacheUtil.clearCache(RepositoryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the repository.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Repository repository) {
-		EntityCacheUtil.removeResult(RepositoryImpl.class, repository);
-	}
-
-	@Override
-	public void clearCache(List<Repository> repositories) {
-		for (Repository repository : repositories) {
-			EntityCacheUtil.removeResult(RepositoryImpl.class, repository);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RepositoryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(RepositoryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RepositoryModelImpl repositoryModelImpl) {
 
@@ -1219,47 +1178,6 @@ public class RepositoryPersistenceImpl
 		throws NoSuchRepositoryException {
 
 		return remove((Serializable)repositoryId);
-	}
-
-	/**
-	 * Removes the repository with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the repository
-	 * @return the repository that was removed
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	@Override
-	public Repository remove(Serializable primaryKey)
-		throws NoSuchRepositoryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Repository repository = (Repository)session.get(
-				RepositoryImpl.class, primaryKey);
-
-			if (repository == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRepositoryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(repository);
-		}
-		catch (NoSuchRepositoryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1442,31 +1360,6 @@ public class RepositoryPersistenceImpl
 		}
 
 		repository.resetOriginalValues();
-
-		return repository;
-	}
-
-	/**
-	 * Returns the repository with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the repository
-	 * @return the repository
-	 * @throws NoSuchRepositoryException if a repository with the primary key could not be found
-	 */
-	@Override
-	public Repository findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRepositoryException {
-
-		Repository repository = fetchByPrimaryKey(primaryKey);
-
-		if (repository == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRepositoryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return repository;
 	}
@@ -2164,9 +2057,6 @@ public class RepositoryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "repository.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Repository exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Repository exists with the key {";
 
@@ -2182,4 +2072,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1285826216
+// LIFERAY-SERVICE-BUILDER-HASH:348202214

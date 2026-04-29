@@ -63,7 +63,8 @@ import java.util.Set;
  * @generated
  */
 public class SocialActivitySettingPersistenceImpl
-	extends BasePersistenceImpl<SocialActivitySetting>
+	extends BasePersistenceImpl
+		<SocialActivitySetting, NoSuchActivitySettingException>
 	implements SocialActivitySettingPersistence {
 
 	/*
@@ -967,53 +968,6 @@ public class SocialActivitySettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social activity settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialActivitySettingImpl.class);
-
-		FinderCacheUtil.clearCache(SocialActivitySettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social activity setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SocialActivitySetting socialActivitySetting) {
-		EntityCacheUtil.removeResult(
-			SocialActivitySettingImpl.class, socialActivitySetting);
-	}
-
-	@Override
-	public void clearCache(List<SocialActivitySetting> socialActivitySettings) {
-		for (SocialActivitySetting socialActivitySetting :
-				socialActivitySettings) {
-
-			EntityCacheUtil.removeResult(
-				SocialActivitySettingImpl.class, socialActivitySetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialActivitySettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				SocialActivitySettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialActivitySettingModelImpl socialActivitySettingModelImpl) {
 
@@ -1065,48 +1019,6 @@ public class SocialActivitySettingPersistenceImpl
 		throws NoSuchActivitySettingException {
 
 		return remove((Serializable)activitySettingId);
-	}
-
-	/**
-	 * Removes the social activity setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social activity setting
-	 * @return the social activity setting that was removed
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	@Override
-	public SocialActivitySetting remove(Serializable primaryKey)
-		throws NoSuchActivitySettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivitySetting socialActivitySetting =
-				(SocialActivitySetting)session.get(
-					SocialActivitySettingImpl.class, primaryKey);
-
-			if (socialActivitySetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchActivitySettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialActivitySetting);
-		}
-		catch (NoSuchActivitySettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1209,32 +1121,6 @@ public class SocialActivitySettingPersistenceImpl
 		}
 
 		socialActivitySetting.resetOriginalValues();
-
-		return socialActivitySetting;
-	}
-
-	/**
-	 * Returns the social activity setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social activity setting
-	 * @return the social activity setting
-	 * @throws NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	 */
-	@Override
-	public SocialActivitySetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchActivitySettingException {
-
-		SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(
-			primaryKey);
-
-		if (socialActivitySetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchActivitySettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialActivitySetting;
 	}
@@ -1925,9 +1811,6 @@ public class SocialActivitySettingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"socialActivitySetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialActivitySetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialActivitySetting exists with the key {";
 
@@ -1940,4 +1823,4 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2006565101
+// LIFERAY-SERVICE-BUILDER-HASH:-1224644300

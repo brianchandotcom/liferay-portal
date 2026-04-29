@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceChannelAccountEntryRelPersistence.class)
 public class CommerceChannelAccountEntryRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceChannelAccountEntryRel>
+	extends BasePersistenceImpl
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
 	implements CommerceChannelAccountEntryRelPersistence {
 
 	/*
@@ -1553,59 +1554,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce channel account entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceChannelAccountEntryRelImpl.class);
-
-		finderCache.clearCache(CommerceChannelAccountEntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce channel account entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel) {
-
-		entityCache.removeResult(
-			CommerceChannelAccountEntryRelImpl.class,
-			commerceChannelAccountEntryRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels) {
-
-		for (CommerceChannelAccountEntryRel commerceChannelAccountEntryRel :
-				commerceChannelAccountEntryRels) {
-
-			entityCache.removeResult(
-				CommerceChannelAccountEntryRelImpl.class,
-				commerceChannelAccountEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceChannelAccountEntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceChannelAccountEntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceChannelAccountEntryRelModelImpl
 			commerceChannelAccountEntryRelModelImpl) {
@@ -1665,48 +1613,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		throws NoSuchChannelAccountEntryRelException {
 
 		return remove((Serializable)commerceChannelAccountEntryRelId);
-	}
-
-	/**
-	 * Removes the commerce channel account entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce channel account entry rel
-	 * @return the commerce channel account entry rel that was removed
-	 * @throws NoSuchChannelAccountEntryRelException if a commerce channel account entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel remove(Serializable primaryKey)
-		throws NoSuchChannelAccountEntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-				(CommerceChannelAccountEntryRel)session.get(
-					CommerceChannelAccountEntryRelImpl.class, primaryKey);
-
-			if (commerceChannelAccountEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchChannelAccountEntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceChannelAccountEntryRel);
-		}
-		catch (NoSuchChannelAccountEntryRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1840,33 +1746,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 		}
 
 		commerceChannelAccountEntryRel.resetOriginalValues();
-
-		return commerceChannelAccountEntryRel;
-	}
-
-	/**
-	 * Returns the commerce channel account entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce channel account entry rel
-	 * @return the commerce channel account entry rel
-	 * @throws NoSuchChannelAccountEntryRelException if a commerce channel account entry rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceChannelAccountEntryRel findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchChannelAccountEntryRelException {
-
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceChannelAccountEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchChannelAccountEntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceChannelAccountEntryRel;
 	}
@@ -2772,9 +2651,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceChannelAccountEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceChannelAccountEntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceChannelAccountEntryRel exists with the key {";
 
@@ -2790,4 +2666,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:942858771
+// LIFERAY-SERVICE-BUILDER-HASH:-243316422

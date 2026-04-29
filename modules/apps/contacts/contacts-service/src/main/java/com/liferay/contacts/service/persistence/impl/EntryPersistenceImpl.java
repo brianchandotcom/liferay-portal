@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = EntryPersistence.class)
 public class EntryPersistenceImpl
-	extends BasePersistenceImpl<Entry> implements EntryPersistence {
+	extends BasePersistenceImpl<Entry, NoSuchEntryException>
+	implements EntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -363,48 +363,6 @@ public class EntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(EntryImpl.class);
-
-		finderCache.clearCache(EntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Entry entry) {
-		entityCache.removeResult(EntryImpl.class, entry);
-	}
-
-	@Override
-	public void clearCache(List<Entry> entries) {
-		for (Entry entry : entries) {
-			entityCache.removeResult(EntryImpl.class, entry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(EntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(EntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(EntryModelImpl entryModelImpl) {
 		Object[] args = new Object[] {
 			entryModelImpl.getUserId(), entryModelImpl.getEmailAddress()
@@ -441,44 +399,6 @@ public class EntryPersistenceImpl
 	@Override
 	public Entry remove(long entryId) throws NoSuchEntryException {
 		return remove((Serializable)entryId);
-	}
-
-	/**
-	 * Removes the entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the entry
-	 * @return the entry that was removed
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
-	@Override
-	public Entry remove(Serializable primaryKey) throws NoSuchEntryException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Entry entry = (Entry)session.get(EntryImpl.class, primaryKey);
-
-			if (entry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(entry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -584,31 +504,6 @@ public class EntryPersistenceImpl
 		}
 
 		entry.resetOriginalValues();
-
-		return entry;
-	}
-
-	/**
-	 * Returns the entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the entry
-	 * @return the entry
-	 * @throws NoSuchEntryException if a entry with the primary key could not be found
-	 */
-	@Override
-	public Entry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Entry entry = fetchByPrimaryKey(primaryKey);
-
-		if (entry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return entry;
 	}
@@ -953,9 +848,6 @@ public class EntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "entry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Entry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Entry exists with the key {";
 
@@ -968,4 +860,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1183864171
+// LIFERAY-SERVICE-BUILDER-HASH:-105632703

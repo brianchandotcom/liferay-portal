@@ -88,7 +88,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTierPriceEntryPersistence.class)
 public class CommerceTierPriceEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceTierPriceEntry>
+	extends BasePersistenceImpl
+		<CommerceTierPriceEntry, NoSuchTierPriceEntryException>
 	implements CommerceTierPriceEntryPersistence {
 
 	/*
@@ -1928,55 +1929,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce tier price entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTierPriceEntryImpl.class);
-
-		finderCache.clearCache(CommerceTierPriceEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce tier price entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceTierPriceEntry commerceTierPriceEntry) {
-		entityCache.removeResult(
-			CommerceTierPriceEntryImpl.class, commerceTierPriceEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceTierPriceEntry> commerceTierPriceEntries) {
-
-		for (CommerceTierPriceEntry commerceTierPriceEntry :
-				commerceTierPriceEntries) {
-
-			entityCache.removeResult(
-				CommerceTierPriceEntryImpl.class, commerceTierPriceEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTierPriceEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTierPriceEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTierPriceEntryModelImpl commerceTierPriceEntryModelImpl) {
 
@@ -2037,48 +1989,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		throws NoSuchTierPriceEntryException {
 
 		return remove((Serializable)commerceTierPriceEntryId);
-	}
-
-	/**
-	 * Removes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce tier price entry
-	 * @return the commerce tier price entry that was removed
-	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry remove(Serializable primaryKey)
-		throws NoSuchTierPriceEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTierPriceEntry commerceTierPriceEntry =
-				(CommerceTierPriceEntry)session.get(
-					CommerceTierPriceEntryImpl.class, primaryKey);
-
-			if (commerceTierPriceEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTierPriceEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTierPriceEntry);
-		}
-		catch (NoSuchTierPriceEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2282,32 +2192,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 		}
 
 		commerceTierPriceEntry.resetOriginalValues();
-
-		return commerceTierPriceEntry;
-	}
-
-	/**
-	 * Returns the commerce tier price entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce tier price entry
-	 * @return the commerce tier price entry
-	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceTierPriceEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTierPriceEntryException {
-
-		CommerceTierPriceEntry commerceTierPriceEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceTierPriceEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTierPriceEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTierPriceEntry;
 	}
@@ -3225,9 +3109,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceTierPriceEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTierPriceEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTierPriceEntry exists with the key {";
 
@@ -3243,4 +3124,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1678866598
+// LIFERAY-SERVICE-BUILDER-HASH:129927942

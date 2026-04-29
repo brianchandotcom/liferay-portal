@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceModifierPersistence.class)
 public class CommercePriceModifierPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceModifier>
+	extends BasePersistenceImpl
+		<CommercePriceModifier, NoSuchPriceModifierException>
 	implements CommercePriceModifierPersistence {
 
 	/*
@@ -2861,53 +2862,6 @@ public class CommercePriceModifierPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price modifiers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceModifierImpl.class);
-
-		finderCache.clearCache(CommercePriceModifierImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price modifier.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommercePriceModifier commercePriceModifier) {
-		entityCache.removeResult(
-			CommercePriceModifierImpl.class, commercePriceModifier);
-	}
-
-	@Override
-	public void clearCache(List<CommercePriceModifier> commercePriceModifiers) {
-		for (CommercePriceModifier commercePriceModifier :
-				commercePriceModifiers) {
-
-			entityCache.removeResult(
-				CommercePriceModifierImpl.class, commercePriceModifier);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceModifierImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceModifierImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceModifierModelImpl commercePriceModifierModelImpl) {
 
@@ -2968,48 +2922,6 @@ public class CommercePriceModifierPersistenceImpl
 		throws NoSuchPriceModifierException {
 
 		return remove((Serializable)commercePriceModifierId);
-	}
-
-	/**
-	 * Removes the commerce price modifier with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price modifier
-	 * @return the commerce price modifier that was removed
-	 * @throws NoSuchPriceModifierException if a commerce price modifier with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceModifier remove(Serializable primaryKey)
-		throws NoSuchPriceModifierException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceModifier commercePriceModifier =
-				(CommercePriceModifier)session.get(
-					CommercePriceModifierImpl.class, primaryKey);
-
-			if (commercePriceModifier == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceModifierException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceModifier);
-		}
-		catch (NoSuchPriceModifierException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3213,32 +3125,6 @@ public class CommercePriceModifierPersistenceImpl
 		}
 
 		commercePriceModifier.resetOriginalValues();
-
-		return commercePriceModifier;
-	}
-
-	/**
-	 * Returns the commerce price modifier with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price modifier
-	 * @return the commerce price modifier
-	 * @throws NoSuchPriceModifierException if a commerce price modifier with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceModifier findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPriceModifierException {
-
-		CommercePriceModifier commercePriceModifier = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commercePriceModifier == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceModifierException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceModifier;
 	}
@@ -4125,9 +4011,6 @@ public class CommercePriceModifierPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceModifier.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceModifier exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceModifier exists with the key {";
 
@@ -4143,4 +4026,4 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:683433350
+// LIFERAY-SERVICE-BUILDER-HASH:3247533

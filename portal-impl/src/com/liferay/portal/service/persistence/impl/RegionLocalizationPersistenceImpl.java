@@ -63,7 +63,8 @@ import java.util.Set;
  * @generated
  */
 public class RegionLocalizationPersistenceImpl
-	extends BasePersistenceImpl<RegionLocalization>
+	extends BasePersistenceImpl
+		<RegionLocalization, NoSuchRegionLocalizationException>
 	implements RegionLocalizationPersistence {
 
 	/*
@@ -413,51 +414,6 @@ public class RegionLocalizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all region localizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RegionLocalizationImpl.class);
-
-		FinderCacheUtil.clearCache(RegionLocalizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the region localization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RegionLocalization regionLocalization) {
-		EntityCacheUtil.removeResult(
-			RegionLocalizationImpl.class, regionLocalization);
-	}
-
-	@Override
-	public void clearCache(List<RegionLocalization> regionLocalizations) {
-		for (RegionLocalization regionLocalization : regionLocalizations) {
-			EntityCacheUtil.removeResult(
-				RegionLocalizationImpl.class, regionLocalization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RegionLocalizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				RegionLocalizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		RegionLocalizationModelImpl regionLocalizationModelImpl) {
 
@@ -506,48 +462,6 @@ public class RegionLocalizationPersistenceImpl
 		throws NoSuchRegionLocalizationException {
 
 		return remove((Serializable)regionLocalizationId);
-	}
-
-	/**
-	 * Removes the region localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the region localization
-	 * @return the region localization that was removed
-	 * @throws NoSuchRegionLocalizationException if a region localization with the primary key could not be found
-	 */
-	@Override
-	public RegionLocalization remove(Serializable primaryKey)
-		throws NoSuchRegionLocalizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RegionLocalization regionLocalization =
-				(RegionLocalization)session.get(
-					RegionLocalizationImpl.class, primaryKey);
-
-			if (regionLocalization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRegionLocalizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(regionLocalization);
-		}
-		catch (NoSuchRegionLocalizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -648,31 +562,6 @@ public class RegionLocalizationPersistenceImpl
 		}
 
 		regionLocalization.resetOriginalValues();
-
-		return regionLocalization;
-	}
-
-	/**
-	 * Returns the region localization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the region localization
-	 * @return the region localization
-	 * @throws NoSuchRegionLocalizationException if a region localization with the primary key could not be found
-	 */
-	@Override
-	public RegionLocalization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRegionLocalizationException {
-
-		RegionLocalization regionLocalization = fetchByPrimaryKey(primaryKey);
-
-		if (regionLocalization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRegionLocalizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return regionLocalization;
 	}
@@ -1238,9 +1127,6 @@ public class RegionLocalizationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "regionLocalization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RegionLocalization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RegionLocalization exists with the key {";
 
@@ -1253,4 +1139,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:998013816
+// LIFERAY-SERVICE-BUILDER-HASH:978495871

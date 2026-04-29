@@ -66,7 +66,7 @@ import java.util.Set;
  * @generated
  */
 public class SocialRequestPersistenceImpl
-	extends BasePersistenceImpl<SocialRequest>
+	extends BasePersistenceImpl<SocialRequest, NoSuchRequestException>
 	implements SocialRequestPersistence {
 
 	/*
@@ -2129,49 +2129,6 @@ public class SocialRequestPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social requests.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialRequestImpl.class);
-
-		FinderCacheUtil.clearCache(SocialRequestImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social request.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SocialRequest socialRequest) {
-		EntityCacheUtil.removeResult(SocialRequestImpl.class, socialRequest);
-	}
-
-	@Override
-	public void clearCache(List<SocialRequest> socialRequests) {
-		for (SocialRequest socialRequest : socialRequests) {
-			EntityCacheUtil.removeResult(
-				SocialRequestImpl.class, socialRequest);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialRequestImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(SocialRequestImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialRequestModelImpl socialRequestModelImpl) {
 
@@ -2232,47 +2189,6 @@ public class SocialRequestPersistenceImpl
 	@Override
 	public SocialRequest remove(long requestId) throws NoSuchRequestException {
 		return remove((Serializable)requestId);
-	}
-
-	/**
-	 * Removes the social request with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social request
-	 * @return the social request that was removed
-	 * @throws NoSuchRequestException if a social request with the primary key could not be found
-	 */
-	@Override
-	public SocialRequest remove(Serializable primaryKey)
-		throws NoSuchRequestException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialRequest socialRequest = (SocialRequest)session.get(
-				SocialRequestImpl.class, primaryKey);
-
-			if (socialRequest == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRequestException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialRequest);
-		}
-		catch (NoSuchRequestException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2372,31 +2288,6 @@ public class SocialRequestPersistenceImpl
 		}
 
 		socialRequest.resetOriginalValues();
-
-		return socialRequest;
-	}
-
-	/**
-	 * Returns the social request with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social request
-	 * @return the social request
-	 * @throws NoSuchRequestException if a social request with the primary key could not be found
-	 */
-	@Override
-	public SocialRequest findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRequestException {
-
-		SocialRequest socialRequest = fetchByPrimaryKey(primaryKey);
-
-		if (socialRequest == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRequestException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialRequest;
 	}
@@ -3327,9 +3218,6 @@ public class SocialRequestPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialRequest.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialRequest exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialRequest exists with the key {";
 
@@ -3345,4 +3233,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1038956997
+// LIFERAY-SERVICE-BUILDER-HASH:1010999432

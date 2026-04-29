@@ -37,7 +37,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the cache field entry service.
@@ -50,7 +49,7 @@ import java.util.Set;
  * @generated
  */
 public class CacheFieldEntryPersistenceImpl
-	extends BasePersistenceImpl<CacheFieldEntry>
+	extends BasePersistenceImpl<CacheFieldEntry, NoSuchCacheFieldEntryException>
 	implements CacheFieldEntryPersistence {
 
 	/*
@@ -275,49 +274,6 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cache field entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CacheFieldEntryImpl.class);
-
-		finderCache.clearCache(CacheFieldEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cache field entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CacheFieldEntry cacheFieldEntry) {
-		entityCache.removeResult(CacheFieldEntryImpl.class, cacheFieldEntry);
-	}
-
-	@Override
-	public void clearCache(List<CacheFieldEntry> cacheFieldEntries) {
-		for (CacheFieldEntry cacheFieldEntry : cacheFieldEntries) {
-			entityCache.removeResult(
-				CacheFieldEntryImpl.class, cacheFieldEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CacheFieldEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CacheFieldEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cache field entry with the primary key. Does not add the cache field entry to the database.
 	 *
 	 * @param cacheFieldEntryId the primary key for the new cache field entry
@@ -345,47 +301,6 @@ public class CacheFieldEntryPersistenceImpl
 		throws NoSuchCacheFieldEntryException {
 
 		return remove((Serializable)cacheFieldEntryId);
-	}
-
-	/**
-	 * Removes the cache field entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cache field entry
-	 * @return the cache field entry that was removed
-	 * @throws NoSuchCacheFieldEntryException if a cache field entry with the primary key could not be found
-	 */
-	@Override
-	public CacheFieldEntry remove(Serializable primaryKey)
-		throws NoSuchCacheFieldEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CacheFieldEntry cacheFieldEntry = (CacheFieldEntry)session.get(
-				CacheFieldEntryImpl.class, primaryKey);
-
-			if (cacheFieldEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCacheFieldEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cacheFieldEntry);
-		}
-		catch (NoSuchCacheFieldEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -471,31 +386,6 @@ public class CacheFieldEntryPersistenceImpl
 		}
 
 		cacheFieldEntry.resetOriginalValues();
-
-		return cacheFieldEntry;
-	}
-
-	/**
-	 * Returns the cache field entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cache field entry
-	 * @return the cache field entry
-	 * @throws NoSuchCacheFieldEntryException if a cache field entry with the primary key could not be found
-	 */
-	@Override
-	public CacheFieldEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCacheFieldEntryException {
-
-		CacheFieldEntry cacheFieldEntry = fetchByPrimaryKey(primaryKey);
-
-		if (cacheFieldEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCacheFieldEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cacheFieldEntry;
 	}
@@ -803,9 +693,6 @@ public class CacheFieldEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheFieldEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CacheFieldEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CacheFieldEntry exists with the key {";
 
@@ -818,4 +705,4 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1824120196
+// LIFERAY-SERVICE-BUILDER-HASH:-1785033176

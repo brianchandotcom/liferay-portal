@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DepotAppCustomizationPersistence.class)
 public class DepotAppCustomizationPersistenceImpl
-	extends BasePersistenceImpl<DepotAppCustomization>
+	extends BasePersistenceImpl
+		<DepotAppCustomization, NoSuchAppCustomizationException>
 	implements DepotAppCustomizationPersistence {
 
 	/*
@@ -532,53 +533,6 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all depot app customizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DepotAppCustomizationImpl.class);
-
-		finderCache.clearCache(DepotAppCustomizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the depot app customization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DepotAppCustomization depotAppCustomization) {
-		entityCache.removeResult(
-			DepotAppCustomizationImpl.class, depotAppCustomization);
-	}
-
-	@Override
-	public void clearCache(List<DepotAppCustomization> depotAppCustomizations) {
-		for (DepotAppCustomization depotAppCustomization :
-				depotAppCustomizations) {
-
-			entityCache.removeResult(
-				DepotAppCustomizationImpl.class, depotAppCustomization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DepotAppCustomizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DepotAppCustomizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DepotAppCustomizationModelImpl depotAppCustomizationModelImpl) {
 
@@ -635,48 +589,6 @@ public class DepotAppCustomizationPersistenceImpl
 		throws NoSuchAppCustomizationException {
 
 		return remove((Serializable)depotAppCustomizationId);
-	}
-
-	/**
-	 * Removes the depot app customization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the depot app customization
-	 * @return the depot app customization that was removed
-	 * @throws NoSuchAppCustomizationException if a depot app customization with the primary key could not be found
-	 */
-	@Override
-	public DepotAppCustomization remove(Serializable primaryKey)
-		throws NoSuchAppCustomizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DepotAppCustomization depotAppCustomization =
-				(DepotAppCustomization)session.get(
-					DepotAppCustomizationImpl.class, primaryKey);
-
-			if (depotAppCustomization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAppCustomizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(depotAppCustomization);
-		}
-		catch (NoSuchAppCustomizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -779,32 +691,6 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 
 		depotAppCustomization.resetOriginalValues();
-
-		return depotAppCustomization;
-	}
-
-	/**
-	 * Returns the depot app customization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the depot app customization
-	 * @return the depot app customization
-	 * @throws NoSuchAppCustomizationException if a depot app customization with the primary key could not be found
-	 */
-	@Override
-	public DepotAppCustomization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAppCustomizationException {
-
-		DepotAppCustomization depotAppCustomization = fetchByPrimaryKey(
-			primaryKey);
-
-		if (depotAppCustomization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAppCustomizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return depotAppCustomization;
 	}
@@ -1426,9 +1312,6 @@ public class DepotAppCustomizationPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"depotAppCustomization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DepotAppCustomization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DepotAppCustomization exists with the key {";
 
@@ -1441,4 +1324,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1548078802
+// LIFERAY-SERVICE-BUILDER-HASH:1290807637

@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTPreferencesPersistence.class)
 public class CTPreferencesPersistenceImpl
-	extends BasePersistenceImpl<CTPreferences>
+	extends BasePersistenceImpl<CTPreferences, NoSuchPreferencesException>
 	implements CTPreferencesPersistence {
 
 	/*
@@ -530,48 +529,6 @@ public class CTPreferencesPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ct preferenceses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTPreferencesImpl.class);
-
-		finderCache.clearCache(CTPreferencesImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct preferences.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTPreferences ctPreferences) {
-		entityCache.removeResult(CTPreferencesImpl.class, ctPreferences);
-	}
-
-	@Override
-	public void clearCache(List<CTPreferences> ctPreferenceses) {
-		for (CTPreferences ctPreferences : ctPreferenceses) {
-			entityCache.removeResult(CTPreferencesImpl.class, ctPreferences);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTPreferencesImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTPreferencesImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CTPreferencesModelImpl ctPreferencesModelImpl) {
 
@@ -614,47 +571,6 @@ public class CTPreferencesPersistenceImpl
 		throws NoSuchPreferencesException {
 
 		return remove((Serializable)ctPreferencesId);
-	}
-
-	/**
-	 * Removes the ct preferences with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct preferences
-	 * @return the ct preferences that was removed
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	@Override
-	public CTPreferences remove(Serializable primaryKey)
-		throws NoSuchPreferencesException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTPreferences ctPreferences = (CTPreferences)session.get(
-				CTPreferencesImpl.class, primaryKey);
-
-			if (ctPreferences == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPreferencesException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctPreferences);
-		}
-		catch (NoSuchPreferencesException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -740,31 +656,6 @@ public class CTPreferencesPersistenceImpl
 		}
 
 		ctPreferences.resetOriginalValues();
-
-		return ctPreferences;
-	}
-
-	/**
-	 * Returns the ct preferences with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct preferences
-	 * @return the ct preferences
-	 * @throws NoSuchPreferencesException if a ct preferences with the primary key could not be found
-	 */
-	@Override
-	public CTPreferences findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPreferencesException {
-
-		CTPreferences ctPreferences = fetchByPrimaryKey(primaryKey);
-
-		if (ctPreferences == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPreferencesException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctPreferences;
 	}
@@ -1147,9 +1038,6 @@ public class CTPreferencesPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctPreferences.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTPreferences exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTPreferences exists with the key {";
 
@@ -1162,4 +1050,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1956557339
+// LIFERAY-SERVICE-BUILDER-HASH:-1229805201

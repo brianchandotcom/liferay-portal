@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDLRecordSetPersistence.class)
 public class DDLRecordSetPersistenceImpl
-	extends BasePersistenceImpl<DDLRecordSet>
+	extends BasePersistenceImpl<DDLRecordSet, NoSuchRecordSetException>
 	implements DDLRecordSetPersistence {
 
 	/*
@@ -2255,48 +2255,6 @@ public class DDLRecordSetPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddl record sets.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDLRecordSetImpl.class);
-
-		finderCache.clearCache(DDLRecordSetImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddl record set.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDLRecordSet ddlRecordSet) {
-		entityCache.removeResult(DDLRecordSetImpl.class, ddlRecordSet);
-	}
-
-	@Override
-	public void clearCache(List<DDLRecordSet> ddlRecordSets) {
-		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
-			entityCache.removeResult(DDLRecordSetImpl.class, ddlRecordSet);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDLRecordSetImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDLRecordSetImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDLRecordSetModelImpl ddlRecordSetModelImpl) {
 
@@ -2356,47 +2314,6 @@ public class DDLRecordSetPersistenceImpl
 		throws NoSuchRecordSetException {
 
 		return remove((Serializable)recordSetId);
-	}
-
-	/**
-	 * Removes the ddl record set with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddl record set
-	 * @return the ddl record set that was removed
-	 * @throws NoSuchRecordSetException if a ddl record set with the primary key could not be found
-	 */
-	@Override
-	public DDLRecordSet remove(Serializable primaryKey)
-		throws NoSuchRecordSetException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDLRecordSet ddlRecordSet = (DDLRecordSet)session.get(
-				DDLRecordSetImpl.class, primaryKey);
-
-			if (ddlRecordSet == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRecordSetException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddlRecordSet);
-		}
-		catch (NoSuchRecordSetException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2520,31 +2437,6 @@ public class DDLRecordSetPersistenceImpl
 		}
 
 		ddlRecordSet.resetOriginalValues();
-
-		return ddlRecordSet;
-	}
-
-	/**
-	 * Returns the ddl record set with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddl record set
-	 * @return the ddl record set
-	 * @throws NoSuchRecordSetException if a ddl record set with the primary key could not be found
-	 */
-	@Override
-	public DDLRecordSet findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRecordSetException {
-
-		DDLRecordSet ddlRecordSet = fetchByPrimaryKey(primaryKey);
-
-		if (ddlRecordSet == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRecordSetException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddlRecordSet;
 	}
@@ -3268,9 +3160,6 @@ public class DDLRecordSetPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDLRecordSet.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDLRecordSet exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDLRecordSet exists with the key {";
 
@@ -3286,4 +3175,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1882611342
+// LIFERAY-SERVICE-BUILDER-HASH:-1337733647

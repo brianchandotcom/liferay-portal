@@ -67,7 +67,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShippingFixedOptionQualifierPersistence.class)
 public class CommerceShippingFixedOptionQualifierPersistenceImpl
-	extends BasePersistenceImpl<CommerceShippingFixedOptionQualifier>
+	extends BasePersistenceImpl
+		<CommerceShippingFixedOptionQualifier,
+		 NoSuchShippingFixedOptionQualifierException>
 	implements CommerceShippingFixedOptionQualifierPersistence {
 
 	/*
@@ -632,62 +634,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipping fixed option qualifiers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShippingFixedOptionQualifierImpl.class);
-
-		finderCache.clearCache(CommerceShippingFixedOptionQualifierImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipping fixed option qualifier.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier) {
-
-		entityCache.removeResult(
-			CommerceShippingFixedOptionQualifierImpl.class,
-			commerceShippingFixedOptionQualifier);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceShippingFixedOptionQualifier>
-			commerceShippingFixedOptionQualifiers) {
-
-		for (CommerceShippingFixedOptionQualifier
-				commerceShippingFixedOptionQualifier :
-					commerceShippingFixedOptionQualifiers) {
-
-			entityCache.removeResult(
-				CommerceShippingFixedOptionQualifierImpl.class,
-				commerceShippingFixedOptionQualifier);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShippingFixedOptionQualifierImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShippingFixedOptionQualifierImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShippingFixedOptionQualifierModelImpl
 			commerceShippingFixedOptionQualifierModelImpl) {
@@ -741,52 +687,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		throws NoSuchShippingFixedOptionQualifierException {
 
 		return remove((Serializable)commerceShippingFixedOptionQualifierId);
-	}
-
-	/**
-	 * Removes the commerce shipping fixed option qualifier with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option qualifier
-	 * @return the commerce shipping fixed option qualifier that was removed
-	 * @throws NoSuchShippingFixedOptionQualifierException if a commerce shipping fixed option qualifier with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier remove(Serializable primaryKey)
-		throws NoSuchShippingFixedOptionQualifierException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingFixedOptionQualifier
-				commerceShippingFixedOptionQualifier =
-					(CommerceShippingFixedOptionQualifier)session.get(
-						CommerceShippingFixedOptionQualifierImpl.class,
-						primaryKey);
-
-			if (commerceShippingFixedOptionQualifier == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShippingFixedOptionQualifierException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShippingFixedOptionQualifier);
-		}
-		catch (NoSuchShippingFixedOptionQualifierException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -919,34 +819,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 		}
 
 		commerceShippingFixedOptionQualifier.resetOriginalValues();
-
-		return commerceShippingFixedOptionQualifier;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option qualifier with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping fixed option qualifier
-	 * @return the commerce shipping fixed option qualifier
-	 * @throws NoSuchShippingFixedOptionQualifierException if a commerce shipping fixed option qualifier with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionQualifier findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchShippingFixedOptionQualifierException {
-
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier = fetchByPrimaryKey(
-				primaryKey);
-
-		if (commerceShippingFixedOptionQualifier == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShippingFixedOptionQualifierException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShippingFixedOptionQualifier;
 	}
@@ -1388,9 +1260,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShippingFixedOptionQualifier.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShippingFixedOptionQualifier exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShippingFixedOptionQualifier exists with the key {";
 
@@ -1406,4 +1275,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1978128000
+// LIFERAY-SERVICE-BUILDER-HASH:-1882378297

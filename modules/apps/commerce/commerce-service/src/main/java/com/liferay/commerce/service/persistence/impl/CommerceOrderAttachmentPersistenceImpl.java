@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceOrderAttachmentPersistence.class)
 public class CommerceOrderAttachmentPersistenceImpl
-	extends BasePersistenceImpl<CommerceOrderAttachment>
+	extends BasePersistenceImpl
+		<CommerceOrderAttachment, NoSuchOrderAttachmentException>
 	implements CommerceOrderAttachmentPersistence {
 
 	/*
@@ -981,55 +982,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce order attachments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceOrderAttachmentImpl.class);
-
-		finderCache.clearCache(CommerceOrderAttachmentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce order attachment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceOrderAttachment commerceOrderAttachment) {
-		entityCache.removeResult(
-			CommerceOrderAttachmentImpl.class, commerceOrderAttachment);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceOrderAttachment> commerceOrderAttachments) {
-
-		for (CommerceOrderAttachment commerceOrderAttachment :
-				commerceOrderAttachments) {
-
-			entityCache.removeResult(
-				CommerceOrderAttachmentImpl.class, commerceOrderAttachment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceOrderAttachmentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceOrderAttachmentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceOrderAttachmentModelImpl commerceOrderAttachmentModelImpl) {
 
@@ -1085,48 +1037,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 		throws NoSuchOrderAttachmentException {
 
 		return remove((Serializable)commerceOrderAttachmentId);
-	}
-
-	/**
-	 * Removes the commerce order attachment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce order attachment
-	 * @return the commerce order attachment that was removed
-	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderAttachment remove(Serializable primaryKey)
-		throws NoSuchOrderAttachmentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceOrderAttachment commerceOrderAttachment =
-				(CommerceOrderAttachment)session.get(
-					CommerceOrderAttachmentImpl.class, primaryKey);
-
-			if (commerceOrderAttachment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrderAttachmentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceOrderAttachment);
-		}
-		catch (NoSuchOrderAttachmentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1324,32 +1234,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 		}
 
 		commerceOrderAttachment.resetOriginalValues();
-
-		return commerceOrderAttachment;
-	}
-
-	/**
-	 * Returns the commerce order attachment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce order attachment
-	 * @return the commerce order attachment
-	 * @throws NoSuchOrderAttachmentException if a commerce order attachment with the primary key could not be found
-	 */
-	@Override
-	public CommerceOrderAttachment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrderAttachmentException {
-
-		CommerceOrderAttachment commerceOrderAttachment = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceOrderAttachment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrderAttachmentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceOrderAttachment;
 	}
@@ -1831,9 +1715,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceOrderAttachment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceOrderAttachment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderAttachment exists with the key {";
 
@@ -1849,4 +1730,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-303298814
+// LIFERAY-SERVICE-BUILDER-HASH:-196095531

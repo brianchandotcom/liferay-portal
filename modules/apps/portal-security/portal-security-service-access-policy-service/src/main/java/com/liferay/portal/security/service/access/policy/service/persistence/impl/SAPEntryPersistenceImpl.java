@@ -74,7 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SAPEntryPersistence.class)
 public class SAPEntryPersistenceImpl
-	extends BasePersistenceImpl<SAPEntry> implements SAPEntryPersistence {
+	extends BasePersistenceImpl<SAPEntry, NoSuchEntryException>
+	implements SAPEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1835,48 +1836,6 @@ public class SAPEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sap entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SAPEntryImpl.class);
-
-		finderCache.clearCache(SAPEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sap entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SAPEntry sapEntry) {
-		entityCache.removeResult(SAPEntryImpl.class, sapEntry);
-	}
-
-	@Override
-	public void clearCache(List<SAPEntry> sapEntries) {
-		for (SAPEntry sapEntry : sapEntries) {
-			entityCache.removeResult(SAPEntryImpl.class, sapEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SAPEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SAPEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SAPEntryModelImpl sapEntryModelImpl) {
 
@@ -1919,47 +1878,6 @@ public class SAPEntryPersistenceImpl
 	@Override
 	public SAPEntry remove(long sapEntryId) throws NoSuchEntryException {
 		return remove((Serializable)sapEntryId);
-	}
-
-	/**
-	 * Removes the sap entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sap entry
-	 * @return the sap entry that was removed
-	 * @throws NoSuchEntryException if a sap entry with the primary key could not be found
-	 */
-	@Override
-	public SAPEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SAPEntry sapEntry = (SAPEntry)session.get(
-				SAPEntryImpl.class, primaryKey);
-
-			if (sapEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sapEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2072,31 +1990,6 @@ public class SAPEntryPersistenceImpl
 		}
 
 		sapEntry.resetOriginalValues();
-
-		return sapEntry;
-	}
-
-	/**
-	 * Returns the sap entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sap entry
-	 * @return the sap entry
-	 * @throws NoSuchEntryException if a sap entry with the primary key could not be found
-	 */
-	@Override
-	public SAPEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		SAPEntry sapEntry = fetchByPrimaryKey(primaryKey);
-
-		if (sapEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sapEntry;
 	}
@@ -2554,9 +2447,6 @@ public class SAPEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SAPEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SAPEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SAPEntry exists with the key {";
 
@@ -2572,4 +2462,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654914024
+// LIFERAY-SERVICE-BUILDER-HASH:-1579469400

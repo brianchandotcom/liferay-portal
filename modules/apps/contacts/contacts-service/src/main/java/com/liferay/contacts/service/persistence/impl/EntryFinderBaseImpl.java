@@ -5,6 +5,7 @@
 
 package com.liferay.contacts.service.persistence.impl;
 
+import com.liferay.contacts.exception.NoSuchEntryException;
 import com.liferay.contacts.model.Entry;
 import com.liferay.contacts.service.persistence.EntryPersistence;
 import com.liferay.contacts.service.persistence.impl.constants.ContactsPersistenceConstants;
@@ -20,7 +21,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
+public abstract class EntryFinderBaseImpl
+	extends BasePersistenceImpl<Entry, NoSuchEntryException> {
 
 	public EntryFinderBaseImpl() {
 		setModelClass(Entry.class);
@@ -56,4 +58,4 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 	protected EntryPersistence entryPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-793395566
+// LIFERAY-SERVICE-BUILDER-HASH:315116226

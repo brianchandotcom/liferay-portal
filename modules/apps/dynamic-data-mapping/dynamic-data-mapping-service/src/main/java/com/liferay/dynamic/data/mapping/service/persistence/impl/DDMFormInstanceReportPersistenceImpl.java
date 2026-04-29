@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMFormInstanceReportPersistence.class)
 public class DDMFormInstanceReportPersistenceImpl
-	extends BasePersistenceImpl<DDMFormInstanceReport>
+	extends BasePersistenceImpl
+		<DDMFormInstanceReport, NoSuchFormInstanceReportException>
 	implements DDMFormInstanceReportPersistence {
 
 	/*
@@ -260,53 +261,6 @@ public class DDMFormInstanceReportPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm form instance reports.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMFormInstanceReportImpl.class);
-
-		finderCache.clearCache(DDMFormInstanceReportImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm form instance report.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMFormInstanceReport ddmFormInstanceReport) {
-		entityCache.removeResult(
-			DDMFormInstanceReportImpl.class, ddmFormInstanceReport);
-	}
-
-	@Override
-	public void clearCache(List<DDMFormInstanceReport> ddmFormInstanceReports) {
-		for (DDMFormInstanceReport ddmFormInstanceReport :
-				ddmFormInstanceReports) {
-
-			entityCache.removeResult(
-				DDMFormInstanceReportImpl.class, ddmFormInstanceReport);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMFormInstanceReportImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DDMFormInstanceReportImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMFormInstanceReportModelImpl ddmFormInstanceReportModelImpl) {
 
@@ -355,48 +309,6 @@ public class DDMFormInstanceReportPersistenceImpl
 		throws NoSuchFormInstanceReportException {
 
 		return remove((Serializable)formInstanceReportId);
-	}
-
-	/**
-	 * Removes the ddm form instance report with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance report
-	 * @return the ddm form instance report that was removed
-	 * @throws NoSuchFormInstanceReportException if a ddm form instance report with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstanceReport remove(Serializable primaryKey)
-		throws NoSuchFormInstanceReportException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMFormInstanceReport ddmFormInstanceReport =
-				(DDMFormInstanceReport)session.get(
-					DDMFormInstanceReportImpl.class, primaryKey);
-
-			if (ddmFormInstanceReport == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFormInstanceReportException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmFormInstanceReport);
-		}
-		catch (NoSuchFormInstanceReportException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -524,32 +436,6 @@ public class DDMFormInstanceReportPersistenceImpl
 		}
 
 		ddmFormInstanceReport.resetOriginalValues();
-
-		return ddmFormInstanceReport;
-	}
-
-	/**
-	 * Returns the ddm form instance report with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance report
-	 * @return the ddm form instance report
-	 * @throws NoSuchFormInstanceReportException if a ddm form instance report with the primary key could not be found
-	 */
-	@Override
-	public DDMFormInstanceReport findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFormInstanceReportException {
-
-		DDMFormInstanceReport ddmFormInstanceReport = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ddmFormInstanceReport == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFormInstanceReportException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmFormInstanceReport;
 	}
@@ -1124,9 +1010,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmFormInstanceReport.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMFormInstanceReport exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMFormInstanceReport exists with the key {";
 
@@ -1142,4 +1025,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-501135487
+// LIFERAY-SERVICE-BUILDER-HASH:1651756746

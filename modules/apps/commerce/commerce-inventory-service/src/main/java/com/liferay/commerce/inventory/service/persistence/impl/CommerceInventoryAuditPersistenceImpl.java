@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceInventoryAuditPersistence.class)
 public class CommerceInventoryAuditPersistenceImpl
-	extends BasePersistenceImpl<CommerceInventoryAudit>
+	extends BasePersistenceImpl
+		<CommerceInventoryAudit, NoSuchInventoryAuditException>
 	implements CommerceInventoryAuditPersistence {
 
 	/*
@@ -469,55 +470,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce inventory audits.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceInventoryAuditImpl.class);
-
-		finderCache.clearCache(CommerceInventoryAuditImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce inventory audit.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceInventoryAudit commerceInventoryAudit) {
-		entityCache.removeResult(
-			CommerceInventoryAuditImpl.class, commerceInventoryAudit);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceInventoryAudit> commerceInventoryAudits) {
-
-		for (CommerceInventoryAudit commerceInventoryAudit :
-				commerceInventoryAudits) {
-
-			entityCache.removeResult(
-				CommerceInventoryAuditImpl.class, commerceInventoryAudit);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceInventoryAuditImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceInventoryAuditImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce inventory audit with the primary key. Does not add the commerce inventory audit to the database.
 	 *
 	 * @param commerceInventoryAuditId the primary key for the new commerce inventory audit
@@ -548,48 +500,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		throws NoSuchInventoryAuditException {
 
 		return remove((Serializable)commerceInventoryAuditId);
-	}
-
-	/**
-	 * Removes the commerce inventory audit with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory audit
-	 * @return the commerce inventory audit that was removed
-	 * @throws NoSuchInventoryAuditException if a commerce inventory audit with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit remove(Serializable primaryKey)
-		throws NoSuchInventoryAuditException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceInventoryAudit commerceInventoryAudit =
-				(CommerceInventoryAudit)session.get(
-					CommerceInventoryAuditImpl.class, primaryKey);
-
-			if (commerceInventoryAudit == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchInventoryAuditException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceInventoryAudit);
-		}
-		catch (NoSuchInventoryAuditException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -707,32 +617,6 @@ public class CommerceInventoryAuditPersistenceImpl
 		}
 
 		commerceInventoryAudit.resetOriginalValues();
-
-		return commerceInventoryAudit;
-	}
-
-	/**
-	 * Returns the commerce inventory audit with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce inventory audit
-	 * @return the commerce inventory audit
-	 * @throws NoSuchInventoryAuditException if a commerce inventory audit with the primary key could not be found
-	 */
-	@Override
-	public CommerceInventoryAudit findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchInventoryAuditException {
-
-		CommerceInventoryAudit commerceInventoryAudit = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceInventoryAudit == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchInventoryAuditException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceInventoryAudit;
 	}
@@ -1118,9 +1002,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceInventoryAudit.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceInventoryAudit exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceInventoryAudit exists with the key {";
 
@@ -1136,4 +1017,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1994441573
+// LIFERAY-SERVICE-BUILDER-HASH:1031017668

@@ -74,7 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AnalyticsAssociationPersistence.class)
 public class AnalyticsAssociationPersistenceImpl
-	extends BasePersistenceImpl<AnalyticsAssociation>
+	extends BasePersistenceImpl
+		<AnalyticsAssociation, NoSuchAssociationException>
 	implements AnalyticsAssociationPersistence {
 
 	/*
@@ -1051,53 +1052,6 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all analytics associations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AnalyticsAssociationImpl.class);
-
-		finderCache.clearCache(AnalyticsAssociationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the analytics association.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AnalyticsAssociation analyticsAssociation) {
-		entityCache.removeResult(
-			AnalyticsAssociationImpl.class, analyticsAssociation);
-	}
-
-	@Override
-	public void clearCache(List<AnalyticsAssociation> analyticsAssociations) {
-		for (AnalyticsAssociation analyticsAssociation :
-				analyticsAssociations) {
-
-			entityCache.removeResult(
-				AnalyticsAssociationImpl.class, analyticsAssociation);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AnalyticsAssociationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AnalyticsAssociationImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new analytics association with the primary key. Does not add the analytics association to the database.
 	 *
 	 * @param analyticsAssociationId the primary key for the new analytics association
@@ -1128,48 +1082,6 @@ public class AnalyticsAssociationPersistenceImpl
 		throws NoSuchAssociationException {
 
 		return remove((Serializable)analyticsAssociationId);
-	}
-
-	/**
-	 * Removes the analytics association with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the analytics association
-	 * @return the analytics association that was removed
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsAssociation remove(Serializable primaryKey)
-		throws NoSuchAssociationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnalyticsAssociation analyticsAssociation =
-				(AnalyticsAssociation)session.get(
-					AnalyticsAssociationImpl.class, primaryKey);
-
-			if (analyticsAssociation == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAssociationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(analyticsAssociation);
-		}
-		catch (NoSuchAssociationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1293,32 +1205,6 @@ public class AnalyticsAssociationPersistenceImpl
 		}
 
 		analyticsAssociation.resetOriginalValues();
-
-		return analyticsAssociation;
-	}
-
-	/**
-	 * Returns the analytics association with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the analytics association
-	 * @return the analytics association
-	 * @throws NoSuchAssociationException if a analytics association with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsAssociation findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAssociationException {
-
-		AnalyticsAssociation analyticsAssociation = fetchByPrimaryKey(
-			primaryKey);
-
-		if (analyticsAssociation == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAssociationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return analyticsAssociation;
 	}
@@ -2063,9 +1949,6 @@ public class AnalyticsAssociationPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"analyticsAssociation.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AnalyticsAssociation exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnalyticsAssociation exists with the key {";
 
@@ -2078,4 +1961,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-36177298
+// LIFERAY-SERVICE-BUILDER-HASH:-105258883

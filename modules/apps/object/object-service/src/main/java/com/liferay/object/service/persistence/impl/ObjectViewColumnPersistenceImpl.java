@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectViewColumnPersistence.class)
 public class ObjectViewColumnPersistenceImpl
-	extends BasePersistenceImpl<ObjectViewColumn>
+	extends BasePersistenceImpl
+		<ObjectViewColumn, NoSuchObjectViewColumnException>
 	implements ObjectViewColumnPersistence {
 
 	/*
@@ -754,49 +755,6 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object view columns.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectViewColumnImpl.class);
-
-		finderCache.clearCache(ObjectViewColumnImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object view column.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectViewColumn objectViewColumn) {
-		entityCache.removeResult(ObjectViewColumnImpl.class, objectViewColumn);
-	}
-
-	@Override
-	public void clearCache(List<ObjectViewColumn> objectViewColumns) {
-		for (ObjectViewColumn objectViewColumn : objectViewColumns) {
-			entityCache.removeResult(
-				ObjectViewColumnImpl.class, objectViewColumn);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectViewColumnImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectViewColumnImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object view column with the primary key. Does not add the object view column to the database.
 	 *
 	 * @param objectViewColumnId the primary key for the new object view column
@@ -830,47 +788,6 @@ public class ObjectViewColumnPersistenceImpl
 		throws NoSuchObjectViewColumnException {
 
 		return remove((Serializable)objectViewColumnId);
-	}
-
-	/**
-	 * Removes the object view column with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object view column
-	 * @return the object view column that was removed
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	@Override
-	public ObjectViewColumn remove(Serializable primaryKey)
-		throws NoSuchObjectViewColumnException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectViewColumn objectViewColumn = (ObjectViewColumn)session.get(
-				ObjectViewColumnImpl.class, primaryKey);
-
-			if (objectViewColumn == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectViewColumnException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectViewColumn);
-		}
-		catch (NoSuchObjectViewColumnException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -987,31 +904,6 @@ public class ObjectViewColumnPersistenceImpl
 		}
 
 		objectViewColumn.resetOriginalValues();
-
-		return objectViewColumn;
-	}
-
-	/**
-	 * Returns the object view column with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object view column
-	 * @return the object view column
-	 * @throws NoSuchObjectViewColumnException if a object view column with the primary key could not be found
-	 */
-	@Override
-	public ObjectViewColumn findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectViewColumnException {
-
-		ObjectViewColumn objectViewColumn = fetchByPrimaryKey(primaryKey);
-
-		if (objectViewColumn == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectViewColumnException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectViewColumn;
 	}
@@ -1448,9 +1340,6 @@ public class ObjectViewColumnPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectViewColumn.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectViewColumn exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectViewColumn exists with the key {";
 
@@ -1466,4 +1355,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1378286707
+// LIFERAY-SERVICE-BUILDER-HASH:294816214

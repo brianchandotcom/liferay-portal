@@ -77,7 +77,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LaunchEntryPersistence.class)
 public class LaunchEntryPersistenceImpl
-	extends BasePersistenceImpl<LaunchEntry> implements LaunchEntryPersistence {
+	extends BasePersistenceImpl<LaunchEntry, NoSuchLaunchEntryException>
+	implements LaunchEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -812,48 +813,6 @@ public class LaunchEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all launch entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LaunchEntryImpl.class);
-
-		finderCache.clearCache(LaunchEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the launch entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LaunchEntry launchEntry) {
-		entityCache.removeResult(LaunchEntryImpl.class, launchEntry);
-	}
-
-	@Override
-	public void clearCache(List<LaunchEntry> launchEntries) {
-		for (LaunchEntry launchEntry : launchEntries) {
-			entityCache.removeResult(LaunchEntryImpl.class, launchEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LaunchEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LaunchEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LaunchEntryModelImpl launchEntryModelImpl) {
 
@@ -909,47 +868,6 @@ public class LaunchEntryPersistenceImpl
 		throws NoSuchLaunchEntryException {
 
 		return remove((Serializable)launchEntryId);
-	}
-
-	/**
-	 * Removes the launch entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the launch entry
-	 * @return the launch entry that was removed
-	 * @throws NoSuchLaunchEntryException if a launch entry with the primary key could not be found
-	 */
-	@Override
-	public LaunchEntry remove(Serializable primaryKey)
-		throws NoSuchLaunchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LaunchEntry launchEntry = (LaunchEntry)session.get(
-				LaunchEntryImpl.class, primaryKey);
-
-			if (launchEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLaunchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(launchEntry);
-		}
-		catch (NoSuchLaunchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1126,31 +1044,6 @@ public class LaunchEntryPersistenceImpl
 		}
 
 		launchEntry.resetOriginalValues();
-
-		return launchEntry;
-	}
-
-	/**
-	 * Returns the launch entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the launch entry
-	 * @return the launch entry
-	 * @throws NoSuchLaunchEntryException if a launch entry with the primary key could not be found
-	 */
-	@Override
-	public LaunchEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLaunchEntryException {
-
-		LaunchEntry launchEntry = fetchByPrimaryKey(primaryKey);
-
-		if (launchEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLaunchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return launchEntry;
 	}
@@ -1584,9 +1477,6 @@ public class LaunchEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "launchEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LaunchEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LaunchEntry exists with the key {";
 
@@ -1602,4 +1492,4 @@ public class LaunchEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1204191192
+// LIFERAY-SERVICE-BUILDER-HASH:532854044

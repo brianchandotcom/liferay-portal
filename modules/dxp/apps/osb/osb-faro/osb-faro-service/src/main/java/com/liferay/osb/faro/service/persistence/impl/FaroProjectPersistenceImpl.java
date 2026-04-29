@@ -64,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroProjectPersistence.class)
 public class FaroProjectPersistenceImpl
-	extends BasePersistenceImpl<FaroProject> implements FaroProjectPersistence {
+	extends BasePersistenceImpl<FaroProject, NoSuchFaroProjectException>
+	implements FaroProjectPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -692,48 +693,6 @@ public class FaroProjectPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all faro projects.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroProjectImpl.class);
-
-		finderCache.clearCache(FaroProjectImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro project.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroProject faroProject) {
-		entityCache.removeResult(FaroProjectImpl.class, faroProject);
-	}
-
-	@Override
-	public void clearCache(List<FaroProject> faroProjects) {
-		for (FaroProject faroProject : faroProjects) {
-			entityCache.removeResult(FaroProjectImpl.class, faroProject);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroProjectImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroProjectImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FaroProjectModelImpl faroProjectModelImpl) {
 
@@ -783,47 +742,6 @@ public class FaroProjectPersistenceImpl
 		throws NoSuchFaroProjectException {
 
 		return remove((Serializable)faroProjectId);
-	}
-
-	/**
-	 * Removes the faro project with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro project
-	 * @return the faro project that was removed
-	 * @throws NoSuchFaroProjectException if a faro project with the primary key could not be found
-	 */
-	@Override
-	public FaroProject remove(Serializable primaryKey)
-		throws NoSuchFaroProjectException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroProject faroProject = (FaroProject)session.get(
-				FaroProjectImpl.class, primaryKey);
-
-			if (faroProject == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroProjectException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroProject);
-		}
-		catch (NoSuchFaroProjectException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -908,31 +826,6 @@ public class FaroProjectPersistenceImpl
 		}
 
 		faroProject.resetOriginalValues();
-
-		return faroProject;
-	}
-
-	/**
-	 * Returns the faro project with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro project
-	 * @return the faro project
-	 * @throws NoSuchFaroProjectException if a faro project with the primary key could not be found
-	 */
-	@Override
-	public FaroProject findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroProjectException {
-
-		FaroProject faroProject = fetchByPrimaryKey(primaryKey);
-
-		if (faroProject == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroProjectException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroProject;
 	}
@@ -1334,9 +1227,6 @@ public class FaroProjectPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroProject.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroProject exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroProject exists with the key {";
 
@@ -1352,4 +1242,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-135354641
+// LIFERAY-SERVICE-BUILDER-HASH:2128836682

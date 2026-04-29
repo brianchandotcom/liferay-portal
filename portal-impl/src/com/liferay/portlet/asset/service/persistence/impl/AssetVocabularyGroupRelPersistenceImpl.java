@@ -66,7 +66,8 @@ import java.util.Set;
  * @generated
  */
 public class AssetVocabularyGroupRelPersistenceImpl
-	extends BasePersistenceImpl<AssetVocabularyGroupRel>
+	extends BasePersistenceImpl
+		<AssetVocabularyGroupRel, NoSuchVocabularyGroupRelException>
 	implements AssetVocabularyGroupRelPersistence {
 
 	/*
@@ -1018,55 +1019,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset vocabulary group rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AssetVocabularyGroupRelImpl.class);
-
-		FinderCacheUtil.clearCache(AssetVocabularyGroupRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset vocabulary group rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetVocabularyGroupRel assetVocabularyGroupRel) {
-		EntityCacheUtil.removeResult(
-			AssetVocabularyGroupRelImpl.class, assetVocabularyGroupRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<AssetVocabularyGroupRel> assetVocabularyGroupRels) {
-
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				assetVocabularyGroupRels) {
-
-			EntityCacheUtil.removeResult(
-				AssetVocabularyGroupRelImpl.class, assetVocabularyGroupRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AssetVocabularyGroupRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				AssetVocabularyGroupRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetVocabularyGroupRelModelImpl assetVocabularyGroupRelModelImpl) {
 
@@ -1128,48 +1080,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		throws NoSuchVocabularyGroupRelException {
 
 		return remove((Serializable)assetVocabularyGroupRelId);
-	}
-
-	/**
-	 * Removes the asset vocabulary group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset vocabulary group rel
-	 * @return the asset vocabulary group rel that was removed
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel remove(Serializable primaryKey)
-		throws NoSuchVocabularyGroupRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetVocabularyGroupRel assetVocabularyGroupRel =
-				(AssetVocabularyGroupRel)session.get(
-					AssetVocabularyGroupRelImpl.class, primaryKey);
-
-			if (assetVocabularyGroupRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchVocabularyGroupRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetVocabularyGroupRel);
-		}
-		catch (NoSuchVocabularyGroupRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1279,32 +1189,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 		}
 
 		assetVocabularyGroupRel.resetOriginalValues();
-
-		return assetVocabularyGroupRel;
-	}
-
-	/**
-	 * Returns the asset vocabulary group rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset vocabulary group rel
-	 * @return the asset vocabulary group rel
-	 * @throws NoSuchVocabularyGroupRelException if a asset vocabulary group rel with the primary key could not be found
-	 */
-	@Override
-	public AssetVocabularyGroupRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchVocabularyGroupRelException {
-
-		AssetVocabularyGroupRel assetVocabularyGroupRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (assetVocabularyGroupRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchVocabularyGroupRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetVocabularyGroupRel;
 	}
@@ -1995,9 +1879,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"assetVocabularyGroupRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetVocabularyGroupRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetVocabularyGroupRel exists with the key {";
 
@@ -2013,4 +1894,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103053750
+// LIFERAY-SERVICE-BUILDER-HASH:1422216389

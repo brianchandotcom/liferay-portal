@@ -66,7 +66,8 @@ import java.util.Set;
  * @generated
  */
 public class ResourcePermissionPersistenceImpl
-	extends BasePersistenceImpl<ResourcePermission>
+	extends BasePersistenceImpl
+		<ResourcePermission, NoSuchResourcePermissionException>
 	implements ResourcePermissionPersistence {
 
 	/*
@@ -4318,51 +4319,6 @@ public class ResourcePermissionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all resource permissions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ResourcePermissionImpl.class);
-
-		FinderCacheUtil.clearCache(ResourcePermissionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the resource permission.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ResourcePermission resourcePermission) {
-		EntityCacheUtil.removeResult(
-			ResourcePermissionImpl.class, resourcePermission);
-	}
-
-	@Override
-	public void clearCache(List<ResourcePermission> resourcePermissions) {
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			EntityCacheUtil.removeResult(
-				ResourcePermissionImpl.class, resourcePermission);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ResourcePermissionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				ResourcePermissionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ResourcePermissionModelImpl resourcePermissionModelImpl) {
 
@@ -4413,48 +4369,6 @@ public class ResourcePermissionPersistenceImpl
 		throws NoSuchResourcePermissionException {
 
 		return remove((Serializable)resourcePermissionId);
-	}
-
-	/**
-	 * Removes the resource permission with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the resource permission
-	 * @return the resource permission that was removed
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	@Override
-	public ResourcePermission remove(Serializable primaryKey)
-		throws NoSuchResourcePermissionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ResourcePermission resourcePermission =
-				(ResourcePermission)session.get(
-					ResourcePermissionImpl.class, primaryKey);
-
-			if (resourcePermission == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchResourcePermissionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(resourcePermission);
-		}
-		catch (NoSuchResourcePermissionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4555,31 +4469,6 @@ public class ResourcePermissionPersistenceImpl
 		}
 
 		resourcePermission.resetOriginalValues();
-
-		return resourcePermission;
-	}
-
-	/**
-	 * Returns the resource permission with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the resource permission
-	 * @return the resource permission
-	 * @throws NoSuchResourcePermissionException if a resource permission with the primary key could not be found
-	 */
-	@Override
-	public ResourcePermission findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchResourcePermissionException {
-
-		ResourcePermission resourcePermission = fetchByPrimaryKey(primaryKey);
-
-		if (resourcePermission == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchResourcePermissionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return resourcePermission;
 	}
@@ -5474,9 +5363,6 @@ public class ResourcePermissionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourcePermission.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ResourcePermission exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ResourcePermission exists with the key {";
 
@@ -5489,4 +5375,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:904762682
+// LIFERAY-SERVICE-BUILDER-HASH:-521298377

@@ -82,7 +82,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectDefinitionPersistence.class)
 public class ObjectDefinitionPersistenceImpl
-	extends BasePersistenceImpl<ObjectDefinition>
+	extends BasePersistenceImpl
+		<ObjectDefinition, NoSuchObjectDefinitionException>
 	implements ObjectDefinitionPersistence {
 
 	/*
@@ -6617,49 +6618,6 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectDefinitionImpl.class);
-
-		finderCache.clearCache(ObjectDefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectDefinition objectDefinition) {
-		entityCache.removeResult(ObjectDefinitionImpl.class, objectDefinition);
-	}
-
-	@Override
-	public void clearCache(List<ObjectDefinition> objectDefinitions) {
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			entityCache.removeResult(
-				ObjectDefinitionImpl.class, objectDefinition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectDefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectDefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectDefinitionModelImpl objectDefinitionModelImpl) {
 
@@ -6727,47 +6685,6 @@ public class ObjectDefinitionPersistenceImpl
 		throws NoSuchObjectDefinitionException {
 
 		return remove((Serializable)objectDefinitionId);
-	}
-
-	/**
-	 * Removes the object definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object definition
-	 * @return the object definition that was removed
-	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
-	 */
-	@Override
-	public ObjectDefinition remove(Serializable primaryKey)
-		throws NoSuchObjectDefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectDefinition objectDefinition = (ObjectDefinition)session.get(
-				ObjectDefinitionImpl.class, primaryKey);
-
-			if (objectDefinition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectDefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectDefinition);
-		}
-		catch (NoSuchObjectDefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6952,31 +6869,6 @@ public class ObjectDefinitionPersistenceImpl
 		}
 
 		objectDefinition.resetOriginalValues();
-
-		return objectDefinition;
-	}
-
-	/**
-	 * Returns the object definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object definition
-	 * @return the object definition
-	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
-	 */
-	@Override
-	public ObjectDefinition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectDefinitionException {
-
-		ObjectDefinition objectDefinition = fetchByPrimaryKey(primaryKey);
-
-		if (objectDefinition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectDefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectDefinition;
 	}
@@ -7831,9 +7723,6 @@ public class ObjectDefinitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "ObjectDefinition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectDefinition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectDefinition exists with the key {";
 
@@ -7851,4 +7740,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1872873438
+// LIFERAY-SERVICE-BUILDER-HASH:954325281

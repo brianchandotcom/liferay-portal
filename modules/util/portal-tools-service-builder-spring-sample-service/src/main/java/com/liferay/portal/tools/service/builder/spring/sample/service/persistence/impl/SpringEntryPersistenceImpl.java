@@ -58,7 +58,8 @@ import java.util.Set;
  * @generated
  */
 public class SpringEntryPersistenceImpl
-	extends BasePersistenceImpl<SpringEntry> implements SpringEntryPersistence {
+	extends BasePersistenceImpl<SpringEntry, NoSuchSpringEntryException>
+	implements SpringEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -575,48 +576,6 @@ public class SpringEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all spring entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SpringEntryImpl.class);
-
-		finderCache.clearCache(SpringEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the spring entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SpringEntry springEntry) {
-		entityCache.removeResult(SpringEntryImpl.class, springEntry);
-	}
-
-	@Override
-	public void clearCache(List<SpringEntry> springEntries) {
-		for (SpringEntry springEntry : springEntries) {
-			entityCache.removeResult(SpringEntryImpl.class, springEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SpringEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SpringEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
 	 * @param springEntryId the primary key for the new spring entry
@@ -650,47 +609,6 @@ public class SpringEntryPersistenceImpl
 		throws NoSuchSpringEntryException {
 
 		return remove((Serializable)springEntryId);
-	}
-
-	/**
-	 * Removes the spring entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the spring entry
-	 * @return the spring entry that was removed
-	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
-	 */
-	@Override
-	public SpringEntry remove(Serializable primaryKey)
-		throws NoSuchSpringEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SpringEntry springEntry = (SpringEntry)session.get(
-				SpringEntryImpl.class, primaryKey);
-
-			if (springEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSpringEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(springEntry);
-		}
-		catch (NoSuchSpringEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -793,31 +711,6 @@ public class SpringEntryPersistenceImpl
 		}
 
 		springEntry.resetOriginalValues();
-
-		return springEntry;
-	}
-
-	/**
-	 * Returns the spring entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the spring entry
-	 * @return the spring entry
-	 * @throws NoSuchSpringEntryException if a spring entry with the primary key could not be found
-	 */
-	@Override
-	public SpringEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSpringEntryException {
-
-		SpringEntry springEntry = fetchByPrimaryKey(primaryKey);
-
-		if (springEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSpringEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return springEntry;
 	}
@@ -1188,9 +1081,6 @@ public class SpringEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "springEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SpringEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SpringEntry exists with the key {";
 
@@ -1206,4 +1096,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:454814145
+// LIFERAY-SERVICE-BUILDER-HASH:534571557

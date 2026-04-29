@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceQualifierEntryPersistence.class)
 public class CommerceQualifierEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceQualifierEntry>
+	extends BasePersistenceImpl
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
 	implements CommerceQualifierEntryPersistence {
 
 	/*
@@ -988,55 +989,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce qualifier entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceQualifierEntryImpl.class);
-
-		finderCache.clearCache(CommerceQualifierEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce qualifier entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceQualifierEntry commerceQualifierEntry) {
-		entityCache.removeResult(
-			CommerceQualifierEntryImpl.class, commerceQualifierEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceQualifierEntry> commerceQualifierEntries) {
-
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				commerceQualifierEntries) {
-
-			entityCache.removeResult(
-				CommerceQualifierEntryImpl.class, commerceQualifierEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceQualifierEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceQualifierEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceQualifierEntryModelImpl commerceQualifierEntryModelImpl) {
 
@@ -1082,48 +1034,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		throws NoSuchCommerceQualifierEntryException {
 
 		return remove((Serializable)commerceQualifierEntryId);
-	}
-
-	/**
-	 * Removes the commerce qualifier entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce qualifier entry
-	 * @return the commerce qualifier entry that was removed
-	 * @throws NoSuchCommerceQualifierEntryException if a commerce qualifier entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry remove(Serializable primaryKey)
-		throws NoSuchCommerceQualifierEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceQualifierEntry commerceQualifierEntry =
-				(CommerceQualifierEntry)session.get(
-					CommerceQualifierEntryImpl.class, primaryKey);
-
-			if (commerceQualifierEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCommerceQualifierEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceQualifierEntry);
-		}
-		catch (NoSuchCommerceQualifierEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1243,32 +1153,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		}
 
 		commerceQualifierEntry.resetOriginalValues();
-
-		return commerceQualifierEntry;
-	}
-
-	/**
-	 * Returns the commerce qualifier entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce qualifier entry
-	 * @return the commerce qualifier entry
-	 * @throws NoSuchCommerceQualifierEntryException if a commerce qualifier entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCommerceQualifierEntryException {
-
-		CommerceQualifierEntry commerceQualifierEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceQualifierEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCommerceQualifierEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceQualifierEntry;
 	}
@@ -1791,9 +1675,6 @@ public class CommerceQualifierEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceQualifierEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceQualifierEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceQualifierEntry exists with the key {";
 
@@ -1812,4 +1693,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014976332
+// LIFERAY-SERVICE-BUILDER-HASH:-1681048852

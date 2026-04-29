@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectLayoutColumnPersistence.class)
 public class ObjectLayoutColumnPersistenceImpl
-	extends BasePersistenceImpl<ObjectLayoutColumn>
+	extends BasePersistenceImpl
+		<ObjectLayoutColumn, NoSuchObjectLayoutColumnException>
 	implements ObjectLayoutColumnPersistence {
 
 	/*
@@ -749,50 +750,6 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object layout columns.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectLayoutColumnImpl.class);
-
-		finderCache.clearCache(ObjectLayoutColumnImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object layout column.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectLayoutColumn objectLayoutColumn) {
-		entityCache.removeResult(
-			ObjectLayoutColumnImpl.class, objectLayoutColumn);
-	}
-
-	@Override
-	public void clearCache(List<ObjectLayoutColumn> objectLayoutColumns) {
-		for (ObjectLayoutColumn objectLayoutColumn : objectLayoutColumns) {
-			entityCache.removeResult(
-				ObjectLayoutColumnImpl.class, objectLayoutColumn);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectLayoutColumnImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectLayoutColumnImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object layout column with the primary key. Does not add the object layout column to the database.
 	 *
 	 * @param objectLayoutColumnId the primary key for the new object layout column
@@ -826,48 +783,6 @@ public class ObjectLayoutColumnPersistenceImpl
 		throws NoSuchObjectLayoutColumnException {
 
 		return remove((Serializable)objectLayoutColumnId);
-	}
-
-	/**
-	 * Removes the object layout column with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object layout column
-	 * @return the object layout column that was removed
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn remove(Serializable primaryKey)
-		throws NoSuchObjectLayoutColumnException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectLayoutColumn objectLayoutColumn =
-				(ObjectLayoutColumn)session.get(
-					ObjectLayoutColumnImpl.class, primaryKey);
-
-			if (objectLayoutColumn == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectLayoutColumnException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectLayoutColumn);
-		}
-		catch (NoSuchObjectLayoutColumnException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -989,31 +904,6 @@ public class ObjectLayoutColumnPersistenceImpl
 		}
 
 		objectLayoutColumn.resetOriginalValues();
-
-		return objectLayoutColumn;
-	}
-
-	/**
-	 * Returns the object layout column with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object layout column
-	 * @return the object layout column
-	 * @throws NoSuchObjectLayoutColumnException if a object layout column with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutColumn findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectLayoutColumnException {
-
-		ObjectLayoutColumn objectLayoutColumn = fetchByPrimaryKey(primaryKey);
-
-		if (objectLayoutColumn == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectLayoutColumnException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectLayoutColumn;
 	}
@@ -1452,9 +1342,6 @@ public class ObjectLayoutColumnPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectLayoutColumn.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectLayoutColumn exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectLayoutColumn exists with the key {";
 
@@ -1470,4 +1357,4 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1212067123
+// LIFERAY-SERVICE-BUILDER-HASH:-832869850

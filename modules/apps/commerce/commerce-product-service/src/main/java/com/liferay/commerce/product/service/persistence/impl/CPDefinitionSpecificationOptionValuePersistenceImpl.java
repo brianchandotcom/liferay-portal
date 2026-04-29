@@ -86,7 +86,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionSpecificationOptionValuePersistence.class)
 public class CPDefinitionSpecificationOptionValuePersistenceImpl
-	extends BasePersistenceImpl<CPDefinitionSpecificationOptionValue>
+	extends BasePersistenceImpl
+		<CPDefinitionSpecificationOptionValue,
+		 NoSuchCPDefinitionSpecificationOptionValueException>
 	implements CPDefinitionSpecificationOptionValuePersistence {
 
 	/*
@@ -2029,62 +2031,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definition specification option values.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionSpecificationOptionValueImpl.class);
-
-		finderCache.clearCache(CPDefinitionSpecificationOptionValueImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition specification option value.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue) {
-
-		entityCache.removeResult(
-			CPDefinitionSpecificationOptionValueImpl.class,
-			cpDefinitionSpecificationOptionValue);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues) {
-
-		for (CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue :
-					cpDefinitionSpecificationOptionValues) {
-
-			entityCache.removeResult(
-				CPDefinitionSpecificationOptionValueImpl.class,
-				cpDefinitionSpecificationOptionValue);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionSpecificationOptionValueImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDefinitionSpecificationOptionValueImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionSpecificationOptionValueModelImpl
 			cpDefinitionSpecificationOptionValueModelImpl) {
@@ -2177,52 +2123,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		throws NoSuchCPDefinitionSpecificationOptionValueException {
 
 		return remove((Serializable)CPDefinitionSpecificationOptionValueId);
-	}
-
-	/**
-	 * Removes the cp definition specification option value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition specification option value
-	 * @return the cp definition specification option value that was removed
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionSpecificationOptionValue
-				cpDefinitionSpecificationOptionValue =
-					(CPDefinitionSpecificationOptionValue)session.get(
-						CPDefinitionSpecificationOptionValueImpl.class,
-						primaryKey);
-
-			if (cpDefinitionSpecificationOptionValue == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionSpecificationOptionValueException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinitionSpecificationOptionValue);
-		}
-		catch (NoSuchCPDefinitionSpecificationOptionValueException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2457,34 +2357,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		}
 
 		cpDefinitionSpecificationOptionValue.resetOriginalValues();
-
-		return cpDefinitionSpecificationOptionValue;
-	}
-
-	/**
-	 * Returns the cp definition specification option value with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition specification option value
-	 * @return the cp definition specification option value
-	 * @throws NoSuchCPDefinitionSpecificationOptionValueException if a cp definition specification option value with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionSpecificationOptionValue findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchCPDefinitionSpecificationOptionValueException {
-
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue = fetchByPrimaryKey(
-				primaryKey);
-
-		if (cpDefinitionSpecificationOptionValue == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionSpecificationOptionValueException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinitionSpecificationOptionValue;
 	}
@@ -3447,9 +3319,6 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpDefinitionSpecificationOptionValue.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinitionSpecificationOptionValue exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionSpecificationOptionValue exists with the key {";
 
@@ -3465,4 +3334,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-255187850
+// LIFERAY-SERVICE-BUILDER-HASH:393732851

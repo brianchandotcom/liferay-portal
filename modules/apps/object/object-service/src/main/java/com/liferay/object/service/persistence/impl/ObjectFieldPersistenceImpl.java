@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectFieldPersistence.class)
 public class ObjectFieldPersistenceImpl
-	extends BasePersistenceImpl<ObjectField> implements ObjectFieldPersistence {
+	extends BasePersistenceImpl<ObjectField, NoSuchObjectFieldException>
+	implements ObjectFieldPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2767,48 +2768,6 @@ public class ObjectFieldPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object fields.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectFieldImpl.class);
-
-		finderCache.clearCache(ObjectFieldImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object field.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectField objectField) {
-		entityCache.removeResult(ObjectFieldImpl.class, objectField);
-	}
-
-	@Override
-	public void clearCache(List<ObjectField> objectFields) {
-		for (ObjectField objectField : objectFields) {
-			entityCache.removeResult(ObjectFieldImpl.class, objectField);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectFieldImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectFieldImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectFieldModelImpl objectFieldModelImpl) {
 
@@ -2864,47 +2823,6 @@ public class ObjectFieldPersistenceImpl
 		throws NoSuchObjectFieldException {
 
 		return remove((Serializable)objectFieldId);
-	}
-
-	/**
-	 * Removes the object field with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object field
-	 * @return the object field that was removed
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	@Override
-	public ObjectField remove(Serializable primaryKey)
-		throws NoSuchObjectFieldException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectField objectField = (ObjectField)session.get(
-				ObjectFieldImpl.class, primaryKey);
-
-			if (objectField == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectFieldException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectField);
-		}
-		catch (NoSuchObjectFieldException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3057,31 +2975,6 @@ public class ObjectFieldPersistenceImpl
 		}
 
 		objectField.resetOriginalValues();
-
-		return objectField;
-	}
-
-	/**
-	 * Returns the object field with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object field
-	 * @return the object field
-	 * @throws NoSuchObjectFieldException if a object field with the primary key could not be found
-	 */
-	@Override
-	public ObjectField findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectFieldException {
-
-		ObjectField objectField = fetchByPrimaryKey(primaryKey);
-
-		if (objectField == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectFieldException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectField;
 	}
@@ -3922,9 +3815,6 @@ public class ObjectFieldPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectField.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectField exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectField exists with the key {";
 
@@ -3940,4 +3830,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:721649920
+// LIFERAY-SERVICE-BUILDER-HASH:464239835

@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the data limit entry service.
@@ -52,7 +51,7 @@ import java.util.Set;
  * @generated
  */
 public class DataLimitEntryPersistenceImpl
-	extends BasePersistenceImpl<DataLimitEntry>
+	extends BasePersistenceImpl<DataLimitEntry, NoSuchDataLimitEntryException>
 	implements DataLimitEntryPersistence {
 
 	/*
@@ -122,48 +121,6 @@ public class DataLimitEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all data limit entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DataLimitEntryImpl.class);
-
-		finderCache.clearCache(DataLimitEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the data limit entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DataLimitEntry dataLimitEntry) {
-		entityCache.removeResult(DataLimitEntryImpl.class, dataLimitEntry);
-	}
-
-	@Override
-	public void clearCache(List<DataLimitEntry> dataLimitEntries) {
-		for (DataLimitEntry dataLimitEntry : dataLimitEntries) {
-			entityCache.removeResult(DataLimitEntryImpl.class, dataLimitEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DataLimitEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DataLimitEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new data limit entry with the primary key. Does not add the data limit entry to the database.
 	 *
 	 * @param dataLimitEntryId the primary key for the new data limit entry
@@ -193,47 +150,6 @@ public class DataLimitEntryPersistenceImpl
 		throws NoSuchDataLimitEntryException {
 
 		return remove((Serializable)dataLimitEntryId);
-	}
-
-	/**
-	 * Removes the data limit entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the data limit entry
-	 * @return the data limit entry that was removed
-	 * @throws NoSuchDataLimitEntryException if a data limit entry with the primary key could not be found
-	 */
-	@Override
-	public DataLimitEntry remove(Serializable primaryKey)
-		throws NoSuchDataLimitEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DataLimitEntry dataLimitEntry = (DataLimitEntry)session.get(
-				DataLimitEntryImpl.class, primaryKey);
-
-			if (dataLimitEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDataLimitEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dataLimitEntry);
-		}
-		catch (NoSuchDataLimitEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -343,31 +259,6 @@ public class DataLimitEntryPersistenceImpl
 		}
 
 		dataLimitEntry.resetOriginalValues();
-
-		return dataLimitEntry;
-	}
-
-	/**
-	 * Returns the data limit entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the data limit entry
-	 * @return the data limit entry
-	 * @throws NoSuchDataLimitEntryException if a data limit entry with the primary key could not be found
-	 */
-	@Override
-	public DataLimitEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDataLimitEntryException {
-
-		DataLimitEntry dataLimitEntry = fetchByPrimaryKey(primaryKey);
-
-		if (dataLimitEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDataLimitEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dataLimitEntry;
 	}
@@ -639,9 +530,6 @@ public class DataLimitEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dataLimitEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DataLimitEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataLimitEntryPersistenceImpl.class);
 
@@ -651,4 +539,4 @@ public class DataLimitEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1641404611
+// LIFERAY-SERVICE-BUILDER-HASH:1018990405

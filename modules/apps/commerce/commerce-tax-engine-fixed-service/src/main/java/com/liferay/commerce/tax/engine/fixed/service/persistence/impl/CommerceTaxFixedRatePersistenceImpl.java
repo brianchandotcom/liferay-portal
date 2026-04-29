@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTaxFixedRatePersistence.class)
 public class CommerceTaxFixedRatePersistenceImpl
-	extends BasePersistenceImpl<CommerceTaxFixedRate>
+	extends BasePersistenceImpl
+		<CommerceTaxFixedRate, NoSuchTaxFixedRateException>
 	implements CommerceTaxFixedRatePersistence {
 
 	/*
@@ -547,53 +547,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce tax fixed rates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTaxFixedRateImpl.class);
-
-		finderCache.clearCache(CommerceTaxFixedRateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce tax fixed rate.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceTaxFixedRate commerceTaxFixedRate) {
-		entityCache.removeResult(
-			CommerceTaxFixedRateImpl.class, commerceTaxFixedRate);
-	}
-
-	@Override
-	public void clearCache(List<CommerceTaxFixedRate> commerceTaxFixedRates) {
-		for (CommerceTaxFixedRate commerceTaxFixedRate :
-				commerceTaxFixedRates) {
-
-			entityCache.removeResult(
-				CommerceTaxFixedRateImpl.class, commerceTaxFixedRate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTaxFixedRateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceTaxFixedRateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl) {
 
@@ -637,48 +590,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 		throws NoSuchTaxFixedRateException {
 
 		return remove((Serializable)commerceTaxFixedRateId);
-	}
-
-	/**
-	 * Removes the commerce tax fixed rate with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce tax fixed rate
-	 * @return the commerce tax fixed rate that was removed
-	 * @throws NoSuchTaxFixedRateException if a commerce tax fixed rate with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate remove(Serializable primaryKey)
-		throws NoSuchTaxFixedRateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTaxFixedRate commerceTaxFixedRate =
-				(CommerceTaxFixedRate)session.get(
-					CommerceTaxFixedRateImpl.class, primaryKey);
-
-			if (commerceTaxFixedRate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaxFixedRateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTaxFixedRate);
-		}
-		catch (NoSuchTaxFixedRateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -796,32 +707,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 		}
 
 		commerceTaxFixedRate.resetOriginalValues();
-
-		return commerceTaxFixedRate;
-	}
-
-	/**
-	 * Returns the commerce tax fixed rate with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce tax fixed rate
-	 * @return the commerce tax fixed rate
-	 * @throws NoSuchTaxFixedRateException if a commerce tax fixed rate with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxFixedRate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaxFixedRateException {
-
-		CommerceTaxFixedRate commerceTaxFixedRate = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceTaxFixedRate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaxFixedRateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTaxFixedRate;
 	}
@@ -1210,9 +1095,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceTaxFixedRate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTaxFixedRate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTaxFixedRate exists with the key {";
 
@@ -1225,4 +1107,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1209370205
+// LIFERAY-SERVICE-BUILDER-HASH:1063774142

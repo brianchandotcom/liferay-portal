@@ -77,7 +77,8 @@ import java.util.Set;
  * @generated
  */
 public class PhonePersistenceImpl
-	extends BasePersistenceImpl<Phone> implements PhonePersistence {
+	extends BasePersistenceImpl<Phone, NoSuchPhoneException>
+	implements PhonePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1442,48 +1443,6 @@ public class PhonePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all phones.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PhoneImpl.class);
-
-		FinderCacheUtil.clearCache(PhoneImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the phone.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Phone phone) {
-		EntityCacheUtil.removeResult(PhoneImpl.class, phone);
-	}
-
-	@Override
-	public void clearCache(List<Phone> phones) {
-		for (Phone phone : phones) {
-			EntityCacheUtil.removeResult(PhoneImpl.class, phone);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PhoneImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PhoneImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(PhoneModelImpl phoneModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -1531,44 +1490,6 @@ public class PhonePersistenceImpl
 	@Override
 	public Phone remove(long phoneId) throws NoSuchPhoneException {
 		return remove((Serializable)phoneId);
-	}
-
-	/**
-	 * Removes the phone with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the phone
-	 * @return the phone that was removed
-	 * @throws NoSuchPhoneException if a phone with the primary key could not be found
-	 */
-	@Override
-	public Phone remove(Serializable primaryKey) throws NoSuchPhoneException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Phone phone = (Phone)session.get(PhoneImpl.class, primaryKey);
-
-			if (phone == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPhoneException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(phone);
-		}
-		catch (NoSuchPhoneException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1744,31 +1665,6 @@ public class PhonePersistenceImpl
 		}
 
 		phone.resetOriginalValues();
-
-		return phone;
-	}
-
-	/**
-	 * Returns the phone with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the phone
-	 * @return the phone
-	 * @throws NoSuchPhoneException if a phone with the primary key could not be found
-	 */
-	@Override
-	public Phone findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPhoneException {
-
-		Phone phone = fetchByPrimaryKey(primaryKey);
-
-		if (phone == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPhoneException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return phone;
 	}
@@ -2535,9 +2431,6 @@ public class PhonePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "phone.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Phone exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Phone exists with the key {";
 
@@ -2553,4 +2446,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883235926
+// LIFERAY-SERVICE-BUILDER-HASH:2133120911

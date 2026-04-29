@@ -73,7 +73,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTSContentPersistence.class)
 public class CTSContentPersistenceImpl
-	extends BasePersistenceImpl<CTSContent> implements CTSContentPersistence {
+	extends BasePersistenceImpl<CTSContent, NoSuchContentException>
+	implements CTSContentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1048,48 +1049,6 @@ public class CTSContentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cts contents.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTSContentImpl.class);
-
-		finderCache.clearCache(CTSContentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cts content.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTSContent ctsContent) {
-		entityCache.removeResult(CTSContentImpl.class, ctsContent);
-	}
-
-	@Override
-	public void clearCache(List<CTSContent> ctsContents) {
-		for (CTSContent ctsContent : ctsContents) {
-			entityCache.removeResult(CTSContentImpl.class, ctsContent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTSContentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTSContentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CTSContentModelImpl ctsContentModelImpl) {
 
@@ -1137,47 +1096,6 @@ public class CTSContentPersistenceImpl
 	@Override
 	public CTSContent remove(long ctsContentId) throws NoSuchContentException {
 		return remove((Serializable)ctsContentId);
-	}
-
-	/**
-	 * Removes the cts content with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cts content
-	 * @return the cts content that was removed
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	@Override
-	public CTSContent remove(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSContent ctsContent = (CTSContent)session.get(
-				CTSContentImpl.class, primaryKey);
-
-			if (ctsContent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctsContent);
-		}
-		catch (NoSuchContentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1275,31 +1193,6 @@ public class CTSContentPersistenceImpl
 		}
 
 		ctsContent.resetOriginalValues();
-
-		return ctsContent;
-	}
-
-	/**
-	 * Returns the cts content with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cts content
-	 * @return the cts content
-	 * @throws NoSuchContentException if a cts content with the primary key could not be found
-	 */
-	@Override
-	public CTSContent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContentException {
-
-		CTSContent ctsContent = fetchByPrimaryKey(primaryKey);
-
-		if (ctsContent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctsContent;
 	}
@@ -2042,9 +1935,6 @@ public class CTSContentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctsContent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTSContent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSContent exists with the key {";
 
@@ -2060,4 +1950,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1786001370
+// LIFERAY-SERVICE-BUILDER-HASH:700860121

@@ -71,7 +71,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTSChildPersistence.class)
 public class CTSChildPersistenceImpl
-	extends BasePersistenceImpl<CTSChild> implements CTSChildPersistence {
+	extends BasePersistenceImpl<CTSChild, NoSuchCTSChildException>
+	implements CTSChildPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -637,48 +638,6 @@ public class CTSChildPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cts childs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTSChildImpl.class);
-
-		finderCache.clearCache(CTSChildImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cts child.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTSChild ctsChild) {
-		entityCache.removeResult(CTSChildImpl.class, ctsChild);
-	}
-
-	@Override
-	public void clearCache(List<CTSChild> ctsChilds) {
-		for (CTSChild ctsChild : ctsChilds) {
-			entityCache.removeResult(CTSChildImpl.class, ctsChild);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTSChildImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTSChildImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cts child with the primary key. Does not add the cts child to the database.
 	 *
 	 * @param ctsChildId the primary key for the new cts child
@@ -706,47 +665,6 @@ public class CTSChildPersistenceImpl
 	@Override
 	public CTSChild remove(long ctsChildId) throws NoSuchCTSChildException {
 		return remove((Serializable)ctsChildId);
-	}
-
-	/**
-	 * Removes the cts child with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cts child
-	 * @return the cts child that was removed
-	 * @throws NoSuchCTSChildException if a cts child with the primary key could not be found
-	 */
-	@Override
-	public CTSChild remove(Serializable primaryKey)
-		throws NoSuchCTSChildException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSChild ctsChild = (CTSChild)session.get(
-				CTSChildImpl.class, primaryKey);
-
-			if (ctsChild == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCTSChildException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctsChild);
-		}
-		catch (NoSuchCTSChildException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -833,31 +751,6 @@ public class CTSChildPersistenceImpl
 		}
 
 		ctsChild.resetOriginalValues();
-
-		return ctsChild;
-	}
-
-	/**
-	 * Returns the cts child with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cts child
-	 * @return the cts child
-	 * @throws NoSuchCTSChildException if a cts child with the primary key could not be found
-	 */
-	@Override
-	public CTSChild findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCTSChildException {
-
-		CTSChild ctsChild = fetchByPrimaryKey(primaryKey);
-
-		if (ctsChild == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCTSChildException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctsChild;
 	}
@@ -1486,9 +1379,6 @@ public class CTSChildPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctsChild.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTSChild exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSChild exists with the key {";
 
@@ -1501,4 +1391,4 @@ public class CTSChildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1504874027
+// LIFERAY-SERVICE-BUILDER-HASH:-993121364

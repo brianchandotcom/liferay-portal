@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -20,7 +21,8 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
+public class LayoutFinderBaseImpl
+	extends BasePersistenceImpl<Layout, NoSuchLayoutException> {
 
 	public LayoutFinderBaseImpl() {
 		setModelClass(Layout.class);
@@ -72,4 +74,4 @@ public class LayoutFinderBaseImpl extends BasePersistenceImpl<Layout> {
 		LayoutFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:667222670
+// LIFERAY-SERVICE-BUILDER-HASH:1268205714

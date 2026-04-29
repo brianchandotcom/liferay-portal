@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
@@ -21,7 +22,7 @@ import java.util.Set;
  * @generated
  */
 public class OrganizationFinderBaseImpl
-	extends BasePersistenceImpl<Organization> {
+	extends BasePersistenceImpl<Organization, NoSuchOrganizationException> {
 
 	public OrganizationFinderBaseImpl() {
 		setModelClass(Organization.class);
@@ -67,4 +68,4 @@ public class OrganizationFinderBaseImpl
 		OrganizationFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1798811433
+// LIFERAY-SERVICE-BUILDER-HASH:1950006095

@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = JournalArticlePersistence.class)
 public class JournalArticlePersistenceImpl
-	extends BasePersistenceImpl<JournalArticle>
+	extends BasePersistenceImpl<JournalArticle, NoSuchArticleException>
 	implements JournalArticlePersistence {
 
 	/*
@@ -16936,48 +16936,6 @@ public class JournalArticlePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all journal articles.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(JournalArticleImpl.class);
-
-		finderCache.clearCache(JournalArticleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the journal article.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(JournalArticle journalArticle) {
-		entityCache.removeResult(JournalArticleImpl.class, journalArticle);
-	}
-
-	@Override
-	public void clearCache(List<JournalArticle> journalArticles) {
-		for (JournalArticle journalArticle : journalArticles) {
-			entityCache.removeResult(JournalArticleImpl.class, journalArticle);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(JournalArticleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(JournalArticleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		JournalArticleModelImpl journalArticleModelImpl) {
 
@@ -17054,47 +17012,6 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public JournalArticle remove(long id) throws NoSuchArticleException {
 		return remove((Serializable)id);
-	}
-
-	/**
-	 * Removes the journal article with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the journal article
-	 * @return the journal article that was removed
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	@Override
-	public JournalArticle remove(Serializable primaryKey)
-		throws NoSuchArticleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			JournalArticle journalArticle = (JournalArticle)session.get(
-				JournalArticleImpl.class, primaryKey);
-
-			if (journalArticle == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchArticleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(journalArticle);
-		}
-		catch (NoSuchArticleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -17259,31 +17176,6 @@ public class JournalArticlePersistenceImpl
 		}
 
 		journalArticle.resetOriginalValues();
-
-		return journalArticle;
-	}
-
-	/**
-	 * Returns the journal article with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal article
-	 * @return the journal article
-	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
-	 */
-	@Override
-	public JournalArticle findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchArticleException {
-
-		JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
-
-		if (journalArticle == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchArticleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return journalArticle;
 	}
@@ -19155,9 +19047,6 @@ public class JournalArticlePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "JournalArticle.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No JournalArticle exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No JournalArticle exists with the key {";
 
@@ -19173,4 +19062,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1052134454
+// LIFERAY-SERVICE-BUILDER-HASH:-845177885

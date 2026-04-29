@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoConditionPersistence.class)
 public class KaleoConditionPersistenceImpl
-	extends BasePersistenceImpl<KaleoCondition>
+	extends BasePersistenceImpl<KaleoCondition, NoSuchConditionException>
 	implements KaleoConditionPersistence {
 
 	/*
@@ -572,48 +572,6 @@ public class KaleoConditionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo conditions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoConditionImpl.class);
-
-		finderCache.clearCache(KaleoConditionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo condition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoCondition kaleoCondition) {
-		entityCache.removeResult(KaleoConditionImpl.class, kaleoCondition);
-	}
-
-	@Override
-	public void clearCache(List<KaleoCondition> kaleoConditions) {
-		for (KaleoCondition kaleoCondition : kaleoConditions) {
-			entityCache.removeResult(KaleoConditionImpl.class, kaleoCondition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoConditionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoConditionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoConditionModelImpl kaleoConditionModelImpl) {
 
@@ -660,47 +618,6 @@ public class KaleoConditionPersistenceImpl
 		throws NoSuchConditionException {
 
 		return remove((Serializable)kaleoConditionId);
-	}
-
-	/**
-	 * Removes the kaleo condition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo condition
-	 * @return the kaleo condition that was removed
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
-	 */
-	@Override
-	public KaleoCondition remove(Serializable primaryKey)
-		throws NoSuchConditionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoCondition kaleoCondition = (KaleoCondition)session.get(
-				KaleoConditionImpl.class, primaryKey);
-
-			if (kaleoCondition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchConditionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoCondition);
-		}
-		catch (NoSuchConditionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -820,31 +737,6 @@ public class KaleoConditionPersistenceImpl
 		}
 
 		kaleoCondition.resetOriginalValues();
-
-		return kaleoCondition;
-	}
-
-	/**
-	 * Returns the kaleo condition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo condition
-	 * @return the kaleo condition
-	 * @throws NoSuchConditionException if a kaleo condition with the primary key could not be found
-	 */
-	@Override
-	public KaleoCondition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchConditionException {
-
-		KaleoCondition kaleoCondition = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoCondition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchConditionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoCondition;
 	}
@@ -1479,9 +1371,6 @@ public class KaleoConditionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoCondition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoCondition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoCondition exists with the key {";
 
@@ -1494,4 +1383,4 @@ public class KaleoConditionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1373763607
+// LIFERAY-SERVICE-BUILDER-HASH:-1209603616

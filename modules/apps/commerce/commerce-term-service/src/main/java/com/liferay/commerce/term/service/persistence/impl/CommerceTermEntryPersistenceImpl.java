@@ -83,7 +83,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTermEntryPersistence.class)
 public class CommerceTermEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceTermEntry>
+	extends BasePersistenceImpl<CommerceTermEntry, NoSuchTermEntryException>
 	implements CommerceTermEntryPersistence {
 
 	/*
@@ -3288,50 +3288,6 @@ public class CommerceTermEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce term entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTermEntryImpl.class);
-
-		finderCache.clearCache(CommerceTermEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce term entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceTermEntry commerceTermEntry) {
-		entityCache.removeResult(
-			CommerceTermEntryImpl.class, commerceTermEntry);
-	}
-
-	@Override
-	public void clearCache(List<CommerceTermEntry> commerceTermEntries) {
-		for (CommerceTermEntry commerceTermEntry : commerceTermEntries) {
-			entityCache.removeResult(
-				CommerceTermEntryImpl.class, commerceTermEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTermEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceTermEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTermEntryModelImpl commerceTermEntryModelImpl) {
 
@@ -3395,48 +3351,6 @@ public class CommerceTermEntryPersistenceImpl
 		throws NoSuchTermEntryException {
 
 		return remove((Serializable)commerceTermEntryId);
-	}
-
-	/**
-	 * Removes the commerce term entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce term entry
-	 * @return the commerce term entry that was removed
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceTermEntry remove(Serializable primaryKey)
-		throws NoSuchTermEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTermEntry commerceTermEntry =
-				(CommerceTermEntry)session.get(
-					CommerceTermEntryImpl.class, primaryKey);
-
-			if (commerceTermEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTermEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTermEntry);
-		}
-		catch (NoSuchTermEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3627,31 +3541,6 @@ public class CommerceTermEntryPersistenceImpl
 		}
 
 		commerceTermEntry.resetOriginalValues();
-
-		return commerceTermEntry;
-	}
-
-	/**
-	 * Returns the commerce term entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce term entry
-	 * @return the commerce term entry
-	 * @throws NoSuchTermEntryException if a commerce term entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceTermEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTermEntryException {
-
-		CommerceTermEntry commerceTermEntry = fetchByPrimaryKey(primaryKey);
-
-		if (commerceTermEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTermEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTermEntry;
 	}
@@ -4251,9 +4140,6 @@ public class CommerceTermEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CommerceTermEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTermEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTermEntry exists with the key {";
 
@@ -4269,4 +4155,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1045849069
+// LIFERAY-SERVICE-BUILDER-HASH:-618994503

@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMStructurePersistence.class)
 public class DDMStructurePersistenceImpl
-	extends BasePersistenceImpl<DDMStructure>
+	extends BasePersistenceImpl<DDMStructure, NoSuchStructureException>
 	implements DDMStructurePersistence {
 
 	/*
@@ -5697,48 +5697,6 @@ public class DDMStructurePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm structures.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMStructureImpl.class);
-
-		finderCache.clearCache(DDMStructureImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm structure.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMStructure ddmStructure) {
-		entityCache.removeResult(DDMStructureImpl.class, ddmStructure);
-	}
-
-	@Override
-	public void clearCache(List<DDMStructure> ddmStructures) {
-		for (DDMStructure ddmStructure : ddmStructures) {
-			entityCache.removeResult(DDMStructureImpl.class, ddmStructure);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMStructureImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMStructureImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMStructureModelImpl ddmStructureModelImpl) {
 
@@ -5808,47 +5766,6 @@ public class DDMStructurePersistenceImpl
 		throws NoSuchStructureException {
 
 		return remove((Serializable)structureId);
-	}
-
-	/**
-	 * Removes the ddm structure with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm structure
-	 * @return the ddm structure that was removed
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	@Override
-	public DDMStructure remove(Serializable primaryKey)
-		throws NoSuchStructureException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMStructure ddmStructure = (DDMStructure)session.get(
-				DDMStructureImpl.class, primaryKey);
-
-			if (ddmStructure == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchStructureException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmStructure);
-		}
-		catch (NoSuchStructureException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6010,31 +5927,6 @@ public class DDMStructurePersistenceImpl
 		}
 
 		ddmStructure.resetOriginalValues();
-
-		return ddmStructure;
-	}
-
-	/**
-	 * Returns the ddm structure with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm structure
-	 * @return the ddm structure
-	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
-	 */
-	@Override
-	public DDMStructure findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchStructureException {
-
-		DDMStructure ddmStructure = fetchByPrimaryKey(primaryKey);
-
-		if (ddmStructure == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchStructureException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmStructure;
 	}
@@ -6992,9 +6884,6 @@ public class DDMStructurePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DDMStructure.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMStructure exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMStructure exists with the key {";
 
@@ -7010,4 +6899,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:378653516
+// LIFERAY-SERVICE-BUILDER-HASH:-825029519

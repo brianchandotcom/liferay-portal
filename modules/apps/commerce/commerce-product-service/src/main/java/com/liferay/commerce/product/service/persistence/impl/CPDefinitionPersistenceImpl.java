@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionPersistence.class)
 public class CPDefinitionPersistenceImpl
-	extends BasePersistenceImpl<CPDefinition>
+	extends BasePersistenceImpl<CPDefinition, NoSuchCPDefinitionException>
 	implements CPDefinitionPersistence {
 
 	/*
@@ -2626,48 +2626,6 @@ public class CPDefinitionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionImpl.class);
-
-		finderCache.clearCache(CPDefinitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDefinition cpDefinition) {
-		entityCache.removeResult(CPDefinitionImpl.class, cpDefinition);
-	}
-
-	@Override
-	public void clearCache(List<CPDefinition> cpDefinitions) {
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			entityCache.removeResult(CPDefinitionImpl.class, cpDefinition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPDefinitionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionModelImpl cpDefinitionModelImpl) {
 
@@ -2727,47 +2685,6 @@ public class CPDefinitionPersistenceImpl
 		throws NoSuchCPDefinitionException {
 
 		return remove((Serializable)CPDefinitionId);
-	}
-
-	/**
-	 * Removes the cp definition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition
-	 * @return the cp definition that was removed
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	@Override
-	public CPDefinition remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinition cpDefinition = (CPDefinition)session.get(
-				CPDefinitionImpl.class, primaryKey);
-
-			if (cpDefinition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinition);
-		}
-		catch (NoSuchCPDefinitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2894,31 +2811,6 @@ public class CPDefinitionPersistenceImpl
 		}
 
 		cpDefinition.resetOriginalValues();
-
-		return cpDefinition;
-	}
-
-	/**
-	 * Returns the cp definition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition
-	 * @return the cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	@Override
-	public CPDefinition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByPrimaryKey(primaryKey);
-
-		if (cpDefinition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinition;
 	}
@@ -3863,9 +3755,6 @@ public class CPDefinitionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CPDefinition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinition exists with the key {";
 
@@ -3881,4 +3770,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-482507080
+// LIFERAY-SERVICE-BUILDER-HASH:-384375117

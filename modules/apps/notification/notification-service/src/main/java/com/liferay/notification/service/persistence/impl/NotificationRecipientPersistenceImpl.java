@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = NotificationRecipientPersistence.class)
 public class NotificationRecipientPersistenceImpl
-	extends BasePersistenceImpl<NotificationRecipient>
+	extends BasePersistenceImpl
+		<NotificationRecipient, NoSuchNotificationRecipientException>
 	implements NotificationRecipientPersistence {
 
 	/*
@@ -543,53 +544,6 @@ public class NotificationRecipientPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all notification recipients.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NotificationRecipientImpl.class);
-
-		finderCache.clearCache(NotificationRecipientImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the notification recipient.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(NotificationRecipient notificationRecipient) {
-		entityCache.removeResult(
-			NotificationRecipientImpl.class, notificationRecipient);
-	}
-
-	@Override
-	public void clearCache(List<NotificationRecipient> notificationRecipients) {
-		for (NotificationRecipient notificationRecipient :
-				notificationRecipients) {
-
-			entityCache.removeResult(
-				NotificationRecipientImpl.class, notificationRecipient);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NotificationRecipientImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				NotificationRecipientImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		NotificationRecipientModelImpl notificationRecipientModelImpl) {
 
@@ -636,48 +590,6 @@ public class NotificationRecipientPersistenceImpl
 		throws NoSuchNotificationRecipientException {
 
 		return remove((Serializable)notificationRecipientId);
-	}
-
-	/**
-	 * Removes the notification recipient with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the notification recipient
-	 * @return the notification recipient that was removed
-	 * @throws NoSuchNotificationRecipientException if a notification recipient with the primary key could not be found
-	 */
-	@Override
-	public NotificationRecipient remove(Serializable primaryKey)
-		throws NoSuchNotificationRecipientException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NotificationRecipient notificationRecipient =
-				(NotificationRecipient)session.get(
-					NotificationRecipientImpl.class, primaryKey);
-
-			if (notificationRecipient == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationRecipientException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(notificationRecipient);
-		}
-		catch (NoSuchNotificationRecipientException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -803,32 +715,6 @@ public class NotificationRecipientPersistenceImpl
 		}
 
 		notificationRecipient.resetOriginalValues();
-
-		return notificationRecipient;
-	}
-
-	/**
-	 * Returns the notification recipient with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the notification recipient
-	 * @return the notification recipient
-	 * @throws NoSuchNotificationRecipientException if a notification recipient with the primary key could not be found
-	 */
-	@Override
-	public NotificationRecipient findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNotificationRecipientException {
-
-		NotificationRecipient notificationRecipient = fetchByPrimaryKey(
-			primaryKey);
-
-		if (notificationRecipient == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationRecipientException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return notificationRecipient;
 	}
@@ -1221,9 +1107,6 @@ public class NotificationRecipientPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"notificationRecipient.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NotificationRecipient exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationRecipient exists with the key {";
 
@@ -1239,4 +1122,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1267944735
+// LIFERAY-SERVICE-BUILDER-HASH:-926877720

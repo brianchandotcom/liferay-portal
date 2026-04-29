@@ -81,7 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KBCommentPersistence.class)
 public class KBCommentPersistenceImpl
-	extends BasePersistenceImpl<KBComment> implements KBCommentPersistence {
+	extends BasePersistenceImpl<KBComment, NoSuchCommentException>
+	implements KBCommentPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2073,48 +2074,6 @@ public class KBCommentPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kb comments.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KBCommentImpl.class);
-
-		finderCache.clearCache(KBCommentImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kb comment.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KBComment kbComment) {
-		entityCache.removeResult(KBCommentImpl.class, kbComment);
-	}
-
-	@Override
-	public void clearCache(List<KBComment> kbComments) {
-		for (KBComment kbComment : kbComments) {
-			entityCache.removeResult(KBCommentImpl.class, kbComment);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KBCommentImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KBCommentImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KBCommentModelImpl kbCommentModelImpl) {
 
@@ -2163,47 +2122,6 @@ public class KBCommentPersistenceImpl
 	@Override
 	public KBComment remove(long kbCommentId) throws NoSuchCommentException {
 		return remove((Serializable)kbCommentId);
-	}
-
-	/**
-	 * Removes the kb comment with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kb comment
-	 * @return the kb comment that was removed
-	 * @throws NoSuchCommentException if a kb comment with the primary key could not be found
-	 */
-	@Override
-	public KBComment remove(Serializable primaryKey)
-		throws NoSuchCommentException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KBComment kbComment = (KBComment)session.get(
-				KBCommentImpl.class, primaryKey);
-
-			if (kbComment == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCommentException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kbComment);
-		}
-		catch (NoSuchCommentException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2323,31 +2241,6 @@ public class KBCommentPersistenceImpl
 		}
 
 		kbComment.resetOriginalValues();
-
-		return kbComment;
-	}
-
-	/**
-	 * Returns the kb comment with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb comment
-	 * @return the kb comment
-	 * @throws NoSuchCommentException if a kb comment with the primary key could not be found
-	 */
-	@Override
-	public KBComment findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCommentException {
-
-		KBComment kbComment = fetchByPrimaryKey(primaryKey);
-
-		if (kbComment == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCommentException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kbComment;
 	}
@@ -3171,9 +3064,6 @@ public class KBCommentPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kbComment.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KBComment exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBComment exists with the key {";
 
@@ -3189,4 +3079,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2118001786
+// LIFERAY-SERVICE-BUILDER-HASH:-376069543

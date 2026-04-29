@@ -67,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceShippingMethodPersistence.class)
 public class CommerceShippingMethodPersistenceImpl
-	extends BasePersistenceImpl<CommerceShippingMethod>
+	extends BasePersistenceImpl
+		<CommerceShippingMethod, NoSuchShippingMethodException>
 	implements CommerceShippingMethodPersistence {
 
 	/*
@@ -552,55 +553,6 @@ public class CommerceShippingMethodPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce shipping methods.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceShippingMethodImpl.class);
-
-		finderCache.clearCache(CommerceShippingMethodImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce shipping method.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceShippingMethod commerceShippingMethod) {
-		entityCache.removeResult(
-			CommerceShippingMethodImpl.class, commerceShippingMethod);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceShippingMethod> commerceShippingMethods) {
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			entityCache.removeResult(
-				CommerceShippingMethodImpl.class, commerceShippingMethod);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceShippingMethodImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceShippingMethodImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceShippingMethodModelImpl commerceShippingMethodModelImpl) {
 
@@ -644,48 +596,6 @@ public class CommerceShippingMethodPersistenceImpl
 		throws NoSuchShippingMethodException {
 
 		return remove((Serializable)commerceShippingMethodId);
-	}
-
-	/**
-	 * Removes the commerce shipping method with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping method
-	 * @return the commerce shipping method that was removed
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingMethod remove(Serializable primaryKey)
-		throws NoSuchShippingMethodException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingMethod commerceShippingMethod =
-				(CommerceShippingMethod)session.get(
-					CommerceShippingMethodImpl.class, primaryKey);
-
-			if (commerceShippingMethod == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchShippingMethodException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceShippingMethod);
-		}
-		catch (NoSuchShippingMethodException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -805,32 +715,6 @@ public class CommerceShippingMethodPersistenceImpl
 		}
 
 		commerceShippingMethod.resetOriginalValues();
-
-		return commerceShippingMethod;
-	}
-
-	/**
-	 * Returns the commerce shipping method with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce shipping method
-	 * @return the commerce shipping method
-	 * @throws NoSuchShippingMethodException if a commerce shipping method with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingMethod findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchShippingMethodException {
-
-		CommerceShippingMethod commerceShippingMethod = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceShippingMethod == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchShippingMethodException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceShippingMethod;
 	}
@@ -1228,9 +1112,6 @@ public class CommerceShippingMethodPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceShippingMethod.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceShippingMethod exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceShippingMethod exists with the key {";
 
@@ -1246,4 +1127,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:67181719
+// LIFERAY-SERVICE-BUILDER-HASH:-187762308

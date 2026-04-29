@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoTaskInstanceTokenPersistence.class)
 public class KaleoTaskInstanceTokenPersistenceImpl
-	extends BasePersistenceImpl<KaleoTaskInstanceToken>
+	extends BasePersistenceImpl
+		<KaleoTaskInstanceToken, NoSuchTaskInstanceTokenException>
 	implements KaleoTaskInstanceTokenPersistence {
 
 	/*
@@ -1274,55 +1275,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo task instance tokens.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoTaskInstanceTokenImpl.class);
-
-		finderCache.clearCache(KaleoTaskInstanceTokenImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo task instance token.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		entityCache.removeResult(
-			KaleoTaskInstanceTokenImpl.class, kaleoTaskInstanceToken);
-	}
-
-	@Override
-	public void clearCache(
-		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens) {
-
-		for (KaleoTaskInstanceToken kaleoTaskInstanceToken :
-				kaleoTaskInstanceTokens) {
-
-			entityCache.removeResult(
-				KaleoTaskInstanceTokenImpl.class, kaleoTaskInstanceToken);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoTaskInstanceTokenImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				KaleoTaskInstanceTokenImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl) {
 
@@ -1372,48 +1324,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 		throws NoSuchTaskInstanceTokenException {
 
 		return remove((Serializable)kaleoTaskInstanceTokenId);
-	}
-
-	/**
-	 * Removes the kaleo task instance token with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo task instance token
-	 * @return the kaleo task instance token that was removed
-	 * @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken remove(Serializable primaryKey)
-		throws NoSuchTaskInstanceTokenException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTaskInstanceToken kaleoTaskInstanceToken =
-				(KaleoTaskInstanceToken)session.get(
-					KaleoTaskInstanceTokenImpl.class, primaryKey);
-
-			if (kaleoTaskInstanceToken == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaskInstanceTokenException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoTaskInstanceToken);
-		}
-		catch (NoSuchTaskInstanceTokenException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1541,32 +1451,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 		}
 
 		kaleoTaskInstanceToken.resetOriginalValues();
-
-		return kaleoTaskInstanceToken;
-	}
-
-	/**
-	 * Returns the kaleo task instance token with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo task instance token
-	 * @return the kaleo task instance token
-	 * @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaskInstanceTokenException {
-
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByPrimaryKey(
-			primaryKey);
-
-		if (kaleoTaskInstanceToken == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaskInstanceTokenException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoTaskInstanceToken;
 	}
@@ -2374,9 +2258,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"kaleoTaskInstanceToken.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoTaskInstanceToken exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTaskInstanceToken exists with the key {";
 
@@ -2389,4 +2270,4 @@ public class KaleoTaskInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1741652673
+// LIFERAY-SERVICE-BUILDER-HASH:-1540669866

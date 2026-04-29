@@ -84,7 +84,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = StyleBookEntryVersionPersistence.class)
 public class StyleBookEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<StyleBookEntryVersion>
+	extends BasePersistenceImpl
+		<StyleBookEntryVersion, NoSuchEntryVersionException>
 	implements StyleBookEntryVersionPersistence {
 
 	/*
@@ -3835,53 +3836,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all style book entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(StyleBookEntryVersionImpl.class);
-
-		finderCache.clearCache(StyleBookEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the style book entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(StyleBookEntryVersion styleBookEntryVersion) {
-		entityCache.removeResult(
-			StyleBookEntryVersionImpl.class, styleBookEntryVersion);
-	}
-
-	@Override
-	public void clearCache(List<StyleBookEntryVersion> styleBookEntryVersions) {
-		for (StyleBookEntryVersion styleBookEntryVersion :
-				styleBookEntryVersions) {
-
-			entityCache.removeResult(
-				StyleBookEntryVersionImpl.class, styleBookEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(StyleBookEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				StyleBookEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		StyleBookEntryVersionModelImpl styleBookEntryVersionModelImpl) {
 
@@ -3951,48 +3905,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		throws NoSuchEntryVersionException {
 
 		return remove((Serializable)styleBookEntryVersionId);
-	}
-
-	/**
-	 * Removes the style book entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the style book entry version
-	 * @return the style book entry version that was removed
-	 * @throws NoSuchEntryVersionException if a style book entry version with the primary key could not be found
-	 */
-	@Override
-	public StyleBookEntryVersion remove(Serializable primaryKey)
-		throws NoSuchEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			StyleBookEntryVersion styleBookEntryVersion =
-				(StyleBookEntryVersion)session.get(
-					StyleBookEntryVersionImpl.class, primaryKey);
-
-			if (styleBookEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(styleBookEntryVersion);
-		}
-		catch (NoSuchEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4163,32 +4075,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		}
 
 		styleBookEntryVersion.resetOriginalValues();
-
-		return styleBookEntryVersion;
-	}
-
-	/**
-	 * Returns the style book entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the style book entry version
-	 * @return the style book entry version
-	 * @throws NoSuchEntryVersionException if a style book entry version with the primary key could not be found
-	 */
-	@Override
-	public StyleBookEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryVersionException {
-
-		StyleBookEntryVersion styleBookEntryVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (styleBookEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return styleBookEntryVersion;
 	}
@@ -5577,9 +5463,6 @@ public class StyleBookEntryVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"styleBookEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No StyleBookEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No StyleBookEntryVersion exists with the key {";
 
@@ -5595,4 +5478,4 @@ public class StyleBookEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:698366957
+// LIFERAY-SERVICE-BUILDER-HASH:-674054042

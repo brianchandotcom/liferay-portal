@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the password policy rel service.
@@ -53,7 +52,8 @@ import java.util.Set;
  * @generated
  */
 public class PasswordPolicyRelPersistenceImpl
-	extends BasePersistenceImpl<PasswordPolicyRel>
+	extends BasePersistenceImpl
+		<PasswordPolicyRel, NoSuchPasswordPolicyRelException>
 	implements PasswordPolicyRelPersistence {
 
 	/*
@@ -375,51 +375,6 @@ public class PasswordPolicyRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all password policy rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PasswordPolicyRelImpl.class);
-
-		FinderCacheUtil.clearCache(PasswordPolicyRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the password policy rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PasswordPolicyRel passwordPolicyRel) {
-		EntityCacheUtil.removeResult(
-			PasswordPolicyRelImpl.class, passwordPolicyRel);
-	}
-
-	@Override
-	public void clearCache(List<PasswordPolicyRel> passwordPolicyRels) {
-		for (PasswordPolicyRel passwordPolicyRel : passwordPolicyRels) {
-			EntityCacheUtil.removeResult(
-				PasswordPolicyRelImpl.class, passwordPolicyRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PasswordPolicyRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				PasswordPolicyRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl) {
 
@@ -462,48 +417,6 @@ public class PasswordPolicyRelPersistenceImpl
 		throws NoSuchPasswordPolicyRelException {
 
 		return remove((Serializable)passwordPolicyRelId);
-	}
-
-	/**
-	 * Removes the password policy rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the password policy rel
-	 * @return the password policy rel that was removed
-	 * @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicyRel remove(Serializable primaryKey)
-		throws NoSuchPasswordPolicyRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PasswordPolicyRel passwordPolicyRel =
-				(PasswordPolicyRel)session.get(
-					PasswordPolicyRelImpl.class, primaryKey);
-
-			if (passwordPolicyRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPasswordPolicyRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(passwordPolicyRel);
-		}
-		catch (NoSuchPasswordPolicyRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -594,31 +507,6 @@ public class PasswordPolicyRelPersistenceImpl
 		}
 
 		passwordPolicyRel.resetOriginalValues();
-
-		return passwordPolicyRel;
-	}
-
-	/**
-	 * Returns the password policy rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the password policy rel
-	 * @return the password policy rel
-	 * @throws NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 */
-	@Override
-	public PasswordPolicyRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPasswordPolicyRelException {
-
-		PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(primaryKey);
-
-		if (passwordPolicyRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPasswordPolicyRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return passwordPolicyRel;
 	}
@@ -937,9 +825,6 @@ public class PasswordPolicyRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "passwordPolicyRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PasswordPolicyRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PasswordPolicyRel exists with the key {";
 
@@ -952,4 +837,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1863767565
+// LIFERAY-SERVICE-BUILDER-HASH:1841954020

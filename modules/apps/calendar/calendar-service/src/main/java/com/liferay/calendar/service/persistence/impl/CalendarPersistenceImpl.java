@@ -81,7 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CalendarPersistence.class)
 public class CalendarPersistenceImpl
-	extends BasePersistenceImpl<Calendar> implements CalendarPersistence {
+	extends BasePersistenceImpl<Calendar, NoSuchCalendarException>
+	implements CalendarPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1390,48 +1391,6 @@ public class CalendarPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all calendars.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CalendarImpl.class);
-
-		finderCache.clearCache(CalendarImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the calendar.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Calendar calendar) {
-		entityCache.removeResult(CalendarImpl.class, calendar);
-	}
-
-	@Override
-	public void clearCache(List<Calendar> calendars) {
-		for (Calendar calendar : calendars) {
-			entityCache.removeResult(CalendarImpl.class, calendar);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CalendarImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CalendarImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CalendarModelImpl calendarModelImpl) {
 
@@ -1480,47 +1439,6 @@ public class CalendarPersistenceImpl
 	@Override
 	public Calendar remove(long calendarId) throws NoSuchCalendarException {
 		return remove((Serializable)calendarId);
-	}
-
-	/**
-	 * Removes the calendar with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the calendar
-	 * @return the calendar that was removed
-	 * @throws NoSuchCalendarException if a calendar with the primary key could not be found
-	 */
-	@Override
-	public Calendar remove(Serializable primaryKey)
-		throws NoSuchCalendarException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Calendar calendar = (Calendar)session.get(
-				CalendarImpl.class, primaryKey);
-
-			if (calendar == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCalendarException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(calendar);
-		}
-		catch (NoSuchCalendarException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1638,31 +1556,6 @@ public class CalendarPersistenceImpl
 		}
 
 		calendar.resetOriginalValues();
-
-		return calendar;
-	}
-
-	/**
-	 * Returns the calendar with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the calendar
-	 * @return the calendar
-	 * @throws NoSuchCalendarException if a calendar with the primary key could not be found
-	 */
-	@Override
-	public Calendar findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCalendarException {
-
-		Calendar calendar = fetchByPrimaryKey(primaryKey);
-
-		if (calendar == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCalendarException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return calendar;
 	}
@@ -2392,9 +2285,6 @@ public class CalendarPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Calendar.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Calendar exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Calendar exists with the key {";
 
@@ -2410,4 +2300,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2078881096
+// LIFERAY-SERVICE-BUILDER-HASH:-1614827349

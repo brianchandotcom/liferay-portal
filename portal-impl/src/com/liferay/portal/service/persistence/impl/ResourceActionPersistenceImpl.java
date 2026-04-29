@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the resource action service.
@@ -52,7 +51,7 @@ import java.util.Set;
  * @generated
  */
 public class ResourceActionPersistenceImpl
-	extends BasePersistenceImpl<ResourceAction>
+	extends BasePersistenceImpl<ResourceAction, NoSuchResourceActionException>
 	implements ResourceActionPersistence {
 
 	/*
@@ -361,49 +360,6 @@ public class ResourceActionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all resource actions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ResourceActionImpl.class);
-
-		FinderCacheUtil.clearCache(ResourceActionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the resource action.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ResourceAction resourceAction) {
-		EntityCacheUtil.removeResult(ResourceActionImpl.class, resourceAction);
-	}
-
-	@Override
-	public void clearCache(List<ResourceAction> resourceActions) {
-		for (ResourceAction resourceAction : resourceActions) {
-			EntityCacheUtil.removeResult(
-				ResourceActionImpl.class, resourceAction);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ResourceActionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ResourceActionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ResourceActionModelImpl resourceActionModelImpl) {
 
@@ -444,47 +400,6 @@ public class ResourceActionPersistenceImpl
 		throws NoSuchResourceActionException {
 
 		return remove((Serializable)resourceActionId);
-	}
-
-	/**
-	 * Removes the resource action with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the resource action
-	 * @return the resource action that was removed
-	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
-	 */
-	@Override
-	public ResourceAction remove(Serializable primaryKey)
-		throws NoSuchResourceActionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ResourceAction resourceAction = (ResourceAction)session.get(
-				ResourceActionImpl.class, primaryKey);
-
-			if (resourceAction == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchResourceActionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(resourceAction);
-		}
-		catch (NoSuchResourceActionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -571,31 +486,6 @@ public class ResourceActionPersistenceImpl
 		}
 
 		resourceAction.resetOriginalValues();
-
-		return resourceAction;
-	}
-
-	/**
-	 * Returns the resource action with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the resource action
-	 * @return the resource action
-	 * @throws NoSuchResourceActionException if a resource action with the primary key could not be found
-	 */
-	@Override
-	public ResourceAction findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchResourceActionException {
-
-		ResourceAction resourceAction = fetchByPrimaryKey(primaryKey);
-
-		if (resourceAction == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchResourceActionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return resourceAction;
 	}
@@ -907,9 +797,6 @@ public class ResourceActionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "resourceAction.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ResourceAction exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ResourceAction exists with the key {";
 
@@ -922,4 +809,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1084535898
+// LIFERAY-SERVICE-BUILDER-HASH:-1079658303

@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceTaxMethodPersistence.class)
 public class CommerceTaxMethodPersistenceImpl
-	extends BasePersistenceImpl<CommerceTaxMethod>
+	extends BasePersistenceImpl<CommerceTaxMethod, NoSuchTaxMethodException>
 	implements CommerceTaxMethodPersistence {
 
 	/*
@@ -542,50 +542,6 @@ public class CommerceTaxMethodPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce tax methods.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceTaxMethodImpl.class);
-
-		finderCache.clearCache(CommerceTaxMethodImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce tax method.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceTaxMethod commerceTaxMethod) {
-		entityCache.removeResult(
-			CommerceTaxMethodImpl.class, commerceTaxMethod);
-	}
-
-	@Override
-	public void clearCache(List<CommerceTaxMethod> commerceTaxMethods) {
-		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
-			entityCache.removeResult(
-				CommerceTaxMethodImpl.class, commerceTaxMethod);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceTaxMethodImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceTaxMethodImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceTaxMethodModelImpl commerceTaxMethodModelImpl) {
 
@@ -628,48 +584,6 @@ public class CommerceTaxMethodPersistenceImpl
 		throws NoSuchTaxMethodException {
 
 		return remove((Serializable)commerceTaxMethodId);
-	}
-
-	/**
-	 * Removes the commerce tax method with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce tax method
-	 * @return the commerce tax method that was removed
-	 * @throws NoSuchTaxMethodException if a commerce tax method with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxMethod remove(Serializable primaryKey)
-		throws NoSuchTaxMethodException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceTaxMethod commerceTaxMethod =
-				(CommerceTaxMethod)session.get(
-					CommerceTaxMethodImpl.class, primaryKey);
-
-			if (commerceTaxMethod == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaxMethodException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceTaxMethod);
-		}
-		catch (NoSuchTaxMethodException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -785,31 +699,6 @@ public class CommerceTaxMethodPersistenceImpl
 		}
 
 		commerceTaxMethod.resetOriginalValues();
-
-		return commerceTaxMethod;
-	}
-
-	/**
-	 * Returns the commerce tax method with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce tax method
-	 * @return the commerce tax method
-	 * @throws NoSuchTaxMethodException if a commerce tax method with the primary key could not be found
-	 */
-	@Override
-	public CommerceTaxMethod findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaxMethodException {
-
-		CommerceTaxMethod commerceTaxMethod = fetchByPrimaryKey(primaryKey);
-
-		if (commerceTaxMethod == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaxMethodException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceTaxMethod;
 	}
@@ -1197,9 +1086,6 @@ public class CommerceTaxMethodPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceTaxMethod.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceTaxMethod exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceTaxMethod exists with the key {";
 
@@ -1215,4 +1101,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-141403814
+// LIFERAY-SERVICE-BUILDER-HASH:-1623935645

@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectStateFlowPersistence.class)
 public class ObjectStateFlowPersistenceImpl
-	extends BasePersistenceImpl<ObjectStateFlow>
+	extends BasePersistenceImpl<ObjectStateFlow, NoSuchObjectStateFlowException>
 	implements ObjectStateFlowPersistence {
 
 	/*
@@ -532,49 +532,6 @@ public class ObjectStateFlowPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object state flows.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectStateFlowImpl.class);
-
-		finderCache.clearCache(ObjectStateFlowImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object state flow.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectStateFlow objectStateFlow) {
-		entityCache.removeResult(ObjectStateFlowImpl.class, objectStateFlow);
-	}
-
-	@Override
-	public void clearCache(List<ObjectStateFlow> objectStateFlows) {
-		for (ObjectStateFlow objectStateFlow : objectStateFlows) {
-			entityCache.removeResult(
-				ObjectStateFlowImpl.class, objectStateFlow);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectStateFlowImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectStateFlowImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectStateFlowModelImpl objectStateFlowModelImpl) {
 
@@ -620,47 +577,6 @@ public class ObjectStateFlowPersistenceImpl
 		throws NoSuchObjectStateFlowException {
 
 		return remove((Serializable)objectStateFlowId);
-	}
-
-	/**
-	 * Removes the object state flow with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object state flow
-	 * @return the object state flow that was removed
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	@Override
-	public ObjectStateFlow remove(Serializable primaryKey)
-		throws NoSuchObjectStateFlowException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectStateFlow objectStateFlow = (ObjectStateFlow)session.get(
-				ObjectStateFlowImpl.class, primaryKey);
-
-			if (objectStateFlow == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectStateFlowException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectStateFlow);
-		}
-		catch (NoSuchObjectStateFlowException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -779,31 +695,6 @@ public class ObjectStateFlowPersistenceImpl
 		}
 
 		objectStateFlow.resetOriginalValues();
-
-		return objectStateFlow;
-	}
-
-	/**
-	 * Returns the object state flow with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object state flow
-	 * @return the object state flow
-	 * @throws NoSuchObjectStateFlowException if a object state flow with the primary key could not be found
-	 */
-	@Override
-	public ObjectStateFlow findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectStateFlowException {
-
-		ObjectStateFlow objectStateFlow = fetchByPrimaryKey(primaryKey);
-
-		if (objectStateFlow == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectStateFlowException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectStateFlow;
 	}
@@ -1187,9 +1078,6 @@ public class ObjectStateFlowPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectStateFlow.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectStateFlow exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectStateFlow exists with the key {";
 
@@ -1205,4 +1093,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-709500989
+// LIFERAY-SERVICE-BUILDER-HASH:-770826954

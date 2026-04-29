@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDefinitionLinkPersistence.class)
 public class CPDefinitionLinkPersistenceImpl
-	extends BasePersistenceImpl<CPDefinitionLink>
+	extends BasePersistenceImpl
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
 	implements CPDefinitionLinkPersistence {
 
 	/*
@@ -2387,49 +2388,6 @@ public class CPDefinitionLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp definition links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDefinitionLinkImpl.class);
-
-		finderCache.clearCache(CPDefinitionLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp definition link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPDefinitionLink cpDefinitionLink) {
-		entityCache.removeResult(CPDefinitionLinkImpl.class, cpDefinitionLink);
-	}
-
-	@Override
-	public void clearCache(List<CPDefinitionLink> cpDefinitionLinks) {
-		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			entityCache.removeResult(
-				CPDefinitionLinkImpl.class, cpDefinitionLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDefinitionLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPDefinitionLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl) {
 
@@ -2490,47 +2448,6 @@ public class CPDefinitionLinkPersistenceImpl
 		throws NoSuchCPDefinitionLinkException {
 
 		return remove((Serializable)CPDefinitionLinkId);
-	}
-
-	/**
-	 * Removes the cp definition link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp definition link
-	 * @return the cp definition link that was removed
-	 * @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionLink remove(Serializable primaryKey)
-		throws NoSuchCPDefinitionLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinitionLink cpDefinitionLink = (CPDefinitionLink)session.get(
-				CPDefinitionLinkImpl.class, primaryKey);
-
-			if (cpDefinitionLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDefinitionLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpDefinitionLink);
-		}
-		catch (NoSuchCPDefinitionLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2657,31 +2574,6 @@ public class CPDefinitionLinkPersistenceImpl
 		}
 
 		cpDefinitionLink.resetOriginalValues();
-
-		return cpDefinitionLink;
-	}
-
-	/**
-	 * Returns the cp definition link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition link
-	 * @return the cp definition link
-	 * @throws NoSuchCPDefinitionLinkException if a cp definition link with the primary key could not be found
-	 */
-	@Override
-	public CPDefinitionLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDefinitionLinkException {
-
-		CPDefinitionLink cpDefinitionLink = fetchByPrimaryKey(primaryKey);
-
-		if (cpDefinitionLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDefinitionLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpDefinitionLink;
 	}
@@ -3680,9 +3572,6 @@ public class CPDefinitionLinkPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpDefinitionLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDefinitionLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionLink exists with the key {";
 
@@ -3698,4 +3587,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-101699525
+// LIFERAY-SERVICE-BUILDER-HASH:-340078156

@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CalendarBookingPersistence.class)
 public class CalendarBookingPersistenceImpl
-	extends BasePersistenceImpl<CalendarBooking>
+	extends BasePersistenceImpl<CalendarBooking, NoSuchBookingException>
 	implements CalendarBookingPersistence {
 
 	/*
@@ -2370,49 +2370,6 @@ public class CalendarBookingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all calendar bookings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CalendarBookingImpl.class);
-
-		finderCache.clearCache(CalendarBookingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the calendar booking.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CalendarBooking calendarBooking) {
-		entityCache.removeResult(CalendarBookingImpl.class, calendarBooking);
-	}
-
-	@Override
-	public void clearCache(List<CalendarBooking> calendarBookings) {
-		for (CalendarBooking calendarBooking : calendarBookings) {
-			entityCache.removeResult(
-				CalendarBookingImpl.class, calendarBooking);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CalendarBookingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CalendarBookingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CalendarBookingModelImpl calendarBookingModelImpl) {
 
@@ -2488,47 +2445,6 @@ public class CalendarBookingPersistenceImpl
 		throws NoSuchBookingException {
 
 		return remove((Serializable)calendarBookingId);
-	}
-
-	/**
-	 * Removes the calendar booking with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the calendar booking
-	 * @return the calendar booking that was removed
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	@Override
-	public CalendarBooking remove(Serializable primaryKey)
-		throws NoSuchBookingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CalendarBooking calendarBooking = (CalendarBooking)session.get(
-				CalendarBookingImpl.class, primaryKey);
-
-			if (calendarBooking == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBookingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(calendarBooking);
-		}
-		catch (NoSuchBookingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2718,31 +2634,6 @@ public class CalendarBookingPersistenceImpl
 		}
 
 		calendarBooking.resetOriginalValues();
-
-		return calendarBooking;
-	}
-
-	/**
-	 * Returns the calendar booking with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the calendar booking
-	 * @return the calendar booking
-	 * @throws NoSuchBookingException if a calendar booking with the primary key could not be found
-	 */
-	@Override
-	public CalendarBooking findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBookingException {
-
-		CalendarBooking calendarBooking = fetchByPrimaryKey(primaryKey);
-
-		if (calendarBooking == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBookingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return calendarBooking;
 	}
@@ -3639,9 +3530,6 @@ public class CalendarBookingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "calendarBooking.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CalendarBooking exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CalendarBooking exists with the key {";
 
@@ -3657,4 +3545,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:684067845
+// LIFERAY-SERVICE-BUILDER-HASH:1954258934

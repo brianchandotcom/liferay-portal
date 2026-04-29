@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoTaskPersistence.class)
 public class KaleoTaskPersistenceImpl
-	extends BasePersistenceImpl<KaleoTask> implements KaleoTaskPersistence {
+	extends BasePersistenceImpl<KaleoTask, NoSuchTaskException>
+	implements KaleoTaskPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -568,48 +569,6 @@ public class KaleoTaskPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kaleo tasks.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoTaskImpl.class);
-
-		finderCache.clearCache(KaleoTaskImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo task.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoTask kaleoTask) {
-		entityCache.removeResult(KaleoTaskImpl.class, kaleoTask);
-	}
-
-	@Override
-	public void clearCache(List<KaleoTask> kaleoTasks) {
-		for (KaleoTask kaleoTask : kaleoTasks) {
-			entityCache.removeResult(KaleoTaskImpl.class, kaleoTask);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoTaskImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoTaskImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KaleoTaskModelImpl kaleoTaskModelImpl) {
 
@@ -652,47 +611,6 @@ public class KaleoTaskPersistenceImpl
 	@Override
 	public KaleoTask remove(long kaleoTaskId) throws NoSuchTaskException {
 		return remove((Serializable)kaleoTaskId);
-	}
-
-	/**
-	 * Removes the kaleo task with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo task
-	 * @return the kaleo task that was removed
-	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
-	 */
-	@Override
-	public KaleoTask remove(Serializable primaryKey)
-		throws NoSuchTaskException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTask kaleoTask = (KaleoTask)session.get(
-				KaleoTaskImpl.class, primaryKey);
-
-			if (kaleoTask == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTaskException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoTask);
-		}
-		catch (NoSuchTaskException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -806,31 +724,6 @@ public class KaleoTaskPersistenceImpl
 		}
 
 		kaleoTask.resetOriginalValues();
-
-		return kaleoTask;
-	}
-
-	/**
-	 * Returns the kaleo task with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo task
-	 * @return the kaleo task
-	 * @throws NoSuchTaskException if a kaleo task with the primary key could not be found
-	 */
-	@Override
-	public KaleoTask findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTaskException {
-
-		KaleoTask kaleoTask = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoTask == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTaskException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoTask;
 	}
@@ -1453,9 +1346,6 @@ public class KaleoTaskPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoTask.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoTask exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoTask exists with the key {";
 
@@ -1468,4 +1358,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505312995
+// LIFERAY-SERVICE-BUILDER-HASH:-473288958

@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMStructureLayoutPersistence.class)
 public class DDMStructureLayoutPersistenceImpl
-	extends BasePersistenceImpl<DDMStructureLayout>
+	extends BasePersistenceImpl
+		<DDMStructureLayout, NoSuchStructureLayoutException>
 	implements DDMStructureLayoutPersistence {
 
 	/*
@@ -1504,50 +1505,6 @@ public class DDMStructureLayoutPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm structure layouts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMStructureLayoutImpl.class);
-
-		finderCache.clearCache(DDMStructureLayoutImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm structure layout.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DDMStructureLayout ddmStructureLayout) {
-		entityCache.removeResult(
-			DDMStructureLayoutImpl.class, ddmStructureLayout);
-	}
-
-	@Override
-	public void clearCache(List<DDMStructureLayout> ddmStructureLayouts) {
-		for (DDMStructureLayout ddmStructureLayout : ddmStructureLayouts) {
-			entityCache.removeResult(
-				DDMStructureLayoutImpl.class, ddmStructureLayout);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMStructureLayoutImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DDMStructureLayoutImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl) {
 
@@ -1616,48 +1573,6 @@ public class DDMStructureLayoutPersistenceImpl
 		throws NoSuchStructureLayoutException {
 
 		return remove((Serializable)structureLayoutId);
-	}
-
-	/**
-	 * Removes the ddm structure layout with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm structure layout
-	 * @return the ddm structure layout that was removed
-	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
-	 */
-	@Override
-	public DDMStructureLayout remove(Serializable primaryKey)
-		throws NoSuchStructureLayoutException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMStructureLayout ddmStructureLayout =
-				(DDMStructureLayout)session.get(
-					DDMStructureLayoutImpl.class, primaryKey);
-
-			if (ddmStructureLayout == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchStructureLayoutException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmStructureLayout);
-		}
-		catch (NoSuchStructureLayoutException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1789,31 +1704,6 @@ public class DDMStructureLayoutPersistenceImpl
 		}
 
 		ddmStructureLayout.resetOriginalValues();
-
-		return ddmStructureLayout;
-	}
-
-	/**
-	 * Returns the ddm structure layout with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm structure layout
-	 * @return the ddm structure layout
-	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
-	 */
-	@Override
-	public DDMStructureLayout findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchStructureLayoutException {
-
-		DDMStructureLayout ddmStructureLayout = fetchByPrimaryKey(primaryKey);
-
-		if (ddmStructureLayout == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchStructureLayoutException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmStructureLayout;
 	}
@@ -2639,9 +2529,6 @@ public class DDMStructureLayoutPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ddmStructureLayout.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMStructureLayout exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMStructureLayout exists with the key {";
 
@@ -2657,4 +2544,4 @@ public class DDMStructureLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:74504134
+// LIFERAY-SERVICE-BUILDER-HASH:-1218461155

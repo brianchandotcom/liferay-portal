@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectViewPersistence.class)
 public class ObjectViewPersistenceImpl
-	extends BasePersistenceImpl<ObjectView> implements ObjectViewPersistence {
+	extends BasePersistenceImpl<ObjectView, NoSuchObjectViewException>
+	implements ObjectViewPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -758,48 +759,6 @@ public class ObjectViewPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object views.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectViewImpl.class);
-
-		finderCache.clearCache(ObjectViewImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object view.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectView objectView) {
-		entityCache.removeResult(ObjectViewImpl.class, objectView);
-	}
-
-	@Override
-	public void clearCache(List<ObjectView> objectViews) {
-		for (ObjectView objectView : objectViews) {
-			entityCache.removeResult(ObjectViewImpl.class, objectView);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectViewImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectViewImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object view with the primary key. Does not add the object view to the database.
 	 *
 	 * @param objectViewId the primary key for the new object view
@@ -833,47 +792,6 @@ public class ObjectViewPersistenceImpl
 		throws NoSuchObjectViewException {
 
 		return remove((Serializable)objectViewId);
-	}
-
-	/**
-	 * Removes the object view with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object view
-	 * @return the object view that was removed
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	@Override
-	public ObjectView remove(Serializable primaryKey)
-		throws NoSuchObjectViewException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectView objectView = (ObjectView)session.get(
-				ObjectViewImpl.class, primaryKey);
-
-			if (objectView == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectViewException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectView);
-		}
-		catch (NoSuchObjectViewException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -986,31 +904,6 @@ public class ObjectViewPersistenceImpl
 		}
 
 		objectView.resetOriginalValues();
-
-		return objectView;
-	}
-
-	/**
-	 * Returns the object view with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object view
-	 * @return the object view
-	 * @throws NoSuchObjectViewException if a object view with the primary key could not be found
-	 */
-	@Override
-	public ObjectView findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectViewException {
-
-		ObjectView objectView = fetchByPrimaryKey(primaryKey);
-
-		if (objectView == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectViewException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectView;
 	}
@@ -1443,9 +1336,6 @@ public class ObjectViewPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectView.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectView exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectView exists with the key {";
 
@@ -1461,4 +1351,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:339670303
+// LIFERAY-SERVICE-BUILDER-HASH:-915103712

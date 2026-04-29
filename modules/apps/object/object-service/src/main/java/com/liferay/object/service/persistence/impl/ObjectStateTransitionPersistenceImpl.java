@@ -68,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectStateTransitionPersistence.class)
 public class ObjectStateTransitionPersistenceImpl
-	extends BasePersistenceImpl<ObjectStateTransition>
+	extends BasePersistenceImpl
+		<ObjectStateTransition, NoSuchObjectStateTransitionException>
 	implements ObjectStateTransitionPersistence {
 
 	/*
@@ -915,53 +916,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object state transitions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectStateTransitionImpl.class);
-
-		finderCache.clearCache(ObjectStateTransitionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object state transition.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectStateTransition objectStateTransition) {
-		entityCache.removeResult(
-			ObjectStateTransitionImpl.class, objectStateTransition);
-	}
-
-	@Override
-	public void clearCache(List<ObjectStateTransition> objectStateTransitions) {
-		for (ObjectStateTransition objectStateTransition :
-				objectStateTransitions) {
-
-			entityCache.removeResult(
-				ObjectStateTransitionImpl.class, objectStateTransition);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectStateTransitionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ObjectStateTransitionImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
 	 * @param objectStateTransitionId the primary key for the new object state transition
@@ -996,48 +950,6 @@ public class ObjectStateTransitionPersistenceImpl
 		throws NoSuchObjectStateTransitionException {
 
 		return remove((Serializable)objectStateTransitionId);
-	}
-
-	/**
-	 * Removes the object state transition with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object state transition
-	 * @return the object state transition that was removed
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	@Override
-	public ObjectStateTransition remove(Serializable primaryKey)
-		throws NoSuchObjectStateTransitionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectStateTransition objectStateTransition =
-				(ObjectStateTransition)session.get(
-					ObjectStateTransitionImpl.class, primaryKey);
-
-			if (objectStateTransition == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectStateTransitionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectStateTransition);
-		}
-		catch (NoSuchObjectStateTransitionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1161,32 +1073,6 @@ public class ObjectStateTransitionPersistenceImpl
 		}
 
 		objectStateTransition.resetOriginalValues();
-
-		return objectStateTransition;
-	}
-
-	/**
-	 * Returns the object state transition with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object state transition
-	 * @return the object state transition
-	 * @throws NoSuchObjectStateTransitionException if a object state transition with the primary key could not be found
-	 */
-	@Override
-	public ObjectStateTransition findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectStateTransitionException {
-
-		ObjectStateTransition objectStateTransition = fetchByPrimaryKey(
-			primaryKey);
-
-		if (objectStateTransition == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectStateTransitionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectStateTransition;
 	}
@@ -1663,9 +1549,6 @@ public class ObjectStateTransitionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"objectStateTransition.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectStateTransition exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectStateTransition exists with the key {";
 
@@ -1681,4 +1564,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1925218322
+// LIFERAY-SERVICE-BUILDER-HASH:-1531511865

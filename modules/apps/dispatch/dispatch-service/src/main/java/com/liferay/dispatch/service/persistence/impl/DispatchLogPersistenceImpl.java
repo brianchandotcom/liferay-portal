@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DispatchLogPersistence.class)
 public class DispatchLogPersistenceImpl
-	extends BasePersistenceImpl<DispatchLog> implements DispatchLogPersistence {
+	extends BasePersistenceImpl<DispatchLog, NoSuchLogException>
+	implements DispatchLogPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -449,48 +450,6 @@ public class DispatchLogPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all dispatch logs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DispatchLogImpl.class);
-
-		finderCache.clearCache(DispatchLogImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dispatch log.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DispatchLog dispatchLog) {
-		entityCache.removeResult(DispatchLogImpl.class, dispatchLog);
-	}
-
-	@Override
-	public void clearCache(List<DispatchLog> dispatchLogs) {
-		for (DispatchLog dispatchLog : dispatchLogs) {
-			entityCache.removeResult(DispatchLogImpl.class, dispatchLog);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DispatchLogImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DispatchLogImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
 	 * @param dispatchLogId the primary key for the new dispatch log
@@ -518,47 +477,6 @@ public class DispatchLogPersistenceImpl
 	@Override
 	public DispatchLog remove(long dispatchLogId) throws NoSuchLogException {
 		return remove((Serializable)dispatchLogId);
-	}
-
-	/**
-	 * Removes the dispatch log with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dispatch log
-	 * @return the dispatch log that was removed
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	@Override
-	public DispatchLog remove(Serializable primaryKey)
-		throws NoSuchLogException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DispatchLog dispatchLog = (DispatchLog)session.get(
-				DispatchLogImpl.class, primaryKey);
-
-			if (dispatchLog == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLogException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dispatchLog);
-		}
-		catch (NoSuchLogException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -665,31 +583,6 @@ public class DispatchLogPersistenceImpl
 		}
 
 		dispatchLog.resetOriginalValues();
-
-		return dispatchLog;
-	}
-
-	/**
-	 * Returns the dispatch log with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dispatch log
-	 * @return the dispatch log
-	 * @throws NoSuchLogException if a dispatch log with the primary key could not be found
-	 */
-	@Override
-	public DispatchLog findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLogException {
-
-		DispatchLog dispatchLog = fetchByPrimaryKey(primaryKey);
-
-		if (dispatchLog == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLogException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dispatchLog;
 	}
@@ -1059,9 +952,6 @@ public class DispatchLogPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dispatchLog.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DispatchLog exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DispatchLog exists with the key {";
 
@@ -1077,4 +967,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1567106924
+// LIFERAY-SERVICE-BUILDER-HASH:516487977

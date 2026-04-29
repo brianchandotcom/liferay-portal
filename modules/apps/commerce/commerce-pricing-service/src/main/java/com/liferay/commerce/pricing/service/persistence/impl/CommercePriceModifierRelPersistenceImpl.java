@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePriceModifierRelPersistence.class)
 public class CommercePriceModifierRelPersistenceImpl
-	extends BasePersistenceImpl<CommercePriceModifierRel>
+	extends BasePersistenceImpl
+		<CommercePriceModifierRel, NoSuchPriceModifierRelException>
 	implements CommercePriceModifierRelPersistence {
 
 	/*
@@ -797,55 +798,6 @@ public class CommercePriceModifierRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce price modifier rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePriceModifierRelImpl.class);
-
-		finderCache.clearCache(CommercePriceModifierRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce price modifier rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommercePriceModifierRel commercePriceModifierRel) {
-		entityCache.removeResult(
-			CommercePriceModifierRelImpl.class, commercePriceModifierRel);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommercePriceModifierRel> commercePriceModifierRels) {
-
-		for (CommercePriceModifierRel commercePriceModifierRel :
-				commercePriceModifierRels) {
-
-			entityCache.removeResult(
-				CommercePriceModifierRelImpl.class, commercePriceModifierRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePriceModifierRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePriceModifierRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePriceModifierRelModelImpl commercePriceModifierRelModelImpl) {
 
@@ -897,48 +849,6 @@ public class CommercePriceModifierRelPersistenceImpl
 		throws NoSuchPriceModifierRelException {
 
 		return remove((Serializable)commercePriceModifierRelId);
-	}
-
-	/**
-	 * Removes the commerce price modifier rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce price modifier rel
-	 * @return the commerce price modifier rel that was removed
-	 * @throws NoSuchPriceModifierRelException if a commerce price modifier rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel remove(Serializable primaryKey)
-		throws NoSuchPriceModifierRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePriceModifierRel commercePriceModifierRel =
-				(CommercePriceModifierRel)session.get(
-					CommercePriceModifierRelImpl.class, primaryKey);
-
-			if (commercePriceModifierRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPriceModifierRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePriceModifierRel);
-		}
-		catch (NoSuchPriceModifierRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1068,32 +978,6 @@ public class CommercePriceModifierRelPersistenceImpl
 		}
 
 		commercePriceModifierRel.resetOriginalValues();
-
-		return commercePriceModifierRel;
-	}
-
-	/**
-	 * Returns the commerce price modifier rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price modifier rel
-	 * @return the commerce price modifier rel
-	 * @throws NoSuchPriceModifierRelException if a commerce price modifier rel with the primary key could not be found
-	 */
-	@Override
-	public CommercePriceModifierRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPriceModifierRelException {
-
-		CommercePriceModifierRel commercePriceModifierRel = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commercePriceModifierRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPriceModifierRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePriceModifierRel;
 	}
@@ -1795,9 +1679,6 @@ public class CommercePriceModifierRelPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commercePriceModifierRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePriceModifierRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePriceModifierRel exists with the key {";
 
@@ -1810,4 +1691,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261243472
+// LIFERAY-SERVICE-BUILDER-HASH:1390514167

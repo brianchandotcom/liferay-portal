@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DispatchTriggerPersistence.class)
 public class DispatchTriggerPersistenceImpl
-	extends BasePersistenceImpl<DispatchTrigger>
+	extends BasePersistenceImpl<DispatchTrigger, NoSuchTriggerException>
 	implements DispatchTriggerPersistence {
 
 	/*
@@ -3704,49 +3704,6 @@ public class DispatchTriggerPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all dispatch triggers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DispatchTriggerImpl.class);
-
-		finderCache.clearCache(DispatchTriggerImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dispatch trigger.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DispatchTrigger dispatchTrigger) {
-		entityCache.removeResult(DispatchTriggerImpl.class, dispatchTrigger);
-	}
-
-	@Override
-	public void clearCache(List<DispatchTrigger> dispatchTriggers) {
-		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
-			entityCache.removeResult(
-				DispatchTriggerImpl.class, dispatchTrigger);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DispatchTriggerImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DispatchTriggerImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DispatchTriggerModelImpl dispatchTriggerModelImpl) {
 
@@ -3801,47 +3758,6 @@ public class DispatchTriggerPersistenceImpl
 		throws NoSuchTriggerException {
 
 		return remove((Serializable)dispatchTriggerId);
-	}
-
-	/**
-	 * Removes the dispatch trigger with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dispatch trigger
-	 * @return the dispatch trigger that was removed
-	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
-	 */
-	@Override
-	public DispatchTrigger remove(Serializable primaryKey)
-		throws NoSuchTriggerException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DispatchTrigger dispatchTrigger = (DispatchTrigger)session.get(
-				DispatchTriggerImpl.class, primaryKey);
-
-			if (dispatchTrigger == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTriggerException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dispatchTrigger);
-		}
-		catch (NoSuchTriggerException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4025,31 +3941,6 @@ public class DispatchTriggerPersistenceImpl
 		}
 
 		dispatchTrigger.resetOriginalValues();
-
-		return dispatchTrigger;
-	}
-
-	/**
-	 * Returns the dispatch trigger with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dispatch trigger
-	 * @return the dispatch trigger
-	 * @throws NoSuchTriggerException if a dispatch trigger with the primary key could not be found
-	 */
-	@Override
-	public DispatchTrigger findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTriggerException {
-
-		DispatchTrigger dispatchTrigger = fetchByPrimaryKey(primaryKey);
-
-		if (dispatchTrigger == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTriggerException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dispatchTrigger;
 	}
@@ -4620,9 +4511,6 @@ public class DispatchTriggerPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "DispatchTrigger.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DispatchTrigger exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DispatchTrigger exists with the key {";
 
@@ -4638,4 +4526,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-21787909
+// LIFERAY-SERVICE-BUILDER-HASH:-152985008

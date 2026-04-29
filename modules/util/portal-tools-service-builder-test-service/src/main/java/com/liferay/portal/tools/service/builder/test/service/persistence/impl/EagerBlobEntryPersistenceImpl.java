@@ -54,7 +54,7 @@ import java.util.Set;
  * @generated
  */
 public class EagerBlobEntryPersistenceImpl
-	extends BasePersistenceImpl<EagerBlobEntry>
+	extends BasePersistenceImpl<EagerBlobEntry, NoSuchEagerBlobEntryException>
 	implements EagerBlobEntryPersistence {
 
 	/*
@@ -369,49 +369,6 @@ public class EagerBlobEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all eager blob entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(EagerBlobEntryImpl.class);
-
-		dummyFinderCache.clearCache(EagerBlobEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the eager blob entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(EagerBlobEntry eagerBlobEntry) {
-		dummyEntityCache.removeResult(EagerBlobEntryImpl.class, eagerBlobEntry);
-	}
-
-	@Override
-	public void clearCache(List<EagerBlobEntry> eagerBlobEntries) {
-		for (EagerBlobEntry eagerBlobEntry : eagerBlobEntries) {
-			dummyEntityCache.removeResult(
-				EagerBlobEntryImpl.class, eagerBlobEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(EagerBlobEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(EagerBlobEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		EagerBlobEntryModelImpl eagerBlobEntryModelImpl) {
 
@@ -456,47 +413,6 @@ public class EagerBlobEntryPersistenceImpl
 		throws NoSuchEagerBlobEntryException {
 
 		return remove((Serializable)eagerBlobEntryId);
-	}
-
-	/**
-	 * Removes the eager blob entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the eager blob entry
-	 * @return the eager blob entry that was removed
-	 * @throws NoSuchEagerBlobEntryException if a eager blob entry with the primary key could not be found
-	 */
-	@Override
-	public EagerBlobEntry remove(Serializable primaryKey)
-		throws NoSuchEagerBlobEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			EagerBlobEntry eagerBlobEntry = (EagerBlobEntry)session.get(
-				EagerBlobEntryImpl.class, primaryKey);
-
-			if (eagerBlobEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEagerBlobEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(eagerBlobEntry);
-		}
-		catch (NoSuchEagerBlobEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -589,31 +505,6 @@ public class EagerBlobEntryPersistenceImpl
 		}
 
 		eagerBlobEntry.resetOriginalValues();
-
-		return eagerBlobEntry;
-	}
-
-	/**
-	 * Returns the eager blob entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the eager blob entry
-	 * @return the eager blob entry
-	 * @throws NoSuchEagerBlobEntryException if a eager blob entry with the primary key could not be found
-	 */
-	@Override
-	public EagerBlobEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEagerBlobEntryException {
-
-		EagerBlobEntry eagerBlobEntry = fetchByPrimaryKey(primaryKey);
-
-		if (eagerBlobEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEagerBlobEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return eagerBlobEntry;
 	}
@@ -931,9 +822,6 @@ public class EagerBlobEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "eagerBlobEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No EagerBlobEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No EagerBlobEntry exists with the key {";
 
@@ -949,4 +837,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1731953659
+// LIFERAY-SERVICE-BUILDER-HASH:1543397101

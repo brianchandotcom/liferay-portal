@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the remember me token service.
@@ -55,7 +54,7 @@ import java.util.Set;
  * @generated
  */
 public class RememberMeTokenPersistenceImpl
-	extends BasePersistenceImpl<RememberMeToken>
+	extends BasePersistenceImpl<RememberMeToken, NoSuchRememberMeTokenException>
 	implements RememberMeTokenPersistence {
 
 	/*
@@ -418,50 +417,6 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all remember me tokens.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RememberMeTokenImpl.class);
-
-		FinderCacheUtil.clearCache(RememberMeTokenImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the remember me token.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RememberMeToken rememberMeToken) {
-		EntityCacheUtil.removeResult(
-			RememberMeTokenImpl.class, rememberMeToken);
-	}
-
-	@Override
-	public void clearCache(List<RememberMeToken> rememberMeTokens) {
-		for (RememberMeToken rememberMeToken : rememberMeTokens) {
-			EntityCacheUtil.removeResult(
-				RememberMeTokenImpl.class, rememberMeToken);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RememberMeTokenImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(RememberMeTokenImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new remember me token with the primary key. Does not add the remember me token to the database.
 	 *
 	 * @param rememberMeTokenId the primary key for the new remember me token
@@ -491,47 +446,6 @@ public class RememberMeTokenPersistenceImpl
 		throws NoSuchRememberMeTokenException {
 
 		return remove((Serializable)rememberMeTokenId);
-	}
-
-	/**
-	 * Removes the remember me token with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the remember me token
-	 * @return the remember me token that was removed
-	 * @throws NoSuchRememberMeTokenException if a remember me token with the primary key could not be found
-	 */
-	@Override
-	public RememberMeToken remove(Serializable primaryKey)
-		throws NoSuchRememberMeTokenException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RememberMeToken rememberMeToken = (RememberMeToken)session.get(
-				RememberMeTokenImpl.class, primaryKey);
-
-			if (rememberMeToken == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRememberMeTokenException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(rememberMeToken);
-		}
-		catch (NoSuchRememberMeTokenException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -632,31 +546,6 @@ public class RememberMeTokenPersistenceImpl
 		}
 
 		rememberMeToken.resetOriginalValues();
-
-		return rememberMeToken;
-	}
-
-	/**
-	 * Returns the remember me token with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the remember me token
-	 * @return the remember me token
-	 * @throws NoSuchRememberMeTokenException if a remember me token with the primary key could not be found
-	 */
-	@Override
-	public RememberMeToken findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRememberMeTokenException {
-
-		RememberMeToken rememberMeToken = fetchByPrimaryKey(primaryKey);
-
-		if (rememberMeToken == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRememberMeTokenException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return rememberMeToken;
 	}
@@ -982,9 +871,6 @@ public class RememberMeTokenPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "rememberMeToken.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RememberMeToken exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No RememberMeToken exists with the key {";
 
@@ -997,4 +883,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1523426964
+// LIFERAY-SERVICE-BUILDER-HASH:-1105927011

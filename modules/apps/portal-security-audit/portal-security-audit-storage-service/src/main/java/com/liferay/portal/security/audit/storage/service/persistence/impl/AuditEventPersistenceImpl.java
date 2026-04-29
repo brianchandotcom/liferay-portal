@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AuditEventPersistence.class)
 public class AuditEventPersistenceImpl
-	extends BasePersistenceImpl<AuditEvent> implements AuditEventPersistence {
+	extends BasePersistenceImpl<AuditEvent, NoSuchEventException>
+	implements AuditEventPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -275,48 +275,6 @@ public class AuditEventPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all audit events.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(AuditEventImpl.class);
-
-		dummyFinderCache.clearCache(AuditEventImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the audit event.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AuditEvent auditEvent) {
-		dummyEntityCache.removeResult(AuditEventImpl.class, auditEvent);
-	}
-
-	@Override
-	public void clearCache(List<AuditEvent> auditEvents) {
-		for (AuditEvent auditEvent : auditEvents) {
-			dummyEntityCache.removeResult(AuditEventImpl.class, auditEvent);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(AuditEventImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(AuditEventImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *
 	 * @param auditEventId the primary key for the new audit event
@@ -344,47 +302,6 @@ public class AuditEventPersistenceImpl
 	@Override
 	public AuditEvent remove(long auditEventId) throws NoSuchEventException {
 		return remove((Serializable)auditEventId);
-	}
-
-	/**
-	 * Removes the audit event with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the audit event
-	 * @return the audit event that was removed
-	 * @throws NoSuchEventException if a audit event with the primary key could not be found
-	 */
-	@Override
-	public AuditEvent remove(Serializable primaryKey)
-		throws NoSuchEventException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AuditEvent auditEvent = (AuditEvent)session.get(
-				AuditEventImpl.class, primaryKey);
-
-			if (auditEvent == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEventException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(auditEvent);
-		}
-		catch (NoSuchEventException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -481,31 +398,6 @@ public class AuditEventPersistenceImpl
 		}
 
 		auditEvent.resetOriginalValues();
-
-		return auditEvent;
-	}
-
-	/**
-	 * Returns the audit event with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the audit event
-	 * @return the audit event
-	 * @throws NoSuchEventException if a audit event with the primary key could not be found
-	 */
-	@Override
-	public AuditEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEventException {
-
-		AuditEvent auditEvent = fetchByPrimaryKey(primaryKey);
-
-		if (auditEvent == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEventException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return auditEvent;
 	}
@@ -833,9 +725,6 @@ public class AuditEventPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "auditEvent.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AuditEvent exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AuditEvent exists with the key {";
 
@@ -848,4 +737,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:227990362
+// LIFERAY-SERVICE-BUILDER-HASH:1732442545

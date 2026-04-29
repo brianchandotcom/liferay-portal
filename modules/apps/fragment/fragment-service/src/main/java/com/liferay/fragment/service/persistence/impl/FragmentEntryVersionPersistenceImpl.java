@@ -84,7 +84,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentEntryVersionPersistence.class)
 public class FragmentEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<FragmentEntryVersion>
+	extends BasePersistenceImpl
+		<FragmentEntryVersion, NoSuchEntryVersionException>
 	implements FragmentEntryVersionPersistence {
 
 	/*
@@ -5088,53 +5089,6 @@ public class FragmentEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all fragment entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FragmentEntryVersionImpl.class);
-
-		finderCache.clearCache(FragmentEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the fragment entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FragmentEntryVersion fragmentEntryVersion) {
-		entityCache.removeResult(
-			FragmentEntryVersionImpl.class, fragmentEntryVersion);
-	}
-
-	@Override
-	public void clearCache(List<FragmentEntryVersion> fragmentEntryVersions) {
-		for (FragmentEntryVersion fragmentEntryVersion :
-				fragmentEntryVersions) {
-
-			entityCache.removeResult(
-				FragmentEntryVersionImpl.class, fragmentEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FragmentEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				FragmentEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FragmentEntryVersionModelImpl fragmentEntryVersionModelImpl) {
 
@@ -5204,48 +5158,6 @@ public class FragmentEntryVersionPersistenceImpl
 		throws NoSuchEntryVersionException {
 
 		return remove((Serializable)fragmentEntryVersionId);
-	}
-
-	/**
-	 * Removes the fragment entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the fragment entry version
-	 * @return the fragment entry version that was removed
-	 * @throws NoSuchEntryVersionException if a fragment entry version with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntryVersion remove(Serializable primaryKey)
-		throws NoSuchEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentEntryVersion fragmentEntryVersion =
-				(FragmentEntryVersion)session.get(
-					FragmentEntryVersionImpl.class, primaryKey);
-
-			if (fragmentEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(fragmentEntryVersion);
-		}
-		catch (NoSuchEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -5411,32 +5323,6 @@ public class FragmentEntryVersionPersistenceImpl
 		}
 
 		fragmentEntryVersion.resetOriginalValues();
-
-		return fragmentEntryVersion;
-	}
-
-	/**
-	 * Returns the fragment entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment entry version
-	 * @return the fragment entry version
-	 * @throws NoSuchEntryVersionException if a fragment entry version with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryVersionException {
-
-		FragmentEntryVersion fragmentEntryVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (fragmentEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return fragmentEntryVersion;
 	}
@@ -7180,9 +7066,6 @@ public class FragmentEntryVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"fragmentEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FragmentEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentEntryVersion exists with the key {";
 
@@ -7198,4 +7081,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:79558193
+// LIFERAY-SERVICE-BUILDER-HASH:-616740706

@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBDiscussionPersistence.class)
 public class MBDiscussionPersistenceImpl
-	extends BasePersistenceImpl<MBDiscussion>
+	extends BasePersistenceImpl<MBDiscussion, NoSuchDiscussionException>
 	implements MBDiscussionPersistence {
 
 	/*
@@ -777,48 +777,6 @@ public class MBDiscussionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message boards discussions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBDiscussionImpl.class);
-
-		finderCache.clearCache(MBDiscussionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message boards discussion.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBDiscussion mbDiscussion) {
-		entityCache.removeResult(MBDiscussionImpl.class, mbDiscussion);
-	}
-
-	@Override
-	public void clearCache(List<MBDiscussion> mbDiscussions) {
-		for (MBDiscussion mbDiscussion : mbDiscussions) {
-			entityCache.removeResult(MBDiscussionImpl.class, mbDiscussion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBDiscussionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBDiscussionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBDiscussionModelImpl mbDiscussionModelImpl) {
 
@@ -883,47 +841,6 @@ public class MBDiscussionPersistenceImpl
 		throws NoSuchDiscussionException {
 
 		return remove((Serializable)discussionId);
-	}
-
-	/**
-	 * Removes the message boards discussion with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message boards discussion
-	 * @return the message boards discussion that was removed
-	 * @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	 */
-	@Override
-	public MBDiscussion remove(Serializable primaryKey)
-		throws NoSuchDiscussionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBDiscussion mbDiscussion = (MBDiscussion)session.get(
-				MBDiscussionImpl.class, primaryKey);
-
-			if (mbDiscussion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscussionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbDiscussion);
-		}
-		catch (NoSuchDiscussionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1047,31 +964,6 @@ public class MBDiscussionPersistenceImpl
 		}
 
 		mbDiscussion.resetOriginalValues();
-
-		return mbDiscussion;
-	}
-
-	/**
-	 * Returns the message boards discussion with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards discussion
-	 * @return the message boards discussion
-	 * @throws NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	 */
-	@Override
-	public MBDiscussion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscussionException {
-
-		MBDiscussion mbDiscussion = fetchByPrimaryKey(primaryKey);
-
-		if (mbDiscussion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscussionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbDiscussion;
 	}
@@ -1732,9 +1624,6 @@ public class MBDiscussionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mbDiscussion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBDiscussion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBDiscussion exists with the key {";
 
@@ -1750,4 +1639,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:721766619
+// LIFERAY-SERVICE-BUILDER-HASH:-2128387474

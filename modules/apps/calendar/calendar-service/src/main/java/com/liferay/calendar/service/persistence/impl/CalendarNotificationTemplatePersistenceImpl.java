@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CalendarNotificationTemplatePersistence.class)
 public class CalendarNotificationTemplatePersistenceImpl
-	extends BasePersistenceImpl<CalendarNotificationTemplate>
+	extends BasePersistenceImpl
+		<CalendarNotificationTemplate, NoSuchNotificationTemplateException>
 	implements CalendarNotificationTemplatePersistence {
 
 	/*
@@ -899,59 +900,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all calendar notification templates.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CalendarNotificationTemplateImpl.class);
-
-		finderCache.clearCache(CalendarNotificationTemplateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the calendar notification template.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-
-		entityCache.removeResult(
-			CalendarNotificationTemplateImpl.class,
-			calendarNotificationTemplate);
-	}
-
-	@Override
-	public void clearCache(
-		List<CalendarNotificationTemplate> calendarNotificationTemplates) {
-
-		for (CalendarNotificationTemplate calendarNotificationTemplate :
-				calendarNotificationTemplates) {
-
-			entityCache.removeResult(
-				CalendarNotificationTemplateImpl.class,
-				calendarNotificationTemplate);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CalendarNotificationTemplateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CalendarNotificationTemplateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CalendarNotificationTemplateModelImpl
 			calendarNotificationTemplateModelImpl) {
@@ -1023,48 +971,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		throws NoSuchNotificationTemplateException {
 
 		return remove((Serializable)calendarNotificationTemplateId);
-	}
-
-	/**
-	 * Removes the calendar notification template with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the calendar notification template
-	 * @return the calendar notification template that was removed
-	 * @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate remove(Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CalendarNotificationTemplate calendarNotificationTemplate =
-				(CalendarNotificationTemplate)session.get(
-					CalendarNotificationTemplateImpl.class, primaryKey);
-
-			if (calendarNotificationTemplate == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNotificationTemplateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(calendarNotificationTemplate);
-		}
-		catch (NoSuchNotificationTemplateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1204,33 +1110,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		}
 
 		calendarNotificationTemplate.resetOriginalValues();
-
-		return calendarNotificationTemplate;
-	}
-
-	/**
-	 * Returns the calendar notification template with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the calendar notification template
-	 * @return the calendar notification template
-	 * @throws NoSuchNotificationTemplateException if a calendar notification template with the primary key could not be found
-	 */
-	@Override
-	public CalendarNotificationTemplate findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchNotificationTemplateException {
-
-		CalendarNotificationTemplate calendarNotificationTemplate =
-			fetchByPrimaryKey(primaryKey);
-
-		if (calendarNotificationTemplate == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNotificationTemplateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return calendarNotificationTemplate;
 	}
@@ -1959,9 +1838,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"calendarNotificationTemplate.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CalendarNotificationTemplate exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CalendarNotificationTemplate exists with the key {";
 
@@ -1977,4 +1853,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1282645732
+// LIFERAY-SERVICE-BUILDER-HASH:1505049969

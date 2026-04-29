@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.asset.service.persistence.impl;
 
+import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -20,7 +21,8 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class AssetTagFinderBaseImpl extends BasePersistenceImpl<AssetTag> {
+public class AssetTagFinderBaseImpl
+	extends BasePersistenceImpl<AssetTag, NoSuchTagException> {
 
 	public AssetTagFinderBaseImpl() {
 		setModelClass(AssetTag.class);
@@ -64,4 +66,4 @@ public class AssetTagFinderBaseImpl extends BasePersistenceImpl<AssetTag> {
 		AssetTagFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-585231577
+// LIFERAY-SERVICE-BUILDER-HASH:168152903

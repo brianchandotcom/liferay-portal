@@ -68,7 +68,8 @@ import java.util.Set;
  * @generated
  */
 public class WebsitePersistenceImpl
-	extends BasePersistenceImpl<Website> implements WebsitePersistence {
+	extends BasePersistenceImpl<Website, NoSuchWebsiteException>
+	implements WebsitePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1345,48 +1346,6 @@ public class WebsitePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all websites.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(WebsiteImpl.class);
-
-		FinderCacheUtil.clearCache(WebsiteImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the website.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Website website) {
-		EntityCacheUtil.removeResult(WebsiteImpl.class, website);
-	}
-
-	@Override
-	public void clearCache(List<Website> websites) {
-		for (Website website : websites) {
-			EntityCacheUtil.removeResult(WebsiteImpl.class, website);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(WebsiteImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(WebsiteImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(WebsiteModelImpl websiteModelImpl) {
 		Object[] args = new Object[] {
 			websiteModelImpl.getExternalReferenceCode(),
@@ -1429,47 +1388,6 @@ public class WebsitePersistenceImpl
 	@Override
 	public Website remove(long websiteId) throws NoSuchWebsiteException {
 		return remove((Serializable)websiteId);
-	}
-
-	/**
-	 * Removes the website with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the website
-	 * @return the website that was removed
-	 * @throws NoSuchWebsiteException if a website with the primary key could not be found
-	 */
-	@Override
-	public Website remove(Serializable primaryKey)
-		throws NoSuchWebsiteException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Website website = (Website)session.get(
-				WebsiteImpl.class, primaryKey);
-
-			if (website == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchWebsiteException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(website);
-		}
-		catch (NoSuchWebsiteException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1642,31 +1560,6 @@ public class WebsitePersistenceImpl
 		}
 
 		website.resetOriginalValues();
-
-		return website;
-	}
-
-	/**
-	 * Returns the website with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the website
-	 * @return the website
-	 * @throws NoSuchWebsiteException if a website with the primary key could not be found
-	 */
-	@Override
-	public Website findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchWebsiteException {
-
-		Website website = fetchByPrimaryKey(primaryKey);
-
-		if (website == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchWebsiteException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return website;
 	}
@@ -2191,9 +2084,6 @@ public class WebsitePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "website.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Website exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Website exists with the key {";
 
@@ -2209,4 +2099,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:347122476
+// LIFERAY-SERVICE-BUILDER-HASH:873206975

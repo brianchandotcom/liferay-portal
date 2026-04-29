@@ -75,7 +75,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KaleoLogPersistence.class)
 public class KaleoLogPersistenceImpl
-	extends BasePersistenceImpl<KaleoLog> implements KaleoLogPersistence {
+	extends BasePersistenceImpl<KaleoLog, NoSuchLogException>
+	implements KaleoLogPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1188,48 +1189,6 @@ public class KaleoLogPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all kaleo logs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KaleoLogImpl.class);
-
-		finderCache.clearCache(KaleoLogImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kaleo log.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KaleoLog kaleoLog) {
-		entityCache.removeResult(KaleoLogImpl.class, kaleoLog);
-	}
-
-	@Override
-	public void clearCache(List<KaleoLog> kaleoLogs) {
-		for (KaleoLog kaleoLog : kaleoLogs) {
-			entityCache.removeResult(KaleoLogImpl.class, kaleoLog);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KaleoLogImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KaleoLogImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
 	 *
 	 * @param kaleoLogId the primary key for the new kaleo log
@@ -1257,45 +1216,6 @@ public class KaleoLogPersistenceImpl
 	@Override
 	public KaleoLog remove(long kaleoLogId) throws NoSuchLogException {
 		return remove((Serializable)kaleoLogId);
-	}
-
-	/**
-	 * Removes the kaleo log with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kaleo log
-	 * @return the kaleo log that was removed
-	 * @throws NoSuchLogException if a kaleo log with the primary key could not be found
-	 */
-	@Override
-	public KaleoLog remove(Serializable primaryKey) throws NoSuchLogException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoLog kaleoLog = (KaleoLog)session.get(
-				KaleoLogImpl.class, primaryKey);
-
-			if (kaleoLog == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLogException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kaleoLog);
-		}
-		catch (NoSuchLogException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1405,31 +1325,6 @@ public class KaleoLogPersistenceImpl
 		}
 
 		kaleoLog.resetOriginalValues();
-
-		return kaleoLog;
-	}
-
-	/**
-	 * Returns the kaleo log with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo log
-	 * @return the kaleo log
-	 * @throws NoSuchLogException if a kaleo log with the primary key could not be found
-	 */
-	@Override
-	public KaleoLog findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLogException {
-
-		KaleoLog kaleoLog = fetchByPrimaryKey(primaryKey);
-
-		if (kaleoLog == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLogException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kaleoLog;
 	}
@@ -2219,9 +2114,6 @@ public class KaleoLogPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "kaleoLog.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KaleoLog exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KaleoLog exists with the key {";
 
@@ -2237,4 +2129,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:838400341
+// LIFERAY-SERVICE-BUILDER-HASH:-1296350742

@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPOptionPersistence.class)
 public class CPOptionPersistenceImpl
-	extends BasePersistenceImpl<CPOption> implements CPOptionPersistence {
+	extends BasePersistenceImpl<CPOption, NoSuchCPOptionException>
+	implements CPOptionPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1501,48 +1502,6 @@ public class CPOptionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp options.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPOptionImpl.class);
-
-		finderCache.clearCache(CPOptionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp option.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPOption cpOption) {
-		entityCache.removeResult(CPOptionImpl.class, cpOption);
-	}
-
-	@Override
-	public void clearCache(List<CPOption> cpOptions) {
-		for (CPOption cpOption : cpOptions) {
-			entityCache.removeResult(CPOptionImpl.class, cpOption);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPOptionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPOptionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPOptionModelImpl cpOptionModelImpl) {
 
@@ -1599,47 +1558,6 @@ public class CPOptionPersistenceImpl
 	@Override
 	public CPOption remove(long CPOptionId) throws NoSuchCPOptionException {
 		return remove((Serializable)CPOptionId);
-	}
-
-	/**
-	 * Removes the cp option with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp option
-	 * @return the cp option that was removed
-	 * @throws NoSuchCPOptionException if a cp option with the primary key could not be found
-	 */
-	@Override
-	public CPOption remove(Serializable primaryKey)
-		throws NoSuchCPOptionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPOption cpOption = (CPOption)session.get(
-				CPOptionImpl.class, primaryKey);
-
-			if (cpOption == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPOptionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpOption);
-		}
-		catch (NoSuchCPOptionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1817,31 +1735,6 @@ public class CPOptionPersistenceImpl
 		}
 
 		cpOption.resetOriginalValues();
-
-		return cpOption;
-	}
-
-	/**
-	 * Returns the cp option with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp option
-	 * @return the cp option
-	 * @throws NoSuchCPOptionException if a cp option with the primary key could not be found
-	 */
-	@Override
-	public CPOption findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPOptionException {
-
-		CPOption cpOption = fetchByPrimaryKey(primaryKey);
-
-		if (cpOption == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPOptionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpOption;
 	}
@@ -2542,9 +2435,6 @@ public class CPOptionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CPOption.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPOption exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPOption exists with the key {";
 
@@ -2560,4 +2450,4 @@ public class CPOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-87558124
+// LIFERAY-SERVICE-BUILDER-HASH:-1066093973

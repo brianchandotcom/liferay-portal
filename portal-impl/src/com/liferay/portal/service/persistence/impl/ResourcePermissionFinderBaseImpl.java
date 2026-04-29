@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -15,7 +16,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
  * @generated
  */
 public class ResourcePermissionFinderBaseImpl
-	extends BasePersistenceImpl<ResourcePermission> {
+	extends BasePersistenceImpl
+		<ResourcePermission, NoSuchResourcePermissionException> {
 
 	public ResourcePermissionFinderBaseImpl() {
 		setModelClass(ResourcePermission.class);
@@ -45,4 +47,4 @@ public class ResourcePermissionFinderBaseImpl
 	protected ResourcePermissionPersistence resourcePermissionPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:583847454
+// LIFERAY-SERVICE-BUILDER-HASH:457666222

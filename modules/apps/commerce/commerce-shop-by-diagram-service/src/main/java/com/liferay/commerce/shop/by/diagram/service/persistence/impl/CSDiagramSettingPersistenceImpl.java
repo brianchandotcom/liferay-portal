@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CSDiagramSettingPersistence.class)
 public class CSDiagramSettingPersistenceImpl
-	extends BasePersistenceImpl<CSDiagramSetting>
+	extends BasePersistenceImpl
+		<CSDiagramSetting, NoSuchCSDiagramSettingException>
 	implements CSDiagramSettingPersistence {
 
 	/*
@@ -580,49 +581,6 @@ public class CSDiagramSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cs diagram settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CSDiagramSettingImpl.class);
-
-		finderCache.clearCache(CSDiagramSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cs diagram setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CSDiagramSetting csDiagramSetting) {
-		entityCache.removeResult(CSDiagramSettingImpl.class, csDiagramSetting);
-	}
-
-	@Override
-	public void clearCache(List<CSDiagramSetting> csDiagramSettings) {
-		for (CSDiagramSetting csDiagramSetting : csDiagramSettings) {
-			entityCache.removeResult(
-				CSDiagramSettingImpl.class, csDiagramSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CSDiagramSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CSDiagramSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CSDiagramSettingModelImpl csDiagramSettingModelImpl) {
 
@@ -674,47 +632,6 @@ public class CSDiagramSettingPersistenceImpl
 		throws NoSuchCSDiagramSettingException {
 
 		return remove((Serializable)CSDiagramSettingId);
-	}
-
-	/**
-	 * Removes the cs diagram setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cs diagram setting
-	 * @return the cs diagram setting that was removed
-	 * @throws NoSuchCSDiagramSettingException if a cs diagram setting with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramSetting remove(Serializable primaryKey)
-		throws NoSuchCSDiagramSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CSDiagramSetting csDiagramSetting = (CSDiagramSetting)session.get(
-				CSDiagramSettingImpl.class, primaryKey);
-
-			if (csDiagramSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCSDiagramSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(csDiagramSetting);
-		}
-		catch (NoSuchCSDiagramSettingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -841,31 +758,6 @@ public class CSDiagramSettingPersistenceImpl
 		}
 
 		csDiagramSetting.resetOriginalValues();
-
-		return csDiagramSetting;
-	}
-
-	/**
-	 * Returns the cs diagram setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cs diagram setting
-	 * @return the cs diagram setting
-	 * @throws NoSuchCSDiagramSettingException if a cs diagram setting with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCSDiagramSettingException {
-
-		CSDiagramSetting csDiagramSetting = fetchByPrimaryKey(primaryKey);
-
-		if (csDiagramSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCSDiagramSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return csDiagramSetting;
 	}
@@ -1506,9 +1398,6 @@ public class CSDiagramSettingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "csDiagramSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CSDiagramSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CSDiagramSetting exists with the key {";
 
@@ -1524,4 +1413,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-542555142
+// LIFERAY-SERVICE-BUILDER-HASH:-179043261

@@ -64,7 +64,7 @@ import java.util.Set;
  * @generated
  */
 public class AnnouncementsDeliveryPersistenceImpl
-	extends BasePersistenceImpl<AnnouncementsDelivery>
+	extends BasePersistenceImpl<AnnouncementsDelivery, NoSuchDeliveryException>
 	implements AnnouncementsDeliveryPersistence {
 
 	/*
@@ -573,55 +573,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all announcements deliveries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AnnouncementsDeliveryImpl.class);
-
-		FinderCacheUtil.clearCache(AnnouncementsDeliveryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the announcements delivery.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AnnouncementsDelivery announcementsDelivery) {
-		EntityCacheUtil.removeResult(
-			AnnouncementsDeliveryImpl.class, announcementsDelivery);
-	}
-
-	@Override
-	public void clearCache(
-		List<AnnouncementsDelivery> announcementsDeliveries) {
-
-		for (AnnouncementsDelivery announcementsDelivery :
-				announcementsDeliveries) {
-
-			EntityCacheUtil.removeResult(
-				AnnouncementsDeliveryImpl.class, announcementsDelivery);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AnnouncementsDeliveryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				AnnouncementsDeliveryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
 
@@ -670,48 +621,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 		throws NoSuchDeliveryException {
 
 		return remove((Serializable)deliveryId);
-	}
-
-	/**
-	 * Removes the announcements delivery with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the announcements delivery
-	 * @return the announcements delivery that was removed
-	 * @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery remove(Serializable primaryKey)
-		throws NoSuchDeliveryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnnouncementsDelivery announcementsDelivery =
-				(AnnouncementsDelivery)session.get(
-					AnnouncementsDeliveryImpl.class, primaryKey);
-
-			if (announcementsDelivery == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDeliveryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(announcementsDelivery);
-		}
-		catch (NoSuchDeliveryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -814,32 +723,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 		}
 
 		announcementsDelivery.resetOriginalValues();
-
-		return announcementsDelivery;
-	}
-
-	/**
-	 * Returns the announcements delivery with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the announcements delivery
-	 * @return the announcements delivery
-	 * @throws NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsDelivery findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDeliveryException {
-
-		AnnouncementsDelivery announcementsDelivery = fetchByPrimaryKey(
-			primaryKey);
-
-		if (announcementsDelivery == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDeliveryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return announcementsDelivery;
 	}
@@ -1443,9 +1326,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"announcementsDelivery.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AnnouncementsDelivery exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnnouncementsDelivery exists with the key {";
 
@@ -1461,4 +1341,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1483314799
+// LIFERAY-SERVICE-BUILDER-HASH:-781431807

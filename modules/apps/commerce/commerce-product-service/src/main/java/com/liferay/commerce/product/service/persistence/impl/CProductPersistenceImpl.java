@@ -86,7 +86,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CProductPersistence.class)
 public class CProductPersistenceImpl
-	extends BasePersistenceImpl<CProduct> implements CProductPersistence {
+	extends BasePersistenceImpl<CProduct, NoSuchCProductException>
+	implements CProductPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -837,48 +838,6 @@ public class CProductPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all c products.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CProductImpl.class);
-
-		finderCache.clearCache(CProductImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the c product.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CProduct cProduct) {
-		entityCache.removeResult(CProductImpl.class, cProduct);
-	}
-
-	@Override
-	public void clearCache(List<CProduct> cProducts) {
-		for (CProduct cProduct : cProducts) {
-			entityCache.removeResult(CProductImpl.class, cProduct);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CProductImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CProductImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CProductModelImpl cProductModelImpl) {
 
@@ -935,47 +894,6 @@ public class CProductPersistenceImpl
 	@Override
 	public CProduct remove(long CProductId) throws NoSuchCProductException {
 		return remove((Serializable)CProductId);
-	}
-
-	/**
-	 * Removes the c product with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the c product
-	 * @return the c product that was removed
-	 * @throws NoSuchCProductException if a c product with the primary key could not be found
-	 */
-	@Override
-	public CProduct remove(Serializable primaryKey)
-		throws NoSuchCProductException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CProduct cProduct = (CProduct)session.get(
-				CProductImpl.class, primaryKey);
-
-			if (cProduct == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCProductException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cProduct);
-		}
-		catch (NoSuchCProductException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1153,31 +1071,6 @@ public class CProductPersistenceImpl
 		}
 
 		cProduct.resetOriginalValues();
-
-		return cProduct;
-	}
-
-	/**
-	 * Returns the c product with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the c product
-	 * @return the c product
-	 * @throws NoSuchCProductException if a c product with the primary key could not be found
-	 */
-	@Override
-	public CProduct findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCProductException {
-
-		CProduct cProduct = fetchByPrimaryKey(primaryKey);
-
-		if (cProduct == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCProductException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cProduct;
 	}
@@ -1850,9 +1743,6 @@ public class CProductPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cProduct.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CProduct exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CProduct exists with the key {";
 
@@ -1868,4 +1758,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:569603501
+// LIFERAY-SERVICE-BUILDER-HASH:168640636

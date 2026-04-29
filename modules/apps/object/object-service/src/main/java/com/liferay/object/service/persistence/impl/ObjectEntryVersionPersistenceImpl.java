@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectEntryVersionPersistence.class)
 public class ObjectEntryVersionPersistenceImpl
-	extends BasePersistenceImpl<ObjectEntryVersion>
+	extends BasePersistenceImpl
+		<ObjectEntryVersion, NoSuchObjectEntryVersionException>
 	implements ObjectEntryVersionPersistence {
 
 	/*
@@ -1171,50 +1172,6 @@ public class ObjectEntryVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object entry versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectEntryVersionImpl.class);
-
-		finderCache.clearCache(ObjectEntryVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object entry version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectEntryVersion objectEntryVersion) {
-		entityCache.removeResult(
-			ObjectEntryVersionImpl.class, objectEntryVersion);
-	}
-
-	@Override
-	public void clearCache(List<ObjectEntryVersion> objectEntryVersions) {
-		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
-			entityCache.removeResult(
-				ObjectEntryVersionImpl.class, objectEntryVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectEntryVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectEntryVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectEntryVersionModelImpl objectEntryVersionModelImpl) {
 
@@ -1261,48 +1218,6 @@ public class ObjectEntryVersionPersistenceImpl
 		throws NoSuchObjectEntryVersionException {
 
 		return remove((Serializable)objectEntryVersionId);
-	}
-
-	/**
-	 * Removes the object entry version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object entry version
-	 * @return the object entry version that was removed
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntryVersion remove(Serializable primaryKey)
-		throws NoSuchObjectEntryVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectEntryVersion objectEntryVersion =
-				(ObjectEntryVersion)session.get(
-					ObjectEntryVersionImpl.class, primaryKey);
-
-			if (objectEntryVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectEntryVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectEntryVersion);
-		}
-		catch (NoSuchObjectEntryVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1426,31 +1341,6 @@ public class ObjectEntryVersionPersistenceImpl
 		}
 
 		objectEntryVersion.resetOriginalValues();
-
-		return objectEntryVersion;
-	}
-
-	/**
-	 * Returns the object entry version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object entry version
-	 * @return the object entry version
-	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntryVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectEntryVersionException {
-
-		ObjectEntryVersion objectEntryVersion = fetchByPrimaryKey(primaryKey);
-
-		if (objectEntryVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectEntryVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectEntryVersion;
 	}
@@ -1967,9 +1857,6 @@ public class ObjectEntryVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectEntryVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectEntryVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectEntryVersion exists with the key {";
 
@@ -1985,4 +1872,4 @@ public class ObjectEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1907634328
+// LIFERAY-SERVICE-BUILDER-HASH:668466405

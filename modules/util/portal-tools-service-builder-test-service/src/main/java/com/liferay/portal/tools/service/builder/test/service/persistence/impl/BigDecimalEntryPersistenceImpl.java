@@ -61,7 +61,7 @@ import java.util.Set;
  * @generated
  */
 public class BigDecimalEntryPersistenceImpl
-	extends BasePersistenceImpl<BigDecimalEntry>
+	extends BasePersistenceImpl<BigDecimalEntry, NoSuchBigDecimalEntryException>
 	implements BigDecimalEntryPersistence {
 
 	/*
@@ -583,49 +583,6 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all big decimal entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BigDecimalEntryImpl.class);
-
-		finderCache.clearCache(BigDecimalEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the big decimal entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BigDecimalEntry bigDecimalEntry) {
-		entityCache.removeResult(BigDecimalEntryImpl.class, bigDecimalEntry);
-	}
-
-	@Override
-	public void clearCache(List<BigDecimalEntry> bigDecimalEntries) {
-		for (BigDecimalEntry bigDecimalEntry : bigDecimalEntries) {
-			entityCache.removeResult(
-				BigDecimalEntryImpl.class, bigDecimalEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BigDecimalEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BigDecimalEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new big decimal entry with the primary key. Does not add the big decimal entry to the database.
 	 *
 	 * @param bigDecimalEntryId the primary key for the new big decimal entry
@@ -655,47 +612,6 @@ public class BigDecimalEntryPersistenceImpl
 		throws NoSuchBigDecimalEntryException {
 
 		return remove((Serializable)bigDecimalEntryId);
-	}
-
-	/**
-	 * Removes the big decimal entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the big decimal entry
-	 * @return the big decimal entry that was removed
-	 * @throws NoSuchBigDecimalEntryException if a big decimal entry with the primary key could not be found
-	 */
-	@Override
-	public BigDecimalEntry remove(Serializable primaryKey)
-		throws NoSuchBigDecimalEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BigDecimalEntry bigDecimalEntry = (BigDecimalEntry)session.get(
-				BigDecimalEntryImpl.class, primaryKey);
-
-			if (bigDecimalEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBigDecimalEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(bigDecimalEntry);
-		}
-		catch (NoSuchBigDecimalEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -784,31 +700,6 @@ public class BigDecimalEntryPersistenceImpl
 		}
 
 		bigDecimalEntry.resetOriginalValues();
-
-		return bigDecimalEntry;
-	}
-
-	/**
-	 * Returns the big decimal entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the big decimal entry
-	 * @return the big decimal entry
-	 * @throws NoSuchBigDecimalEntryException if a big decimal entry with the primary key could not be found
-	 */
-	@Override
-	public BigDecimalEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBigDecimalEntryException {
-
-		BigDecimalEntry bigDecimalEntry = fetchByPrimaryKey(primaryKey);
-
-		if (bigDecimalEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBigDecimalEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return bigDecimalEntry;
 	}
@@ -1525,9 +1416,6 @@ public class BigDecimalEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "bigDecimalEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BigDecimalEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BigDecimalEntry exists with the key {";
 
@@ -1540,4 +1428,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-68541673
+// LIFERAY-SERVICE-BUILDER-HASH:-781019307

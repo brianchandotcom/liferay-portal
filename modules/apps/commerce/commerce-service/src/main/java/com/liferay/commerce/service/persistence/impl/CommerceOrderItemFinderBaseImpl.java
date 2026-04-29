@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
+import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
@@ -27,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class CommerceOrderItemFinderBaseImpl
-	extends BasePersistenceImpl<CommerceOrderItem> {
+	extends BasePersistenceImpl<CommerceOrderItem, NoSuchOrderItemException> {
 
 	public CommerceOrderItemFinderBaseImpl() {
 		setModelClass(CommerceOrderItem.class);
@@ -96,4 +97,4 @@ public abstract class CommerceOrderItemFinderBaseImpl
 		CommerceOrderItemFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1776246831
+// LIFERAY-SERVICE-BUILDER-HASH:-843413957

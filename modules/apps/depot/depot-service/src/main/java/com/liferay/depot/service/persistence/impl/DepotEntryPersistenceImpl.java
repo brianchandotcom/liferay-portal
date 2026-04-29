@@ -78,7 +78,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DepotEntryPersistence.class)
 public class DepotEntryPersistenceImpl
-	extends BasePersistenceImpl<DepotEntry> implements DepotEntryPersistence {
+	extends BasePersistenceImpl<DepotEntry, NoSuchEntryException>
+	implements DepotEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -835,48 +836,6 @@ public class DepotEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all depot entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DepotEntryImpl.class);
-
-		finderCache.clearCache(DepotEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the depot entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DepotEntry depotEntry) {
-		entityCache.removeResult(DepotEntryImpl.class, depotEntry);
-	}
-
-	@Override
-	public void clearCache(List<DepotEntry> depotEntries) {
-		for (DepotEntry depotEntry : depotEntries) {
-			entityCache.removeResult(DepotEntryImpl.class, depotEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DepotEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DepotEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DepotEntryModelImpl depotEntryModelImpl) {
 
@@ -930,47 +889,6 @@ public class DepotEntryPersistenceImpl
 	@Override
 	public DepotEntry remove(long depotEntryId) throws NoSuchEntryException {
 		return remove((Serializable)depotEntryId);
-	}
-
-	/**
-	 * Removes the depot entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the depot entry
-	 * @return the depot entry that was removed
-	 * @throws NoSuchEntryException if a depot entry with the primary key could not be found
-	 */
-	@Override
-	public DepotEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DepotEntry depotEntry = (DepotEntry)session.get(
-				DepotEntryImpl.class, primaryKey);
-
-			if (depotEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(depotEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1092,31 +1010,6 @@ public class DepotEntryPersistenceImpl
 		}
 
 		depotEntry.resetOriginalValues();
-
-		return depotEntry;
-	}
-
-	/**
-	 * Returns the depot entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the depot entry
-	 * @return the depot entry
-	 * @throws NoSuchEntryException if a depot entry with the primary key could not be found
-	 */
-	@Override
-	public DepotEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		DepotEntry depotEntry = fetchByPrimaryKey(primaryKey);
-
-		if (depotEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return depotEntry;
 	}
@@ -1789,9 +1682,6 @@ public class DepotEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "depotEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DepotEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DepotEntry exists with the key {";
 
@@ -1807,4 +1697,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-298699021
+// LIFERAY-SERVICE-BUILDER-HASH:1931135887

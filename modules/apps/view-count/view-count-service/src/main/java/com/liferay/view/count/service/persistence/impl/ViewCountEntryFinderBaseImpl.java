@@ -8,6 +8,7 @@ package com.liferay.view.count.service.persistence.impl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.view.count.exception.NoSuchEntryException;
 import com.liferay.view.count.model.ViewCountEntry;
 import com.liferay.view.count.service.persistence.ViewCountEntryPersistence;
 import com.liferay.view.count.service.persistence.impl.constants.ViewCountPersistenceConstants;
@@ -21,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class ViewCountEntryFinderBaseImpl
-	extends BasePersistenceImpl<ViewCountEntry> {
+	extends BasePersistenceImpl<ViewCountEntry, NoSuchEntryException> {
 
 	public ViewCountEntryFinderBaseImpl() {
 		setModelClass(ViewCountEntry.class);
@@ -57,4 +58,4 @@ public abstract class ViewCountEntryFinderBaseImpl
 	protected ViewCountEntryPersistence viewCountEntryPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1312937333
+// LIFERAY-SERVICE-BUILDER-HASH:-1754546376

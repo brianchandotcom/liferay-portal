@@ -32,7 +32,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the uad partial entry service.
@@ -45,7 +44,7 @@ import java.util.Set;
  * @generated
  */
 public class UADPartialEntryPersistenceImpl
-	extends BasePersistenceImpl<UADPartialEntry>
+	extends BasePersistenceImpl<UADPartialEntry, NoSuchUADPartialEntryException>
 	implements UADPartialEntryPersistence {
 
 	/*
@@ -115,49 +114,6 @@ public class UADPartialEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all uad partial entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(UADPartialEntryImpl.class);
-
-		finderCache.clearCache(UADPartialEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the uad partial entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(UADPartialEntry uadPartialEntry) {
-		entityCache.removeResult(UADPartialEntryImpl.class, uadPartialEntry);
-	}
-
-	@Override
-	public void clearCache(List<UADPartialEntry> uadPartialEntries) {
-		for (UADPartialEntry uadPartialEntry : uadPartialEntries) {
-			entityCache.removeResult(
-				UADPartialEntryImpl.class, uadPartialEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(UADPartialEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(UADPartialEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new uad partial entry with the primary key. Does not add the uad partial entry to the database.
 	 *
 	 * @param uadPartialEntryId the primary key for the new uad partial entry
@@ -185,47 +141,6 @@ public class UADPartialEntryPersistenceImpl
 		throws NoSuchUADPartialEntryException {
 
 		return remove((Serializable)uadPartialEntryId);
-	}
-
-	/**
-	 * Removes the uad partial entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the uad partial entry
-	 * @return the uad partial entry that was removed
-	 * @throws NoSuchUADPartialEntryException if a uad partial entry with the primary key could not be found
-	 */
-	@Override
-	public UADPartialEntry remove(Serializable primaryKey)
-		throws NoSuchUADPartialEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			UADPartialEntry uadPartialEntry = (UADPartialEntry)session.get(
-				UADPartialEntryImpl.class, primaryKey);
-
-			if (uadPartialEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchUADPartialEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(uadPartialEntry);
-		}
-		catch (NoSuchUADPartialEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -291,31 +206,6 @@ public class UADPartialEntryPersistenceImpl
 		}
 
 		uadPartialEntry.resetOriginalValues();
-
-		return uadPartialEntry;
-	}
-
-	/**
-	 * Returns the uad partial entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the uad partial entry
-	 * @return the uad partial entry
-	 * @throws NoSuchUADPartialEntryException if a uad partial entry with the primary key could not be found
-	 */
-	@Override
-	public UADPartialEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUADPartialEntryException {
-
-		UADPartialEntry uadPartialEntry = fetchByPrimaryKey(primaryKey);
-
-		if (uadPartialEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchUADPartialEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return uadPartialEntry;
 	}
@@ -588,9 +478,6 @@ public class UADPartialEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "uadPartialEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No UADPartialEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		UADPartialEntryPersistenceImpl.class);
 
@@ -600,4 +487,4 @@ public class UADPartialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1007726245
+// LIFERAY-SERVICE-BUILDER-HASH:-1319903359

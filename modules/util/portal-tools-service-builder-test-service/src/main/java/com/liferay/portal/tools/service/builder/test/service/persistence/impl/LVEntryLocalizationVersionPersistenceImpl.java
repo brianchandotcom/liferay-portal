@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the lv entry localization version service.
@@ -52,7 +51,8 @@ import java.util.Set;
  * @generated
  */
 public class LVEntryLocalizationVersionPersistenceImpl
-	extends BasePersistenceImpl<LVEntryLocalizationVersion>
+	extends BasePersistenceImpl
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
 	implements LVEntryLocalizationVersionPersistence {
 
 	/*
@@ -987,58 +987,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all lv entry localization versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LVEntryLocalizationVersionImpl.class);
-
-		finderCache.clearCache(LVEntryLocalizationVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lv entry localization version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-		entityCache.removeResult(
-			LVEntryLocalizationVersionImpl.class, lvEntryLocalizationVersion);
-	}
-
-	@Override
-	public void clearCache(
-		List<LVEntryLocalizationVersion> lvEntryLocalizationVersions) {
-
-		for (LVEntryLocalizationVersion lvEntryLocalizationVersion :
-				lvEntryLocalizationVersions) {
-
-			entityCache.removeResult(
-				LVEntryLocalizationVersionImpl.class,
-				lvEntryLocalizationVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LVEntryLocalizationVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LVEntryLocalizationVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LVEntryLocalizationVersionModelImpl
 			lvEntryLocalizationVersionModelImpl) {
@@ -1097,50 +1045,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		throws NoSuchLVEntryLocalizationVersionException {
 
 		return remove((Serializable)lvEntryLocalizationVersionId);
-	}
-
-	/**
-	 * Removes the lv entry localization version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lv entry localization version
-	 * @return the lv entry localization version that was removed
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion remove(Serializable primaryKey)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LVEntryLocalizationVersion lvEntryLocalizationVersion =
-				(LVEntryLocalizationVersion)session.get(
-					LVEntryLocalizationVersionImpl.class, primaryKey);
-
-			if (lvEntryLocalizationVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLVEntryLocalizationVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lvEntryLocalizationVersion);
-		}
-		catch (NoSuchLVEntryLocalizationVersionException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1237,32 +1141,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		}
 
 		lvEntryLocalizationVersion.resetOriginalValues();
-
-		return lvEntryLocalizationVersion;
-	}
-
-	/**
-	 * Returns the lv entry localization version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lv entry localization version
-	 * @return the lv entry localization version
-	 * @throws NoSuchLVEntryLocalizationVersionException if a lv entry localization version with the primary key could not be found
-	 */
-	@Override
-	public LVEntryLocalizationVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLVEntryLocalizationVersionException {
-
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByPrimaryKey(primaryKey);
-
-		if (lvEntryLocalizationVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLVEntryLocalizationVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lvEntryLocalizationVersion;
 	}
@@ -1738,9 +1616,6 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"lvEntryLocalizationVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LVEntryLocalizationVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntryLocalizationVersion exists with the key {";
 
@@ -1753,4 +1628,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1925864935
+// LIFERAY-SERVICE-BUILDER-HASH:-1516075752

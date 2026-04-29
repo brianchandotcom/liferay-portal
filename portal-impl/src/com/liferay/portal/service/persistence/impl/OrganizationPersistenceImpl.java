@@ -88,7 +88,7 @@ import java.util.Set;
  * @generated
  */
 public class OrganizationPersistenceImpl
-	extends BasePersistenceImpl<Organization>
+	extends BasePersistenceImpl<Organization, NoSuchOrganizationException>
 	implements OrganizationPersistence {
 
 	/*
@@ -4865,48 +4865,6 @@ public class OrganizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all organizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(OrganizationImpl.class);
-
-		FinderCacheUtil.clearCache(OrganizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the organization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Organization organization) {
-		EntityCacheUtil.removeResult(OrganizationImpl.class, organization);
-	}
-
-	@Override
-	public void clearCache(List<Organization> organizations) {
-		for (Organization organization : organizations) {
-			EntityCacheUtil.removeResult(OrganizationImpl.class, organization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(OrganizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(OrganizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OrganizationModelImpl organizationModelImpl) {
 
@@ -4966,47 +4924,6 @@ public class OrganizationPersistenceImpl
 		throws NoSuchOrganizationException {
 
 		return remove((Serializable)organizationId);
-	}
-
-	/**
-	 * Removes the organization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the organization
-	 * @return the organization that was removed
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	@Override
-	public Organization remove(Serializable primaryKey)
-		throws NoSuchOrganizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Organization organization = (Organization)session.get(
-				OrganizationImpl.class, primaryKey);
-
-			if (organization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOrganizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(organization);
-		}
-		catch (NoSuchOrganizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -5198,31 +5115,6 @@ public class OrganizationPersistenceImpl
 		}
 
 		organization.resetOriginalValues();
-
-		return organization;
-	}
-
-	/**
-	 * Returns the organization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the organization
-	 * @return the organization
-	 * @throws NoSuchOrganizationException if a organization with the primary key could not be found
-	 */
-	@Override
-	public Organization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrganizationException {
-
-		Organization organization = fetchByPrimaryKey(primaryKey);
-
-		if (organization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOrganizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return organization;
 	}
@@ -6739,9 +6631,6 @@ public class OrganizationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Organization_.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Organization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Organization exists with the key {";
 
@@ -6757,4 +6646,4 @@ public class OrganizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:714534289
+// LIFERAY-SERVICE-BUILDER-HASH:-1450650970

@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlIdpSpSessionPersistence.class)
 public class SamlIdpSpSessionPersistenceImpl
-	extends BasePersistenceImpl<SamlIdpSpSession>
+	extends BasePersistenceImpl<SamlIdpSpSession, NoSuchIdpSpSessionException>
 	implements SamlIdpSpSessionPersistence {
 
 	/*
@@ -434,49 +433,6 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all saml idp sp sessions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlIdpSpSessionImpl.class);
-
-		finderCache.clearCache(SamlIdpSpSessionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml idp sp session.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlIdpSpSession samlIdpSpSession) {
-		entityCache.removeResult(SamlIdpSpSessionImpl.class, samlIdpSpSession);
-	}
-
-	@Override
-	public void clearCache(List<SamlIdpSpSession> samlIdpSpSessions) {
-		for (SamlIdpSpSession samlIdpSpSession : samlIdpSpSessions) {
-			entityCache.removeResult(
-				SamlIdpSpSessionImpl.class, samlIdpSpSession);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlIdpSpSessionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlIdpSpSessionImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new saml idp sp session with the primary key. Does not add the saml idp sp session to the database.
 	 *
 	 * @param samlIdpSpSessionId the primary key for the new saml idp sp session
@@ -506,47 +462,6 @@ public class SamlIdpSpSessionPersistenceImpl
 		throws NoSuchIdpSpSessionException {
 
 		return remove((Serializable)samlIdpSpSessionId);
-	}
-
-	/**
-	 * Removes the saml idp sp session with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml idp sp session
-	 * @return the saml idp sp session that was removed
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSpSession remove(Serializable primaryKey)
-		throws NoSuchIdpSpSessionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlIdpSpSession samlIdpSpSession = (SamlIdpSpSession)session.get(
-				SamlIdpSpSessionImpl.class, primaryKey);
-
-			if (samlIdpSpSession == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchIdpSpSessionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlIdpSpSession);
-		}
-		catch (NoSuchIdpSpSessionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -657,31 +572,6 @@ public class SamlIdpSpSessionPersistenceImpl
 		}
 
 		samlIdpSpSession.resetOriginalValues();
-
-		return samlIdpSpSession;
-	}
-
-	/**
-	 * Returns the saml idp sp session with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml idp sp session
-	 * @return the saml idp sp session
-	 * @throws NoSuchIdpSpSessionException if a saml idp sp session with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSpSession findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchIdpSpSessionException {
-
-		SamlIdpSpSession samlIdpSpSession = fetchByPrimaryKey(primaryKey);
-
-		if (samlIdpSpSession == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchIdpSpSessionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlIdpSpSession;
 	}
@@ -1043,9 +933,6 @@ public class SamlIdpSpSessionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlIdpSpSession.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlIdpSpSession exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlIdpSpSession exists with the key {";
 
@@ -1058,4 +945,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:642811746
+// LIFERAY-SERVICE-BUILDER-HASH:1467440309

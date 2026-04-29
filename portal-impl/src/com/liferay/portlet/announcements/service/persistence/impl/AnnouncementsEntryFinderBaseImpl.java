@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.announcements.service.persistence.impl;
 
+import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -21,7 +22,7 @@ import java.util.Set;
  * @generated
  */
 public class AnnouncementsEntryFinderBaseImpl
-	extends BasePersistenceImpl<AnnouncementsEntry> {
+	extends BasePersistenceImpl<AnnouncementsEntry, NoSuchEntryException> {
 
 	public AnnouncementsEntryFinderBaseImpl() {
 		setModelClass(AnnouncementsEntry.class);
@@ -66,4 +67,4 @@ public class AnnouncementsEntryFinderBaseImpl
 		AnnouncementsEntryFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1122899507
+// LIFERAY-SERVICE-BUILDER-HASH:2120929105

@@ -64,7 +64,8 @@ import java.util.Set;
  * @generated
  */
 public class PortletPreferenceValuePersistenceImpl
-	extends BasePersistenceImpl<PortletPreferenceValue>
+	extends BasePersistenceImpl
+		<PortletPreferenceValue, NoSuchPortletPreferenceValueException>
 	implements PortletPreferenceValuePersistence {
 
 	/*
@@ -990,55 +991,6 @@ public class PortletPreferenceValuePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all portlet preference values.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PortletPreferenceValueImpl.class);
-
-		FinderCacheUtil.clearCache(PortletPreferenceValueImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the portlet preference value.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PortletPreferenceValue portletPreferenceValue) {
-		EntityCacheUtil.removeResult(
-			PortletPreferenceValueImpl.class, portletPreferenceValue);
-	}
-
-	@Override
-	public void clearCache(
-		List<PortletPreferenceValue> portletPreferenceValues) {
-
-		for (PortletPreferenceValue portletPreferenceValue :
-				portletPreferenceValues) {
-
-			EntityCacheUtil.removeResult(
-				PortletPreferenceValueImpl.class, portletPreferenceValue);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PortletPreferenceValueImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				PortletPreferenceValueImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PortletPreferenceValueModelImpl portletPreferenceValueModelImpl) {
 
@@ -1088,48 +1040,6 @@ public class PortletPreferenceValuePersistenceImpl
 		throws NoSuchPortletPreferenceValueException {
 
 		return remove((Serializable)portletPreferenceValueId);
-	}
-
-	/**
-	 * Removes the portlet preference value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the portlet preference value
-	 * @return the portlet preference value that was removed
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	@Override
-	public PortletPreferenceValue remove(Serializable primaryKey)
-		throws NoSuchPortletPreferenceValueException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletPreferenceValue portletPreferenceValue =
-				(PortletPreferenceValue)session.get(
-					PortletPreferenceValueImpl.class, primaryKey);
-
-			if (portletPreferenceValue == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPortletPreferenceValueException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(portletPreferenceValue);
-		}
-		catch (NoSuchPortletPreferenceValueException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1232,32 +1142,6 @@ public class PortletPreferenceValuePersistenceImpl
 		}
 
 		portletPreferenceValue.resetOriginalValues();
-
-		return portletPreferenceValue;
-	}
-
-	/**
-	 * Returns the portlet preference value with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portlet preference value
-	 * @return the portlet preference value
-	 * @throws NoSuchPortletPreferenceValueException if a portlet preference value with the primary key could not be found
-	 */
-	@Override
-	public PortletPreferenceValue findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPortletPreferenceValueException {
-
-		PortletPreferenceValue portletPreferenceValue = fetchByPrimaryKey(
-			primaryKey);
-
-		if (portletPreferenceValue == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPortletPreferenceValueException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return portletPreferenceValue;
 	}
@@ -1971,9 +1855,6 @@ public class PortletPreferenceValuePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"portletPreferenceValue.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PortletPreferenceValue exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PortletPreferenceValue exists with the key {";
 
@@ -1989,4 +1870,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-928230160
+// LIFERAY-SERVICE-BUILDER-HASH:-37120359

@@ -38,7 +38,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the class name service.
@@ -51,7 +50,8 @@ import java.util.Set;
  * @generated
  */
 public class ClassNamePersistenceImpl
-	extends BasePersistenceImpl<ClassName> implements ClassNamePersistence {
+	extends BasePersistenceImpl<ClassName, NoSuchClassNameException>
+	implements ClassNamePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -200,48 +200,6 @@ public class ClassNamePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all class names.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ClassNameImpl.class);
-
-		FinderCacheUtil.clearCache(ClassNameImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the class name.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ClassName className) {
-		EntityCacheUtil.removeResult(ClassNameImpl.class, className);
-	}
-
-	@Override
-	public void clearCache(List<ClassName> classNames) {
-		for (ClassName className : classNames) {
-			EntityCacheUtil.removeResult(ClassNameImpl.class, className);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ClassNameImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ClassNameImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ClassNameModelImpl classNameModelImpl) {
 
@@ -277,47 +235,6 @@ public class ClassNamePersistenceImpl
 	@Override
 	public ClassName remove(long classNameId) throws NoSuchClassNameException {
 		return remove((Serializable)classNameId);
-	}
-
-	/**
-	 * Removes the class name with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the class name
-	 * @return the class name that was removed
-	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
-	 */
-	@Override
-	public ClassName remove(Serializable primaryKey)
-		throws NoSuchClassNameException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ClassName className = (ClassName)session.get(
-				ClassNameImpl.class, primaryKey);
-
-			if (className == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchClassNameException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(className);
-		}
-		catch (NoSuchClassNameException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -401,31 +318,6 @@ public class ClassNamePersistenceImpl
 		}
 
 		className.resetOriginalValues();
-
-		return className;
-	}
-
-	/**
-	 * Returns the class name with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the class name
-	 * @return the class name
-	 * @throws NoSuchClassNameException if a class name with the primary key could not be found
-	 */
-	@Override
-	public ClassName findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchClassNameException {
-
-		ClassName className = fetchByPrimaryKey(primaryKey);
-
-		if (className == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchClassNameException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return className;
 	}
@@ -704,9 +596,6 @@ public class ClassNamePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "className.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ClassName exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ClassName exists with the key {";
 
@@ -719,4 +608,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-490123660
+// LIFERAY-SERVICE-BUILDER-HASH:-21909563

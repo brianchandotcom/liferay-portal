@@ -79,7 +79,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommercePaymentEntryPersistence.class)
 public class CommercePaymentEntryPersistenceImpl
-	extends BasePersistenceImpl<CommercePaymentEntry>
+	extends BasePersistenceImpl
+		<CommercePaymentEntry, NoSuchPaymentEntryException>
 	implements CommercePaymentEntryPersistence {
 
 	/*
@@ -1952,53 +1953,6 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce payment entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommercePaymentEntryImpl.class);
-
-		finderCache.clearCache(CommercePaymentEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce payment entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommercePaymentEntry commercePaymentEntry) {
-		entityCache.removeResult(
-			CommercePaymentEntryImpl.class, commercePaymentEntry);
-	}
-
-	@Override
-	public void clearCache(List<CommercePaymentEntry> commercePaymentEntries) {
-		for (CommercePaymentEntry commercePaymentEntry :
-				commercePaymentEntries) {
-
-			entityCache.removeResult(
-				CommercePaymentEntryImpl.class, commercePaymentEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommercePaymentEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommercePaymentEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommercePaymentEntryModelImpl commercePaymentEntryModelImpl) {
 
@@ -2042,48 +1996,6 @@ public class CommercePaymentEntryPersistenceImpl
 		throws NoSuchPaymentEntryException {
 
 		return remove((Serializable)commercePaymentEntryId);
-	}
-
-	/**
-	 * Removes the commerce payment entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce payment entry
-	 * @return the commerce payment entry that was removed
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentEntry remove(Serializable primaryKey)
-		throws NoSuchPaymentEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommercePaymentEntry commercePaymentEntry =
-				(CommercePaymentEntry)session.get(
-					CommercePaymentEntryImpl.class, primaryKey);
-
-			if (commercePaymentEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPaymentEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commercePaymentEntry);
-		}
-		catch (NoSuchPaymentEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2267,32 +2179,6 @@ public class CommercePaymentEntryPersistenceImpl
 		}
 
 		commercePaymentEntry.resetOriginalValues();
-
-		return commercePaymentEntry;
-	}
-
-	/**
-	 * Returns the commerce payment entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce payment entry
-	 * @return the commerce payment entry
-	 * @throws NoSuchPaymentEntryException if a commerce payment entry with the primary key could not be found
-	 */
-	@Override
-	public CommercePaymentEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPaymentEntryException {
-
-		CommercePaymentEntry commercePaymentEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commercePaymentEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPaymentEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commercePaymentEntry;
 	}
@@ -2835,9 +2721,6 @@ public class CommercePaymentEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"CommercePaymentEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommercePaymentEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommercePaymentEntry exists with the key {";
 
@@ -2853,4 +2736,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1068616687
+// LIFERAY-SERVICE-BUILDER-HASH:-1766415503

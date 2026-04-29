@@ -76,7 +76,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AssetLinkPersistence.class)
 public class AssetLinkPersistenceImpl
-	extends BasePersistenceImpl<AssetLink> implements AssetLinkPersistence {
+	extends BasePersistenceImpl<AssetLink, NoSuchLinkException>
+	implements AssetLinkPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1073,48 +1074,6 @@ public class AssetLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all asset links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AssetLinkImpl.class);
-
-		finderCache.clearCache(AssetLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the asset link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AssetLink assetLink) {
-		entityCache.removeResult(AssetLinkImpl.class, assetLink);
-	}
-
-	@Override
-	public void clearCache(List<AssetLink> assetLinks) {
-		for (AssetLink assetLink : assetLinks) {
-			entityCache.removeResult(AssetLinkImpl.class, assetLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AssetLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(AssetLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AssetLinkModelImpl assetLinkModelImpl) {
 
@@ -1160,47 +1119,6 @@ public class AssetLinkPersistenceImpl
 	@Override
 	public AssetLink remove(long linkId) throws NoSuchLinkException {
 		return remove((Serializable)linkId);
-	}
-
-	/**
-	 * Removes the asset link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the asset link
-	 * @return the asset link that was removed
-	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
-	 */
-	@Override
-	public AssetLink remove(Serializable primaryKey)
-		throws NoSuchLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetLink assetLink = (AssetLink)session.get(
-				AssetLinkImpl.class, primaryKey);
-
-			if (assetLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(assetLink);
-		}
-		catch (NoSuchLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1305,31 +1223,6 @@ public class AssetLinkPersistenceImpl
 		}
 
 		assetLink.resetOriginalValues();
-
-		return assetLink;
-	}
-
-	/**
-	 * Returns the asset link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset link
-	 * @return the asset link
-	 * @throws NoSuchLinkException if a asset link with the primary key could not be found
-	 */
-	@Override
-	public AssetLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLinkException {
-
-		AssetLink assetLink = fetchByPrimaryKey(primaryKey);
-
-		if (assetLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return assetLink;
 	}
@@ -2048,9 +1941,6 @@ public class AssetLinkPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "assetLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AssetLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetLink exists with the key {";
 
@@ -2066,4 +1956,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2118843614
+// LIFERAY-SERVICE-BUILDER-HASH:1113208263

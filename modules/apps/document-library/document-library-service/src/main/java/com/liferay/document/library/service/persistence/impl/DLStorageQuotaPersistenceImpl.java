@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DLStorageQuotaPersistence.class)
 public class DLStorageQuotaPersistenceImpl
-	extends BasePersistenceImpl<DLStorageQuota>
+	extends BasePersistenceImpl<DLStorageQuota, NoSuchStorageQuotaException>
 	implements DLStorageQuotaPersistence {
 
 	/*
@@ -217,48 +216,6 @@ public class DLStorageQuotaPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all dl storage quotas.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DLStorageQuotaImpl.class);
-
-		finderCache.clearCache(DLStorageQuotaImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the dl storage quota.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLStorageQuota dlStorageQuota) {
-		entityCache.removeResult(DLStorageQuotaImpl.class, dlStorageQuota);
-	}
-
-	@Override
-	public void clearCache(List<DLStorageQuota> dlStorageQuotas) {
-		for (DLStorageQuota dlStorageQuota : dlStorageQuotas) {
-			entityCache.removeResult(DLStorageQuotaImpl.class, dlStorageQuota);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DLStorageQuotaImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(DLStorageQuotaImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLStorageQuotaModelImpl dlStorageQuotaModelImpl) {
 
@@ -298,47 +255,6 @@ public class DLStorageQuotaPersistenceImpl
 		throws NoSuchStorageQuotaException {
 
 		return remove((Serializable)dlStorageQuotaId);
-	}
-
-	/**
-	 * Removes the dl storage quota with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the dl storage quota
-	 * @return the dl storage quota that was removed
-	 * @throws NoSuchStorageQuotaException if a dl storage quota with the primary key could not be found
-	 */
-	@Override
-	public DLStorageQuota remove(Serializable primaryKey)
-		throws NoSuchStorageQuotaException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLStorageQuota dlStorageQuota = (DLStorageQuota)session.get(
-				DLStorageQuotaImpl.class, primaryKey);
-
-			if (dlStorageQuota == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchStorageQuotaException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlStorageQuota);
-		}
-		catch (NoSuchStorageQuotaException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -425,31 +341,6 @@ public class DLStorageQuotaPersistenceImpl
 		}
 
 		dlStorageQuota.resetOriginalValues();
-
-		return dlStorageQuota;
-	}
-
-	/**
-	 * Returns the dl storage quota with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dl storage quota
-	 * @return the dl storage quota
-	 * @throws NoSuchStorageQuotaException if a dl storage quota with the primary key could not be found
-	 */
-	@Override
-	public DLStorageQuota findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchStorageQuotaException {
-
-		DLStorageQuota dlStorageQuota = fetchByPrimaryKey(primaryKey);
-
-		if (dlStorageQuota == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchStorageQuotaException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlStorageQuota;
 	}
@@ -763,9 +654,6 @@ public class DLStorageQuotaPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlStorageQuota.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLStorageQuota exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLStorageQuota exists with the key {";
 
@@ -778,4 +666,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1758649993
+// LIFERAY-SERVICE-BUILDER-HASH:-2054536158

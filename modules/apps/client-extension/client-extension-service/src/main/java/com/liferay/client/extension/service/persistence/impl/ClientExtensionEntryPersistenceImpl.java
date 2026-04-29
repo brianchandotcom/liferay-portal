@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ClientExtensionEntryPersistence.class)
 public class ClientExtensionEntryPersistenceImpl
-	extends BasePersistenceImpl<ClientExtensionEntry>
+	extends BasePersistenceImpl
+		<ClientExtensionEntry, NoSuchClientExtensionEntryException>
 	implements ClientExtensionEntryPersistence {
 
 	/*
@@ -1870,53 +1871,6 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all client extension entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ClientExtensionEntryImpl.class);
-
-		finderCache.clearCache(ClientExtensionEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the client extension entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ClientExtensionEntry clientExtensionEntry) {
-		entityCache.removeResult(
-			ClientExtensionEntryImpl.class, clientExtensionEntry);
-	}
-
-	@Override
-	public void clearCache(List<ClientExtensionEntry> clientExtensionEntries) {
-		for (ClientExtensionEntry clientExtensionEntry :
-				clientExtensionEntries) {
-
-			entityCache.removeResult(
-				ClientExtensionEntryImpl.class, clientExtensionEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ClientExtensionEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ClientExtensionEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ClientExtensionEntryModelImpl clientExtensionEntryModelImpl) {
 
@@ -1969,48 +1923,6 @@ public class ClientExtensionEntryPersistenceImpl
 		throws NoSuchClientExtensionEntryException {
 
 		return remove((Serializable)clientExtensionEntryId);
-	}
-
-	/**
-	 * Removes the client extension entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the client extension entry
-	 * @return the client extension entry that was removed
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	@Override
-	public ClientExtensionEntry remove(Serializable primaryKey)
-		throws NoSuchClientExtensionEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ClientExtensionEntry clientExtensionEntry =
-				(ClientExtensionEntry)session.get(
-					ClientExtensionEntryImpl.class, primaryKey);
-
-			if (clientExtensionEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchClientExtensionEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(clientExtensionEntry);
-		}
-		catch (NoSuchClientExtensionEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2235,32 +2147,6 @@ public class ClientExtensionEntryPersistenceImpl
 		}
 
 		clientExtensionEntry.resetOriginalValues();
-
-		return clientExtensionEntry;
-	}
-
-	/**
-	 * Returns the client extension entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the client extension entry
-	 * @return the client extension entry
-	 * @throws NoSuchClientExtensionEntryException if a client extension entry with the primary key could not be found
-	 */
-	@Override
-	public ClientExtensionEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchClientExtensionEntryException {
-
-		ClientExtensionEntry clientExtensionEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (clientExtensionEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchClientExtensionEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return clientExtensionEntry;
 	}
@@ -3006,9 +2892,6 @@ public class ClientExtensionEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"ClientExtensionEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ClientExtensionEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ClientExtensionEntry exists with the key {";
 
@@ -3024,4 +2907,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1349940848
+// LIFERAY-SERVICE-BUILDER-HASH:1988720980

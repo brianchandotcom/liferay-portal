@@ -91,7 +91,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = LayoutUtilityPageEntryPersistence.class)
 public class LayoutUtilityPageEntryPersistenceImpl
-	extends BasePersistenceImpl<LayoutUtilityPageEntry>
+	extends BasePersistenceImpl
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
 	implements LayoutUtilityPageEntryPersistence {
 
 	/*
@@ -4336,55 +4337,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all layout utility page entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LayoutUtilityPageEntryImpl.class);
-
-		finderCache.clearCache(LayoutUtilityPageEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the layout utility page entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LayoutUtilityPageEntry layoutUtilityPageEntry) {
-		entityCache.removeResult(
-			LayoutUtilityPageEntryImpl.class, layoutUtilityPageEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<LayoutUtilityPageEntry> layoutUtilityPageEntries) {
-
-		for (LayoutUtilityPageEntry layoutUtilityPageEntry :
-				layoutUtilityPageEntries) {
-
-			entityCache.removeResult(
-				LayoutUtilityPageEntryImpl.class, layoutUtilityPageEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LayoutUtilityPageEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				LayoutUtilityPageEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LayoutUtilityPageEntryModelImpl layoutUtilityPageEntryModelImpl) {
 
@@ -4460,48 +4412,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		throws NoSuchLayoutUtilityPageEntryException {
 
 		return remove((Serializable)LayoutUtilityPageEntryId);
-	}
-
-	/**
-	 * Removes the layout utility page entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the layout utility page entry
-	 * @return the layout utility page entry that was removed
-	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry remove(Serializable primaryKey)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				(LayoutUtilityPageEntry)session.get(
-					LayoutUtilityPageEntryImpl.class, primaryKey);
-
-			if (layoutUtilityPageEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLayoutUtilityPageEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(layoutUtilityPageEntry);
-		}
-		catch (NoSuchLayoutUtilityPageEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4705,32 +4615,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		layoutUtilityPageEntry.resetOriginalValues();
-
-		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout utility page entry
-	 * @return the layout utility page entry
-	 * @throws NoSuchLayoutUtilityPageEntryException if a layout utility page entry with the primary key could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLayoutUtilityPageEntryException {
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (layoutUtilityPageEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLayoutUtilityPageEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return layoutUtilityPageEntry;
 	}
@@ -5588,9 +5472,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"LayoutUtilityPageEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LayoutUtilityPageEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutUtilityPageEntry exists with the key {";
 
@@ -5606,4 +5487,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1805798603
+// LIFERAY-SERVICE-BUILDER-HASH:-1356563

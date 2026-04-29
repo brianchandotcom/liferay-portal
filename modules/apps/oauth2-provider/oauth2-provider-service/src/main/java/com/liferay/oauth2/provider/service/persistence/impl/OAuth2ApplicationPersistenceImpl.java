@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuth2ApplicationPersistence.class)
 public class OAuth2ApplicationPersistenceImpl
-	extends BasePersistenceImpl<OAuth2Application>
+	extends BasePersistenceImpl
+		<OAuth2Application, NoSuchOAuth2ApplicationException>
 	implements OAuth2ApplicationPersistence {
 
 	/*
@@ -1872,50 +1873,6 @@ public class OAuth2ApplicationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all o auth2 applications.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OAuth2ApplicationImpl.class);
-
-		finderCache.clearCache(OAuth2ApplicationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the o auth2 application.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OAuth2Application oAuth2Application) {
-		entityCache.removeResult(
-			OAuth2ApplicationImpl.class, oAuth2Application);
-	}
-
-	@Override
-	public void clearCache(List<OAuth2Application> oAuth2Applications) {
-		for (OAuth2Application oAuth2Application : oAuth2Applications) {
-			entityCache.removeResult(
-				OAuth2ApplicationImpl.class, oAuth2Application);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OAuth2ApplicationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(OAuth2ApplicationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl) {
 
@@ -1970,48 +1927,6 @@ public class OAuth2ApplicationPersistenceImpl
 		throws NoSuchOAuth2ApplicationException {
 
 		return remove((Serializable)oAuth2ApplicationId);
-	}
-
-	/**
-	 * Removes the o auth2 application with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the o auth2 application
-	 * @return the o auth2 application that was removed
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Application remove(Serializable primaryKey)
-		throws NoSuchOAuth2ApplicationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OAuth2Application oAuth2Application =
-				(OAuth2Application)session.get(
-					OAuth2ApplicationImpl.class, primaryKey);
-
-			if (oAuth2Application == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOAuth2ApplicationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(oAuth2Application);
-		}
-		catch (NoSuchOAuth2ApplicationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2199,31 +2114,6 @@ public class OAuth2ApplicationPersistenceImpl
 		}
 
 		oAuth2Application.resetOriginalValues();
-
-		return oAuth2Application;
-	}
-
-	/**
-	 * Returns the o auth2 application with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 application
-	 * @return the o auth2 application
-	 * @throws NoSuchOAuth2ApplicationException if a o auth2 application with the primary key could not be found
-	 */
-	@Override
-	public OAuth2Application findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOAuth2ApplicationException {
-
-		OAuth2Application oAuth2Application = fetchByPrimaryKey(primaryKey);
-
-		if (oAuth2Application == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOAuth2ApplicationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return oAuth2Application;
 	}
@@ -2713,9 +2603,6 @@ public class OAuth2ApplicationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "OAuth2Application.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OAuth2Application exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2Application exists with the key {";
 
@@ -2731,4 +2618,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1724858644
+// LIFERAY-SERVICE-BUILDER-HASH:-1892050679

@@ -69,7 +69,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectValidationRuleSettingPersistence.class)
 public class ObjectValidationRuleSettingPersistenceImpl
-	extends BasePersistenceImpl<ObjectValidationRuleSetting>
+	extends BasePersistenceImpl
+		<ObjectValidationRuleSetting,
+		 NoSuchObjectValidationRuleSettingException>
 	implements ObjectValidationRuleSettingPersistence {
 
 	/*
@@ -990,58 +992,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object validation rule settings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectValidationRuleSettingImpl.class);
-
-		finderCache.clearCache(ObjectValidationRuleSettingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object validation rule setting.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		ObjectValidationRuleSetting objectValidationRuleSetting) {
-
-		entityCache.removeResult(
-			ObjectValidationRuleSettingImpl.class, objectValidationRuleSetting);
-	}
-
-	@Override
-	public void clearCache(
-		List<ObjectValidationRuleSetting> objectValidationRuleSettings) {
-
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				objectValidationRuleSettings) {
-
-			entityCache.removeResult(
-				ObjectValidationRuleSettingImpl.class,
-				objectValidationRuleSetting);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectValidationRuleSettingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				ObjectValidationRuleSettingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectValidationRuleSettingModelImpl
 			objectValidationRuleSettingModelImpl) {
@@ -1105,50 +1055,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		throws NoSuchObjectValidationRuleSettingException {
 
 		return remove((Serializable)objectValidationRuleSettingId);
-	}
-
-	/**
-	 * Removes the object validation rule setting with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object validation rule setting
-	 * @return the object validation rule setting that was removed
-	 * @throws NoSuchObjectValidationRuleSettingException if a object validation rule setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectValidationRuleSetting remove(Serializable primaryKey)
-		throws NoSuchObjectValidationRuleSettingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectValidationRuleSetting objectValidationRuleSetting =
-				(ObjectValidationRuleSetting)session.get(
-					ObjectValidationRuleSettingImpl.class, primaryKey);
-
-			if (objectValidationRuleSetting == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectValidationRuleSettingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectValidationRuleSetting);
-		}
-		catch (NoSuchObjectValidationRuleSettingException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1280,32 +1186,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 		}
 
 		objectValidationRuleSetting.resetOriginalValues();
-
-		return objectValidationRuleSetting;
-	}
-
-	/**
-	 * Returns the object validation rule setting with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object validation rule setting
-	 * @return the object validation rule setting
-	 * @throws NoSuchObjectValidationRuleSettingException if a object validation rule setting with the primary key could not be found
-	 */
-	@Override
-	public ObjectValidationRuleSetting findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectValidationRuleSettingException {
-
-		ObjectValidationRuleSetting objectValidationRuleSetting =
-			fetchByPrimaryKey(primaryKey);
-
-		if (objectValidationRuleSetting == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectValidationRuleSettingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectValidationRuleSetting;
 	}
@@ -1807,9 +1687,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"objectValidationRuleSetting.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectValidationRuleSetting exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectValidationRuleSetting exists with the key {";
 
@@ -1825,4 +1702,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-740255033
+// LIFERAY-SERVICE-BUILDER-HASH:-790899730

@@ -81,7 +81,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectEntryPersistence.class)
 public class ObjectEntryPersistenceImpl
-	extends BasePersistenceImpl<ObjectEntry> implements ObjectEntryPersistence {
+	extends BasePersistenceImpl<ObjectEntry, NoSuchObjectEntryException>
+	implements ObjectEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -3805,48 +3806,6 @@ public class ObjectEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectEntryImpl.class);
-
-		finderCache.clearCache(ObjectEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectEntry objectEntry) {
-		entityCache.removeResult(ObjectEntryImpl.class, objectEntry);
-	}
-
-	@Override
-	public void clearCache(List<ObjectEntry> objectEntries) {
-		for (ObjectEntry objectEntry : objectEntries) {
-			entityCache.removeResult(ObjectEntryImpl.class, objectEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectEntryModelImpl objectEntryModelImpl) {
 
@@ -3907,47 +3866,6 @@ public class ObjectEntryPersistenceImpl
 		throws NoSuchObjectEntryException {
 
 		return remove((Serializable)objectEntryId);
-	}
-
-	/**
-	 * Removes the object entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object entry
-	 * @return the object entry that was removed
-	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntry remove(Serializable primaryKey)
-		throws NoSuchObjectEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectEntry objectEntry = (ObjectEntry)session.get(
-				ObjectEntryImpl.class, primaryKey);
-
-			if (objectEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectEntry);
-		}
-		catch (NoSuchObjectEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4100,31 +4018,6 @@ public class ObjectEntryPersistenceImpl
 		}
 
 		objectEntry.resetOriginalValues();
-
-		return objectEntry;
-	}
-
-	/**
-	 * Returns the object entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object entry
-	 * @return the object entry
-	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
-	 */
-	@Override
-	public ObjectEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectEntryException {
-
-		ObjectEntry objectEntry = fetchByPrimaryKey(primaryKey);
-
-		if (objectEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectEntry;
 	}
@@ -4717,9 +4610,6 @@ public class ObjectEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectEntry exists with the key {";
 
@@ -4735,4 +4625,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:465518507
+// LIFERAY-SERVICE-BUILDER-HASH:-1061349887

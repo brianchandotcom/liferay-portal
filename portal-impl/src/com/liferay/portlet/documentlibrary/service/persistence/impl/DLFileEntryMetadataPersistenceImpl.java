@@ -74,7 +74,8 @@ import java.util.Set;
  * @generated
  */
 public class DLFileEntryMetadataPersistenceImpl
-	extends BasePersistenceImpl<DLFileEntryMetadata>
+	extends BasePersistenceImpl
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException>
 	implements DLFileEntryMetadataPersistence {
 
 	/*
@@ -1030,51 +1031,6 @@ public class DLFileEntryMetadataPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all document library file entry metadatas.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(DLFileEntryMetadataImpl.class);
-
-		FinderCacheUtil.clearCache(DLFileEntryMetadataImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the document library file entry metadata.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(DLFileEntryMetadata dlFileEntryMetadata) {
-		EntityCacheUtil.removeResult(
-			DLFileEntryMetadataImpl.class, dlFileEntryMetadata);
-	}
-
-	@Override
-	public void clearCache(List<DLFileEntryMetadata> dlFileEntryMetadatas) {
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			EntityCacheUtil.removeResult(
-				DLFileEntryMetadataImpl.class, dlFileEntryMetadata);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(DLFileEntryMetadataImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				DLFileEntryMetadataImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl) {
 
@@ -1134,48 +1090,6 @@ public class DLFileEntryMetadataPersistenceImpl
 		throws NoSuchFileEntryMetadataException {
 
 		return remove((Serializable)fileEntryMetadataId);
-	}
-
-	/**
-	 * Removes the document library file entry metadata with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the document library file entry metadata
-	 * @return the document library file entry metadata that was removed
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata remove(Serializable primaryKey)
-		throws NoSuchFileEntryMetadataException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DLFileEntryMetadata dlFileEntryMetadata =
-				(DLFileEntryMetadata)session.get(
-					DLFileEntryMetadataImpl.class, primaryKey);
-
-			if (dlFileEntryMetadata == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFileEntryMetadataException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(dlFileEntryMetadata);
-		}
-		catch (NoSuchFileEntryMetadataException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1348,31 +1262,6 @@ public class DLFileEntryMetadataPersistenceImpl
 		}
 
 		dlFileEntryMetadata.resetOriginalValues();
-
-		return dlFileEntryMetadata;
-	}
-
-	/**
-	 * Returns the document library file entry metadata with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the document library file entry metadata
-	 * @return the document library file entry metadata
-	 * @throws NoSuchFileEntryMetadataException if a document library file entry metadata with the primary key could not be found
-	 */
-	@Override
-	public DLFileEntryMetadata findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFileEntryMetadataException {
-
-		DLFileEntryMetadata dlFileEntryMetadata = fetchByPrimaryKey(primaryKey);
-
-		if (dlFileEntryMetadata == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFileEntryMetadataException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return dlFileEntryMetadata;
 	}
@@ -2061,9 +1950,6 @@ public class DLFileEntryMetadataPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntryMetadata.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DLFileEntryMetadata exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileEntryMetadata exists with the key {";
 
@@ -2079,4 +1965,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1875813017
+// LIFERAY-SERVICE-BUILDER-HASH:-1296941878

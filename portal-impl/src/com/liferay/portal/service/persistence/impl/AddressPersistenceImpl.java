@@ -80,7 +80,8 @@ import java.util.Set;
  * @generated
  */
 public class AddressPersistenceImpl
-	extends BasePersistenceImpl<Address> implements AddressPersistence {
+	extends BasePersistenceImpl<Address, NoSuchAddressException>
+	implements AddressPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -2833,48 +2834,6 @@ public class AddressPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all addresses.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AddressImpl.class);
-
-		FinderCacheUtil.clearCache(AddressImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the address.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Address address) {
-		EntityCacheUtil.removeResult(AddressImpl.class, address);
-	}
-
-	@Override
-	public void clearCache(List<Address> addresses) {
-		for (Address address : addresses) {
-			EntityCacheUtil.removeResult(AddressImpl.class, address);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AddressImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(AddressImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(AddressModelImpl addressModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -2922,47 +2881,6 @@ public class AddressPersistenceImpl
 	@Override
 	public Address remove(long addressId) throws NoSuchAddressException {
 		return remove((Serializable)addressId);
-	}
-
-	/**
-	 * Removes the address with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the address
-	 * @return the address that was removed
-	 * @throws NoSuchAddressException if a address with the primary key could not be found
-	 */
-	@Override
-	public Address remove(Serializable primaryKey)
-		throws NoSuchAddressException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Address address = (Address)session.get(
-				AddressImpl.class, primaryKey);
-
-			if (address == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAddressException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(address);
-		}
-		catch (NoSuchAddressException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3142,31 +3060,6 @@ public class AddressPersistenceImpl
 		}
 
 		address.resetOriginalValues();
-
-		return address;
-	}
-
-	/**
-	 * Returns the address with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the address
-	 * @return the address
-	 * @throws NoSuchAddressException if a address with the primary key could not be found
-	 */
-	@Override
-	public Address findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAddressException {
-
-		Address address = fetchByPrimaryKey(primaryKey);
-
-		if (address == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAddressException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return address;
 	}
@@ -4129,9 +4022,6 @@ public class AddressPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "address.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Address exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Address exists with the key {";
 
@@ -4147,4 +4037,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:391092831
+// LIFERAY-SERVICE-BUILDER-HASH:1609543511

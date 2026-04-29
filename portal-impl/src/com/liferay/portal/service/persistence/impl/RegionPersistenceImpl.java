@@ -71,7 +71,8 @@ import java.util.Set;
  * @generated
  */
 public class RegionPersistenceImpl
-	extends BasePersistenceImpl<Region> implements RegionPersistence {
+	extends BasePersistenceImpl<Region, NoSuchRegionException>
+	implements RegionPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1047,48 +1048,6 @@ public class RegionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all regions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(RegionImpl.class);
-
-		FinderCacheUtil.clearCache(RegionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the region.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Region region) {
-		EntityCacheUtil.removeResult(RegionImpl.class, region);
-	}
-
-	@Override
-	public void clearCache(List<Region> regions) {
-		for (Region region : regions) {
-			EntityCacheUtil.removeResult(RegionImpl.class, region);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(RegionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(RegionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(RegionModelImpl regionModelImpl) {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -1135,44 +1094,6 @@ public class RegionPersistenceImpl
 	@Override
 	public Region remove(long regionId) throws NoSuchRegionException {
 		return remove((Serializable)regionId);
-	}
-
-	/**
-	 * Removes the region with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the region
-	 * @return the region that was removed
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	@Override
-	public Region remove(Serializable primaryKey) throws NoSuchRegionException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Region region = (Region)session.get(RegionImpl.class, primaryKey);
-
-			if (region == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRegionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(region);
-		}
-		catch (NoSuchRegionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1291,31 +1212,6 @@ public class RegionPersistenceImpl
 		}
 
 		region.resetOriginalValues();
-
-		return region;
-	}
-
-	/**
-	 * Returns the region with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the region
-	 * @return the region
-	 * @throws NoSuchRegionException if a region with the primary key could not be found
-	 */
-	@Override
-	public Region findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRegionException {
-
-		Region region = fetchByPrimaryKey(primaryKey);
-
-		if (region == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRegionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return region;
 	}
@@ -2000,9 +1896,6 @@ public class RegionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "region.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Region exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Region exists with the key {";
 
@@ -2018,4 +1911,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1508090477
+// LIFERAY-SERVICE-BUILDER-HASH:-1987957946

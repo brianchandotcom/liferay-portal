@@ -78,7 +78,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TranslationEntryPersistence.class)
 public class TranslationEntryPersistenceImpl
-	extends BasePersistenceImpl<TranslationEntry>
+	extends BasePersistenceImpl<TranslationEntry, NoSuchEntryException>
 	implements TranslationEntryPersistence {
 
 	/*
@@ -870,49 +870,6 @@ public class TranslationEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all translation entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TranslationEntryImpl.class);
-
-		finderCache.clearCache(TranslationEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the translation entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TranslationEntry translationEntry) {
-		entityCache.removeResult(TranslationEntryImpl.class, translationEntry);
-	}
-
-	@Override
-	public void clearCache(List<TranslationEntry> translationEntries) {
-		for (TranslationEntry translationEntry : translationEntries) {
-			entityCache.removeResult(
-				TranslationEntryImpl.class, translationEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TranslationEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TranslationEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		TranslationEntryModelImpl translationEntryModelImpl) {
 
@@ -973,47 +930,6 @@ public class TranslationEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)translationEntryId);
-	}
-
-	/**
-	 * Removes the translation entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the translation entry
-	 * @return the translation entry that was removed
-	 * @throws NoSuchEntryException if a translation entry with the primary key could not be found
-	 */
-	@Override
-	public TranslationEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TranslationEntry translationEntry = (TranslationEntry)session.get(
-				TranslationEntryImpl.class, primaryKey);
-
-			if (translationEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(translationEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1140,31 +1056,6 @@ public class TranslationEntryPersistenceImpl
 		}
 
 		translationEntry.resetOriginalValues();
-
-		return translationEntry;
-	}
-
-	/**
-	 * Returns the translation entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the translation entry
-	 * @return the translation entry
-	 * @throws NoSuchEntryException if a translation entry with the primary key could not be found
-	 */
-	@Override
-	public TranslationEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		TranslationEntry translationEntry = fetchByPrimaryKey(primaryKey);
-
-		if (translationEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return translationEntry;
 	}
@@ -1865,9 +1756,6 @@ public class TranslationEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "translationEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TranslationEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No TranslationEntry exists with the key {";
 
@@ -1883,4 +1771,4 @@ public class TranslationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2083587622
+// LIFERAY-SERVICE-BUILDER-HASH:-1406755202

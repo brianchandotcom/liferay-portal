@@ -74,7 +74,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = AnalyticsDeleteMessagePersistence.class)
 public class AnalyticsDeleteMessagePersistenceImpl
-	extends BasePersistenceImpl<AnalyticsDeleteMessage>
+	extends BasePersistenceImpl
+		<AnalyticsDeleteMessage, NoSuchDeleteMessageException>
 	implements AnalyticsDeleteMessagePersistence {
 
 	/*
@@ -657,55 +658,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all analytics delete messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(AnalyticsDeleteMessageImpl.class);
-
-		finderCache.clearCache(AnalyticsDeleteMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the analytics delete message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AnalyticsDeleteMessage analyticsDeleteMessage) {
-		entityCache.removeResult(
-			AnalyticsDeleteMessageImpl.class, analyticsDeleteMessage);
-	}
-
-	@Override
-	public void clearCache(
-		List<AnalyticsDeleteMessage> analyticsDeleteMessages) {
-
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				analyticsDeleteMessages) {
-
-			entityCache.removeResult(
-				AnalyticsDeleteMessageImpl.class, analyticsDeleteMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(AnalyticsDeleteMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				AnalyticsDeleteMessageImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
 	 * @param analyticsDeleteMessageId the primary key for the new analytics delete message
@@ -736,48 +688,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		throws NoSuchDeleteMessageException {
 
 		return remove((Serializable)analyticsDeleteMessageId);
-	}
-
-	/**
-	 * Removes the analytics delete message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the analytics delete message
-	 * @return the analytics delete message that was removed
-	 * @throws NoSuchDeleteMessageException if a analytics delete message with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage remove(Serializable primaryKey)
-		throws NoSuchDeleteMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnalyticsDeleteMessage analyticsDeleteMessage =
-				(AnalyticsDeleteMessage)session.get(
-					AnalyticsDeleteMessageImpl.class, primaryKey);
-
-			if (analyticsDeleteMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDeleteMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(analyticsDeleteMessage);
-		}
-		catch (NoSuchDeleteMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -903,32 +813,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 		}
 
 		analyticsDeleteMessage.resetOriginalValues();
-
-		return analyticsDeleteMessage;
-	}
-
-	/**
-	 * Returns the analytics delete message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the analytics delete message
-	 * @return the analytics delete message
-	 * @throws NoSuchDeleteMessageException if a analytics delete message with the primary key could not be found
-	 */
-	@Override
-	public AnalyticsDeleteMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDeleteMessageException {
-
-		AnalyticsDeleteMessage analyticsDeleteMessage = fetchByPrimaryKey(
-			primaryKey);
-
-		if (analyticsDeleteMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDeleteMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return analyticsDeleteMessage;
 	}
@@ -1582,9 +1466,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"analyticsDeleteMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AnalyticsDeleteMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnalyticsDeleteMessage exists with the key {";
 
@@ -1597,4 +1478,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2041115552
+// LIFERAY-SERVICE-BUILDER-HASH:1153011227

@@ -63,7 +63,7 @@ import java.util.Set;
  * @generated
  */
 public class ExpandoTablePersistenceImpl
-	extends BasePersistenceImpl<ExpandoTable>
+	extends BasePersistenceImpl<ExpandoTable, NoSuchTableException>
 	implements ExpandoTablePersistence {
 
 	/*
@@ -427,48 +427,6 @@ public class ExpandoTablePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all expando tables.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ExpandoTableImpl.class);
-
-		FinderCacheUtil.clearCache(ExpandoTableImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the expando table.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ExpandoTable expandoTable) {
-		EntityCacheUtil.removeResult(ExpandoTableImpl.class, expandoTable);
-	}
-
-	@Override
-	public void clearCache(List<ExpandoTable> expandoTables) {
-		for (ExpandoTable expandoTable : expandoTables) {
-			EntityCacheUtil.removeResult(ExpandoTableImpl.class, expandoTable);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ExpandoTableImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ExpandoTableImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ExpandoTableModelImpl expandoTableModelImpl) {
 
@@ -515,47 +473,6 @@ public class ExpandoTablePersistenceImpl
 	@Override
 	public ExpandoTable remove(long tableId) throws NoSuchTableException {
 		return remove((Serializable)tableId);
-	}
-
-	/**
-	 * Removes the expando table with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the expando table
-	 * @return the expando table that was removed
-	 * @throws NoSuchTableException if a expando table with the primary key could not be found
-	 */
-	@Override
-	public ExpandoTable remove(Serializable primaryKey)
-		throws NoSuchTableException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExpandoTable expandoTable = (ExpandoTable)session.get(
-				ExpandoTableImpl.class, primaryKey);
-
-			if (expandoTable == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTableException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(expandoTable);
-		}
-		catch (NoSuchTableException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -649,31 +566,6 @@ public class ExpandoTablePersistenceImpl
 		}
 
 		expandoTable.resetOriginalValues();
-
-		return expandoTable;
-	}
-
-	/**
-	 * Returns the expando table with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the expando table
-	 * @return the expando table
-	 * @throws NoSuchTableException if a expando table with the primary key could not be found
-	 */
-	@Override
-	public ExpandoTable findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTableException {
-
-		ExpandoTable expandoTable = fetchByPrimaryKey(primaryKey);
-
-		if (expandoTable == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTableException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return expandoTable;
 	}
@@ -1229,9 +1121,6 @@ public class ExpandoTablePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoTable.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ExpandoTable exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExpandoTable exists with the key {";
 
@@ -1244,4 +1133,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:695928807
+// LIFERAY-SERVICE-BUILDER-HASH:867539998

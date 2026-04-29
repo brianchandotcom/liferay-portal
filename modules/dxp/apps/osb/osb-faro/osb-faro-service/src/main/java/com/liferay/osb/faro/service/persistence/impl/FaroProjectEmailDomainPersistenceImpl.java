@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroProjectEmailDomainPersistence.class)
 public class FaroProjectEmailDomainPersistenceImpl
-	extends BasePersistenceImpl<FaroProjectEmailDomain>
+	extends BasePersistenceImpl
+		<FaroProjectEmailDomain, NoSuchFaroProjectEmailDomainException>
 	implements FaroProjectEmailDomainPersistence {
 
 	/*
@@ -433,55 +433,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all faro project email domains.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroProjectEmailDomainImpl.class);
-
-		finderCache.clearCache(FaroProjectEmailDomainImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro project email domain.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroProjectEmailDomain faroProjectEmailDomain) {
-		entityCache.removeResult(
-			FaroProjectEmailDomainImpl.class, faroProjectEmailDomain);
-	}
-
-	@Override
-	public void clearCache(
-		List<FaroProjectEmailDomain> faroProjectEmailDomains) {
-
-		for (FaroProjectEmailDomain faroProjectEmailDomain :
-				faroProjectEmailDomains) {
-
-			entityCache.removeResult(
-				FaroProjectEmailDomainImpl.class, faroProjectEmailDomain);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroProjectEmailDomainImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				FaroProjectEmailDomainImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new faro project email domain with the primary key. Does not add the faro project email domain to the database.
 	 *
 	 * @param faroProjectEmailDomainId the primary key for the new faro project email domain
@@ -512,48 +463,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 		throws NoSuchFaroProjectEmailDomainException {
 
 		return remove((Serializable)faroProjectEmailDomainId);
-	}
-
-	/**
-	 * Removes the faro project email domain with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro project email domain
-	 * @return the faro project email domain that was removed
-	 * @throws NoSuchFaroProjectEmailDomainException if a faro project email domain with the primary key could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain remove(Serializable primaryKey)
-		throws NoSuchFaroProjectEmailDomainException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroProjectEmailDomain faroProjectEmailDomain =
-				(FaroProjectEmailDomain)session.get(
-					FaroProjectEmailDomainImpl.class, primaryKey);
-
-			if (faroProjectEmailDomain == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroProjectEmailDomainException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroProjectEmailDomain);
-		}
-		catch (NoSuchFaroProjectEmailDomainException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -646,32 +555,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 		}
 
 		faroProjectEmailDomain.resetOriginalValues();
-
-		return faroProjectEmailDomain;
-	}
-
-	/**
-	 * Returns the faro project email domain with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro project email domain
-	 * @return the faro project email domain
-	 * @throws NoSuchFaroProjectEmailDomainException if a faro project email domain with the primary key could not be found
-	 */
-	@Override
-	public FaroProjectEmailDomain findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroProjectEmailDomainException {
-
-		FaroProjectEmailDomain faroProjectEmailDomain = fetchByPrimaryKey(
-			primaryKey);
-
-		if (faroProjectEmailDomain == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroProjectEmailDomainException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroProjectEmailDomain;
 	}
@@ -1047,9 +930,6 @@ public class FaroProjectEmailDomainPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"faroProjectEmailDomain.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroProjectEmailDomain exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroProjectEmailDomain exists with the key {";
 
@@ -1062,4 +942,4 @@ public class FaroProjectEmailDomainPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:244375997
+// LIFERAY-SERVICE-BUILDER-HASH:91258484

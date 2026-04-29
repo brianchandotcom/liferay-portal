@@ -81,7 +81,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BookmarksFolderPersistence.class)
 public class BookmarksFolderPersistenceImpl
-	extends BasePersistenceImpl<BookmarksFolder>
+	extends BasePersistenceImpl<BookmarksFolder, NoSuchFolderException>
 	implements BookmarksFolderPersistence {
 
 	/*
@@ -2708,49 +2708,6 @@ public class BookmarksFolderPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all bookmarks folders.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BookmarksFolderImpl.class);
-
-		finderCache.clearCache(BookmarksFolderImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the bookmarks folder.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BookmarksFolder bookmarksFolder) {
-		entityCache.removeResult(BookmarksFolderImpl.class, bookmarksFolder);
-	}
-
-	@Override
-	public void clearCache(List<BookmarksFolder> bookmarksFolders) {
-		for (BookmarksFolder bookmarksFolder : bookmarksFolders) {
-			entityCache.removeResult(
-				BookmarksFolderImpl.class, bookmarksFolder);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BookmarksFolderImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BookmarksFolderImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BookmarksFolderModelImpl bookmarksFolderModelImpl) {
 
@@ -2800,47 +2757,6 @@ public class BookmarksFolderPersistenceImpl
 	@Override
 	public BookmarksFolder remove(long folderId) throws NoSuchFolderException {
 		return remove((Serializable)folderId);
-	}
-
-	/**
-	 * Removes the bookmarks folder with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the bookmarks folder
-	 * @return the bookmarks folder that was removed
-	 * @throws NoSuchFolderException if a bookmarks folder with the primary key could not be found
-	 */
-	@Override
-	public BookmarksFolder remove(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BookmarksFolder bookmarksFolder = (BookmarksFolder)session.get(
-				BookmarksFolderImpl.class, primaryKey);
-
-			if (bookmarksFolder == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFolderException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(bookmarksFolder);
-		}
-		catch (NoSuchFolderException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2967,31 +2883,6 @@ public class BookmarksFolderPersistenceImpl
 		}
 
 		bookmarksFolder.resetOriginalValues();
-
-		return bookmarksFolder;
-	}
-
-	/**
-	 * Returns the bookmarks folder with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the bookmarks folder
-	 * @return the bookmarks folder
-	 * @throws NoSuchFolderException if a bookmarks folder with the primary key could not be found
-	 */
-	@Override
-	public BookmarksFolder findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFolderException {
-
-		BookmarksFolder bookmarksFolder = fetchByPrimaryKey(primaryKey);
-
-		if (bookmarksFolder == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFolderException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return bookmarksFolder;
 	}
@@ -3891,9 +3782,6 @@ public class BookmarksFolderPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "BookmarksFolder.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BookmarksFolder exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BookmarksFolder exists with the key {";
 
@@ -3909,4 +3797,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:284621464
+// LIFERAY-SERVICE-BUILDER-HASH:816643721

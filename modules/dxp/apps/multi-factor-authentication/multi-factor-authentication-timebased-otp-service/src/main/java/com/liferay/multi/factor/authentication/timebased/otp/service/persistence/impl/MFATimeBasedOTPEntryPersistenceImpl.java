@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MFATimeBasedOTPEntryPersistence.class)
 public class MFATimeBasedOTPEntryPersistenceImpl
-	extends BasePersistenceImpl<MFATimeBasedOTPEntry>
+	extends BasePersistenceImpl<MFATimeBasedOTPEntry, NoSuchEntryException>
 	implements MFATimeBasedOTPEntryPersistence {
 
 	/*
@@ -224,53 +223,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all mfa time based otp entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MFATimeBasedOTPEntryImpl.class);
-
-		finderCache.clearCache(MFATimeBasedOTPEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the mfa time based otp entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
-		entityCache.removeResult(
-			MFATimeBasedOTPEntryImpl.class, mfaTimeBasedOTPEntry);
-	}
-
-	@Override
-	public void clearCache(List<MFATimeBasedOTPEntry> mfaTimeBasedOTPEntries) {
-		for (MFATimeBasedOTPEntry mfaTimeBasedOTPEntry :
-				mfaTimeBasedOTPEntries) {
-
-			entityCache.removeResult(
-				MFATimeBasedOTPEntryImpl.class, mfaTimeBasedOTPEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MFATimeBasedOTPEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				MFATimeBasedOTPEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MFATimeBasedOTPEntryModelImpl mfaTimeBasedOTPEntryModelImpl) {
 
@@ -313,48 +265,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)mfaTimeBasedOTPEntryId);
-	}
-
-	/**
-	 * Removes the mfa time based otp entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the mfa time based otp entry
-	 * @return the mfa time based otp entry that was removed
-	 * @throws NoSuchEntryException if a mfa time based otp entry with the primary key could not be found
-	 */
-	@Override
-	public MFATimeBasedOTPEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MFATimeBasedOTPEntry mfaTimeBasedOTPEntry =
-				(MFATimeBasedOTPEntry)session.get(
-					MFATimeBasedOTPEntryImpl.class, primaryKey);
-
-			if (mfaTimeBasedOTPEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mfaTimeBasedOTPEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -472,32 +382,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		}
 
 		mfaTimeBasedOTPEntry.resetOriginalValues();
-
-		return mfaTimeBasedOTPEntry;
-	}
-
-	/**
-	 * Returns the mfa time based otp entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the mfa time based otp entry
-	 * @return the mfa time based otp entry
-	 * @throws NoSuchEntryException if a mfa time based otp entry with the primary key could not be found
-	 */
-	@Override
-	public MFATimeBasedOTPEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		MFATimeBasedOTPEntry mfaTimeBasedOTPEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (mfaTimeBasedOTPEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mfaTimeBasedOTPEntry;
 	}
@@ -814,9 +698,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"mfaTimeBasedOTPEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MFATimeBasedOTPEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MFATimeBasedOTPEntry exists with the key {";
 
@@ -829,4 +710,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2113560601
+// LIFERAY-SERVICE-BUILDER-HASH:1182926155

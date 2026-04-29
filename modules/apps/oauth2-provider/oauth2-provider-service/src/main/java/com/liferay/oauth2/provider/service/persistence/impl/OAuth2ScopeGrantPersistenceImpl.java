@@ -70,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = OAuth2ScopeGrantPersistence.class)
 public class OAuth2ScopeGrantPersistenceImpl
-	extends BasePersistenceImpl<OAuth2ScopeGrant>
+	extends BasePersistenceImpl
+		<OAuth2ScopeGrant, NoSuchOAuth2ScopeGrantException>
 	implements OAuth2ScopeGrantPersistence {
 
 	/*
@@ -458,49 +459,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all o auth2 scope grants.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(OAuth2ScopeGrantImpl.class);
-
-		finderCache.clearCache(OAuth2ScopeGrantImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the o auth2 scope grant.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		entityCache.removeResult(OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant);
-	}
-
-	@Override
-	public void clearCache(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
-		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			entityCache.removeResult(
-				OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(OAuth2ScopeGrantImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(OAuth2ScopeGrantImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		OAuth2ScopeGrantModelImpl oAuth2ScopeGrantModelImpl) {
 
@@ -546,47 +504,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		throws NoSuchOAuth2ScopeGrantException {
 
 		return remove((Serializable)oAuth2ScopeGrantId);
-	}
-
-	/**
-	 * Removes the o auth2 scope grant with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the o auth2 scope grant
-	 * @return the o auth2 scope grant that was removed
-	 * @throws NoSuchOAuth2ScopeGrantException if a o auth2 scope grant with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant remove(Serializable primaryKey)
-		throws NoSuchOAuth2ScopeGrantException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			OAuth2ScopeGrant oAuth2ScopeGrant = (OAuth2ScopeGrant)session.get(
-				OAuth2ScopeGrantImpl.class, primaryKey);
-
-			if (oAuth2ScopeGrant == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchOAuth2ScopeGrantException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(oAuth2ScopeGrant);
-		}
-		catch (NoSuchOAuth2ScopeGrantException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -677,31 +594,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		}
 
 		oAuth2ScopeGrant.resetOriginalValues();
-
-		return oAuth2ScopeGrant;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the o auth2 scope grant
-	 * @return the o auth2 scope grant
-	 * @throws NoSuchOAuth2ScopeGrantException if a o auth2 scope grant with the primary key could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOAuth2ScopeGrantException {
-
-		OAuth2ScopeGrant oAuth2ScopeGrant = fetchByPrimaryKey(primaryKey);
-
-		if (oAuth2ScopeGrant == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchOAuth2ScopeGrantException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return oAuth2ScopeGrant;
 	}
@@ -1452,9 +1344,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "oAuth2ScopeGrant.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No OAuth2ScopeGrant exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No OAuth2ScopeGrant exists with the key {";
 
@@ -1470,4 +1359,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1694549519
+// LIFERAY-SERVICE-BUILDER-HASH:-494155706

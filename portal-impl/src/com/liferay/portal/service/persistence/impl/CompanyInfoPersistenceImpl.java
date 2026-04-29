@@ -54,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class CompanyInfoPersistenceImpl
-	extends BasePersistenceImpl<CompanyInfo> implements CompanyInfoPersistence {
+	extends BasePersistenceImpl<CompanyInfo, NoSuchCompanyInfoException>
+	implements CompanyInfoPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -215,48 +216,6 @@ public class CompanyInfoPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all company infos.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(CompanyInfoImpl.class);
-
-		FinderCacheUtil.clearCache(CompanyInfoImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the company info.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CompanyInfo companyInfo) {
-		EntityCacheUtil.removeResult(CompanyInfoImpl.class, companyInfo);
-	}
-
-	@Override
-	public void clearCache(List<CompanyInfo> companyInfos) {
-		for (CompanyInfo companyInfo : companyInfos) {
-			EntityCacheUtil.removeResult(CompanyInfoImpl.class, companyInfo);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(CompanyInfoImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(CompanyInfoImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CompanyInfoModelImpl companyInfoModelImpl) {
 
@@ -296,47 +255,6 @@ public class CompanyInfoPersistenceImpl
 		throws NoSuchCompanyInfoException {
 
 		return remove((Serializable)companyInfoId);
-	}
-
-	/**
-	 * Removes the company info with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the company info
-	 * @return the company info that was removed
-	 * @throws NoSuchCompanyInfoException if a company info with the primary key could not be found
-	 */
-	@Override
-	public CompanyInfo remove(Serializable primaryKey)
-		throws NoSuchCompanyInfoException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CompanyInfo companyInfo = (CompanyInfo)session.get(
-				CompanyInfoImpl.class, primaryKey);
-
-			if (companyInfo == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCompanyInfoException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(companyInfo);
-		}
-		catch (NoSuchCompanyInfoException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -421,31 +339,6 @@ public class CompanyInfoPersistenceImpl
 		}
 
 		companyInfo.resetOriginalValues();
-
-		return companyInfo;
-	}
-
-	/**
-	 * Returns the company info with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the company info
-	 * @return the company info
-	 * @throws NoSuchCompanyInfoException if a company info with the primary key could not be found
-	 */
-	@Override
-	public CompanyInfo findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCompanyInfoException {
-
-		CompanyInfo companyInfo = fetchByPrimaryKey(primaryKey);
-
-		if (companyInfo == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCompanyInfoException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return companyInfo;
 	}
@@ -729,9 +622,6 @@ public class CompanyInfoPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "companyInfo.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CompanyInfo exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CompanyInfo exists with the key {";
 
@@ -747,4 +637,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-768563039
+// LIFERAY-SERVICE-BUILDER-HASH:1335178384

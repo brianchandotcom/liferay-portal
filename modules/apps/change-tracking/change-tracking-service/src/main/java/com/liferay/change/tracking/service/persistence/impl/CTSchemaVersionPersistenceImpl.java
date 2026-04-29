@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTSchemaVersionPersistence.class)
 public class CTSchemaVersionPersistenceImpl
-	extends BasePersistenceImpl<CTSchemaVersion>
+	extends BasePersistenceImpl<CTSchemaVersion, NoSuchSchemaVersionException>
 	implements CTSchemaVersionPersistence {
 
 	/*
@@ -277,49 +276,6 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct schema versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTSchemaVersionImpl.class);
-
-		finderCache.clearCache(CTSchemaVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct schema version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTSchemaVersion ctSchemaVersion) {
-		entityCache.removeResult(CTSchemaVersionImpl.class, ctSchemaVersion);
-	}
-
-	@Override
-	public void clearCache(List<CTSchemaVersion> ctSchemaVersions) {
-		for (CTSchemaVersion ctSchemaVersion : ctSchemaVersions) {
-			entityCache.removeResult(
-				CTSchemaVersionImpl.class, ctSchemaVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTSchemaVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTSchemaVersionImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct schema version with the primary key. Does not add the ct schema version to the database.
 	 *
 	 * @param schemaVersionId the primary key for the new ct schema version
@@ -349,47 +305,6 @@ public class CTSchemaVersionPersistenceImpl
 		throws NoSuchSchemaVersionException {
 
 		return remove((Serializable)schemaVersionId);
-	}
-
-	/**
-	 * Removes the ct schema version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct schema version
-	 * @return the ct schema version that was removed
-	 * @throws NoSuchSchemaVersionException if a ct schema version with the primary key could not be found
-	 */
-	@Override
-	public CTSchemaVersion remove(Serializable primaryKey)
-		throws NoSuchSchemaVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTSchemaVersion ctSchemaVersion = (CTSchemaVersion)session.get(
-				CTSchemaVersionImpl.class, primaryKey);
-
-			if (ctSchemaVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSchemaVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctSchemaVersion);
-		}
-		catch (NoSuchSchemaVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -475,31 +390,6 @@ public class CTSchemaVersionPersistenceImpl
 		}
 
 		ctSchemaVersion.resetOriginalValues();
-
-		return ctSchemaVersion;
-	}
-
-	/**
-	 * Returns the ct schema version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct schema version
-	 * @return the ct schema version
-	 * @throws NoSuchSchemaVersionException if a ct schema version with the primary key could not be found
-	 */
-	@Override
-	public CTSchemaVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSchemaVersionException {
-
-		CTSchemaVersion ctSchemaVersion = fetchByPrimaryKey(primaryKey);
-
-		if (ctSchemaVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSchemaVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctSchemaVersion;
 	}
@@ -835,9 +725,6 @@ public class CTSchemaVersionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctSchemaVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTSchemaVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTSchemaVersion exists with the key {";
 
@@ -850,4 +737,4 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:341123435
+// LIFERAY-SERVICE-BUILDER-HASH:-1732074154

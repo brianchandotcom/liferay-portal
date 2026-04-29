@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SegmentsEntryRelPersistence.class)
 public class SegmentsEntryRelPersistenceImpl
-	extends BasePersistenceImpl<SegmentsEntryRel>
+	extends BasePersistenceImpl<SegmentsEntryRel, NoSuchEntryRelException>
 	implements SegmentsEntryRelPersistence {
 
 	/*
@@ -781,49 +781,6 @@ public class SegmentsEntryRelPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all segments entry rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SegmentsEntryRelImpl.class);
-
-		finderCache.clearCache(SegmentsEntryRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the segments entry rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SegmentsEntryRel segmentsEntryRel) {
-		entityCache.removeResult(SegmentsEntryRelImpl.class, segmentsEntryRel);
-	}
-
-	@Override
-	public void clearCache(List<SegmentsEntryRel> segmentsEntryRels) {
-		for (SegmentsEntryRel segmentsEntryRel : segmentsEntryRels) {
-			entityCache.removeResult(
-				SegmentsEntryRelImpl.class, segmentsEntryRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SegmentsEntryRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SegmentsEntryRelImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SegmentsEntryRelModelImpl segmentsEntryRelModelImpl) {
 
@@ -872,47 +829,6 @@ public class SegmentsEntryRelPersistenceImpl
 		throws NoSuchEntryRelException {
 
 		return remove((Serializable)segmentsEntryRelId);
-	}
-
-	/**
-	 * Removes the segments entry rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the segments entry rel
-	 * @return the segments entry rel that was removed
-	 * @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntryRel remove(Serializable primaryKey)
-		throws NoSuchEntryRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SegmentsEntryRel segmentsEntryRel = (SegmentsEntryRel)session.get(
-				SegmentsEntryRelImpl.class, primaryKey);
-
-			if (segmentsEntryRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(segmentsEntryRel);
-		}
-		catch (NoSuchEntryRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1033,31 +949,6 @@ public class SegmentsEntryRelPersistenceImpl
 		}
 
 		segmentsEntryRel.resetOriginalValues();
-
-		return segmentsEntryRel;
-	}
-
-	/**
-	 * Returns the segments entry rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments entry rel
-	 * @return the segments entry rel
-	 * @throws NoSuchEntryRelException if a segments entry rel with the primary key could not be found
-	 */
-	@Override
-	public SegmentsEntryRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryRelException {
-
-		SegmentsEntryRel segmentsEntryRel = fetchByPrimaryKey(primaryKey);
-
-		if (segmentsEntryRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return segmentsEntryRel;
 	}
@@ -1741,9 +1632,6 @@ public class SegmentsEntryRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "segmentsEntryRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SegmentsEntryRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SegmentsEntryRel exists with the key {";
 
@@ -1756,4 +1644,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-500465876
+// LIFERAY-SERVICE-BUILDER-HASH:-1523910157

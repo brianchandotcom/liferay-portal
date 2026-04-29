@@ -45,7 +45,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the portlet item service.
@@ -58,7 +57,8 @@ import java.util.Set;
  * @generated
  */
 public class PortletItemPersistenceImpl
-	extends BasePersistenceImpl<PortletItem> implements PortletItemPersistence {
+	extends BasePersistenceImpl<PortletItem, NoSuchPortletItemException>
+	implements PortletItemPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -723,48 +723,6 @@ public class PortletItemPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all portlet items.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(PortletItemImpl.class);
-
-		FinderCacheUtil.clearCache(PortletItemImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the portlet item.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PortletItem portletItem) {
-		EntityCacheUtil.removeResult(PortletItemImpl.class, portletItem);
-	}
-
-	@Override
-	public void clearCache(List<PortletItem> portletItems) {
-		for (PortletItem portletItem : portletItems) {
-			EntityCacheUtil.removeResult(PortletItemImpl.class, portletItem);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(PortletItemImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(PortletItemImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PortletItemModelImpl portletItemModelImpl) {
 
@@ -808,47 +766,6 @@ public class PortletItemPersistenceImpl
 		throws NoSuchPortletItemException {
 
 		return remove((Serializable)portletItemId);
-	}
-
-	/**
-	 * Removes the portlet item with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the portlet item
-	 * @return the portlet item that was removed
-	 * @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
-	 */
-	@Override
-	public PortletItem remove(Serializable primaryKey)
-		throws NoSuchPortletItemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortletItem portletItem = (PortletItem)session.get(
-				PortletItemImpl.class, primaryKey);
-
-			if (portletItem == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPortletItemException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(portletItem);
-		}
-		catch (NoSuchPortletItemException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -957,31 +874,6 @@ public class PortletItemPersistenceImpl
 		}
 
 		portletItem.resetOriginalValues();
-
-		return portletItem;
-	}
-
-	/**
-	 * Returns the portlet item with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portlet item
-	 * @return the portlet item
-	 * @throws NoSuchPortletItemException if a portlet item with the primary key could not be found
-	 */
-	@Override
-	public PortletItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPortletItemException {
-
-		PortletItem portletItem = fetchByPrimaryKey(primaryKey);
-
-		if (portletItem == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPortletItemException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return portletItem;
 	}
@@ -1331,9 +1223,6 @@ public class PortletItemPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "portletItem.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PortletItem exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PortletItem exists with the key {";
 
@@ -1346,4 +1235,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1045704074
+// LIFERAY-SERVICE-BUILDER-HASH:1825119893

@@ -56,7 +56,8 @@ import java.util.Set;
  * @generated
  */
 public class PortalPreferenceValuePersistenceImpl
-	extends BasePersistenceImpl<PortalPreferenceValue>
+	extends BasePersistenceImpl
+		<PortalPreferenceValue, NoSuchPreferenceValueException>
 	implements PortalPreferenceValuePersistence {
 
 	/*
@@ -1365,53 +1366,6 @@ public class PortalPreferenceValuePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all portal preference values.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		dummyEntityCache.clearCache(PortalPreferenceValueImpl.class);
-
-		dummyFinderCache.clearCache(PortalPreferenceValueImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the portal preference value.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PortalPreferenceValue portalPreferenceValue) {
-		dummyEntityCache.removeResult(
-			PortalPreferenceValueImpl.class, portalPreferenceValue);
-	}
-
-	@Override
-	public void clearCache(List<PortalPreferenceValue> portalPreferenceValues) {
-		for (PortalPreferenceValue portalPreferenceValue :
-				portalPreferenceValues) {
-
-			dummyEntityCache.removeResult(
-				PortalPreferenceValueImpl.class, portalPreferenceValue);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		dummyFinderCache.clearCache(PortalPreferenceValueImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			dummyEntityCache.removeResult(
-				PortalPreferenceValueImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PortalPreferenceValueModelImpl portalPreferenceValueModelImpl) {
 
@@ -1457,48 +1411,6 @@ public class PortalPreferenceValuePersistenceImpl
 		throws NoSuchPreferenceValueException {
 
 		return remove((Serializable)portalPreferenceValueId);
-	}
-
-	/**
-	 * Removes the portal preference value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the portal preference value
-	 * @return the portal preference value that was removed
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferenceValue remove(Serializable primaryKey)
-		throws NoSuchPreferenceValueException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PortalPreferenceValue portalPreferenceValue =
-				(PortalPreferenceValue)session.get(
-					PortalPreferenceValueImpl.class, primaryKey);
-
-			if (portalPreferenceValue == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPreferenceValueException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(portalPreferenceValue);
-		}
-		catch (NoSuchPreferenceValueException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1593,32 +1505,6 @@ public class PortalPreferenceValuePersistenceImpl
 		}
 
 		portalPreferenceValue.resetOriginalValues();
-
-		return portalPreferenceValue;
-	}
-
-	/**
-	 * Returns the portal preference value with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portal preference value
-	 * @return the portal preference value
-	 * @throws NoSuchPreferenceValueException if a portal preference value with the primary key could not be found
-	 */
-	@Override
-	public PortalPreferenceValue findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPreferenceValueException {
-
-		PortalPreferenceValue portalPreferenceValue = fetchByPrimaryKey(
-			primaryKey);
-
-		if (portalPreferenceValue == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPreferenceValueException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return portalPreferenceValue;
 	}
@@ -2086,9 +1972,6 @@ public class PortalPreferenceValuePersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"portalPreferenceValue.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PortalPreferenceValue exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PortalPreferenceValue exists with the key {";
 
@@ -2104,4 +1987,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1539186136
+// LIFERAY-SERVICE-BUILDER-HASH:2075051269

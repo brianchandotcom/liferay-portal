@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CSDiagramPinPersistence.class)
 public class CSDiagramPinPersistenceImpl
-	extends BasePersistenceImpl<CSDiagramPin>
+	extends BasePersistenceImpl<CSDiagramPin, NoSuchCSDiagramPinException>
 	implements CSDiagramPinPersistence {
 
 	/*
@@ -311,48 +311,6 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all cs diagram pins.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CSDiagramPinImpl.class);
-
-		finderCache.clearCache(CSDiagramPinImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cs diagram pin.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CSDiagramPin csDiagramPin) {
-		entityCache.removeResult(CSDiagramPinImpl.class, csDiagramPin);
-	}
-
-	@Override
-	public void clearCache(List<CSDiagramPin> csDiagramPins) {
-		for (CSDiagramPin csDiagramPin : csDiagramPins) {
-			entityCache.removeResult(CSDiagramPinImpl.class, csDiagramPin);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CSDiagramPinImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CSDiagramPinImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new cs diagram pin with the primary key. Does not add the cs diagram pin to the database.
 	 *
 	 * @param CSDiagramPinId the primary key for the new cs diagram pin
@@ -382,47 +340,6 @@ public class CSDiagramPinPersistenceImpl
 		throws NoSuchCSDiagramPinException {
 
 		return remove((Serializable)CSDiagramPinId);
-	}
-
-	/**
-	 * Removes the cs diagram pin with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cs diagram pin
-	 * @return the cs diagram pin that was removed
-	 * @throws NoSuchCSDiagramPinException if a cs diagram pin with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramPin remove(Serializable primaryKey)
-		throws NoSuchCSDiagramPinException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CSDiagramPin csDiagramPin = (CSDiagramPin)session.get(
-				CSDiagramPinImpl.class, primaryKey);
-
-			if (csDiagramPin == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCSDiagramPinException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(csDiagramPin);
-		}
-		catch (NoSuchCSDiagramPinException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -538,31 +455,6 @@ public class CSDiagramPinPersistenceImpl
 		}
 
 		csDiagramPin.resetOriginalValues();
-
-		return csDiagramPin;
-	}
-
-	/**
-	 * Returns the cs diagram pin with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cs diagram pin
-	 * @return the cs diagram pin
-	 * @throws NoSuchCSDiagramPinException if a cs diagram pin with the primary key could not be found
-	 */
-	@Override
-	public CSDiagramPin findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCSDiagramPinException {
-
-		CSDiagramPin csDiagramPin = fetchByPrimaryKey(primaryKey);
-
-		if (csDiagramPin == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCSDiagramPinException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return csDiagramPin;
 	}
@@ -1140,9 +1032,6 @@ public class CSDiagramPinPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "csDiagramPin.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CSDiagramPin exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CSDiagramPin exists with the key {";
 
@@ -1155,4 +1044,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1210416711
+// LIFERAY-SERVICE-BUILDER-HASH:-1252735726

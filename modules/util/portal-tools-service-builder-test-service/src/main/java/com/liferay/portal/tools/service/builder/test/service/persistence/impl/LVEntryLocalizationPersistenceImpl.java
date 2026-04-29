@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the lv entry localization service.
@@ -52,7 +51,8 @@ import java.util.Set;
  * @generated
  */
 public class LVEntryLocalizationPersistenceImpl
-	extends BasePersistenceImpl<LVEntryLocalization>
+	extends BasePersistenceImpl
+		<LVEntryLocalization, NoSuchLVEntryLocalizationException>
 	implements LVEntryLocalizationPersistence {
 
 	/*
@@ -464,50 +464,6 @@ public class LVEntryLocalizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all lv entry localizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(LVEntryLocalizationImpl.class);
-
-		finderCache.clearCache(LVEntryLocalizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the lv entry localization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(LVEntryLocalization lvEntryLocalization) {
-		entityCache.removeResult(
-			LVEntryLocalizationImpl.class, lvEntryLocalization);
-	}
-
-	@Override
-	public void clearCache(List<LVEntryLocalization> lvEntryLocalizations) {
-		for (LVEntryLocalization lvEntryLocalization : lvEntryLocalizations) {
-			entityCache.removeResult(
-				LVEntryLocalizationImpl.class, lvEntryLocalization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(LVEntryLocalizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(LVEntryLocalizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		LVEntryLocalizationModelImpl lvEntryLocalizationModelImpl) {
 
@@ -556,48 +512,6 @@ public class LVEntryLocalizationPersistenceImpl
 		throws NoSuchLVEntryLocalizationException {
 
 		return remove((Serializable)lvEntryLocalizationId);
-	}
-
-	/**
-	 * Removes the lv entry localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the lv entry localization
-	 * @return the lv entry localization that was removed
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
-	@Override
-	public LVEntryLocalization remove(Serializable primaryKey)
-		throws NoSuchLVEntryLocalizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			LVEntryLocalization lvEntryLocalization =
-				(LVEntryLocalization)session.get(
-					LVEntryLocalizationImpl.class, primaryKey);
-
-			if (lvEntryLocalization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchLVEntryLocalizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(lvEntryLocalization);
-		}
-		catch (NoSuchLVEntryLocalizationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -690,31 +604,6 @@ public class LVEntryLocalizationPersistenceImpl
 		}
 
 		lvEntryLocalization.resetOriginalValues();
-
-		return lvEntryLocalization;
-	}
-
-	/**
-	 * Returns the lv entry localization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the lv entry localization
-	 * @return the lv entry localization
-	 * @throws NoSuchLVEntryLocalizationException if a lv entry localization with the primary key could not be found
-	 */
-	@Override
-	public LVEntryLocalization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchLVEntryLocalizationException {
-
-		LVEntryLocalization lvEntryLocalization = fetchByPrimaryKey(primaryKey);
-
-		if (lvEntryLocalization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchLVEntryLocalizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return lvEntryLocalization;
 	}
@@ -1053,9 +942,6 @@ public class LVEntryLocalizationPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntryLocalization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No LVEntryLocalization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntryLocalization exists with the key {";
 
@@ -1068,4 +954,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1871385383
+// LIFERAY-SERVICE-BUILDER-HASH:-583464496

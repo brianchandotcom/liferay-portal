@@ -5,6 +5,7 @@
 
 package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryMetadataException;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -21,7 +22,8 @@ import java.util.Set;
  * @generated
  */
 public class DLFileEntryMetadataFinderBaseImpl
-	extends BasePersistenceImpl<DLFileEntryMetadata> {
+	extends BasePersistenceImpl
+		<DLFileEntryMetadata, NoSuchFileEntryMetadataException> {
 
 	public DLFileEntryMetadataFinderBaseImpl() {
 		setModelClass(DLFileEntryMetadata.class);
@@ -65,4 +67,4 @@ public class DLFileEntryMetadataFinderBaseImpl
 		DLFileEntryMetadataFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-107703617
+// LIFERAY-SERVICE-BUILDER-HASH:864192783

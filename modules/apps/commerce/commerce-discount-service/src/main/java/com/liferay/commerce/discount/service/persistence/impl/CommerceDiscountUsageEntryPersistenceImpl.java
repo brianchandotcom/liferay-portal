@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountUsageEntryPersistence.class)
 public class CommerceDiscountUsageEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountUsageEntry>
+	extends BasePersistenceImpl
+		<CommerceDiscountUsageEntry, NoSuchDiscountUsageEntryException>
 	implements CommerceDiscountUsageEntryPersistence {
 
 	/*
@@ -823,58 +823,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce discount usage entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountUsageEntryImpl.class);
-
-		finderCache.clearCache(CommerceDiscountUsageEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount usage entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-		entityCache.removeResult(
-			CommerceDiscountUsageEntryImpl.class, commerceDiscountUsageEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceDiscountUsageEntry> commerceDiscountUsageEntries) {
-
-		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
-				commerceDiscountUsageEntries) {
-
-			entityCache.removeResult(
-				CommerceDiscountUsageEntryImpl.class,
-				commerceDiscountUsageEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountUsageEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceDiscountUsageEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount usage entry with the primary key. Does not add the commerce discount usage entry to the database.
 	 *
 	 * @param commerceDiscountUsageEntryId the primary key for the new commerce discount usage entry
@@ -908,48 +856,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		throws NoSuchDiscountUsageEntryException {
 
 		return remove((Serializable)commerceDiscountUsageEntryId);
-	}
-
-	/**
-	 * Removes the commerce discount usage entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount usage entry
-	 * @return the commerce discount usage entry that was removed
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry remove(Serializable primaryKey)
-		throws NoSuchDiscountUsageEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-				(CommerceDiscountUsageEntry)session.get(
-					CommerceDiscountUsageEntryImpl.class, primaryKey);
-
-			if (commerceDiscountUsageEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountUsageEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountUsageEntry);
-		}
-		catch (NoSuchDiscountUsageEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1070,32 +976,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 		}
 
 		commerceDiscountUsageEntry.resetOriginalValues();
-
-		return commerceDiscountUsageEntry;
-	}
-
-	/**
-	 * Returns the commerce discount usage entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount usage entry
-	 * @return the commerce discount usage entry
-	 * @throws NoSuchDiscountUsageEntryException if a commerce discount usage entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountUsageEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscountUsageEntryException {
-
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (commerceDiscountUsageEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountUsageEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountUsageEntry;
 	}
@@ -1570,9 +1450,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceDiscountUsageEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountUsageEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountUsageEntry exists with the key {";
 
@@ -1585,4 +1462,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-964089233
+// LIFERAY-SERVICE-BUILDER-HASH:-664083563

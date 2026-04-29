@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = DDMDataProviderInstanceLinkPersistence.class)
 public class DDMDataProviderInstanceLinkPersistenceImpl
-	extends BasePersistenceImpl<DDMDataProviderInstanceLink>
+	extends BasePersistenceImpl
+		<DDMDataProviderInstanceLink, NoSuchDataProviderInstanceLinkException>
 	implements DDMDataProviderInstanceLinkPersistence {
 
 	/*
@@ -595,58 +596,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ddm data provider instance links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(DDMDataProviderInstanceLinkImpl.class);
-
-		finderCache.clearCache(DDMDataProviderInstanceLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ddm data provider instance link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
-		entityCache.removeResult(
-			DDMDataProviderInstanceLinkImpl.class, ddmDataProviderInstanceLink);
-	}
-
-	@Override
-	public void clearCache(
-		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks) {
-
-		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-				ddmDataProviderInstanceLinks) {
-
-			entityCache.removeResult(
-				DDMDataProviderInstanceLinkImpl.class,
-				ddmDataProviderInstanceLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(DDMDataProviderInstanceLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				DDMDataProviderInstanceLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		DDMDataProviderInstanceLinkModelImpl
 			ddmDataProviderInstanceLinkModelImpl) {
@@ -699,48 +648,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		throws NoSuchDataProviderInstanceLinkException {
 
 		return remove((Serializable)dataProviderInstanceLinkId);
-	}
-
-	/**
-	 * Removes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ddm data provider instance link
-	 * @return the ddm data provider instance link that was removed
-	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink remove(Serializable primaryKey)
-		throws NoSuchDataProviderInstanceLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-				(DDMDataProviderInstanceLink)session.get(
-					DDMDataProviderInstanceLinkImpl.class, primaryKey);
-
-			if (ddmDataProviderInstanceLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDataProviderInstanceLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ddmDataProviderInstanceLink);
-		}
-		catch (NoSuchDataProviderInstanceLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -849,32 +756,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 		}
 
 		ddmDataProviderInstanceLink.resetOriginalValues();
-
-		return ddmDataProviderInstanceLink;
-	}
-
-	/**
-	 * Returns the ddm data provider instance link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm data provider instance link
-	 * @return the ddm data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
-	 */
-	@Override
-	public DDMDataProviderInstanceLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDataProviderInstanceLinkException {
-
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink =
-			fetchByPrimaryKey(primaryKey);
-
-		if (ddmDataProviderInstanceLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDataProviderInstanceLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ddmDataProviderInstanceLink;
 	}
@@ -1526,9 +1407,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ddmDataProviderInstanceLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No DDMDataProviderInstanceLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDMDataProviderInstanceLink exists with the key {";
 
@@ -1541,4 +1419,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:606286227
+// LIFERAY-SERVICE-BUILDER-HASH:1250879092

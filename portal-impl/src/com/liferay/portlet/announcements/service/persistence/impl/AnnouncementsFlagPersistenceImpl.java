@@ -66,7 +66,7 @@ import java.util.Set;
  * @generated
  */
 public class AnnouncementsFlagPersistenceImpl
-	extends BasePersistenceImpl<AnnouncementsFlag>
+	extends BasePersistenceImpl<AnnouncementsFlag, NoSuchFlagException>
 	implements AnnouncementsFlagPersistence {
 
 	/*
@@ -576,51 +576,6 @@ public class AnnouncementsFlagPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all announcements flags.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(AnnouncementsFlagImpl.class);
-
-		FinderCacheUtil.clearCache(AnnouncementsFlagImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the announcements flag.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(AnnouncementsFlag announcementsFlag) {
-		EntityCacheUtil.removeResult(
-			AnnouncementsFlagImpl.class, announcementsFlag);
-	}
-
-	@Override
-	public void clearCache(List<AnnouncementsFlag> announcementsFlags) {
-		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
-			EntityCacheUtil.removeResult(
-				AnnouncementsFlagImpl.class, announcementsFlag);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(AnnouncementsFlagImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				AnnouncementsFlagImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		AnnouncementsFlagModelImpl announcementsFlagModelImpl) {
 
@@ -667,48 +622,6 @@ public class AnnouncementsFlagPersistenceImpl
 	@Override
 	public AnnouncementsFlag remove(long flagId) throws NoSuchFlagException {
 		return remove((Serializable)flagId);
-	}
-
-	/**
-	 * Removes the announcements flag with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the announcements flag
-	 * @return the announcements flag that was removed
-	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsFlag remove(Serializable primaryKey)
-		throws NoSuchFlagException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AnnouncementsFlag announcementsFlag =
-				(AnnouncementsFlag)session.get(
-					AnnouncementsFlagImpl.class, primaryKey);
-
-			if (announcementsFlag == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFlagException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(announcementsFlag);
-		}
-		catch (NoSuchFlagException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -822,31 +735,6 @@ public class AnnouncementsFlagPersistenceImpl
 		}
 
 		announcementsFlag.resetOriginalValues();
-
-		return announcementsFlag;
-	}
-
-	/**
-	 * Returns the announcements flag with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the announcements flag
-	 * @return the announcements flag
-	 * @throws NoSuchFlagException if a announcements flag with the primary key could not be found
-	 */
-	@Override
-	public AnnouncementsFlag findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFlagException {
-
-		AnnouncementsFlag announcementsFlag = fetchByPrimaryKey(primaryKey);
-
-		if (announcementsFlag == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFlagException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return announcementsFlag;
 	}
@@ -1440,9 +1328,6 @@ public class AnnouncementsFlagPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsFlag.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No AnnouncementsFlag exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnnouncementsFlag exists with the key {";
 
@@ -1455,4 +1340,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-67516279
+// LIFERAY-SERVICE-BUILDER-HASH:1731847426

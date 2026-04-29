@@ -60,7 +60,8 @@ import java.util.Set;
  * @generated
  */
 public class ListTypePersistenceImpl
-	extends BasePersistenceImpl<ListType> implements ListTypePersistence {
+	extends BasePersistenceImpl<ListType, NoSuchListTypeException>
+	implements ListTypePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -834,48 +835,6 @@ public class ListTypePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all list types.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ListTypeImpl.class);
-
-		FinderCacheUtil.clearCache(ListTypeImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the list type.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ListType listType) {
-		EntityCacheUtil.removeResult(ListTypeImpl.class, listType);
-	}
-
-	@Override
-	public void clearCache(List<ListType> listTypes) {
-		for (ListType listType : listTypes) {
-			EntityCacheUtil.removeResult(ListTypeImpl.class, listType);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ListTypeImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ListTypeImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ListTypeModelImpl listTypeModelImpl) {
 
@@ -920,47 +879,6 @@ public class ListTypePersistenceImpl
 	@Override
 	public ListType remove(long listTypeId) throws NoSuchListTypeException {
 		return remove((Serializable)listTypeId);
-	}
-
-	/**
-	 * Removes the list type with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the list type
-	 * @return the list type that was removed
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	@Override
-	public ListType remove(Serializable primaryKey)
-		throws NoSuchListTypeException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ListType listType = (ListType)session.get(
-				ListTypeImpl.class, primaryKey);
-
-			if (listType == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchListTypeException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(listType);
-		}
-		catch (NoSuchListTypeException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1073,31 +991,6 @@ public class ListTypePersistenceImpl
 		}
 
 		listType.resetOriginalValues();
-
-		return listType;
-	}
-
-	/**
-	 * Returns the list type with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the list type
-	 * @return the list type
-	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
-	 */
-	@Override
-	public ListType findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchListTypeException {
-
-		ListType listType = fetchByPrimaryKey(primaryKey);
-
-		if (listType == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchListTypeException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return listType;
 	}
@@ -1513,9 +1406,6 @@ public class ListTypePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "listType.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ListType exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ListType exists with the key {";
 
@@ -1531,4 +1421,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:859101337
+// LIFERAY-SERVICE-BUILDER-HASH:-104108874

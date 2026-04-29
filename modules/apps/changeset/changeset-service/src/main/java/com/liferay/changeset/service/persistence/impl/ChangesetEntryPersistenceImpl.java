@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ChangesetEntryPersistence.class)
 public class ChangesetEntryPersistenceImpl
-	extends BasePersistenceImpl<ChangesetEntry>
+	extends BasePersistenceImpl<ChangesetEntry, NoSuchEntryException>
 	implements ChangesetEntryPersistence {
 
 	/*
@@ -1147,48 +1146,6 @@ public class ChangesetEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all changeset entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ChangesetEntryImpl.class);
-
-		finderCache.clearCache(ChangesetEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the changeset entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ChangesetEntry changesetEntry) {
-		entityCache.removeResult(ChangesetEntryImpl.class, changesetEntry);
-	}
-
-	@Override
-	public void clearCache(List<ChangesetEntry> changesetEntries) {
-		for (ChangesetEntry changesetEntry : changesetEntries) {
-			entityCache.removeResult(ChangesetEntryImpl.class, changesetEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ChangesetEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ChangesetEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ChangesetEntryModelImpl changesetEntryModelImpl) {
 
@@ -1241,47 +1198,6 @@ public class ChangesetEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)changesetEntryId);
-	}
-
-	/**
-	 * Removes the changeset entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the changeset entry
-	 * @return the changeset entry that was removed
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	@Override
-	public ChangesetEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ChangesetEntry changesetEntry = (ChangesetEntry)session.get(
-				ChangesetEntryImpl.class, primaryKey);
-
-			if (changesetEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(changesetEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1393,31 +1309,6 @@ public class ChangesetEntryPersistenceImpl
 		}
 
 		changesetEntry.resetOriginalValues();
-
-		return changesetEntry;
-	}
-
-	/**
-	 * Returns the changeset entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the changeset entry
-	 * @return the changeset entry
-	 * @throws NoSuchEntryException if a changeset entry with the primary key could not be found
-	 */
-	@Override
-	public ChangesetEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		ChangesetEntry changesetEntry = fetchByPrimaryKey(primaryKey);
-
-		if (changesetEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return changesetEntry;
 	}
@@ -1925,9 +1816,6 @@ public class ChangesetEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "changesetEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ChangesetEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ChangesetEntry exists with the key {";
 
@@ -1940,4 +1828,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:146815961
+// LIFERAY-SERVICE-BUILDER-HASH:396517369

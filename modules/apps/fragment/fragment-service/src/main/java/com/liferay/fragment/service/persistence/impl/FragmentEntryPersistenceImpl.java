@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentEntryPersistence.class)
 public class FragmentEntryPersistenceImpl
-	extends BasePersistenceImpl<FragmentEntry>
+	extends BasePersistenceImpl<FragmentEntry, NoSuchEntryException>
 	implements FragmentEntryPersistence {
 
 	/*
@@ -5136,48 +5136,6 @@ public class FragmentEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all fragment entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FragmentEntryImpl.class);
-
-		finderCache.clearCache(FragmentEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the fragment entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FragmentEntry fragmentEntry) {
-		entityCache.removeResult(FragmentEntryImpl.class, fragmentEntry);
-	}
-
-	@Override
-	public void clearCache(List<FragmentEntry> fragmentEntries) {
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			entityCache.removeResult(FragmentEntryImpl.class, fragmentEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FragmentEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FragmentEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FragmentEntryModelImpl fragmentEntryModelImpl) {
 
@@ -5253,47 +5211,6 @@ public class FragmentEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)fragmentEntryId);
-	}
-
-	/**
-	 * Removes the fragment entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the fragment entry
-	 * @return the fragment entry that was removed
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentEntry fragmentEntry = (FragmentEntry)session.get(
-				FragmentEntryImpl.class, primaryKey);
-
-			if (fragmentEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(fragmentEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -5480,31 +5397,6 @@ public class FragmentEntryPersistenceImpl
 		}
 
 		fragmentEntry.resetOriginalValues();
-
-		return fragmentEntry;
-	}
-
-	/**
-	 * Returns the fragment entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment entry
-	 * @return the fragment entry
-	 * @throws NoSuchEntryException if a fragment entry with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		FragmentEntry fragmentEntry = fetchByPrimaryKey(primaryKey);
-
-		if (fragmentEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return fragmentEntry;
 	}
@@ -7121,9 +7013,6 @@ public class FragmentEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FragmentEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentEntry exists with the key {";
 
@@ -7139,4 +7028,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:130596257
+// LIFERAY-SERVICE-BUILDER-HASH:-1736911807

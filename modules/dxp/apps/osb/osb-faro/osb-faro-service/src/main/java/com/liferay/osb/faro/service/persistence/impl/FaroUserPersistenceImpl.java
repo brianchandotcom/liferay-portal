@@ -64,7 +64,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroUserPersistence.class)
 public class FaroUserPersistenceImpl
-	extends BasePersistenceImpl<FaroUser> implements FaroUserPersistence {
+	extends BasePersistenceImpl<FaroUser, NoSuchFaroUserException>
+	implements FaroUserPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1316,48 +1317,6 @@ public class FaroUserPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all faro users.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroUserImpl.class);
-
-		finderCache.clearCache(FaroUserImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro user.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroUser faroUser) {
-		entityCache.removeResult(FaroUserImpl.class, faroUser);
-	}
-
-	@Override
-	public void clearCache(List<FaroUser> faroUsers) {
-		for (FaroUser faroUser : faroUsers) {
-			entityCache.removeResult(FaroUserImpl.class, faroUser);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroUserImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroUserImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FaroUserModelImpl faroUserModelImpl) {
 
@@ -1406,47 +1365,6 @@ public class FaroUserPersistenceImpl
 	@Override
 	public FaroUser remove(long faroUserId) throws NoSuchFaroUserException {
 		return remove((Serializable)faroUserId);
-	}
-
-	/**
-	 * Removes the faro user with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro user
-	 * @return the faro user that was removed
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	@Override
-	public FaroUser remove(Serializable primaryKey)
-		throws NoSuchFaroUserException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroUser faroUser = (FaroUser)session.get(
-				FaroUserImpl.class, primaryKey);
-
-			if (faroUser == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroUserException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroUser);
-		}
-		catch (NoSuchFaroUserException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1530,31 +1448,6 @@ public class FaroUserPersistenceImpl
 		}
 
 		faroUser.resetOriginalValues();
-
-		return faroUser;
-	}
-
-	/**
-	 * Returns the faro user with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro user
-	 * @return the faro user
-	 * @throws NoSuchFaroUserException if a faro user with the primary key could not be found
-	 */
-	@Override
-	public FaroUser findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroUserException {
-
-		FaroUser faroUser = fetchByPrimaryKey(primaryKey);
-
-		if (faroUser == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroUserException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroUser;
 	}
@@ -2084,9 +1977,6 @@ public class FaroUserPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroUser.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroUser exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroUser exists with the key {";
 
@@ -2102,4 +1992,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1306260675
+// LIFERAY-SERVICE-BUILDER-HASH:1526515170

@@ -86,7 +86,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPOptionValuePersistence.class)
 public class CPOptionValuePersistenceImpl
-	extends BasePersistenceImpl<CPOptionValue>
+	extends BasePersistenceImpl<CPOptionValue, NoSuchCPOptionValueException>
 	implements CPOptionValuePersistence {
 
 	/*
@@ -1016,48 +1016,6 @@ public class CPOptionValuePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp option values.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPOptionValueImpl.class);
-
-		finderCache.clearCache(CPOptionValueImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp option value.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPOptionValue cpOptionValue) {
-		entityCache.removeResult(CPOptionValueImpl.class, cpOptionValue);
-	}
-
-	@Override
-	public void clearCache(List<CPOptionValue> cpOptionValues) {
-		for (CPOptionValue cpOptionValue : cpOptionValues) {
-			entityCache.removeResult(CPOptionValueImpl.class, cpOptionValue);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPOptionValueImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPOptionValueImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPOptionValueModelImpl cpOptionValueModelImpl) {
 
@@ -1117,47 +1075,6 @@ public class CPOptionValuePersistenceImpl
 		throws NoSuchCPOptionValueException {
 
 		return remove((Serializable)CPOptionValueId);
-	}
-
-	/**
-	 * Removes the cp option value with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp option value
-	 * @return the cp option value that was removed
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	@Override
-	public CPOptionValue remove(Serializable primaryKey)
-		throws NoSuchCPOptionValueException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPOptionValue cpOptionValue = (CPOptionValue)session.get(
-				CPOptionValueImpl.class, primaryKey);
-
-			if (cpOptionValue == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPOptionValueException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpOptionValue);
-		}
-		catch (NoSuchCPOptionValueException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1344,31 +1261,6 @@ public class CPOptionValuePersistenceImpl
 		}
 
 		cpOptionValue.resetOriginalValues();
-
-		return cpOptionValue;
-	}
-
-	/**
-	 * Returns the cp option value with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp option value
-	 * @return the cp option value
-	 * @throws NoSuchCPOptionValueException if a cp option value with the primary key could not be found
-	 */
-	@Override
-	public CPOptionValue findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPOptionValueException {
-
-		CPOptionValue cpOptionValue = fetchByPrimaryKey(primaryKey);
-
-		if (cpOptionValue == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPOptionValueException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpOptionValue;
 	}
@@ -2082,9 +1974,6 @@ public class CPOptionValuePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpOptionValue.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPOptionValue exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPOptionValue exists with the key {";
 
@@ -2100,4 +1989,4 @@ public class CPOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:260488579
+// LIFERAY-SERVICE-BUILDER-HASH:-1783833314

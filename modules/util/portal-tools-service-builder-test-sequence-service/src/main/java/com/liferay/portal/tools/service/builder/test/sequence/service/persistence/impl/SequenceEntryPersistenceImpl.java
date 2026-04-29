@@ -65,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SequenceEntryPersistence.class)
 public class SequenceEntryPersistenceImpl
-	extends BasePersistenceImpl<SequenceEntry>
+	extends BasePersistenceImpl<SequenceEntry, NoSuchSequenceEntryException>
 	implements SequenceEntryPersistence {
 
 	/*
@@ -439,48 +439,6 @@ public class SequenceEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all sequence entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SequenceEntryImpl.class);
-
-		finderCache.clearCache(SequenceEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the sequence entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SequenceEntry sequenceEntry) {
-		entityCache.removeResult(SequenceEntryImpl.class, sequenceEntry);
-	}
-
-	@Override
-	public void clearCache(List<SequenceEntry> sequenceEntries) {
-		for (SequenceEntry sequenceEntry : sequenceEntries) {
-			entityCache.removeResult(SequenceEntryImpl.class, sequenceEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SequenceEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SequenceEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new sequence entry with the primary key. Does not add the sequence entry to the database.
 	 *
 	 * @param sequenceEntryId the primary key for the new sequence entry
@@ -514,47 +472,6 @@ public class SequenceEntryPersistenceImpl
 		throws NoSuchSequenceEntryException {
 
 		return remove((Serializable)sequenceEntryId);
-	}
-
-	/**
-	 * Removes the sequence entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the sequence entry
-	 * @return the sequence entry that was removed
-	 * @throws NoSuchSequenceEntryException if a sequence entry with the primary key could not be found
-	 */
-	@Override
-	public SequenceEntry remove(Serializable primaryKey)
-		throws NoSuchSequenceEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SequenceEntry sequenceEntry = (SequenceEntry)session.get(
-				SequenceEntryImpl.class, primaryKey);
-
-			if (sequenceEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSequenceEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(sequenceEntry);
-		}
-		catch (NoSuchSequenceEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -644,31 +561,6 @@ public class SequenceEntryPersistenceImpl
 		}
 
 		sequenceEntry.resetOriginalValues();
-
-		return sequenceEntry;
-	}
-
-	/**
-	 * Returns the sequence entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the sequence entry
-	 * @return the sequence entry
-	 * @throws NoSuchSequenceEntryException if a sequence entry with the primary key could not be found
-	 */
-	@Override
-	public SequenceEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSequenceEntryException {
-
-		SequenceEntry sequenceEntry = fetchByPrimaryKey(primaryKey);
-
-		if (sequenceEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSequenceEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return sequenceEntry;
 	}
@@ -1039,9 +931,6 @@ public class SequenceEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "sequenceEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SequenceEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SequenceEntry exists with the key {";
 
@@ -1057,4 +946,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1232674259
+// LIFERAY-SERVICE-BUILDER-HASH:1315855009

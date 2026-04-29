@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceDiscountRelPersistence.class)
 public class CommerceDiscountRelPersistenceImpl
-	extends BasePersistenceImpl<CommerceDiscountRel>
+	extends BasePersistenceImpl<CommerceDiscountRel, NoSuchDiscountRelException>
 	implements CommerceDiscountRelPersistence {
 
 	/*
@@ -791,50 +790,6 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all commerce discount rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceDiscountRelImpl.class);
-
-		finderCache.clearCache(CommerceDiscountRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce discount rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CommerceDiscountRel commerceDiscountRel) {
-		entityCache.removeResult(
-			CommerceDiscountRelImpl.class, commerceDiscountRel);
-	}
-
-	@Override
-	public void clearCache(List<CommerceDiscountRel> commerceDiscountRels) {
-		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
-			entityCache.removeResult(
-				CommerceDiscountRelImpl.class, commerceDiscountRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceDiscountRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CommerceDiscountRelImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount rel with the primary key. Does not add the commerce discount rel to the database.
 	 *
 	 * @param commerceDiscountRelId the primary key for the new commerce discount rel
@@ -864,48 +819,6 @@ public class CommerceDiscountRelPersistenceImpl
 		throws NoSuchDiscountRelException {
 
 		return remove((Serializable)commerceDiscountRelId);
-	}
-
-	/**
-	 * Removes the commerce discount rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce discount rel
-	 * @return the commerce discount rel that was removed
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountRel remove(Serializable primaryKey)
-		throws NoSuchDiscountRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceDiscountRel commerceDiscountRel =
-				(CommerceDiscountRel)session.get(
-					CommerceDiscountRelImpl.class, primaryKey);
-
-			if (commerceDiscountRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchDiscountRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceDiscountRel);
-		}
-		catch (NoSuchDiscountRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1021,31 +934,6 @@ public class CommerceDiscountRelPersistenceImpl
 		}
 
 		commerceDiscountRel.resetOriginalValues();
-
-		return commerceDiscountRel;
-	}
-
-	/**
-	 * Returns the commerce discount rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce discount rel
-	 * @return the commerce discount rel
-	 * @throws NoSuchDiscountRelException if a commerce discount rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceDiscountRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchDiscountRelException {
-
-		CommerceDiscountRel commerceDiscountRel = fetchByPrimaryKey(primaryKey);
-
-		if (commerceDiscountRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchDiscountRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceDiscountRel;
 	}
@@ -1500,9 +1388,6 @@ public class CommerceDiscountRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "commerceDiscountRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceDiscountRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceDiscountRel exists with the key {";
 
@@ -1515,4 +1400,4 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1330266132
+// LIFERAY-SERVICE-BUILDER-HASH:-1234006579

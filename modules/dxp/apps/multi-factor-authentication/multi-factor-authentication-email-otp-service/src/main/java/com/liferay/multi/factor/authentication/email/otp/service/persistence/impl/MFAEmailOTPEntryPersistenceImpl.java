@@ -43,7 +43,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MFAEmailOTPEntryPersistence.class)
 public class MFAEmailOTPEntryPersistenceImpl
-	extends BasePersistenceImpl<MFAEmailOTPEntry>
+	extends BasePersistenceImpl<MFAEmailOTPEntry, NoSuchEntryException>
 	implements MFAEmailOTPEntryPersistence {
 
 	/*
@@ -219,49 +218,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all mfa email otp entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MFAEmailOTPEntryImpl.class);
-
-		finderCache.clearCache(MFAEmailOTPEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the mfa email otp entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MFAEmailOTPEntry mfaEmailOTPEntry) {
-		entityCache.removeResult(MFAEmailOTPEntryImpl.class, mfaEmailOTPEntry);
-	}
-
-	@Override
-	public void clearCache(List<MFAEmailOTPEntry> mfaEmailOTPEntries) {
-		for (MFAEmailOTPEntry mfaEmailOTPEntry : mfaEmailOTPEntries) {
-			entityCache.removeResult(
-				MFAEmailOTPEntryImpl.class, mfaEmailOTPEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MFAEmailOTPEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MFAEmailOTPEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MFAEmailOTPEntryModelImpl mfaEmailOTPEntryModelImpl) {
 
@@ -301,47 +257,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 		throws NoSuchEntryException {
 
 		return remove((Serializable)mfaEmailOTPEntryId);
-	}
-
-	/**
-	 * Removes the mfa email otp entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the mfa email otp entry
-	 * @return the mfa email otp entry that was removed
-	 * @throws NoSuchEntryException if a mfa email otp entry with the primary key could not be found
-	 */
-	@Override
-	public MFAEmailOTPEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MFAEmailOTPEntry mfaEmailOTPEntry = (MFAEmailOTPEntry)session.get(
-				MFAEmailOTPEntryImpl.class, primaryKey);
-
-			if (mfaEmailOTPEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mfaEmailOTPEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -454,31 +369,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 		}
 
 		mfaEmailOTPEntry.resetOriginalValues();
-
-		return mfaEmailOTPEntry;
-	}
-
-	/**
-	 * Returns the mfa email otp entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the mfa email otp entry
-	 * @return the mfa email otp entry
-	 * @throws NoSuchEntryException if a mfa email otp entry with the primary key could not be found
-	 */
-	@Override
-	public MFAEmailOTPEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		MFAEmailOTPEntry mfaEmailOTPEntry = fetchByPrimaryKey(primaryKey);
-
-		if (mfaEmailOTPEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mfaEmailOTPEntry;
 	}
@@ -792,9 +682,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mfaEmailOTPEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MFAEmailOTPEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MFAEmailOTPEntry exists with the key {";
 
@@ -807,4 +694,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883277331
+// LIFERAY-SERVICE-BUILDER-HASH:-1451563413

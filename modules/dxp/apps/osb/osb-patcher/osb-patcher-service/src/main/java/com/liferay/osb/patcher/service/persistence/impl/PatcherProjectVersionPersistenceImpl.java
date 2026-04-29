@@ -48,7 +48,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -69,7 +68,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherProjectVersionPersistence.class)
 public class PatcherProjectVersionPersistenceImpl
-	extends BasePersistenceImpl<PatcherProjectVersion>
+	extends BasePersistenceImpl
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
 	implements PatcherProjectVersionPersistence {
 
 	/*
@@ -1917,53 +1917,6 @@ public class PatcherProjectVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher project versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherProjectVersionImpl.class);
-
-		finderCache.clearCache(PatcherProjectVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher project version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherProjectVersion patcherProjectVersion) {
-		entityCache.removeResult(
-			PatcherProjectVersionImpl.class, patcherProjectVersion);
-	}
-
-	@Override
-	public void clearCache(List<PatcherProjectVersion> patcherProjectVersions) {
-		for (PatcherProjectVersion patcherProjectVersion :
-				patcherProjectVersions) {
-
-			entityCache.removeResult(
-				PatcherProjectVersionImpl.class, patcherProjectVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherProjectVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				PatcherProjectVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherProjectVersionModelImpl patcherProjectVersionModelImpl) {
 
@@ -2011,48 +1964,6 @@ public class PatcherProjectVersionPersistenceImpl
 		throws NoSuchPatcherProjectVersionException {
 
 		return remove((Serializable)patcherProjectVersionId);
-	}
-
-	/**
-	 * Removes the patcher project version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher project version
-	 * @return the patcher project version that was removed
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	@Override
-	public PatcherProjectVersion remove(Serializable primaryKey)
-		throws NoSuchPatcherProjectVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherProjectVersion patcherProjectVersion =
-				(PatcherProjectVersion)session.get(
-					PatcherProjectVersionImpl.class, primaryKey);
-
-			if (patcherProjectVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherProjectVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherProjectVersion);
-		}
-		catch (NoSuchPatcherProjectVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2172,32 +2083,6 @@ public class PatcherProjectVersionPersistenceImpl
 		}
 
 		patcherProjectVersion.resetOriginalValues();
-
-		return patcherProjectVersion;
-	}
-
-	/**
-	 * Returns the patcher project version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher project version
-	 * @return the patcher project version
-	 * @throws NoSuchPatcherProjectVersionException if a patcher project version with the primary key could not be found
-	 */
-	@Override
-	public PatcherProjectVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherProjectVersionException {
-
-		PatcherProjectVersion patcherProjectVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (patcherProjectVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherProjectVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherProjectVersion;
 	}
@@ -2710,9 +2595,6 @@ public class PatcherProjectVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PProjectVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherProjectVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherProjectVersion exists with the key {";
 
@@ -2725,4 +2607,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:973034535
+// LIFERAY-SERVICE-BUILDER-HASH:-72672388

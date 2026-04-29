@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ChangesetCollectionPersistence.class)
 public class ChangesetCollectionPersistenceImpl
-	extends BasePersistenceImpl<ChangesetCollection>
+	extends BasePersistenceImpl<ChangesetCollection, NoSuchCollectionException>
 	implements ChangesetCollectionPersistence {
 
 	/*
@@ -838,50 +837,6 @@ public class ChangesetCollectionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all changeset collections.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ChangesetCollectionImpl.class);
-
-		finderCache.clearCache(ChangesetCollectionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the changeset collection.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ChangesetCollection changesetCollection) {
-		entityCache.removeResult(
-			ChangesetCollectionImpl.class, changesetCollection);
-	}
-
-	@Override
-	public void clearCache(List<ChangesetCollection> changesetCollections) {
-		for (ChangesetCollection changesetCollection : changesetCollections) {
-			entityCache.removeResult(
-				ChangesetCollectionImpl.class, changesetCollection);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ChangesetCollectionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ChangesetCollectionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ChangesetCollectionModelImpl changesetCollectionModelImpl) {
 
@@ -924,48 +879,6 @@ public class ChangesetCollectionPersistenceImpl
 		throws NoSuchCollectionException {
 
 		return remove((Serializable)changesetCollectionId);
-	}
-
-	/**
-	 * Removes the changeset collection with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the changeset collection
-	 * @return the changeset collection that was removed
-	 * @throws NoSuchCollectionException if a changeset collection with the primary key could not be found
-	 */
-	@Override
-	public ChangesetCollection remove(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ChangesetCollection changesetCollection =
-				(ChangesetCollection)session.get(
-					ChangesetCollectionImpl.class, primaryKey);
-
-			if (changesetCollection == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCollectionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(changesetCollection);
-		}
-		catch (NoSuchCollectionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1083,31 +996,6 @@ public class ChangesetCollectionPersistenceImpl
 		}
 
 		changesetCollection.resetOriginalValues();
-
-		return changesetCollection;
-	}
-
-	/**
-	 * Returns the changeset collection with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the changeset collection
-	 * @return the changeset collection
-	 * @throws NoSuchCollectionException if a changeset collection with the primary key could not be found
-	 */
-	@Override
-	public ChangesetCollection findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCollectionException {
-
-		ChangesetCollection changesetCollection = fetchByPrimaryKey(primaryKey);
-
-		if (changesetCollection == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCollectionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return changesetCollection;
 	}
@@ -1555,9 +1443,6 @@ public class ChangesetCollectionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "changesetCollection.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ChangesetCollection exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ChangesetCollection exists with the key {";
 
@@ -1570,4 +1455,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1350835519
+// LIFERAY-SERVICE-BUILDER-HASH:-1038769696

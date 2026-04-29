@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectFilterPersistence.class)
 public class ObjectFilterPersistenceImpl
-	extends BasePersistenceImpl<ObjectFilter>
+	extends BasePersistenceImpl<ObjectFilter, NoSuchObjectFilterException>
 	implements ObjectFilterPersistence {
 
 	/*
@@ -588,48 +588,6 @@ public class ObjectFilterPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object filters.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectFilterImpl.class);
-
-		finderCache.clearCache(ObjectFilterImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object filter.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectFilter objectFilter) {
-		entityCache.removeResult(ObjectFilterImpl.class, objectFilter);
-	}
-
-	@Override
-	public void clearCache(List<ObjectFilter> objectFilters) {
-		for (ObjectFilter objectFilter : objectFilters) {
-			entityCache.removeResult(ObjectFilterImpl.class, objectFilter);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectFilterImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectFilterImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object filter with the primary key. Does not add the object filter to the database.
 	 *
 	 * @param objectFilterId the primary key for the new object filter
@@ -663,47 +621,6 @@ public class ObjectFilterPersistenceImpl
 		throws NoSuchObjectFilterException {
 
 		return remove((Serializable)objectFilterId);
-	}
-
-	/**
-	 * Removes the object filter with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object filter
-	 * @return the object filter that was removed
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	@Override
-	public ObjectFilter remove(Serializable primaryKey)
-		throws NoSuchObjectFilterException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectFilter objectFilter = (ObjectFilter)session.get(
-				ObjectFilterImpl.class, primaryKey);
-
-			if (objectFilter == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectFilterException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectFilter);
-		}
-		catch (NoSuchObjectFilterException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -817,31 +734,6 @@ public class ObjectFilterPersistenceImpl
 		}
 
 		objectFilter.resetOriginalValues();
-
-		return objectFilter;
-	}
-
-	/**
-	 * Returns the object filter with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object filter
-	 * @return the object filter
-	 * @throws NoSuchObjectFilterException if a object filter with the primary key could not be found
-	 */
-	@Override
-	public ObjectFilter findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectFilterException {
-
-		ObjectFilter objectFilter = fetchByPrimaryKey(primaryKey);
-
-		if (objectFilter == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectFilterException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectFilter;
 	}
@@ -1240,9 +1132,6 @@ public class ObjectFilterPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectFilter.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectFilter exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectFilter exists with the key {";
 
@@ -1258,4 +1147,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1382192159
+// LIFERAY-SERVICE-BUILDER-HASH:-605914490

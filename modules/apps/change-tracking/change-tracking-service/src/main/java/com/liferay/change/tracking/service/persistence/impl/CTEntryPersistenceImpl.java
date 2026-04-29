@@ -80,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTEntryPersistence.class)
 public class CTEntryPersistenceImpl
-	extends BasePersistenceImpl<CTEntry> implements CTEntryPersistence {
+	extends BasePersistenceImpl<CTEntry, NoSuchEntryException>
+	implements CTEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1754,48 +1755,6 @@ public class CTEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all ct entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTEntryImpl.class);
-
-		finderCache.clearCache(CTEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTEntry ctEntry) {
-		entityCache.removeResult(CTEntryImpl.class, ctEntry);
-	}
-
-	@Override
-	public void clearCache(List<CTEntry> ctEntries) {
-		for (CTEntry ctEntry : ctEntries) {
-			entityCache.removeResult(CTEntryImpl.class, ctEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(CTEntryModelImpl ctEntryModelImpl) {
 		Object[] args = new Object[] {
 			ctEntryModelImpl.getCtCollectionId(),
@@ -1846,45 +1805,6 @@ public class CTEntryPersistenceImpl
 	@Override
 	public CTEntry remove(long ctEntryId) throws NoSuchEntryException {
 		return remove((Serializable)ctEntryId);
-	}
-
-	/**
-	 * Removes the ct entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct entry
-	 * @return the ct entry that was removed
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	@Override
-	public CTEntry remove(Serializable primaryKey) throws NoSuchEntryException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTEntry ctEntry = (CTEntry)session.get(
-				CTEntryImpl.class, primaryKey);
-
-			if (ctEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2056,31 +1976,6 @@ public class CTEntryPersistenceImpl
 		}
 
 		ctEntry.resetOriginalValues();
-
-		return ctEntry;
-	}
-
-	/**
-	 * Returns the ct entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct entry
-	 * @return the ct entry
-	 * @throws NoSuchEntryException if a ct entry with the primary key could not be found
-	 */
-	@Override
-	public CTEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		CTEntry ctEntry = fetchByPrimaryKey(primaryKey);
-
-		if (ctEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctEntry;
 	}
@@ -2592,9 +2487,6 @@ public class CTEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "ctEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTEntry exists with the key {";
 
@@ -2610,4 +2502,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1447135298
+// LIFERAY-SERVICE-BUILDER-HASH:-164481498

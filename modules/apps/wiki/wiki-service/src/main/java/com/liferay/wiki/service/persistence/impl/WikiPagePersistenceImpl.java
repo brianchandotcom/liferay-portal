@@ -89,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = WikiPagePersistence.class)
 public class WikiPagePersistenceImpl
-	extends BasePersistenceImpl<WikiPage> implements WikiPagePersistence {
+	extends BasePersistenceImpl<WikiPage, NoSuchPageException>
+	implements WikiPagePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -10940,48 +10941,6 @@ public class WikiPagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all wiki pages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(WikiPageImpl.class);
-
-		finderCache.clearCache(WikiPageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the wiki page.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(WikiPage wikiPage) {
-		entityCache.removeResult(WikiPageImpl.class, wikiPage);
-	}
-
-	@Override
-	public void clearCache(List<WikiPage> wikiPages) {
-		for (WikiPage wikiPage : wikiPages) {
-			entityCache.removeResult(WikiPageImpl.class, wikiPage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(WikiPageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(WikiPageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		WikiPageModelImpl wikiPageModelImpl) {
 
@@ -11055,45 +11014,6 @@ public class WikiPagePersistenceImpl
 	@Override
 	public WikiPage remove(long pageId) throws NoSuchPageException {
 		return remove((Serializable)pageId);
-	}
-
-	/**
-	 * Removes the wiki page with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the wiki page
-	 * @return the wiki page that was removed
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	@Override
-	public WikiPage remove(Serializable primaryKey) throws NoSuchPageException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			WikiPage wikiPage = (WikiPage)session.get(
-				WikiPageImpl.class, primaryKey);
-
-			if (wikiPage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(wikiPage);
-		}
-		catch (NoSuchPageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -11274,31 +11194,6 @@ public class WikiPagePersistenceImpl
 		}
 
 		wikiPage.resetOriginalValues();
-
-		return wikiPage;
-	}
-
-	/**
-	 * Returns the wiki page with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the wiki page
-	 * @return the wiki page
-	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
-	 */
-	@Override
-	public WikiPage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPageException {
-
-		WikiPage wikiPage = fetchByPrimaryKey(primaryKey);
-
-		if (wikiPage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return wikiPage;
 	}
@@ -12954,9 +12849,6 @@ public class WikiPagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiPage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No WikiPage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No WikiPage exists with the key {";
 
@@ -12972,4 +12864,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1732934269
+// LIFERAY-SERVICE-BUILDER-HASH:-122772872

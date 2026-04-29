@@ -46,7 +46,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -67,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTRemotePersistence.class)
 public class CTRemotePersistenceImpl
-	extends BasePersistenceImpl<CTRemote> implements CTRemotePersistence {
+	extends BasePersistenceImpl<CTRemote, NoSuchRemoteException>
+	implements CTRemotePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -471,48 +471,6 @@ public class CTRemotePersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct remotes.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTRemoteImpl.class);
-
-		finderCache.clearCache(CTRemoteImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct remote.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTRemote ctRemote) {
-		entityCache.removeResult(CTRemoteImpl.class, ctRemote);
-	}
-
-	@Override
-	public void clearCache(List<CTRemote> ctRemotes) {
-		for (CTRemote ctRemote : ctRemotes) {
-			entityCache.removeResult(CTRemoteImpl.class, ctRemote);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTRemoteImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CTRemoteImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct remote with the primary key. Does not add the ct remote to the database.
 	 *
 	 * @param ctRemoteId the primary key for the new ct remote
@@ -540,47 +498,6 @@ public class CTRemotePersistenceImpl
 	@Override
 	public CTRemote remove(long ctRemoteId) throws NoSuchRemoteException {
 		return remove((Serializable)ctRemoteId);
-	}
-
-	/**
-	 * Removes the ct remote with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct remote
-	 * @return the ct remote that was removed
-	 * @throws NoSuchRemoteException if a ct remote with the primary key could not be found
-	 */
-	@Override
-	public CTRemote remove(Serializable primaryKey)
-		throws NoSuchRemoteException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTRemote ctRemote = (CTRemote)session.get(
-				CTRemoteImpl.class, primaryKey);
-
-			if (ctRemote == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchRemoteException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctRemote);
-		}
-		catch (NoSuchRemoteException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -685,31 +602,6 @@ public class CTRemotePersistenceImpl
 		}
 
 		ctRemote.resetOriginalValues();
-
-		return ctRemote;
-	}
-
-	/**
-	 * Returns the ct remote with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct remote
-	 * @return the ct remote
-	 * @throws NoSuchRemoteException if a ct remote with the primary key could not be found
-	 */
-	@Override
-	public CTRemote findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRemoteException {
-
-		CTRemote ctRemote = fetchByPrimaryKey(primaryKey);
-
-		if (ctRemote == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchRemoteException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctRemote;
 	}
@@ -1066,9 +958,6 @@ public class CTRemotePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CTRemote.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTRemote exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTRemote exists with the key {";
 
@@ -1081,4 +970,4 @@ public class CTRemotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1115179789
+// LIFERAY-SERVICE-BUILDER-HASH:1989999252

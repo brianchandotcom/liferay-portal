@@ -68,7 +68,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectLayoutRowPersistence.class)
 public class ObjectLayoutRowPersistenceImpl
-	extends BasePersistenceImpl<ObjectLayoutRow>
+	extends BasePersistenceImpl<ObjectLayoutRow, NoSuchObjectLayoutRowException>
 	implements ObjectLayoutRowPersistence {
 
 	/*
@@ -596,49 +596,6 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all object layout rows.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectLayoutRowImpl.class);
-
-		finderCache.clearCache(ObjectLayoutRowImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object layout row.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectLayoutRow objectLayoutRow) {
-		entityCache.removeResult(ObjectLayoutRowImpl.class, objectLayoutRow);
-	}
-
-	@Override
-	public void clearCache(List<ObjectLayoutRow> objectLayoutRows) {
-		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
-			entityCache.removeResult(
-				ObjectLayoutRowImpl.class, objectLayoutRow);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectLayoutRowImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectLayoutRowImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new object layout row with the primary key. Does not add the object layout row to the database.
 	 *
 	 * @param objectLayoutRowId the primary key for the new object layout row
@@ -672,47 +629,6 @@ public class ObjectLayoutRowPersistenceImpl
 		throws NoSuchObjectLayoutRowException {
 
 		return remove((Serializable)objectLayoutRowId);
-	}
-
-	/**
-	 * Removes the object layout row with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object layout row
-	 * @return the object layout row that was removed
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutRow remove(Serializable primaryKey)
-		throws NoSuchObjectLayoutRowException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectLayoutRow objectLayoutRow = (ObjectLayoutRow)session.get(
-				ObjectLayoutRowImpl.class, primaryKey);
-
-			if (objectLayoutRow == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectLayoutRowException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectLayoutRow);
-		}
-		catch (NoSuchObjectLayoutRowException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -829,31 +745,6 @@ public class ObjectLayoutRowPersistenceImpl
 		}
 
 		objectLayoutRow.resetOriginalValues();
-
-		return objectLayoutRow;
-	}
-
-	/**
-	 * Returns the object layout row with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object layout row
-	 * @return the object layout row
-	 * @throws NoSuchObjectLayoutRowException if a object layout row with the primary key could not be found
-	 */
-	@Override
-	public ObjectLayoutRow findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectLayoutRowException {
-
-		ObjectLayoutRow objectLayoutRow = fetchByPrimaryKey(primaryKey);
-
-		if (objectLayoutRow == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectLayoutRowException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectLayoutRow;
 	}
@@ -1256,9 +1147,6 @@ public class ObjectLayoutRowPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectLayoutRow.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectLayoutRow exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectLayoutRow exists with the key {";
 
@@ -1274,4 +1162,4 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1673266730
+// LIFERAY-SERVICE-BUILDER-HASH:-1183876981

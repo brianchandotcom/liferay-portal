@@ -35,7 +35,6 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -56,7 +55,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = RSVEntryPersistence.class)
 public class RSVEntryPersistenceImpl
-	extends BasePersistenceImpl<RSVEntry> implements RSVEntryPersistence {
+	extends BasePersistenceImpl<RSVEntry, NoSuchEntryException>
+	implements RSVEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -122,48 +122,6 @@ public class RSVEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all rsv entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(RSVEntryImpl.class);
-
-		finderCache.clearCache(RSVEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the rsv entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(RSVEntry rsvEntry) {
-		entityCache.removeResult(RSVEntryImpl.class, rsvEntry);
-	}
-
-	@Override
-	public void clearCache(List<RSVEntry> rsvEntries) {
-		for (RSVEntry rsvEntry : rsvEntries) {
-			entityCache.removeResult(RSVEntryImpl.class, rsvEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(RSVEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(RSVEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new rsv entry with the primary key. Does not add the rsv entry to the database.
 	 *
 	 * @param rsvEntryId the primary key for the new rsv entry
@@ -191,47 +149,6 @@ public class RSVEntryPersistenceImpl
 	@Override
 	public RSVEntry remove(long rsvEntryId) throws NoSuchEntryException {
 		return remove((Serializable)rsvEntryId);
-	}
-
-	/**
-	 * Removes the rsv entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the rsv entry
-	 * @return the rsv entry that was removed
-	 * @throws NoSuchEntryException if a rsv entry with the primary key could not be found
-	 */
-	@Override
-	public RSVEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			RSVEntry rsvEntry = (RSVEntry)session.get(
-				RSVEntryImpl.class, primaryKey);
-
-			if (rsvEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(rsvEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -294,31 +211,6 @@ public class RSVEntryPersistenceImpl
 		}
 
 		rsvEntry.resetOriginalValues();
-
-		return rsvEntry;
-	}
-
-	/**
-	 * Returns the rsv entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the rsv entry
-	 * @return the rsv entry
-	 * @throws NoSuchEntryException if a rsv entry with the primary key could not be found
-	 */
-	@Override
-	public RSVEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		RSVEntry rsvEntry = fetchByPrimaryKey(primaryKey);
-
-		if (rsvEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return rsvEntry;
 	}
@@ -617,9 +509,6 @@ public class RSVEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "rsvEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No RSVEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		RSVEntryPersistenceImpl.class);
 
@@ -629,4 +518,4 @@ public class RSVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-703349390
+// LIFERAY-SERVICE-BUILDER-HASH:1218813200

@@ -90,7 +90,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = KBArticlePersistence.class)
 public class KBArticlePersistenceImpl
-	extends BasePersistenceImpl<KBArticle> implements KBArticlePersistence {
+	extends BasePersistenceImpl<KBArticle, NoSuchArticleException>
+	implements KBArticlePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -36553,48 +36554,6 @@ public class KBArticlePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all kb articles.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(KBArticleImpl.class);
-
-		finderCache.clearCache(KBArticleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the kb article.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(KBArticle kbArticle) {
-		entityCache.removeResult(KBArticleImpl.class, kbArticle);
-	}
-
-	@Override
-	public void clearCache(List<KBArticle> kbArticles) {
-		for (KBArticle kbArticle : kbArticles) {
-			entityCache.removeResult(KBArticleImpl.class, kbArticle);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(KBArticleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(KBArticleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		KBArticleModelImpl kbArticleModelImpl) {
 
@@ -36668,47 +36627,6 @@ public class KBArticlePersistenceImpl
 	@Override
 	public KBArticle remove(long kbArticleId) throws NoSuchArticleException {
 		return remove((Serializable)kbArticleId);
-	}
-
-	/**
-	 * Removes the kb article with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the kb article
-	 * @return the kb article that was removed
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	@Override
-	public KBArticle remove(Serializable primaryKey)
-		throws NoSuchArticleException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KBArticle kbArticle = (KBArticle)session.get(
-				KBArticleImpl.class, primaryKey);
-
-			if (kbArticle == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchArticleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(kbArticle);
-		}
-		catch (NoSuchArticleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -36891,31 +36809,6 @@ public class KBArticlePersistenceImpl
 		}
 
 		kbArticle.resetOriginalValues();
-
-		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb article
-	 * @return the kb article
-	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
-	 */
-	@Override
-	public KBArticle findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchArticleException {
-
-		KBArticle kbArticle = fetchByPrimaryKey(primaryKey);
-
-		if (kbArticle == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchArticleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return kbArticle;
 	}
@@ -39063,9 +38956,6 @@ public class KBArticlePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "KBArticle.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No KBArticle exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBArticle exists with the key {";
 
@@ -39081,4 +38971,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1108056143
+// LIFERAY-SERVICE-BUILDER-HASH:462957944

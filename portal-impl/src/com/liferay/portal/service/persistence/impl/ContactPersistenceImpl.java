@@ -42,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the contact service.
@@ -55,7 +54,8 @@ import java.util.Set;
  * @generated
  */
 public class ContactPersistenceImpl
-	extends BasePersistenceImpl<Contact> implements ContactPersistence {
+	extends BasePersistenceImpl<Contact, NoSuchContactException>
+	implements ContactPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -722,48 +722,6 @@ public class ContactPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all contacts.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ContactImpl.class);
-
-		FinderCacheUtil.clearCache(ContactImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the contact.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Contact contact) {
-		EntityCacheUtil.removeResult(ContactImpl.class, contact);
-	}
-
-	@Override
-	public void clearCache(List<Contact> contacts) {
-		for (Contact contact : contacts) {
-			EntityCacheUtil.removeResult(ContactImpl.class, contact);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ContactImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(ContactImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new contact with the primary key. Does not add the contact to the database.
 	 *
 	 * @param contactId the primary key for the new contact
@@ -791,47 +749,6 @@ public class ContactPersistenceImpl
 	@Override
 	public Contact remove(long contactId) throws NoSuchContactException {
 		return remove((Serializable)contactId);
-	}
-
-	/**
-	 * Removes the contact with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the contact
-	 * @return the contact that was removed
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	@Override
-	public Contact remove(Serializable primaryKey)
-		throws NoSuchContactException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Contact contact = (Contact)session.get(
-				ContactImpl.class, primaryKey);
-
-			if (contact == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchContactException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(contact);
-		}
-		catch (NoSuchContactException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -936,31 +853,6 @@ public class ContactPersistenceImpl
 		}
 
 		contact.resetOriginalValues();
-
-		return contact;
-	}
-
-	/**
-	 * Returns the contact with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the contact
-	 * @return the contact
-	 * @throws NoSuchContactException if a contact with the primary key could not be found
-	 */
-	@Override
-	public Contact findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchContactException {
-
-		Contact contact = fetchByPrimaryKey(primaryKey);
-
-		if (contact == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchContactException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return contact;
 	}
@@ -1350,9 +1242,6 @@ public class ContactPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "contact.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Contact exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Contact exists with the key {";
 
@@ -1365,4 +1254,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1631718796
+// LIFERAY-SERVICE-BUILDER-HASH:-287810155

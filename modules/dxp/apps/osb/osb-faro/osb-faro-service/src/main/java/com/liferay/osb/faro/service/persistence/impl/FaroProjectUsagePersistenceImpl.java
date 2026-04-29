@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FaroProjectUsagePersistence.class)
 public class FaroProjectUsagePersistenceImpl
-	extends BasePersistenceImpl<FaroProjectUsage>
+	extends BasePersistenceImpl
+		<FaroProjectUsage, NoSuchFaroProjectUsageException>
 	implements FaroProjectUsagePersistence {
 
 	/*
@@ -230,49 +230,6 @@ public class FaroProjectUsagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all faro project usages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FaroProjectUsageImpl.class);
-
-		finderCache.clearCache(FaroProjectUsageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the faro project usage.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FaroProjectUsage faroProjectUsage) {
-		entityCache.removeResult(FaroProjectUsageImpl.class, faroProjectUsage);
-	}
-
-	@Override
-	public void clearCache(List<FaroProjectUsage> faroProjectUsages) {
-		for (FaroProjectUsage faroProjectUsage : faroProjectUsages) {
-			entityCache.removeResult(
-				FaroProjectUsageImpl.class, faroProjectUsage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FaroProjectUsageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FaroProjectUsageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FaroProjectUsageModelImpl faroProjectUsageModelImpl) {
 
@@ -315,47 +272,6 @@ public class FaroProjectUsagePersistenceImpl
 		throws NoSuchFaroProjectUsageException {
 
 		return remove((Serializable)faroProjectUsageId);
-	}
-
-	/**
-	 * Removes the faro project usage with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the faro project usage
-	 * @return the faro project usage that was removed
-	 * @throws NoSuchFaroProjectUsageException if a faro project usage with the primary key could not be found
-	 */
-	@Override
-	public FaroProjectUsage remove(Serializable primaryKey)
-		throws NoSuchFaroProjectUsageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FaroProjectUsage faroProjectUsage = (FaroProjectUsage)session.get(
-				FaroProjectUsageImpl.class, primaryKey);
-
-			if (faroProjectUsage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFaroProjectUsageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(faroProjectUsage);
-		}
-		catch (NoSuchFaroProjectUsageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -443,31 +359,6 @@ public class FaroProjectUsagePersistenceImpl
 		}
 
 		faroProjectUsage.resetOriginalValues();
-
-		return faroProjectUsage;
-	}
-
-	/**
-	 * Returns the faro project usage with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the faro project usage
-	 * @return the faro project usage
-	 * @throws NoSuchFaroProjectUsageException if a faro project usage with the primary key could not be found
-	 */
-	@Override
-	public FaroProjectUsage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchFaroProjectUsageException {
-
-		FaroProjectUsage faroProjectUsage = fetchByPrimaryKey(primaryKey);
-
-		if (faroProjectUsage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFaroProjectUsageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return faroProjectUsage;
 	}
@@ -785,9 +676,6 @@ public class FaroProjectUsagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "faroProjectUsage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FaroProjectUsage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FaroProjectUsage exists with the key {";
 
@@ -800,4 +688,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1904252589
+// LIFERAY-SERVICE-BUILDER-HASH:144036646

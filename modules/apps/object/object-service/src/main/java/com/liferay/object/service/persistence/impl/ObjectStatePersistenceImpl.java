@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ObjectStatePersistence.class)
 public class ObjectStatePersistenceImpl
-	extends BasePersistenceImpl<ObjectState> implements ObjectStatePersistence {
+	extends BasePersistenceImpl<ObjectState, NoSuchObjectStateException>
+	implements ObjectStatePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -845,48 +846,6 @@ public class ObjectStatePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all object states.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ObjectStateImpl.class);
-
-		finderCache.clearCache(ObjectStateImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the object state.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(ObjectState objectState) {
-		entityCache.removeResult(ObjectStateImpl.class, objectState);
-	}
-
-	@Override
-	public void clearCache(List<ObjectState> objectStates) {
-		for (ObjectState objectState : objectStates) {
-			entityCache.removeResult(ObjectStateImpl.class, objectState);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ObjectStateImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ObjectStateImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		ObjectStateModelImpl objectStateModelImpl) {
 
@@ -933,47 +892,6 @@ public class ObjectStatePersistenceImpl
 		throws NoSuchObjectStateException {
 
 		return remove((Serializable)objectStateId);
-	}
-
-	/**
-	 * Removes the object state with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the object state
-	 * @return the object state that was removed
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	@Override
-	public ObjectState remove(Serializable primaryKey)
-		throws NoSuchObjectStateException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ObjectState objectState = (ObjectState)session.get(
-				ObjectStateImpl.class, primaryKey);
-
-			if (objectState == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchObjectStateException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(objectState);
-		}
-		catch (NoSuchObjectStateException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1088,31 +1006,6 @@ public class ObjectStatePersistenceImpl
 		}
 
 		objectState.resetOriginalValues();
-
-		return objectState;
-	}
-
-	/**
-	 * Returns the object state with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the object state
-	 * @return the object state
-	 * @throws NoSuchObjectStateException if a object state with the primary key could not be found
-	 */
-	@Override
-	public ObjectState findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchObjectStateException {
-
-		ObjectState objectState = fetchByPrimaryKey(primaryKey);
-
-		if (objectState == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchObjectStateException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return objectState;
 	}
@@ -1554,9 +1447,6 @@ public class ObjectStatePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "objectState.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ObjectState exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ObjectState exists with the key {";
 
@@ -1572,4 +1462,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712044684
+// LIFERAY-SERVICE-BUILDER-HASH:504780637

@@ -66,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ModulePersistence.class)
 public class ModulePersistenceImpl
-	extends BasePersistenceImpl<Module> implements ModulePersistence {
+	extends BasePersistenceImpl<Module, NoSuchModuleException>
+	implements ModulePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1139,48 +1140,6 @@ public class ModulePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all modules.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(ModuleImpl.class);
-
-		finderCache.clearCache(ModuleImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the module.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Module module) {
-		entityCache.removeResult(ModuleImpl.class, module);
-	}
-
-	@Override
-	public void clearCache(List<Module> modules) {
-		for (Module module : modules) {
-			entityCache.removeResult(ModuleImpl.class, module);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(ModuleImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(ModuleImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(ModuleModelImpl moduleModelImpl) {
 		Object[] args = new Object[] {
 			moduleModelImpl.getAppId(), moduleModelImpl.getBundleSymbolicName(),
@@ -1223,44 +1182,6 @@ public class ModulePersistenceImpl
 	@Override
 	public Module remove(long moduleId) throws NoSuchModuleException {
 		return remove((Serializable)moduleId);
-	}
-
-	/**
-	 * Removes the module with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the module
-	 * @return the module that was removed
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	@Override
-	public Module remove(Serializable primaryKey) throws NoSuchModuleException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Module module = (Module)session.get(ModuleImpl.class, primaryKey);
-
-			if (module == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchModuleException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(module);
-		}
-		catch (NoSuchModuleException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1349,31 +1270,6 @@ public class ModulePersistenceImpl
 		}
 
 		module.resetOriginalValues();
-
-		return module;
-	}
-
-	/**
-	 * Returns the module with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the module
-	 * @return the module
-	 * @throws NoSuchModuleException if a module with the primary key could not be found
-	 */
-	@Override
-	public Module findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchModuleException {
-
-		Module module = fetchByPrimaryKey(primaryKey);
-
-		if (module == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchModuleException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return module;
 	}
@@ -1876,9 +1772,6 @@ public class ModulePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "module.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Module exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Module exists with the key {";
 
@@ -1894,4 +1787,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:389137871
+// LIFERAY-SERVICE-BUILDER-HASH:-1277361480

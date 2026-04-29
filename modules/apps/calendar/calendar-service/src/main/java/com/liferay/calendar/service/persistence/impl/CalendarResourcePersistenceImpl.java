@@ -84,7 +84,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CalendarResourcePersistence.class)
 public class CalendarResourcePersistenceImpl
-	extends BasePersistenceImpl<CalendarResource>
+	extends BasePersistenceImpl<CalendarResource, NoSuchResourceException>
 	implements CalendarResourcePersistence {
 
 	/*
@@ -2960,49 +2960,6 @@ public class CalendarResourcePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all calendar resources.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CalendarResourceImpl.class);
-
-		finderCache.clearCache(CalendarResourceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the calendar resource.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CalendarResource calendarResource) {
-		entityCache.removeResult(CalendarResourceImpl.class, calendarResource);
-	}
-
-	@Override
-	public void clearCache(List<CalendarResource> calendarResources) {
-		for (CalendarResource calendarResource : calendarResources) {
-			entityCache.removeResult(
-				CalendarResourceImpl.class, calendarResource);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CalendarResourceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CalendarResourceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CalendarResourceModelImpl calendarResourceModelImpl) {
 
@@ -3062,47 +3019,6 @@ public class CalendarResourcePersistenceImpl
 		throws NoSuchResourceException {
 
 		return remove((Serializable)calendarResourceId);
-	}
-
-	/**
-	 * Removes the calendar resource with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the calendar resource
-	 * @return the calendar resource that was removed
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	@Override
-	public CalendarResource remove(Serializable primaryKey)
-		throws NoSuchResourceException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CalendarResource calendarResource = (CalendarResource)session.get(
-				CalendarResourceImpl.class, primaryKey);
-
-			if (calendarResource == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchResourceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(calendarResource);
-		}
-		catch (NoSuchResourceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3229,31 +3145,6 @@ public class CalendarResourcePersistenceImpl
 		}
 
 		calendarResource.resetOriginalValues();
-
-		return calendarResource;
-	}
-
-	/**
-	 * Returns the calendar resource with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the calendar resource
-	 * @return the calendar resource
-	 * @throws NoSuchResourceException if a calendar resource with the primary key could not be found
-	 */
-	@Override
-	public CalendarResource findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchResourceException {
-
-		CalendarResource calendarResource = fetchByPrimaryKey(primaryKey);
-
-		if (calendarResource == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchResourceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return calendarResource;
 	}
@@ -4085,9 +3976,6 @@ public class CalendarResourcePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "CalendarResource.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CalendarResource exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CalendarResource exists with the key {";
 
@@ -4103,4 +3991,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:821017275
+// LIFERAY-SERVICE-BUILDER-HASH:-616881942

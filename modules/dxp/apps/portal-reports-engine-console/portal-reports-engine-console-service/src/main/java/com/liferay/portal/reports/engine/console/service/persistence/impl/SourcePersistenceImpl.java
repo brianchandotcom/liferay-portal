@@ -72,7 +72,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SourcePersistence.class)
 public class SourcePersistenceImpl
-	extends BasePersistenceImpl<Source> implements SourcePersistence {
+	extends BasePersistenceImpl<Source, NoSuchSourceException>
+	implements SourcePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -1009,48 +1010,6 @@ public class SourcePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all sources.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SourceImpl.class);
-
-		finderCache.clearCache(SourceImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the source.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(Source source) {
-		entityCache.removeResult(SourceImpl.class, source);
-	}
-
-	@Override
-	public void clearCache(List<Source> sources) {
-		for (Source source : sources) {
-			entityCache.removeResult(SourceImpl.class, source);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SourceImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SourceImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(SourceModelImpl sourceModelImpl) {
 		Object[] args = new Object[] {
 			sourceModelImpl.getUuid(), sourceModelImpl.getGroupId()
@@ -1091,44 +1050,6 @@ public class SourcePersistenceImpl
 	@Override
 	public Source remove(long sourceId) throws NoSuchSourceException {
 		return remove((Serializable)sourceId);
-	}
-
-	/**
-	 * Removes the source with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the source
-	 * @return the source that was removed
-	 * @throws NoSuchSourceException if a source with the primary key could not be found
-	 */
-	@Override
-	public Source remove(Serializable primaryKey) throws NoSuchSourceException {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Source source = (Source)session.get(SourceImpl.class, primaryKey);
-
-			if (source == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSourceException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(source);
-		}
-		catch (NoSuchSourceException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1240,31 +1161,6 @@ public class SourcePersistenceImpl
 		}
 
 		source.resetOriginalValues();
-
-		return source;
-	}
-
-	/**
-	 * Returns the source with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the source
-	 * @return the source
-	 * @throws NoSuchSourceException if a source with the primary key could not be found
-	 */
-	@Override
-	public Source findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSourceException {
-
-		Source source = fetchByPrimaryKey(primaryKey);
-
-		if (source == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSourceException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return source;
 	}
@@ -1727,9 +1623,6 @@ public class SourcePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "Reports_Source.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No Source exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Source exists with the key {";
 
@@ -1745,4 +1638,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1944568698
+// LIFERAY-SERVICE-BUILDER-HASH:-1299519473

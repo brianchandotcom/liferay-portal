@@ -88,7 +88,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPMeasurementUnitPersistence.class)
 public class CPMeasurementUnitPersistenceImpl
-	extends BasePersistenceImpl<CPMeasurementUnit>
+	extends BasePersistenceImpl
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
 	implements CPMeasurementUnitPersistence {
 
 	/*
@@ -1422,50 +1423,6 @@ public class CPMeasurementUnitPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cp measurement units.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPMeasurementUnitImpl.class);
-
-		finderCache.clearCache(CPMeasurementUnitImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cp measurement unit.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CPMeasurementUnit cpMeasurementUnit) {
-		entityCache.removeResult(
-			CPMeasurementUnitImpl.class, cpMeasurementUnit);
-	}
-
-	@Override
-	public void clearCache(List<CPMeasurementUnit> cpMeasurementUnits) {
-		for (CPMeasurementUnit cpMeasurementUnit : cpMeasurementUnits) {
-			entityCache.removeResult(
-				CPMeasurementUnitImpl.class, cpMeasurementUnit);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPMeasurementUnitImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(CPMeasurementUnitImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPMeasurementUnitModelImpl cpMeasurementUnitModelImpl) {
 
@@ -1533,48 +1490,6 @@ public class CPMeasurementUnitPersistenceImpl
 		throws NoSuchCPMeasurementUnitException {
 
 		return remove((Serializable)CPMeasurementUnitId);
-	}
-
-	/**
-	 * Removes the cp measurement unit with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cp measurement unit
-	 * @return the cp measurement unit that was removed
-	 * @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
-	 */
-	@Override
-	public CPMeasurementUnit remove(Serializable primaryKey)
-		throws NoSuchCPMeasurementUnitException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPMeasurementUnit cpMeasurementUnit =
-				(CPMeasurementUnit)session.get(
-					CPMeasurementUnitImpl.class, primaryKey);
-
-			if (cpMeasurementUnit == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPMeasurementUnitException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpMeasurementUnit);
-		}
-		catch (NoSuchCPMeasurementUnitException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1770,31 +1685,6 @@ public class CPMeasurementUnitPersistenceImpl
 		}
 
 		cpMeasurementUnit.resetOriginalValues();
-
-		return cpMeasurementUnit;
-	}
-
-	/**
-	 * Returns the cp measurement unit with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp measurement unit
-	 * @return the cp measurement unit
-	 * @throws NoSuchCPMeasurementUnitException if a cp measurement unit with the primary key could not be found
-	 */
-	@Override
-	public CPMeasurementUnit findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPMeasurementUnitException {
-
-		CPMeasurementUnit cpMeasurementUnit = fetchByPrimaryKey(primaryKey);
-
-		if (cpMeasurementUnit == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPMeasurementUnitException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpMeasurementUnit;
 	}
@@ -2570,9 +2460,6 @@ public class CPMeasurementUnitPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "cpMeasurementUnit.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPMeasurementUnit exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPMeasurementUnit exists with the key {";
 
@@ -2588,4 +2475,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1886332042
+// LIFERAY-SERVICE-BUILDER-HASH:373628197

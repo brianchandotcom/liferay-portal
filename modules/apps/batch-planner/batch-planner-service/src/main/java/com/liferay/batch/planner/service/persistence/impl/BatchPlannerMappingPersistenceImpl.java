@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BatchPlannerMappingPersistence.class)
 public class BatchPlannerMappingPersistenceImpl
-	extends BasePersistenceImpl<BatchPlannerMapping>
+	extends BasePersistenceImpl<BatchPlannerMapping, NoSuchMappingException>
 	implements BatchPlannerMappingPersistence {
 
 	/*
@@ -415,50 +414,6 @@ public class BatchPlannerMappingPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all batch planner mappings.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BatchPlannerMappingImpl.class);
-
-		finderCache.clearCache(BatchPlannerMappingImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the batch planner mapping.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BatchPlannerMapping batchPlannerMapping) {
-		entityCache.removeResult(
-			BatchPlannerMappingImpl.class, batchPlannerMapping);
-	}
-
-	@Override
-	public void clearCache(List<BatchPlannerMapping> batchPlannerMappings) {
-		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			entityCache.removeResult(
-				BatchPlannerMappingImpl.class, batchPlannerMapping);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BatchPlannerMappingImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BatchPlannerMappingImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BatchPlannerMappingModelImpl batchPlannerMappingModelImpl) {
 
@@ -502,48 +457,6 @@ public class BatchPlannerMappingPersistenceImpl
 		throws NoSuchMappingException {
 
 		return remove((Serializable)batchPlannerMappingId);
-	}
-
-	/**
-	 * Removes the batch planner mapping with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the batch planner mapping
-	 * @return the batch planner mapping that was removed
-	 * @throws NoSuchMappingException if a batch planner mapping with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerMapping remove(Serializable primaryKey)
-		throws NoSuchMappingException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BatchPlannerMapping batchPlannerMapping =
-				(BatchPlannerMapping)session.get(
-					BatchPlannerMappingImpl.class, primaryKey);
-
-			if (batchPlannerMapping == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMappingException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(batchPlannerMapping);
-		}
-		catch (NoSuchMappingException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -661,31 +574,6 @@ public class BatchPlannerMappingPersistenceImpl
 		}
 
 		batchPlannerMapping.resetOriginalValues();
-
-		return batchPlannerMapping;
-	}
-
-	/**
-	 * Returns the batch planner mapping with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the batch planner mapping
-	 * @return the batch planner mapping
-	 * @throws NoSuchMappingException if a batch planner mapping with the primary key could not be found
-	 */
-	@Override
-	public BatchPlannerMapping findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMappingException {
-
-		BatchPlannerMapping batchPlannerMapping = fetchByPrimaryKey(primaryKey);
-
-		if (batchPlannerMapping == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMappingException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return batchPlannerMapping;
 	}
@@ -1052,9 +940,6 @@ public class BatchPlannerMappingPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "batchPlannerMapping.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BatchPlannerMapping exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BatchPlannerMapping exists with the key {";
 
@@ -1067,4 +952,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883555804
+// LIFERAY-SERVICE-BUILDER-HASH:-619509959

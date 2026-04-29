@@ -41,7 +41,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * The persistence implementation for the nested sets tree entry service.
@@ -54,7 +53,8 @@ import java.util.Set;
  * @generated
  */
 public class NestedSetsTreeEntryPersistenceImpl
-	extends BasePersistenceImpl<NestedSetsTreeEntry>
+	extends BasePersistenceImpl
+		<NestedSetsTreeEntry, NoSuchNestedSetsTreeEntryException>
 	implements NestedSetsTreeEntryPersistence {
 
 	/*
@@ -128,50 +128,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all nested sets tree entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(NestedSetsTreeEntryImpl.class);
-
-		finderCache.clearCache(NestedSetsTreeEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the nested sets tree entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(NestedSetsTreeEntry nestedSetsTreeEntry) {
-		entityCache.removeResult(
-			NestedSetsTreeEntryImpl.class, nestedSetsTreeEntry);
-	}
-
-	@Override
-	public void clearCache(List<NestedSetsTreeEntry> nestedSetsTreeEntries) {
-		for (NestedSetsTreeEntry nestedSetsTreeEntry : nestedSetsTreeEntries) {
-			entityCache.removeResult(
-				NestedSetsTreeEntryImpl.class, nestedSetsTreeEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(NestedSetsTreeEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(NestedSetsTreeEntryImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new nested sets tree entry with the primary key. Does not add the nested sets tree entry to the database.
 	 *
 	 * @param nestedSetsTreeEntryId the primary key for the new nested sets tree entry
@@ -199,48 +155,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 		throws NoSuchNestedSetsTreeEntryException {
 
 		return remove((Serializable)nestedSetsTreeEntryId);
-	}
-
-	/**
-	 * Removes the nested sets tree entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the nested sets tree entry
-	 * @return the nested sets tree entry that was removed
-	 * @throws NoSuchNestedSetsTreeEntryException if a nested sets tree entry with the primary key could not be found
-	 */
-	@Override
-	public NestedSetsTreeEntry remove(Serializable primaryKey)
-		throws NoSuchNestedSetsTreeEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			NestedSetsTreeEntry nestedSetsTreeEntry =
-				(NestedSetsTreeEntry)session.get(
-					NestedSetsTreeEntryImpl.class, primaryKey);
-
-			if (nestedSetsTreeEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchNestedSetsTreeEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(nestedSetsTreeEntry);
-		}
-		catch (NoSuchNestedSetsTreeEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -378,31 +292,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 		}
 
 		nestedSetsTreeEntry.resetOriginalValues();
-
-		return nestedSetsTreeEntry;
-	}
-
-	/**
-	 * Returns the nested sets tree entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the nested sets tree entry
-	 * @return the nested sets tree entry
-	 * @throws NoSuchNestedSetsTreeEntryException if a nested sets tree entry with the primary key could not be found
-	 */
-	@Override
-	public NestedSetsTreeEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchNestedSetsTreeEntryException {
-
-		NestedSetsTreeEntry nestedSetsTreeEntry = fetchByPrimaryKey(primaryKey);
-
-		if (nestedSetsTreeEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchNestedSetsTreeEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return nestedSetsTreeEntry;
 	}
@@ -991,9 +880,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "nestedSetsTreeEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No NestedSetsTreeEntry exists with the primary key ";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		NestedSetsTreeEntryPersistenceImpl.class);
 
@@ -1003,4 +889,4 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1899420953
+// LIFERAY-SERVICE-BUILDER-HASH:-714051855

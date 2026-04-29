@@ -46,7 +46,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -67,7 +66,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTAutoResolutionInfoPersistence.class)
 public class CTAutoResolutionInfoPersistenceImpl
-	extends BasePersistenceImpl<CTAutoResolutionInfo>
+	extends BasePersistenceImpl
+		<CTAutoResolutionInfo, NoSuchAutoResolutionInfoException>
 	implements CTAutoResolutionInfoPersistence {
 
 	/*
@@ -961,53 +961,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all ct auto resolution infos.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CTAutoResolutionInfoImpl.class);
-
-		finderCache.clearCache(CTAutoResolutionInfoImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the ct auto resolution info.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(CTAutoResolutionInfo ctAutoResolutionInfo) {
-		entityCache.removeResult(
-			CTAutoResolutionInfoImpl.class, ctAutoResolutionInfo);
-	}
-
-	@Override
-	public void clearCache(List<CTAutoResolutionInfo> ctAutoResolutionInfos) {
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				ctAutoResolutionInfos) {
-
-			entityCache.removeResult(
-				CTAutoResolutionInfoImpl.class, ctAutoResolutionInfo);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CTAutoResolutionInfoImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CTAutoResolutionInfoImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new ct auto resolution info with the primary key. Does not add the ct auto resolution info to the database.
 	 *
 	 * @param ctAutoResolutionInfoId the primary key for the new ct auto resolution info
@@ -1038,48 +991,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 		throws NoSuchAutoResolutionInfoException {
 
 		return remove((Serializable)ctAutoResolutionInfoId);
-	}
-
-	/**
-	 * Removes the ct auto resolution info with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the ct auto resolution info
-	 * @return the ct auto resolution info that was removed
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo remove(Serializable primaryKey)
-		throws NoSuchAutoResolutionInfoException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTAutoResolutionInfo ctAutoResolutionInfo =
-				(CTAutoResolutionInfo)session.get(
-					CTAutoResolutionInfoImpl.class, primaryKey);
-
-			if (ctAutoResolutionInfo == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchAutoResolutionInfoException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(ctAutoResolutionInfo);
-		}
-		catch (NoSuchAutoResolutionInfoException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1185,32 +1096,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 		}
 
 		ctAutoResolutionInfo.resetOriginalValues();
-
-		return ctAutoResolutionInfo;
-	}
-
-	/**
-	 * Returns the ct auto resolution info with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ct auto resolution info
-	 * @return the ct auto resolution info
-	 * @throws NoSuchAutoResolutionInfoException if a ct auto resolution info with the primary key could not be found
-	 */
-	@Override
-	public CTAutoResolutionInfo findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAutoResolutionInfoException {
-
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByPrimaryKey(
-			primaryKey);
-
-		if (ctAutoResolutionInfo == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchAutoResolutionInfoException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return ctAutoResolutionInfo;
 	}
@@ -1593,9 +1478,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"ctAutoResolutionInfo.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CTAutoResolutionInfo exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTAutoResolutionInfo exists with the key {";
 
@@ -1608,4 +1490,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1814052265
+// LIFERAY-SERVICE-BUILDER-HASH:117345038

@@ -8,6 +8,7 @@ package com.liferay.portal.reports.engine.console.service.persistence.impl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.service.persistence.EntryPersistence;
 import com.liferay.portal.reports.engine.console.service.persistence.impl.constants.ReportsPersistenceConstants;
@@ -20,7 +21,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
+public abstract class EntryFinderBaseImpl
+	extends BasePersistenceImpl<Entry, NoSuchEntryException> {
 
 	public EntryFinderBaseImpl() {
 		setModelClass(Entry.class);
@@ -56,4 +58,4 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 	protected EntryPersistence entryPersistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1639653228
+// LIFERAY-SERVICE-BUILDER-HASH:915836319

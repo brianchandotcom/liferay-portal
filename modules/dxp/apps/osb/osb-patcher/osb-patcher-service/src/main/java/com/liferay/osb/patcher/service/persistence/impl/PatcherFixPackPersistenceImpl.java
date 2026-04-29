@@ -75,7 +75,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherFixPackPersistence.class)
 public class PatcherFixPackPersistenceImpl
-	extends BasePersistenceImpl<PatcherFixPack>
+	extends BasePersistenceImpl<PatcherFixPack, NoSuchPatcherFixPackException>
 	implements PatcherFixPackPersistence {
 
 	/*
@@ -3223,48 +3223,6 @@ public class PatcherFixPackPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher fix packs.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherFixPackImpl.class);
-
-		finderCache.clearCache(PatcherFixPackImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher fix pack.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherFixPack patcherFixPack) {
-		entityCache.removeResult(PatcherFixPackImpl.class, patcherFixPack);
-	}
-
-	@Override
-	public void clearCache(List<PatcherFixPack> patcherFixPacks) {
-		for (PatcherFixPack patcherFixPack : patcherFixPacks) {
-			entityCache.removeResult(PatcherFixPackImpl.class, patcherFixPack);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherFixPackImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherFixPackImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherFixPackModelImpl patcherFixPackModelImpl) {
 
@@ -3324,47 +3282,6 @@ public class PatcherFixPackPersistenceImpl
 		throws NoSuchPatcherFixPackException {
 
 		return remove((Serializable)patcherFixPackId);
-	}
-
-	/**
-	 * Removes the patcher fix pack with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher fix pack
-	 * @return the patcher fix pack that was removed
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixPack remove(Serializable primaryKey)
-		throws NoSuchPatcherFixPackException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherFixPack patcherFixPack = (PatcherFixPack)session.get(
-				PatcherFixPackImpl.class, primaryKey);
-
-			if (patcherFixPack == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherFixPackException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherFixPack);
-		}
-		catch (NoSuchPatcherFixPackException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -3479,31 +3396,6 @@ public class PatcherFixPackPersistenceImpl
 		}
 
 		patcherFixPack.resetOriginalValues();
-
-		return patcherFixPack;
-	}
-
-	/**
-	 * Returns the patcher fix pack with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher fix pack
-	 * @return the patcher fix pack
-	 * @throws NoSuchPatcherFixPackException if a patcher fix pack with the primary key could not be found
-	 */
-	@Override
-	public PatcherFixPack findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherFixPackException {
-
-		PatcherFixPack patcherFixPack = fetchByPrimaryKey(primaryKey);
-
-		if (patcherFixPack == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherFixPackException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherFixPack;
 	}
@@ -4478,9 +4370,6 @@ public class PatcherFixPackPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PatcherFixPack.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherFixPack exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherFixPack exists with the key {";
 
@@ -4493,4 +4382,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1190243126
+// LIFERAY-SERVICE-BUILDER-HASH:-1131240563

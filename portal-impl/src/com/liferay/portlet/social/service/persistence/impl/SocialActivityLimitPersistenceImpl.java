@@ -63,7 +63,8 @@ import java.util.Set;
  * @generated
  */
 public class SocialActivityLimitPersistenceImpl
-	extends BasePersistenceImpl<SocialActivityLimit>
+	extends BasePersistenceImpl
+		<SocialActivityLimit, NoSuchActivityLimitException>
 	implements SocialActivityLimitPersistence {
 
 	/*
@@ -785,51 +786,6 @@ public class SocialActivityLimitPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all social activity limits.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(SocialActivityLimitImpl.class);
-
-		FinderCacheUtil.clearCache(SocialActivityLimitImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the social activity limit.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SocialActivityLimit socialActivityLimit) {
-		EntityCacheUtil.removeResult(
-			SocialActivityLimitImpl.class, socialActivityLimit);
-	}
-
-	@Override
-	public void clearCache(List<SocialActivityLimit> socialActivityLimits) {
-		for (SocialActivityLimit socialActivityLimit : socialActivityLimits) {
-			EntityCacheUtil.removeResult(
-				SocialActivityLimitImpl.class, socialActivityLimit);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(SocialActivityLimitImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				SocialActivityLimitImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl) {
 
@@ -882,48 +838,6 @@ public class SocialActivityLimitPersistenceImpl
 		throws NoSuchActivityLimitException {
 
 		return remove((Serializable)activityLimitId);
-	}
-
-	/**
-	 * Removes the social activity limit with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the social activity limit
-	 * @return the social activity limit that was removed
-	 * @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityLimit remove(Serializable primaryKey)
-		throws NoSuchActivityLimitException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SocialActivityLimit socialActivityLimit =
-				(SocialActivityLimit)session.get(
-					SocialActivityLimitImpl.class, primaryKey);
-
-			if (socialActivityLimit == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchActivityLimitException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(socialActivityLimit);
-		}
-		catch (NoSuchActivityLimitException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1024,31 +938,6 @@ public class SocialActivityLimitPersistenceImpl
 		}
 
 		socialActivityLimit.resetOriginalValues();
-
-		return socialActivityLimit;
-	}
-
-	/**
-	 * Returns the social activity limit with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the social activity limit
-	 * @return the social activity limit
-	 * @throws NoSuchActivityLimitException if a social activity limit with the primary key could not be found
-	 */
-	@Override
-	public SocialActivityLimit findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchActivityLimitException {
-
-		SocialActivityLimit socialActivityLimit = fetchByPrimaryKey(primaryKey);
-
-		if (socialActivityLimit == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchActivityLimitException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return socialActivityLimit;
 	}
@@ -1705,9 +1594,6 @@ public class SocialActivityLimitPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "socialActivityLimit.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SocialActivityLimit exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SocialActivityLimit exists with the key {";
 
@@ -1720,4 +1606,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1723845821
+// LIFERAY-SERVICE-BUILDER-HASH:-466700492

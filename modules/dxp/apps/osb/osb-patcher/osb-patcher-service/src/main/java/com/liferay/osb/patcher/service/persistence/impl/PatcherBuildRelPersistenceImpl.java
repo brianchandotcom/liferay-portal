@@ -40,7 +40,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -61,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherBuildRelPersistence.class)
 public class PatcherBuildRelPersistenceImpl
-	extends BasePersistenceImpl<PatcherBuildRel>
+	extends BasePersistenceImpl<PatcherBuildRel, NoSuchPatcherBuildRelException>
 	implements PatcherBuildRelPersistence {
 
 	/*
@@ -438,49 +437,6 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all patcher build rels.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherBuildRelImpl.class);
-
-		finderCache.clearCache(PatcherBuildRelImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher build rel.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherBuildRel patcherBuildRel) {
-		entityCache.removeResult(PatcherBuildRelImpl.class, patcherBuildRel);
-	}
-
-	@Override
-	public void clearCache(List<PatcherBuildRel> patcherBuildRels) {
-		for (PatcherBuildRel patcherBuildRel : patcherBuildRels) {
-			entityCache.removeResult(
-				PatcherBuildRelImpl.class, patcherBuildRel);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherBuildRelImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(PatcherBuildRelImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new patcher build rel with the primary key. Does not add the patcher build rel to the database.
 	 *
 	 * @param patcherBuildRelId the primary key for the new patcher build rel
@@ -510,47 +466,6 @@ public class PatcherBuildRelPersistenceImpl
 		throws NoSuchPatcherBuildRelException {
 
 		return remove((Serializable)patcherBuildRelId);
-	}
-
-	/**
-	 * Removes the patcher build rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher build rel
-	 * @return the patcher build rel that was removed
-	 * @throws NoSuchPatcherBuildRelException if a patcher build rel with the primary key could not be found
-	 */
-	@Override
-	public PatcherBuildRel remove(Serializable primaryKey)
-		throws NoSuchPatcherBuildRelException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherBuildRel patcherBuildRel = (PatcherBuildRel)session.get(
-				PatcherBuildRelImpl.class, primaryKey);
-
-			if (patcherBuildRel == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherBuildRelException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherBuildRel);
-		}
-		catch (NoSuchPatcherBuildRelException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -636,31 +551,6 @@ public class PatcherBuildRelPersistenceImpl
 		}
 
 		patcherBuildRel.resetOriginalValues();
-
-		return patcherBuildRel;
-	}
-
-	/**
-	 * Returns the patcher build rel with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher build rel
-	 * @return the patcher build rel
-	 * @throws NoSuchPatcherBuildRelException if a patcher build rel with the primary key could not be found
-	 */
-	@Override
-	public PatcherBuildRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherBuildRelException {
-
-		PatcherBuildRel patcherBuildRel = fetchByPrimaryKey(primaryKey);
-
-		if (patcherBuildRel == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherBuildRelException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherBuildRel;
 	}
@@ -1030,9 +920,6 @@ public class PatcherBuildRelPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "patcherBuildRel.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherBuildRel exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherBuildRel exists with the key {";
 
@@ -1045,4 +932,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1193392342
+// LIFERAY-SERVICE-BUILDER-HASH:-1713467465

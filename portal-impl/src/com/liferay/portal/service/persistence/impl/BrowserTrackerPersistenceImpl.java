@@ -39,7 +39,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The persistence implementation for the browser tracker service.
@@ -52,7 +51,7 @@ import java.util.Set;
  * @generated
  */
 public class BrowserTrackerPersistenceImpl
-	extends BasePersistenceImpl<BrowserTracker>
+	extends BasePersistenceImpl<BrowserTracker, NoSuchBrowserTrackerException>
 	implements BrowserTrackerPersistence {
 
 	/*
@@ -207,49 +206,6 @@ public class BrowserTrackerPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all browser trackers.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(BrowserTrackerImpl.class);
-
-		FinderCacheUtil.clearCache(BrowserTrackerImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the browser tracker.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BrowserTracker browserTracker) {
-		EntityCacheUtil.removeResult(BrowserTrackerImpl.class, browserTracker);
-	}
-
-	@Override
-	public void clearCache(List<BrowserTracker> browserTrackers) {
-		for (BrowserTracker browserTracker : browserTrackers) {
-			EntityCacheUtil.removeResult(
-				BrowserTrackerImpl.class, browserTracker);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(BrowserTrackerImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(BrowserTrackerImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BrowserTrackerModelImpl browserTrackerModelImpl) {
 
@@ -289,47 +245,6 @@ public class BrowserTrackerPersistenceImpl
 		throws NoSuchBrowserTrackerException {
 
 		return remove((Serializable)browserTrackerId);
-	}
-
-	/**
-	 * Removes the browser tracker with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the browser tracker
-	 * @return the browser tracker that was removed
-	 * @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 */
-	@Override
-	public BrowserTracker remove(Serializable primaryKey)
-		throws NoSuchBrowserTrackerException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BrowserTracker browserTracker = (BrowserTracker)session.get(
-				BrowserTrackerImpl.class, primaryKey);
-
-			if (browserTracker == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchBrowserTrackerException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(browserTracker);
-		}
-		catch (NoSuchBrowserTrackerException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -416,31 +331,6 @@ public class BrowserTrackerPersistenceImpl
 		}
 
 		browserTracker.resetOriginalValues();
-
-		return browserTracker;
-	}
-
-	/**
-	 * Returns the browser tracker with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the browser tracker
-	 * @return the browser tracker
-	 * @throws NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 */
-	@Override
-	public BrowserTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBrowserTrackerException {
-
-		BrowserTracker browserTracker = fetchByPrimaryKey(primaryKey);
-
-		if (browserTracker == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchBrowserTrackerException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return browserTracker;
 	}
@@ -719,9 +609,6 @@ public class BrowserTrackerPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "browserTracker.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BrowserTracker exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BrowserTracker exists with the key {";
 
@@ -734,4 +621,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:731978445
+// LIFERAY-SERVICE-BUILDER-HASH:-404282928

@@ -93,7 +93,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = BlogsEntryPersistence.class)
 public class BlogsEntryPersistenceImpl
-	extends BasePersistenceImpl<BlogsEntry> implements BlogsEntryPersistence {
+	extends BasePersistenceImpl<BlogsEntry, NoSuchEntryException>
+	implements BlogsEntryPersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -8699,48 +8700,6 @@ public class BlogsEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all blogs entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(BlogsEntryImpl.class);
-
-		finderCache.clearCache(BlogsEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the blogs entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(BlogsEntry blogsEntry) {
-		entityCache.removeResult(BlogsEntryImpl.class, blogsEntry);
-	}
-
-	@Override
-	public void clearCache(List<BlogsEntry> blogsEntries) {
-		for (BlogsEntry blogsEntry : blogsEntries) {
-			entityCache.removeResult(BlogsEntryImpl.class, blogsEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(BlogsEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(BlogsEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		BlogsEntryModelImpl blogsEntryModelImpl) {
 
@@ -8805,47 +8764,6 @@ public class BlogsEntryPersistenceImpl
 	@Override
 	public BlogsEntry remove(long entryId) throws NoSuchEntryException {
 		return remove((Serializable)entryId);
-	}
-
-	/**
-	 * Removes the blogs entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the blogs entry
-	 * @return the blogs entry that was removed
-	 * @throws NoSuchEntryException if a blogs entry with the primary key could not be found
-	 */
-	@Override
-	public BlogsEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BlogsEntry blogsEntry = (BlogsEntry)session.get(
-				BlogsEntryImpl.class, primaryKey);
-
-			if (blogsEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(blogsEntry);
-		}
-		catch (NoSuchEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -9064,31 +8982,6 @@ public class BlogsEntryPersistenceImpl
 		}
 
 		blogsEntry.resetOriginalValues();
-
-		return blogsEntry;
-	}
-
-	/**
-	 * Returns the blogs entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the blogs entry
-	 * @return the blogs entry
-	 * @throws NoSuchEntryException if a blogs entry with the primary key could not be found
-	 */
-	@Override
-	public BlogsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException {
-
-		BlogsEntry blogsEntry = fetchByPrimaryKey(primaryKey);
-
-		if (blogsEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return blogsEntry;
 	}
@@ -10528,9 +10421,6 @@ public class BlogsEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "BlogsEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No BlogsEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No BlogsEntry exists with the key {";
 
@@ -10546,4 +10436,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-464151192
+// LIFERAY-SERVICE-BUILDER-HASH:-1600637710

@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CommerceSubscriptionEntryPersistence.class)
 public class CommerceSubscriptionEntryPersistenceImpl
-	extends BasePersistenceImpl<CommerceSubscriptionEntry>
+	extends BasePersistenceImpl
+		<CommerceSubscriptionEntry, NoSuchSubscriptionEntryException>
 	implements CommerceSubscriptionEntryPersistence {
 
 	/*
@@ -1555,57 +1556,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all commerce subscription entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CommerceSubscriptionEntryImpl.class);
-
-		finderCache.clearCache(CommerceSubscriptionEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the commerce subscription entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-		entityCache.removeResult(
-			CommerceSubscriptionEntryImpl.class, commerceSubscriptionEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CommerceSubscriptionEntry> commerceSubscriptionEntries) {
-
-		for (CommerceSubscriptionEntry commerceSubscriptionEntry :
-				commerceSubscriptionEntries) {
-
-			entityCache.removeResult(
-				CommerceSubscriptionEntryImpl.class, commerceSubscriptionEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CommerceSubscriptionEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CommerceSubscriptionEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CommerceSubscriptionEntryModelImpl commerceSubscriptionEntryModelImpl) {
 
@@ -1671,48 +1621,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		throws NoSuchSubscriptionEntryException {
 
 		return remove((Serializable)commerceSubscriptionEntryId);
-	}
-
-	/**
-	 * Removes the commerce subscription entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the commerce subscription entry
-	 * @return the commerce subscription entry that was removed
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry remove(Serializable primaryKey)
-		throws NoSuchSubscriptionEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceSubscriptionEntry commerceSubscriptionEntry =
-				(CommerceSubscriptionEntry)session.get(
-					CommerceSubscriptionEntryImpl.class, primaryKey);
-
-			if (commerceSubscriptionEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchSubscriptionEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(commerceSubscriptionEntry);
-		}
-		catch (NoSuchSubscriptionEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1840,32 +1748,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		}
 
 		commerceSubscriptionEntry.resetOriginalValues();
-
-		return commerceSubscriptionEntry;
-	}
-
-	/**
-	 * Returns the commerce subscription entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce subscription entry
-	 * @return the commerce subscription entry
-	 * @throws NoSuchSubscriptionEntryException if a commerce subscription entry with the primary key could not be found
-	 */
-	@Override
-	public CommerceSubscriptionEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSubscriptionEntryException {
-
-		CommerceSubscriptionEntry commerceSubscriptionEntry = fetchByPrimaryKey(
-			primaryKey);
-
-		if (commerceSubscriptionEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchSubscriptionEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return commerceSubscriptionEntry;
 	}
@@ -2476,9 +2358,6 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"commerceSubscriptionEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CommerceSubscriptionEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceSubscriptionEntry exists with the key {";
 
@@ -2494,4 +2373,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-725938877
+// LIFERAY-SERVICE-BUILDER-HASH:405418921

@@ -44,7 +44,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -65,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SamlIdpSsoSessionPersistence.class)
 public class SamlIdpSsoSessionPersistenceImpl
-	extends BasePersistenceImpl<SamlIdpSsoSession>
+	extends BasePersistenceImpl<SamlIdpSsoSession, NoSuchIdpSsoSessionException>
 	implements SamlIdpSsoSessionPersistence {
 
 	/*
@@ -468,50 +467,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all saml idp sso sessions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SamlIdpSsoSessionImpl.class);
-
-		finderCache.clearCache(SamlIdpSsoSessionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the saml idp sso session.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SamlIdpSsoSession samlIdpSsoSession) {
-		entityCache.removeResult(
-			SamlIdpSsoSessionImpl.class, samlIdpSsoSession);
-	}
-
-	@Override
-	public void clearCache(List<SamlIdpSsoSession> samlIdpSsoSessions) {
-		for (SamlIdpSsoSession samlIdpSsoSession : samlIdpSsoSessions) {
-			entityCache.removeResult(
-				SamlIdpSsoSessionImpl.class, samlIdpSsoSession);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SamlIdpSsoSessionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SamlIdpSsoSessionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl) {
 
@@ -559,48 +514,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 		throws NoSuchIdpSsoSessionException {
 
 		return remove((Serializable)samlIdpSsoSessionId);
-	}
-
-	/**
-	 * Removes the saml idp sso session with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the saml idp sso session
-	 * @return the saml idp sso session that was removed
-	 * @throws NoSuchIdpSsoSessionException if a saml idp sso session with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession remove(Serializable primaryKey)
-		throws NoSuchIdpSsoSessionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SamlIdpSsoSession samlIdpSsoSession =
-				(SamlIdpSsoSession)session.get(
-					SamlIdpSsoSessionImpl.class, primaryKey);
-
-			if (samlIdpSsoSession == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchIdpSsoSessionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(samlIdpSsoSession);
-		}
-		catch (NoSuchIdpSsoSessionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -716,31 +629,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 		}
 
 		samlIdpSsoSession.resetOriginalValues();
-
-		return samlIdpSsoSession;
-	}
-
-	/**
-	 * Returns the saml idp sso session with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the saml idp sso session
-	 * @return the saml idp sso session
-	 * @throws NoSuchIdpSsoSessionException if a saml idp sso session with the primary key could not be found
-	 */
-	@Override
-	public SamlIdpSsoSession findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchIdpSsoSessionException {
-
-		SamlIdpSsoSession samlIdpSsoSession = fetchByPrimaryKey(primaryKey);
-
-		if (samlIdpSsoSession == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchIdpSsoSessionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return samlIdpSsoSession;
 	}
@@ -1096,9 +984,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "samlIdpSsoSession.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SamlIdpSsoSession exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SamlIdpSsoSession exists with the key {";
 
@@ -1111,4 +996,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2094660200
+// LIFERAY-SERVICE-BUILDER-HASH:1916057523

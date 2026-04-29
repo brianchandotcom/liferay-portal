@@ -69,7 +69,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CPDVirtualSettingFileEntryPersistence.class)
 public class CPDVirtualSettingFileEntryPersistenceImpl
-	extends BasePersistenceImpl<CPDVirtualSettingFileEntry>
+	extends BasePersistenceImpl
+		<CPDVirtualSettingFileEntry, NoSuchCPDVirtualSettingFileEntryException>
 	implements CPDVirtualSettingFileEntryPersistence {
 
 	/*
@@ -874,58 +875,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all cpd virtual setting file entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(CPDVirtualSettingFileEntryImpl.class);
-
-		finderCache.clearCache(CPDVirtualSettingFileEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the cpd virtual setting file entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
-
-		entityCache.removeResult(
-			CPDVirtualSettingFileEntryImpl.class, cpdVirtualSettingFileEntry);
-	}
-
-	@Override
-	public void clearCache(
-		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries) {
-
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				cpdVirtualSettingFileEntries) {
-
-			entityCache.removeResult(
-				CPDVirtualSettingFileEntryImpl.class,
-				cpdVirtualSettingFileEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(CPDVirtualSettingFileEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				CPDVirtualSettingFileEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		CPDVirtualSettingFileEntryModelImpl
 			cpdVirtualSettingFileEntryModelImpl) {
@@ -980,50 +929,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		throws NoSuchCPDVirtualSettingFileEntryException {
 
 		return remove((Serializable)CPDefinitionVirtualSettingFileEntryId);
-	}
-
-	/**
-	 * Removes the cpd virtual setting file entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the cpd virtual setting file entry
-	 * @return the cpd virtual setting file entry that was removed
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry remove(Serializable primaryKey)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-				(CPDVirtualSettingFileEntry)session.get(
-					CPDVirtualSettingFileEntryImpl.class, primaryKey);
-
-			if (cpdVirtualSettingFileEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchCPDVirtualSettingFileEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(cpdVirtualSettingFileEntry);
-		}
-		catch (NoSuchCPDVirtualSettingFileEntryException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1152,32 +1057,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 		}
 
 		cpdVirtualSettingFileEntry.resetOriginalValues();
-
-		return cpdVirtualSettingFileEntry;
-	}
-
-	/**
-	 * Returns the cpd virtual setting file entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cpd virtual setting file entry
-	 * @return the cpd virtual setting file entry
-	 * @throws NoSuchCPDVirtualSettingFileEntryException if a cpd virtual setting file entry with the primary key could not be found
-	 */
-	@Override
-	public CPDVirtualSettingFileEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCPDVirtualSettingFileEntryException {
-
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry =
-			fetchByPrimaryKey(primaryKey);
-
-		if (cpdVirtualSettingFileEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchCPDVirtualSettingFileEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return cpdVirtualSettingFileEntry;
 	}
@@ -1653,9 +1532,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"cpdVirtualSettingFileEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No CPDVirtualSettingFileEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDVirtualSettingFileEntry exists with the key {";
 
@@ -1671,4 +1547,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:916321093
+// LIFERAY-SERVICE-BUILDER-HASH:-1064482363

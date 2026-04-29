@@ -91,7 +91,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = MBMessagePersistence.class)
 public class MBMessagePersistenceImpl
-	extends BasePersistenceImpl<MBMessage> implements MBMessagePersistence {
+	extends BasePersistenceImpl<MBMessage, NoSuchMessageException>
+	implements MBMessagePersistence {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -9711,48 +9712,6 @@ public class MBMessagePersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all message-boards messages.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(MBMessageImpl.class);
-
-		finderCache.clearCache(MBMessageImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the message-boards message.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(MBMessage mbMessage) {
-		entityCache.removeResult(MBMessageImpl.class, mbMessage);
-	}
-
-	@Override
-	public void clearCache(List<MBMessage> mbMessages) {
-		for (MBMessage mbMessage : mbMessages) {
-			entityCache.removeResult(MBMessageImpl.class, mbMessage);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(MBMessageImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(MBMessageImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		MBMessageModelImpl mbMessageModelImpl) {
 
@@ -9817,47 +9776,6 @@ public class MBMessagePersistenceImpl
 	@Override
 	public MBMessage remove(long messageId) throws NoSuchMessageException {
 		return remove((Serializable)messageId);
-	}
-
-	/**
-	 * Removes the message-boards message with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the message-boards message
-	 * @return the message-boards message that was removed
-	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
-	 */
-	@Override
-	public MBMessage remove(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			MBMessage mbMessage = (MBMessage)session.get(
-				MBMessageImpl.class, primaryKey);
-
-			if (mbMessage == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMessageException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(mbMessage);
-		}
-		catch (NoSuchMessageException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -10062,31 +9980,6 @@ public class MBMessagePersistenceImpl
 		}
 
 		mbMessage.resetOriginalValues();
-
-		return mbMessage;
-	}
-
-	/**
-	 * Returns the message-boards message with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message-boards message
-	 * @return the message-boards message
-	 * @throws NoSuchMessageException if a message-boards message with the primary key could not be found
-	 */
-	@Override
-	public MBMessage findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMessageException {
-
-		MBMessage mbMessage = fetchByPrimaryKey(primaryKey);
-
-		if (mbMessage == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMessageException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return mbMessage;
 	}
@@ -11584,9 +11477,6 @@ public class MBMessagePersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "MBMessage.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No MBMessage exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBMessage exists with the key {";
 
@@ -11602,4 +11492,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1433628033
+// LIFERAY-SERVICE-BUILDER-HASH:-1258497580

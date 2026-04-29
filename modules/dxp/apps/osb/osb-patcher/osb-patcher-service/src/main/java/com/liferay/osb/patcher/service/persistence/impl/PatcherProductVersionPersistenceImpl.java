@@ -47,7 +47,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -68,7 +67,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PatcherProductVersionPersistence.class)
 public class PatcherProductVersionPersistenceImpl
-	extends BasePersistenceImpl<PatcherProductVersion>
+	extends BasePersistenceImpl
+		<PatcherProductVersion, NoSuchPatcherProductVersionException>
 	implements PatcherProductVersionPersistence {
 
 	/*
@@ -593,53 +593,6 @@ public class PatcherProductVersionPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all patcher product versions.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(PatcherProductVersionImpl.class);
-
-		finderCache.clearCache(PatcherProductVersionImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the patcher product version.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(PatcherProductVersion patcherProductVersion) {
-		entityCache.removeResult(
-			PatcherProductVersionImpl.class, patcherProductVersion);
-	}
-
-	@Override
-	public void clearCache(List<PatcherProductVersion> patcherProductVersions) {
-		for (PatcherProductVersion patcherProductVersion :
-				patcherProductVersions) {
-
-			entityCache.removeResult(
-				PatcherProductVersionImpl.class, patcherProductVersion);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(PatcherProductVersionImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				PatcherProductVersionImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		PatcherProductVersionModelImpl patcherProductVersionModelImpl) {
 
@@ -680,48 +633,6 @@ public class PatcherProductVersionPersistenceImpl
 		throws NoSuchPatcherProductVersionException {
 
 		return remove((Serializable)patcherProductVersionId);
-	}
-
-	/**
-	 * Removes the patcher product version with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the patcher product version
-	 * @return the patcher product version that was removed
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	@Override
-	public PatcherProductVersion remove(Serializable primaryKey)
-		throws NoSuchPatcherProductVersionException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			PatcherProductVersion patcherProductVersion =
-				(PatcherProductVersion)session.get(
-					PatcherProductVersionImpl.class, primaryKey);
-
-			if (patcherProductVersion == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchPatcherProductVersionException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(patcherProductVersion);
-		}
-		catch (NoSuchPatcherProductVersionException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -841,32 +752,6 @@ public class PatcherProductVersionPersistenceImpl
 		}
 
 		patcherProductVersion.resetOriginalValues();
-
-		return patcherProductVersion;
-	}
-
-	/**
-	 * Returns the patcher product version with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the patcher product version
-	 * @return the patcher product version
-	 * @throws NoSuchPatcherProductVersionException if a patcher product version with the primary key could not be found
-	 */
-	@Override
-	public PatcherProductVersion findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPatcherProductVersionException {
-
-		PatcherProductVersion patcherProductVersion = fetchByPrimaryKey(
-			primaryKey);
-
-		if (patcherProductVersion == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchPatcherProductVersionException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return patcherProductVersion;
 	}
@@ -1245,9 +1130,6 @@ public class PatcherProductVersionPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PProductVersion.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No PatcherProductVersion exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherProductVersion exists with the key {";
 
@@ -1260,4 +1142,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-273888189
+// LIFERAY-SERVICE-BUILDER-HASH:-331289538

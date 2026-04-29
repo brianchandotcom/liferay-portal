@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.persistence.WorkflowMetricsSLADefinitionVersionPersistence;
 import com.liferay.portal.workflow.metrics.service.persistence.impl.constants.WorkflowMetricsPersistenceConstants;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @generated
  */
 public abstract class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
-	extends BasePersistenceImpl<WorkflowMetricsSLADefinitionVersion> {
+	extends BasePersistenceImpl
+		<WorkflowMetricsSLADefinitionVersion,
+		 NoSuchSLADefinitionVersionException> {
 
 	public WorkflowMetricsSLADefinitionVersionFinderBaseImpl() {
 		setModelClass(WorkflowMetricsSLADefinitionVersion.class);
@@ -85,4 +88,4 @@ public abstract class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 		WorkflowMetricsSLADefinitionVersionFinderBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1863702358
+// LIFERAY-SERVICE-BUILDER-HASH:-297244637

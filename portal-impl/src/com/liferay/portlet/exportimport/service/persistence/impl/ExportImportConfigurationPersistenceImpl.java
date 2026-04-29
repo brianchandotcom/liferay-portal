@@ -57,7 +57,8 @@ import java.util.Set;
  * @generated
  */
 public class ExportImportConfigurationPersistenceImpl
-	extends BasePersistenceImpl<ExportImportConfiguration>
+	extends BasePersistenceImpl
+		<ExportImportConfiguration, NoSuchConfigurationException>
 	implements ExportImportConfigurationPersistence {
 
 	/*
@@ -924,57 +925,6 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all export import configurations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		EntityCacheUtil.clearCache(ExportImportConfigurationImpl.class);
-
-		FinderCacheUtil.clearCache(ExportImportConfigurationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the export import configuration.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		ExportImportConfiguration exportImportConfiguration) {
-
-		EntityCacheUtil.removeResult(
-			ExportImportConfigurationImpl.class, exportImportConfiguration);
-	}
-
-	@Override
-	public void clearCache(
-		List<ExportImportConfiguration> exportImportConfigurations) {
-
-		for (ExportImportConfiguration exportImportConfiguration :
-				exportImportConfigurations) {
-
-			EntityCacheUtil.removeResult(
-				ExportImportConfigurationImpl.class, exportImportConfiguration);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		FinderCacheUtil.clearCache(ExportImportConfigurationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				ExportImportConfigurationImpl.class, primaryKey);
-		}
-	}
-
-	/**
 	 * Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
 	 *
 	 * @param exportImportConfigurationId the primary key for the new export import configuration
@@ -1006,48 +956,6 @@ public class ExportImportConfigurationPersistenceImpl
 		throws NoSuchConfigurationException {
 
 		return remove((Serializable)exportImportConfigurationId);
-	}
-
-	/**
-	 * Removes the export import configuration with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the export import configuration
-	 * @return the export import configuration that was removed
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	@Override
-	public ExportImportConfiguration remove(Serializable primaryKey)
-		throws NoSuchConfigurationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExportImportConfiguration exportImportConfiguration =
-				(ExportImportConfiguration)session.get(
-					ExportImportConfigurationImpl.class, primaryKey);
-
-			if (exportImportConfiguration == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchConfigurationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(exportImportConfiguration);
-		}
-		catch (NoSuchConfigurationException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1167,32 +1075,6 @@ public class ExportImportConfigurationPersistenceImpl
 		}
 
 		exportImportConfiguration.resetOriginalValues();
-
-		return exportImportConfiguration;
-	}
-
-	/**
-	 * Returns the export import configuration with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the export import configuration
-	 * @return the export import configuration
-	 * @throws NoSuchConfigurationException if a export import configuration with the primary key could not be found
-	 */
-	@Override
-	public ExportImportConfiguration findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchConfigurationException {
-
-		ExportImportConfiguration exportImportConfiguration = fetchByPrimaryKey(
-			primaryKey);
-
-		if (exportImportConfiguration == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchConfigurationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return exportImportConfiguration;
 	}
@@ -1651,9 +1533,6 @@ public class ExportImportConfigurationPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"exportImportConfiguration.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No ExportImportConfiguration exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ExportImportConfiguration exists with the key {";
 
@@ -1669,4 +1548,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-927611503
+// LIFERAY-SERVICE-BUILDER-HASH:-678827012

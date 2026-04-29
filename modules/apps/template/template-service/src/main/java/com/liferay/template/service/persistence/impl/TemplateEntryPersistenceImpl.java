@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = TemplateEntryPersistence.class)
 public class TemplateEntryPersistenceImpl
-	extends BasePersistenceImpl<TemplateEntry>
+	extends BasePersistenceImpl<TemplateEntry, NoSuchTemplateEntryException>
 	implements TemplateEntryPersistence {
 
 	/*
@@ -2348,48 +2348,6 @@ public class TemplateEntryPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all template entries.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(TemplateEntryImpl.class);
-
-		finderCache.clearCache(TemplateEntryImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the template entry.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(TemplateEntry templateEntry) {
-		entityCache.removeResult(TemplateEntryImpl.class, templateEntry);
-	}
-
-	@Override
-	public void clearCache(List<TemplateEntry> templateEntries) {
-		for (TemplateEntry templateEntry : templateEntries) {
-			entityCache.removeResult(TemplateEntryImpl.class, templateEntry);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(TemplateEntryImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(TemplateEntryImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		TemplateEntryModelImpl templateEntryModelImpl) {
 
@@ -2454,47 +2412,6 @@ public class TemplateEntryPersistenceImpl
 		throws NoSuchTemplateEntryException {
 
 		return remove((Serializable)templateEntryId);
-	}
-
-	/**
-	 * Removes the template entry with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the template entry
-	 * @return the template entry that was removed
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	@Override
-	public TemplateEntry remove(Serializable primaryKey)
-		throws NoSuchTemplateEntryException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TemplateEntry templateEntry = (TemplateEntry)session.get(
-				TemplateEntryImpl.class, primaryKey);
-
-			if (templateEntry == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchTemplateEntryException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(templateEntry);
-		}
-		catch (NoSuchTemplateEntryException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -2681,31 +2598,6 @@ public class TemplateEntryPersistenceImpl
 		}
 
 		templateEntry.resetOriginalValues();
-
-		return templateEntry;
-	}
-
-	/**
-	 * Returns the template entry with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the template entry
-	 * @return the template entry
-	 * @throws NoSuchTemplateEntryException if a template entry with the primary key could not be found
-	 */
-	@Override
-	public TemplateEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateEntryException {
-
-		TemplateEntry templateEntry = fetchByPrimaryKey(primaryKey);
-
-		if (templateEntry == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchTemplateEntryException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return templateEntry;
 	}
@@ -3475,9 +3367,6 @@ public class TemplateEntryPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "templateEntry.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No TemplateEntry exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No TemplateEntry exists with the key {";
 
@@ -3493,4 +3382,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2033087994
+// LIFERAY-SERVICE-BUILDER-HASH:-1888969424

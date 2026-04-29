@@ -91,7 +91,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = SiteNavigationMenuPersistence.class)
 public class SiteNavigationMenuPersistenceImpl
-	extends BasePersistenceImpl<SiteNavigationMenu>
+	extends BasePersistenceImpl<SiteNavigationMenu, NoSuchMenuException>
 	implements SiteNavigationMenuPersistence {
 
 	/*
@@ -3909,50 +3909,6 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all site navigation menus.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(SiteNavigationMenuImpl.class);
-
-		finderCache.clearCache(SiteNavigationMenuImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the site navigation menu.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(SiteNavigationMenu siteNavigationMenu) {
-		entityCache.removeResult(
-			SiteNavigationMenuImpl.class, siteNavigationMenu);
-	}
-
-	@Override
-	public void clearCache(List<SiteNavigationMenu> siteNavigationMenus) {
-		for (SiteNavigationMenu siteNavigationMenu : siteNavigationMenus) {
-			entityCache.removeResult(
-				SiteNavigationMenuImpl.class, siteNavigationMenu);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(SiteNavigationMenuImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(SiteNavigationMenuImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		SiteNavigationMenuModelImpl siteNavigationMenuModelImpl) {
 
@@ -4020,48 +3976,6 @@ public class SiteNavigationMenuPersistenceImpl
 		throws NoSuchMenuException {
 
 		return remove((Serializable)siteNavigationMenuId);
-	}
-
-	/**
-	 * Removes the site navigation menu with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the site navigation menu
-	 * @return the site navigation menu that was removed
-	 * @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
-	 */
-	@Override
-	public SiteNavigationMenu remove(Serializable primaryKey)
-		throws NoSuchMenuException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SiteNavigationMenu siteNavigationMenu =
-				(SiteNavigationMenu)session.get(
-					SiteNavigationMenuImpl.class, primaryKey);
-
-			if (siteNavigationMenu == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchMenuException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(siteNavigationMenu);
-		}
-		catch (NoSuchMenuException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -4259,31 +4173,6 @@ public class SiteNavigationMenuPersistenceImpl
 		}
 
 		siteNavigationMenu.resetOriginalValues();
-
-		return siteNavigationMenu;
-	}
-
-	/**
-	 * Returns the site navigation menu with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the site navigation menu
-	 * @return the site navigation menu
-	 * @throws NoSuchMenuException if a site navigation menu with the primary key could not be found
-	 */
-	@Override
-	public SiteNavigationMenu findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchMenuException {
-
-		SiteNavigationMenu siteNavigationMenu = fetchByPrimaryKey(primaryKey);
-
-		if (siteNavigationMenu == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchMenuException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return siteNavigationMenu;
 	}
@@ -5118,9 +5007,6 @@ public class SiteNavigationMenuPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_TABLE = "SiteNavigationMenu.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No SiteNavigationMenu exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SiteNavigationMenu exists with the key {";
 
@@ -5136,4 +5022,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:761667382
+// LIFERAY-SERVICE-BUILDER-HASH:1448761025

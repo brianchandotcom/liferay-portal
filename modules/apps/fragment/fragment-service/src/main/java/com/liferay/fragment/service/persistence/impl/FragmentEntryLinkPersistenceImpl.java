@@ -89,7 +89,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentEntryLinkPersistence.class)
 public class FragmentEntryLinkPersistenceImpl
-	extends BasePersistenceImpl<FragmentEntryLink>
+	extends BasePersistenceImpl<FragmentEntryLink, NoSuchEntryLinkException>
 	implements FragmentEntryLinkPersistence {
 
 	/*
@@ -5900,50 +5900,6 @@ public class FragmentEntryLinkPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all fragment entry links.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FragmentEntryLinkImpl.class);
-
-		finderCache.clearCache(FragmentEntryLinkImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the fragment entry link.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(FragmentEntryLink fragmentEntryLink) {
-		entityCache.removeResult(
-			FragmentEntryLinkImpl.class, fragmentEntryLink);
-	}
-
-	@Override
-	public void clearCache(List<FragmentEntryLink> fragmentEntryLinks) {
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			entityCache.removeResult(
-				FragmentEntryLinkImpl.class, fragmentEntryLink);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FragmentEntryLinkImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(FragmentEntryLinkImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl) {
 
@@ -6003,48 +5959,6 @@ public class FragmentEntryLinkPersistenceImpl
 		throws NoSuchEntryLinkException {
 
 		return remove((Serializable)fragmentEntryLinkId);
-	}
-
-	/**
-	 * Removes the fragment entry link with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the fragment entry link
-	 * @return the fragment entry link that was removed
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntryLink remove(Serializable primaryKey)
-		throws NoSuchEntryLinkException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FragmentEntryLink fragmentEntryLink =
-				(FragmentEntryLink)session.get(
-					FragmentEntryLinkImpl.class, primaryKey);
-
-			if (fragmentEntryLink == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchEntryLinkException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(fragmentEntryLink);
-		}
-		catch (NoSuchEntryLinkException noSuchEntityException) {
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -6238,31 +6152,6 @@ public class FragmentEntryLinkPersistenceImpl
 		}
 
 		fragmentEntryLink.resetOriginalValues();
-
-		return fragmentEntryLink;
-	}
-
-	/**
-	 * Returns the fragment entry link with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment entry link
-	 * @return the fragment entry link
-	 * @throws NoSuchEntryLinkException if a fragment entry link with the primary key could not be found
-	 */
-	@Override
-	public FragmentEntryLink findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryLinkException {
-
-		FragmentEntryLink fragmentEntryLink = fetchByPrimaryKey(primaryKey);
-
-		if (fragmentEntryLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchEntryLinkException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return fragmentEntryLink;
 	}
@@ -7798,9 +7687,6 @@ public class FragmentEntryLinkPersistenceImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentEntryLink.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FragmentEntryLink exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentEntryLink exists with the key {";
 
@@ -7816,4 +7702,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1463199189
+// LIFERAY-SERVICE-BUILDER-HASH:251416344

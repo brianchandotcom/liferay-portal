@@ -72,7 +72,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FriendlyURLEntryLocalizationPersistence.class)
 public class FriendlyURLEntryLocalizationPersistenceImpl
-	extends BasePersistenceImpl<FriendlyURLEntryLocalization>
+	extends BasePersistenceImpl
+		<FriendlyURLEntryLocalization,
+		 NoSuchFriendlyURLEntryLocalizationException>
 	implements FriendlyURLEntryLocalizationPersistence {
 
 	/*
@@ -1362,59 +1364,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		}
 	}
 
-	/**
-	 * Clears the cache for all friendly url entry localizations.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache() {
-		entityCache.clearCache(FriendlyURLEntryLocalizationImpl.class);
-
-		finderCache.clearCache(FriendlyURLEntryLocalizationImpl.class);
-	}
-
-	/**
-	 * Clears the cache for the friendly url entry localization.
-	 *
-	 * <p>
-	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
-	 * </p>
-	 */
-	@Override
-	public void clearCache(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-
-		entityCache.removeResult(
-			FriendlyURLEntryLocalizationImpl.class,
-			friendlyURLEntryLocalization);
-	}
-
-	@Override
-	public void clearCache(
-		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations) {
-
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				friendlyURLEntryLocalizations) {
-
-			entityCache.removeResult(
-				FriendlyURLEntryLocalizationImpl.class,
-				friendlyURLEntryLocalization);
-		}
-	}
-
-	@Override
-	public void clearCache(Set<Serializable> primaryKeys) {
-		finderCache.clearCache(FriendlyURLEntryLocalizationImpl.class);
-
-		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				FriendlyURLEntryLocalizationImpl.class, primaryKey);
-		}
-	}
-
 	protected void cacheUniqueFindersCache(
 		FriendlyURLEntryLocalizationModelImpl
 			friendlyURLEntryLocalizationModelImpl) {
@@ -1482,50 +1431,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		throws NoSuchFriendlyURLEntryLocalizationException {
 
 		return remove((Serializable)friendlyURLEntryLocalizationId);
-	}
-
-	/**
-	 * Removes the friendly url entry localization with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param primaryKey the primary key of the friendly url entry localization
-	 * @return the friendly url entry localization that was removed
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a friendly url entry localization with the primary key could not be found
-	 */
-	@Override
-	public FriendlyURLEntryLocalization remove(Serializable primaryKey)
-		throws NoSuchFriendlyURLEntryLocalizationException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-				(FriendlyURLEntryLocalization)session.get(
-					FriendlyURLEntryLocalizationImpl.class, primaryKey);
-
-			if (friendlyURLEntryLocalization == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-				}
-
-				throw new NoSuchFriendlyURLEntryLocalizationException(
-					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			return remove(friendlyURLEntryLocalization);
-		}
-		catch (NoSuchFriendlyURLEntryLocalizationException
-					noSuchEntityException) {
-
-			throw noSuchEntityException;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	@Override
@@ -1634,33 +1539,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		}
 
 		friendlyURLEntryLocalization.resetOriginalValues();
-
-		return friendlyURLEntryLocalization;
-	}
-
-	/**
-	 * Returns the friendly url entry localization with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the friendly url entry localization
-	 * @return the friendly url entry localization
-	 * @throws NoSuchFriendlyURLEntryLocalizationException if a friendly url entry localization with the primary key could not be found
-	 */
-	@Override
-	public FriendlyURLEntryLocalization findByPrimaryKey(
-			Serializable primaryKey)
-		throws NoSuchFriendlyURLEntryLocalizationException {
-
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			fetchByPrimaryKey(primaryKey);
-
-		if (friendlyURLEntryLocalization == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-			}
-
-			throw new NoSuchFriendlyURLEntryLocalizationException(
-				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
-		}
 
 		return friendlyURLEntryLocalization;
 	}
@@ -2520,9 +2398,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"friendlyURLEntryLocalization.";
 
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
-		"No FriendlyURLEntryLocalization exists with the primary key ";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FriendlyURLEntryLocalization exists with the key {";
 
@@ -2535,4 +2410,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:602061781
+// LIFERAY-SERVICE-BUILDER-HASH:-605740606

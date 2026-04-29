@@ -35,6 +35,7 @@ create index IX_B2A61B55 on AssetEntries_AssetTags (tagId);
 
 create unique index IX_7BF8337B on AssetEntry (classNameId, classPK, ctCollectionId);
 create index IX_23280E2 on AssetEntry (classNameId, companyId);
+create index IX_FC1F9C7B on AssetEntry (classUuid[$COLUMN_LENGTH:75$]);
 create index IX_7306C60 on AssetEntry (companyId);
 create index IX_75D42FF9 on AssetEntry (expirationDate);
 create index IX_6418BB52 on AssetEntry (groupId, classNameId, publishDate, expirationDate);

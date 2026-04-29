@@ -258,6 +258,15 @@ public class AssetEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByClassUuid() throws Exception {
+		_persistence.countByClassUuid("");
+
+		_persistence.countByClassUuid("null");
+
+		_persistence.countByClassUuid((String)null);
+	}
+
+	@Test
 	public void testCountByVisible() throws Exception {
 		_persistence.countByVisible(RandomTestUtil.randomBoolean());
 
@@ -712,4 +721,4 @@ public class AssetEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1393027993
+// LIFERAY-SERVICE-BUILDER-HASH:553377363

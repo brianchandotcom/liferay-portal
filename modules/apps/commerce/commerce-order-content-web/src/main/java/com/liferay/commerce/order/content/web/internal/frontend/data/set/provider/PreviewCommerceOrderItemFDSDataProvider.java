@@ -208,8 +208,8 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 		try {
 			return _commercePriceFormatter.format(
-				unitPriceCommerceMoney.getCommerceCurrency(), finalPrice,
-				locale);
+				unitPriceCommerceMoney.getCommerceCurrency(), true, locale,
+				finalPrice);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

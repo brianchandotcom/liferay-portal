@@ -81,33 +81,34 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			return StringPool.BLANK;
 		}
 
-		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
+		DecimalFormat decimalFormat = _getDecimalFormat(null, false, locale);
 
 		return decimalFormat.format(price);
 	}
 
 	@Override
 	public String format(
-			CommerceCurrency commerceCurrency, BigDecimal price, Locale locale)
+			CommerceCurrency commerceCurrency, boolean includeSymbol,
+			Locale locale, BigDecimal price)
 		throws PortalException {
 
 		DecimalFormat decimalFormat = _getDecimalFormat(
-			commerceCurrency, locale);
+			commerceCurrency, includeSymbol, locale);
 
 		return decimalFormat.format(price);
 	}
 
 	@Override
 	public String formatAsRelative(
-		CommerceCurrency commerceCurrency, BigDecimal relativePrice,
-		Locale locale) {
+		CommerceCurrency commerceCurrency, boolean includeSymbol, Locale locale,
+		BigDecimal relativePrice) {
 
 		if (relativePrice.signum() == 0) {
 			return StringPool.BLANK;
 		}
 
 		DecimalFormat decimalFormat = _getDecimalFormat(
-			commerceCurrency, locale);
+			commerceCurrency, includeSymbol, locale);
 
 		if (relativePrice.signum() == -1) {
 			return String.format(
@@ -182,7 +183,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			price = StringUtil.replace(price, CharPool.PERIOD, CharPool.COMMA);
 		}
 
-		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
+		DecimalFormat decimalFormat = _getDecimalFormat(null, false, locale);
 
 		return decimalFormat.parse(
 			price
@@ -202,7 +203,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	private DecimalFormat _getDecimalFormat(
-		CommerceCurrency commerceCurrency, Locale locale) {
+		CommerceCurrency commerceCurrency, boolean includeSymbol,
+		Locale locale) {
 
 		String formatPattern = CommerceCurrencyConstants.DECIMAL_FORMAT_PATTERN;
 		int maxFractionDigits =
@@ -217,6 +219,19 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			if (Validator.isNull(formatPattern)) {
 				formatPattern = commerceCurrency.getFormatPattern(
 					commerceCurrency.getDefaultLanguageId());
+			}
+
+			if (!includeSymbol) {
+				String symbol = commerceCurrency.getSymbol();
+
+				if (Validator.isNotNull(symbol) &&
+					formatPattern.contains(symbol)) {
+
+					formatPattern = StringUtil.removeSubstring(
+						formatPattern, symbol);
+
+					formatPattern = StringUtil.trim(formatPattern);
+				}
 			}
 
 			maxFractionDigits = commerceCurrency.getMaxFractionDigits();

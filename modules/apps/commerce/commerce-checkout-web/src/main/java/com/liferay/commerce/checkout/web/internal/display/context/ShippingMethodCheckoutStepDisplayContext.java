@@ -113,8 +113,8 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		return StringBundler.concat(
 			commerceShippingOption.getName(), " (+",
 			_commercePriceFormatter.format(
-				_commerceOrder.getCommerceCurrency(),
-				commerceShippingOption.getAmount(), themeDisplay.getLocale()),
+				_commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(), commerceShippingOption.getAmount()),
 			CharPool.CLOSE_PARENTHESIS);
 	}
 

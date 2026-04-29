@@ -98,7 +98,7 @@ public class TierPriceDTOConverter
 						}
 
 						return _commercePriceFormatter.format(
-							commerceCurrency, price, locale);
+							commerceCurrency, true, locale, price);
 					});
 				setUnitOfMeasureKey(commercePriceEntry::getUnitOfMeasureKey);
 			}

@@ -268,71 +268,65 @@ public class CommerceOrderInfoItemFieldValuesProvider
 						CommerceOrderInfoItemFields.
 							formattedDiscountAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getTotalDiscountAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.getTotalDiscountAmount()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedDiscountWithTaxAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getTotalDiscountWithTaxAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.
+									getTotalDiscountWithTaxAmount()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedShippingAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getShippingAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.getShippingAmount()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedShippingWithTaxAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getShippingWithTaxAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.getShippingWithTaxAmount()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedSubtotalAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
-							commerceCurrency.round(commerceOrder.getSubtotal()),
-							themeDisplay.getLocale())));
+							commerceCurrency, true, themeDisplay.getLocale(),
+							commerceCurrency.round(
+								commerceOrder.getSubtotal()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedSubtotalWithTaxAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getSubtotalWithTaxAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.getSubtotalWithTaxAmount()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedTotalAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
-							commerceCurrency.round(commerceOrder.getTotal()),
-							themeDisplay.getLocale())));
+							commerceCurrency, true, themeDisplay.getLocale(),
+							commerceCurrency.round(commerceOrder.getTotal()))));
 				commerceOrderInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CommerceOrderInfoItemFields.
 							formattedTotalWithTaxAmountInfoField,
 						_commercePriceFormatter.format(
-							commerceCurrency,
+							commerceCurrency, true, themeDisplay.getLocale(),
 							commerceCurrency.round(
-								commerceOrder.getTotalWithTaxAmount()),
-							themeDisplay.getLocale())));
+								commerceOrder.getTotalWithTaxAmount()))));
 			}
 
 			commerceOrderInfoFieldValues.add(

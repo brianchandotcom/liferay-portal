@@ -225,129 +225,129 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			).put(
 				"shippingDiscountAmount",
 				_commercePriceFormatter.format(
-					commerceOrder.getCommerceCurrency(),
-					commerceOrder.getShippingDiscountAmount(),
-					themeDisplay.getLocale())
+					commerceOrder.getCommerceCurrency(), true,
+					themeDisplay.getLocale(),
+					commerceOrder.getShippingDiscountAmount())
 			);
 		}
 
 		hashMapWrapper.put(
 			"shippingAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingAmount(), themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(), commerceOrder.getShippingAmount())
 		).put(
 			"shippingDiscountAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingDiscountAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getShippingDiscountAmount())
 		).put(
 			"shippingDiscountPercentageLevel1",
 			commerceOrder.getShippingDiscountPercentageLevel1()
 		).put(
 			"shippingDiscountPercentageLevel1WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getShippingDiscountPercentageLevel1WithTaxAmount(),
-				themeDisplay.getLocale())
+					getShippingDiscountPercentageLevel1WithTaxAmount())
 		).put(
 			"shippingDiscountPercentageLevel2",
 			commerceOrder.getShippingDiscountPercentageLevel2()
 		).put(
 			"shippingDiscountPercentageLevel2WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getShippingDiscountPercentageLevel2WithTaxAmount(),
-				themeDisplay.getLocale())
+					getShippingDiscountPercentageLevel2WithTaxAmount())
 		).put(
 			"shippingDiscountPercentageLevel3",
 			commerceOrder.getShippingDiscountPercentageLevel3()
 		).put(
 			"shippingDiscountPercentageLevel3WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getShippingDiscountPercentageLevel3WithTaxAmount(),
-				themeDisplay.getLocale())
+					getShippingDiscountPercentageLevel3WithTaxAmount())
 		).put(
 			"shippingDiscountPercentageLevel4",
 			commerceOrder.getShippingDiscountPercentageLevel4()
 		).put(
 			"shippingDiscountPercentageLevel4WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getShippingDiscountPercentageLevel4WithTaxAmount(),
-				themeDisplay.getLocale())
+					getShippingDiscountPercentageLevel4WithTaxAmount())
 		).put(
 			"shippingDiscountWithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingDiscountWithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getShippingDiscountWithTaxAmount())
 		).put(
 			"shippingWithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingWithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getShippingWithTaxAmount())
 		).put(
 			"siteDefaultLocale", themeDisplay.getSiteDefaultLocale()
 		).put(
 			"subtotalDiscountAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getSubtotalDiscountAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getSubtotalDiscountAmount())
 		).put(
 			"subtotalDiscountPercentageLevel1",
 			commerceOrder.getSubtotalDiscountPercentageLevel1()
 		).put(
 			"subtotalDiscountPercentageLevel1WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getSubtotalDiscountPercentageLevel1WithTaxAmount(),
-				themeDisplay.getLocale())
+					getSubtotalDiscountPercentageLevel1WithTaxAmount())
 		).put(
 			"subtotalDiscountPercentageLevel2",
 			commerceOrder.getSubtotalDiscountPercentageLevel2()
 		).put(
 			"subtotalDiscountPercentageLevel2WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getSubtotalDiscountPercentageLevel2WithTaxAmount(),
-				themeDisplay.getLocale())
+					getSubtotalDiscountPercentageLevel2WithTaxAmount())
 		).put(
 			"subtotalDiscountPercentageLevel3",
 			commerceOrder.getSubtotalDiscountPercentageLevel3()
 		).put(
 			"subtotalDiscountPercentageLevel3WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getSubtotalDiscountPercentageLevel3WithTaxAmount(),
-				themeDisplay.getLocale())
+					getSubtotalDiscountPercentageLevel3WithTaxAmount())
 		).put(
 			"subtotalDiscountPercentageLevel4",
 			commerceOrder.getSubtotalDiscountPercentageLevel4()
 		).put(
 			"subtotalDiscountPercentageLevel4WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
 				commerceOrder.
-					getSubtotalDiscountPercentageLevel4WithTaxAmount(),
-				themeDisplay.getLocale())
+					getSubtotalDiscountPercentageLevel4WithTaxAmount())
 		).put(
 			"subtotalDiscountWithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getSubtotalDiscountWithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getSubtotalDiscountWithTaxAmount())
 		).put(
 			"subtotalMoney", commerceOrder.getSubtotalMoney()
 		).put(
@@ -356,56 +356,56 @@ public class ExportCommerceOrderReportMVCResourceCommand
 		).put(
 			"taxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTaxAmount(), themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(), commerceOrder.getTaxAmount())
 		).put(
 			"totalDiscountAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountAmount())
 		).put(
 			"totalDiscountPercentageLevel1",
 			commerceOrder.getTotalDiscountPercentageLevel1()
 		).put(
 			"totalDiscountPercentageLevel1WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountPercentageLevel1WithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountPercentageLevel1WithTaxAmount())
 		).put(
 			"totalDiscountPercentageLevel2",
 			commerceOrder.getTotalDiscountPercentageLevel2()
 		).put(
 			"totalDiscountPercentageLevel2WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountPercentageLevel2WithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountPercentageLevel2WithTaxAmount())
 		).put(
 			"totalDiscountPercentageLevel3",
 			commerceOrder.getTotalDiscountPercentageLevel3()
 		).put(
 			"totalDiscountPercentageLevel3WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountPercentageLevel3WithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountPercentageLevel3WithTaxAmount())
 		).put(
 			"totalDiscountPercentageLevel4",
 			commerceOrder.getTotalDiscountPercentageLevel4()
 		).put(
 			"totalDiscountPercentageLevel4WithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountPercentageLevel4WithTaxAmount())
 		).put(
 			"totalDiscountWithTaxAmount",
 			_commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountWithTaxAmount(),
-				themeDisplay.getLocale())
+				commerceOrder.getCommerceCurrency(), true,
+				themeDisplay.getLocale(),
+				commerceOrder.getTotalDiscountWithTaxAmount())
 		).put(
 			"totalMoney", commerceOrder.getTotalMoney()
 		).put(

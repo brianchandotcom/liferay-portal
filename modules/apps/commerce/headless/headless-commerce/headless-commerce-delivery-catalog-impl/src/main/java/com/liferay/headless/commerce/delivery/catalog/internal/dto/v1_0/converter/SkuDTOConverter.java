@@ -795,8 +795,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 								setPrice(convertedPrice::doubleValue);
 								setPriceFormatted(
 									() -> _commercePriceFormatter.format(
-										commerceCurrency, convertedPrice,
-										locale));
+										commerceCurrency, true, locale,
+										convertedPrice));
 
 								setPriceOnApplication(
 									commercePriceEntry::isPriceOnApplication);
@@ -911,7 +911,7 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 				setPrice(convertedPrice::doubleValue);
 				setPriceFormatted(
 					() -> _commercePriceFormatter.format(
-						commerceCurrency, convertedPrice, locale));
+						commerceCurrency, true, locale, convertedPrice));
 
 				setPricingQuantityPrice(
 					() -> {

@@ -70,7 +70,7 @@ public class CommercePriceFormatterTest {
 		_commerceCurrency.setFormatPattern("###,##0.00 $", LocaleUtil.FRANCE);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			_commerceCurrency, _price, LocaleUtil.FRANCE);
+			_commerceCurrency, true, LocaleUtil.FRANCE, _price);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexFR) {
@@ -95,7 +95,7 @@ public class CommercePriceFormatterTest {
 		_commerceCurrency.setFormatPattern("$ ###,##0.00", LocaleUtil.ITALY);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			_commerceCurrency, _price, LocaleUtil.ITALY);
+			_commerceCurrency, true, LocaleUtil.ITALY, _price);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexIT) {
@@ -120,7 +120,7 @@ public class CommercePriceFormatterTest {
 		_commerceCurrency.setFormatPattern("$###,##0.00", LocaleUtil.US);
 
 		String formattedPrice = _commercePriceFormatter.format(
-			_commerceCurrency, _price, LocaleUtil.US);
+			_commerceCurrency, true, LocaleUtil.US, _price);
 
 		Matcher<String> regexMatcher = new CustomMatcher<String>(
 			"Matches regex " + regexUS) {

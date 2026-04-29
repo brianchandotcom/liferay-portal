@@ -195,9 +195,9 @@ public class CommercePaymentEntryDisplayContext {
 				_relatedCommercePaymentEntry.getClassPK());
 
 		return _commercePriceFormatter.format(
-			commerceOrder.getCommerceCurrency(),
-			commerceOrder.getShippingAmount(),
-			_commercePaymentRequestHelper.getLocale());
+			commerceOrder.getCommerceCurrency(), true,
+			_commercePaymentRequestHelper.getLocale(),
+			commerceOrder.getShippingAmount());
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
@@ -376,11 +376,11 @@ public class CommercePaymentEntryDisplayContext {
 		return _commercePriceFormatter.format(
 			_getCommerceCurrency(
 				_relatedCommercePaymentEntry.getCurrencyCode()),
+			true, _commercePaymentRequestHelper.getLocale(),
 			_commercePaymentEntryService.getRefundedAmount(
 				_relatedCommercePaymentEntry.getCompanyId(),
 				_classNameLocalService.getClassNameId(CommerceOrder.class),
-				_relatedCommercePaymentEntry.getClassPK()),
-			_commercePaymentRequestHelper.getLocale());
+				_relatedCommercePaymentEntry.getClassPK()));
 	}
 
 	public String getRelatedToClassName() {
@@ -427,8 +427,8 @@ public class CommercePaymentEntryDisplayContext {
 		return _commercePriceFormatter.format(
 			_getCommerceCurrency(
 				_relatedCommercePaymentEntry.getCurrencyCode()),
-			_relatedCommercePaymentEntry.getAmount(),
-			_commercePaymentRequestHelper.getLocale());
+			true, _commercePaymentRequestHelper.getLocale(),
+			_relatedCommercePaymentEntry.getAmount());
 	}
 
 	public String getTransactionCode() {

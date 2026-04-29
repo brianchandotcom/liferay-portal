@@ -24,11 +24,13 @@ public interface CommercePriceFormatter {
 		throws PortalException;
 
 	public String format(
-			CommerceCurrency commerceCurrency, BigDecimal price, Locale locale)
+			CommerceCurrency commerceCurrency, boolean includeSymbol,
+			Locale locale, BigDecimal price)
 		throws PortalException;
 
 	public String formatAsRelative(
-		CommerceCurrency commerceCurrency, BigDecimal price, Locale locale);
+		CommerceCurrency commerceCurrency, boolean includeSymbol, Locale locale,
+		BigDecimal price);
 
 	public BigDecimal parse(
 			ActionRequest actionRequest, boolean allowNegativeValue,

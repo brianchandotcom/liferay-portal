@@ -41,7 +41,7 @@ public class CommerceMoneyImpl implements CommerceMoney {
 		}
 
 		return _commercePriceFormatter.format(
-			getCommerceCurrency(), price, locale);
+			getCommerceCurrency(), true, locale, price);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class CommerceMoneyImpl implements CommerceMoney {
 
 		StringBundler sb = new StringBundler(
 			_commercePriceFormatter.format(
-				getCommerceCurrency(), price, locale));
+				getCommerceCurrency(), true, locale, price));
 
 		sb.append(
 			StringPool.SPACE

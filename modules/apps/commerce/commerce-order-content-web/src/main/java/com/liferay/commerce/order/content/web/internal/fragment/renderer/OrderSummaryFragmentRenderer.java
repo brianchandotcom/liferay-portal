@@ -191,38 +191,38 @@ public class OrderSummaryFragmentRenderer implements FragmentRenderer {
 		}
 		else if (field.equals("shippingDiscountValueFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingDiscountAmount(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getShippingDiscountAmount());
 		}
 		else if (field.equals("shippingValueFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getShippingAmount(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getShippingAmount());
 		}
 		else if (field.equals("subtotalDiscountValueFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getSubtotalDiscountAmount(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getSubtotalDiscountAmount());
 		}
 		else if (field.equals("subtotalFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getSubtotal(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getSubtotal());
 		}
 		else if (field.equals("taxValueFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTaxAmount(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getTaxAmount());
 		}
 		else if (field.equals("totalDiscountValueFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(),
-				commerceOrder.getTotalDiscountAmount(), locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getTotalDiscountAmount());
 		}
 		else if (field.equals("totalFormatted")) {
 			return _commercePriceFormatter.format(
-				commerceOrder.getCommerceCurrency(), commerceOrder.getTotal(),
-				locale);
+				commerceOrder.getCommerceCurrency(), true, locale,
+				commerceOrder.getTotal());
 		}
 
 		return StringPool.BLANK;

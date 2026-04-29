@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -272,6 +274,67 @@ public class JournalFeedStagedModelDataHandlerTest
 		}
 	}
 
+	@Test
+	public void testExportImportWithTargetLayoutFromAnotherGroup()
+		throws Exception {
+
+		_otherGroup = GroupTestUtil.addGroup();
+
+		Layout otherLayout = LayoutTestUtil.addTypePortletLayout(_otherGroup);
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		JournalFeed feed = (JournalFeed)addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		String targetLayoutFriendlyURL =
+			PortalUtil.getPathFriendlyURLPublic() +
+				_otherGroup.getFriendlyURL() + otherLayout.getFriendlyURL();
+
+		feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyURL);
+
+		feed = JournalFeedLocalServiceUtil.updateJournalFeed(feed);
+
+		exportStagedModel(feed);
+
+		try (SafeCloseable safeCloseable = initImportWithSafeCloseable()) {
+			Element feedElement =
+				portletDataContext.getImportDataStagedModelElement(feed);
+
+			Assert.assertEquals(
+				otherLayout.getExternalReferenceCode(),
+				feedElement.attributeValue("targetLayoutERC"));
+			Assert.assertEquals(
+				_otherGroup.getExternalReferenceCode(),
+				feedElement.attributeValue("targetLayoutGroupERC"));
+
+			StagedModel exportedStagedModel = readExportedStagedModel(feed);
+
+			Assert.assertNotNull(exportedStagedModel);
+
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			try {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, exportedStagedModel);
+			}
+			finally {
+				ExportImportThreadLocal.setPortletImportInProcess(false);
+			}
+
+			JournalFeed importedFeed =
+				JournalFeedLocalServiceUtil.fetchJournalFeedByUuidAndGroupId(
+					feed.getUuid(), liveGroup.getGroupId());
+
+			Assert.assertNotNull(importedFeed);
+
+			Assert.assertEquals(
+				targetLayoutFriendlyURL,
+				importedFeed.getTargetLayoutFriendlyUrl());
+		}
+	}
+
 	@Override
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
@@ -422,5 +485,8 @@ public class JournalFeedStagedModelDataHandlerTest
 
 	private Layout _layout;
 	private String _originalPortalPreferencesXML;
+
+	@DeleteAfterTestRun
+	private Group _otherGroup;
 
 }

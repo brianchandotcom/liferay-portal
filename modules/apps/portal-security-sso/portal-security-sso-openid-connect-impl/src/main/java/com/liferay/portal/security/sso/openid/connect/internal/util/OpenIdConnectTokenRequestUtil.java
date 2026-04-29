@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 
 import com.nimbusds.jose.JOSEException;
@@ -133,11 +132,8 @@ public class OpenIdConnectTokenRequestUtil {
 			Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
 				httpRequest);
 
-			String responseContent = HttpUtil.URLtoString(httpOptions);
-
 			TokenResponse tokenResponse = OIDCTokenResponseParser.parse(
-				OpenIdConnectHttpUtil.toHTTPResponse(
-					httpOptions, responseContent));
+				OpenIdConnectHttpUtil.toHTTPResponse(httpOptions));
 
 			if (tokenResponse instanceof TokenErrorResponse) {
 				TokenErrorResponse tokenErrorResponse =

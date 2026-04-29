@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.common.contenttype.ContentType;
@@ -21,6 +22,9 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Christian Moura
@@ -150,41 +154,62 @@ public class OpenIdConnectHttpUtilTest {
 	public void testToHTTPResponseCopiesResponseCodeBodyAndContentType()
 		throws Exception {
 
-		Http.Options httpOptions = new Http.Options();
+		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
+				HttpUtil.class)) {
 
-		Http.Response liferayHttpResponse = new Http.Response();
+			httpUtilMockedStatic.when(
+				() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
+			).thenReturn(
+				"{\"sub\":\"subject\"}"
+			);
 
-		liferayHttpResponse.setContentType("application/json");
-		liferayHttpResponse.setResponseCode(200);
+			Http.Options httpOptions = new Http.Options();
 
-		httpOptions.setResponse(liferayHttpResponse);
+			Http.Response liferayHttpResponse = new Http.Response();
 
-		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
-			httpOptions, "{\"sub\":\"subject\"}");
+			liferayHttpResponse.setContentType("application/json");
+			liferayHttpResponse.setResponseCode(200);
 
-		Assert.assertEquals("{\"sub\":\"subject\"}", httpResponse.getBody());
-		Assert.assertEquals(
-			"application/json",
-			String.valueOf(httpResponse.getEntityContentType()));
-		Assert.assertEquals(200, httpResponse.getStatusCode());
+			httpOptions.setResponse(liferayHttpResponse);
+
+			HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
+				httpOptions);
+
+			Assert.assertEquals(
+				"{\"sub\":\"subject\"}", httpResponse.getBody());
+			Assert.assertEquals(
+				"application/json",
+				String.valueOf(httpResponse.getEntityContentType()));
+			Assert.assertEquals(200, httpResponse.getStatusCode());
+		}
 	}
 
 	@Test
 	public void testToHTTPResponseWithoutContentType() throws Exception {
-		Http.Options httpOptions = new Http.Options();
+		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
+				HttpUtil.class)) {
 
-		Http.Response liferayHttpResponse = new Http.Response();
+			httpUtilMockedStatic.when(
+				() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
+			).thenReturn(
+				StringPool.BLANK
+			);
 
-		liferayHttpResponse.setContentType(null);
-		liferayHttpResponse.setResponseCode(204);
+			Http.Options httpOptions = new Http.Options();
 
-		httpOptions.setResponse(liferayHttpResponse);
+			Http.Response liferayHttpResponse = new Http.Response();
 
-		HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
-			httpOptions, StringPool.BLANK);
+			liferayHttpResponse.setContentType(null);
+			liferayHttpResponse.setResponseCode(204);
 
-		Assert.assertEquals(204, httpResponse.getStatusCode());
-		Assert.assertNull(httpResponse.getEntityContentType());
+			httpOptions.setResponse(liferayHttpResponse);
+
+			HTTPResponse httpResponse = OpenIdConnectHttpUtil.toHTTPResponse(
+				httpOptions);
+
+			Assert.assertEquals(204, httpResponse.getStatusCode());
+			Assert.assertNull(httpResponse.getEntityContentType());
+		}
 	}
 
 }

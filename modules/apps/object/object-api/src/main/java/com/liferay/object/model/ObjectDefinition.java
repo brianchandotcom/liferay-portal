@@ -83,6 +83,8 @@ public interface ObjectDefinition
 
 	public String getShortName();
 
+	public boolean isAllowStandaloneObjectEntry();
+
 	public boolean isApproved();
 
 	public boolean isCMP();
@@ -114,4 +116,4 @@ public interface ObjectDefinition
 	public void setObjectFolder(ObjectFolder objectFolder);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1332771215
+// LIFERAY-SERVICE-BUILDER-HASH:-1251103539

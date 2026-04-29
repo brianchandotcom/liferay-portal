@@ -203,6 +203,7 @@ public class AssetTagStagedModelDataHandler
 		}
 
 		importedAssetTag.setUuid(assetTag.getUuid());
+		importedAssetTag.setModifiedDate(assetTag.getModifiedDate());
 
 		importedAssetTag = _assetTagLocalService.updateAssetTag(
 			importedAssetTag);

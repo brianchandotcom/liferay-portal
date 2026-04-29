@@ -261,6 +261,7 @@ public class AssetVocabularyStagedModelDataHandler
 		}
 
 		importedVocabulary.setUuid(vocabulary.getUuid());
+		importedVocabulary.setModifiedDate(vocabulary.getModifiedDate());
 
 		importedVocabulary = _assetVocabularyLocalService.updateAssetVocabulary(
 			importedVocabulary);

@@ -283,6 +283,7 @@ public class AssetCategoryStagedModelDataHandler
 		}
 
 		importedCategory.setUuid(category.getUuid());
+		importedCategory.setModifiedDate(category.getModifiedDate());
 
 		importedCategory = _assetCategoryLocalService.updateAssetCategory(
 			importedCategory);

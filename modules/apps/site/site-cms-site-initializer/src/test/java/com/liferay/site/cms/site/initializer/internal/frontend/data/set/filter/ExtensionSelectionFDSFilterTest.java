@@ -173,7 +173,7 @@ public class ExtensionSelectionFDSFilterTest {
 	@Mock
 	private DepotEntryLocalService _depotEntryLocalService;
 
-	private ExtensionSelectionFDSFilter _extensionSelectionFDSFilter =
+	private final ExtensionSelectionFDSFilter _extensionSelectionFDSFilter =
 		new ExtensionSelectionFDSFilter();
 	private final Locale _locale = LocaleUtil.US;
 

@@ -15,15 +15,7 @@ import {
 	isExpiringSoon,
 } from '../utils/expirationStatus';
 
-declare type LabelDisplayType =
-	| 'secondary'
-	| 'info'
-	| 'warning'
-	| 'danger'
-	| 'success'
-	| 'unstyled';
-
-const mapLabelToLabelDisplayType: {[key in AssetStatus]: LabelDisplayType} = {
+const assetStatusToDisplayType = {
 	[ASSET_STATUS.APPROVED]: 'success',
 	[ASSET_STATUS.DENIED]: 'danger',
 	[ASSET_STATUS.DRAFT]: 'secondary',
@@ -33,7 +25,7 @@ const mapLabelToLabelDisplayType: {[key in AssetStatus]: LabelDisplayType} = {
 	[ASSET_STATUS.INCOMPLETE]: 'warning',
 	[ASSET_STATUS.PENDING]: 'info',
 	[ASSET_STATUS.SCHEDULED]: 'info',
-};
+} as const;
 
 interface StatusLabelProps {
 	expirationDate?: string;
@@ -58,7 +50,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 						tabIndex={0}
 						title={formattedDate}
 					>
-						<Label displayType={mapLabelToLabelDisplayType[label]}>
+						<Label displayType={assetStatusToDisplayType[label]}>
 							{Liferay.Language.get(label)}
 						</Label>
 					</span>
@@ -67,12 +59,9 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 		}
 	}
 
-	if (
-		label !== ASSET_STATUS.APPROVED ||
-		!isExpiringSoon(expirationDate)
-	) {
+	if (label !== ASSET_STATUS.APPROVED || !isExpiringSoon(expirationDate)) {
 		return (
-			<Label displayType={mapLabelToLabelDisplayType[label]}>
+			<Label displayType={assetStatusToDisplayType[label]}>
 				{Liferay.Language.get(label)}
 			</Label>
 		);
@@ -87,7 +76,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 
 	return (
 		<span className="align-items-center c-gap-2 d-flex flex-wrap">
-			<Label displayType={mapLabelToLabelDisplayType[label]}>
+			<Label displayType={assetStatusToDisplayType[label]}>
 				{Liferay.Language.get(label)}
 			</Label>
 

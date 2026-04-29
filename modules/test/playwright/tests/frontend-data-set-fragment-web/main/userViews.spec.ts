@@ -400,14 +400,14 @@ test(
 			await menuItem.click();
 
 			await expect(
-				dataSetFragmentPage.userViewsSaveModal
+				dataSetFragmentPage.userViewsRenameModal
 			).toBeInViewport();
 
-			await dataSetFragmentPage.userViewsSaveModal
+			await dataSetFragmentPage.userViewsRenameModal
 				.getByLabel('NameRequired')
 				.fill(userView2Name);
 
-			await dataSetFragmentPage.userViewsSaveModal
+			await dataSetFragmentPage.userViewsRenameModal
 				.getByRole('button', {name: 'Save'})
 				.click();
 

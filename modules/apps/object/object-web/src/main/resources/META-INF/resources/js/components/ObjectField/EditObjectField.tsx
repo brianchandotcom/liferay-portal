@@ -14,6 +14,7 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {EditObjectFieldContent} from './EditObjectFieldContent';
+import {CountryInfo} from './Tabs/BasicInfo/PhoneNumberProperties';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './EditObjectField.scss';
@@ -21,6 +22,7 @@ import './EditObjectField.scss';
 export interface EditObjectFieldProps {
 	baseResourceURL: string;
 	ckEditor5Config?: object;
+	countries: CountryInfo[];
 	creationLanguageId: Liferay.Language.Locale;
 	decimalSeparator: string;
 	filterOperators: TFilterOperators;
@@ -59,6 +61,7 @@ export const objectFieldInitialValues: Partial<ObjectField> = {
 export default function EditObjectField({
 	baseResourceURL,
 	ckEditor5Config,
+	countries,
 	creationLanguageId,
 	decimalSeparator,
 	filterOperators,
@@ -145,6 +148,7 @@ export default function EditObjectField({
 				baseResourceURL={baseResourceURL}
 				ckEditor5Config={ckEditor5Config}
 				containerWrapper={Card}
+				countries={countries}
 				creationLanguageId={creationLanguageId}
 				decimalSeparator={decimalSeparator}
 				errors={errors}

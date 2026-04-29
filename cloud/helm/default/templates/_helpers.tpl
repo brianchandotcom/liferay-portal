@@ -21,16 +21,6 @@
 {{- end }}
 {{- end }}
 
-{{- define "liferay.hostnameSlug" -}}
-{{- $hostname := . | lower -}}
-{{- $sanitized := $hostname | replace "*" "wildcard" | replace "." "-" | trimPrefix "-" | trimSuffix "-" -}}
-{{- if gt (len $sanitized) 50 -}}
-{{- $hash := sha256sum $hostname | trunc 8 -}}
-{{- $sanitized = printf "%s-%s" (trunc 41 $sanitized | trimSuffix "-") $hash -}}
-{{- end -}}
-{{- $sanitized -}}
-{{- end -}}
-
 {{- define "liferay.labels" -}}
 {{ include "liferay.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}

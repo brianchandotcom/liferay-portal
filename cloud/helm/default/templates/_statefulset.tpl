@@ -177,7 +177,6 @@ spec:
         {{- end }}
     {{- end }}
 {{- if and .statefulset.network .statefulset.network.enabled }}
-{{- $perHost := and .statefulset.network.perHostnameRoutes (gt (len .statefulset.network.hostnames) 0) }}
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
@@ -211,18 +210,9 @@ metadata:
     namespace: {{ include "liferay.namespace" $.root }}
 spec:
     targetRefs:
-        {{- if $perHost }}
-        {{- range $hostname := $.statefulset.network.hostnames }}
-        {{- $slug := include "liferay.hostnameSlug" $hostname }}
-        -   group: gateway.networking.k8s.io
-            kind: HTTPRoute
-            name: {{ include "liferay.name" $.root }}-httproute-{{ $slug }}
-        {{- end }}
-        {{- else }}
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" $.root }}-httproute
-        {{- end }}
     authorization:
         {{- toYaml . | nindent 8 }}
 {{- end }}

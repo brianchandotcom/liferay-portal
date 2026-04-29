@@ -8,12 +8,7 @@ import {Params} from 'react-router-dom';
 import SearchBuilder, {Operators} from '../core/SearchBuilder';
 import {AccountType} from '../enums/Account';
 import {MarketplaceCategory} from '../enums/Categories';
-import {
-	OrderTypes,
-	OrderWorkflowStatusCode,
-	PaymentStatus,
-	orderTypeLabel,
-} from '../enums/Order';
+import {OrderWorkflowStatusCode, PaymentStatus} from '../enums/Order';
 import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
 import {PublisherPayoutStatus} from '../pages/FinanceDashboard/pages/Payments';
@@ -250,52 +245,21 @@ const filterSchema = {
 			overrides(baseFilters.type, {
 				label: i18n.translate('app-type'),
 				name: 'orderTypeExternalReferenceCode',
-				options: [
-					{
-						label: i18n.translate('ai-hub'),
-						value: OrderTypes.AI_HUB,
-					},
-					{
-						label: i18n.translate('client-extension'),
-						value: OrderTypes.CLIENT_EXTENSION,
-					},
-					{
-						label: i18n.translate('cloud-app'),
-						value: OrderTypes.CLOUD_APP,
-					},
-					{
-						label: orderTypeLabel[OrderTypes.CMP],
-						value: OrderTypes.CMP,
-					},
-					{
-						label: i18n.translate('composite-app'),
-						value: OrderTypes.COMPOSITE_APP,
-					},
-					{
-						label: orderTypeLabel[OrderTypes.DXP],
-						value: OrderTypes.DXP,
-					},
-					{
-						label: i18n.translate('dxp-app'),
-						value: OrderTypes.DXP_APP,
-					},
-					{
-						label: i18n.translate('low-code-configuration'),
-						value: OrderTypes.LOW_CODE_CONFIGURATION,
-					},
-					{
-						label: i18n.translate('trial'),
-						value: OrderTypes.SOLUTIONS7,
-					},
-					{
-						label: i18n.translate('ssa-trials'),
-						value: OrderTypes.SSA_SAAS,
-					},
-					{
-						label: i18n.translate('other'),
-						value: OrderTypes.OTHER,
-					},
-				],
+				resource:
+					'o/headless-commerce-admin-order/v1.0/order-types?pageSize=-1&sort=name:asc',
+				transformData: ({items = []}) =>
+					items.map(
+						({
+							externalReferenceCode,
+							name,
+						}: {
+							externalReferenceCode: string;
+							name: {[locale: string]: string};
+						}) => ({
+							label: name?.en_US ?? externalReferenceCode,
+							value: externalReferenceCode,
+						})
+					),
 				type: 'checkbox',
 			}),
 			overrides(baseFilters.status, {

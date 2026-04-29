@@ -7,10 +7,7 @@ import {addDays} from 'date-fns';
 import useSWR from 'swr';
 
 import SearchBuilder from '../../../core/SearchBuilder';
-import {
-	ProductTypeVocabulary,
-	ProductWorkflowStatusCode,
-} from '../../../enums/Product';
+import {ProductWorkflowStatusCode} from '../../../enums/Product';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
 
 type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
@@ -24,20 +21,11 @@ export const METRIC_PARAMETER = {
 	week: 7,
 };
 
-const searchBuilder = new SearchBuilder().lambda(
-	'categoryNames',
-	ProductTypeVocabulary.APP
-);
-
-const approved = searchBuilder
-	.clone()
-	.and()
+const approved = new SearchBuilder()
 	.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
 	.build();
 
-const inReview = searchBuilder
-	.clone()
-	.and()
+const inReview = new SearchBuilder()
 	.in('statusCode', [
 		ProductWorkflowStatusCode.PENDING,
 		ProductWorkflowStatusCode.DRAFT,
@@ -60,9 +48,7 @@ const useAppsMetricks = (param: FilterType = 'week') => {
 	beforeLastPeriod.setHours(0, 0, 0);
 	lastPeriod.setHours(23, 59, 59);
 
-	const approvedBeforeLastWeek = searchBuilder
-		.clone()
-		.and()
+	const approvedBeforeLastWeek = new SearchBuilder()
 		.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
 		.and()
 		.lt('createDate', lastPeriod.toISOString())
@@ -70,17 +56,13 @@ const useAppsMetricks = (param: FilterType = 'week') => {
 		.gt('createDate', beforeLastPeriod.toISOString())
 		.build();
 
-	const approvedLastWeek = searchBuilder
-		.clone()
-		.and()
+	const approvedLastWeek = new SearchBuilder()
 		.in('statusCode', [ProductWorkflowStatusCode.APPROVED])
 		.and()
 		.gt('createDate', lastPeriod.toISOString())
 		.build();
 
-	const inReviewBeforeLastWeek = searchBuilder
-		.clone()
-		.and()
+	const inReviewBeforeLastWeek = new SearchBuilder()
 		.in('statusCode', [
 			ProductWorkflowStatusCode.DRAFT,
 			ProductWorkflowStatusCode.PENDING,
@@ -91,9 +73,7 @@ const useAppsMetricks = (param: FilterType = 'week') => {
 		.gt('createDate', beforeLastPeriod.toISOString())
 		.build();
 
-	const inReviewLastWeek = searchBuilder
-		.clone()
-		.and()
+	const inReviewLastWeek = new SearchBuilder()
 		.in('statusCode', [
 			ProductWorkflowStatusCode.DRAFT,
 			ProductWorkflowStatusCode.PENDING,
@@ -110,7 +90,7 @@ const useAppsMetricks = (param: FilterType = 'week') => {
 			inReview,
 			inReviewBeforeLastWeek,
 			inReviewLastWeek,
-			products: searchBuilder.clone().build(),
+			products: '',
 		}).then(({data: {metrics}}) => ({
 			approved: metrics?.approved?.totalCount || 0,
 			approvedBeforeLastWeek:

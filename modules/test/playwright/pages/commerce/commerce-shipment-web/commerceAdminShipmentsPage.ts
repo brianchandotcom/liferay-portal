@@ -66,9 +66,9 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		this.editProductFrame = page.frameLocator('iframe');
 		this.addQuantityInShipment =
 			this.editProductFrame.getByRole('spinbutton');
-		this.addProductsToShipment = page.getByText(
-			'Add Products to This Shipment'
-		);
+		this.addProductsToShipment = page
+			.getByTestId('managementToolbar')
+			.locator('[data-testid="fdsCreationActionButton"]');
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.carrierDetailsEditLink = page
 			.getByText('Carrier Details Edit')

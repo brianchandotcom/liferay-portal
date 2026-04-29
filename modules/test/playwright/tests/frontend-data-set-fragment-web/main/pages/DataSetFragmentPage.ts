@@ -51,6 +51,7 @@ export class DataSetFragmentPage {
 	readonly userViewsActionsButton: Locator;
 	readonly userViewsDeleteAlert: Locator;
 	readonly userViewsSelectorButton: Locator;
+	readonly userViewsRenameModal: Locator;
 	readonly userViewsSaveModal: Locator;
 
 	constructor(page: Page) {
@@ -138,6 +139,9 @@ export class DataSetFragmentPage {
 			name: 'Delete View',
 		});
 		this.userViewsSelectorButton = page.getByLabel('Views');
+		this.userViewsRenameModal = page.getByRole('dialog', {
+			name: 'Rename View',
+		});
 		this.userViewsSaveModal = page.getByRole('dialog', {
 			name: 'Save New View As',
 		});

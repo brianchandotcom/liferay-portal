@@ -269,6 +269,7 @@ network:
     gatewayName: ""
     hostnames: []
     perHostnameRoutes: false
+    securityPolicyAuthorizationSpec: {}
     timeouts: {}
 networkPolicy:
     allowGatewayIngress: true

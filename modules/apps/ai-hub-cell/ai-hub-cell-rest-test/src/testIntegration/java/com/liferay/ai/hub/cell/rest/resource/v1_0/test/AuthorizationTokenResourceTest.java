@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
@@ -44,6 +45,8 @@ public class AuthorizationTokenResourceTest
 		try {
 			ConfigurationTestUtil.deleteConfiguration(
 				AIHubCellConfiguration.class.getName());
+
+			WebCachePoolUtil.clear();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -78,12 +81,19 @@ public class AuthorizationTokenResourceTest
 				"serviceURL", "http://localhost:8080"
 			).build());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
 			null, "ai-hub-cell/v1.0/authorization-tokens", Http.Method.POST);
 
-		Assert.assertTrue(jsonObject.has("accessToken"));
-		Assert.assertTrue(jsonObject.has("scope"));
-		Assert.assertTrue(jsonObject.has("userToken"));
+		Assert.assertTrue(jsonObject1.has("accessToken"));
+		Assert.assertTrue(jsonObject1.has("scope"));
+		Assert.assertTrue(jsonObject1.has("userToken"));
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			null, "ai-hub-cell/v1.0/authorization-tokens", Http.Method.POST);
+
+		Assert.assertEquals(
+			jsonObject1.getString("accessToken"),
+			jsonObject2.getString("accessToken"));
 	}
 
 	@Inject

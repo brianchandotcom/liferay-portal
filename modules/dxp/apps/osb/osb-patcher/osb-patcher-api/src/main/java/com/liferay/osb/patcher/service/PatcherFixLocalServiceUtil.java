@@ -76,13 +76,13 @@ public class PatcherFixLocalServiceUtil {
 
 	public static PatcherFix addPatcherFix(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String name, String committish,
-			String gitRemoteURL, int type, int status)
+			long patcherProjectVersionId, String committish,
+			String gitRemoteURL, String name, int type, int status)
 		throws Exception {
 
 		return getService().addPatcherFix(
-			userId, patcherProductVersionId, patcherProjectVersionId, name,
-			committish, gitRemoteURL, type, status);
+			userId, patcherProductVersionId, patcherProjectVersionId,
+			committish, gitRemoteURL, name, type, status);
 	}
 
 	/**
@@ -672,4 +672,4 @@ public class PatcherFixLocalServiceUtil {
 			PatcherFixLocalServiceUtil.class, PatcherFixLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1279255345
+// LIFERAY-SERVICE-BUILDER-HASH:-155651747

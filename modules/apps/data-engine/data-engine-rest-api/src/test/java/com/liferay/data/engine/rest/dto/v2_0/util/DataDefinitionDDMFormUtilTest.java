@@ -82,6 +82,14 @@ public class DataDefinitionDDMFormUtilTest {
 	}
 
 	@Test
+	public void testToDDMForm() {
+		_testToDDMFormWithEmptyDataDefinition();
+		_testToDDMFormWithNullDataDefinition();
+		_testToDDMFormWithoutDefaultValue(null);
+		_testToDDMFormWithoutDefaultValue(Collections.emptyMap());
+	}
+
+	@Test
 	public void testToDDMFormEquals() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.BRAZIL, LocaleUtil.US), LocaleUtil.US);
@@ -185,29 +193,6 @@ public class DataDefinitionDDMFormUtilTest {
 					}
 				},
 				_ddmFormFieldTypeServicesRegistry));
-	}
-
-	@Test
-	public void testToDDMFormWithEmptyDataDefinition() {
-		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
-			new DataDefinition(), null);
-
-		Assert.assertTrue(SetUtil.isEmpty(ddmForm.getAvailableLocales()));
-		Assert.assertTrue(ListUtil.isEmpty(ddmForm.getDDMFormFields()));
-		Assert.assertEquals(
-			"en_US", LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
-	}
-
-	@Test
-	public void testToDDMFormWithNullDataDefinition() {
-		Assert.assertEquals(
-			new DDMForm(), DataDefinitionDDMFormUtil.toDDMForm(null, null));
-	}
-
-	@Test
-	public void testToDDMFormWithoutDefaultValue() {
-		_testToDDMFormWithoutDefaultValue(Collections.emptyMap());
-		_testToDDMFormWithoutDefaultValue(null);
 	}
 
 	private DataDefinitionField[] _getDataDefinitionFields() {
@@ -326,6 +311,21 @@ public class DataDefinitionDDMFormUtilTest {
 		).when(
 			ddmFormFieldType
 		).getDDMFormFieldTypeSettings();
+	}
+
+	private void _testToDDMFormWithEmptyDataDefinition() {
+		DDMForm ddmForm = DataDefinitionDDMFormUtil.toDDMForm(
+			new DataDefinition(), null);
+
+		Assert.assertTrue(SetUtil.isEmpty(ddmForm.getAvailableLocales()));
+		Assert.assertTrue(ListUtil.isEmpty(ddmForm.getDDMFormFields()));
+		Assert.assertEquals(
+			"en_US", LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
+	}
+
+	private void _testToDDMFormWithNullDataDefinition() {
+		Assert.assertEquals(
+			new DDMForm(), DataDefinitionDDMFormUtil.toDDMForm(null, null));
 	}
 
 	private void _testToDDMFormWithoutDefaultValue(

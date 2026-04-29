@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -39,6 +40,7 @@ import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,7 +105,9 @@ public class CommerceTierPriceEntryFDSDataProvider
 
 			tierPriceEntries.add(
 				new TierPriceEntry(
-					_getDiscountLevels(commerceTierPriceEntry),
+					_getDiscountLevels(
+						commerceCurrency, commerceTierPriceEntry,
+						themeDisplay.getLocale()),
 					_getEndDate(commerceTierPriceEntry, dateTimeFormat),
 					_getOverride(commerceTierPriceEntry, httpServletRequest),
 					priceCommerceMoney.format(themeDisplay.getLocale()),
@@ -133,17 +137,30 @@ public class CommerceTierPriceEntryFDSDataProvider
 	}
 
 	private String _getDiscountLevels(
-		CommerceTierPriceEntry commerceTierPriceEntry) {
+			CommerceCurrency commerceCurrency,
+			CommerceTierPriceEntry commerceTierPriceEntry, Locale locale)
+		throws PortalException {
 
 		if (commerceTierPriceEntry.isDiscountDiscovery()) {
 			return StringPool.BLANK;
 		}
 
 		return StringBundler.concat(
-			commerceTierPriceEntry.getDiscountLevel1(), " - ",
-			commerceTierPriceEntry.getDiscountLevel2(), " - ",
-			commerceTierPriceEntry.getDiscountLevel3(), " - ",
-			commerceTierPriceEntry.getDiscountLevel4());
+			_commercePriceFormatter.format(
+				commerceCurrency, true, locale,
+				commerceTierPriceEntry.getDiscountLevel1()),
+			" - ",
+			_commercePriceFormatter.format(
+				commerceCurrency, true, locale,
+				commerceTierPriceEntry.getDiscountLevel2()),
+			" - ",
+			_commercePriceFormatter.format(
+				commerceCurrency, true, locale,
+				commerceTierPriceEntry.getDiscountLevel3()),
+			" - ",
+			_commercePriceFormatter.format(
+				commerceCurrency, true, locale,
+				commerceTierPriceEntry.getDiscountLevel4()));
 	}
 
 	private String _getEndDate(
@@ -170,6 +187,9 @@ public class CommerceTierPriceEntryFDSDataProvider
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference
 	private CommerceQuantityFormatter _commerceQuantityFormatter;

@@ -173,18 +173,22 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).build();
 	}
 
-	public String getFormattedDiscount(BigDecimal discount)
+	public String getFormattedDiscount(
+			CommerceCurrency commerceCurrency, BigDecimal discount)
 		throws PortalException {
 
 		return _commercePriceFormatter.format(
-			discount, cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(), discount);
 	}
 
-	public String getFormattedPrice() throws PortalException {
+	public String getFormattedPrice(CommerceCurrency commerceCurrency)
+		throws PortalException {
+
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		return _commercePriceFormatter.format(
-			commercePriceEntry.getPrice(), cpRequestHelper.getLocale());
+			commerceCurrency, false, cpRequestHelper.getLocale(),
+			commercePriceEntry.getPrice());
 	}
 
 	public String getItemSelectorUrl(String unitOfMeasureKey)

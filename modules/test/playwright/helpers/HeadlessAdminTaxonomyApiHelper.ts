@@ -214,10 +214,19 @@ export class HeadlessAdminTaxonomyApiHelper {
 		name,
 		siteId,
 	}: postSiteKeywordProps): Promise<{id: number}> {
-		return this.apiHelpers.post(
+		const keyword = await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/keywords`,
 			{data: {name}}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: keyword.id,
+				type: 'keyword',
+			});
+		}
+
+		return keyword;
 	}
 
 	/**

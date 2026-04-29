@@ -245,7 +245,7 @@ export default function Cards(props: IDataSetSectionProps) {
 
 	return (
 		<ClayLayout.ContentCol className="c-gap-4 cards-visualization-mode">
-			{cardsSections.every((cardsSection) => !cardsSection.field) && (
+			{!cardsSections.some((cardsSection) => cardsSection.field) && (
 				<ClayAlert
 					displayType="info"
 					title={`${Liferay.Language.get('info')}:`}

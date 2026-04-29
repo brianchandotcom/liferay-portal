@@ -16,6 +16,8 @@ import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
+import {getSpaceAvatarSrc} from './getSpaceAvatarSrc';
+
 const BASE_SEARCH_PARAMS = {
 	currentURL: '/web/cms/files',
 	emptySearch: 'true',
@@ -29,27 +31,6 @@ const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 const ROOT_URL = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}/o/search/v1.0/search`;
 
 const SPACES_API_URL = '/o/headless-asset-library/v1.0/asset-libraries';
-
-const SPACE_STYLE: Record<string, {backgroundColor: string; color: string}> = {
-	'outline-0': {backgroundColor: '#f1f2f5', color: '#272833'},
-	'outline-1': {backgroundColor: '#f2e5ff', color: '#aa33ff'},
-	'outline-2': {backgroundColor: '#fff8e5', color: '#b38900'},
-	'outline-3': {backgroundColor: '#f1fce9', color: '#458613'},
-	'outline-4': {backgroundColor: '#ffe5e5', color: '#e60000'},
-	'outline-5': {backgroundColor: '#fff0e5', color: '#cc4e00'},
-	'outline-6': {backgroundColor: '#eafbf8', color: '#1b7e6e'},
-	'outline-7': {backgroundColor: '#e5f6ff', color: '#0077b3'},
-	'outline-8': {backgroundColor: '#ffe5f4', color: '#e50082'},
-	'outline-9': {backgroundColor: '#fff', color: '#393a4a'},
-};
-
-function getSpaceAvatarSrc(letter: string, displayType: string) {
-	const {backgroundColor = '', color = ''} = SPACE_STYLE[displayType] ?? {};
-
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><rect width="300" height="200" fill="#ffffff"/><rect x="125" y="75" rx="6" ry="6" width="50" height="50" fill="${backgroundColor}" stroke="${color}" stroke-width="1"/><text x="150" y="100" dy=".35em" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="26" font-weight="700" fill="${color}">${letter}</text></svg>`;
-
-	return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-}
 
 const getSpaceId = (item: any) => {
 	return item.siteId || item.groupId || item.group?.id || item.id;
@@ -283,19 +264,15 @@ function CMSFilesItemSelectorModal({
 							},
 							setItemComponentProps: ({item, props}: any) => ({
 								...props,
+								flushHorizontal: true,
+								flushVertical: true,
 								imgProps: {
 									alt: item.name,
 									src: getSpaceAvatarSrc(
-										item.name?.charAt(0).toUpperCase(),
-										item.settings?.logoColor
+										item.name?.charAt(0).toUpperCase() ??
+											'',
+										item.settings?.logoColor || 'outline-0'
 									),
-									style: {
-										backgroundColor: '#fff',
-										height: '100%',
-										maxHeight: 'none',
-										maxWidth: 'none',
-										width: '100%',
-									},
 								},
 								onClick: () => {
 									onSpaceClick({

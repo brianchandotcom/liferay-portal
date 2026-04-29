@@ -296,13 +296,7 @@ test(
 test(
 	'Find and Replace bulk action is hidden when user cannot update selected items',
 	{tag: '@LPD-78865'},
-	async ({
-		apiHelpers,
-		assetsPage,
-		dataSetPage,
-		findAndReplacePage,
-		page,
-	}) => {
+	async ({apiHelpers, assetsPage, dataSetPage, findAndReplacePage, page}) => {
 
 		// Create content
 
@@ -319,9 +313,10 @@ test(
 
 		// Add user without update permission
 
-		const [space] = await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
-			`name eq '${SITE_CMS_SPACE_NAME}'`
-		);
+		const [space] =
+			await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage(
+				`name eq '${SITE_CMS_SPACE_NAME}'`
+			);
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 

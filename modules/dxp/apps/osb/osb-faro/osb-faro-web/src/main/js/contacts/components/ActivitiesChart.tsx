@@ -44,15 +44,14 @@ interface IChartProps<T> extends React.HTMLAttributes<HTMLElement> {
 	onPointSelect: (index: number | null) => void;
 	rangeSelectors: RangeSelectors;
 	selectedPoint?: number;
-	tooltipRenderRows?: (data: T) => Array<{
-		label: string;
-		value: any;
-	}>;
+	tooltipRenderRows?: (data: T) => ChartTooltipRow[];
 }
 
 interface IActivitiesHistoryProps<initDateType = number> {
 	intervalInitDate: initDateType;
 	totalEvents: number;
+	totalSessions?: number;
+	uniqueVisitors?: number;
 }
 
 const ActivitiesChart: React.FC<
@@ -66,7 +65,8 @@ const ActivitiesChart: React.FC<
 	interval,
 	onPointSelect,
 	rangeSelectors,
-	selectedPoint
+	selectedPoint,
+	tooltipRenderRows
 }) => {
 	const _tooltipRef = useRef<any>();
 
@@ -98,23 +98,25 @@ const ActivitiesChart: React.FC<
 
 			const {intervalInitDate, totalEvents, totalSessions} = data;
 
-			const rows: ChartTooltipRow[] = [
-				{
-					label: Liferay.Language.get('events'),
-					value: totalEvents.toLocaleString()
-				},
-				{
-					label: Liferay.Language.get('sessions'),
-					value: totalSessions.toLocaleString()
-				}
-			];
+			const rows: ChartTooltipRow[] = tooltipRenderRows
+				? tooltipRenderRows(data)
+				: [
+						{
+							label: Liferay.Language.get('events'),
+							value: totalEvents.toLocaleString()
+						},
+						{
+							label: Liferay.Language.get('sessions'),
+							value: totalSessions.toLocaleString()
+						}
+				  ];
 
 			if (moment.utc(intervalInitDate).isSame(moment(), 'day')) {
 				rows.push({
-					className: 'informative-text',
+					className: 'text-info text-uppercase mt-4',
 					label: Liferay.Language.get(
 						'data-for-todays-events-may-vary-or-be-incomplete'
-					).toUpperCase()
+					)
 				});
 			}
 

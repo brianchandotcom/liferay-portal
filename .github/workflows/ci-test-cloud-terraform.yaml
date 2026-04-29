@@ -12,7 +12,7 @@ jobs:
                 uses: hashicorp/setup-terraform@v3
                 with:
                     terraform_version: 1.5.7
-            -   name: Setup tflint
+            -   name: Setup TFLint
                 uses: terraform-linters/setup-tflint@v4
             -   name: Initialize Terraform
                 run: terraform init -backend=false -input=false
@@ -20,7 +20,7 @@ jobs:
             -   name: Validate Terraform
                 run: terraform validate
                 working-directory: ./cloud/terraform/${{matrix.stack}}
-            -   name: Run tflint
+            -   name: Run TFLint
                 run: |
                     tflint --init
                     tflint

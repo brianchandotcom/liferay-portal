@@ -42,12 +42,17 @@ $clay-reorder-underlay: map-deep-merge(
 $clay-reorder-underlay-focus: () !default;
 $clay-reorder-underlay-focus: map-deep-merge(
 	(
-		background-color:
-			var(--clay-reorder-underlay-focus-background-color, $input-focus-bg),
-		border-color:
-			var(
+		background-color: var(
+				--clay-reorder-underlay-focus-background-color,
+				$input-focus-bg
+			),
+		border-color: var(
 				--clay-reorder-underlay-focus-border-color,
 				$input-focus-border-color
+			),
+		box-shadow: var(
+				--clay-reorder-underlay-focus-box-shadow,
+				$input-focus-box-shadow
 			),
 	),
 	$clay-reorder-underlay-focus

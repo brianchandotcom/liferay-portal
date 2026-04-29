@@ -29,24 +29,19 @@ public class RestoreObjectBulkSelectionActionSerDes {
 			restoreObjectBulkSelectionActionJSONParser =
 				new RestoreObjectBulkSelectionActionJSONParser();
 
-		return restoreObjectBulkSelectionActionJSONParser.parseToDTO(
-			json);
+		return restoreObjectBulkSelectionActionJSONParser.parseToDTO(json);
 	}
 
-	public static RestoreObjectBulkSelectionAction[] toDTOs(
-		String json) {
-
+	public static RestoreObjectBulkSelectionAction[] toDTOs(String json) {
 		RestoreObjectBulkSelectionActionJSONParser
 			restoreObjectBulkSelectionActionJSONParser =
 				new RestoreObjectBulkSelectionActionJSONParser();
 
-		return restoreObjectBulkSelectionActionJSONParser.parseToDTOs(
-			json);
+		return restoreObjectBulkSelectionActionJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		RestoreObjectBulkSelectionAction
-			restoreObjectBulkSelectionAction) {
+		RestoreObjectBulkSelectionAction restoreObjectBulkSelectionAction) {
 
 		if (restoreObjectBulkSelectionAction == null) {
 			return "null";
@@ -56,9 +51,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 
 		sb.append("{");
 
-		if (restoreObjectBulkSelectionAction.getBulkActionItems() !=
-				null) {
-
+		if (restoreObjectBulkSelectionAction.getBulkActionItems() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -68,14 +61,15 @@ public class RestoreObjectBulkSelectionActionSerDes {
 			sb.append("[");
 
 			for (int i = 0;
-				 i < restoreObjectBulkSelectionAction.
-					 getBulkActionItems().length;
+				 i <
+					 restoreObjectBulkSelectionAction.
+						 getBulkActionItems().length;
 				 i++) {
 
 				sb.append(
 					String.valueOf(
-						restoreObjectBulkSelectionAction.
-							getBulkActionItems()[i]));
+						restoreObjectBulkSelectionAction.getBulkActionItems()
+							[i]));
 
 				if ((i + 1) < restoreObjectBulkSelectionAction.
 						getBulkActionItems().length) {
@@ -87,9 +81,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 			sb.append("]");
 		}
 
-		if (restoreObjectBulkSelectionAction.getSelectionScope() !=
-				null) {
-
+		if (restoreObjectBulkSelectionAction.getSelectionScope() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -98,8 +90,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 
 			sb.append(
 				String.valueOf(
-					restoreObjectBulkSelectionAction.
-						getSelectionScope()));
+					restoreObjectBulkSelectionAction.getSelectionScope()));
 		}
 
 		if (restoreObjectBulkSelectionAction.getType() != null) {
@@ -124,13 +115,11 @@ public class RestoreObjectBulkSelectionActionSerDes {
 			restoreObjectBulkSelectionActionJSONParser =
 				new RestoreObjectBulkSelectionActionJSONParser();
 
-		return restoreObjectBulkSelectionActionJSONParser.parseToMap(
-			json);
+		return restoreObjectBulkSelectionActionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		RestoreObjectBulkSelectionAction
-			restoreObjectBulkSelectionAction) {
+		RestoreObjectBulkSelectionAction restoreObjectBulkSelectionAction) {
 
 		if (restoreObjectBulkSelectionAction == null) {
 			return null;
@@ -138,30 +127,24 @@ public class RestoreObjectBulkSelectionActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (restoreObjectBulkSelectionAction.getBulkActionItems() ==
-				null) {
-
+		if (restoreObjectBulkSelectionAction.getBulkActionItems() == null) {
 			map.put("bulkActionItems", null);
 		}
 		else {
 			map.put(
 				"bulkActionItems",
 				String.valueOf(
-					restoreObjectBulkSelectionAction.
-						getBulkActionItems()));
+					restoreObjectBulkSelectionAction.getBulkActionItems()));
 		}
 
-		if (restoreObjectBulkSelectionAction.getSelectionScope() ==
-				null) {
-
+		if (restoreObjectBulkSelectionAction.getSelectionScope() == null) {
 			map.put("selectionScope", null);
 		}
 		else {
 			map.put(
 				"selectionScope",
 				String.valueOf(
-					restoreObjectBulkSelectionAction.
-						getSelectionScope()));
+					restoreObjectBulkSelectionAction.getSelectionScope()));
 		}
 
 		if (restoreObjectBulkSelectionAction.getType() == null) {
@@ -170,8 +153,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 		else {
 			map.put(
 				"type",
-				String.valueOf(
-					restoreObjectBulkSelectionAction.getType()));
+				String.valueOf(restoreObjectBulkSelectionAction.getType()));
 		}
 
 		return map;
@@ -186,9 +168,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 		}
 
 		@Override
-		protected RestoreObjectBulkSelectionAction[] createDTOArray(
-			int size) {
-
+		protected RestoreObjectBulkSelectionAction[] createDTOArray(int size) {
 			return new RestoreObjectBulkSelectionAction[size];
 		}
 
@@ -209,8 +189,7 @@ public class RestoreObjectBulkSelectionActionSerDes {
 
 		@Override
 		protected void setField(
-			RestoreObjectBulkSelectionAction
-				restoreObjectBulkSelectionAction,
+			RestoreObjectBulkSelectionAction restoreObjectBulkSelectionAction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
@@ -325,4 +304,4 @@ public class RestoreObjectBulkSelectionActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:912360074
+// LIFERAY-REST-BUILDER-HASH:-113731800

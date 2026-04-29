@@ -42,9 +42,8 @@ public class RestoreObjectBulkSelectionAction
 			return false;
 		}
 
-		RestoreObjectBulkSelectionAction
-			restoreObjectBulkSelectionAction =
-				(RestoreObjectBulkSelectionAction)object;
+		RestoreObjectBulkSelectionAction restoreObjectBulkSelectionAction =
+			(RestoreObjectBulkSelectionAction)object;
 
 		return Objects.equals(
 			toString(), restoreObjectBulkSelectionAction.toString());
@@ -62,4 +61,4 @@ public class RestoreObjectBulkSelectionAction
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-309972876
+// LIFERAY-REST-BUILDER-HASH:63982809

@@ -39,9 +39,7 @@ public class RestoreObjectBulkSelectionAction
 			RestoreObjectBulkSelectionAction.class, json);
 	}
 
-	public static RestoreObjectBulkSelectionAction unsafeToDTO(
-		String json) {
-
+	public static RestoreObjectBulkSelectionAction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
 			RestoreObjectBulkSelectionAction.class, json);
 	}
@@ -56,9 +54,8 @@ public class RestoreObjectBulkSelectionAction
 			return false;
 		}
 
-		RestoreObjectBulkSelectionAction
-			restoreObjectBulkSelectionAction =
-				(RestoreObjectBulkSelectionAction)object;
+		RestoreObjectBulkSelectionAction restoreObjectBulkSelectionAction =
+			(RestoreObjectBulkSelectionAction)object;
 
 		return Objects.equals(
 			toString(), restoreObjectBulkSelectionAction.toString());
@@ -225,4 +222,4 @@ public class RestoreObjectBulkSelectionAction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:403173701
+// LIFERAY-REST-BUILDER-HASH:285634325

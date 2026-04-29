@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import React from 'react';
 
 import {updateSelection} from '../../../utils/contentSelection';
@@ -12,20 +13,33 @@ import ContentSection, {SectionSelection} from './ContentSection';
 export type ContentSelection = Record<string, SectionSelection>;
 
 interface ContentSelectorProps {
-	onChange: (value: ContentSelection | undefined) => void;
-	sections: PortletDataHandlerSection[];
-	value: ContentSelection | undefined;
+	'aria-labelledby'?: string;
+	'errorMessage'?: string;
+	'name': string;
+	'onChange': (value: ContentSelection | undefined) => void;
+	'sections': PortletDataHandlerSection[];
+	'value': ContentSelection | undefined;
 }
 
 export default function ContentSelector({
+	'aria-labelledby': ariaLabelledby,
+	errorMessage,
+	name,
 	onChange,
 	sections,
 	value,
 }: ContentSelectorProps) {
 	const currentValue = value || {};
+	const errorId = errorMessage ? `${name}-error-message` : undefined;
 
 	return (
-		<div className="mt-4">
+		<div
+			aria-describedby={errorId}
+			aria-invalid={errorMessage ? true : undefined}
+			aria-labelledby={ariaLabelledby}
+			className="mt-4"
+			role="group"
+		>
 			{sections.map((section: PortletDataHandlerSection) => (
 				<ContentSection
 					key={section.name}
@@ -42,6 +56,16 @@ export default function ContentSelector({
 					value={currentValue[section.name]}
 				/>
 			))}
+
+			{errorMessage && (
+				<ClayAlert
+					displayType="danger"
+					id={errorId}
+					title={Liferay.Language.get('error-colon')}
+				>
+					{errorMessage}
+				</ClayAlert>
+			)}
 		</div>
 	);
 }

@@ -44,6 +44,7 @@ export default function DataSelection({
 
 			<div data-testid="data-selection-section">
 				<FormikFieldContentSelector
+					aria-labelledby={LABEL_ID}
 					name="contentSelection"
 					sections={sections}
 				/>

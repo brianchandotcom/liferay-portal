@@ -85,6 +85,10 @@ test(
 		await test.step('Connect space to the site', async () => {
 			await page.goto(PORTLET_URLS.cmsAllSpaces);
 
+			await expect(
+				page.getByRole('row', {name: spaceName})
+			).toBeVisible();
+
 			await page
 				.getByRole('row', {name: spaceName})
 				.getByRole('button', {name: 'Actions'})

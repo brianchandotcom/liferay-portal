@@ -6,6 +6,7 @@
 package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.banner.web.internal.constants.CookiesBannerPortletKeys;
+import com.liferay.cookies.banner.web.internal.constants.CookiesBannerWebKeys;
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
@@ -77,6 +78,11 @@ public class CookiesBannerDisplayContext
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(
 			"consentRenewalPeriodTimeUnit", getConsentRenewalPeriodTimeUnit()
+		).put(
+			"cookiesBannerSuppressed",
+			Boolean.TRUE.equals(
+				httpServletRequest.getAttribute(
+					CookiesBannerWebKeys.COOKIES_BANNER_SUPPRESSED))
 		).put(
 			"dissentRenewalPeriod", getDissentRenewalPeriod()
 		).put(

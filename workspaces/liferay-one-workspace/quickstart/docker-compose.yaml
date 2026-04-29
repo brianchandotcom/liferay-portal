@@ -1,0 +1,118 @@
+name: liferay-one-workspace
+services:
+    database:
+        command: >
+            mysqld
+            --character-set-server=utf8mb4
+            --collation-server=utf8mb4_general_ci
+            --innodb-buffer-pool-size=512M
+            --innodb-doublewrite=OFF
+            --innodb-flush-log-at-trx-commit=2
+            --innodb-flush-method=O_DIRECT
+            --lower_case_table_names=1
+            --sync-binlog=0
+        container_name: liferay-one-workspace-database
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_DATABASE: lportal
+        healthcheck:
+            interval: 5s
+            retries: 10
+            start_period: 5m
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            timeout: 20s
+        image: mysql:5.7
+        ports:
+            -   3306:3306
+    liferay:
+        container_name: liferay-one-workspace-liferay
+        depends_on:
+            database:
+                condition: service_healthy
+        environment:
+            LIFERAY_ADMIN_PERIOD_DEFAULT_PERIOD_GROUP_PERIOD_NAMES: Liferay One
+            LIFERAY_ADMIN_PERIOD_EMAIL_PERIOD_USER_PERIOD_ADDED_PERIOD_ENABLED: "false"
+            LIFERAY_ADMIN_PERIOD_SYNC_PERIOD_DEFAULT_PERIOD_ASSOCIATIONS: "true"
+            LIFERAY_COMPANY_PERIOD_SECURITY_PERIOD_STRANGERS: "false"
+            LIFERAY_COMPANY_PERIOD_SECURITY_PERIOD_STRANGERS_PERIOD_VERIFY: "false"
+            LIFERAY_COMPANY_PERIOD_SECURITY_PERIOD_UPDATE_PERIOD_PASSWORD_PERIOD_REQUIRED: "false"
+            LIFERAY_DISABLE_TRIAL_LICENSE: "true"
+            LIFERAY_ENTERPRISE_PERIOD_PRODUCT_PERIOD_NOTIFICATION_PERIOD_ENABLED: "false"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEC__UPPERCASEO__UPPERCASEM__UPPERCASEM__UPPERCASEE__UPPERCASER__UPPERCASEC__UPPERCASEE__MINUS__NUMBER8__NUMBER0__NUMBER8__NUMBER7_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASED__MINUS__NUMBER4__NUMBER8__NUMBER8__NUMBER6__NUMBER2_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASED__MINUS__NUMBER6__NUMBER3__NUMBER3__NUMBER1__NUMBER1_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER2__NUMBER9__NUMBER4__NUMBER1__NUMBER2_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER3__NUMBER5__NUMBER4__NUMBER3__NUMBER0_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER6__NUMBER4__NUMBER5__NUMBER6__NUMBER3_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER7__NUMBER7__NUMBER0__NUMBER2__NUMBER7_: "true"
+            LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__UPPERCASEL__UPPERCASEP__UPPERCASES__MINUS__NUMBER1__NUMBER7__NUMBER8__NUMBER6__NUMBER4__NUMBER2_: "true"
+            LIFERAY_INDEX_PERIOD_ON_PERIOD_STARTUP: "true"
+            LIFERAY_INDEX_PERIOD_ON_PERIOD_STARTUP_PERIOD_DELAY: "60"
+            LIFERAY_JAVASCRIPT_PERIOD_SINGLE_PERIOD_PAGE_PERIOD_APPLICATION_PERIOD_ENABLED: "false"
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME: com.mysql.cj.jdbc.Driver
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD: ""
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL: jdbc:mysql://database/lportal?useUnicode=true&characterEncoding=UTF-8
+            LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME: root
+            LIFERAY_JPDA_ENABLED: "true"
+            LIFERAY_JVM_OPTS: -Xms8192m -Xmx8192m -XX:NewSize=2048m -XX:MaxNewSize=2048m -XX:MetaspaceSize=768m -XX:MaxMetaspaceSize=1024m -XX:SurvivorRatio=7
+            LIFERAY_MAIL_PERIOD_SEND_PERIOD_BLACKLIST: ""
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL: "true"
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_AUTH: "false"
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_HOST: mail
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_PASSWORD: ""
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_PORT: "1025"
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_STARTTLS_PERIOD_ENABLE: "false"
+            LIFERAY_MAIL_PERIOD_SESSION_PERIOD_MAIL_PERIOD_SMTP_PERIOD_USER: ""
+            LIFERAY_PASSWORDS_PERIOD_DEFAULT_PERIOD_POLICY_PERIOD_CHANGE_PERIOD_REQUIRED: "false"
+            LIFERAY_SESSION_PERIOD_TIMEOUT: "600"
+            LIFERAY_TERMS_PERIOD_OF_PERIOD_USE_PERIOD_REQUIRED: "false"
+            LIFERAY_UPGRADE_PERIOD_DATABASE_PERIOD_AUTO_PERIOD_RUN: "true"
+            LIFERAY_USERS_PERIOD_REMINDER_PERIOD_QUERIES_PERIOD_ENABLED: "false"
+            LIFERAY_VIRTUAL_PERIOD_HOSTS_PERIOD_VALID_PERIOD_HOSTS: "*"
+            LIFERAY_WEB_PERIOD_SERVER_PERIOD_PROTOCOL: http
+        healthcheck:
+            interval: 10s
+            retries: 60
+            start_period: 40s
+            test: ["CMD", "curl", "-f", "-s", "--fail", "http://localhost:8080/c/portal/status"]
+            timeout: 10s
+        image: liferay/dxp:2026.q1.2-lts
+        mem_limit: 10g
+        mem_reservation: 8g
+        ports:
+            -   8000:8000
+            -   8080:8080
+            -   11311:11311
+        user: root
+        volumes:
+            -   ./liferay:/mnt/liferay
+            -   liferay_data:/opt/liferay/data
+            -   routes_dxp:/opt/liferay/routes/default/dxp
+            -   routes_spring_boot:/opt/liferay/routes/default/liferay-one-etc-spring-boot
+    mail:
+        container_name: liferay-one-workspace-mail
+        image: maildev/maildev
+        ports:
+            -   1025:1025
+            -   1080:1080
+        restart: unless-stopped
+    spring_boot:
+        build: ../client-extensions/liferay-one-etc-spring-boot/build/liferay-client-extension-build
+        container_name: liferay-one-workspace-spring-boot
+        depends_on:
+            liferay:
+                condition: service_healthy
+        environment:
+            LIFERAY_ROUTES_CLIENT_EXTENSION: /etc/liferay/lxc/ext-init-metadata
+            LIFERAY_ROUTES_DXP: /etc/liferay/lxc/dxp-metadata
+            SERVER_PORT: "58081"
+        ports:
+            -   58081:58081
+        profiles: ["extensions"]
+        volumes:
+            -   routes_dxp:/etc/liferay/lxc/dxp-metadata
+            -   routes_spring_boot:/etc/liferay/lxc/ext-init-metadata
+volumes:
+    liferay_data:
+    routes_dxp:
+    routes_spring_boot:

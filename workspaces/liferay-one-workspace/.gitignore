@@ -4,6 +4,7 @@
 /poshi/poshi-ext.properties
 /poshi/test-results
 /poshi/tests
+/quickstart/liferay
 bin
 build
 dist

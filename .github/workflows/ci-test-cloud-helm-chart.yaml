@@ -3,7 +3,7 @@ defaults:
         shell: bash
 jobs:
     test-cloud-helm-chart:
-        if: ${{github.repository == 'pt-cloudnative/liferay-portal'}}
+        if: ${{github.repository == 'cloudnative-team/liferay-portal'}}
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout code

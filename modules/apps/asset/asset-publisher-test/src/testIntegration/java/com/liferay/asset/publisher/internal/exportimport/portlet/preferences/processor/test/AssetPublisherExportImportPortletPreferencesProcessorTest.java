@@ -144,74 +144,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-85494")
-	public void testProcessExportPortletPreferencesWhenPlidIsZero()
-		throws Exception {
-
-		_portletDataContextExport.setPlid(0);
-
-		_portletPreferences.setValue(
-			"scopeIds", String.valueOf(_group.getGroupId()));
-
-		_portletPreferences.store();
-
-		PortletPreferences exportedPortletPreferences =
-			_exportImportPortletPreferencesProcessor.
-				processExportPortletPreferences(
-					_portletDataContextExport, _portletPreferences);
-
-		Assert.assertNotNull(exportedPortletPreferences);
-	}
-
-	@Test
-	@TestInfo("LPD-85494")
-	public void testProcessImportPortletPreferencesWhenGroupIdMappingsElementIsMissing()
-		throws Exception {
-
-		_portletPreferences.setValue(
-			"scopeIds", String.valueOf(_group.getGroupId()));
-
-		_portletPreferences.store();
-
-		Element importDataRootElement =
-			_portletDataContextImport.getImportDataRootElement();
-
-		Assert.assertNull(importDataRootElement.element("group-id-mappings"));
-
-		PortletPreferences importedPortletPreferences =
-			_exportImportPortletPreferencesProcessor.
-				processImportPortletPreferences(
-					_portletDataContextImport, _portletPreferences);
-
-		Assert.assertNotNull(importedPortletPreferences);
-	}
-
-	@Test
-	@TestInfo("LPD-85494")
-	public void testProcessImportPortletPreferencesWhenPlidIsZero()
-		throws Exception {
-
-		_portletDataContextImport.setPlid(0);
-
-		_portletPreferences.setValue(
-			"scopeIds", String.valueOf(_group.getGroupId()));
-
-		_portletPreferences.store();
-
-		Element importDataRootElement =
-			_portletDataContextImport.getImportDataRootElement();
-
-		importDataRootElement.addElement("group-id-mappings");
-
-		PortletPreferences importedPortletPreferences =
-			_exportImportPortletPreferencesProcessor.
-				processImportPortletPreferences(
-					_portletDataContextImport, _portletPreferences);
-
-		Assert.assertNotNull(importedPortletPreferences);
-	}
-
-	@Test
 	public void testProcessQueryNames() throws Exception {
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -266,6 +198,68 @@ public class AssetPublisherExportImportPortletPreferencesProcessorTest {
 		Assert.assertEquals(
 			assetCategory.getCategoryId(),
 			GetterUtil.getLong(importedAssetCategoryId));
+	}
+
+	@Test
+	@TestInfo("LPD-85494")
+	public void testProcessScopeIds1() throws Exception {
+		_portletDataContextExport.setPlid(0);
+
+		_portletPreferences.setValue(
+			"scopeIds", String.valueOf(_group.getGroupId()));
+
+		_portletPreferences.store();
+
+		PortletPreferences exportedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processExportPortletPreferences(
+					_portletDataContextExport, _portletPreferences);
+
+		Assert.assertNotNull(exportedPortletPreferences);
+	}
+
+	@Test
+	@TestInfo("LPD-85494")
+	public void testProcessScopeIds2() throws Exception {
+		_portletPreferences.setValue(
+			"scopeIds", String.valueOf(_group.getGroupId()));
+
+		_portletPreferences.store();
+
+		Element importDataRootElement =
+			_portletDataContextImport.getImportDataRootElement();
+
+		Assert.assertNull(importDataRootElement.element("group-id-mappings"));
+
+		PortletPreferences importedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processImportPortletPreferences(
+					_portletDataContextImport, _portletPreferences);
+
+		Assert.assertNotNull(importedPortletPreferences);
+	}
+
+	@Test
+	@TestInfo("LPD-85494")
+	public void testProcessScopeIds3() throws Exception {
+		_portletDataContextImport.setPlid(0);
+
+		_portletPreferences.setValue(
+			"scopeIds", String.valueOf(_group.getGroupId()));
+
+		_portletPreferences.store();
+
+		Element importDataRootElement =
+			_portletDataContextImport.getImportDataRootElement();
+
+		importDataRootElement.addElement("group-id-mappings");
+
+		PortletPreferences importedPortletPreferences =
+			_exportImportPortletPreferencesProcessor.
+				processImportPortletPreferences(
+					_portletDataContextImport, _portletPreferences);
+
+		Assert.assertNotNull(importedPortletPreferences);
 	}
 
 	@Inject(

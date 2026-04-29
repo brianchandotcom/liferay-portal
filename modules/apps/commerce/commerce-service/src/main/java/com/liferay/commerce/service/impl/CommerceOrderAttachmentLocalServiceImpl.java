@@ -280,7 +280,7 @@ public class CommerceOrderAttachmentLocalServiceImpl
 		}
 
 		if (Validator.isNull(type)) {
-			return;
+			throw new CommerceOrderAttachmentTypeException();
 		}
 
 		ListTypeDefinition listTypeDefinition =

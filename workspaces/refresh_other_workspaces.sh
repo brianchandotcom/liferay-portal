@@ -23,8 +23,8 @@ function main {
 			--exclude "modules" \
 			--exclude "node_modules" \
 			--exclude "node_modules_cache" \
-			--exclude "quickstart" \
 			--exclude "poshi" \
+			--exclude "quickstart" \
 			--exclude "themes" \
 			liferay-sample-workspace/ "${dir}"
 	done

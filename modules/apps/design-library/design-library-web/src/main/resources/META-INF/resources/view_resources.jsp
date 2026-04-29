@@ -9,6 +9,7 @@
 
 <%
 long designLibraryEntryId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY);
+long designLibrarySiteId = (long)request.getAttribute(DesignLibraryConstants.DESIGN_LIBRARY_SITE_ID_KEY);
 
 DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new DesignLibraryResourcesDisplayContext(request, liferayPortletResponse);
 %>
@@ -24,7 +25,7 @@ DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new 
 	<div class="design-library-fds-wrapper design-library-fds-wrapper--resources">
 		<frontend-data-set:headless-display
 			additionalProps="<%= designLibraryResourcesDisplayContext.getFDSAdditionalProps(designLibraryEntryId) %>"
-			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
+			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL(designLibrarySiteId) %>"
 			emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
 			fdsActionDropdownItems="<%= designLibraryResourcesDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"

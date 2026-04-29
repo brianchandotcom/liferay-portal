@@ -115,26 +115,22 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		AssetLibrary assetLibrary = testGetAssetLibrariesPage_addAssetLibrary(
 			randomAssetLibrary);
 
-		try {
-			Page<AssetLibrary> page =
-				assetLibraryResource.getAssetLibrariesPage(
-					null, null, "siteId eq " + assetLibrary.getSiteId(),
-					Pagination.of(1, 10), null);
+		Page<AssetLibrary> page =
+			assetLibraryResource.getAssetLibrariesPage(
+				null, null, "siteId eq " + assetLibrary.getSiteId(),
+				Pagination.of(1, 10), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(1, page.getTotalCount());
 
-			List<AssetLibrary> assetLibraries =
-				(List<AssetLibrary>)page.getItems();
+		List<AssetLibrary> assetLibraries = (List<AssetLibrary>)page.getItems();
 
-			AssetLibrary filteredAssetLibrary = assetLibraries.get(0);
+		AssetLibrary filteredAssetLibrary = assetLibraries.get(0);
 
-			Assert.assertEquals(
-				assetLibrary.getSiteId(), filteredAssetLibrary.getSiteId());
-		}
-		finally {
-			assetLibraryResource.deleteAssetLibrary(
-				assetLibrary.getExternalReferenceCode());
-		}
+		Assert.assertEquals(
+			assetLibrary.getSiteId(), filteredAssetLibrary.getSiteId());
+
+		assetLibraryResource.deleteAssetLibrary(
+			assetLibrary.getExternalReferenceCode());
 	}
 
 	@Override

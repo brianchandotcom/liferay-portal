@@ -65,6 +65,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
+
 import java.math.BigDecimal;
 
 import java.util.Collections;
@@ -301,14 +303,12 @@ public class CommerceOrderLocalServiceTest {
 				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
 				0);
 
-		Class<?> clazz = getClass();
-
 		FileEntry fileEntry1 =
 			_commerceOrderLocalService.addAttachmentFileEntry(
 				RandomTestUtil.randomString(), _user.getUserId(),
 				commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.randomString(),
-				clazz.getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 		LocalRepository localRepository = commerceOrder.getLocalRepository();
 
@@ -404,12 +404,10 @@ public class CommerceOrderLocalServiceTest {
 				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
 				0);
 
-		Class<?> clazz = getClass();
-
 		FileEntry fileEntry = _commerceOrderLocalService.addAttachmentFileEntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString(),
-			clazz.getResourceAsStream("dependencies/attachment.txt"));
+			new ByteArrayInputStream("Liferay".getBytes()));
 
 		LocalRepository localRepository = commerceOrder.getLocalRepository();
 

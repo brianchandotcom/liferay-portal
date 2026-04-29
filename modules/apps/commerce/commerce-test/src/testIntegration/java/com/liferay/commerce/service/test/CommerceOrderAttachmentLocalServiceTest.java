@@ -34,6 +34,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.ByteArrayInputStream;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -87,7 +89,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 				null, _user.getUserId(), _commerceOrder.getCommerceOrderId(),
 				RandomTestUtil.nextDouble(), false, null, _TYPE_KEY,
 				RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 			Assert.fail();
 		}
@@ -103,7 +105,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 				RandomTestUtil.nextDouble(), false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 			Assert.fail();
 		}
@@ -122,7 +124,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 				externalReferenceCode, _user.getUserId(),
 				_commerceOrder.getCommerceOrderId(), priority, false, title,
 				_TYPE_KEY, RandomTestUtil.randomString(),
-				getClass().getResourceAsStream("dependencies/attachment.txt"));
+				new ByteArrayInputStream("Liferay".getBytes()));
 
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -306,7 +308,7 @@ public class CommerceOrderAttachmentLocalServiceTest {
 			_commerceOrder.getCommerceOrderId(), RandomTestUtil.nextDouble(),
 			restricted, RandomTestUtil.randomString(), _TYPE_KEY,
 			RandomTestUtil.randomString(),
-			getClass().getResourceAsStream("dependencies/attachment.txt"));
+			new ByteArrayInputStream("Liferay".getBytes()));
 	}
 
 	private static final String _TYPE_KEY = "invoice";

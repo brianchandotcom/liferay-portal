@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
  * @author Tancredi Covioli
  */
 @RunWith(Arquillian.class)
-public class PlacedCommerceOrderAttachmentTableFDSViewTest {
+public class PendingCommerceOrderAttachmentTableFDSViewTest {
 
 	@ClassRule
 	@Rule
@@ -41,7 +41,7 @@ public class PlacedCommerceOrderAttachmentTableFDSViewTest {
 	public void setUp() throws Exception {
 		List<FDSView> fdsViews = _fdsViewRegistry.getFDSViews(
 			CommerceFragmentRendererKeys.ORDER_ATTACHMENTS_DATA_SET +
-				"-placedOrderAttachments");
+				"-pendingOrderAttachments");
 
 		FDSView fdsView = fdsViews.get(0);
 

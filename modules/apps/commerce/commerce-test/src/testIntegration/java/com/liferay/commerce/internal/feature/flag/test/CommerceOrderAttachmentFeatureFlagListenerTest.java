@@ -32,6 +32,8 @@ import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.io.ByteArrayInputStream;
+
 import java.util.List;
 
 import org.junit.Assert;
@@ -137,7 +139,7 @@ public class CommerceOrderAttachmentFeatureFlagListenerTest {
 		return _commerceOrderLocalService.addAttachmentFileEntry(
 			RandomTestUtil.randomString(), _user.getUserId(),
 			_commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString(),
-			getClass().getResourceAsStream("dependencies/attachment.txt"));
+			new ByteArrayInputStream("Liferay".getBytes()));
 	}
 
 	private AccountEntry _accountEntry;

@@ -8,11 +8,11 @@ jobs:
         steps:
             -   name: Checkout code
                 uses: actions/checkout@v4
-            -   name: Setup Terraform
+            -   name: Set up Terraform
                 uses: hashicorp/setup-terraform@v3
                 with:
                     terraform_version: 1.5.7
-            -   name: Setup TFLint
+            -   name: Set up TFLint
                 uses: terraform-linters/setup-tflint@v4
             -   name: Initialize Terraform
                 run: terraform init -backend=false -input=false

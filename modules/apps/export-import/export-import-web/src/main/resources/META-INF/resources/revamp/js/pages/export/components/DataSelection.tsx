@@ -10,8 +10,10 @@ import DateFilter, {DateFilterValues} from '../../../components/date_filter';
 import {FormikFieldContentSelector} from '../../../components/forms/formik';
 import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
 
-export default function DataSelectionStep({
-	itemsCount = 0,
+const LABEL_ID = 'dataSelection-label';
+
+export default function DataSelection({
+	itemsCount,
 	onApplyFilter,
 	sections,
 }: {
@@ -21,6 +23,18 @@ export default function DataSelectionStep({
 }) {
 	return (
 		<>
+			<header className="mb-1 mt-5 sheet-header">
+				<div className="mb-1 sheet-title" id={LABEL_ID}>
+					{Liferay.Language.get('data-selection')}
+				</div>
+
+				<p className="sheet-text text-secondary">
+					{Liferay.Language.get(
+						'select-and-filter-the-data-you-want-to-include-in-your-export'
+					)}
+				</p>
+			</header>
+
 			<ClayLayout.Sheet>
 				<DateFilter
 					itemsCount={itemsCount}
@@ -28,10 +42,12 @@ export default function DataSelectionStep({
 				/>
 			</ClayLayout.Sheet>
 
-			<FormikFieldContentSelector
-				name="contentSelection"
-				sections={sections}
-			/>
+			<div data-testid="data-selection-section">
+				<FormikFieldContentSelector
+					name="contentSelection"
+					sections={sections}
+				/>
+			</div>
 		</>
 	);
 }

@@ -5,19 +5,19 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import {FormikValues} from 'formik';
+import {Form, Formik, FormikValues} from 'formik';
 import React from 'react';
 
-import {Wizard, WizardStep} from '../../components/Wizard';
+import Footer from '../../components/Footer';
 import {DateFilterValues} from '../../components/date_filter';
+import {FormikDebug} from '../../components/forms/formik';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import {
 	PortletDataHandlerSection,
 	mockPortletDataHandlerSections,
 } from '../../utils/mockPortletDataHandlerSections';
-import DataSelectionStep from './steps/DataSelectionStep';
-import SettingsStep from './steps/SettingsStep';
-import SetupStep from './steps/SetupStep';
+import DataSelection from './components/DataSelection';
+import Setup from './components/Setup';
 
 interface NewExportProps {
 	backURL: string;
@@ -35,76 +35,76 @@ export function NewExport({
 	};
 
 	return (
-		<Wizard backURL={backURL}>
-			<WizardStep
-				description={Liferay.Language.get(
-					'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'
-				)}
-				initialValues={{
-					filename: '',
-					selectedSectionIds: [],
-				}}
-				title={Liferay.Language.get('setup')}
-				validate={(values: FormikValues) => {
-					const errors: {[key: string]: string} = {};
+		<Formik
+			initialValues={{
+				contentSelection: undefined,
+				filename: '',
+			}}
+			onSubmit={async (values) => {
+				const flatValues = flattenContentSelection({
+					contentSelection: values.contentSelection,
+					sections,
+				});
 
-					if (!values?.selectedSectionIds?.length) {
-						errors.selectedSectionIds = Liferay.Language.get(
-							'please-select-at-least-one-entity-type-to-continue'
-						);
-					}
+				// eslint-disable-next-line no-console
+				console.log({
+					contentSelection: values.contentSelection,
+					filename: values.filename,
+					flatValues,
+				});
+			}}
+			validate={(values: FormikValues) => {
+				const errors: {[key: string]: string} = {};
 
-					return errors;
-				}}
-			>
-				<SetupStep sections={sections} />
-			</WizardStep>
-
-			<WizardStep
-				description={Liferay.Language.get(
-					'select-and-filter-the-data-you-want-to-include-in-your-export'
-				)}
-				initialValues={{
-					contentSelection: undefined,
-				}}
-				title={Liferay.Language.get('data-selection')}
-			>
-				<DataSelectionStep
-					itemsCount={0}
-					onApplyFilter={handleApplyFilter}
-					sections={sections}
-				/>
-			</WizardStep>
-
-			<WizardStep
-				actionButton={
-					<ClayButton type="submit">
-						<span className="inline-item inline-item-before">
-							<ClayIcon className="mr-1" symbol="export" />
-						</span>
-
-						{Liferay.Language.get('export')}
-					</ClayButton>
+				if (!values?.filename) {
+					errors.filename = Liferay.Language.get(
+						'this-field-is-required'
+					);
 				}
-				description={Liferay.Language.get(
-					'configure-your-export-settings'
-				)}
-				onSubmit={async (values) => {
-					const flatValues = flattenContentSelection({
-						contentSelection: values.contentSelection,
-						sections,
-					});
 
-					// eslint-disable-next-line no-console
-					console.log({
-						contentSelection: values.contentSelection,
-						flatValues,
-					});
-				}}
-				title={Liferay.Language.get('settings')}
-			>
-				<SettingsStep />
-			</WizardStep>
-		</Wizard>
+				if (!values?.contentSelection) {
+					errors.contentSelection = Liferay.Language.get(
+						'please-select-at-least-one-entity-type-to-continue'
+					);
+				}
+
+				return errors;
+			}}
+			validateOnMount
+		>
+			{(formik) => (
+				<Form noValidate>
+					<Setup />
+
+					<DataSelection
+						onApplyFilter={handleApplyFilter}
+						sections={sections}
+					/>
+
+					<Footer
+						actionButton={
+							<ClayButton
+								disabled={
+									formik.isSubmitting || !formik.isValid
+								}
+								type="submit"
+							>
+								<span className="inline-item inline-item-before">
+									<ClayIcon
+										className="mr-1"
+										symbol="export"
+									/>
+								</span>
+
+								{Liferay.Language.get('export')}
+							</ClayButton>
+						}
+						backURL={backURL}
+					/>
+
+					{process.env.NODE_ENV === 'development' && <FormikDebug />}
+				</Form>
+			)}
+		</Formik>
 	);
 }

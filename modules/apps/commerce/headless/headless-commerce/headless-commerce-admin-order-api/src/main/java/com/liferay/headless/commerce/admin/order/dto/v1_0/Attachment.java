@@ -262,6 +262,47 @@ public class Attachment implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getFileName() {
+		if (_fileNameSupplier != null) {
+			fileName = _fileNameSupplier.get();
+
+			_fileNameSupplier = null;
+		}
+
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+
+		_fileNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
+
+		_fileNameSupplier = () -> {
+			try {
+				return fileNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String fileName;
+
+	@JsonIgnore
+	private Supplier<String> _fileNameSupplier;
+
 	@DecimalMin("0")
 	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
 	public Long getId() {
@@ -650,6 +691,22 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 		}
 
+		String fileName = getFileName();
+
+		if (fileName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileName));
+
+			sb.append("\"");
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -851,4 +908,4 @@ public class Attachment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-684937967
+// LIFERAY-REST-BUILDER-HASH:1552463707

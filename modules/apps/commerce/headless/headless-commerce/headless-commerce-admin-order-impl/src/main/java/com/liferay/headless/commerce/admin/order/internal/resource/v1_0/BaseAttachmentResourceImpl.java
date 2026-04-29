@@ -343,7 +343,7 @@ public abstract class BaseAttachmentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{orderId}/attachments/{attachmentId}' -d $'{"attachment": ___, "externalReferenceCode": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{orderId}/attachments/{attachmentId}' -d $'{"attachment": ___, "externalReferenceCode": ___, "fileName": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -383,7 +383,7 @@ public abstract class BaseAttachmentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}' -d $'{"attachment": ___, "externalReferenceCode": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/attachments/by-externalReferenceCode/{attachmentExternalReferenceCode}' -d $'{"attachment": ___, "externalReferenceCode": ___, "fileName": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -426,7 +426,7 @@ public abstract class BaseAttachmentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{orderId}/attachments' -d $'{"attachment": ___, "externalReferenceCode": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/{orderId}/attachments' -d $'{"attachment": ___, "externalReferenceCode": ___, "fileName": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -458,7 +458,7 @@ public abstract class BaseAttachmentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/attachments' -d $'{"attachment": ___, "externalReferenceCode": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-order/v1.0/orders/by-externalReferenceCode/{externalReferenceCode}/attachments' -d $'{"attachment": ___, "externalReferenceCode": ___, "fileName": ___, "priority": ___, "restricted": ___, "title": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1184,4 +1184,4 @@ public abstract class BaseAttachmentResourceImpl
 		LogFactoryUtil.getLog(BaseAttachmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1069124740
+// LIFERAY-REST-BUILDER-HASH:233804818

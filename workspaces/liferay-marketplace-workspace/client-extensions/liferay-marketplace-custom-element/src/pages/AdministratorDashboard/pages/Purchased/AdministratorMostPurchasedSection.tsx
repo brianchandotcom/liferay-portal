@@ -22,14 +22,10 @@ import AdministratorMostPurchasedListView, {
 type ProductsCountEntry = {
 	orderTypeExternalReferenceCode: string;
 	productId: number;
-	productName: string;
 	total: number;
 };
 
-type PurchasedReportValue = {
-	createDate?: string;
-	productsPurchased?: ProductsCountEntry[];
-};
+type PurchasedReportValue = ProductsCountEntry[];
 
 type ReportsEntry = {
 	value?: string;
@@ -57,27 +53,27 @@ function getTopProducts(
 				return b.total - a.total;
 			}
 
-			return a.productName.localeCompare(b.productName);
+			return a.productId - b.productId;
 		})
 		.slice(0, TOP_PRODUCTS_COUNT);
 }
 
-async function withThumbnails(
+async function withProductDetails(
 	entries: ProductsCountEntry[]
 ): Promise<PurchasedItem[]> {
 	return Promise.all(
-		entries.map(async ({productId, productName, total}) => {
+		entries.map(async ({productId, total}) => {
+			let productName = '';
 			let thumbnail = '';
 
 			try {
 				const product =
 					await HeadlessCommerceAdminCatalog.getProduct(productId);
 
+				productName = product?.name?.en_US ?? '';
 				thumbnail = product?.thumbnail ?? '';
 			}
-			catch {
-				thumbnail = '';
-			}
+			catch {}
 
 			return {productName, purchaseCount: total, thumbnail};
 		})
@@ -89,7 +85,7 @@ const AdministratorMostPurchasedSection: React.FC = () => {
 		apps: [],
 		liferayProducts: [],
 	});
-	const [loadingThumbnails, setLoadingThumbnails] = useState(false);
+	const [loadingDetails, setLoadingDetails] = useState(false);
 
 	const {data: reportsData, loading} = useFetch<APIResponse<ReportsEntry>>(
 		`${REPORTS_ENDPOINT}?filter=${encodeURIComponent(REPORTS_FILTER)}`
@@ -104,12 +100,10 @@ const AdministratorMostPurchasedSection: React.FC = () => {
 			return;
 		}
 
-		const reportValue = safeJSONParse<PurchasedReportValue>(
+		const productsPurchased = safeJSONParse<PurchasedReportValue>(
 			reportsData.items[0]?.value || '',
-			{}
+			[]
 		);
-
-		const productsPurchased = reportValue.productsPurchased || [];
 
 		const topApps = getTopProducts(productsPurchased, APP_ORDER_TYPES);
 		const topLiferayProducts = getTopProducts(
@@ -123,23 +117,23 @@ const AdministratorMostPurchasedSection: React.FC = () => {
 			return;
 		}
 
-		setLoadingThumbnails(true);
+		setLoadingDetails(true);
 
 		Promise.all([
-			withThumbnails(topApps),
-			withThumbnails(topLiferayProducts),
+			withProductDetails(topApps),
+			withProductDetails(topLiferayProducts),
 		])
 			.then(([apps, liferayProducts]) => {
 				if (!cancelled) {
 					setProducts({apps, liferayProducts});
-					setLoadingThumbnails(false);
+					setLoadingDetails(false);
 				}
 			})
 			.catch((error) => {
 				console.error(error);
 
 				if (!cancelled) {
-					setLoadingThumbnails(false);
+					setLoadingDetails(false);
 				}
 			});
 
@@ -148,7 +142,7 @@ const AdministratorMostPurchasedSection: React.FC = () => {
 		};
 	}, [reportsData]);
 
-	if (loading || loadingThumbnails) {
+	if (loading || loadingDetails) {
 		return <Loading />;
 	}
 

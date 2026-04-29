@@ -216,10 +216,16 @@ public class DataDefinitionDDMFormUtil {
 			_toDDMFormFields(
 				dataDefinitionField.getNestedDataDefinitionFields(),
 				ddmFormFieldTypeServicesRegistry, languageId));
-		ddmFormField.setPredefinedValue(
-			LocalizedValueUtil.toLocalizedValue(
-				dataDefinitionField.getDefaultValue(),
-				LocaleUtil.fromLanguageId(languageId)));
+
+		Map<String, Object> defaultValue =
+			dataDefinitionField.getDefaultValue();
+
+		if (MapUtil.isNotEmpty(defaultValue)) {
+			ddmFormField.setPredefinedValue(
+				LocalizedValueUtil.toLocalizedValue(
+					defaultValue, LocaleUtil.fromLanguageId(languageId)));
+		}
+
 		ddmFormField.setReadOnly(
 			GetterUtil.getBoolean(dataDefinitionField.getReadOnly()));
 		ddmFormField.setRepeatable(

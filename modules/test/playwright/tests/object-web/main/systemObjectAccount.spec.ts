@@ -245,6 +245,8 @@ test('cannot edit system fields', async ({
 		await expect(
 			sidePanel.locator('input[name="name"]')
 		).not.toBeEditable();
+
+		await page.frameLocator('iframe').getByLabel('Cancel').click();
 	}
 });
 

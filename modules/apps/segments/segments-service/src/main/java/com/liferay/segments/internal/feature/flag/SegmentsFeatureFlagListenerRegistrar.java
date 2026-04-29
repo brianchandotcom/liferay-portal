@@ -77,6 +77,10 @@ public class SegmentsFeatureFlagListenerRegistrar {
 		public void onValue(
 			long companyId, String featureFlagKey, boolean enabled) {
 
+			if (companyId != 0) {
+				return;
+			}
+
 			_companyLocalService.forEachCompany(
 				company -> {
 					long[] groupIds = TransformUtil.transformToLongArray(

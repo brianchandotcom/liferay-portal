@@ -7,6 +7,7 @@ package com.liferay.headless.object.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
@@ -15,6 +16,7 @@ import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.headless.object.client.problem.Problem;
 import com.liferay.headless.object.client.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceWrapper;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -24,23 +26,28 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -48,6 +55,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -57,13 +65,17 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryLocalService;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -84,15 +96,7 @@ public class ObjectEntryFolderResourceTest
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		BaseObjectEntryFolderResourceTestCase.setUpClass();
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-17564");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-17564");
+		CMSTestUtil.getOrAddGroup(ObjectEntryFolderResourceTest.class);
 	}
 
 	@Before
@@ -126,6 +130,125 @@ public class ObjectEntryFolderResourceTest
 		_testGetObjectEntryFolderActionsWithSharingEnabled();
 		_testGetObjectEntryFolderActionsWithSystemSharingDisabled();
 		_testGetObjectEntryFolderActionsWithoutUpdatePermission();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	@TestInfo("LPD-83639")
+	public void testGetObjectEntryFolderShareAction() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		user.setEmailAddressVerified(true);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
+			_addObjectEntryFolder(
+				depotEntry,
+				ServiceContextTestUtil.getServiceContext(
+					depotEntry.getGroupId()),
+				depotEntry.getUserId());
+
+		// With asset library administrator role
+
+		Role role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+
+		UserGroupRole userGroupRole =
+			_userGroupRoleLocalService.addUserGroupRole(
+				user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
+
+		JSONObject jsonObject = _getActionsJSONObject(
+			objectEntryFolder, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		// With asset library content reviewer role
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		userGroupRole = _userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertFalse(jsonObject.has("share"));
+
+		// With asset library content reviewer role and shared object entry
+		// folder
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
+			_classNameLocalService.getClassNameId(
+				objectEntryFolder.getModelClassName()),
+			objectEntryFolder.getObjectEntryFolderId(), depotEntry.getGroupId(),
+			true, List.of(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				depotEntry.getGroupId(), TestPropsValues.getUserId()));
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		_sharingEntryLocalService.deleteSharingEntry(
+			sharingEntry.getSharingEntryId());
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		// With CMS administrator role
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_roleLocalService.deleteUserRole(user.getUserId(), role.getRoleId());
+
+		// With user as creator
+
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder2 =
+			_addObjectEntryFolder(
+				depotEntry,
+				ServiceContextTestUtil.getServiceContext(
+					depotEntry.getGroupId(), user.getUserId()),
+				user.getUserId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder2, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		// Without role
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertFalse(jsonObject.has("share"));
 	}
 
 	@Override
@@ -698,6 +821,26 @@ public class ObjectEntryFolderResourceTest
 		return objectEntryFolder.getScopeKey();
 	}
 
+	private com.liferay.object.model.ObjectEntryFolder _addObjectEntryFolder(
+			DepotEntry depotEntry, ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					depotEntry.getGroupId(), depotEntry.getCompanyId());
+
+		return _objectEntryFolderLocalService.addObjectEntryFolder(
+			null, depotEntry.getGroupId(), userId,
+			objectEntryFolder.getObjectEntryFolderId(),
+			RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			RandomTestUtil.randomString(), serviceContext);
+	}
+
 	private void _addResourcePermission(String actionId, long userId)
 		throws Exception {
 
@@ -727,6 +870,32 @@ public class ObjectEntryFolderResourceTest
 
 			Assert.assertEquals("FORBIDDEN", problem.getStatus());
 		}
+	}
+
+	private JSONObject _getActionsJSONObject(
+			com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+			String password, User user)
+		throws Exception {
+
+		AtomicReference<JSONObject> atomicReference = new AtomicReference<>();
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			() -> {
+				JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
+					null,
+					"headless-object/v1.0/object-entry-folders/" +
+						objectEntryFolder.getObjectEntryFolderId(),
+					Http.Method.GET);
+
+				atomicReference.set(
+					responseJSONObject.getJSONObject("actions"));
+			}
+		);
+
+		return atomicReference.get();
 	}
 
 	private Map<String, String> _getActionValue(String href, String method) {
@@ -1470,6 +1639,9 @@ public class ObjectEntryFolderResourceTest
 	}
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
@@ -1485,11 +1657,17 @@ public class ObjectEntryFolderResourceTest
 	private RoleLocalService _roleLocalService;
 
 	@Inject
+	private SharingEntryLocalService _sharingEntryLocalService;
+
+	@Inject
 	private SubscriptionLocalService _subscriptionLocalService;
 
 	@DeleteAfterTestRun
 	private DepotEntry _testDepotEntry;
 
 	private Group _testDepotEntryGroup;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

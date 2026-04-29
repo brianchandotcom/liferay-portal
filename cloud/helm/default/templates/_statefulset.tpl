@@ -339,33 +339,6 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    ingress:
-        {{- if and .statefulset.network .statefulset.network.enabled .statefulset.networkPolicy.allowGatewayIngress }}
-        -   from:
-                -   namespaceSelector:
-                        matchLabels:
-                            kubernetes.io/metadata.name: {{ .statefulset.networkPolicy.gatewayNamespace | quote }}
-                    podSelector:
-                        matchLabels:
-                            app.kubernetes.io/managed-by: envoy-gateway
-                            app.kubernetes.io/name: {{ .statefulset.networkPolicy.gatewayPodLabel | quote }}
-                            gateway.envoyproxy.io/owning-gateway-namespace: {{ include "liferay.namespace" .root | quote }}
-            ports:
-                -   port: http
-                    protocol: TCP
-        {{- end }}
-        -   from:
-                -   podSelector:
-                        matchLabels:
-                            {{- include "liferay.selectorLabels" .root | nindent 28 }}
-            ports:
-                -   port: cluster
-                    protocol: TCP
-                -   port: http
-                    protocol: TCP
-        {{- with .statefulset.networkPolicy.extraIngress }}
-        {{- toYaml . | nindent 8 }}
-        {{- end }}
     egress:
         -   ports:
                 -   port: 53
@@ -394,6 +367,33 @@ spec:
         {{- end }}
         {{- end }}
         {{- with .statefulset.networkPolicy.extraEgress }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    ingress:
+        {{- if and .statefulset.network .statefulset.network.enabled .statefulset.networkPolicy.allowGatewayIngress }}
+        -   from:
+                -   namespaceSelector:
+                        matchLabels:
+                            kubernetes.io/metadata.name: {{ .statefulset.networkPolicy.gatewayNamespace | quote }}
+                    podSelector:
+                        matchLabels:
+                            app.kubernetes.io/managed-by: envoy-gateway
+                            app.kubernetes.io/name: {{ .statefulset.networkPolicy.gatewayPodLabel | quote }}
+                            gateway.envoyproxy.io/owning-gateway-namespace: {{ include "liferay.namespace" .root | quote }}
+            ports:
+                -   port: http
+                    protocol: TCP
+        {{- end }}
+        -   from:
+                -   podSelector:
+                        matchLabels:
+                            {{- include "liferay.selectorLabels" .root | nindent 28 }}
+            ports:
+                -   port: cluster
+                    protocol: TCP
+                -   port: http
+                    protocol: TCP
+        {{- with .statefulset.networkPolicy.extraIngress }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     podSelector:

@@ -367,7 +367,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithGridPageElement();
-		_testPostSitePageSpecificationPageExperiencePageElementWithUndeployedPortletWidgetPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 	}
 
@@ -381,7 +380,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement();
-		_testPutSitePageSpecificationPageExperiencePageElementWithUndeployedPortletWidgetPageElement();
 		_testPutSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 	}
 
@@ -2520,53 +2518,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			journalArticle, pageElement.getExternalReferenceCode());
 	}
 
-	private void _testPostSitePageSpecificationPageExperiencePageElementWithUndeployedPortletWidgetPageElement()
-		throws Exception {
-
-		String draftWidgetInstanceExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String namespace = RandomTestUtil.randomString();
-
-		_addFragmentEntryLink(
-			draftWidgetInstanceExternalReferenceCode, namespace);
-
-		String undeployedPortletName =
-			"com_liferay_test_UndeployedPortlet_" +
-				RandomTestUtil.randomString();
-
-		PageElement pageElement = _getWidgetPageElement(
-			null, RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-			draftWidgetInstanceExternalReferenceCode, false,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_getWidgetConfig(), RandomTestUtil.randomString(), namespace,
-			undeployedPortletName, _getWidgetPermissions());
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_layout.getPlid());
-
-		PageElement postPageElement =
-			pageElementResource.
-				postSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(), pageElement);
-
-		assertValid(postPageElement);
-
-		WidgetInstancePageElementDefinition
-			postWidgetInstancePageElementDefinition =
-				(WidgetInstancePageElementDefinition)
-					postPageElement.getPageElementDefinition();
-
-		WidgetInstance postWidgetInstance =
-			postWidgetInstancePageElementDefinition.getWidgetInstance();
-
-		Assert.assertEquals(
-			undeployedPortletName, postWidgetInstance.getWidgetName());
-	}
-
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()
 		throws Exception {
 
@@ -2596,6 +2547,44 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, 0, null, pageElement);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		String undeployedPortletName =
+			"com_liferay_test_UndeployedPortlet_" +
+				RandomTestUtil.randomString();
+
+		pageElement =
+			pageElementResource.
+				postSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
+					_getWidgetPageElement(
+						null,
+						RandomTestUtil.randomStrings(
+							RandomTestUtil.randomInt(1, 10)),
+						draftWidgetInstanceExternalReferenceCode, false,
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString(), _getWidgetConfig(),
+						RandomTestUtil.randomString(), namespace,
+						undeployedPortletName, _getWidgetPermissions()));
+
+		assertValid(pageElement);
+
+		WidgetInstancePageElementDefinition
+			widgetInstancePageElementDefinition =
+				(WidgetInstancePageElementDefinition)
+					pageElement.getPageElementDefinition();
+
+		WidgetInstance widgetInstance =
+			widgetInstancePageElementDefinition.getWidgetInstance();
+
+		Assert.assertEquals(
+			undeployedPortletName, widgetInstance.getWidgetName());
 	}
 
 	private PageElement _testPutSitePageSpecificationPageExperiencePageElement(
@@ -4407,54 +4396,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getGridPageElementDefaultValues(externalReferenceCode));
 	}
 
-	private void _testPutSitePageSpecificationPageExperiencePageElementWithUndeployedPortletWidgetPageElement()
-		throws Exception {
-
-		String draftWidgetInstanceExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String namespace = RandomTestUtil.randomString();
-
-		_addFragmentEntryLink(
-			draftWidgetInstanceExternalReferenceCode, namespace);
-
-		String undeployedPortletName =
-			"com_liferay_test_UndeployedPortlet_" +
-				RandomTestUtil.randomString();
-
-		PageElement pageElement = _getWidgetPageElement(
-			null, RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-			draftWidgetInstanceExternalReferenceCode, false,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_getWidgetConfig(), RandomTestUtil.randomString(), namespace,
-			undeployedPortletName, _getWidgetPermissions());
-
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_layout.getPlid());
-
-		PageElement putPageElement =
-			pageElementResource.
-				putSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					pageElement.getExternalReferenceCode(), pageElement);
-
-		assertValid(putPageElement);
-
-		WidgetInstancePageElementDefinition
-			putWidgetInstancePageElementDefinition =
-				(WidgetInstancePageElementDefinition)
-					putPageElement.getPageElementDefinition();
-
-		WidgetInstance putWidgetInstance =
-			putWidgetInstancePageElementDefinition.getWidgetInstance();
-
-		Assert.assertEquals(
-			undeployedPortletName, putWidgetInstance.getWidgetName());
-	}
-
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()
 		throws Exception {
 
@@ -4529,6 +4470,45 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, 0, null, externalReferenceCode);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		String undeployedPortletName =
+			"com_liferay_test_UndeployedPortlet_" +
+				RandomTestUtil.randomString();
+
+		PageElement pageElement =
+			pageElementResource.
+				putSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
+					externalReferenceCode,
+					_getWidgetPageElement(
+						null,
+						RandomTestUtil.randomStrings(
+							RandomTestUtil.randomInt(1, 10)),
+						draftWidgetInstanceExternalReferenceCode, false,
+						RandomTestUtil.randomString(), externalReferenceCode,
+						_getWidgetConfig(), widgetInstanceExternalReferenceCode,
+						namespace, undeployedPortletName,
+						_getWidgetPermissions()));
+
+		assertValid(pageElement);
+
+		WidgetInstancePageElementDefinition
+			widgetInstancePageElementDefinition =
+				(WidgetInstancePageElementDefinition)
+					pageElement.getPageElementDefinition();
+
+		WidgetInstance widgetInstance =
+			widgetInstancePageElementDefinition.getWidgetInstance();
+
+		Assert.assertEquals(
+			undeployedPortletName, widgetInstance.getWidgetName());
 	}
 
 	@Inject

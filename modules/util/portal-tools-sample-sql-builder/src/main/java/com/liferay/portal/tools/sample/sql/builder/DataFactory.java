@@ -9178,16 +9178,16 @@ public class DataFactory {
 	private String _getFragmentComponentConfiguration(String renderKey)
 		throws Exception {
 
-		if (renderKey.equals("INPUTS-select-from-list")) {
-			return StringPool.BLANK;
-		}
-
 		if (renderKey.equals("INPUTS-file-upload")) {
 			renderKey = "file_upload";
 		}
 
 		if (renderKey.equals("INPUTS-rich-text-input")) {
 			renderKey = "rich_text";
+		}
+
+		if (renderKey.equals("INPUTS-select-from-list")) {
+			return StringPool.BLANK;
 		}
 
 		if (renderKey.equals("INPUTS-text-input")) {

@@ -32,8 +32,7 @@ public class CommerceTermEntryModelDocumentContributor
 		Document document, CommerceTermEntry commerceTermEntry) {
 
 		document.addKeyword(Field.NAME, commerceTermEntry.getName());
-		document.addNumberSortable(
-			Field.PRIORITY, commerceTermEntry.getPriority());
+		document.addKeyword(Field.PRIORITY, commerceTermEntry.getPriority());
 		document.addText(Field.TYPE, commerceTermEntry.getType());
 
 		List<String> languageIds =

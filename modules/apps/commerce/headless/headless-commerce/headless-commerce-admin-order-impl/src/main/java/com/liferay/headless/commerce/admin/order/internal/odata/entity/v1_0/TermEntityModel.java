@@ -24,10 +24,7 @@ public class TermEntityModel implements EntityModel {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
 			new CollectionEntityField(
 				new IntegerEntityField(Field.NAME, locale -> Field.NAME)),
-			new DoubleEntityField(
-				Field.PRIORITY,
-				locale -> Field.getSortableFieldName(
-					Field.PRIORITY + "_Number")),
+			new DoubleEntityField(Field.PRIORITY, locale -> Field.PRIORITY),
 			new StringEntityField(Field.TYPE, locale -> Field.TYPE));
 	}
 

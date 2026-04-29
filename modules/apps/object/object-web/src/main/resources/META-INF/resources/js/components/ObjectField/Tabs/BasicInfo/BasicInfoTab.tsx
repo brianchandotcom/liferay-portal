@@ -13,6 +13,7 @@ import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilterContainer} from './AggregationFilterContainer';
 import {BasicInfoContainer} from './BasicInfoContainer';
 import {FormulaContainer} from './FormulaContainer';
+import {CountryInfo} from './PhoneNumberProperties';
 import {SearchableContainer} from './SearchableContainer';
 import {TranslationOptionsContainer} from './TranslationOptionsContainer';
 
@@ -34,6 +35,7 @@ export interface AggregationFilters {
 interface BasicInfoTabProps {
 	baseResourceURL: string;
 	containerWrapper: ElementType;
+	countries: CountryInfo[];
 	dbObjectFieldRequired?: boolean;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
@@ -56,6 +58,7 @@ interface BasicInfoTabProps {
 export function BasicInfoTab({
 	baseResourceURL,
 	containerWrapper: ContainerWrapper,
+	countries,
 	dbObjectFieldRequired,
 	errors,
 	filterOperators,
@@ -99,6 +102,7 @@ export function BasicInfoTab({
 			>
 				<BasicInfoContainer
 					baseResourceURL={baseResourceURL}
+					countries={countries}
 					creationLanguageId2={creationLanguageId2}
 					dbObjectFieldRequired={dbObjectFieldRequired}
 					errors={errors}

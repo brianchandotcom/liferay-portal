@@ -17,12 +17,14 @@ import ObjectFieldFormBase, {
 import {AttachmentProperties} from './AttachmentProperties';
 import {AggregationFilters} from './BasicInfoTab';
 import {MaxLengthProperties} from './MaxLengthProperties';
+import {CountryInfo} from './PhoneNumberProperties';
 import {PhoneNumberProperties} from './PhoneNumberProperties';
 
 import '../../EditObjectFieldContent.scss';
 
 interface BasicInfoContainerProps {
 	baseResourceURL: string;
+	countries: CountryInfo[];
 	creationLanguageId2?: Liferay.Language.Locale;
 	dbObjectFieldRequired?: boolean;
 	errors: ObjectFieldErrors;
@@ -44,6 +46,7 @@ interface BasicInfoContainerProps {
 
 export function BasicInfoContainer({
 	baseResourceURL,
+	countries,
 	creationLanguageId2,
 	dbObjectFieldRequired,
 	errors,
@@ -158,6 +161,7 @@ export function BasicInfoContainer({
 
 			{values.businessType === 'PhoneNumber' && (
 				<PhoneNumberProperties
+					countries={countries}
 					disabled={disableFieldFormBase}
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]

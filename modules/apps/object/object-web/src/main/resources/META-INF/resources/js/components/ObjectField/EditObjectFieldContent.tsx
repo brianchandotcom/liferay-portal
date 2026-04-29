@@ -46,6 +46,7 @@ export function EditObjectFieldContent({
 	baseResourceURL,
 	ckEditor5Config,
 	containerWrapper,
+	countries,
 	creationLanguageId,
 	decimalSeparator,
 	errors,
@@ -176,6 +177,7 @@ export function EditObjectFieldContent({
 							<BasicInfoTab
 								baseResourceURL={baseResourceURL}
 								containerWrapper={containerWrapper}
+								countries={countries}
 								dbObjectFieldRequired={dbObjectFieldRequired}
 								errors={errors}
 								filterOperators={filterOperators}
@@ -233,6 +235,7 @@ export function EditObjectFieldContent({
 				<BasicInfoTab
 					baseResourceURL={baseResourceURL}
 					containerWrapper={containerWrapper}
+					countries={countries}
 					dbObjectFieldRequired={dbObjectFieldRequired}
 					errors={errors}
 					filterOperators={filterOperators}

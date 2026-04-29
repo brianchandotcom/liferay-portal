@@ -28,49 +28,6 @@ export interface CountryInfo {
 	name: string;
 }
 
-export const DEFAULT_COUNTRIES: CountryInfo[] = [
-	{a2: 'US', idd: '1', name: 'United States'},
-	{a2: 'GB', idd: '44', name: 'United Kingdom'},
-	{a2: 'DE', idd: '49', name: 'Germany'},
-	{a2: 'FR', idd: '33', name: 'France'},
-	{a2: 'IT', idd: '39', name: 'Italy'},
-	{a2: 'ES', idd: '34', name: 'Spain'},
-	{a2: 'PT', idd: '351', name: 'Portugal'},
-	{a2: 'BR', idd: '55', name: 'Brazil'},
-	{a2: 'JP', idd: '81', name: 'Japan'},
-	{a2: 'CN', idd: '86', name: 'China'},
-	{a2: 'IN', idd: '91', name: 'India'},
-	{a2: 'AU', idd: '61', name: 'Australia'},
-	{a2: 'CA', idd: '1', name: 'Canada'},
-	{a2: 'MX', idd: '52', name: 'Mexico'},
-	{a2: 'AR', idd: '54', name: 'Argentina'},
-	{a2: 'CL', idd: '56', name: 'Chile'},
-	{a2: 'CO', idd: '57', name: 'Colombia'},
-	{a2: 'KR', idd: '82', name: 'South Korea'},
-	{a2: 'NL', idd: '31', name: 'Netherlands'},
-	{a2: 'BE', idd: '32', name: 'Belgium'},
-	{a2: 'CH', idd: '41', name: 'Switzerland'},
-	{a2: 'AT', idd: '43', name: 'Austria'},
-	{a2: 'SE', idd: '46', name: 'Sweden'},
-	{a2: 'NO', idd: '47', name: 'Norway'},
-	{a2: 'DK', idd: '45', name: 'Denmark'},
-	{a2: 'FI', idd: '358', name: 'Finland'},
-	{a2: 'PL', idd: '48', name: 'Poland'},
-	{a2: 'IE', idd: '353', name: 'Ireland'},
-	{a2: 'NZ', idd: '64', name: 'New Zealand'},
-	{a2: 'SG', idd: '65', name: 'Singapore'},
-	{a2: 'ZA', idd: '27', name: 'South Africa'},
-	{a2: 'RU', idd: '7', name: 'Russia'},
-	{a2: 'TR', idd: '90', name: 'Turkey'},
-	{a2: 'IL', idd: '972', name: 'Israel'},
-	{a2: 'AE', idd: '971', name: 'United Arab Emirates'},
-	{a2: 'SA', idd: '966', name: 'Saudi Arabia'},
-	{a2: 'TH', idd: '66', name: 'Thailand'},
-	{a2: 'PH', idd: '63', name: 'Philippines'},
-	{a2: 'ID', idd: '62', name: 'Indonesia'},
-	{a2: 'MY', idd: '60', name: 'Malaysia'},
-];
-
 const FLAG_ICON_MAP: Record<string, string> = {
 	AD: 'ca-ad',
 	AE: 'ar-sa',
@@ -139,6 +96,7 @@ function getFlagSymbol(a2: string): string {
 }
 
 interface IPhoneNumberPropertiesProps {
+	countries: CountryInfo[];
 	disabled?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSubmit?: (values?: Partial<ObjectField>) => void;
@@ -168,6 +126,7 @@ const PickerTrigger = React.forwardRef<
 });
 
 export function PhoneNumberProperties({
+	countries,
 	disabled,
 	objectFieldSettings,
 	onSubmit,
@@ -180,8 +139,8 @@ export function PhoneNumberProperties({
 	const prefixType = settings.prefixType || PREFIX_TYPES.DEFINE_BY_USER;
 
 	const selectedCountry =
-		DEFAULT_COUNTRIES.find((country) => `+${country.idd}` === prefix) ||
-		DEFAULT_COUNTRIES[0];
+		countries.find((country) => `+${country.idd}` === prefix) ||
+		countries[0];
 
 	const handlePrefixTypeChange = (value: PrefixType) => {
 		let updatedSettings = updateFieldSettings(objectFieldSettings, {
@@ -197,7 +156,7 @@ export function PhoneNumberProperties({
 		else if (value === PREFIX_TYPES.FIXED) {
 			updatedSettings = updateFieldSettings(updatedSettings, {
 				name: 'prefix',
-				value: `+${DEFAULT_COUNTRIES[0].idd}`,
+				value: `+${countries[0].idd}`,
 			});
 		}
 
@@ -262,9 +221,9 @@ export function PhoneNumberProperties({
 						<Picker
 							as={PickerTrigger}
 							disabled={disabled}
-							items={DEFAULT_COUNTRIES}
+							items={countries}
 							onSelectionChange={(key) => {
-								const selectedCountry = DEFAULT_COUNTRIES.find(
+								const selectedCountry = countries.find(
 									(country) => country.a2 === key
 								);
 

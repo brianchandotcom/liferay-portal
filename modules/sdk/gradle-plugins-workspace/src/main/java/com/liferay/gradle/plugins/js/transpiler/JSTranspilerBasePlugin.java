@@ -22,6 +22,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskDependency;
@@ -43,8 +44,20 @@ public class JSTranspilerBasePlugin implements Plugin<Project> {
 		LiferayWorkspaceNodePlugin.INSTANCE.apply(project);
 
 		final NpmInstallTask npmInstallTask =
-			(NpmInstallTask)GradleUtil.getTask(
+			(NpmInstallTask)GradleUtil.fetchTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
+
+		if (npmInstallTask == null) {
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Unable to find NPM install task, skipping " +
+						"JSTranspilerBasePlugin configuration");
+			}
+
+			return;
+		}
 
 		final Configuration jsCompileConfiguration = _addConfigurationJSCompile(
 			project);

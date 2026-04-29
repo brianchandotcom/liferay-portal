@@ -196,21 +196,50 @@ describe('Picker incremental interactions', () => {
 
 		const originalScrollTo = HTMLElement.prototype.scrollTo;
 		HTMLElement.prototype.scrollTo = jest.fn() as any;
-		const offsetTopSpy = jest
-			.spyOn(HTMLElement.prototype, 'offsetTop', 'get')
+		const getBoundingClientRectSpy = jest
+			.spyOn(Element.prototype, 'getBoundingClientRect')
 			.mockImplementation(function (this: HTMLElement) {
 				if (this.getAttribute('role') === 'option') {
-					return items.indexOf(this.id) * ITEM_HEIGHT;
+					const top = items.indexOf(this.id) * ITEM_HEIGHT;
+
+					return {
+						bottom: top + ITEM_HEIGHT,
+						height: ITEM_HEIGHT,
+						left: 0,
+						right: 0,
+						top,
+						width: 0,
+						x: 0,
+						y: top,
+						toJSON: () => ({}),
+					};
 				}
 
-				return 0;
-			});
-		const offsetHeightSpy = jest
-			.spyOn(HTMLElement.prototype, 'offsetHeight', 'get')
-			.mockImplementation(function (this: HTMLElement) {
-				return this.getAttribute('role') === 'option'
-					? ITEM_HEIGHT
-					: 0;
+				if (this.getAttribute('role') === 'listbox') {
+					return {
+						bottom: LIST_CLIENT_HEIGHT,
+						height: LIST_CLIENT_HEIGHT,
+						left: 0,
+						right: 0,
+						top: 0,
+						width: 0,
+						x: 0,
+						y: 0,
+						toJSON: () => ({}),
+					};
+				}
+
+				return {
+					bottom: 0,
+					height: 0,
+					left: 0,
+					right: 0,
+					top: 0,
+					width: 0,
+					x: 0,
+					y: 0,
+					toJSON: () => ({}),
+				};
 			});
 		const clientHeightSpy = jest
 			.spyOn(HTMLElement.prototype, 'clientHeight', 'get')
@@ -249,8 +278,7 @@ describe('Picker incremental interactions', () => {
 			expect(getByRole('listbox').scrollTop).toBe(expected);
 		}
 		finally {
-			offsetTopSpy.mockRestore();
-			offsetHeightSpy.mockRestore();
+			getBoundingClientRectSpy.mockRestore();
 			clientHeightSpy.mockRestore();
 			scrollHeightSpy.mockRestore();
 			HTMLElement.prototype.scrollTo = originalScrollTo;

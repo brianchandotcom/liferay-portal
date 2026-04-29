@@ -433,9 +433,12 @@ export function Picker<T extends Record<string, any> | string | number>({
 		}
 
 		const list = listRef.current;
-		const offsetTop = item.offsetTop - list.offsetTop;
+		const itemRect = item.getBoundingClientRect();
+		const listRect = list.getBoundingClientRect();
+		const itemOffsetInList =
+			itemRect.top - listRect.top + list.scrollTop;
 		const centeredTop =
-			offsetTop - (list.clientHeight - item.offsetHeight) / 2;
+			itemOffsetInList - (list.clientHeight - itemRect.height) / 2;
 
 		list.scrollTop = Math.max(
 			0,

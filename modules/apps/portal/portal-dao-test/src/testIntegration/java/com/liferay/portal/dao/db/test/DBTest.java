@@ -670,14 +670,14 @@ public class DBTest {
 
 			statement1.executeUpdate(
 				"update " + TABLE_NAME_1 +
-					" set nilColumn='locked' where id=1");
+					" set nilColumn = 'locked' where id = 1");
 
 			futureTask = new FutureTask<>(
 				() -> {
 					try (Statement statement2 = connection.createStatement()) {
 						statement2.executeUpdate(
 							"update " + TABLE_NAME_1 +
-								" set nilColumn='waiting' where id=1");
+								" set nilColumn = 'waiting' where id = 1");
 					}
 
 					return null;

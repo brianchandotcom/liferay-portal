@@ -13,18 +13,29 @@ import {
 import {DefaultValueInput} from './condition_builder/DefaultValueInput';
 import {getCollectionOperators} from './operators';
 
+import type {
+	ConditionType,
+	FilterCondition,
+	GenericProperty,
+} from './condition_builder/types';
+
+interface CollectionFilterBuilderProps {
+	initialConditionType?: ConditionType;
+	initialConditions?: Array<Omit<FilterCondition, 'id'>>;
+	namespace: string;
+	onChange?: (state: {
+		conditionType: ConditionType;
+		conditions: FilterCondition[];
+	}) => void;
+	properties: GenericProperty[];
+	propertiesURL?: string;
+}
+
 /**
  * Collections-specific wrapper around the generic ConditionBuilder.
  *
  * Serializes the current value into a hidden input so the typeSettings handler
  * picks it up on form submit.
- *
- * @param {Object} props
- * @param {'all'|'any'} [props.initialConditionType='all']
- * @param {Array<{id:string, propertyName?:string, operatorName?:string, value?:string}>} [props.initialConditions]
- * @param {string} props.namespace - portlet namespace, used for the hidden input name
- * @param {(state: {conditionType:'all'|'any', conditions:Array}) => void} [props.onChange]
- * @param {Array<{name:string, label:string, type:string, options?:Array}>} props.properties
  */
 export default function CollectionFilterBuilder({
 	initialConditionType = 'all',
@@ -33,8 +44,8 @@ export default function CollectionFilterBuilder({
 	onChange,
 	properties: initialProperties,
 	propertiesURL,
-}) {
-	const [conditions, setConditions] = useState(
+}: CollectionFilterBuilderProps) {
+	const [conditions, setConditions] = useState<FilterCondition[]>(
 		initialConditions?.length
 			? initialConditions.map((condition) => ({
 					...condition,
@@ -43,11 +54,14 @@ export default function CollectionFilterBuilder({
 			: [{id: generateConditionId()}]
 	);
 
-	const [conditionType, setConditionType] = useState(initialConditionType);
+	const [conditionType, setConditionType] =
+		useState<ConditionType>(initialConditionType);
 
-	const [properties, setProperties] = useState(initialProperties || []);
+	const [properties, setProperties] = useState<GenericProperty[]>(
+		initialProperties || []
+	);
 
-	const filterValuesAndOmitID = (conditions) =>
+	const filterValuesAndOmitID = (conditions: FilterCondition[]) =>
 		conditions
 			.filter(
 				({operatorName, propertyName, value}) =>
@@ -63,15 +77,15 @@ export default function CollectionFilterBuilder({
 		const assetTypeListenerHandler = () => {
 			const assetTypeSelector = document.getElementById(
 				`${namespace}anyAssetType`
-			);
+			) as HTMLSelectElement | null;
 			const assetTypeValue = assetTypeSelector?.value || '';
 
-			let classNameIds = [];
+			let classNameIds: string[] = [];
 
 			if (assetTypeValue === 'false') {
 				const multiSelector = document.getElementById(
 					`${namespace}currentClassNameIds`
-				);
+				) as HTMLSelectElement | null;
 
 				classNameIds = Array.from(multiSelector?.options || []).map(
 					(option) => option.value
@@ -81,7 +95,7 @@ export default function CollectionFilterBuilder({
 				classNameIds = [assetTypeValue];
 			}
 
-			let classTypeIds = [];
+			let classTypeIds: string[] = [];
 
 			if (classNameIds.length === 1) {
 				const subtypeContainer = document.querySelector(
@@ -89,17 +103,17 @@ export default function CollectionFilterBuilder({
 				);
 				const subtypeSelector = subtypeContainer?.querySelector(
 					`[id^="${namespace}anyClassType"]`
-				);
+				) as HTMLSelectElement | null;
 				const subtypeValue = subtypeSelector?.value;
 
-				if (subtypeValue === 'false') {
+				if (subtypeValue === 'false' && subtypeContainer) {
 					const className = subtypeContainer.id.slice(
 						namespace.length,
 						-'Options'.length
 					);
 					const multiSubtypeSelect = document.getElementById(
 						`${namespace}${className}currentClassTypeIds`
-					);
+					) as HTMLSelectElement | null;
 
 					classTypeIds = Array.from(
 						multiSubtypeSelect?.options || []
@@ -133,7 +147,10 @@ export default function CollectionFilterBuilder({
 		};
 	}, [namespace, propertiesURL]);
 
-	const handleChange = (newConditions, newType) => {
+	const handleChange = (
+		newConditions: FilterCondition[],
+		newType: ConditionType
+	) => {
 		setConditions(newConditions);
 		setConditionType(newType);
 

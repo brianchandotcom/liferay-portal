@@ -474,7 +474,7 @@ test(
 		)}`;
 
 		let snapshotId: number;
-		let recipient: {alternateName: string; id: number | string};
+		let user: {alternateName: string; id: number | string};
 
 		await test.step('Enable User Views (snapshots)', async () => {
 			await dataSetManagerApiHelpers.updateDataSet({
@@ -501,7 +501,7 @@ test(
 		});
 
 		await test.step('Create a recipient user with VIEW permission on Data Sets and snapshots', async () => {
-			recipient = await createRecipientWithDataSetViewerRole({
+			user = await createRecipientWithDataSetViewerRole({
 				apiHelpers,
 				page,
 			});
@@ -512,7 +512,7 @@ test(
 				[
 					{
 						actionIds: ['VIEW'],
-						id: recipient.id,
+						id: user.id,
 						share: false,
 						type: 'User',
 					},
@@ -523,7 +523,7 @@ test(
 		});
 
 		await test.step('Switch to the recipient user and load the page', async () => {
-			await performUserSwitch(page, recipient.alternateName);
+			await performUserSwitch(page, user.alternateName);
 
 			await dataSetFragmentPage.goToPage({layout});
 

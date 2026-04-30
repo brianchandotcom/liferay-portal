@@ -322,7 +322,9 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	@PostMapping("/process-publisher-asset-links/{productId}")
-	public void processPublisherAssetLinks(@PathVariable long productId) throws Exception {
+	public void processPublisherAssetLinks(@PathVariable long productId)
+		throws Exception {
+
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"POST process publisher asset links for product " + productId);
@@ -360,10 +362,10 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 		catch (WebClientResponseException webClientResponseException) {
 			_log.error(
-				"Unable to process publisher asset links for product " +
-					productId);
-
-			_log.error(webClientResponseException.getResponseBodyAsString());
+				StringBundler.concat(
+					"Unable to process publisher asset links for product ",
+					productId, ":\n",
+					webClientResponseException.getResponseBodyAsString()));
 		}
 	}
 

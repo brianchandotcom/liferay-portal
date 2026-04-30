@@ -32,6 +32,7 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 				'.date-picker-dropdown-menu',
 				'.ddm-form-builder-wrapper',
 				'.ddm-select-dropdown',
+				'.dropdown-menu-select',
 				'.input-localized-content',
 				'.lfr-icon-menu-open',
 				'.multi-panel-sidebar'

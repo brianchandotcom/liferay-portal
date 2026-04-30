@@ -155,6 +155,7 @@ export default function DataEngineLayoutBuilderHandler({
 				target,
 				'.cke_dialog',
 				'.ddm-form-builder-wrapper',
+				'.dropdown-menu-select',
 				'.input-localized-content',
 				'.lfr-icon-menu-open',
 				'.multi-panel-sidebar'

@@ -58,6 +58,7 @@ import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.entry.ObjectEntryContext;
+import com.liferay.object.entry.contributor.ObjectEntryReviewNotificationContributor;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderUtil;
@@ -202,7 +203,6 @@ import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -2553,6 +2553,9 @@ public class ObjectEntryLocalServiceImpl
 			ObjectFilterConstants.TYPE_EXCLUDES,
 			ObjectFilterConstants.TYPE_INCLUDES);
 
+		_objectEntryReviewNotificationContributors =
+			ServiceTrackerListFactory.open(
+				bundleContext, ObjectEntryReviewNotificationContributor.class);
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, ObjectEntryValuesContributor.class);
 	}
@@ -2562,6 +2565,7 @@ public class ObjectEntryLocalServiceImpl
 	protected void deactivate() {
 		super.deactivate();
 
+		_objectEntryReviewNotificationContributors.close();
 		_serviceTrackerList.close();
 	}
 
@@ -3277,27 +3281,11 @@ public class ObjectEntryLocalServiceImpl
 				"notificationMessageKey", "x-has-reached-its-review-date"
 			);
 
-			ObjectEntryFolder objectEntryFolder =
-				_objectEntryFolderPersistence.fetchByPrimaryKey(
-					objectEntry.getObjectEntryFolderId());
+			for (ObjectEntryReviewNotificationContributor contributor :
+					_objectEntryReviewNotificationContributors) {
 
-			if (objectEntryFolder != null) {
-				String folderExternalReferenceCode =
-					objectEntryFolder.getExternalReferenceCode();
-
-				if (ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS.
-						equals(folderExternalReferenceCode) ||
-					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES.
-						equals(folderExternalReferenceCode)) {
-
-					payloadJSONObject.put(
-						"notificationLink",
-						StringBundler.concat(
-							_portal.getPathMain(),
-							GroupConstants.CMS_FRIENDLY_URL,
-							"/edit_content_item?p_l_mode=read&p_p_state=",
-							LiferayWindowState.POP_UP, "&objectEntryId=",
-							objectEntry.getObjectEntryId()));
+				if (contributor.isApplicable(objectEntry)) {
+					contributor.contribute(objectEntry, payloadJSONObject);
 				}
 			}
 
@@ -8541,6 +8529,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectEntryFolderPersistence _objectEntryFolderPersistence;
+
+	private ServiceTrackerList<ObjectEntryReviewNotificationContributor>
+		_objectEntryReviewNotificationContributors;
 
 	@Reference
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;

@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -675,7 +676,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 				_commerceOrderAttachmentLocalService.
 					getCommerceOrderAttachments(
 						commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null)) {
+						QueryUtil.ALL_POS,
+						OrderByComparatorFactoryUtil.create(
+							"CommerceOrderAttachment", "priority", false))) {
 
 			if (Objects.equals(
 					commerceOrderAttachment.getType(),

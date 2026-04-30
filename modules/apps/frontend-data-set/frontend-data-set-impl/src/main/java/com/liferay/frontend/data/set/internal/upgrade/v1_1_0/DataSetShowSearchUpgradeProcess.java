@@ -52,7 +52,7 @@ public class DataSetShowSearchUpgradeProcess extends UpgradeProcess {
 		if (objectDefinition == null) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"L_DATA_SET object definition not found for company " +
+					"L_DATA_SET object definition was not found for company " +
 						companyId);
 			}
 

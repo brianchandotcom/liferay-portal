@@ -267,6 +267,85 @@ public class CommerceOrderAttachmentModelResourcePermissionTest {
 				permissionChecker,
 				commerceOrderAttachment.getCommerceOrderAttachmentId(),
 				ActionKeys.VIEW));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceOrder.getCompanyId(), CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_GROUP,
+			String.valueOf(_accountEntry.getAccountEntryGroupId()),
+			_role.getRoleId(),
+			new String[] {CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS});
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			commerceOrderAttachment.getCompanyId(),
+			CommerceOrderAttachment.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(
+				commerceOrderAttachment.getCommerceOrderAttachmentId()),
+			_role.getRoleId(), new String[0]);
+
+		Assert.assertFalse(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.DELETE));
+		Assert.assertFalse(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.UPDATE));
+		Assert.assertFalse(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.VIEW));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceOrder.getCompanyId(),
+			CommerceOrderAttachment.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_commerceOrder.getCompanyId()), _role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		Assert.assertFalse(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.DELETE));
+		Assert.assertFalse(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.VIEW));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			_commerceOrder.getCompanyId(),
+			CommerceOrderAttachment.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_commerceOrder.getCompanyId()), _role.getRoleId(),
+			new String[] {
+				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
+			});
+
+		Assert.assertTrue(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.DELETE));
+		Assert.assertTrue(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_commerceOrderAttachmentModelResourcePermission.contains(
+				permissionChecker,
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				ActionKeys.VIEW));
 	}
 
 	private AccountEntry _accountEntry;

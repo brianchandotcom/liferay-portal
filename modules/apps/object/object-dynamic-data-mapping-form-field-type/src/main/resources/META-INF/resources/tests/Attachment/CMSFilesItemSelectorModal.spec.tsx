@@ -13,9 +13,14 @@ import CMSFilesItemSelectorModal, {
 
 const SPACES_API_URL = '/o/headless-asset-library/v1.0/asset-libraries';
 
+function mockCMSFileUploaderComponent() {
+	return null;
+}
+
 let lastItemSelectorProps: any = null;
 
 jest.mock('@liferay/frontend-js-item-selector-web', () => ({
+	CMSFileUploaderComponent: mockCMSFileUploaderComponent,
 	ItemSelectorModal: (props: any) => {
 		lastItemSelectorProps = props;
 
@@ -65,12 +70,6 @@ jest.mock('@liferay/frontend-js-item-selector-web', () => ({
 	},
 	getCMSItemSelectorFilters: jest.fn().mockReturnValue([]),
 	getCMSItemSelectorGroupedFilters: jest.fn().mockReturnValue([]),
-}));
-
-jest.mock('@liferay/frontend-js-react-web', () => ({
-	ReactPortal: ({children}: {children: React.ReactNode}) => (
-		<div>{children}</div>
-	),
 }));
 
 jest.mock('uuid', () => ({v4: () => 'test-uuid'}));
@@ -244,119 +243,24 @@ describe('CMSFilesItemSelectorModal — open/close state management', () => {
 			urlAfterNavigation
 		);
 	});
-
-	it('preserves navigation state when preserveStateOnOpen is true', () => {
-		const {rerender} = render(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				items={[]}
-				open={true}
-			/>
-		);
-
-		fireEvent.click(screen.getByTestId('simulate-space-click'));
-
-		const urlAfterNavigation =
-			screen.getByTestId('api-url').textContent ?? '';
-
-		rerender(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				items={[]}
-				open={false}
-			/>
-		);
-
-		act(() => {
-			rerender(
-				<CMSFilesItemSelectorModal
-					{...defaultProps}
-					items={[]}
-					open={true}
-					preserveStateOnOpen={true}
-				/>
-			);
-		});
-
-		expect(screen.getByTestId('api-url').textContent).toBe(
-			urlAfterNavigation
-		);
-	});
-
-	it('calls onPreserveStateConsumed after preserving state', () => {
-		const onPreserveStateConsumed = jest.fn();
-
-		const {rerender} = render(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				items={[]}
-				open={true}
-			/>
-		);
-
-		fireEvent.click(screen.getByTestId('simulate-space-click'));
-
-		rerender(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				items={[]}
-				open={false}
-			/>
-		);
-
-		act(() => {
-			rerender(
-				<CMSFilesItemSelectorModal
-					{...defaultProps}
-					items={[]}
-					onPreserveStateConsumed={onPreserveStateConsumed}
-					open={true}
-					preserveStateOnOpen={true}
-				/>
-			);
-		});
-
-		expect(onPreserveStateConsumed).toHaveBeenCalledTimes(1);
-	});
 });
 
 describe('CMSFilesItemSelectorModal — upload integration', () => {
-	it('includes Upload Files in the creation menu when onOpenUploadModal is provided', () => {
-		const onOpenUploadModal = jest.fn();
-
-		render(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				onOpenUploadModal={onOpenUploadModal}
-				open={true}
-			/>
-		);
-
-		expect(
-			lastItemSelectorProps?.fdsProps?.creationMenu?.primaryItems?.[0]
-				?.label
-		).toBe('upload-files');
-	});
-
-	it('does not include a creation menu when onOpenUploadModal is not provided', () => {
+	it('does not enable the uploader when in space list view', () => {
 		render(<CMSFilesItemSelectorModal {...defaultProps} open={true} />);
 
-		expect(lastItemSelectorProps?.fdsProps?.creationMenu).toBeUndefined();
+		expect(lastItemSelectorProps?.filesUploaderComponent).toBeUndefined();
+		expect(lastItemSelectorProps?.groupId).toBeUndefined();
 	});
 
-	it('calls onOpenUploadModal when the Upload Files button is triggered', () => {
-		const onOpenUploadModal = jest.fn();
+	it('passes CMSFileUploaderComponent and groupId after navigating into a space', () => {
+		render(<CMSFilesItemSelectorModal {...defaultProps} open={true} />);
 
-		render(
-			<CMSFilesItemSelectorModal
-				{...defaultProps}
-				onOpenUploadModal={onOpenUploadModal}
-				open={true}
-			/>
+		fireEvent.click(screen.getByTestId('simulate-space-click'));
+
+		expect(lastItemSelectorProps?.filesUploaderComponent).toBe(
+			mockCMSFileUploaderComponent
 		);
-
-		lastItemSelectorProps?.fdsProps?.creationMenu?.primaryItems?.[0]?.onClick?.();
-
-		expect(onOpenUploadModal).toHaveBeenCalledTimes(1);
+		expect(lastItemSelectorProps?.groupId).toBe(42);
 	});
 });

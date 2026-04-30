@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Badge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import {IView} from '@liferay/frontend-data-set-web';
 import {
+	CMSFileUploaderComponent,
 	IItemSelectorModalProps,
 	ItemSelectorModal,
 	getCMSItemSelectorFilters,
 	getCMSItemSelectorGroupedFilters,
 } from '@liferay/frontend-js-item-selector-web';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
@@ -80,29 +79,23 @@ type Space = {
 function CMSFilesItemSelectorModal({
 	fdsProps,
 	items,
-	onOpenUploadModal,
-	onPreserveStateConsumed,
 	open,
-	preserveStateOnOpen = false,
-	refreshCounter = 0,
 	...otherProps
 }: Omit<
 	IItemSelectorModalProps<CMSFile>,
-	'itemTypeLabel' | 'fdsProps' | 'apiURL'
+	| 'itemTypeLabel'
+	| 'fdsProps'
+	| 'apiURL'
+	| 'filesUploaderComponent'
+	| 'groupId'
 > & {
 	fdsProps?: IItemSelectorModalProps<any>['fdsProps'];
-	onOpenUploadModal?: (files?: File[]) => void;
-	onPreserveStateConsumed?: () => void;
-	preserveStateOnOpen?: boolean;
-	refreshCounter?: number;
 }) {
 	const wasOpenRef = useRef(open);
 
-	const [dragCoordinates, setDragCoordinates] = useState({x: 0, y: 0});
 	const [folderStructure, setFolderStructure] = useState<
 		{folderId: string; folderName: string}[]
 	>([]);
-	const [isDraggingOver, setIsDraggingOver] = useState(false);
 	const [selectedSpace, setSelectedSpace] = useState<Space | null>(null);
 	const [url, setURL] = useState(SPACES_API_URL);
 
@@ -110,8 +103,8 @@ function CMSFilesItemSelectorModal({
 
 	const modalId = useMemo(
 		() =>
-			`itemSelectorModal-cms-${isSpaceMode ? 'space' : 'files'}-${refreshCounter}-${uuidv4()}`,
-		[isSpaceMode, refreshCounter]
+			`itemSelectorModal-cms-${isSpaceMode ? 'space' : 'files'}-${uuidv4()}`,
+		[isSpaceMode]
 	);
 
 	useEffect(() => {
@@ -123,56 +116,12 @@ function CMSFilesItemSelectorModal({
 			return;
 		}
 
-		if (preserveStateOnOpen) {
-			onPreserveStateConsumed?.();
-
-			return;
-		}
-
 		if (!items.length) {
 			setSelectedSpace(null);
 			setFolderStructure([]);
 			setURL(SPACES_API_URL);
 		}
-	}, [open, items, preserveStateOnOpen, onPreserveStateConsumed]);
-
-	useEffect(() => {
-		if (!open || !selectedSpace) {
-			setIsDraggingOver(false);
-
-			return;
-		}
-
-		const handleDragEnter = (event: DragEvent) => {
-			if (!event.dataTransfer?.types.includes('Files')) {
-				return;
-			}
-
-			setIsDraggingOver(true);
-		};
-
-		const handleDragEnd = () => {
-			setIsDraggingOver(false);
-		};
-
-		const handleDragLeave = (event: DragEvent) => {
-			if (event.relatedTarget !== null) {
-				return;
-			}
-
-			setIsDraggingOver(false);
-		};
-
-		document.addEventListener('dragend', handleDragEnd, true);
-		document.addEventListener('dragenter', handleDragEnter, true);
-		document.addEventListener('dragleave', handleDragLeave, true);
-
-		return () => {
-			document.removeEventListener('dragend', handleDragEnd, true);
-			document.removeEventListener('dragenter', handleDragEnter, true);
-			document.removeEventListener('dragleave', handleDragLeave, true);
-		};
-	}, [open, selectedSpace]);
+	}, [open, items]);
 
 	const onChildFolderClick = useCallback(
 		({folderId, folderName}: {folderId: string; folderName: string}) => {
@@ -383,164 +332,96 @@ function CMSFilesItemSelectorModal({
 		[onChildFolderClick, onSpaceClick, selectedSpace]
 	);
 
-	const modalBodyElement = isDraggingOver
-		? document.querySelector('.modal-body')
-		: null;
-
 	return (
-		<>
-			<ItemSelectorModal
-				{...otherProps}
-				apiURL={url}
-				breadcrumbs={breadcrumbs}
-				fdsProps={{
-					pagination: {
-						deltas: [{label: 20}, {label: 40}, {label: 60}],
-						initialDelta: 20,
-					},
-					...fdsProps,
-					creationMenu: onOpenUploadModal
-						? {
-								primaryItems: [
-									{
-										label: Liferay.Language.get(
-											'upload-files'
-										),
-										onClick: () => onOpenUploadModal(),
-									},
-								],
-							}
-						: undefined,
-					customRenderers: {
-						tableCell: [
-							{
-								component: ({itemData, value}) => {
-									if (selectedSpace) {
-										const {embedded, entryClassName} =
-											itemData;
+		<ItemSelectorModal
+			{...otherProps}
+			apiURL={url}
+			breadcrumbs={breadcrumbs}
+			fdsProps={{
+				pagination: {
+					deltas: [{label: 20}, {label: 40}, {label: 60}],
+					initialDelta: 20,
+				},
+				...fdsProps,
+				customRenderers: {
+					tableCell: [
+						{
+							component: ({itemData, value}) => {
+								if (selectedSpace) {
+									const {embedded, entryClassName} = itemData;
 
-										return entryClassName ===
-											OBJECT_ENTRY_FOLDER_CLASS_NAME ? (
-											<ClayButton
-												className="c-p-0"
-												displayType="link"
-												onClick={() => {
-													onChildFolderClick({
-														folderId: embedded.id,
-														folderName:
-															embedded.title,
-													});
-												}}
-											>
-												{value}
-											</ClayButton>
-										) : (
-											value
-										);
-									}
-
-									return (
+									return entryClassName ===
+										OBJECT_ENTRY_FOLDER_CLASS_NAME ? (
 										<ClayButton
 											className="c-p-0"
 											displayType="link"
 											onClick={() => {
-												onSpaceClick({
-													id: getSpaceId(itemData),
-													name: itemData.name,
+												onChildFolderClick({
+													folderId: embedded.id,
+													folderName: embedded.title,
 												});
 											}}
 										>
 											{value}
 										</ClayButton>
+									) : (
+										value
 									);
-								},
-								name: 'cmsFilesTitleCellRenderer',
-								type: 'internal',
+								}
+
+								return (
+									<ClayButton
+										className="c-p-0"
+										displayType="link"
+										onClick={() => {
+											onSpaceClick({
+												id: getSpaceId(itemData),
+												name: itemData.name,
+											});
+										}}
+									>
+										{value}
+									</ClayButton>
+								);
 							},
-						],
-					},
-					emptyState: {
-						description: Liferay.Language.get(
-							'drag-and-drop-your-files-or'
-						),
-					},
-					...(selectedSpace
-						? {
-								filters: getCMSItemSelectorFilters(
-									Liferay.ThemeDisplay.getSiteGroupId()
-								),
-								groupedFilters:
-									getCMSItemSelectorGroupedFilters(),
-							}
-						: {}),
-					id: modalId,
-					views: currentViews,
-				}}
-				itemTypeLabel={Liferay.Language.get(
-					selectedSpace ? 'files' : 'space'
-				)}
-				items={items}
-				key={modalId}
-				locator={{
-					id: selectedSpace ? 'embedded.id' : 'id',
-					label: selectedSpace ? 'embedded.title' : 'name',
-					value: selectedSpace ? 'embedded.id' : 'id',
-				}}
-				multiSelect={false}
-				open={open}
-			/>
-
-			{isDraggingOver && modalBodyElement && (
-				<ReactPortal container={modalBodyElement} wrapper={false}>
-					<div
-						className="lfr-objects__cms-drag-overlay"
-						onDragEnd={() => setIsDraggingOver(false)}
-						onDragOver={(event) => {
-							event.preventDefault();
-							setDragCoordinates({
-								x: event.clientX,
-								y: event.clientY,
-							});
-						}}
-						onDrop={(event) => {
-							event.preventDefault();
-							setIsDraggingOver(false);
-
-							const files = event.dataTransfer?.files
-								? Array.from(event.dataTransfer.files)
-								: [];
-
-							if (files[0]) {
-								onOpenUploadModal?.(files);
-							}
-						}}
-					>
-						<div
-							className="fds-file-drag-layer"
-							id={`${modalId}-fds-file-drag-layer`}
-						>
-							<div
-								style={{
-									left: 0,
-									pointerEvents: 'none',
-									position: 'fixed',
-									top: 0,
-									transform: `translate(${dragCoordinates.x + 60}px, ${dragCoordinates.y + 80}px)`,
-									zIndex: 9999,
-								}}
-							>
-								<Badge
-									displayType="primary"
-									label={Liferay.Language.get(
-										'drop-files-here-to-upload'
-									)}
-								/>
-							</div>
-						</div>
-					</div>
-				</ReactPortal>
+							name: 'cmsFilesTitleCellRenderer',
+							type: 'internal',
+						},
+					],
+				},
+				emptyState: {
+					description: Liferay.Language.get(
+						'drag-and-drop-your-files-or'
+					),
+				},
+				...(selectedSpace
+					? {
+							filters: getCMSItemSelectorFilters(
+								Liferay.ThemeDisplay.getSiteGroupId()
+							),
+							groupedFilters: getCMSItemSelectorGroupedFilters(),
+						}
+					: {}),
+				id: modalId,
+				views: currentViews,
+			}}
+			filesUploaderComponent={
+				selectedSpace ? CMSFileUploaderComponent : undefined
+			}
+			groupId={selectedSpace ? Number(selectedSpace.id) : undefined}
+			itemTypeLabel={Liferay.Language.get(
+				selectedSpace ? 'files' : 'space'
 			)}
-		</>
+			items={items}
+			key={modalId}
+			locator={{
+				id: selectedSpace ? 'embedded.id' : 'id',
+				label: selectedSpace ? 'embedded.title' : 'name',
+				value: selectedSpace ? 'embedded.id' : 'id',
+			}}
+			multiSelect={false}
+			open={open}
+		/>
 	);
 }
 

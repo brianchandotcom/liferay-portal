@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayModal, {useModal} from '@clayui/modal';
+import {useModal} from '@clayui/modal';
 import {
 	convertToFormData,
 	makeFetch,
@@ -14,7 +14,6 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import {fetch, getFileAsBase64} from 'frontend-js-web';
 import React, {ChangeEventHandler, useEffect, useRef, useState} from 'react';
 
-import CMSUploadModal, {Space} from './CMSFilesUploadModal';
 import FileContainer from './FileContainer';
 import CMSFilesItemSelectorModal, {
 	CMSFile,
@@ -24,6 +23,10 @@ import {validateFileExtension, validateFileSize} from './util/attachment';
 import './Attachment.scss';
 
 import type {LocalizedValue} from 'dynamic-data-mapping-form-field-type';
+
+type Space = {
+	externalReferenceCode: string;
+};
 
 export type AttachmentFile = {
 	contentURL: string;
@@ -99,23 +102,13 @@ export default function AttachmentBase({
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [cmsFiles, setCMSFiles] = useState<CMSFile[]>([]);
-	const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
 	const [isLoading, setLoading] = useState(false);
-	const [preserveStateOnNextOpen, setPreserveStateOnNextOpen] =
-		useState(false);
-	const [refreshCounter, setRefreshCounter] = useState(0);
 	const [spaces, setSpaces] = useState<Space[]>([]);
 
 	const {
 		observer: spaceItemSelectorObserver,
 		onOpenChange: onSpaceItemSelectorOpenChange,
 		open: spaceItemSelectorOpen,
-	} = useModal();
-
-	const {
-		observer: uploadModalObserver,
-		onOpenChange: onUploadModalOpenChange,
-		open: uploadModalOpen,
 	} = useModal();
 
 	const DEFAULT_FOLDER_ERC = 'L_FILES';
@@ -134,28 +127,6 @@ export default function AttachmentBase({
 
 	const hasLibraryStorage =
 		isUserComputerToCMSBasicDocument || isUserComputerToDocumentsAndMedia;
-
-	/**
-	 * This ref is used for the cleanup effect so that it only runs when the modal actually closes,
-	 * and prevents it from running on the initial render.
-	 */
-	const uploadModalWasOpenRef = useRef(false);
-
-	const handleCloseUploadModal = () => {
-		onUploadModalOpenChange(false);
-	};
-
-	const handleOpenUploadModal = (files?: File[]) => {
-		setFilesToUpload(files ?? []);
-		setPreserveStateOnNextOpen(true);
-
-		onUploadModalOpenChange(true);
-		onSpaceItemSelectorOpenChange(false);
-	};
-
-	const handleUploadSuccess = () => {
-		setRefreshCounter((prev) => prev + 1);
-	};
 
 	const handleCMSItemsChange = (items: CMSFile[]) => {
 		setCMSFiles(items);
@@ -224,17 +195,6 @@ export default function AttachmentBase({
 			setCMSFiles([]);
 		}
 	}, [attachment]);
-
-	useEffect(() => {
-		if (uploadModalOpen) {
-			uploadModalWasOpenRef.current = true;
-		}
-		else if (uploadModalWasOpenRef.current) {
-			uploadModalWasOpenRef.current = false;
-			setFilesToUpload([]);
-			onSpaceItemSelectorOpenChange(true);
-		}
-	}, [uploadModalOpen, onSpaceItemSelectorOpenChange]);
 
 	const findOrCreateFolder = async (
 		folderName: string,
@@ -526,25 +486,8 @@ export default function AttachmentBase({
 					observer={spaceItemSelectorObserver}
 					onItemsChange={handleCMSItemsChange}
 					onOpenChange={onSpaceItemSelectorOpenChange}
-					onOpenUploadModal={handleOpenUploadModal}
-					onPreserveStateConsumed={() =>
-						setPreserveStateOnNextOpen(false)
-					}
 					open={spaceItemSelectorOpen}
-					preserveStateOnOpen={preserveStateOnNextOpen}
-					refreshCounter={refreshCounter}
 				/>
-			)}
-
-			{uploadModalOpen && (
-				<ClayModal observer={uploadModalObserver} size="lg">
-					<CMSUploadModal
-						initialFiles={filesToUpload}
-						onModalClose={handleCloseUploadModal}
-						onUploadSuccess={handleUploadSuccess}
-						spaces={spaces}
-					/>
-				</ClayModal>
 			)}
 
 			<input

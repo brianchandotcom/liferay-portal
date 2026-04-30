@@ -1,7 +1,6 @@
 {
 	"dependencies": {
 		"@clayui/autocomplete": "^3.161.0",
-		"@clayui/badge": "^3.161.0",
 		"@clayui/button": "^3.161.0",
 		"@clayui/data-provider": "^3.161.0",
 		"@clayui/drop-down": "^3.161.0",
@@ -12,7 +11,6 @@
 		"@clayui/shared": "^3.161.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",
-		"@liferay/frontend-js-react-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"classnames": "2.3.1",
 		"data-engine-js-components-web": "*",

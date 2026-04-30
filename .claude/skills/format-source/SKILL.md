@@ -410,3 +410,16 @@ It applies to workflow and other YAML scripted output.
 -show-foo-help=When enabled, the foo will be shown.
  show-qux=Show Qux
 ```
+
+### Rule 20: Use the Author's Full Given Name in @author Tags
+
+**Why:** Spelling out the contributor's full given name keeps `@author` attribution unambiguous across files and matches the dominant convention; nicknames vary file to file for the same person and break a name-based search through history.
+
+**Examples:**
+
+```diff
+ /**
+- * @author Dave Truong
++ * @author David Truong
+  */
+```

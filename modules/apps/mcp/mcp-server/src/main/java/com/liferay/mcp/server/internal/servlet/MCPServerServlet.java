@@ -283,9 +283,9 @@ public class MCPServerServlet extends HttpServlet {
 					HttpServletResponse httpServletResponse =
 						(HttpServletResponse)servletResponse;
 
-					httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 					httpServletResponse.setContentType("text/event-stream");
 					httpServletResponse.setHeader("Cache-Control", "no-cache");
+					httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 					httpServletResponse.flushBuffer();
 

@@ -82,7 +82,7 @@ app.server.parent.dir=${project.dir}/bundle
 Check whether a bundle already exists by looking for a `tomcat-*` directory inside the resolved bundle parent directory (see step 4a).
 
 - **Bundle exists:** Skip `ant all`. Inform the user the existing bundle will be reused. If the user explicitly requests a rebuild, run `ant all`.
-- **No bundle:** Run `ant all`:
+- **No bundle:** Before running `ant all`, try to reuse the main worktree's bundle. Locate the `liferay-portal` worktree (no suffix) via `git worktree list --porcelain`, resolve its bundle directory using the same logic as step 4a, and read `.githash` from it. When that hash equals `git rev-parse HEAD` in the current worktree, or when the user explicitly asks to copy or reuse the main bundle, reuse it into `<WORKTREE_DIR>/bundle` and skip `ant all`. Always reuse by making a full copy — never by symlinking or sharing the folder. Otherwise run it:
 
 ```bash
 cd <WORKTREE_DIR> && ant all

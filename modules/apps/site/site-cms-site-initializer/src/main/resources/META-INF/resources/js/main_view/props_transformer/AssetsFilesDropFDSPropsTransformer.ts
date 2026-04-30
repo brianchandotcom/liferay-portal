@@ -78,7 +78,6 @@ export default function AssetsFilesDropFDSPropsTransformer({
 				);
 			},
 		},
-		hideManagementBarInEmptyState: true,
 		snapshotsEnabled: true,
 	};
 }

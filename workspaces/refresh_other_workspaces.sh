@@ -24,6 +24,7 @@ function main {
 			--exclude "node_modules" \
 			--exclude "node_modules_cache" \
 			--exclude "poshi" \
+			--exclude "quickstart/docker-compose.yaml" \
 			--exclude "themes" \
 			liferay-sample-workspace/ "${dir}"
 	done

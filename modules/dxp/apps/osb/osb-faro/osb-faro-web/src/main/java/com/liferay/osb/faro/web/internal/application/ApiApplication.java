@@ -10,7 +10,7 @@ import com.fasterxml.jackson.jakarta.rs.json.JacksonJsonProvider;
 import com.liferay.osb.faro.web.internal.context.GroupInfoContextProvider;
 import com.liferay.osb.faro.web.internal.controller.api.DemandbaseAccountController;
 import com.liferay.osb.faro.web.internal.controller.api.GraphQLController;
-import com.liferay.osb.faro.web.internal.controller.api.HubspotWebhookController;
+import com.liferay.osb.faro.web.internal.controller.api.HubSpotWebhookController;
 import com.liferay.osb.faro.web.internal.controller.api.RecommendationController;
 import com.liferay.osb.faro.web.internal.controller.api.ReportController;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -45,7 +45,7 @@ public class ApiApplication extends Application {
 		singletons.add(_demandbaseAccountController);
 		singletons.add(_graphQLController);
 		singletons.add(_groupInfoContextProvider);
-		singletons.add(_hubspotWebhookController);
+		singletons.add(_hubSpotWebhookController);
 		singletons.add(new JacksonJsonProvider(JSONUtil.getObjectMapper()));
 		singletons.add(_recommendationController);
 		singletons.add(_reportController);
@@ -79,7 +79,7 @@ public class ApiApplication extends Application {
 	private GroupInfoContextProvider _groupInfoContextProvider;
 
 	@Reference
-	private HubspotWebhookController _hubspotWebhookController;
+	private HubSpotWebhookController _hubSpotWebhookController;
 
 	@Reference
 	private RecommendationController _recommendationController;

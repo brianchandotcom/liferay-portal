@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @author Nilton Vieira
  */
-public class HubspotProvider implements Provider {
+public class HubSpotProvider implements Provider {
 
 	public static final String TYPE = "HUBSPOT";
 

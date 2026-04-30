@@ -14,6 +14,7 @@ html#{$cadmin-selector} .cadmin.global-menu {
 			$cadmin-primary-l0 4px,
 			transparent 2px
 		);
+		pointer-events: auto;
 	}
 
 	.sites-list {

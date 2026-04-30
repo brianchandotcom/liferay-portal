@@ -162,6 +162,7 @@ export default function GlobalMenu({
 					return (
 						<ClayDropdown.Item
 							active={active}
+							aria-current={active ? 'page' : undefined}
 							className={classNames(
 								'align-items-center c-mb-2 d-inline-flex',
 								className
@@ -211,6 +212,9 @@ export default function GlobalMenu({
 									<ClayDropdown.Item
 										{...item}
 										active={item.current}
+										aria-current={
+											item.current ? 'page' : undefined
+										}
 										className="c-py-1 text-primary"
 										href={item.url}
 										key={item.key}

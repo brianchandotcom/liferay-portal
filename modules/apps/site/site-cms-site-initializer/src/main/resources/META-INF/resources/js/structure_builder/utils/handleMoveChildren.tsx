@@ -11,6 +11,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import {Dispatch} from 'react';
 
+import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {Action, State} from '../contexts/StateContext';
 import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
@@ -103,7 +104,7 @@ export default async function handleMoveChildren({
 				Liferay.Language.get(
 					'one-or-more-fields-have-field-names-that-already-exist-in-the-location-x.-what-action-do-you-want-to-take'
 				),
-				target.label[Liferay.ThemeDisplay.getDefaultLanguageId()]
+				getLocalizedValue(target.label)
 			),
 			title: Liferay.Language.get('move-options'),
 		});

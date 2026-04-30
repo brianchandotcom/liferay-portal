@@ -21,6 +21,7 @@ import Input from '../Input';
 const DEFAULT_NAME = {
 	[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 		Liferay.Language.get('option'),
+	[Liferay.ThemeDisplay.getLanguageId()]: Liferay.Language.get('option'),
 };
 
 export default function AddOptionModal({

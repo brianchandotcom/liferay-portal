@@ -26,6 +26,7 @@ const INITIAL_STATE = {
 	id: null,
 	name: {
 		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_PICKLIST_NAME,
+		[Liferay.ThemeDisplay.getLanguageId()]: DEFAULT_PICKLIST_NAME,
 	},
 	options: new Map(),
 	setDeletedOptions: noop,

@@ -16,6 +16,17 @@ public class PlaywrightCompilationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public String getMessage(Build build) {
+		String jobVariant = build.getJobVariant();
+
+		if (!jobVariant.contains("playwright-compile")) {
+			return null;
+		}
+
+		return getMessage(build.getConsoleText());
+	}
+
+	@Override
 	public String getMessage(String consoleText) {
 		int end = consoleText.indexOf(_TOKEN_END_SNIPPET);
 

@@ -56,6 +56,74 @@ public class GroovyStyleChecker {
 		return violations;
 	}
 
+	public static List<Violation> checkUnescapedDollarInterpolation(
+		String blockText) {
+
+		if ((blockText == null) || blockText.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Violation> violations = new ArrayList<>();
+
+		String[] lines = _removeComment(
+			blockText
+		).split(
+			"\n", -1
+		);
+
+		for (int lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+			String line = lines[lineIndex];
+
+			boolean inDoubleString = false;
+			boolean inSingleString = false;
+
+			for (int i = 0; i < line.length(); i++) {
+				char c = line.charAt(i);
+
+				if (inDoubleString) {
+					if (c == '\\') {
+						i++;
+
+						continue;
+					}
+
+					if (c == '"') {
+						inDoubleString = false;
+
+						continue;
+					}
+
+					if ((c == '$') && ((i + 1) < line.length()) &&
+						_isInterpolationStart(line.charAt(i + 1))) {
+
+						violations.add(new Violation(line, lineIndex + 1));
+
+						break;
+					}
+				}
+				else if (inSingleString) {
+					if (c == '\\') {
+						i++;
+
+						continue;
+					}
+
+					if (c == '\'') {
+						inSingleString = false;
+					}
+				}
+				else if (c == '"') {
+					inDoubleString = true;
+				}
+				else if (c == '\'') {
+					inSingleString = true;
+				}
+			}
+		}
+
+		return violations;
+	}
+
 	public static final class Violation {
 
 		public String getLine() {
@@ -118,6 +186,14 @@ public class GroovyStyleChecker {
 		if (nextLine.equals("{") || nextLine.startsWith(".") ||
 			nextLine.startsWith("throws ") || nextLine.startsWith("{ ")) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isInterpolationStart(char c) {
+		if ((c == '{') || Character.isJavaIdentifierStart(c)) {
 			return true;
 		}
 

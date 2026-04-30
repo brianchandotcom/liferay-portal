@@ -74,16 +74,36 @@ public class GroovyValidateFileTask extends Task {
 
 				List<String> errorMessages = new ArrayList<>();
 
-				List<GroovyStyleChecker.Violation> violations =
+				List<GroovyStyleChecker.Violation> missingSemicolonViolations =
 					GroovyStyleChecker.checkMissingSemicolons(text);
 
-				for (GroovyStyleChecker.Violation violation : violations) {
+				for (GroovyStyleChecker.Violation violation :
+						missingSemicolonViolations) {
+
 					int lineNumber =
 						startLineNumber + violation.getLineNumber() - 1;
 
 					errorMessages.add(
 						"Missing semicolon at:\n" + file + ":" + lineNumber +
 							"\n" + violation.getLine());
+				}
+
+				List<GroovyStyleChecker.Violation>
+					unescapedDollarInterpolationViolations =
+						GroovyStyleChecker.checkUnescapedDollarInterpolation(
+							text);
+
+				for (GroovyStyleChecker.Violation violation :
+						unescapedDollarInterpolationViolations) {
+
+					int lineNumber =
+						startLineNumber + violation.getLineNumber() - 1;
+
+					errorMessages.add(
+						"Unescaped GString interpolation at:\n" + file + ":" +
+							lineNumber + "\n" + violation.getLine() +
+								"\nUse \\$ for a literal $, or use + " +
+									"concatenation for runtime variables.");
 				}
 
 				GroovyTask groovyTask = new GroovyTask();

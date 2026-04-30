@@ -1,8 +1,18 @@
 affinity: {}
 annotations: {}
 autoscaling:
-    annotations: {}
     enabled: false
+    hpa:
+        annotations: {}
+        maxReplicas: 100
+        metrics:
+            -   resource:
+                    name: cpu
+                    target:
+                        averageUtilization: 80
+                        type: Utilization
+                type: Resource
+        minReplicas: 1
     keda:
         customTriggers: []
         maxReplicaCount: 100
@@ -21,15 +31,6 @@ autoscaling:
                     metricName: jvm_threads_current
                     query: jvm_threads_current
                     threshold: "500"
-    maxReplicas: 100
-    metrics:
-        -   resource:
-                name: cpu
-                target:
-                    averageUtilization: 80
-                    type: Utilization
-            type: Resource
-    minReplicas: 1
     type: hpa
 configmap:
     annotations: {}

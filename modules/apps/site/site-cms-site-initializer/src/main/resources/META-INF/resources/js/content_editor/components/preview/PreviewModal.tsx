@@ -57,7 +57,7 @@ export default function PreviewModal({
 						title={Liferay.Language.get('info')}
 					>
 						{Liferay.Language.get(
-							'no-display-page-templates-available-for-preview-in-this-channel'
+							'no-display-page-templates-are-available-for-preview-in-this-channel'
 						)}
 					</ClayAlert>
 				) : null}

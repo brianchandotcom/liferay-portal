@@ -209,12 +209,12 @@ metadata:
     name: {{ include "liferay.name" $.root }}-securitypolicy
     namespace: {{ include "liferay.namespace" $.root }}
 spec:
+    authorization:
+        {{- toYaml . | nindent 8 }}
     targetRefs:
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" $.root }}-httproute
-    authorization:
-        {{- toYaml . | nindent 8 }}
 {{- end }}
 {{- if .statefulset.network.gatewayName }}
 ---

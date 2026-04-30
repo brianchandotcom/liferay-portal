@@ -356,7 +356,6 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		widgetPageSettings.setDefaultAssetPublisherPortletId(
 			() -> layout.getTypeSettingsProperty(
 				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID));
-
 		widgetPageSettings.setInheritChanges(
 			() -> {
 				if (Validator.isNull(

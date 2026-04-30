@@ -107,12 +107,12 @@ else {
 						markupView="lexicon"
 						showWhenSingleIcon="<%= true %>"
 					>
-						<c:if test="<%= backgroundTask.getStatus() != BackgroundTaskConstants.STATUS_SUCCESSFUL %>">
-							<liferay-ui:icon
-								label="<%= true %>"
-								message="view-report-entries"
-								url="<%= viewReportEntriesURL %>"
-							/>
+						<c:if test="<%= (backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) || (backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
+							<li>
+								<a class="dropdown-item" href="<%= viewReportEntriesURL %>">
+									<liferay-ui:message key="view-report-entries" />
+								</a>
+							</li>
 						</c:if>
 
 						<liferay-ui:icon-delete

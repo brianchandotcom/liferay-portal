@@ -1,5 +1,6 @@
 variable "arn_partition" {
 	default="aws"
+	type=string
 }
 variable "deployment_name" {
 	type=string
@@ -10,6 +11,7 @@ variable "deployment_name" {
 }
 variable "deployment_namespace" {
 	default="liferay-system"
+	type=string
 	validation {
 		condition=can(regex("^[a-z0-9-]*$", var.deployment_namespace))
 		error_message="The deployment_namespace must contain only lowercase letters, numbers, and hyphens."
@@ -36,9 +38,11 @@ variable "envoy_gateway_helm_chart_version" {
 }
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
+	type=string
 }
 variable "max_availability_zones" {
 	default=2
+	type=number
 }
 variable "observability_config" {
 	default={}
@@ -62,4 +66,5 @@ variable "region" {
 }
 variable "vpc_cidr" {
 	default="10.0.0.0/16"
+	type=string
 }

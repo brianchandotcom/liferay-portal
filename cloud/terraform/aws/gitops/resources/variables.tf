@@ -15,9 +15,11 @@ variable "argocd_domain_config" {
 }
 variable "argocd_namespace" {
 	default="argocd-system"
+	type=string
 }
 variable "crossplane_namespace" {
 	default="crossplane-system"
+	type=string
 }
 variable "deployment_name" {
 	type=string
@@ -32,9 +34,11 @@ variable "external_secret_store_provider_hcl" {
 }
 variable "external_secrets_namespace" {
 	default="external-secrets-system"
+	type=string
 }
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
+	type=string
 }
 variable "infrastructure_git_repo_config" {
 	default={

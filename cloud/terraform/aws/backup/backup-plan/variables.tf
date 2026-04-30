@@ -3,6 +3,7 @@ variable "aws_backup_service_assumed_iam_role_arn" {
 }
 variable "backup_plan_name" {
 	default="liferay-backup"
+	type=string
 }
 variable "backup_rules" {
 	default=[
@@ -26,9 +27,11 @@ variable "backup_rules" {
 }
 variable "backup_selection_name" {
 	default="by-tags"
+	type=string
 }
 variable "backup_vault_name" {
 	default="liferay-backup"
+	type=string
 }
 variable "deployment_name" {
 	type=string

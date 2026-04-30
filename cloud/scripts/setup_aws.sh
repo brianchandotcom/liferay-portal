@@ -407,7 +407,6 @@ function _set_up_aws_grafana {
 		"${region}" \
 		"${terraform_args}" \
 		"-var=grafana_workspace_endpoint=$(terraform output -raw "grafana_workspace_endpoint")" \
-		"-var=grafana_workspace_role_arn=$(terraform output -raw "grafana_workspace_role_arn")" \
 		"-var=prometheus_workspace_endpoint=$(terraform output -raw "prometheus_workspace_endpoint")"
 
 	echo "Amazon Managed Grafana setup complete."

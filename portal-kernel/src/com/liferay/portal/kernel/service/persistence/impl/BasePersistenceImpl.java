@@ -175,9 +175,13 @@ public class BasePersistenceImpl
 
 	@Override
 	public void clearCache() {
-		getEntityCache().clearCache(_modelImplClass);
+		EntityCache entityCache = getEntityCache();
 
-		getFinderCache().clearCache(_modelImplClass);
+		entityCache.clearCache(_modelImplClass);
+
+		FinderCache finderCache = getFinderCache();
+
+		finderCache.clearCache(_modelImplClass);
 	}
 
 	@Override
@@ -190,7 +194,9 @@ public class BasePersistenceImpl
 	}
 
 	public void clearCache(Set<Serializable> primaryKeys) {
-		getFinderCache().clearCache(_modelImplClass);
+		FinderCache finderCache = getFinderCache();
+
+		finderCache.clearCache(_modelImplClass);
 
 		EntityCache entityCache = getEntityCache();
 
@@ -201,7 +207,9 @@ public class BasePersistenceImpl
 
 	@Override
 	public void clearCache(T model) {
-		getEntityCache().removeResult(_modelImplClass, model);
+		EntityCache entityCache = getEntityCache();
+
+		entityCache.removeResult(_modelImplClass, model);
 	}
 
 	@Override

@@ -131,28 +131,7 @@ public class MCPServerServlet extends HttpServlet {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		MCPServerConfiguration mcpServerConfiguration;
-
-		try {
-			mcpServerConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					MCPServerConfiguration.class, companyId);
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
-
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
-		}
-
-		if (!mcpServerConfiguration.enabled()) {
+		if (!_isEnabled(companyId)) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
@@ -569,6 +548,25 @@ public class MCPServerServlet extends HttpServlet {
 		}
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
+		}
+	}
+
+	private boolean _isEnabled(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+			return false;
+		}
+
+		try {
+			MCPServerConfiguration mcpServerConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					MCPServerConfiguration.class, companyId);
+
+			return mcpServerConfiguration.enabled();
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+
+			return false;
 		}
 	}
 

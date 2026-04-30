@@ -118,7 +118,7 @@ public class AssetTagsDisplayContext {
 			_groupIds = _assetTagsItemSelectorCriterion.getGroupIds();
 		}
 		else {
-			List<Long> groupIdsList = new ArrayList<>();
+			List<Long> groupIds = new ArrayList<>();
 
 			Group cmsGroup = _groupLocalService.getGroup(
 				themeDisplay.getCompanyId(), GroupConstants.CMS);
@@ -130,17 +130,17 @@ public class AssetTagsDisplayContext {
 					group.getTypeSettingsProperty("depotEntryType"));
 
 				if (depotEntryType != DepotConstants.TYPE_SPACE) {
-					groupIdsList.add(group.getGroupId());
+					groupIds.add(group.getGroupId());
 
 					continue;
 				}
 
-				if (!groupIdsList.contains(cmsGroup.getGroupId())) {
-					groupIdsList.add(cmsGroup.getGroupId());
+				if (!groupIds.contains(cmsGroup.getGroupId())) {
+					groupIds.add(cmsGroup.getGroupId());
 				}
 			}
 
-			_groupIds = ArrayUtil.toLongArray(groupIdsList);
+			_groupIds = ArrayUtil.toLongArray(groupIds);
 		}
 
 		return _groupIds;

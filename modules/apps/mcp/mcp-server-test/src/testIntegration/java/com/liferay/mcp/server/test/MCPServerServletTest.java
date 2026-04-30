@@ -84,14 +84,7 @@ public class MCPServerServletTest {
 
 	@After
 	public void tearDown() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" + _MCP_SERVER_CONFIGURATION_PID + ")");
-
-		if (configurations != null) {
-			for (Configuration configuration : configurations) {
-				configuration.delete();
-			}
-		}
+		_updateMCPServerConfiguration(false);
 	}
 
 	@Test

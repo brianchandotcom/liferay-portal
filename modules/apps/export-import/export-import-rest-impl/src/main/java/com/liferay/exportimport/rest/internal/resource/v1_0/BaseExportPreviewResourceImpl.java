@@ -30,6 +30,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,22 @@ public abstract class BaseExportPreviewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "assetLibraryExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "endDate"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "last"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "range"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "startDate"
 			)
 		}
 	)
@@ -70,7 +87,20 @@ public abstract class BaseExportPreviewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-			String assetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("endDate")
+			Date endDate,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("last")
+			Integer last,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("all")
+			@jakarta.ws.rs.QueryParam("range")
+			String range,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("startDate")
+			Date startDate)
 		throws Exception {
 
 		return new ExportPreview();
@@ -81,6 +111,26 @@ public abstract class BaseExportPreviewResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/export-import/v1.0/export-preview'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "endDate"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "last"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "range"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "startDate"
+			)
+		}
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "ExportPreview")
@@ -90,7 +140,22 @@ public abstract class BaseExportPreviewResourceImpl
 	@jakarta.ws.rs.Path("/export-preview")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ExportPreview getExportPreview() throws Exception {
+	public ExportPreview getExportPreview(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("endDate")
+			Date endDate,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("last")
+			Integer last,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("all")
+			@jakarta.ws.rs.QueryParam("range")
+			String range,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("startDate")
+			Date startDate)
+		throws Exception {
+
 		return new ExportPreview();
 	}
 
@@ -104,6 +169,22 @@ public abstract class BaseExportPreviewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "endDate"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "last"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "range"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "startDate"
 			)
 		}
 	)
@@ -120,7 +201,20 @@ public abstract class BaseExportPreviewResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("endDate")
+			Date endDate,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("last")
+			Integer last,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("all")
+			@jakarta.ws.rs.QueryParam("range")
+			String range,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("startDate")
+			Date startDate)
 		throws Exception {
 
 		return new ExportPreview();
@@ -571,4 +665,4 @@ public abstract class BaseExportPreviewResourceImpl
 		LogFactoryUtil.getLog(BaseExportPreviewResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:543691497
+// LIFERAY-REST-BUILDER-HASH:-1128829400

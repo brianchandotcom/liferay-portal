@@ -23,6 +23,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,12 +43,17 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface ExportPreviewResource {
 
 	public ExportPreview getAssetLibraryExportPreview(
-			String assetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode, Date endDate,
+			Integer last, String range, Date startDate)
 		throws Exception;
 
-	public ExportPreview getExportPreview() throws Exception;
+	public ExportPreview getExportPreview(
+			Date endDate, Integer last, String range, Date startDate)
+		throws Exception;
 
-	public ExportPreview getSiteExportPreview(String siteExternalReferenceCode)
+	public ExportPreview getSiteExportPreview(
+			String siteExternalReferenceCode, Date endDate, Integer last,
+			String range, Date startDate)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -138,4 +144,4 @@ public interface ExportPreviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1074977153
+// LIFERAY-REST-BUILDER-HASH:618786476

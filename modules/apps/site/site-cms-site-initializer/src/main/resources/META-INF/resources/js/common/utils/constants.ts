@@ -83,7 +83,8 @@ export const CMSSiteInitializerFDSNames = {
 	SPACE_CONTENTS_SUMMARY_SECTION: '-spaceContentsSummarySection',
 	SPACE_FILES_SUMMARY_SECTION: '-spaceFilesSummarySection',
 	SPACE_MEMBERS_SUMMARY_SECTION: '-spaceMembersSummarySection',
-	SPACE_MEMBERS_USER_GROUPS_SUMMARY_SECTION: '-spaceMembersUserGroupsSummarySection',
+	SPACE_MEMBERS_USER_GROUPS_SUMMARY_SECTION:
+		'-spaceMembersUserGroupsSummarySection',
 	SPACE_MEMBERS_USERS_SUMMARY_SECTION: '-spaceMembersUsersSummarySection',
 	SPACE_SITES_SUMMARY_SECTION: '-spaceSitesSummarySection',
 	STRUCTURE_USAGES: '-structureUsages',
@@ -92,5 +93,5 @@ export const CMSSiteInitializerFDSNames = {
 	VIEW_CONTENTS_FOLDER: '-viewContentsFolder',
 	VIEW_FILES_FOLDER: '-viewFilesFolder',
 	VIEW_HISTORY: '-viewHistory',
-	VOCABULARIES: '-vocabularies'
+	VOCABULARIES: '-vocabularies',
 } as const;

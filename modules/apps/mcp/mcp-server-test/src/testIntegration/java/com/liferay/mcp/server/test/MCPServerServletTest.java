@@ -452,7 +452,8 @@ public class MCPServerServletTest {
 
 		Configuration configuration =
 			_configurationAdmin.getFactoryConfiguration(
-				_MCP_SERVER_CONFIGURATION_PID,
+				"com.liferay.mcp.server.internal.configuration." +
+					"MCPServerConfiguration",
 				String.valueOf(TestPropsValues.getCompanyId()), "?");
 
 		configuration.update(
@@ -462,9 +463,6 @@ public class MCPServerServletTest {
 				"enabled", enabled
 			).build());
 	}
-
-	private static final String _MCP_SERVER_CONFIGURATION_PID =
-		"com.liferay.mcp.server.internal.configuration.MCPServerConfiguration";
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

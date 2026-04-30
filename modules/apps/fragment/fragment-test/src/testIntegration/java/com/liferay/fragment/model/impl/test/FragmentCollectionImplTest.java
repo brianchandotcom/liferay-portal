@@ -276,7 +276,7 @@ public class FragmentCollectionImplTest {
 	}
 
 	@Inject
-	private static DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 	private FragmentCollection _fragmentCollection;
 

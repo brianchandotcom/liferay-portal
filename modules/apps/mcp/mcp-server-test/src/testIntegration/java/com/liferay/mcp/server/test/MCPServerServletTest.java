@@ -39,22 +39,35 @@ import io.modelcontextprotocol.spec.McpSchema;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 import java.util.Base64;
 import java.util.Collections;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Alejandro Tardín
+ * @author Beni Herrero
  */
 @FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
@@ -64,6 +77,43 @@ public class MCPServerServletTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_updateMCPServerConfiguration(true);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.factoryPid=" + _MCP_SERVER_CONFIGURATION_PID + ")");
+
+		if (configurations != null) {
+			for (Configuration configuration : configurations) {
+				configuration.delete();
+			}
+		}
+	}
+
+	@Test
+	public void testServiceWhenMCPServerConfigurationIsDisabled()
+		throws Exception {
+
+		_updateMCPServerConfiguration(false);
+
+		HttpResponse<Void> httpResponse = HttpClient.newHttpClient(
+		).send(
+			HttpRequest.newBuilder(
+			).header(
+				"Authorization", _getAuthorization()
+			).uri(
+				URI.create("http://localhost:8080/o/mcp")
+			).build(),
+			HttpResponse.BodyHandlers.discarding()
+		);
+
+		Assert.assertEquals(404, httpResponse.statusCode());
+	}
 
 	@FeatureFlag("LPD-86164")
 	@Test
@@ -404,6 +454,28 @@ public class MCPServerServletTest {
 			).build()
 		).build();
 	}
+
+	private void _updateMCPServerConfiguration(boolean enabled)
+		throws Exception {
+
+		Configuration configuration =
+			_configurationAdmin.getFactoryConfiguration(
+				_MCP_SERVER_CONFIGURATION_PID,
+				String.valueOf(TestPropsValues.getCompanyId()), "?");
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put("companyId", TestPropsValues.getCompanyId());
+		properties.put("enabled", enabled);
+
+		configuration.update(properties);
+	}
+
+	private static final String _MCP_SERVER_CONFIGURATION_PID =
+		"com.liferay.mcp.server.internal.configuration.MCPServerConfiguration";
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private Http _http;

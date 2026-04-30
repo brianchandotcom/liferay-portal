@@ -737,6 +737,13 @@ public class SharingEntryLocalServiceWrapper
 			uuid, groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
+		getToTicketSharingEntries(long toTicketId) {
+
+		return _sharingEntryLocalService.getToTicketSharingEntries(toTicketId);
+	}
+
 	/**
 	 * Returns the list of sharing entries for resources shared with the user.
 	 *
@@ -981,4 +988,4 @@ public class SharingEntryLocalServiceWrapper
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1457849249
+// LIFERAY-SERVICE-BUILDER-HASH:1156547837

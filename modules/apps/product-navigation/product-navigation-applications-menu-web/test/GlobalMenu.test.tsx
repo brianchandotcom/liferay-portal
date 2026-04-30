@@ -22,9 +22,16 @@ const mockedData = {
 	cms: {},
 	items: [
 		{
+			active: true,
 			homeURL: '/category1',
 			key: 'category1',
 			label: 'Category 1',
+		},
+		{
+			active: false,
+			homeURL: '/category2',
+			key: 'category2',
+			label: 'Category 2',
 		},
 	],
 	portletNamespace: 'portletNamespace',
@@ -39,6 +46,7 @@ const mockedData = {
 		],
 		recentSites: [
 			{
+				current: true,
 				key: 'Recent1',
 				label: 'Recent Site 1',
 				logoURL: 'recentSite1Logo',
@@ -150,5 +158,25 @@ describe('GlobalMenu', () => {
 				screen.getByRole('menuitem', {name: 'view-all-sites'})
 			).toBeInTheDocument();
 		});
+	});
+
+	it('marks the active category and current site with aria-current="page"', async () => {
+		renderComponent();
+
+		userEvent.click(screen.getByTestId('globalMenu'));
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('menuitem', {name: 'Category 1'})
+			).toHaveAttribute('aria-current', 'page');
+		});
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Category 2'})
+		).not.toHaveAttribute('aria-current');
+
+		expect(
+			screen.getByRole('menuitem', {name: 'Recent Site 1'})
+		).toHaveAttribute('aria-current', 'page');
 	});
 });

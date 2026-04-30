@@ -56,6 +56,79 @@ public class GroovyStyleChecker {
 		return violations;
 	}
 
+	public static List<Violation> checkUnescapedDollarInterpolation(
+		String blockText) {
+
+		if ((blockText == null) || blockText.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<Violation> violations = new ArrayList<>();
+
+		blockText = _removeComment(blockText);
+
+		String[] lines = blockText.split("\n", -1);
+
+		for (int lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+			String line = lines[lineIndex];
+
+			boolean inDoubleQuote = false;
+			boolean inSingleQuote = false;
+
+			for (int i = 0; i < line.length(); i++) {
+				char c = line.charAt(i);
+				char nextChar =
+					((i + 1) < line.length()) ? line.charAt(i + 1) : 0;
+
+				if (inDoubleQuote) {
+					if (c == '\\') {
+						i++;
+
+						continue;
+					}
+
+					if (c == '"') {
+						inDoubleQuote = false;
+
+						continue;
+					}
+
+					if ((c == '$') && (nextChar == '{')) {
+						violations.add(new Violation(line, lineIndex + 1));
+
+						break;
+					}
+
+					continue;
+				}
+
+				if (inSingleQuote) {
+					if (c == '\\') {
+						i++;
+
+						continue;
+					}
+
+					if (c == '\'') {
+						inSingleQuote = false;
+					}
+
+					continue;
+				}
+
+				if (c == '"') {
+					inDoubleQuote = true;
+				}
+
+				if (c == '\'') {
+					inSingleQuote = true;
+				}
+			}
+		}
+
+		return violations;
+	}
+
 	public static final class Violation {
 
 		public String getLine() {

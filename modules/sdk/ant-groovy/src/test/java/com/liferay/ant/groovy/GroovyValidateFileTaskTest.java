@@ -83,6 +83,63 @@ public class GroovyValidateFileTaskTest {
 	}
 
 	@Test
+	public void testCatchesUnescapedDollarBraceInterpolation()
+		throws Exception {
+
+		File xmlFile = _writeFile(
+			"<project>\n<groovy>\n<![CDATA[\n" +
+				"String url = \"https://ci/${jobName}/build\";\n" +
+					"]]>\n</groovy>\n</project>",
+			"unescaped-dollar-brace.xml");
+
+		GroovyValidateFileTask groovyValidateFileTask =
+			_newGroovyValidateFileTask();
+
+		groovyValidateFileTask.setFile(xmlFile);
+
+		try {
+			groovyValidateFileTask.execute();
+
+			Assert.fail("Expected BuildException for unescaped GString");
+		}
+		catch (BuildException buildException) {
+			String message = buildException.getMessage();
+
+			Assert.assertTrue(
+				"Expected message to mention failure, got: " + message,
+				message.contains("Groovy validation failed"));
+		}
+	}
+
+	@Test
+	public void testCatchesUnescapedDollarIdentifierInterpolation()
+		throws Exception {
+
+		File xmlFile = _writeFile(
+			"<project>\n<groovy>\n<![CDATA[\nString x = \"prefix-$jobName" +
+				"\";\n]]>\n</groovy>\n</project>",
+			"unescaped-dollar-identifier.xml");
+
+		GroovyValidateFileTask groovyValidateFileTask =
+			_newGroovyValidateFileTask();
+
+		groovyValidateFileTask.setFile(xmlFile);
+
+		try {
+			groovyValidateFileTask.execute();
+
+			Assert.fail("Expected BuildException for unescaped GString");
+		}
+		catch (BuildException buildException) {
+			String message = buildException.getMessage();
+
+			Assert.assertTrue(
+				"Expected message to mention failure, got: " + message,
+				message.contains("Groovy validation failed"));
+		}
+	}
+
+	@Test
 	public void testMissingFileThrows() throws Exception {
 		GroovyValidateFileTask groovyValidateFileTask =
 			_newGroovyValidateFileTask();
@@ -116,6 +173,37 @@ public class GroovyValidateFileTaskTest {
 
 			Assert.assertTrue(message.contains("Specify"));
 		}
+	}
+
+	@Test
+	public void testToleratesBareDollarOutsideInterpolation() throws Exception {
+		File xmlFile = _writeFile(
+			"<project>\n<groovy>\n<![CDATA[\nString s = \"x\".replaceAll(" +
+				"\"a\", \"$1\");\nString literal = \"$\";\n]]>\n</groovy>\n" +
+					"</project>",
+			"bare-dollar.xml");
+
+		GroovyValidateFileTask groovyValidateFileTask =
+			_newGroovyValidateFileTask();
+
+		groovyValidateFileTask.setFile(xmlFile);
+
+		groovyValidateFileTask.execute();
+	}
+
+	@Test
+	public void testToleratesEscapedDollarIdentifier() throws Exception {
+		File xmlFile = _writeFile(
+			"<project>\n<groovy>\n<![CDATA[\nString s = \"prefix-\\$jobName" +
+				"\";\n]]>\n</groovy>\n</project>",
+			"escaped-dollar.xml");
+
+		GroovyValidateFileTask groovyValidateFileTask =
+			_newGroovyValidateFileTask();
+
+		groovyValidateFileTask.setFile(xmlFile);
+
+		groovyValidateFileTask.execute();
 	}
 
 	@Test

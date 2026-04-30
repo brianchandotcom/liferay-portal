@@ -54,7 +54,7 @@ public class CookiesConfigurationProviderImplTest {
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedFallsBackFromCompanyToSystem()
+	public void testIsCookiesPreferenceHandlingActiveFallsBackFromCompanyToSystem()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -63,18 +63,18 @@ public class CookiesConfigurationProviderImplTest {
 				new ConfigurationTemporarySwapper(
 					CookiesPreferenceHandlingConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"actived", true
+						"active", true
 					).put(
 						"enabled", true
 					).build())) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true);
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedFallsBackFromGroupToCompany()
+	public void testIsCookiesPreferenceHandlingActiveFallsBackFromGroupToCompany()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -84,13 +84,13 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_companyDictionary(companyId, true))) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedPrioritizesCompanyOverSystem()
+	public void testIsCookiesPreferenceHandlingActivePrioritizesCompanyOverSystem()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -99,7 +99,7 @@ public class CookiesConfigurationProviderImplTest {
 				new ConfigurationTemporarySwapper(
 					CookiesPreferenceHandlingConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"actived", true
+						"active", true
 					).put(
 						"enabled", true
 					).build());
@@ -107,18 +107,17 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_companyDictionary(companyId, false))) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, false);
 
 			Assert.assertTrue(
-				_cookiesConfigurationProvider.
-					isCookiesPreferenceHandlingActived(
-						ExtendedObjectClassDefinition.Scope.SYSTEM, 0));
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.SYSTEM, 0));
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedPrioritizesGroupOverCompany()
+	public void testIsCookiesPreferenceHandlingActivePrioritizesGroupOverCompany()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -131,19 +130,17 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_groupDictionary(companyId, groupId, true))) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
 
 			Assert.assertFalse(
-				_cookiesConfigurationProvider.
-					isCookiesPreferenceHandlingActived(
-						ExtendedObjectClassDefinition.Scope.COMPANY,
-						companyId));
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.COMPANY, companyId));
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedWithCompanyScope()
+	public void testIsCookiesPreferenceHandlingActiveWithCompanyScope()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -152,13 +149,13 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_companyDictionary(companyId, true))) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true);
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedWithGroupScope()
+	public void testIsCookiesPreferenceHandlingActiveWithGroupScope()
 		throws Exception {
 
 		long companyId = TestPropsValues.getCompanyId();
@@ -168,45 +165,45 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_groupDictionary(companyId, groupId, true))) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
 		}
 	}
 
 	@Test
-	public void testIsCookiesPreferenceHandlingActivedWithSystemScope()
+	public void testIsCookiesPreferenceHandlingActiveWithSystemScope()
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CookiesPreferenceHandlingConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"actived", true
+						"active", true
 					).put(
 						"enabled", true
 					).build())) {
 
-			_assertActivedEventually(
+			_assertActiveEventually(
 				ExtendedObjectClassDefinition.Scope.SYSTEM, 0, true);
 		}
 	}
 
-	private void _assertActivedEventually(
+	private void _assertActiveEventually(
 			ExtendedObjectClassDefinition.Scope scope, long scopePK,
 			boolean expected)
 		throws Exception {
 
 		Assert.assertEquals(
 			expected,
-			_cookiesConfigurationProvider.isCookiesPreferenceHandlingActived(
+			_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
 				scope, scopePK));
 	}
 
 	private Dictionary<String, Object> _companyDictionary(
-		long companyId, boolean actived) {
+		long companyId, boolean active) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
-			"actived", actived
+			"active", active
 		).put(
 			"companyId", companyId
 		).put(
@@ -215,10 +212,10 @@ public class CookiesConfigurationProviderImplTest {
 	}
 
 	private Dictionary<String, Object> _groupDictionary(
-		long companyId, long groupId, boolean actived) {
+		long companyId, long groupId, boolean active) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
-			"actived", actived
+			"active", active
 		).put(
 			"companyId", companyId
 		).put(

@@ -55,7 +55,10 @@ spec:
                                     elasticsearch-plugin \
                                         install \
                                         --batch \
-                                        analysis-{icu,kuromoji,smartcn,stempel}
+                                        analysis-icu \
+                                        analysis-kuromoji \
+                                        analysis-smartcn \
+                                        analysis-stempel
                             name: install-plugins
                             securityContext:
                                 {{- $search.securityContext | toYaml | nindent 32 }}

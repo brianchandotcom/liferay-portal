@@ -154,6 +154,7 @@ export enum SolutionTypes {
 	AI_HUB = 'ai-hub',
 	ANALYTICS = 'analytics',
 	CMP = 'cmp',
+	DSR = 'dsr',
 	DXP = 'dxp',
 	LIFERAY_DATA_PLATFORM = 'liferay-data-platform',
 	PRE_BUILT_TRIAL = 'pre-built-trial',

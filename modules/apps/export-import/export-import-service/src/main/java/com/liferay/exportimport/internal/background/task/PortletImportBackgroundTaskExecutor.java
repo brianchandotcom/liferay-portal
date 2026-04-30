@@ -9,6 +9,9 @@ import com.liferay.exportimport.internal.background.task.display.PortletExportIm
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.report.model.ExportImportReportEntryTable;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -108,6 +111,25 @@ public class PortletImportBackgroundTaskExecutor
 			}
 		}
 
+		int count = _exportImportReportEntryLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				ExportImportReportEntryTable.INSTANCE
+			).where(
+				ExportImportReportEntryTable.INSTANCE.companyId.eq(
+					exportImportConfiguration.getCompanyId()
+				).and(
+					ExportImportReportEntryTable.INSTANCE.
+						exportImportConfigurationId.eq(
+							exportImportConfiguration.
+								getExportImportConfigurationId())
+				)
+			));
+
+		if (count > 0) {
+			return BackgroundTaskResult.COMPLETED_WITH_ERRORS;
+		}
+
 		return BackgroundTaskResult.SUCCESS;
 	}
 
@@ -120,6 +142,10 @@ public class PortletImportBackgroundTaskExecutor
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	private class PortletImportCallable implements Callable<Void> {
 

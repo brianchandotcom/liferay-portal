@@ -432,148 +432,20 @@ public class BasePersistenceImpl
 	public Map<Serializable, T> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
 
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
+		CTPersistenceHelper ctPersistenceHelper = getCTPersistenceHelper();
 
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
+		if ((ctPersistenceHelper != null) &&
+			ctPersistenceHelper.isProductionMode((Class)_modelClass)) {
 
-			Serializable primaryKey = iterator.next();
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
-			T model = fetchByPrimaryKey(primaryKey);
-
-			if (model == null) {
-				return Collections.emptyMap();
-			}
-
-			return Collections.singletonMap(primaryKey, model);
-		}
-
-		Map<Serializable, T> map = new HashMap<>();
-
-		if (_modelPKType == ModelPKType.COMPOUND) {
-			for (Serializable primaryKey : primaryKeys) {
-				T model = fetchByPrimaryKey(primaryKey);
-
-				if (model != null) {
-					map.put(primaryKey, model);
-				}
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		EntityCache entityCache = getEntityCache();
-
-		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(
-				_modelImplClass, primaryKey);
-
-			if (serializable != nullModel) {
-				if (serializable == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, (T)serializable);
-				}
+				return _fetchByPrimaryKeys(primaryKeys, null);
 			}
 		}
 
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(uncachedPrimaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = uncachedPrimaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler(
-			(2 * uncachedPrimaryKeys.size()) + 4);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		if (_modelPKType == ModelPKType.STRING) {
-			for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
-				sb.append("?");
-
-				sb.append(",");
-			}
-		}
-		else {
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				sb.append((long)primaryKey);
-
-				sb.append(",");
-			}
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			if (_modelPKType == ModelPKType.STRING) {
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				for (Serializable primaryKey : uncachedPrimaryKeys) {
-					queryPos.add(primaryKey);
-				}
-			}
-
-			for (T model : (List<T>)query.list()) {
-				map.put(model.getPrimaryKeyObj(), model);
-
-				cacheResult(model);
-
-				uncachedPrimaryKeys.remove(model.getPrimaryKeyObj());
-			}
-
-			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(_modelImplClass, primaryKey, nullModel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
+		return _fetchByPrimaryKeys(primaryKeys, ctPersistenceHelper);
 	}
 
 	@Override
@@ -1229,6 +1101,171 @@ public class BasePersistenceImpl
 		}
 
 		return model;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<Serializable, T> _fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys,
+		CTPersistenceHelper ctPersistenceHelper) {
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			T model = fetchByPrimaryKey(primaryKey);
+
+			if (model == null) {
+				return Collections.emptyMap();
+			}
+
+			return Collections.singletonMap(primaryKey, model);
+		}
+
+		Map<Serializable, T> map = new HashMap<>();
+
+		if (_modelPKType == ModelPKType.COMPOUND) {
+			for (Serializable primaryKey : primaryKeys) {
+				T model = fetchByPrimaryKey(primaryKey);
+
+				if (model != null) {
+					map.put(primaryKey, model);
+				}
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		EntityCache entityCache = getEntityCache();
+
+		for (Serializable primaryKey : primaryKeys) {
+			Serializable serializable;
+
+			if (ctPersistenceHelper == null) {
+				serializable = entityCache.getResult(
+					_modelImplClass, primaryKey);
+			}
+			else {
+				try (SafeCloseable safeCloseable =
+						ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+							(Class)_modelClass, primaryKey)) {
+
+					serializable = entityCache.getResult(
+						_modelImplClass, primaryKey);
+				}
+			}
+
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<>();
+					}
+
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (T)serializable);
+				}
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(uncachedPrimaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = uncachedPrimaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(
+			(2 * uncachedPrimaryKeys.size()) + 4);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		if (_modelPKType == ModelPKType.STRING) {
+			for (int i = 0; i < uncachedPrimaryKeys.size(); i++) {
+				sb.append("?");
+
+				sb.append(",");
+			}
+		}
+		else {
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				sb.append((long)primaryKey);
+
+				sb.append(",");
+			}
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			if (_modelPKType == ModelPKType.STRING) {
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				for (Serializable primaryKey : uncachedPrimaryKeys) {
+					queryPos.add(primaryKey);
+				}
+			}
+
+			for (T model : (List<T>)query.list()) {
+				map.put(model.getPrimaryKeyObj(), model);
+
+				cacheResult(model);
+
+				uncachedPrimaryKeys.remove(model.getPrimaryKeyObj());
+			}
+
+			if (ctPersistenceHelper == null) {
+				for (Serializable primaryKey : uncachedPrimaryKeys) {
+					entityCache.putResult(
+						_modelImplClass, primaryKey, nullModel);
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	private String[] _getAliasTypes(

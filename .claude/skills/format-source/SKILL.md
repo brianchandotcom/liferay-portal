@@ -7,7 +7,7 @@ name: format-source
 
 # Format Source
 
-All the code is strictly formatted using the source formatter. This is how it works:
+All the code is strictly formatted using the source formatter (Java, JavaScript, JSON, JSP, Markdown, properties, shell, XML, YAML, and others). This is how it works:
 
 Run for a specific module:
 

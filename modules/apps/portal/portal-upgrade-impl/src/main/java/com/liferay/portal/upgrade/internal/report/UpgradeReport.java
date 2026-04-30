@@ -61,10 +61,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
@@ -145,13 +145,11 @@ public class UpgradeReport {
 
 	private String _getExecutionDateString() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"EEE, MMM dd, yyyy hh:mm:ss z");
+			"EEE, MMM dd, yyyy HH:mm:ss z", LocaleUtil.US);
 
 		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-		Calendar calendar = Calendar.getInstance();
-
-		return simpleDateFormat.format(calendar.getTime());
+		return simpleDateFormat.format(new Date());
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(

@@ -1053,7 +1053,7 @@ test.describe('Object Expression Builder Validation', () => {
 	});
 
 	test(
-		'LPD-78504 Can create validation using oldValue function with Picklist field',
+		'Can create validation using oldValue function with Picklist field',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page: _page, site: _site}) => {
 			const suffix = getRandomString().substring(0, 8);

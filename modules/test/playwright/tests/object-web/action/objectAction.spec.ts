@@ -441,7 +441,7 @@ test(
 
 test.describe('Object Action CRUD', () => {
 	test(
-		'LPD-78504 Can activate or deactivate an action',
+		'Can activate or deactivate an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectFields = generateObjectFields({
@@ -471,10 +471,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Custom Action'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -487,7 +488,7 @@ test.describe('Object Action CRUD', () => {
 				page.getByRole('link', {name: 'Custom Action'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 
 			await page.getByRole('link', {name: 'Custom Action'}).click();
 
@@ -497,18 +498,16 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
-			await expect(page.getByText('No')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'No'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can cancel the creation of an action',
+		'Can cancel the creation of an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -527,7 +526,7 @@ test.describe('Object Action CRUD', () => {
 
 			const iframe = page.frameLocator('iframe');
 
-			await iframe.getByRole('button', {name: 'Cancel'}).click();
+			await iframe.getByText('Cancel').click();
 
 			await page.reload();
 
@@ -538,7 +537,7 @@ test.describe('Object Action CRUD', () => {
 	);
 
 	test(
-		'LPD-78504 Can cancel the update of an action',
+		'Can cancel the update of an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -563,10 +562,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Action Label'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -584,18 +584,18 @@ test.describe('Object Action CRUD', () => {
 				.getByPlaceholder('Text to translate')
 				.fill('Update Action Label');
 
-			await iframe.getByRole('button', {name: 'Cancel'}).click();
+			await iframe.getByText('Cancel').click();
 
 			await expect(
 				page.getByRole('link', {name: 'Action Label'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can create an action with webhook',
+		'Can create an action with webhook',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -635,9 +635,7 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
@@ -645,12 +643,12 @@ test.describe('Object Action CRUD', () => {
 				page.getByRole('link', {name: 'Action Label'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can delete an action',
+		'Can delete an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -674,10 +672,11 @@ test.describe('Object Action CRUD', () => {
 					active: true,
 					label: {en_US: 'Action Label'},
 					name: actionName,
-					objectActionExecutorKey: 'webhook',
+					objectActionExecutorKey: 'add-object-entry',
 					objectActionTriggerKey: 'onAfterAdd',
 					parameters: {
-						url: 'http://localhost:8080',
+						objectDefinitionExternalReferenceCode:
+							objectDefinition.externalReferenceCode,
 					},
 				}
 			);
@@ -695,8 +694,6 @@ test.describe('Object Action CRUD', () => {
 
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
 
-			await page.getByRole('button', {name: 'Delete'}).click();
-
 			await expect(
 				page.getByRole('link', {name: 'Action Label'})
 			).toBeHidden();
@@ -704,7 +701,7 @@ test.describe('Object Action CRUD', () => {
 	);
 
 	test(
-		'LPD-78504 Can edit an action name',
+		'Can edit an action name',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -729,10 +726,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Custom Action'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://www.liferay.com',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -754,9 +752,7 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
@@ -764,12 +760,12 @@ test.describe('Object Action CRUD', () => {
 				page.getByRole('link', {name: 'New Action Update'})
 			).toBeVisible();
 
-			await expect(page.getByText('No')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'No'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can inactivate an action',
+		'Can inactivate an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -794,10 +790,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Action Label'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -806,7 +803,7 @@ test.describe('Object Action CRUD', () => {
 
 			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 
 			await page.getByRole('link', {name: 'Action Label'}).click();
 
@@ -816,18 +813,16 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
-			await expect(page.getByText('No')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'No'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can reactivate an action',
+		'Can reactivate an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -852,10 +847,11 @@ test.describe('Object Action CRUD', () => {
 						active: false,
 						label: {en_US: 'Action Label'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -864,7 +860,7 @@ test.describe('Object Action CRUD', () => {
 
 			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-			await expect(page.getByText('No')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'No'})).toBeVisible();
 
 			await page.getByRole('link', {name: 'Action Label'}).click();
 
@@ -874,18 +870,16 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can search for an action',
+		'Can search for an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -911,10 +905,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Action Label 1'},
 						name: actionName1,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -928,10 +923,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Action Label 2'},
 						name: actionName2,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -948,7 +944,10 @@ test.describe('Object Action CRUD', () => {
 				page.getByRole('link', {name: 'Action Label 2'})
 			).toBeVisible();
 
-			await page.getByPlaceholder('Search').fill('1');
+			await page
+				.getByTestId('managementToolbar')
+				.getByRole('searchbox', {name: 'Search'})
+				.fill('1');
 			await page.keyboard.press('Enter');
 
 			await expect(
@@ -962,7 +961,7 @@ test.describe('Object Action CRUD', () => {
 	);
 
 	test(
-		'LPD-78504 Can update an action',
+		'Can update an action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -987,10 +986,11 @@ test.describe('Object Action CRUD', () => {
 						active: true,
 						label: {en_US: 'Action Label'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -1010,9 +1010,7 @@ test.describe('Object Action CRUD', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
@@ -1020,14 +1018,14 @@ test.describe('Object Action CRUD', () => {
 				page.getByRole('link', {name: 'Update Action Label'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 });
 
 test.describe('Object Action Required Field Validation', () => {
 	test(
-		'LPD-78504 Cannot leave action name blank',
+		'Cannot leave action name blank',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1071,12 +1069,14 @@ test.describe('Object Action Required Field Validation', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await expect(iframe.getByText('Required')).toBeVisible();
+			await expect(
+				iframe.locator('#actionNameInputfieldFeedback')
+			).toContainText('Required');
 		}
 	);
 
 	test(
-		'LPD-78504 Cannot leave action then field blank',
+		'Cannot leave action then field blank',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1116,7 +1116,7 @@ test.describe('Object Action Required Field Validation', () => {
 	);
 
 	test(
-		'LPD-78504 Cannot leave action when field blank',
+		'Cannot leave action when field blank',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1158,7 +1158,7 @@ test.describe('Object Action Required Field Validation', () => {
 	);
 
 	test(
-		'LPD-78504 Cannot leave URL blank when webhook is selected',
+		'Cannot leave URL blank when webhook is selected',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1196,12 +1196,14 @@ test.describe('Object Action Required Field Validation', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await expect(iframe.getByText('Required')).toBeVisible();
+			await expect(
+				iframe.locator('#urlInputfieldFeedback')
+			).toContainText('Required');
 		}
 	);
 
 	test(
-		'LPD-78504 Cannot save action without expression builder value',
+		'Cannot save action without expression builder value',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1259,7 +1261,7 @@ test.describe('Object Action Required Field Validation', () => {
 	);
 
 	test(
-		'LPD-78504 Can verify action name is required',
+		'Can verify action name is required',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
@@ -1280,14 +1282,16 @@ test.describe('Object Action Required Field Validation', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await expect(iframe.getByText('Required')).toBeVisible();
+			await expect(
+				iframe.locator('#actionNameInputfieldFeedback')
+			).toContainText('Required');
 		}
 	);
 });
 
 test.describe('Object Action Conditions and Triggers', () => {
 	test(
-		'LPD-78504 Can create an action with expression builder condition',
+		'Can create an action with expression builder condition',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1336,9 +1340,7 @@ test.describe('Object Action Conditions and Triggers', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
@@ -1346,12 +1348,12 @@ test.describe('Object Action Conditions and Triggers', () => {
 				page.getByRole('link', {name: 'Custom Action'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can enable and disable condition on an action',
+		'Can enable and disable condition on an action',
 		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
@@ -1388,10 +1390,11 @@ test.describe('Object Action Conditions and Triggers', () => {
 							objectFields[0].name + " == 'Entry with condition'",
 						label: {en_US: 'Custom Action'},
 						name: actionName,
-						objectActionExecutorKey: 'webhook',
+						objectActionExecutorKey: 'add-object-entry',
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
-							url: 'http://localhost:8080',
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
 						},
 					}
 				);
@@ -1412,9 +1415,7 @@ test.describe('Object Action Conditions and Triggers', () => {
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			await waitForAlert(iframe);
-
-			await page.goBack();
+			await page.waitForLoadState('networkidle');
 
 			await viewObjectActionsPage.actionsTabItem.click();
 
@@ -1422,14 +1423,14 @@ test.describe('Object Action Conditions and Triggers', () => {
 				page.getByRole('link', {name: 'Custom Action'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can trigger action after disabling expression condition',
+		'Can trigger action after disabling expression condition',
 		{tag: ['@LPD-78504', '@LPS-156343']},
-		async ({apiHelpers, site: _site}) => {
+		async ({apiHelpers, site: _site}) => { 
 			const objectFields = generateObjectFields({
 				objectFieldBusinessTypes: ['Text'],
 			});
@@ -1506,7 +1507,7 @@ test.describe('Object Action Conditions and Triggers', () => {
 	);
 
 	test(
-		'LPD-78504 Can trigger action with expression by adding an entry',
+		'Can trigger action with expression by adding an entry',
 		{tag: ['@LPD-78504', '@LPS-156320']},
 		async ({apiHelpers, site: _site}) => {
 			const objectFields = generateObjectFields({
@@ -1581,7 +1582,7 @@ test.describe('Object Action Conditions and Triggers', () => {
 	);
 
 	test(
-		'LPD-78504 Can use expression with webhook action',
+		'Can use expression with webhook action',
 		{tag: '@LPD-78504'},
 		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectFields = generateObjectFields({
@@ -1638,12 +1639,12 @@ test.describe('Object Action Conditions and Triggers', () => {
 				page.getByRole('link', {name: 'Action Label'})
 			).toBeVisible();
 
-			await expect(page.getByText('Yes')).toBeVisible();
+			await expect(page.getByRole('cell', {name: 'Yes'})).toBeVisible();
 		}
 	);
 
 	test(
-		'LPD-78504 Can verify condition card is hidden when using on subscription status update trigger',
+		'Can verify condition card is hidden when using on subscription status update trigger',
 		{tag: '@LPD-78504'},
 		async ({editObjectActionPage, page, viewObjectActionsPage}) => {
 			await viewObjectActionsPage.goto('Commerce Order');
@@ -1658,19 +1659,22 @@ test.describe('Object Action Conditions and Triggers', () => {
 
 			await editObjectActionPage.openActionBuilderTab();
 
+			await expect(iframe.getByLabel('Enable Condition')).toBeVisible();
+
 			await editObjectActionPage.inputWhenCombo.click();
+
 			await iframe
 				.getByRole('option', {name: 'On Subscription Status Update'})
 				.click();
 
-			await expect(iframe.getByText('Condition')).toBeHidden();
+			await expect(iframe.getByLabel('Enable Condition')).toBeHidden();
 		}
 	);
 });
 
 test.describe('Object Action Cross-Object Behavior', () => {
 	test(
-		'LPD-78504 Can add account entry after creating account entry via action',
+		'Can add account entry after creating account entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers, site: _site}) => {
 			const targetAccountName = `Account Name ${getRandomInt()}`;
@@ -1731,7 +1735,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can add account entry after creating custom object entry via action',
+		'Can add account entry after creating custom object entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers, site: _site}) => {
 			const targetAccountName = `Account Name ${getRandomInt()}`;
@@ -1810,7 +1814,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can add account entry after deleting custom object entry via action',
+		'Can add account entry after deleting custom object entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers, site: _site}) => {
 			const targetAccountName = `Account Name ${getRandomInt()}`;
@@ -1894,7 +1898,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can add account entry after updating custom object entry via action',
+		'Can add account entry after updating custom object entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers, site: _site}) => {
 			const targetAccountName = `Account Name ${getRandomInt()}`;
@@ -1981,7 +1985,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can add commerce product group entry after deleting commerce product entry via action',
+		'Can add commerce product group entry after deleting commerce product entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers}) => {
 			const targetGroupName = `Value Test ${getRandomInt()}`;
@@ -2032,11 +2036,11 @@ test.describe('Object Action Cross-Object Behavior', () => {
 
 			const productGroups =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					'c/commerceproductgroups'
+					'headless-commerce-admin-catalog/v1.0/product-groups'
 				);
 
 			const createdGroup = productGroups.items.find(
-				(item: any) => item.title === targetGroupName
+				(item: any) => item.title?.en_US === targetGroupName
 			);
 
 			expect(createdGroup).toBeTruthy();
@@ -2051,7 +2055,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can add user after creating commerce product entry via action',
+		'Can add user after creating commerce product entry via action',
 		{tag: ['@LPD-78504', '@LPS-180070']},
 		async ({apiHelpers}) => {
 			const newUserAlternateName = `newusertest${getRandomInt()}`;
@@ -2130,7 +2134,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can update account entry after creating account entry via action',
+		'Can update account entry after creating account entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers, site: _site}) => {
 			const initialAccountName = `Account Name ${getRandomInt()}`;
@@ -2188,7 +2192,7 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 
 	test(
-		'LPD-78504 Can update commerce product group entry after creating commerce product entry via action',
+		'Can update commerce product group entry after creating commerce product entry via action',
 		{tag: ['@LPD-78504', '@LPS-173537']},
 		async ({apiHelpers}) => {
 			const updatedTitle = `Product Group Updated ${getRandomInt()}`;
@@ -2228,33 +2232,32 @@ test.describe('Object Action Cross-Object Behavior', () => {
 
 			const productGroup = await apiHelpers.objectEntry.postObjectEntry(
 				{
-					name: `Product Group ${getRandomInt()}`,
-					title: 'Original Title',
+					title: {en_US: 'Original Title'},
 				},
-				'c/commerceproductgroups'
+				'headless-commerce-admin-catalog/v1.0/product-groups'
 			);
 
 			apiHelpers.data.push({id: productGroup.id, type: 'objectEntry'});
 
-			const updatedGroup =
-				await apiHelpers.objectEntry.getObjectEntryById(
-					'c/commerceproductgroups',
-					String(productGroup.id)
-				);
+			await expect(async () => {
+				const updatedGroup =
+					await apiHelpers.objectEntry.getObjectEntryById(
+						'headless-commerce-admin-catalog/v1.0/product-groups',
+						String(productGroup.id)
+					);
 
-			expect(updatedGroup.title).toBe(updatedTitle);
+				expect(updatedGroup.title?.en_US).toBe(updatedTitle);
+			}).toPass();
 		}
 	);
 });
 
 test.describe('Object Action with Groovy Script', () => {
 	test(
-		'LPD-78504 Can create an action with Groovy Script',
+		'Can create an action with Groovy Script',
 		{tag: ['@LPD-78504', '@LPS-156569']},
 		async ({apiHelpers, scriptManagementPage, site: _site}) => {
 			await scriptManagementPage.enableScriptManagementConfiguration();
-
-			await scriptManagementPage.page.waitForTimeout(2000);
 
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -2343,25 +2346,26 @@ test.describe('Object Action with Groovy Script', () => {
 				applicationName
 			);
 
-			await expect
-				.poll(
-					async () => {
-						const updatedEntry =
-							await apiHelpers.objectEntry.getObjectEntryById(
-								applicationName,
-								String(entry.id)
-							);
+			// The Groovy executor runs asynchronously after the entry is
+			// committed, so poll until the action's effect (updated
+			// customObjectFieldActionTest) is visible.
 
-						return updatedEntry.customObjectFieldActionTest;
-					},
-					{timeout: 10000}
-				)
-				.toBe('Action Test Works');
+			await expect(async () => {
+				const updatedEntry =
+					await apiHelpers.objectEntry.getObjectEntryById(
+						applicationName,
+						String(entry.id)
+					);
+
+				expect(updatedEntry.customObjectFieldActionTest).toBe(
+					'Action Test Works'
+				);
+			}).toPass();
 		}
 	);
 
 	test(
-		'LPD-78504 Can edit an action with Groovy Script',
+		'Can edit an action with Groovy Script',
 		{tag: ['@LPD-78504', '@LPS-156560']},
 		async ({apiHelpers, scriptManagementPage, site: _site}) => {
 			await scriptManagementPage.enableScriptManagementConfiguration();
@@ -2465,29 +2469,29 @@ test.describe('Object Action with Groovy Script', () => {
 				Number(entry.id)
 			);
 
-			await expect
-				.poll(
-					async () => {
-						const updatedEntry =
-							await apiHelpers.objectEntry.getObjectEntryById(
-								applicationName,
-								String(entry.id)
-							);
+			// The Groovy executor runs asynchronously after the entry is committed,
+			// so poll until the action's effect (updated customObjectFieldActionTest)
+			// is visible.
 
-						return updatedEntry.customObjectFieldActionTest;
-					},
-					{timeout: 10000}
-				)
-				.toBe('Action Test Works');
+			await expect(async () => {
+				const updatedEntry =
+					await apiHelpers.objectEntry.getObjectEntryById(
+						applicationName,
+						String(entry.id)
+					);
+
+				expect(updatedEntry.customObjectFieldActionTest).toBe(
+					'Action Test Works'
+				);
+			}).toPass();
 		}
 	);
 
 	test(
-		'LPD-78504 Can use expression with Groovy Script action',
+		'Can use expression with Groovy Script action',
 		{tag: ['@LPD-78504', '@LPS-156346']},
 		async ({
 			apiHelpers,
-			page,
 			scriptManagementPage,
 			site: _site,
 			viewObjectActionsPage,
@@ -2554,20 +2558,26 @@ test.describe('Object Action with Groovy Script', () => {
 				applicationName
 			);
 
-			await viewObjectActionsPage.goto(objectDefinition.label!['en_US']);
+			// The Groovy executor runs asynchronously after the entry is
+			// committed, so poll the actions page until the action's last
+			// execution status reflects 'Success'.
 
-			await page.reload();
+			await expect(async () => {
+				await viewObjectActionsPage.goto(
+					objectDefinition.label!['en_US']
+				);
 
-			await expect(viewObjectActionsPage.lastExecutionCell).toContainText(
-				'Success'
-			);
+				await expect(
+					viewObjectActionsPage.lastExecutionCell.nth(1)
+				).toContainText('Success');
+			}).toPass();
 		}
 	);
 });
 
 test.describe('Object Action Standalone Permissions', () => {
 	test(
-		'LPD-78504 Can manage standalone permissions in roles',
+		'Can manage standalone permissions in roles',
 		{tag: ['@LPD-78504', '@LPS-173723']},
 		async ({
 			apiHelpers,
@@ -2648,16 +2658,24 @@ test.describe('Object Action Standalone Permissions', () => {
 				true
 			);
 
+			await expect(
+				roleDefinePermissionsPage.page.getByText(actionPermissionName)
+			).toBeVisible();
+
 			await roleDefinePermissionsPage.changePermission(
 				objectName,
 				actionPermissionName,
 				false
 			);
+
+			await expect(
+				roleDefinePermissionsPage.page.getByText(actionPermissionName)
+			).toBeHidden();
 		}
 	);
 
 	test(
-		'LPD-78504 Cannot see deactivated standalone action in dropdown menu',
+		'Cannot see deactivated standalone action in dropdown menu',
 		{tag: ['@LPD-78504', '@LPS-173773']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const objectFields = generateObjectFields({
@@ -2729,7 +2747,7 @@ test.describe('Object Action Standalone Permissions', () => {
 	);
 
 	test(
-		'LPD-78504 Can trigger standalone action for site scoped object',
+		'Can trigger standalone action for site scoped object',
 		{tag: ['@LPD-78504', '@LPS-172918']},
 		async ({apiHelpers, page, site, viewObjectEntriesPage}) => {
 			const objectFields = generateObjectFields({
@@ -2821,7 +2839,7 @@ test.describe('Object Action Standalone Permissions', () => {
 	);
 
 	test(
-		'LPD-78504 Can trigger standalone action with permission',
+		'Can trigger standalone action with permission',
 		{tag: ['@LPD-78504', '@LPS-169994']},
 		async ({
 			apiHelpers,
@@ -2983,7 +3001,7 @@ test.describe('Object Action Standalone Permissions', () => {
 	);
 
 	test(
-		'LPD-78504 Can verify unpublished object with standalone action does not show in permissions',
+		'Can verify unpublished object with standalone action does not show in permissions',
 		{tag: ['@LPD-78504', '@LPS-173774']},
 		async ({
 			apiHelpers,
@@ -3011,7 +3029,7 @@ test.describe('Object Action Standalone Permissions', () => {
 			const unpublishedObject =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					objectFields: unpublishedObjectFields,
-					status: {code: 0},
+					status: {code: 2},
 				});
 
 			apiHelpers.data.push({
@@ -3086,18 +3104,16 @@ test.describe('Object Action Standalone Permissions', () => {
 
 test.describe('Object Action with Formula Field', () => {
 	test(
-		'LPD-78504 Can use formula field with user notification action',
+		'Can use formula field with email notification action',
 		{tag: ['@LPD-78504', '@LPS-176850']},
-		async ({apiHelpers, page, site: _site}) => {
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
 			const notificationTemplate =
-				await apiHelpers.notification.postNotificationTemplate({
-					editorType: 'richText',
-					name: `User Notification Template ${getRandomInt()}`,
-					recipientType: 'term',
-					recipients: [{term: '[%CURRENT_USER_ID%]'}],
-					subject: {en_US: `Subject Test ${getRandomInt()}`},
-					type: 'userNotification',
-				});
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Notification Template ${getRandomInt()}`,
+					senderEmail
+				);
 
 			apiHelpers.data.push({
 				id: notificationTemplate.id,
@@ -3169,7 +3185,7 @@ test.describe('Object Action with Formula Field', () => {
 						objectActionTriggerKey: 'onAfterAdd',
 						parameters: {
 							notificationTemplateId: notificationTemplate.id,
-							type: 'userNotification',
+							type: 'email',
 						},
 					}
 				);
@@ -3184,30 +3200,39 @@ test.describe('Object Action with Formula Field', () => {
 				applicationName
 			);
 
-			await page.waitForTimeout(2000);
+			// The notification action runs asynchronously after the entry is
+			// committed, so poll until the queue is populated.
 
-			const notificationQueueEntries =
-				await apiHelpers.notification.getNotificationQueueEntriesPage(
-					String(notificationTemplate.id)
+			let notificationQueueEntries: {items: {id: number}[]};
+
+			await expect(async () => {
+				notificationQueueEntries =
+					await apiHelpers.notification.getNotificationQueueEntriesPage(
+						senderEmail
+					);
+
+				expect(notificationQueueEntries.items.length).toBeGreaterThan(
+					0
 				);
+			}).toPass();
 
-			for (const item of notificationQueueEntries.items) {
+			// Register the queue entries for teardown cleanup.
+
+			for (const item of notificationQueueEntries!.items) {
 				apiHelpers.data.push({
 					id: item.id,
 					type: 'notificationQueueEntry',
 				});
 			}
-
-			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
 		}
 	);
 });
 
 test.describe('Object Action with oldValue() Function', () => {
 	test(
-		'LPD-78504 Can create action Add an Object Entry using oldValue with On After Delete trigger',
+		'Can create action Add an Object Entry using oldValue with On After Delete trigger',
 		{tag: '@LPD-78504'},
-		async ({apiHelpers, page, site: _site}) => {
+		async ({apiHelpers, site: _site}) => {
 			const suffix = getRandomString().substring(0, 8);
 
 			const objectDefinitionA =
@@ -3311,8 +3336,6 @@ test.describe('Object Action with oldValue() Function', () => {
 				String(entry.id)
 			);
 
-			await page.waitForTimeout(2000);
-
 			const applicationNameB =
 				'c/' + objectDefinitionB.name!.toLowerCase() + 's';
 
@@ -3332,9 +3355,9 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Add an Object Entry using oldValue with On After Update trigger and Picklist field',
+		'Can create action Add an Object Entry using oldValue with On After Update trigger and Picklist field',
 		{tag: '@LPD-78504'},
-		async ({apiHelpers, page, site: _site}) => {
+		async ({apiHelpers, site: _site}) => {
 			const suffix = getRandomString().substring(0, 8);
 
 			const listTypeDefinition =
@@ -3456,8 +3479,6 @@ test.describe('Object Action with oldValue() Function', () => {
 				entry.id
 			);
 
-			await page.waitForTimeout(2000);
-
 			const entries =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
 					applicationName
@@ -3473,7 +3494,7 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Notification using oldValue with On After Add trigger',
+		'Can create action Notification using oldValue with On After Add trigger',
 		{tag: ['@LPD-78504', '@LPS-175197']},
 		async ({apiHelpers, site: _site}) => {
 			const senderEmail = `sender${getRandomInt()}@liferay.com`;
@@ -3565,7 +3586,7 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Notification using oldValue with On After Delete trigger',
+		'Can create action Notification using oldValue with On After Delete trigger',
 		{tag: ['@LPD-78504', '@LPS-175192']},
 		async ({apiHelpers, site: _site}) => {
 			const senderEmail = `sender${getRandomInt()}@liferay.com`;
@@ -3663,7 +3684,7 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Notification using oldValue with On After Update trigger',
+		'Can create action Notification using oldValue with On After Update trigger',
 		{tag: ['@LPD-78504', '@LPS-175191']},
 		async ({apiHelpers, site: _site}) => {
 			const senderEmail = `sender${getRandomInt()}@liferay.com`;
@@ -3762,7 +3783,7 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Notification using oldValue with On After Update trigger on Account Object',
+		'Can create action Notification using oldValue with On After Update trigger on Account Object',
 		{tag: ['@LPD-78504', '@LPS-178410']},
 		async ({apiHelpers, site: _site}) => {
 			const senderEmail = `sender${getRandomInt()}@liferay.com`;
@@ -3830,7 +3851,7 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Notification using oldValue with On After Update trigger on User Object',
+		'Can create action Notification using oldValue with On After Update trigger on User Object',
 		{tag: ['@LPD-78504', '@LPS-178415']},
 		async ({apiHelpers, site: _site}) => {
 			const senderEmail = `sender${getRandomInt()}@liferay.com`;
@@ -3897,9 +3918,9 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action Update an Object Entry using oldValue with On After Update trigger',
+		'Can create action Update an Object Entry using oldValue with On After Update trigger',
 		{tag: '@LPD-78504'},
-		async ({apiHelpers, page, site: _site}) => {
+		async ({apiHelpers, site: _site}) => {
 			const suffix = getRandomString().substring(0, 8);
 
 			const objectDefinition =
@@ -3976,8 +3997,6 @@ test.describe('Object Action with oldValue() Function', () => {
 				entry.id
 			);
 
-			await page.waitForTimeout(2000);
-
 			const updatedEntry =
 				await apiHelpers.objectEntry.getObjectEntryById(
 					applicationName,
@@ -3989,9 +4008,9 @@ test.describe('Object Action with oldValue() Function', () => {
 	);
 
 	test(
-		'LPD-78504 Can create action using oldValue with On After Add trigger and Picklist field',
+		'Can create action using oldValue with On After Add trigger and Picklist field',
 		{tag: '@LPD-78504'},
-		async ({apiHelpers, page, site: _site}) => {
+		async ({apiHelpers, site: _site}) => {
 			const suffix = getRandomString().substring(0, 8);
 
 			const listTypeDefinition =
@@ -4100,8 +4119,6 @@ test.describe('Object Action with oldValue() Function', () => {
 				{customTextField: 'Entry Test'},
 				applicationName
 			);
-
-			await page.waitForTimeout(2000);
 
 			const entries =
 				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(

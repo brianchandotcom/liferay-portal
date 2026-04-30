@@ -1327,7 +1327,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			return ${entity.variableName};
 		}
-	<#elseif entity.isChangeTrackingEnabled()>
+	<#elseif entity.isChangeTrackingEnabled() && !serviceBuilder.isVersionGTE_7_4_0()>
 		/**
 		 * Returns the ${entity.humanName} with the primary key or returns <code>null</code> if it could not be found.
 		 *
@@ -1367,6 +1367,17 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 
 			return ${entity.variableName};
+		}
+	</#if>
+
+	<#if entity.isChangeTrackingEnabled() && serviceBuilder.isVersionGTE_7_4_0()>
+		@Override
+		protected CTPersistenceHelper getCTPersistenceHelper() {
+			<#if osgiModule>
+				return ctPersistenceHelper;
+			<#else>
+				return CTPersistenceHelperUtil.getCTPersistenceHelper();
+			</#if>
 		}
 	</#if>
 

@@ -47,41 +47,41 @@ export default function PreviewBody({
 				</ClayAlert>
 			) : null}
 
-			<div
-				className="align-items-center content-editor__preview__content d-flex position-relative"
-				{...(previewURL && {inert: ''})}
-			>
-				{showDisplayPageTemplateAlert ? (
-					<ClayAlert
-						className="fixed-top m-3 position-absolute"
-						displayType="info"
-						title={Liferay.Language.get('info')}
-					>
-						{Liferay.Language.get(
-							'no-display-page-templates-available-for-preview-in-this-channel'
-						)}
-					</ClayAlert>
-				) : null}
-
-				{previewURL ? (
-					<iframe
-						className="border-0 d-block h-100 w-100"
-						src={previewURL}
-						tabIndex={-1}
-						title={Liferay.Language.get('preview')}
-					/>
-				) : (
-					<ClayEmptyState
-						className="mt-0"
-						description={Liferay.Language.get(
-							'select-a-channel-and-save-as-draft-or-publish-to-see-your-changes-here'
-						)}
-						imgSrc={`${Liferay.ThemeDisplay.getPathContext()}/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg`}
-						small
-						title={Liferay.Language.get('nothing-to-show-yet')}
-					/>
-				)}
-			</div>
+			{showDisplayPageTemplateAlert ? (
+				<ClayAlert
+					className="m-3"
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{Liferay.Language.get(
+						'no-display-page-templates-available-for-preview-in-this-channel'
+					)}
+				</ClayAlert>
+			) : (
+				<div
+					className="align-items-center content-editor__preview__content d-flex position-relative"
+					{...(previewURL && {inert: ''})}
+				>
+					{previewURL ? (
+						<iframe
+							className="border-0 d-block h-100 w-100"
+							src={previewURL}
+							tabIndex={-1}
+							title={Liferay.Language.get('preview')}
+						/>
+					) : (
+						<ClayEmptyState
+							className="mt-0"
+							description={Liferay.Language.get(
+								'select-a-channel-and-save-as-draft-or-publish-to-see-your-changes-here'
+							)}
+							imgSrc={`${Liferay.ThemeDisplay.getPathContext()}/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg`}
+							small
+							title={Liferay.Language.get('nothing-to-show-yet')}
+						/>
+					)}
+				</div>
+			)}
 		</>
 	);
 }

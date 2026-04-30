@@ -111,10 +111,6 @@ public class SearchResultsPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	protected String getCurrentURL(RenderRequest renderRequest) {
-		return _portal.getCurrentURL(renderRequest);
-	}
-
 	protected HttpServletRequest getHttpServletRequest(
 		RenderRequest renderRequest) {
 

@@ -1,11 +1,13 @@
 variable "arn_partition" {
 	default="aws"
+	type=string
 }
 variable "cluster_name" {
 	type=string
 }
 variable "data_active" {
 	default="blue"
+	type=string
 	validation {
 		condition=contains(["blue", "green"], var.data_active)
 		error_message="The active_db_slot must be either 'blue' or 'green'"
@@ -13,6 +15,7 @@ variable "data_active" {
 }
 variable "db_restore_snapshot_identifier" {
 	default=null
+	type=string
 }
 variable "deployment_name" {
 	type=string
@@ -23,6 +26,7 @@ variable "deployment_name" {
 }
 variable "deployment_namespace" {
 	default="liferay-system"
+	type=string
 	validation {
 		condition=can(regex("^[a-z0-9-]*$", var.deployment_namespace))
 		error_message="The deployment_namespace must contain only lowercase letters, numbers, and hyphens."
@@ -30,6 +34,7 @@ variable "deployment_namespace" {
 }
 variable "is_restoring" {
 	default=false
+	type=bool
 }
 variable "liferay_sa_role_arn" {
 	type=string

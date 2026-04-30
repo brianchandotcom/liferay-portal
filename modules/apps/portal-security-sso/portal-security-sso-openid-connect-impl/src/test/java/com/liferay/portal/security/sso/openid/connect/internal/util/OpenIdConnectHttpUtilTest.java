@@ -6,6 +6,7 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -37,14 +38,30 @@ public class OpenIdConnectHttpUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testSend() throws Exception {
+		HTTPResponse httpResponse = _send(
+			"application/json", 200, "{\"sub\":\"subject\"}");
+
+		Assert.assertEquals("{\"sub\":\"subject\"}", httpResponse.getBody());
+		Assert.assertEquals(
+			"application/json",
+			String.valueOf(httpResponse.getEntityContentType()));
+		Assert.assertEquals(200, httpResponse.getStatusCode());
+
+		httpResponse = _send(null, 204, StringPool.BLANK);
+
+		Assert.assertEquals(204, httpResponse.getStatusCode());
+		Assert.assertNull(httpResponse.getEntityContentType());
+	}
+
+	@Test
 	public void testToHttpOptions() throws Exception {
 		HTTPRequest httpRequest = new HTTPRequest(
 			HTTPRequest.Method.GET, new URL("http://localhost:63636/userinfo"));
 
 		httpRequest.setAuthorization("Bearer token");
 
-		Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
-			httpRequest);
+		Http.Options httpOptions = _toHttpOptions(httpRequest);
 
 		Assert.assertNull(httpOptions.getBody());
 		Assert.assertEquals(
@@ -60,7 +77,7 @@ public class OpenIdConnectHttpUtilTest {
 		httpRequest.setEntityContentType(ContentType.APPLICATION_URLENCODED);
 		httpRequest.setHeader("X-Custom", "value");
 
-		httpOptions = OpenIdConnectHttpUtil.toHttpOptions(httpRequest);
+		httpOptions = _toHttpOptions(httpRequest);
 
 		Assert.assertEquals(
 			"http://localhost:63636/token", httpOptions.getLocation());
@@ -85,7 +102,7 @@ public class OpenIdConnectHttpUtilTest {
 
 		httpRequest.setBody("a=1");
 
-		httpOptions = OpenIdConnectHttpUtil.toHttpOptions(httpRequest);
+		httpOptions = _toHttpOptions(httpRequest);
 
 		body = httpOptions.getBody();
 
@@ -93,37 +110,21 @@ public class OpenIdConnectHttpUtilTest {
 		Assert.assertEquals(
 			"application/x-www-form-urlencoded", body.getContentType());
 
-		httpOptions = _toHttpOptions(0, 0);
+		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(0, 0));
 
 		Assert.assertEquals(0, httpOptions.getTimeout());
 
-		httpOptions = _toHttpOptions(0, 3000);
+		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(0, 3000));
 
 		Assert.assertEquals(3000, httpOptions.getTimeout());
 
-		httpOptions = _toHttpOptions(1000, 5000);
+		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(1000, 5000));
 
 		Assert.assertEquals(5000, httpOptions.getTimeout());
 	}
 
-	@Test
-	public void testToHTTPResponse() throws Exception {
-		HTTPResponse httpResponse = _toHTTPResponse(
-			"application/json", 200, "{\"sub\":\"subject\"}");
-
-		Assert.assertEquals("{\"sub\":\"subject\"}", httpResponse.getBody());
-		Assert.assertEquals(
-			"application/json",
-			String.valueOf(httpResponse.getEntityContentType()));
-		Assert.assertEquals(200, httpResponse.getStatusCode());
-
-		httpResponse = _toHTTPResponse(null, 204, StringPool.BLANK);
-
-		Assert.assertEquals(204, httpResponse.getStatusCode());
-		Assert.assertNull(httpResponse.getEntityContentType());
-	}
-
-	private Http.Options _toHttpOptions(int connectTimeout, int readTimeout)
+	private HTTPRequest _buildTimeoutHttpRequest(
+			int connectTimeout, int readTimeout)
 		throws Exception {
 
 		HTTPRequest httpRequest = new HTTPRequest(
@@ -132,10 +133,10 @@ public class OpenIdConnectHttpUtilTest {
 		httpRequest.setConnectTimeout(connectTimeout);
 		httpRequest.setReadTimeout(readTimeout);
 
-		return OpenIdConnectHttpUtil.toHttpOptions(httpRequest);
+		return httpRequest;
 	}
 
-	private HTTPResponse _toHTTPResponse(
+	private HTTPResponse _send(
 			String contentType, int responseCode, String responseJSON)
 		throws Exception {
 
@@ -144,21 +145,33 @@ public class OpenIdConnectHttpUtilTest {
 
 			httpUtilMockedStatic.when(
 				() -> HttpUtil.URLtoString(Mockito.any(Http.Options.class))
-			).thenReturn(
-				responseJSON
+			).thenAnswer(
+				invocation -> {
+					Http.Options httpOptions = invocation.getArgument(0);
+
+					Http.Response httpResponse = new Http.Response();
+
+					httpResponse.setContentType(contentType);
+					httpResponse.setResponseCode(responseCode);
+
+					httpOptions.setResponse(httpResponse);
+
+					return responseJSON;
+				}
 			);
 
-			Http.Options httpOptions = new Http.Options();
+			HTTPRequest httpRequest = new HTTPRequest(
+				HTTPRequest.Method.GET,
+				new URL("http://localhost:63636/userinfo"));
 
-			Http.Response liferayHttpResponse = new Http.Response();
-
-			liferayHttpResponse.setContentType(contentType);
-			liferayHttpResponse.setResponseCode(responseCode);
-
-			httpOptions.setResponse(liferayHttpResponse);
-
-			return OpenIdConnectHttpUtil.toHTTPResponse(httpOptions);
+			return OpenIdConnectHttpUtil.send(httpRequest);
 		}
+	}
+
+	private Http.Options _toHttpOptions(HTTPRequest httpRequest) {
+		return ReflectionTestUtil.invoke(
+			OpenIdConnectHttpUtil.class, "_toHttpOptions",
+			new Class<?>[] {HTTPRequest.class}, httpRequest);
 	}
 
 }

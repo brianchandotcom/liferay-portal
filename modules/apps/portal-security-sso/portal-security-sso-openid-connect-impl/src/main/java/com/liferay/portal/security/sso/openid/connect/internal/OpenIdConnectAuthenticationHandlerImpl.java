@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
@@ -442,11 +441,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			"text/html, image/gif, image/jpeg, */*; q=0.2, */*; q=0.2");
 
 		try {
-			Http.Options httpOptions = OpenIdConnectHttpUtil.toHttpOptions(
-				httpRequest);
-
 			UserInfoResponse userInfoResponse = UserInfoResponse.parse(
-				OpenIdConnectHttpUtil.toHTTPResponse(httpOptions));
+				OpenIdConnectHttpUtil.send(httpRequest));
 
 			if (userInfoResponse instanceof UserInfoErrorResponse) {
 				UserInfoErrorResponse userInfoErrorResponse =

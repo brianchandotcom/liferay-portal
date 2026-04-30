@@ -1,104 +1,105 @@
 #!/bin/bash
 
-function check_health {
-	docker inspect --format="{{.State.Health.Status}}" "${container_id}" | grep --quiet "healthy"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-	if [[ $? -eq 0 ]]
-	then
-		echo "Container ${container_id} is healthy."
+function build {
+	download_license &
 
-		return 0
-	fi
+	local pid_license
+	pid_license=$!
 
-	echo "Container ${container_id} is not healthy."
+	wait "${pid_license}"
 
-	sleep 10
+	"${SCRIPT_DIR}/../gradlew" -p "${SCRIPT_DIR}/.." buildDockerImage
 
-	check_health
+	local product_version
+	product_version=$(grep "^liferay.workspace.product=" "${SCRIPT_DIR}/../gradle.properties" | cut -d= -f2 | sed 's/^dxp-//')
+
+	local project_name
+	project_name=$(basename "$(cd "${SCRIPT_DIR}/.." && pwd)")
+
+	docker tag "${project_name}-liferay:${product_version}" "${project_name}-liferay:local"
 }
 
-function download_hotfix {
-	for file_url in \
-		"https://releases-cdn.liferay.com/dxp/hotfix/2026.q1.2-lts/liferay-dxp-2026.q1.2-lts-hotfix-17.zip"
-	do
-		local hotfix_file_name
+function clean {
+	docker compose --file "${SCRIPT_DIR}/docker-compose.yaml" --profile extensions down --volumes
+}
 
-		hotfix_file_name=$(basename "${file_url}")
+function deploy {
+	local project_name
+	project_name=$(basename "$(cd "${SCRIPT_DIR}/.." && pwd)")
 
-		local file_name="./liferay/patching/${hotfix_file_name}"
+	"${SCRIPT_DIR}/../gradlew" -p "${SCRIPT_DIR}/.." deployDev \
+		-Ddeploy.docker.container.id="$(docker ps -qf "name=${project_name}-liferay")"
+}
 
-		if [ ! -f "${file_name}" ]
-		then
-			echo "Downloading ${file_url} to ${file_name}."
-
-			mkdir --parents $(dirname "${file_name}")
-
-			curl --location "${file_url}" --output "${file_name}"
-		fi
-	done
+function down {
+	docker compose --file "${SCRIPT_DIR}/docker-compose.yaml" --profile extensions down
 }
 
 function download_license {
-	if command -v op &> /dev/null
+	local dest="${SCRIPT_DIR}/../build/docker/deploy/license.xml"
+
+	if [ -f "${dest}" ]
 	then
-		echo "Downloading license from 1Password."
-
-		op read --force "op://Customer Solutions/license.xml/notesPlain" --out-file ./liferay/deploy/license.xml
-
-		if [[ $? -eq 0 ]]
-		then
-			echo "Downloaded license successfully."
-		else
-			echo "Unable to download license from 1Password."
-		fi
-	else
-		echo "Skipping the download of ./liferay/deploy/license.xml because the 1Password CLI is not available."
-	fi
-}
-
-function get_container_id {
-	local container_id
-
-	container_id=$(docker compose ps --quiet "${1}")
-
-	if [[ -n "${container_id}" ]]
-	then
-		echo "${container_id}"
-
 		return 0
 	fi
 
-	sleep 5
+	echo "Extracting trial license from liferay/dxp:latest."
 
-	get_container_id "${1}"
+	mkdir -p "$(dirname "${dest}")"
+
+	docker run \
+		--entrypoint sh \
+		--rm \
+		--user root \
+		--volume "${SCRIPT_DIR}/../build/docker/deploy:/mnt/deploy" \
+		"liferay/dxp:latest" \
+		-c "cp /opt/liferay/deploy/trial-dxp-license*.xml /mnt/deploy/license.xml"
+}
+
+function help {
+	echo "Usage: $(basename "${BASH_SOURCE[0]}") [build|clean|deploy|down|up|help]"
+	echo ""
+	echo "  (no args)  Build the workspace Docker image and start all services."
+	echo ""
+	echo "  build   Build the workspace Docker image."
+	echo "  clean   Stop and remove all containers and volumes."
+	echo "  deploy  Deploy modules to the running container."
+	echo "  down    Stop and remove all containers (volumes preserved)."
+	echo "  help    Show this help message."
+	echo "  up      Start all services (assumes image is already built)."
 }
 
 function main {
-	download_hotfix
+	local command="${1:-}"
 
-	download_license
+	if [ -z "${command}" ]
+	then
+		build
+		up
+	elif [ "${command}" == "build" ]
+	then
+		build
+	elif [ "${command}" == "clean" ]
+	then
+		clean
+	elif [ "${command}" == "deploy" ]
+	then
+		deploy
+	elif [ "${command}" == "down" ]
+	then
+		down
+	elif [ "${command}" == "up" ]
+	then
+		up
+	else
+		help
+	fi
+}
 
-	pushd .. > /dev/null
-
-	./gradlew clean build
-
-	popd > /dev/null
-
-	docker compose up --detach database liferay
-
-	local container_id
-
-	container_id=$(get_container_id "liferay")
-
-	check_health
-
-	pushd .. > /dev/null
-
-	./gradlew deploy "-Ddeploy.docker.container.id=${container_id}"
-
-	popd > /dev/null
-
-	docker compose up liferay
+function up {
+	docker compose --file "${SCRIPT_DIR}/docker-compose.yaml" --profile extensions up --detach
 }
 
 main "${@}"

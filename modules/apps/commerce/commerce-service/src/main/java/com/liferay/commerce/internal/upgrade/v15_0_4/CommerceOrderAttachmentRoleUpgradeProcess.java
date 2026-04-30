@@ -64,11 +64,23 @@ public class CommerceOrderAttachmentRoleUpgradeProcess extends UpgradeProcess {
 						ResourceConstants.SCOPE_GROUP_TEMPLATE,
 						ActionKeys.VIEW);
 					_addResourcePermission(
+						companyId, CommerceOrderConstants.RESOURCE_NAME,
+						GroupConstants.DEFAULT_PARENT_GROUP_ID,
+						AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
+					_addResourcePermission(
 						companyId, CommerceOrderAttachment.class.getName(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,
 						AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
 						ResourceConstants.SCOPE_GROUP_TEMPLATE,
 						ActionKeys.VIEW);
+					_addResourcePermission(
+						companyId, CommerceOrderConstants.RESOURCE_NAME,
+						GroupConstants.DEFAULT_PARENT_GROUP_ID,
+						AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
+						ResourceConstants.SCOPE_GROUP_TEMPLATE,
+						CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
 					_addResourcePermission(
 						companyId, CommerceOrderAttachment.class.getName(),
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,

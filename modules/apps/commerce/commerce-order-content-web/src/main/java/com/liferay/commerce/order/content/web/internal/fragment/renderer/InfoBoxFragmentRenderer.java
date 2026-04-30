@@ -12,19 +12,23 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -144,13 +148,6 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 		String field = _getConfigurationValue(
 			fragmentRendererContext, fragmentEntryLink, "field");
-
-		if (Objects.equals(field, "purchaseOrderDocument") &&
-			FeatureFlagManagerUtil.isEnabled(
-				fragmentEntryLink.getCompanyId(), "LPD-6252")) {
-
-			return;
-		}
 
 		boolean readOnly = GetterUtil.getBoolean(
 			_fragmentEntryConfigurationParser.getFieldValue(
@@ -348,24 +345,8 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			).build();
 		}
 		else if (field.equals("purchaseOrderDocument")) {
-			List<FileEntry> attachmentFileEntries =
-				commerceOrder.getAttachmentFileEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			if (attachmentFileEntries.isEmpty()) {
-				return Collections.emptyMap();
-			}
-
-			FileEntry fileEntry = attachmentFileEntries.get(0);
-
-			return HashMapBuilder.<String, Object>put(
-				"downloadURL",
-				DLURLHelperUtil.getDownloadURL(
-					fileEntry, fileEntry.getLatestFileVersion(), null,
-					StringPool.BLANK, true, true)
-			).put(
-				"value", fileEntry.getFileEntryId()
-			).build();
+			return _getPurchaseOrderDocumentAdditionalProps(
+				commerceOrder, permissionChecker);
 		}
 		else if (field.equals("shippingAddress")) {
 			return HashMapBuilder.<String, Object>put(
@@ -571,15 +552,12 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 			return commerceOrder.getPaymentCommerceTermEntryName();
 		}
 		else if (field.equals("purchaseOrderDocument")) {
-			List<FileEntry> attachmentFileEntries =
-				commerceOrder.getAttachmentFileEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			FileEntry fileEntry = _getPurchaseOrderDocumentFileEntry(
+				commerceOrder);
 
-			if (attachmentFileEntries.isEmpty()) {
+			if (fileEntry == null) {
 				return StringPool.BLANK;
 			}
-
-			FileEntry fileEntry = attachmentFileEntries.get(0);
 
 			return fileEntry.getFileName();
 		}
@@ -620,6 +598,123 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private Map<String, Object> _getPurchaseOrderDocumentAdditionalProps(
+			CommerceOrder commerceOrder, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				commerceOrder.getCompanyId(), "LPD-6252")) {
+
+			Map<String, Object> additionalProps =
+				HashMapBuilder.<String, Object>put(
+					"fdsId",
+					() -> {
+						if (commerceOrder.isOpen()) {
+							return CommerceOrderFragmentFDSNames.
+								PENDING_ORDER_ATTACHMENTS;
+						}
+
+						return CommerceOrderFragmentFDSNames.
+							PLACED_ORDER_ATTACHMENTS;
+					}
+				).build();
+
+			CommerceOrderAttachment commerceOrderAttachment =
+				_getPurchaseOrderDocumentCommerceOrderAttachment(commerceOrder);
+
+			if (commerceOrderAttachment == null) {
+				return additionalProps;
+			}
+
+			FileEntry fileEntry = _dlAppLocalService.fetchFileEntry(
+				commerceOrderAttachment.getFileEntryId());
+
+			if (fileEntry == null) {
+				return additionalProps;
+			}
+
+			additionalProps.put(
+				"downloadURL",
+				DLURLHelperUtil.getDownloadURL(
+					fileEntry, fileEntry.getLatestFileVersion(), null,
+					StringPool.BLANK, true, true));
+			additionalProps.put(
+				"isOwner",
+				permissionChecker.getUserId() ==
+					commerceOrderAttachment.getUserId());
+			additionalProps.put(
+				"value",
+				commerceOrderAttachment.getCommerceOrderAttachmentId());
+
+			return additionalProps;
+		}
+
+		FileEntry fileEntry = _getPurchaseOrderDocumentFileEntry(commerceOrder);
+
+		if (fileEntry == null) {
+			return Collections.emptyMap();
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"downloadURL",
+			DLURLHelperUtil.getDownloadURL(
+				fileEntry, fileEntry.getLatestFileVersion(), null,
+				StringPool.BLANK, true, true)
+		).put(
+			"value", fileEntry.getFileEntryId()
+		).build();
+	}
+
+	private CommerceOrderAttachment
+		_getPurchaseOrderDocumentCommerceOrderAttachment(
+			CommerceOrder commerceOrder) {
+
+		for (CommerceOrderAttachment commerceOrderAttachment :
+				_commerceOrderAttachmentLocalService.
+					getCommerceOrderAttachments(
+						commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null)) {
+
+			if (Objects.equals(
+					commerceOrderAttachment.getType(),
+					"purchaseOrderDocument")) {
+
+				return commerceOrderAttachment;
+			}
+		}
+
+		return null;
+	}
+
+	private FileEntry _getPurchaseOrderDocumentFileEntry(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				commerceOrder.getCompanyId(), "LPD-6252")) {
+
+			CommerceOrderAttachment commerceOrderAttachment =
+				_getPurchaseOrderDocumentCommerceOrderAttachment(commerceOrder);
+
+			if (commerceOrderAttachment == null) {
+				return null;
+			}
+
+			return _dlAppLocalService.fetchFileEntry(
+				commerceOrderAttachment.getFileEntryId());
+		}
+
+		List<FileEntry> attachmentFileEntries =
+			commerceOrder.getAttachmentFileEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		if (attachmentFileEntries.isEmpty()) {
+			return null;
+		}
+
+		return attachmentFileEntries.get(0);
 	}
 
 	private boolean _hasPermission(
@@ -672,6 +767,10 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
+	@Reference
+	private CommerceOrderAttachmentLocalService
+		_commerceOrderAttachmentLocalService;
+
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
 	)
@@ -693,6 +792,9 @@ public class InfoBoxFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

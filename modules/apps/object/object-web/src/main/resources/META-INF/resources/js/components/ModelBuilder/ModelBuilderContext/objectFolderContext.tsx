@@ -29,7 +29,7 @@ interface ObjectFolderContextProviderProps
 const ObjectFolderContext = createContext({} as ObjectFolderContextProps);
 
 const initialState = {
-	countries: [],
+	countries: [] as TState['countries'],
 	deletedObjectDefinition: {} as DeletedObjectDefinition,
 	elements: [] as Elements<
 		ObjectDefinitionNodeData | ObjectRelationshipEdgeData[]
@@ -41,7 +41,7 @@ const initialState = {
 	objectFolderName: getObjectFolderName(),
 	objectFolders: [] as ObjectFolder[],
 	rightSidebarType: 'empty' as RightSidebarType,
-	selectedObjectFolder: {},
+	selectedObjectFolder: {} as ObjectFolder,
 	showChangesSaved: false,
 	showSidebars: true,
 } as TState;

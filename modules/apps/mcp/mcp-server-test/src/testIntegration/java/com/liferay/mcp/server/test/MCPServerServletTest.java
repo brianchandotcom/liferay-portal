@@ -450,8 +450,7 @@ public class MCPServerServletTest {
 
 		ConfigurationTestUtil.createFactoryConfiguration(
 			"com.liferay.mcp.server.internal.configuration." +
-				"MCPServerConfiguration",
-			String.valueOf(TestPropsValues.getCompanyId()),
+				"MCPServerConfiguration.scoped",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(

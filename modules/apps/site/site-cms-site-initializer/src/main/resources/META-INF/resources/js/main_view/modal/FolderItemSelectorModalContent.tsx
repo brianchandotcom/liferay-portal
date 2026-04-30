@@ -316,12 +316,11 @@ function FolderItemSelectorModalContent({
 	const [schemaKey, setSchemaKey] = useState(0);
 	const [currentSpace, setCurrentSpace] = useState<Space | undefined>();
 	const [folderStructure, setFolderStructure] = useState<FolderNode[]>([]);
-	const [hasRootFolder, setHasRootFolder] = useState(false);
+	const [rootFolder, setRootFolder] = useState<Folder | null>(null);
 
 	const {observer, onOpenChange, open} = useModal();
 
 	const abortControllerRef = useRef<AbortController | null>(null);
-	const rootFolderRef = useRef<Folder | null>(null);
 
 	const excludedERCs = useMemo(() => {
 		const rootExcluded = rootObjectEntryFolderExternalReferenceCode
@@ -363,11 +362,10 @@ function FolderItemSelectorModalContent({
 			const controller = new AbortController();
 			abortControllerRef.current = controller;
 
-			rootFolderRef.current = null;
+			setRootFolder(null);
 			setCurrentSpace(space);
 			setFolderStructure([]);
 			setSelectedItemType(ITEM_SELECTOR_ITEM_TYPE.FOLDER);
-			setHasRootFolder(!!rootObjectEntryFolderExternalReferenceCode);
 			setURL(getSpaceFoldersURL(cmsSection, space.scopeId));
 			setSchemaKey((prev) => prev + 1);
 
@@ -384,14 +382,11 @@ function FolderItemSelectorModalContent({
 				if (data?.items?.length) {
 					const folder = data.items[0];
 
-					rootFolderRef.current = {
+					setRootFolder({
 						id: folder.embedded.id,
 						scopeId: String(space.scopeId),
 						title: space.name,
-					};
-				}
-				else {
-					setHasRootFolder(false);
+					});
 				}
 			}
 		},
@@ -460,14 +455,6 @@ function FolderItemSelectorModalContent({
 			const folderItem = item as ISearchAssetObjectEntry;
 			const erc = folderItem.embedded?.externalReferenceCode;
 
-			if (erc === rootObjectEntryFolderExternalReferenceCode) {
-				rootFolderRef.current = {
-					id: item.embedded.id,
-					scopeId: String(item.embedded.scopeId),
-					title: currentSpace?.name || item.title,
-				};
-			}
-
 			if (erc && excludedERCs.includes(erc)) {
 				return {
 					...props,
@@ -523,11 +510,9 @@ function FolderItemSelectorModalContent({
 		},
 		[
 			assetLibraries,
-			currentSpace,
 			excludedERCs,
 			handleChildFolderClick,
 			handleSpaceClick,
-			rootObjectEntryFolderExternalReferenceCode,
 			selectedItemType,
 		]
 	);
@@ -735,7 +720,7 @@ function FolderItemSelectorModalContent({
 				<ItemSelectorModal<Folder>
 					allowEmptySelection={
 						selectedItemType === ITEM_SELECTOR_ITEM_TYPE.FOLDER &&
-						hasRootFolder
+						!!rootFolder
 					}
 					apiURL={url}
 					breadcrumbs={[
@@ -912,11 +897,11 @@ function FolderItemSelectorModalContent({
 						else if (
 							selectedItemType ===
 								ITEM_SELECTOR_ITEM_TYPE.FOLDER &&
-							rootFolderRef.current
+							rootFolder
 						) {
 							handleOnItemsChange(
-								rootFolderRef.current,
-								rootFolderRef.current.title
+								rootFolder,
+								rootFolder.title
 							);
 						}
 					}}

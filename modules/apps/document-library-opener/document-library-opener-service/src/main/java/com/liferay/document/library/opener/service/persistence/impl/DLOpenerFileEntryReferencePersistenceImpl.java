@@ -884,4 +884,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1270747256
+// LIFERAY-SERVICE-BUILDER-HASH:593312252

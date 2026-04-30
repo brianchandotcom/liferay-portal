@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1171,52 +1170,9 @@ public class DepotEntryPinPersistenceImpl
 		return findByPrimaryKey((Serializable)depotEntryPinId);
 	}
 
-	/**
-	 * Returns the depot entry pin with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the depot entry pin
-	 * @return the depot entry pin, or <code>null</code> if a depot entry pin with the primary key could not be found
-	 */
 	@Override
-	public DepotEntryPin fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DepotEntryPin.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DepotEntryPin depotEntryPin = (DepotEntryPin)entityCache.getResult(
-			DepotEntryPinImpl.class, primaryKey);
-
-		if (depotEntryPin != null) {
-			return depotEntryPin;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			depotEntryPin = (DepotEntryPin)session.get(
-				DepotEntryPinImpl.class, primaryKey);
-
-			if (depotEntryPin != null) {
-				cacheResult(depotEntryPin);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return depotEntryPin;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1228,132 +1184,6 @@ public class DepotEntryPinPersistenceImpl
 	@Override
 	public DepotEntryPin fetchByPrimaryKey(long depotEntryPinId) {
 		return fetchByPrimaryKey((Serializable)depotEntryPinId);
-	}
-
-	@Override
-	public Map<Serializable, DepotEntryPin> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DepotEntryPin.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DepotEntryPin> map =
-			new HashMap<Serializable, DepotEntryPin>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DepotEntryPin depotEntryPin = fetchByPrimaryKey(primaryKey);
-
-			if (depotEntryPin != null) {
-				map.put(primaryKey, depotEntryPin);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DepotEntryPin.class, primaryKey)) {
-
-				DepotEntryPin depotEntryPin =
-					(DepotEntryPin)entityCache.getResult(
-						DepotEntryPinImpl.class, primaryKey);
-
-				if (depotEntryPin == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, depotEntryPin);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DepotEntryPin depotEntryPin :
-					(List<DepotEntryPin>)query.list()) {
-
-				map.put(depotEntryPin.getPrimaryKeyObj(), depotEntryPin);
-
-				cacheResult(depotEntryPin);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1868,4 +1698,4 @@ public class DepotEntryPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1298212093
+// LIFERAY-SERVICE-BUILDER-HASH:1023770440

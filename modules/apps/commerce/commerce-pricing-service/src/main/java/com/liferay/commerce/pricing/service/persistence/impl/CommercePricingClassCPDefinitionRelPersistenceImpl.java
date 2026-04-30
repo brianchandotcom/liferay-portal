@@ -52,7 +52,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -854,57 +853,9 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			(Serializable)CommercePricingClassCPDefinitionRelId);
 	}
 
-	/**
-	 * Returns the commerce pricing class cp definition rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce pricing class cp definition rel
-	 * @return the commerce pricing class cp definition rel, or <code>null</code> if a commerce pricing class cp definition rel with the primary key could not be found
-	 */
 	@Override
-	public CommercePricingClassCPDefinitionRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CommercePricingClassCPDefinitionRel.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel =
-				(CommercePricingClassCPDefinitionRel)entityCache.getResult(
-					CommercePricingClassCPDefinitionRelImpl.class, primaryKey);
-
-		if (commercePricingClassCPDefinitionRel != null) {
-			return commercePricingClassCPDefinitionRel;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			commercePricingClassCPDefinitionRel =
-				(CommercePricingClassCPDefinitionRel)session.get(
-					CommercePricingClassCPDefinitionRelImpl.class, primaryKey);
-
-			if (commercePricingClassCPDefinitionRel != null) {
-				cacheResult(commercePricingClassCPDefinitionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return commercePricingClassCPDefinitionRel;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -919,144 +870,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)CommercePricingClassCPDefinitionRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommercePricingClassCPDefinitionRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CommercePricingClassCPDefinitionRel.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommercePricingClassCPDefinitionRel> map =
-			new HashMap<Serializable, CommercePricingClassCPDefinitionRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel = fetchByPrimaryKey(
-					primaryKey);
-
-			if (commercePricingClassCPDefinitionRel != null) {
-				map.put(primaryKey, commercePricingClassCPDefinitionRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CommercePricingClassCPDefinitionRel.class,
-						primaryKey)) {
-
-				CommercePricingClassCPDefinitionRel
-					commercePricingClassCPDefinitionRel =
-						(CommercePricingClassCPDefinitionRel)
-							entityCache.getResult(
-								CommercePricingClassCPDefinitionRelImpl.class,
-								primaryKey);
-
-				if (commercePricingClassCPDefinitionRel == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, commercePricingClassCPDefinitionRel);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommercePricingClassCPDefinitionRel
-					commercePricingClassCPDefinitionRel :
-						(List<CommercePricingClassCPDefinitionRel>)
-							query.list()) {
-
-				map.put(
-					commercePricingClassCPDefinitionRel.getPrimaryKeyObj(),
-					commercePricingClassCPDefinitionRel);
-
-				cacheResult(commercePricingClassCPDefinitionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1535,4 +1348,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1413330907
+// LIFERAY-SERVICE-BUILDER-HASH:72891017

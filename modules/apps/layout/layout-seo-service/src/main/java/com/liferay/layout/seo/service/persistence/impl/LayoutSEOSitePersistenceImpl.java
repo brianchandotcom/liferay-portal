@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -872,52 +871,9 @@ public class LayoutSEOSitePersistenceImpl
 		return findByPrimaryKey((Serializable)layoutSEOSiteId);
 	}
 
-	/**
-	 * Returns the layout seo site with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout seo site
-	 * @return the layout seo site, or <code>null</code> if a layout seo site with the primary key could not be found
-	 */
 	@Override
-	public LayoutSEOSite fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				LayoutSEOSite.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		LayoutSEOSite layoutSEOSite = (LayoutSEOSite)entityCache.getResult(
-			LayoutSEOSiteImpl.class, primaryKey);
-
-		if (layoutSEOSite != null) {
-			return layoutSEOSite;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			layoutSEOSite = (LayoutSEOSite)session.get(
-				LayoutSEOSiteImpl.class, primaryKey);
-
-			if (layoutSEOSite != null) {
-				cacheResult(layoutSEOSite);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return layoutSEOSite;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -929,132 +885,6 @@ public class LayoutSEOSitePersistenceImpl
 	@Override
 	public LayoutSEOSite fetchByPrimaryKey(long layoutSEOSiteId) {
 		return fetchByPrimaryKey((Serializable)layoutSEOSiteId);
-	}
-
-	@Override
-	public Map<Serializable, LayoutSEOSite> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(LayoutSEOSite.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutSEOSite> map =
-			new HashMap<Serializable, LayoutSEOSite>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutSEOSite layoutSEOSite = fetchByPrimaryKey(primaryKey);
-
-			if (layoutSEOSite != null) {
-				map.put(primaryKey, layoutSEOSite);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						LayoutSEOSite.class, primaryKey)) {
-
-				LayoutSEOSite layoutSEOSite =
-					(LayoutSEOSite)entityCache.getResult(
-						LayoutSEOSiteImpl.class, primaryKey);
-
-				if (layoutSEOSite == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, layoutSEOSite);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (LayoutSEOSite layoutSEOSite :
-					(List<LayoutSEOSite>)query.list()) {
-
-				map.put(layoutSEOSite.getPrimaryKeyObj(), layoutSEOSite);
-
-				cacheResult(layoutSEOSite);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1517,4 +1347,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:223865236
+// LIFERAY-SERVICE-BUILDER-HASH:1788588868

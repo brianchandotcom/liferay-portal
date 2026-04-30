@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3143,53 +3142,9 @@ public class CommercePriceModifierPersistenceImpl
 		return findByPrimaryKey((Serializable)commercePriceModifierId);
 	}
 
-	/**
-	 * Returns the commerce price modifier with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price modifier
-	 * @return the commerce price modifier, or <code>null</code> if a commerce price modifier with the primary key could not be found
-	 */
 	@Override
-	public CommercePriceModifier fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceModifier.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CommercePriceModifier commercePriceModifier =
-			(CommercePriceModifier)entityCache.getResult(
-				CommercePriceModifierImpl.class, primaryKey);
-
-		if (commercePriceModifier != null) {
-			return commercePriceModifier;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			commercePriceModifier = (CommercePriceModifier)session.get(
-				CommercePriceModifierImpl.class, primaryKey);
-
-			if (commercePriceModifier != null) {
-				cacheResult(commercePriceModifier);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return commercePriceModifier;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -3203,135 +3158,6 @@ public class CommercePriceModifierPersistenceImpl
 		long commercePriceModifierId) {
 
 		return fetchByPrimaryKey((Serializable)commercePriceModifierId);
-	}
-
-	@Override
-	public Map<Serializable, CommercePriceModifier> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CommercePriceModifier.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommercePriceModifier> map =
-			new HashMap<Serializable, CommercePriceModifier>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommercePriceModifier commercePriceModifier = fetchByPrimaryKey(
-				primaryKey);
-
-			if (commercePriceModifier != null) {
-				map.put(primaryKey, commercePriceModifier);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CommercePriceModifier.class, primaryKey)) {
-
-				CommercePriceModifier commercePriceModifier =
-					(CommercePriceModifier)entityCache.getResult(
-						CommercePriceModifierImpl.class, primaryKey);
-
-				if (commercePriceModifier == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, commercePriceModifier);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommercePriceModifier commercePriceModifier :
-					(List<CommercePriceModifier>)query.list()) {
-
-				map.put(
-					commercePriceModifier.getPrimaryKeyObj(),
-					commercePriceModifier);
-
-				cacheResult(commercePriceModifier);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4026,4 +3852,4 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:3247533
+// LIFERAY-SERVICE-BUILDER-HASH:-1871034670

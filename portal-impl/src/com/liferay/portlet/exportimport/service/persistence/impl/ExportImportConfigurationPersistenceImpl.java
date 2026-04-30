@@ -1548,4 +1548,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-678827012
+// LIFERAY-SERVICE-BUILDER-HASH:944361762

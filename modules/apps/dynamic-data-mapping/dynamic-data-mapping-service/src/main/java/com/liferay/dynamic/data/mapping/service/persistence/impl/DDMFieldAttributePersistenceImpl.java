@@ -49,9 +49,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1627,53 +1625,9 @@ public class DDMFieldAttributePersistenceImpl
 		return findByPrimaryKey((Serializable)fieldAttributeId);
 	}
 
-	/**
-	 * Returns the ddm field attribute with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm field attribute
-	 * @return the ddm field attribute, or <code>null</code> if a ddm field attribute with the primary key could not be found
-	 */
 	@Override
-	public DDMFieldAttribute fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DDMFieldAttribute.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DDMFieldAttribute ddmFieldAttribute =
-			(DDMFieldAttribute)entityCache.getResult(
-				DDMFieldAttributeImpl.class, primaryKey);
-
-		if (ddmFieldAttribute != null) {
-			return ddmFieldAttribute;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ddmFieldAttribute = (DDMFieldAttribute)session.get(
-				DDMFieldAttributeImpl.class, primaryKey);
-
-			if (ddmFieldAttribute != null) {
-				cacheResult(ddmFieldAttribute);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return ddmFieldAttribute;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1685,133 +1639,6 @@ public class DDMFieldAttributePersistenceImpl
 	@Override
 	public DDMFieldAttribute fetchByPrimaryKey(long fieldAttributeId) {
 		return fetchByPrimaryKey((Serializable)fieldAttributeId);
-	}
-
-	@Override
-	public Map<Serializable, DDMFieldAttribute> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DDMFieldAttribute.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMFieldAttribute> map =
-			new HashMap<Serializable, DDMFieldAttribute>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMFieldAttribute ddmFieldAttribute = fetchByPrimaryKey(primaryKey);
-
-			if (ddmFieldAttribute != null) {
-				map.put(primaryKey, ddmFieldAttribute);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DDMFieldAttribute.class, primaryKey)) {
-
-				DDMFieldAttribute ddmFieldAttribute =
-					(DDMFieldAttribute)entityCache.getResult(
-						DDMFieldAttributeImpl.class, primaryKey);
-
-				if (ddmFieldAttribute == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, ddmFieldAttribute);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DDMFieldAttribute ddmFieldAttribute :
-					(List<DDMFieldAttribute>)query.list()) {
-
-				map.put(
-					ddmFieldAttribute.getPrimaryKeyObj(), ddmFieldAttribute);
-
-				cacheResult(ddmFieldAttribute);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2319,4 +2146,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-654215510
+// LIFERAY-SERVICE-BUILDER-HASH:2097683315

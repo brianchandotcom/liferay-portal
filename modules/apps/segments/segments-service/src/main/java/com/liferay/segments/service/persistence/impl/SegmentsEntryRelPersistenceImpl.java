@@ -49,9 +49,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -967,53 +965,9 @@ public class SegmentsEntryRelPersistenceImpl
 		return findByPrimaryKey((Serializable)segmentsEntryRelId);
 	}
 
-	/**
-	 * Returns the segments entry rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the segments entry rel
-	 * @return the segments entry rel, or <code>null</code> if a segments entry rel with the primary key could not be found
-	 */
 	@Override
-	public SegmentsEntryRel fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				SegmentsEntryRel.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		SegmentsEntryRel segmentsEntryRel =
-			(SegmentsEntryRel)entityCache.getResult(
-				SegmentsEntryRelImpl.class, primaryKey);
-
-		if (segmentsEntryRel != null) {
-			return segmentsEntryRel;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			segmentsEntryRel = (SegmentsEntryRel)session.get(
-				SegmentsEntryRelImpl.class, primaryKey);
-
-			if (segmentsEntryRel != null) {
-				cacheResult(segmentsEntryRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return segmentsEntryRel;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1025,132 +979,6 @@ public class SegmentsEntryRelPersistenceImpl
 	@Override
 	public SegmentsEntryRel fetchByPrimaryKey(long segmentsEntryRelId) {
 		return fetchByPrimaryKey((Serializable)segmentsEntryRelId);
-	}
-
-	@Override
-	public Map<Serializable, SegmentsEntryRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(SegmentsEntryRel.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, SegmentsEntryRel> map =
-			new HashMap<Serializable, SegmentsEntryRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			SegmentsEntryRel segmentsEntryRel = fetchByPrimaryKey(primaryKey);
-
-			if (segmentsEntryRel != null) {
-				map.put(primaryKey, segmentsEntryRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						SegmentsEntryRel.class, primaryKey)) {
-
-				SegmentsEntryRel segmentsEntryRel =
-					(SegmentsEntryRel)entityCache.getResult(
-						SegmentsEntryRelImpl.class, primaryKey);
-
-				if (segmentsEntryRel == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, segmentsEntryRel);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (SegmentsEntryRel segmentsEntryRel :
-					(List<SegmentsEntryRel>)query.list()) {
-
-				map.put(segmentsEntryRel.getPrimaryKeyObj(), segmentsEntryRel);
-
-				cacheResult(segmentsEntryRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1644,4 +1472,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1523910157
+// LIFERAY-SERVICE-BUILDER-HASH:1519973882

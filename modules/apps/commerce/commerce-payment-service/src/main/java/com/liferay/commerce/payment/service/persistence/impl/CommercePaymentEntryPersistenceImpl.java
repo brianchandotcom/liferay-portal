@@ -2736,4 +2736,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1766415503
+// LIFERAY-SERVICE-BUILDER-HASH:-2003080529

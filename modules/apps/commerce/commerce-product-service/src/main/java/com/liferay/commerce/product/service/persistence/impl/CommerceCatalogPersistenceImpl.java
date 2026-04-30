@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2451,53 +2450,9 @@ public class CommerceCatalogPersistenceImpl
 		return findByPrimaryKey((Serializable)commerceCatalogId);
 	}
 
-	/**
-	 * Returns the commerce catalog with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce catalog
-	 * @return the commerce catalog, or <code>null</code> if a commerce catalog with the primary key could not be found
-	 */
 	@Override
-	public CommerceCatalog fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CommerceCatalog.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CommerceCatalog commerceCatalog =
-			(CommerceCatalog)entityCache.getResult(
-				CommerceCatalogImpl.class, primaryKey);
-
-		if (commerceCatalog != null) {
-			return commerceCatalog;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			commerceCatalog = (CommerceCatalog)session.get(
-				CommerceCatalogImpl.class, primaryKey);
-
-			if (commerceCatalog != null) {
-				cacheResult(commerceCatalog);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return commerceCatalog;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2509,132 +2464,6 @@ public class CommerceCatalogPersistenceImpl
 	@Override
 	public CommerceCatalog fetchByPrimaryKey(long commerceCatalogId) {
 		return fetchByPrimaryKey((Serializable)commerceCatalogId);
-	}
-
-	@Override
-	public Map<Serializable, CommerceCatalog> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CommerceCatalog.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommerceCatalog> map =
-			new HashMap<Serializable, CommerceCatalog>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommerceCatalog commerceCatalog = fetchByPrimaryKey(primaryKey);
-
-			if (commerceCatalog != null) {
-				map.put(primaryKey, commerceCatalog);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CommerceCatalog.class, primaryKey)) {
-
-				CommerceCatalog commerceCatalog =
-					(CommerceCatalog)entityCache.getResult(
-						CommerceCatalogImpl.class, primaryKey);
-
-				if (commerceCatalog == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, commerceCatalog);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommerceCatalog commerceCatalog :
-					(List<CommerceCatalog>)query.list()) {
-
-				map.put(commerceCatalog.getPrimaryKeyObj(), commerceCatalog);
-
-				cacheResult(commerceCatalog);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3204,4 +3033,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-941398206
+// LIFERAY-SERVICE-BUILDER-HASH:-1989419458

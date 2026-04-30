@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1337,53 +1336,9 @@ public class MBSuspiciousActivityPersistenceImpl
 		return findByPrimaryKey((Serializable)suspiciousActivityId);
 	}
 
-	/**
-	 * Returns the message boards suspicious activity with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the message boards suspicious activity
-	 * @return the message boards suspicious activity, or <code>null</code> if a message boards suspicious activity with the primary key could not be found
-	 */
 	@Override
-	public MBSuspiciousActivity fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				MBSuspiciousActivity.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		MBSuspiciousActivity mbSuspiciousActivity =
-			(MBSuspiciousActivity)entityCache.getResult(
-				MBSuspiciousActivityImpl.class, primaryKey);
-
-		if (mbSuspiciousActivity != null) {
-			return mbSuspiciousActivity;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			mbSuspiciousActivity = (MBSuspiciousActivity)session.get(
-				MBSuspiciousActivityImpl.class, primaryKey);
-
-			if (mbSuspiciousActivity != null) {
-				cacheResult(mbSuspiciousActivity);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return mbSuspiciousActivity;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1395,135 +1350,6 @@ public class MBSuspiciousActivityPersistenceImpl
 	@Override
 	public MBSuspiciousActivity fetchByPrimaryKey(long suspiciousActivityId) {
 		return fetchByPrimaryKey((Serializable)suspiciousActivityId);
-	}
-
-	@Override
-	public Map<Serializable, MBSuspiciousActivity> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(MBSuspiciousActivity.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, MBSuspiciousActivity> map =
-			new HashMap<Serializable, MBSuspiciousActivity>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			MBSuspiciousActivity mbSuspiciousActivity = fetchByPrimaryKey(
-				primaryKey);
-
-			if (mbSuspiciousActivity != null) {
-				map.put(primaryKey, mbSuspiciousActivity);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						MBSuspiciousActivity.class, primaryKey)) {
-
-				MBSuspiciousActivity mbSuspiciousActivity =
-					(MBSuspiciousActivity)entityCache.getResult(
-						MBSuspiciousActivityImpl.class, primaryKey);
-
-				if (mbSuspiciousActivity == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, mbSuspiciousActivity);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (MBSuspiciousActivity mbSuspiciousActivity :
-					(List<MBSuspiciousActivity>)query.list()) {
-
-				map.put(
-					mbSuspiciousActivity.getPrimaryKeyObj(),
-					mbSuspiciousActivity);
-
-				cacheResult(mbSuspiciousActivity);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2074,4 +1900,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1303361338
+// LIFERAY-SERVICE-BUILDER-HASH:1311133803

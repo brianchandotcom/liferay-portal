@@ -1238,4 +1238,4 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:261754742
+// LIFERAY-SERVICE-BUILDER-HASH:-1900011462

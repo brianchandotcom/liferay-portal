@@ -972,4 +972,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:313048827
+// LIFERAY-SERVICE-BUILDER-HASH:-1800542853

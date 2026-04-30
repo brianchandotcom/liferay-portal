@@ -59,7 +59,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1879,53 +1878,9 @@ public class DDMFormInstancePersistenceImpl
 		return findByPrimaryKey((Serializable)formInstanceId);
 	}
 
-	/**
-	 * Returns the ddm form instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddm form instance
-	 * @return the ddm form instance, or <code>null</code> if a ddm form instance with the primary key could not be found
-	 */
 	@Override
-	public DDMFormInstance fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DDMFormInstance.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DDMFormInstance ddmFormInstance =
-			(DDMFormInstance)entityCache.getResult(
-				DDMFormInstanceImpl.class, primaryKey);
-
-		if (ddmFormInstance != null) {
-			return ddmFormInstance;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ddmFormInstance = (DDMFormInstance)session.get(
-				DDMFormInstanceImpl.class, primaryKey);
-
-			if (ddmFormInstance != null) {
-				cacheResult(ddmFormInstance);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return ddmFormInstance;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1937,132 +1892,6 @@ public class DDMFormInstancePersistenceImpl
 	@Override
 	public DDMFormInstance fetchByPrimaryKey(long formInstanceId) {
 		return fetchByPrimaryKey((Serializable)formInstanceId);
-	}
-
-	@Override
-	public Map<Serializable, DDMFormInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DDMFormInstance.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDMFormInstance> map =
-			new HashMap<Serializable, DDMFormInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDMFormInstance ddmFormInstance = fetchByPrimaryKey(primaryKey);
-
-			if (ddmFormInstance != null) {
-				map.put(primaryKey, ddmFormInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DDMFormInstance.class, primaryKey)) {
-
-				DDMFormInstance ddmFormInstance =
-					(DDMFormInstance)entityCache.getResult(
-						DDMFormInstanceImpl.class, primaryKey);
-
-				if (ddmFormInstance == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, ddmFormInstance);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DDMFormInstance ddmFormInstance :
-					(List<DDMFormInstance>)query.list()) {
-
-				map.put(ddmFormInstance.getPrimaryKeyObj(), ddmFormInstance);
-
-				cacheResult(ddmFormInstance);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2578,4 +2407,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-290597040
+// LIFERAY-SERVICE-BUILDER-HASH:948175682

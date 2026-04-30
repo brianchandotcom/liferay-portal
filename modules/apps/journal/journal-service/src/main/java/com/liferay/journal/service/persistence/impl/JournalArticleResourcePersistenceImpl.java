@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1046,53 +1045,9 @@ public class JournalArticleResourcePersistenceImpl
 		return findByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
-	/**
-	 * Returns the journal article resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal article resource
-	 * @return the journal article resource, or <code>null</code> if a journal article resource with the primary key could not be found
-	 */
 	@Override
-	public JournalArticleResource fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				JournalArticleResource.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		JournalArticleResource journalArticleResource =
-			(JournalArticleResource)entityCache.getResult(
-				JournalArticleResourceImpl.class, primaryKey);
-
-		if (journalArticleResource != null) {
-			return journalArticleResource;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			journalArticleResource = (JournalArticleResource)session.get(
-				JournalArticleResourceImpl.class, primaryKey);
-
-			if (journalArticleResource != null) {
-				cacheResult(journalArticleResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return journalArticleResource;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1104,137 +1059,6 @@ public class JournalArticleResourcePersistenceImpl
 	@Override
 	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey) {
 		return fetchByPrimaryKey((Serializable)resourcePrimKey);
-	}
-
-	@Override
-	public Map<Serializable, JournalArticleResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				JournalArticleResource.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticleResource> map =
-			new HashMap<Serializable, JournalArticleResource>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticleResource journalArticleResource = fetchByPrimaryKey(
-				primaryKey);
-
-			if (journalArticleResource != null) {
-				map.put(primaryKey, journalArticleResource);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						JournalArticleResource.class, primaryKey)) {
-
-				JournalArticleResource journalArticleResource =
-					(JournalArticleResource)entityCache.getResult(
-						JournalArticleResourceImpl.class, primaryKey);
-
-				if (journalArticleResource == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, journalArticleResource);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (JournalArticleResource journalArticleResource :
-					(List<JournalArticleResource>)query.list()) {
-
-				map.put(
-					journalArticleResource.getPrimaryKeyObj(),
-					journalArticleResource);
-
-				cacheResult(journalArticleResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1735,4 +1559,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:107495685
+// LIFERAY-SERVICE-BUILDER-HASH:-1397891448

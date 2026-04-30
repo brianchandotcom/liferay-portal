@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1684,52 +1683,9 @@ public class AMImageEntryPersistenceImpl
 		return findByPrimaryKey((Serializable)amImageEntryId);
 	}
 
-	/**
-	 * Returns the am image entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the am image entry
-	 * @return the am image entry, or <code>null</code> if a am image entry with the primary key could not be found
-	 */
 	@Override
-	public AMImageEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				AMImageEntry.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		AMImageEntry amImageEntry = (AMImageEntry)entityCache.getResult(
-			AMImageEntryImpl.class, primaryKey);
-
-		if (amImageEntry != null) {
-			return amImageEntry;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			amImageEntry = (AMImageEntry)session.get(
-				AMImageEntryImpl.class, primaryKey);
-
-			if (amImageEntry != null) {
-				cacheResult(amImageEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return amImageEntry;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1741,129 +1697,6 @@ public class AMImageEntryPersistenceImpl
 	@Override
 	public AMImageEntry fetchByPrimaryKey(long amImageEntryId) {
 		return fetchByPrimaryKey((Serializable)amImageEntryId);
-	}
-
-	@Override
-	public Map<Serializable, AMImageEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(AMImageEntry.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AMImageEntry> map =
-			new HashMap<Serializable, AMImageEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AMImageEntry amImageEntry = fetchByPrimaryKey(primaryKey);
-
-			if (amImageEntry != null) {
-				map.put(primaryKey, amImageEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						AMImageEntry.class, primaryKey)) {
-
-				AMImageEntry amImageEntry = (AMImageEntry)entityCache.getResult(
-					AMImageEntryImpl.class, primaryKey);
-
-				if (amImageEntry == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, amImageEntry);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (AMImageEntry amImageEntry : (List<AMImageEntry>)query.list()) {
-				map.put(amImageEntry.getPrimaryKeyObj(), amImageEntry);
-
-				cacheResult(amImageEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2473,4 +2306,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:432127838
+// LIFERAY-SERVICE-BUILDER-HASH:-27565339

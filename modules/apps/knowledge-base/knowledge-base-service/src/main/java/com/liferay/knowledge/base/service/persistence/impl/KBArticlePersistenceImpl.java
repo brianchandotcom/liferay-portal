@@ -65,7 +65,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36827,49 +36826,9 @@ public class KBArticlePersistenceImpl
 		return findByPrimaryKey((Serializable)kbArticleId);
 	}
 
-	/**
-	 * Returns the kb article with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb article
-	 * @return the kb article, or <code>null</code> if a kb article with the primary key could not be found
-	 */
 	@Override
-	public KBArticle fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(KBArticle.class, primaryKey)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		KBArticle kbArticle = (KBArticle)entityCache.getResult(
-			KBArticleImpl.class, primaryKey);
-
-		if (kbArticle != null) {
-			return kbArticle;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			kbArticle = (KBArticle)session.get(KBArticleImpl.class, primaryKey);
-
-			if (kbArticle != null) {
-				cacheResult(kbArticle);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return kbArticle;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -36881,129 +36840,6 @@ public class KBArticlePersistenceImpl
 	@Override
 	public KBArticle fetchByPrimaryKey(long kbArticleId) {
 		return fetchByPrimaryKey((Serializable)kbArticleId);
-	}
-
-	@Override
-	public Map<Serializable, KBArticle> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(KBArticle.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBArticle> map =
-			new HashMap<Serializable, KBArticle>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBArticle kbArticle = fetchByPrimaryKey(primaryKey);
-
-			if (kbArticle != null) {
-				map.put(primaryKey, kbArticle);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						KBArticle.class, primaryKey)) {
-
-				KBArticle kbArticle = (KBArticle)entityCache.getResult(
-					KBArticleImpl.class, primaryKey);
-
-				if (kbArticle == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, kbArticle);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (KBArticle kbArticle : (List<KBArticle>)query.list()) {
-				map.put(kbArticle.getPrimaryKeyObj(), kbArticle);
-
-				cacheResult(kbArticle);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -38971,4 +38807,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:462957944
+// LIFERAY-SERVICE-BUILDER-HASH:-822318469

@@ -48,9 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -471,53 +469,9 @@ public class AnalyticsMessagePersistenceImpl
 		return findByPrimaryKey((Serializable)analyticsMessageId);
 	}
 
-	/**
-	 * Returns the analytics message with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the analytics message
-	 * @return the analytics message, or <code>null</code> if a analytics message with the primary key could not be found
-	 */
 	@Override
-	public AnalyticsMessage fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				AnalyticsMessage.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		AnalyticsMessage analyticsMessage =
-			(AnalyticsMessage)entityCache.getResult(
-				AnalyticsMessageImpl.class, primaryKey);
-
-		if (analyticsMessage != null) {
-			return analyticsMessage;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			analyticsMessage = (AnalyticsMessage)session.get(
-				AnalyticsMessageImpl.class, primaryKey);
-
-			if (analyticsMessage != null) {
-				cacheResult(analyticsMessage);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return analyticsMessage;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -529,132 +483,6 @@ public class AnalyticsMessagePersistenceImpl
 	@Override
 	public AnalyticsMessage fetchByPrimaryKey(long analyticsMessageId) {
 		return fetchByPrimaryKey((Serializable)analyticsMessageId);
-	}
-
-	@Override
-	public Map<Serializable, AnalyticsMessage> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(AnalyticsMessage.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AnalyticsMessage> map =
-			new HashMap<Serializable, AnalyticsMessage>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AnalyticsMessage analyticsMessage = fetchByPrimaryKey(primaryKey);
-
-			if (analyticsMessage != null) {
-				map.put(primaryKey, analyticsMessage);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						AnalyticsMessage.class, primaryKey)) {
-
-				AnalyticsMessage analyticsMessage =
-					(AnalyticsMessage)entityCache.getResult(
-						AnalyticsMessageImpl.class, primaryKey);
-
-				if (analyticsMessage == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, analyticsMessage);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (AnalyticsMessage analyticsMessage :
-					(List<AnalyticsMessage>)query.list()) {
-
-				map.put(analyticsMessage.getPrimaryKeyObj(), analyticsMessage);
-
-				cacheResult(analyticsMessage);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1043,4 +871,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-963662988
+// LIFERAY-SERVICE-BUILDER-HASH:201820581

@@ -1683,4 +1683,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1964777923
+// LIFERAY-SERVICE-BUILDER-HASH:-1130353765

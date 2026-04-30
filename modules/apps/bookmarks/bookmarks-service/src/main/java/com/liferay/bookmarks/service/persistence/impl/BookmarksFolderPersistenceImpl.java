@@ -57,7 +57,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2901,53 +2900,9 @@ public class BookmarksFolderPersistenceImpl
 		return findByPrimaryKey((Serializable)folderId);
 	}
 
-	/**
-	 * Returns the bookmarks folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the bookmarks folder
-	 * @return the bookmarks folder, or <code>null</code> if a bookmarks folder with the primary key could not be found
-	 */
 	@Override
-	public BookmarksFolder fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				BookmarksFolder.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		BookmarksFolder bookmarksFolder =
-			(BookmarksFolder)entityCache.getResult(
-				BookmarksFolderImpl.class, primaryKey);
-
-		if (bookmarksFolder != null) {
-			return bookmarksFolder;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			bookmarksFolder = (BookmarksFolder)session.get(
-				BookmarksFolderImpl.class, primaryKey);
-
-			if (bookmarksFolder != null) {
-				cacheResult(bookmarksFolder);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return bookmarksFolder;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2959,132 +2914,6 @@ public class BookmarksFolderPersistenceImpl
 	@Override
 	public BookmarksFolder fetchByPrimaryKey(long folderId) {
 		return fetchByPrimaryKey((Serializable)folderId);
-	}
-
-	@Override
-	public Map<Serializable, BookmarksFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(BookmarksFolder.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, BookmarksFolder> map =
-			new HashMap<Serializable, BookmarksFolder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			BookmarksFolder bookmarksFolder = fetchByPrimaryKey(primaryKey);
-
-			if (bookmarksFolder != null) {
-				map.put(primaryKey, bookmarksFolder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						BookmarksFolder.class, primaryKey)) {
-
-				BookmarksFolder bookmarksFolder =
-					(BookmarksFolder)entityCache.getResult(
-						BookmarksFolderImpl.class, primaryKey);
-
-				if (bookmarksFolder == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, bookmarksFolder);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (BookmarksFolder bookmarksFolder :
-					(List<BookmarksFolder>)query.list()) {
-
-				map.put(bookmarksFolder.getPrimaryKeyObj(), bookmarksFolder);
-
-				cacheResult(bookmarksFolder);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3797,4 +3626,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:816643721
+// LIFERAY-SERVICE-BUILDER-HASH:-1975647424

@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1279,52 +1278,9 @@ public class CPOptionValuePersistenceImpl
 		return findByPrimaryKey((Serializable)CPOptionValueId);
 	}
 
-	/**
-	 * Returns the cp option value with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp option value
-	 * @return the cp option value, or <code>null</code> if a cp option value with the primary key could not be found
-	 */
 	@Override
-	public CPOptionValue fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CPOptionValue.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPOptionValue cpOptionValue = (CPOptionValue)entityCache.getResult(
-			CPOptionValueImpl.class, primaryKey);
-
-		if (cpOptionValue != null) {
-			return cpOptionValue;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpOptionValue = (CPOptionValue)session.get(
-				CPOptionValueImpl.class, primaryKey);
-
-			if (cpOptionValue != null) {
-				cacheResult(cpOptionValue);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpOptionValue;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1336,132 +1292,6 @@ public class CPOptionValuePersistenceImpl
 	@Override
 	public CPOptionValue fetchByPrimaryKey(long CPOptionValueId) {
 		return fetchByPrimaryKey((Serializable)CPOptionValueId);
-	}
-
-	@Override
-	public Map<Serializable, CPOptionValue> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CPOptionValue.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPOptionValue> map =
-			new HashMap<Serializable, CPOptionValue>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPOptionValue cpOptionValue = fetchByPrimaryKey(primaryKey);
-
-			if (cpOptionValue != null) {
-				map.put(primaryKey, cpOptionValue);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPOptionValue.class, primaryKey)) {
-
-				CPOptionValue cpOptionValue =
-					(CPOptionValue)entityCache.getResult(
-						CPOptionValueImpl.class, primaryKey);
-
-				if (cpOptionValue == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, cpOptionValue);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPOptionValue cpOptionValue :
-					(List<CPOptionValue>)query.list()) {
-
-				map.put(cpOptionValue.getPrimaryKeyObj(), cpOptionValue);
-
-				cacheResult(cpOptionValue);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1989,4 +1819,4 @@ public class CPOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1783833314
+// LIFERAY-SERVICE-BUILDER-HASH:-675665933

@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1122,52 +1121,9 @@ public class DEDataListViewPersistenceImpl
 		return findByPrimaryKey((Serializable)deDataListViewId);
 	}
 
-	/**
-	 * Returns the de data list view with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the de data list view
-	 * @return the de data list view, or <code>null</code> if a de data list view with the primary key could not be found
-	 */
 	@Override
-	public DEDataListView fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DEDataListView.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DEDataListView deDataListView = (DEDataListView)entityCache.getResult(
-			DEDataListViewImpl.class, primaryKey);
-
-		if (deDataListView != null) {
-			return deDataListView;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			deDataListView = (DEDataListView)session.get(
-				DEDataListViewImpl.class, primaryKey);
-
-			if (deDataListView != null) {
-				cacheResult(deDataListView);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return deDataListView;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1179,132 +1135,6 @@ public class DEDataListViewPersistenceImpl
 	@Override
 	public DEDataListView fetchByPrimaryKey(long deDataListViewId) {
 		return fetchByPrimaryKey((Serializable)deDataListViewId);
-	}
-
-	@Override
-	public Map<Serializable, DEDataListView> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DEDataListView.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DEDataListView> map =
-			new HashMap<Serializable, DEDataListView>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DEDataListView deDataListView = fetchByPrimaryKey(primaryKey);
-
-			if (deDataListView != null) {
-				map.put(primaryKey, deDataListView);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DEDataListView.class, primaryKey)) {
-
-				DEDataListView deDataListView =
-					(DEDataListView)entityCache.getResult(
-						DEDataListViewImpl.class, primaryKey);
-
-				if (deDataListView == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, deDataListView);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DEDataListView deDataListView :
-					(List<DEDataListView>)query.list()) {
-
-				map.put(deDataListView.getPrimaryKeyObj(), deDataListView);
-
-				cacheResult(deDataListView);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1827,4 +1657,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-21193403
+// LIFERAY-SERVICE-BUILDER-HASH:1890615669

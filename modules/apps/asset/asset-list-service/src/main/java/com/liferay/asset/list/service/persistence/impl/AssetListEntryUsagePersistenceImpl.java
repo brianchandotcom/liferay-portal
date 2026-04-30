@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2015,53 +2014,9 @@ public class AssetListEntryUsagePersistenceImpl
 		return findByPrimaryKey((Serializable)assetListEntryUsageId);
 	}
 
-	/**
-	 * Returns the asset list entry usage with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset list entry usage
-	 * @return the asset list entry usage, or <code>null</code> if a asset list entry usage with the primary key could not be found
-	 */
 	@Override
-	public AssetListEntryUsage fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				AssetListEntryUsage.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		AssetListEntryUsage assetListEntryUsage =
-			(AssetListEntryUsage)entityCache.getResult(
-				AssetListEntryUsageImpl.class, primaryKey);
-
-		if (assetListEntryUsage != null) {
-			return assetListEntryUsage;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			assetListEntryUsage = (AssetListEntryUsage)session.get(
-				AssetListEntryUsageImpl.class, primaryKey);
-
-			if (assetListEntryUsage != null) {
-				cacheResult(assetListEntryUsage);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return assetListEntryUsage;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2073,135 +2028,6 @@ public class AssetListEntryUsagePersistenceImpl
 	@Override
 	public AssetListEntryUsage fetchByPrimaryKey(long assetListEntryUsageId) {
 		return fetchByPrimaryKey((Serializable)assetListEntryUsageId);
-	}
-
-	@Override
-	public Map<Serializable, AssetListEntryUsage> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(AssetListEntryUsage.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetListEntryUsage> map =
-			new HashMap<Serializable, AssetListEntryUsage>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetListEntryUsage assetListEntryUsage = fetchByPrimaryKey(
-				primaryKey);
-
-			if (assetListEntryUsage != null) {
-				map.put(primaryKey, assetListEntryUsage);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						AssetListEntryUsage.class, primaryKey)) {
-
-				AssetListEntryUsage assetListEntryUsage =
-					(AssetListEntryUsage)entityCache.getResult(
-						AssetListEntryUsageImpl.class, primaryKey);
-
-				if (assetListEntryUsage == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, assetListEntryUsage);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (AssetListEntryUsage assetListEntryUsage :
-					(List<AssetListEntryUsage>)query.list()) {
-
-				map.put(
-					assetListEntryUsage.getPrimaryKeyObj(),
-					assetListEntryUsage);
-
-				cacheResult(assetListEntryUsage);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2938,4 +2764,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1556533031
+// LIFERAY-SERVICE-BUILDER-HASH:1233233058

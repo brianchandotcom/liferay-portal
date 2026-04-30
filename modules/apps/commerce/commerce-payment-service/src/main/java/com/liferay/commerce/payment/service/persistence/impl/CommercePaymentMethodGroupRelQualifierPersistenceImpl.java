@@ -1286,4 +1286,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1095778585
+// LIFERAY-SERVICE-BUILDER-HASH:470975425

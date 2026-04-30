@@ -48,9 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -473,52 +471,9 @@ public class CSDiagramPinPersistenceImpl
 		return findByPrimaryKey((Serializable)CSDiagramPinId);
 	}
 
-	/**
-	 * Returns the cs diagram pin with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cs diagram pin
-	 * @return the cs diagram pin, or <code>null</code> if a cs diagram pin with the primary key could not be found
-	 */
 	@Override
-	public CSDiagramPin fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CSDiagramPin.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CSDiagramPin csDiagramPin = (CSDiagramPin)entityCache.getResult(
-			CSDiagramPinImpl.class, primaryKey);
-
-		if (csDiagramPin != null) {
-			return csDiagramPin;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			csDiagramPin = (CSDiagramPin)session.get(
-				CSDiagramPinImpl.class, primaryKey);
-
-			if (csDiagramPin != null) {
-				cacheResult(csDiagramPin);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return csDiagramPin;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -530,129 +485,6 @@ public class CSDiagramPinPersistenceImpl
 	@Override
 	public CSDiagramPin fetchByPrimaryKey(long CSDiagramPinId) {
 		return fetchByPrimaryKey((Serializable)CSDiagramPinId);
-	}
-
-	@Override
-	public Map<Serializable, CSDiagramPin> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CSDiagramPin.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CSDiagramPin> map =
-			new HashMap<Serializable, CSDiagramPin>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CSDiagramPin csDiagramPin = fetchByPrimaryKey(primaryKey);
-
-			if (csDiagramPin != null) {
-				map.put(primaryKey, csDiagramPin);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CSDiagramPin.class, primaryKey)) {
-
-				CSDiagramPin csDiagramPin = (CSDiagramPin)entityCache.getResult(
-					CSDiagramPinImpl.class, primaryKey);
-
-				if (csDiagramPin == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, csDiagramPin);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CSDiagramPin csDiagramPin : (List<CSDiagramPin>)query.list()) {
-				map.put(csDiagramPin.getPrimaryKeyObj(), csDiagramPin);
-
-				cacheResult(csDiagramPin);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1044,4 +876,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1252735726
+// LIFERAY-SERVICE-BUILDER-HASH:1262172842

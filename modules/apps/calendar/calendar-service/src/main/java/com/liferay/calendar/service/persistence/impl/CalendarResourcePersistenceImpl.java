@@ -59,7 +59,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3163,53 +3162,9 @@ public class CalendarResourcePersistenceImpl
 		return findByPrimaryKey((Serializable)calendarResourceId);
 	}
 
-	/**
-	 * Returns the calendar resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the calendar resource
-	 * @return the calendar resource, or <code>null</code> if a calendar resource with the primary key could not be found
-	 */
 	@Override
-	public CalendarResource fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CalendarResource.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CalendarResource calendarResource =
-			(CalendarResource)entityCache.getResult(
-				CalendarResourceImpl.class, primaryKey);
-
-		if (calendarResource != null) {
-			return calendarResource;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			calendarResource = (CalendarResource)session.get(
-				CalendarResourceImpl.class, primaryKey);
-
-			if (calendarResource != null) {
-				cacheResult(calendarResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return calendarResource;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -3221,132 +3176,6 @@ public class CalendarResourcePersistenceImpl
 	@Override
 	public CalendarResource fetchByPrimaryKey(long calendarResourceId) {
 		return fetchByPrimaryKey((Serializable)calendarResourceId);
-	}
-
-	@Override
-	public Map<Serializable, CalendarResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CalendarResource.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CalendarResource> map =
-			new HashMap<Serializable, CalendarResource>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CalendarResource calendarResource = fetchByPrimaryKey(primaryKey);
-
-			if (calendarResource != null) {
-				map.put(primaryKey, calendarResource);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CalendarResource.class, primaryKey)) {
-
-				CalendarResource calendarResource =
-					(CalendarResource)entityCache.getResult(
-						CalendarResourceImpl.class, primaryKey);
-
-				if (calendarResource == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, calendarResource);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CalendarResource calendarResource :
-					(List<CalendarResource>)query.list()) {
-
-				map.put(calendarResource.getPrimaryKeyObj(), calendarResource);
-
-				cacheResult(calendarResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3991,4 +3820,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-616881942
+// LIFERAY-SERVICE-BUILDER-HASH:-1333871204

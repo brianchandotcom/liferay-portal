@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -6170,53 +6169,9 @@ public class FragmentEntryLinkPersistenceImpl
 		return findByPrimaryKey((Serializable)fragmentEntryLinkId);
 	}
 
-	/**
-	 * Returns the fragment entry link with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment entry link
-	 * @return the fragment entry link, or <code>null</code> if a fragment entry link with the primary key could not be found
-	 */
 	@Override
-	public FragmentEntryLink fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				FragmentEntryLink.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		FragmentEntryLink fragmentEntryLink =
-			(FragmentEntryLink)entityCache.getResult(
-				FragmentEntryLinkImpl.class, primaryKey);
-
-		if (fragmentEntryLink != null) {
-			return fragmentEntryLink;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			fragmentEntryLink = (FragmentEntryLink)session.get(
-				FragmentEntryLinkImpl.class, primaryKey);
-
-			if (fragmentEntryLink != null) {
-				cacheResult(fragmentEntryLink);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return fragmentEntryLink;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -6228,133 +6183,6 @@ public class FragmentEntryLinkPersistenceImpl
 	@Override
 	public FragmentEntryLink fetchByPrimaryKey(long fragmentEntryLinkId) {
 		return fetchByPrimaryKey((Serializable)fragmentEntryLinkId);
-	}
-
-	@Override
-	public Map<Serializable, FragmentEntryLink> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(FragmentEntryLink.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FragmentEntryLink> map =
-			new HashMap<Serializable, FragmentEntryLink>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FragmentEntryLink fragmentEntryLink = fetchByPrimaryKey(primaryKey);
-
-			if (fragmentEntryLink != null) {
-				map.put(primaryKey, fragmentEntryLink);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						FragmentEntryLink.class, primaryKey)) {
-
-				FragmentEntryLink fragmentEntryLink =
-					(FragmentEntryLink)entityCache.getResult(
-						FragmentEntryLinkImpl.class, primaryKey);
-
-				if (fragmentEntryLink == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, fragmentEntryLink);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (FragmentEntryLink fragmentEntryLink :
-					(List<FragmentEntryLink>)query.list()) {
-
-				map.put(
-					fragmentEntryLink.getPrimaryKeyObj(), fragmentEntryLink);
-
-				cacheResult(fragmentEntryLink);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -7702,4 +7530,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:251416344
+// LIFERAY-SERVICE-BUILDER-HASH:1442628866

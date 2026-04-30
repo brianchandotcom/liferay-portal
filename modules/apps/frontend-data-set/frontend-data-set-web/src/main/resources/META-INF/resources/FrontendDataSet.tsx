@@ -92,7 +92,7 @@ import {
 	VisibleFieldNames,
 } from './utils/types';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
-import ViewsContext, {ISnapshot} from './views/ViewsContext';
+import ViewsContext, {ISnapshot, ISnapshotGroup} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
 import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
@@ -604,10 +604,15 @@ const FrontendDataSetContent = ({
 			oldSorts: sortsProp,
 		});
 
-		const parsedSnapshots = snapshots?.map((snapshot: ISnapshot) => ({
-			...snapshot,
-			configuration: JSON.parse(snapshot.configuration),
-		}));
+		const parsedSnapshotGroups = snapshots?.map(
+			(group: ISnapshotGroup) => ({
+				...group,
+				items: group.items.map((snapshot: ISnapshot) => ({
+					...snapshot,
+					configuration: JSON.parse(snapshot.configuration),
+				})),
+			})
+		);
 
 		return {
 			activeView,
@@ -616,7 +621,7 @@ const FrontendDataSetContent = ({
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,
-			snapshots: parsedSnapshots,
+			snapshotGroups: parsedSnapshotGroups,
 			snapshotsEnabled,
 			sorts,
 			views,

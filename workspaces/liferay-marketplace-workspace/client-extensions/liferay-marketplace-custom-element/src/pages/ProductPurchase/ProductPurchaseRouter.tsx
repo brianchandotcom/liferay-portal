@@ -32,6 +32,7 @@ import PaymentMethod from './pages/App/PaymentMethod';
 import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
 import AIHubForm from './pages/LiferayProduct/AIHubForm/AIHubForm';
 import ActivationKeyForm from './pages/LiferayProduct/ActivationKeyForm';
+import DSRLicenseKeyForm from './pages/LiferayProduct/DSRLicenseKeyForm';
 import LDPInformation from './pages/LiferayProduct/LDPInformation';
 import LDPOrderSummary from './pages/LiferayProduct/LDPOrderSummary';
 import LDPProvisioning from './pages/LiferayProduct/LDPProvisioningForm';
@@ -123,6 +124,21 @@ export const productTypeRoutes = {
 					},
 					{
 						element: ActivationKeyForm,
+						path: 'activation-key-form',
+						title: i18n.translate('activation-key'),
+					},
+				];
+			}
+
+			if (solutionType === SolutionTypes.DSR) {
+				return [
+					{
+						element: ProductPurchaseAccountSelection,
+						index: true,
+						title: i18n.translate('account'),
+					},
+					{
+						element: DSRLicenseKeyForm,
 						path: 'activation-key-form',
 						title: i18n.translate('activation-key'),
 					},

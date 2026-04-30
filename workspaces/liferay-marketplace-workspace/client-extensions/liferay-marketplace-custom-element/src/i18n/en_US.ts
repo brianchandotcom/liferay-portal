@@ -30,6 +30,9 @@ export default {
 	'add-developer-licenses': 'Add Developer Licenses',
 	'add-new-trial': 'Add New Trial',
 	'add-new-version': 'Add New Version',
+	'add-one-ip-address-per-line-ipv-six-addresses-are-not-supported':
+		'Add one IP address per line. IPv6 addresses are not supported.',
+	'add-one-mac-address-per-line': 'Add one MAC address per line.',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-admin': 'Additional Admin',
@@ -283,6 +286,7 @@ export default {
 	'enter-your-vat-id': 'Enter your VAT ID',
 	'entity-type': 'Entity Type',
 	'environment': 'Environment',
+	'environment-details': 'Environment Details',
 	'environment-selection': 'Environment Selection',
 	'environment-type': 'Environment Type',
 	'environments': 'Environments',
@@ -358,6 +362,7 @@ export default {
 		'I agree to the processing of my personal data for the purpose of evaluating my beta access request in accordance with',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
+	'i-have-read-and-agree-to-the': 'I have read and agree to the',
 	'i-have-read-and-agree-to-the-liferay-end-user-agreement':
 		'I have read and agree to the Liferay End User Agreement',
 	'i-have-read-and-agree-to-the-terms-and-conditions-above':
@@ -380,6 +385,7 @@ export default {
 	'income': 'Income',
 	'information': 'Information',
 	'input-one-domain-name-per-instance': 'Input one domain name per instance',
+	'input-one-host-name-per-instance': 'Input one Host name per instance.',
 	'insert-text-here': 'Insert text here',
 	'install': 'Install',
 	'installation': 'Installation',
@@ -416,6 +422,10 @@ export default {
 	'license-type': 'License Type',
 	'licenses': 'Licenses',
 	'licensing': 'Licensing',
+	'liferay-dxp-eula-disclaimer-prefix':
+		'Your use of Liferay DXP is subject to these terms and the Liferay End User License Agreement set forth at',
+	'liferay-dxp-eula-disclaimer-suffix':
+		'(these terms and the eula together form the "agreement"). Please read these terms and the Liferay End User License Agreement carefully before accessing, downloading, installing or in any way using the software. By clicking your agreement to any of these or accessing, downloading, installing or in any way using the software, you signify your assent to and acceptance of the agreement and acknowledge that you have read and you understand terms of the agreement. If you are an individual acting on behalf of an entity, you represent that you have the authority to enter into this agreement on behalf of that entity. If you do not accept the terms of this agreement, then you must not access, download, install or in any way use the software. I have read and agree to all the terms and conditions below (check all boxes).',
 	'liferay-end-user-agreement': 'Liferay End User Agreement',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-paas': 'Liferay PaaS',
@@ -550,6 +560,8 @@ export default {
 		'Please be aware that since you are adding a new version of the app, the only section visible is the "Build".',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
+	'please-complete-at-least-one-of-the-following-fields-to-proceed':
+		'Please complete at least one of the following fields to proceed',
 	'please-fill-in-a-valid-email': 'Please fill in a valid email.',
 	'please-fill-in-a-valid-phone-number':
 		'Please fill in a valid phone number.',
@@ -663,6 +675,8 @@ export default {
 	'section-that-shows-the-payments': 'Section that shows the payments.',
 	'select-a-file': 'Select a File',
 	'select-a-local-file-to-upload': 'Select a Local File to Upload',
+	'select-a-server-to-store-your-data-this-could-have-implications-to-your-organizations-policy-on-user-data-storage':
+		"Select a server to store your data. This could have implications to your organization's policy on user data storage.",
 	'select-an-option': 'Select an Option',
 	'select-areas': 'Select Areas',
 	'select-categories': 'Select Categories',
@@ -799,6 +813,8 @@ export default {
 	'to-be-renewed': 'To be Renewed',
 	'to-generate-your-unique-activation-key-file-and-access-the-download-please-complete-your-profile-details-below-tell-us-a-bit-about-your-intended-use-to-help-us-support-your-experience':
 		'To generate your unique activation key file and access the download, please complete your profile details below. Tell us a bit about your intended use to help us support your experience',
+	'to-generate-your-unique-activation-key-file-please-provide-the-technical-specifications-required-below-these-details-are-used-exclusively-to-configure-the-software-for-your-environment-and-ensure-hardware-compatibility':
+		'To generate your unique activation key file, please provide the technical specifications required below. These details are used exclusively to configure the software for your environment and ensure hardware compatibility.',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
 	'total': 'Total',
@@ -820,6 +836,7 @@ export default {
 	'trial-status': 'Trial Status',
 	'trial-url': 'Trial URL',
 	'trials': 'Trials',
+	'try-beta': 'Try Beta',
 	'type': 'Type',
 	'unable-to-assign-roles': 'Unable to assign roles',
 	'unable-to-download-your-license-file-please-try-again-and-or-contact-support-via-the-manage-menu-on-the-dashboard':

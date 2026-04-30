@@ -75,7 +75,12 @@ async function withProductDetails(
 			}
 			catch {}
 
-			return {productName, purchaseCount: total, thumbnail};
+			return {
+				productName:
+					productName || i18n.translate('product-unavailable'),
+				purchaseCount: total,
+				thumbnail,
+			};
 		})
 	);
 }

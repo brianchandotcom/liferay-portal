@@ -1051,6 +1051,105 @@ test.describe('Object Expression Builder Validation', () => {
 			page.getByText('Please enter a valid entry.')
 		).toBeVisible();
 	});
+
+	test(
+		'LPD-78504 Can create validation using oldValue function with Picklist field',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page: _page, site: _site}) => {
+			const suffix = getRandomString().substring(0, 8);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'open',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'Open'},
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'inprogress',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'In Progress'},
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `Obj${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Picklist',
+							externalReferenceCode: 'customPicklistField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Picklist Field'},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'customPicklistField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+
+			const {body: objectValidationRule} =
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: false,
+						engine: 'ddm',
+						errorLabel: {en_US: 'Validation error'},
+						name: {en_US: 'Custom validation'},
+						script: "oldValue('customPicklistField') == 'open'",
+					}
+				);
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customPicklistField: {key: 'open', name: 'Open'}},
+				applicationName
+			);
+
+			await objectValidationRuleAPIClient.putObjectValidationRule(
+				objectValidationRule.id!,
+				{
+					...objectValidationRule,
+					active: true,
+				}
+			);
+
+			const updatedEntry = await apiHelpers.objectEntry.patchObjectEntry(
+				{customPicklistField: {key: 'inprogress', name: 'In Progress'}},
+				applicationName,
+				entry.id
+			);
+
+			expect(updatedEntry.customPicklistField.key).toBe('inprogress');
+		}
+	);
 });
 
 test.describe('Object Groovy Validation', () => {

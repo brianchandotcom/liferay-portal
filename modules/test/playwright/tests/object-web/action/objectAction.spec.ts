@@ -13,17 +13,35 @@ import path from 'node:path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
+import {scriptManagementPagesTest} from '../../../fixtures/scriptManagementPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {miniumSetUp} from '../../commerce/utils/commerce';
 import {mockedObjectFields} from '../dependencies/objectMockedFields';
+import {generateObjectFields} from '../utils/generateObjectFields';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
 	editObjectDefinitionPagesTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
+	isolatedSiteTest,
 	loginTest(),
-	objectPagesTest
+	objectPagesTest,
+	rolesPagesTest,
+	scriptManagementPagesTest
 );
 
 let createdObjectDefinition: ObjectDefinition;
@@ -420,3 +438,3682 @@ test(
 		});
 	}
 );
+
+test.describe('Object Action CRUD', () => {
+	test(
+		'LPD-78504 Can activate or deactivate an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(
+				page.getByRole('link', {name: 'Custom Action'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+
+			await page.getByRole('link', {name: 'Custom Action'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByLabel('Active', {exact: true}).uncheck();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('No')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can cancel the creation of an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
+
+			await page.reload();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can cancel the update of an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await page.getByRole('link', {name: 'Action Label'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByPlaceholder('Text to translate').clear();
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Update Action Label');
+
+			await iframe.getByRole('button', {name: 'Cancel'}).click();
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can create an action with webhook',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can delete an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				objectDefinition.externalReferenceCode!,
+				{
+					active: true,
+					label: {en_US: 'Action Label'},
+					name: actionName,
+					objectActionExecutorKey: 'webhook',
+					objectActionTriggerKey: 'onAfterAdd',
+					parameters: {
+						url: 'http://localhost:8080',
+					},
+				}
+			);
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label'})
+			).toBeVisible();
+
+			await page
+				.getByRole('row', {name: 'Action Label'})
+				.getByRole('button', {name: 'Actions'})
+				.click();
+
+			await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label'})
+			).toBeHidden();
+		}
+	);
+
+	test(
+		'LPD-78504 Can edit an action name',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://www.liferay.com',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await page.getByRole('link', {name: 'Custom Action'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByPlaceholder('Text to translate').clear();
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('New Action Update');
+
+			await iframe.getByLabel('Active', {exact: true}).uncheck();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(
+				page.getByRole('link', {name: 'New Action Update'})
+			).toBeVisible();
+
+			await expect(page.getByText('No')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can inactivate an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(page.getByText('Yes')).toBeVisible();
+
+			await page.getByRole('link', {name: 'Action Label'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByLabel('Active', {exact: true}).uncheck();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('No')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can reactivate an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: false,
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(page.getByText('No')).toBeVisible();
+
+			await page.getByRole('link', {name: 'Action Label'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByLabel('Active', {exact: true}).check();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can search for an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName1 = 'actionOne' + getRandomInt();
+			const actionName2 = 'actionTwo' + getRandomInt();
+
+			const {body: objectAction1} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Action Label 1'},
+						name: actionName1,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction1.id, type: 'objectAction'});
+
+			const {body: objectAction2} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Action Label 2'},
+						name: actionName2,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction2.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label 1'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label 2'})
+			).toBeVisible();
+
+			await page.getByPlaceholder('Search').fill('1');
+			await page.keyboard.press('Enter');
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label 1'})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label 2'})
+			).toBeHidden();
+		}
+	);
+
+	test(
+		'LPD-78504 Can update an action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await page.getByRole('link', {name: 'Action Label'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByPlaceholder('Text to translate').clear();
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Update Action Label');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(
+				page.getByRole('link', {name: 'Update Action Label'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+});
+
+test.describe('Object Action Required Field Validation', () => {
+	test(
+		'LPD-78504 Cannot leave action name blank',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('tab', {name: 'Basic Info'}).click();
+
+			await iframe.getByPlaceholder('Text to translate').clear();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Cannot leave action then field blank',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Cannot leave action when field blank',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Cannot leave URL blank when webhook is selected',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Cannot save action without expression builder value',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Custom Action');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await iframe.getByLabel('Enable Condition').check();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+
+			await page.reload();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can verify action name is required',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+});
+
+test.describe('Object Action Conditions and Triggers', () => {
+	test(
+		'LPD-78504 Can create an action with expression builder condition',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Custom Action');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await editObjectActionPage.fillExpression(
+				objectFields[0].name + " == 'Entry Test'"
+			);
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(
+				page.getByRole('link', {name: 'Custom Action'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can enable and disable condition on an action',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							objectFields[0].name + " == 'Entry with condition'",
+						label: {en_US: 'Custom Action'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await page.getByRole('link', {name: 'Custom Action'}).click();
+
+			const iframe = page.frameLocator('iframe');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await expect(iframe.getByLabel('Enable Condition')).toBeChecked();
+
+			await iframe.getByLabel('Enable Condition').uncheck();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await waitForAlert(iframe);
+
+			await page.goBack();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(
+				page.getByRole('link', {name: 'Custom Action'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can trigger action after disabling expression condition',
+		{tag: ['@LPD-78504', '@LPS-156343']},
+		async ({apiHelpers, site: _site}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const predefinedValue = `New object entry value ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression: `${fieldName} == 'Entry Test'`,
+						label: {en_US: 'Custom Action Label'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: predefinedValue,
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await objectActionAPIClient.patchObjectAction(objectAction.id!, {
+				conditionExpression: '',
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Different Value'},
+				applicationName
+			);
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const autoCreatedEntry = entries.items.find(
+				(item: any) => item[fieldName] === predefinedValue
+			);
+
+			expect(autoCreatedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can trigger action with expression by adding an entry',
+		{tag: ['@LPD-78504', '@LPS-156320']},
+		async ({apiHelpers, site: _site}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const predefinedValue = `Add Entry Test ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression: `${fieldName} == 'Entry Test'`,
+						label: {en_US: 'Action Label'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: predefinedValue,
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const autoCreatedEntry = entries.items.find(
+				(item: any) => item[fieldName] === predefinedValue
+			);
+
+			expect(autoCreatedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can use expression with webhook action',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const actionName = 'action' + getRandomInt();
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							objectFields[0].name + " == 'Entry Test'",
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'webhook',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							url: 'http://localhost:8080',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+			const fieldName = objectFields[0].name!;
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await expect(
+				page.getByRole('link', {name: 'Action Label'})
+			).toBeVisible();
+
+			await expect(page.getByText('Yes')).toBeVisible();
+		}
+	);
+
+	test(
+		'LPD-78504 Can verify condition card is hidden when using on subscription status update trigger',
+		{tag: '@LPD-78504'},
+		async ({editObjectActionPage, page, viewObjectActionsPage}) => {
+			await viewObjectActionsPage.goto('Commerce Order');
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe
+				.getByRole('option', {name: 'On Subscription Status Update'})
+				.click();
+
+			await expect(iframe.getByText('Condition')).toBeHidden();
+		}
+	);
+});
+
+test.describe('Object Action Cross-Object Behavior', () => {
+	test(
+		'LPD-78504 Can add account entry after creating account entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers, site: _site}) => {
+			const targetAccountName = `Account Name ${getRandomInt()}`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_ACCOUNT',
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_ACCOUNT',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Name'},
+									name: 'name',
+									value: targetAccountName,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Type'},
+									name: 'type',
+									value: 'person',
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: `Business Account ${getRandomInt()}`,
+				type: 'business',
+			});
+
+			const createdAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					targetAccountName
+				);
+
+			if (createdAccount) {
+				apiHelpers.data.push({id: createdAccount.id!, type: 'account'});
+			}
+
+			expect(createdAccount).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can add account entry after creating custom object entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers, site: _site}) => {
+			const targetAccountName = `Account Name ${getRandomInt()}`;
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_ACCOUNT',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Name'},
+									name: 'name',
+									value: targetAccountName,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Type'},
+									name: 'type',
+									value: 'guest',
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[objectFields[0].name!]: 'Entry Test'},
+				applicationName
+			);
+
+			const createdAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					targetAccountName
+				);
+
+			if (createdAccount) {
+				apiHelpers.data.push({id: createdAccount.id!, type: 'account'});
+			}
+
+			expect(createdAccount).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can add account entry after deleting custom object entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers, site: _site}) => {
+			const targetAccountName = `Account Name ${getRandomInt()}`;
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterDelete',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_ACCOUNT',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Name'},
+									name: 'name',
+									value: targetAccountName,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Type'},
+									name: 'type',
+									value: 'guest',
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{[objectFields[0].name!]: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(entry.id)
+			);
+
+			const createdAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					targetAccountName
+				);
+
+			if (createdAccount) {
+				apiHelpers.data.push({id: createdAccount.id!, type: 'account'});
+			}
+
+			expect(createdAccount).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can add account entry after updating custom object entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers, site: _site}) => {
+			const targetAccountName = `Account Name ${getRandomInt()}`;
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_ACCOUNT',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Name'},
+									name: 'name',
+									value: targetAccountName,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Type'},
+									name: 'type',
+									value: 'guest',
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const fieldName = objectFields[0].name!;
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{[fieldName]: 'Entry Test Edited'},
+				applicationName,
+				Number(entry.id)
+			);
+
+			const createdAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					targetAccountName
+				);
+
+			if (createdAccount) {
+				apiHelpers.data.push({id: createdAccount.id!, type: 'account'});
+			}
+
+			expect(createdAccount).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can add commerce product group entry after deleting commerce product entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers}) => {
+			const targetGroupName = `Value Test ${getRandomInt()}`;
+
+			const {catalog} = await miniumSetUp(apiHelpers);
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: `Simple T-Shirt ${getRandomInt()}`},
+					productType: 'simple',
+				});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_COMMERCE_PRODUCT_DEFINITION',
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterDelete',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								'L_COMMERCE_PRODUCT_GROUP',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Title'},
+									name: 'title',
+									value: targetGroupName,
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
+				product.productId!
+			);
+
+			const productGroups =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/commerceproductgroups'
+				);
+
+			const createdGroup = productGroups.items.find(
+				(item: any) => item.title === targetGroupName
+			);
+
+			expect(createdGroup).toBeTruthy();
+
+			if (createdGroup) {
+				apiHelpers.data.push({
+					id: createdGroup.id,
+					type: 'objectEntry',
+				});
+			}
+		}
+	);
+
+	test(
+		'LPD-78504 Can add user after creating commerce product entry via action',
+		{tag: ['@LPD-78504', '@LPS-180070']},
+		async ({apiHelpers}) => {
+			const newUserAlternateName = `newusertest${getRandomInt()}`;
+			const newUserEmail = `${newUserAlternateName}@test.com`;
+
+			const {catalog} = await miniumSetUp(apiHelpers);
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_COMMERCE_PRODUCT_DEFINITION',
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_USER',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Screen Name'},
+									name: 'alternateName',
+									value: newUserAlternateName,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Email Address'},
+									name: 'emailAddress',
+									value: newUserEmail,
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'First Name'},
+									name: 'givenName',
+									value: 'newUserTest',
+								},
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Last Name'},
+									name: 'familyName',
+									value: 'newUserTest',
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: `Simple T-Shirt ${getRandomInt()}`},
+				productType: 'simple',
+			});
+
+			const createdUser =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					newUserEmail
+				);
+
+			expect(createdUser).toBeTruthy();
+
+			if (createdUser?.id) {
+				apiHelpers.data.push({id: createdUser.id, type: 'userAccount'});
+			}
+		}
+	);
+
+	test(
+		'LPD-78504 Can update account entry after creating account entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers, site: _site}) => {
+			const initialAccountName = `Account Name ${getRandomInt()}`;
+			const updatedAccountName = `Updated Accounts Name ${getRandomInt()}`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_ACCOUNT',
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'update-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode: 'L_ACCOUNT',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Name'},
+									name: 'name',
+									value: updatedAccountName,
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await apiHelpers.headlessAdminUser.postAccount({
+				name: initialAccountName,
+				type: 'person',
+			});
+
+			const updatedAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					updatedAccountName
+				);
+
+			expect(updatedAccount).toBeTruthy();
+
+			const oldAccount =
+				await apiHelpers.headlessAdminUser.getAccountByName(
+					initialAccountName
+				);
+
+			expect(oldAccount).toBeFalsy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can update commerce product group entry after creating commerce product entry via action',
+		{tag: ['@LPD-78504', '@LPS-173537']},
+		async ({apiHelpers}) => {
+			const updatedTitle = `Product Group Updated ${getRandomInt()}`;
+
+			await miniumSetUp(apiHelpers);
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_COMMERCE_PRODUCT_GROUP',
+					{
+						active: true,
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'update-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								'L_COMMERCE_PRODUCT_GROUP',
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Title'},
+									name: 'title',
+									value: updatedTitle,
+								},
+							],
+							system: true,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const productGroup = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					name: `Product Group ${getRandomInt()}`,
+					title: 'Original Title',
+				},
+				'c/commerceproductgroups'
+			);
+
+			apiHelpers.data.push({id: productGroup.id, type: 'objectEntry'});
+
+			const updatedGroup =
+				await apiHelpers.objectEntry.getObjectEntryById(
+					'c/commerceproductgroups',
+					String(productGroup.id)
+				);
+
+			expect(updatedGroup.title).toBe(updatedTitle);
+		}
+	);
+});
+
+test.describe('Object Action with Groovy Script', () => {
+	test(
+		'LPD-78504 Can create an action with Groovy Script',
+		{tag: ['@LPD-78504', '@LPS-156569']},
+		async ({apiHelpers, scriptManagementPage, site: _site}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			await scriptManagementPage.page.waitForTimeout(2000);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode:
+								'customObjectFieldActionTest',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field Action Test'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectFieldActionTest',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const groovyScript = `
+	import com.liferay.object.model.ObjectEntry;
+	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+	import com.liferay.portal.kernel.service.ServiceContext;
+	
+	import java.io.Serializable;
+	import java.util.Map;
+	
+	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
+	Map<String, Serializable> values = objectEntry.getValues();
+	values.put("customObjectFieldActionTest", "Action Test Works")
+	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
+	`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							lineCount: groovyScript.split('\n').length,
+							script: groovyScript,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customObjectField: 'Entry Test'},
+				applicationName
+			);
+
+			await expect
+				.poll(
+					async () => {
+						const updatedEntry =
+							await apiHelpers.objectEntry.getObjectEntryById(
+								applicationName,
+								String(entry.id)
+							);
+
+						return updatedEntry.customObjectFieldActionTest;
+					},
+					{timeout: 10000}
+				)
+				.toBe('Action Test Works');
+		}
+	);
+
+	test(
+		'LPD-78504 Can edit an action with Groovy Script',
+		{tag: ['@LPD-78504', '@LPS-156560']},
+		async ({apiHelpers, scriptManagementPage, site: _site}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			await scriptManagementPage.page.waitForTimeout(2000);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode:
+								'customObjectFieldActionTest',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field Action Test'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectFieldActionTest',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const groovyScript = `
+	import com.liferay.object.model.ObjectEntry;
+	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+	import com.liferay.portal.kernel.service.ServiceContext;
+	
+	import java.io.Serializable;
+	import java.util.Map;
+	
+	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
+	Map<String, Serializable> values = objectEntry.getValues();
+	values.put("customObjectFieldActionTest", "Action Test Works")
+	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
+	`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							lineCount: groovyScript.split('\n').length,
+							script: groovyScript,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await objectActionAPIClient.patchObjectAction(objectAction.id!, {
+				conditionExpression: "customObjectField == 'Entry Update'",
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customObjectField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customObjectField: 'Entry Update'},
+				applicationName,
+				Number(entry.id)
+			);
+
+			await expect
+				.poll(
+					async () => {
+						const updatedEntry =
+							await apiHelpers.objectEntry.getObjectEntryById(
+								applicationName,
+								String(entry.id)
+							);
+
+						return updatedEntry.customObjectFieldActionTest;
+					},
+					{timeout: 10000}
+				)
+				.toBe('Action Test Works');
+		}
+	);
+
+	test(
+		'LPD-78504 Can use expression with Groovy Script action',
+		{tag: ['@LPD-78504', '@LPS-156346']},
+		async ({
+			apiHelpers,
+			page,
+			scriptManagementPage,
+			site: _site,
+			viewObjectActionsPage,
+		}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			await scriptManagementPage.page.waitForTimeout(2000);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'Integer',
+							businessType: 'Integer',
+							externalReferenceCode: 'customInteger',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Integer'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customInteger',
+							required: false,
+							system: false,
+							type: 'Integer',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression: 'customInteger == 5',
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Action Label'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							lineCount: 1,
+							script: "println 'Success'",
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{customInteger: 5},
+				applicationName
+			);
+
+			await viewObjectActionsPage.goto(objectDefinition.label!['en_US']);
+
+			await page.reload();
+
+			await expect(viewObjectActionsPage.lastExecutionCell).toContainText(
+				'Success'
+			);
+		}
+	);
+});
+
+test.describe('Object Action Standalone Permissions', () => {
+	test(
+		'LPD-78504 Can manage standalone permissions in roles',
+		{tag: ['@LPD-78504', '@LPS-173723']},
+		async ({
+			apiHelpers,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const actionName = `ActionName${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: 'Error Message'},
+						label: {en_US: 'Action Label'},
+						name: actionName,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: 'New Entry Test',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const roleName = `Regular Role ${getRandomInt()}`;
+
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: roleName,
+			});
+
+			apiHelpers.data.push({id: role.id, type: 'role'});
+
+			await rolesPage.goto();
+
+			await rolesPage.selectRole(roleName);
+
+			await rolePage.definePermissionsLink.click();
+
+			const objectName = objectDefinition.name!;
+			const actionPermissionName = `action.${actionName}`;
+
+			await roleDefinePermissionsPage.changePermission(
+				objectName,
+				actionPermissionName,
+				true
+			);
+
+			await roleDefinePermissionsPage.changePermission(
+				objectName,
+				actionPermissionName,
+				false
+			);
+		}
+	);
+
+	test(
+		'LPD-78504 Cannot see deactivated standalone action in dropdown menu',
+		{tag: ['@LPD-78504', '@LPS-173773']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const actionLabel = `Action Label ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: false,
+						errorMessage: {en_US: 'Error message'},
+						label: {en_US: actionLabel},
+						name: `ActionName${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: 'New Entry Test',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			await viewObjectEntriesPage.goto(objectDefinition.className!);
+
+			await viewObjectEntriesPage.frontendDatasetActions.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: actionLabel})
+			).toBeHidden();
+		}
+	);
+
+	test(
+		'LPD-78504 Can trigger standalone action for site scoped object',
+		{tag: ['@LPD-78504', '@LPS-172918']},
+		async ({apiHelpers, page, site, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const actionLabel = `Action ${getRandomInt()}`;
+			const predefinedValue = `New Entry Test ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					panelCategoryKey: 'site_administration.content',
+					scope: 'site',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: 'Error Message'},
+						label: {en_US: actionLabel},
+						name: `ActionName${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: predefinedValue,
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry'},
+				applicationName,
+				String(site.id)
+			);
+
+			await viewObjectEntriesPage.goto(
+				objectDefinition.className!,
+				'en',
+				site.friendlyUrlPath
+			);
+
+			await viewObjectEntriesPage.frontendDatasetActions.click();
+
+			await page.getByRole('menuitem', {name: actionLabel}).click();
+
+			await page.waitForTimeout(2000);
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
+					applicationName,
+					String(site.id)
+				);
+
+			const autoCreatedEntry = entries.items.find(
+				(item: any) => item[fieldName] === predefinedValue
+			);
+
+			expect(autoCreatedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can trigger standalone action with permission',
+		{tag: ['@LPD-78504', '@LPS-169994']},
+		async ({
+			apiHelpers,
+			page,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+			viewObjectEntriesPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const actionLabel = `Action Label ${getRandomInt()}`;
+			const actionName = `ActionName${getRandomInt()}`;
+			const predefinedValue = `New Entry Test ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: 'Error Message'},
+						label: {en_US: actionLabel},
+						name: actionName,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: predefinedValue,
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			const company =
+				await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+					'liferay.com'
+				);
+
+			const [, classNameSuffix] = objectDefinition.className!.split('#');
+
+			const objectPortletId = `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${classNameSuffix}`;
+
+			const roleName = `Regular Role ${getRandomInt()}`;
+
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: roleName,
+				rolePermissions: [
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: String(company.companyId),
+						resourceName: '90',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+						primaryKey: String(company.companyId),
+						resourceName: objectPortletId,
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: String(company.companyId),
+						resourceName: `com.liferay.object.model.ObjectDefinition#${classNameSuffix}`,
+						scope: 1,
+					},
+				],
+			});
+
+			apiHelpers.data.push({id: role.id, type: 'role'});
+
+			await rolesPage.goto();
+
+			await rolesPage.selectRole(roleName);
+
+			await rolePage.definePermissionsLink.click();
+
+			await roleDefinePermissionsPage.changePermission(
+				objectDefinition.name!,
+				`action.${actionName}`,
+				true
+			);
+
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user.id
+			);
+
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: user.alternateName});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className!);
+
+			await viewObjectEntriesPage.frontendDatasetActions.click();
+
+			await page.getByRole('menuitem', {name: actionLabel}).click();
+
+			await page.waitForTimeout(2000);
+
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const autoCreatedEntry = entries.items.find(
+				(item: any) => item[fieldName] === predefinedValue
+			);
+
+			expect(autoCreatedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can verify unpublished object with standalone action does not show in permissions',
+		{tag: ['@LPD-78504', '@LPS-173774']},
+		async ({
+			apiHelpers,
+			roleDefinePermissionsPage,
+			rolePage,
+			rolesPage,
+		}) => {
+			const publishedObject =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: generateObjectFields({
+						objectFieldBusinessTypes: ['Text'],
+					}),
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: publishedObject.id,
+				type: 'objectDefinition',
+			});
+
+			const unpublishedObjectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const unpublishedObject =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: unpublishedObjectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: unpublishedObject.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					unpublishedObject.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: 'Error'},
+						label: {en_US: 'Action Label'},
+						name: `ActionName${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								unpublishedObject.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: unpublishedObjectFields[0].label!,
+									name: unpublishedObjectFields[0].name!,
+									value: 'Test',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const roleName = `Regular Role ${getRandomInt()}`;
+
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: roleName,
+			});
+
+			apiHelpers.data.push({id: role.id, type: 'role'});
+
+			await rolesPage.goto();
+
+			await rolesPage.selectRole(roleName);
+
+			await rolePage.definePermissionsLink.click();
+
+			await roleDefinePermissionsPage.searchInput.click();
+			await roleDefinePermissionsPage.searchInput.fill(
+				publishedObject.name!
+			);
+
+			await expect(
+				roleDefinePermissionsPage.menuItem(publishedObject.name!)
+			).toBeVisible();
+
+			await roleDefinePermissionsPage.searchInput.fill(
+				unpublishedObject.name!
+			);
+
+			await expect(
+				roleDefinePermissionsPage.menuItem(unpublishedObject.name!)
+			).not.toBeVisible();
+		}
+	);
+});
+
+test.describe('Object Action with Formula Field', () => {
+	test(
+		'LPD-78504 Can use formula field with user notification action',
+		{tag: ['@LPD-78504', '@LPS-176850']},
+		async ({apiHelpers, page, site: _site}) => {
+			const notificationTemplate =
+				await apiHelpers.notification.postNotificationTemplate({
+					editorType: 'richText',
+					name: `User Notification Template ${getRandomInt()}`,
+					recipientType: 'term',
+					recipients: [{term: '[%CURRENT_USER_ID%]'}],
+					subject: {en_US: `Subject Test ${getRandomInt()}`},
+					type: 'userNotification',
+				});
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'Integer',
+							businessType: 'Integer',
+							externalReferenceCode: 'customInteger',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Integer'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customInteger',
+							required: false,
+							system: false,
+							type: 'Integer',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Formula',
+							externalReferenceCode: 'customFormulaField',
+							indexed: false,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Formula Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customFormulaField',
+							objectFieldSettings: [
+								{name: 'output', value: 'Integer'} as any,
+								{
+									name: 'script',
+									value: 'customInteger + customInteger',
+								} as any,
+							],
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						label: {
+							en_US: 'Notification action when entry is added',
+						},
+						name: `notifyOnAdd${getRandomInt()}`,
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'userNotification',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{customInteger: 1111},
+				applicationName
+			);
+
+			await page.waitForTimeout(2000);
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					String(notificationTemplate.id)
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+});
+
+test.describe('Object Action with oldValue() Function', () => {
+	test(
+		'LPD-78504 Can create action Add an Object Entry using oldValue with On After Delete trigger',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, site: _site}) => {
+			const suffix = getRandomString().substring(0, 8);
+
+			const objectDefinitionA =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `ObjA${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinitionA.id,
+				type: 'objectDefinition',
+			});
+
+			const objectDefinitionB =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `ObjB${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinitionB.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinitionA.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							"oldValue('customObjectField') == 'Entry Test'",
+						label: {en_US: 'Custom Action'},
+						name: 'customAction',
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterDelete',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinitionB.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Custom Field'},
+									name: 'customObjectField',
+									value: 'Works!',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationNameA =
+				'c/' + objectDefinitionA.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customObjectField: 'Entry Test'},
+				applicationNameA
+			);
+
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationNameA,
+				String(entry.id)
+			);
+
+			await page.waitForTimeout(2000);
+
+			const applicationNameB =
+				'c/' + objectDefinitionB.name!.toLowerCase() + 's';
+
+			const entriesB =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationNameB
+				);
+
+			expect(entriesB.items.length).toBeGreaterThanOrEqual(1);
+
+			const addedEntry = entriesB.items.find(
+				(item: ObjectEntry) => item.customObjectField === 'Works!'
+			);
+
+			expect(addedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Add an Object Entry using oldValue with On After Update trigger and Picklist field',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, site: _site}) => {
+			const suffix = getRandomString().substring(0, 8);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'open',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'Open'},
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'inprogress',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'In Progress'},
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `Obj${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customTextField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Text Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customTextField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Picklist',
+							externalReferenceCode: 'customPicklistField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Picklist Field'},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'customPicklistField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							"oldValue('customPicklistField') == 'open'",
+						label: {en_US: 'Custom Action'},
+						name: 'customAction',
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Custom Text Field'},
+									name: 'customTextField',
+									value: 'Object entry added',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customTextField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customPicklistField: {key: 'open', name: 'Open'}},
+				applicationName,
+				entry.id
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customPicklistField: {key: 'inprogress', name: 'In Progress'}},
+				applicationName,
+				entry.id
+			);
+
+			await page.waitForTimeout(2000);
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const addedEntry = entries.items.find(
+				(item: ObjectEntry) =>
+					item.customTextField === 'Object entry added'
+			);
+
+			expect(addedEntry).toBeTruthy();
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Notification using oldValue with On After Add trigger',
+		{tag: ['@LPD-78504', '@LPS-175197']},
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+			const notificationTemplate =
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Email Template ${getRandomInt()}`,
+					senderEmail
+				);
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression: 'isEmpty(oldValue("customField"))',
+						label: {
+							en_US: 'Notification action when entry is added',
+						},
+						name: 'notifyOnAdd',
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'email',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{customField: 'Entry Test'},
+				applicationName
+			);
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					senderEmail
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Notification using oldValue with On After Delete trigger',
+		{tag: ['@LPD-78504', '@LPS-175192']},
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+			const notificationTemplate =
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Email Template ${getRandomInt()}`,
+					senderEmail
+				);
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							'oldValue("customField") == "Entry Test"',
+						label: {
+							en_US: 'Notification action when entry is deleted',
+						},
+						name: 'notifyOnDelete',
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterDelete',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'email',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(entry.id)
+			);
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					senderEmail
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Notification using oldValue with On After Update trigger',
+		{tag: ['@LPD-78504', '@LPS-175191']},
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+
+			const notificationTemplate =
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Email Template ${getRandomInt()}`,
+					senderEmail
+				);
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							'oldValue("customField") == "Entry Test"',
+						label: {
+							en_US: 'Notification action when entry is updated',
+						},
+						name: 'notifyOnUpdate',
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'email',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customField: 'Entry Test Edited'},
+				applicationName,
+				Number(entry.id)
+			);
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					senderEmail
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Notification using oldValue with On After Update trigger on Account Object',
+		{tag: ['@LPD-78504', '@LPS-178410']},
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+			const accountName = `Accounts Name Test ${getRandomInt()}`;
+
+			const notificationTemplate =
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Email Template ${getRandomInt()}`,
+					senderEmail
+				);
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_ACCOUNT',
+					{
+						active: true,
+						conditionExpression: `oldValue("name") == "${accountName}"`,
+						label: {
+							en_US: 'Notification action when account is updated',
+						},
+						name: `notifyOnAccountUpdate${getRandomInt()}`,
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'email',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: accountName,
+				type: 'person',
+			});
+
+			await apiHelpers.patch(
+				`${apiHelpers.baseUrl}headless-admin-user/v1.0/accounts/${account.id}`,
+				{name: `${accountName} Edited`}
+			);
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					senderEmail
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Notification using oldValue with On After Update trigger on User Object',
+		{tag: ['@LPD-78504', '@LPS-178415']},
+		async ({apiHelpers, site: _site}) => {
+			const senderEmail = `sender${getRandomInt()}@liferay.com`;
+			const givenName = `userfn${getRandomInt()}`;
+
+			const notificationTemplate =
+				await apiHelpers.notification.postRandomNotificationTemplate(
+					`Email Template ${getRandomInt()}`,
+					senderEmail
+				);
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_USER',
+					{
+						active: true,
+						conditionExpression: `oldValue("givenName") == "${givenName}"`,
+						label: {
+							en_US: 'Notification action when first name is edited',
+						},
+						name: `notifyOnUserUpdate${getRandomInt()}`,
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'email',
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const userAccount =
+				await apiHelpers.headlessAdminUser.postUserAccount({
+					givenName,
+				});
+
+			await apiHelpers.headlessAdminUser.patchUserAccount(userAccount, {
+				givenName: `edit${givenName}`,
+			});
+
+			const notificationQueueEntries =
+				await apiHelpers.notification.getNotificationQueueEntriesPage(
+					senderEmail
+				);
+
+			for (const item of notificationQueueEntries.items) {
+				apiHelpers.data.push({
+					id: item.id,
+					type: 'notificationQueueEntry',
+				});
+			}
+
+			expect(notificationQueueEntries.items.length).toBeGreaterThan(0);
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action Update an Object Entry using oldValue with On After Update trigger',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, site: _site}) => {
+			const suffix = getRandomString().substring(0, 8);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `Obj${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							'oldValue("customField") == "Entry Test"',
+						label: {en_US: 'Custom Action'},
+						name: 'customAction',
+						objectActionExecutorKey: 'update-object-entry',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Custom Field'},
+									name: 'customField',
+									value: 'Object entry updated',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customField: 'Entry Test Edited'},
+				applicationName,
+				entry.id
+			);
+
+			await page.waitForTimeout(2000);
+
+			const updatedEntry =
+				await apiHelpers.objectEntry.getObjectEntryById(
+					applicationName,
+					String(entry.id)
+				);
+
+			expect(updatedEntry.customField).toBe('Object entry updated');
+		}
+	);
+
+	test(
+		'LPD-78504 Can create action using oldValue with On After Add trigger and Picklist field',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, site: _site}) => {
+			const suffix = getRandomString().substring(0, 8);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			apiHelpers.data.push({
+				id: listTypeDefinition.id,
+				type: 'listTypeDefinition',
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'open',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'Open'},
+			});
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry({
+				key: 'closed',
+				listTypeDefinitionExternalReferenceCode:
+					listTypeDefinition.externalReferenceCode,
+				name_i18n: {en_US: 'Closed'},
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `Obj${suffix}`,
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customTextField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Text Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customTextField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Picklist',
+							externalReferenceCode: 'customPicklistField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Picklist Field'},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'customPicklistField',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression:
+							'isEmpty(oldValue("customPicklistField"))',
+						label: {en_US: 'Custom Action'},
+						name: 'customAction',
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: {en_US: 'Custom Text Field'},
+									name: 'customTextField',
+									value: 'Object entry added',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{customTextField: 'Entry Test'},
+				applicationName
+			);
+
+			await page.waitForTimeout(2000);
+
+			const entries =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					applicationName
+				);
+
+			const addedEntry = entries.items.find(
+				(item: ObjectEntry) =>
+					item.customTextField === 'Object entry added'
+			);
+
+			expect(addedEntry).toBeTruthy();
+		}
+	);
+});

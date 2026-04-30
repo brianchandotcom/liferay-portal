@@ -17,8 +17,7 @@ import ObjectFieldFormBase, {
 import {AttachmentProperties} from './AttachmentProperties';
 import {AggregationFilters} from './BasicInfoTab';
 import {MaxLengthProperties} from './MaxLengthProperties';
-import {CountryInfo} from './PhoneNumberProperties';
-import {PhoneNumberProperties} from './PhoneNumberProperties';
+import {CountryInfo, PhoneNumberProperties} from './PhoneNumberProperties';
 
 import '../../EditObjectFieldContent.scss';
 

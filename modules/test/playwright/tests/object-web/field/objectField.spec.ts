@@ -2479,8 +2479,11 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 				await objectFieldsPage.prefixTypeDropdown.click();
 
-				const prefixTypeOption = objectFieldsPage.iframeLocator
-					.getByRole('option', {exact: true, name: 'Fixed'});
+				const prefixTypeOption =
+					objectFieldsPage.iframeLocator.getByRole('option', {
+						exact: true,
+						name: 'Fixed',
+					});
 
 				selectedPrefixType = await prefixTypeOption.innerText();
 
@@ -2494,7 +2497,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 				await prefixOption.click();
 
-				selectedPrefix = await objectFieldsPage.prefixDropdown.innerText();
+				selectedPrefix =
+					await objectFieldsPage.prefixDropdown.innerText();
 
 				await objectFieldsPage.saveObjectField();
 			});

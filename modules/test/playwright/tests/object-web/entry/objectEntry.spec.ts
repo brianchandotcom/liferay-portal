@@ -63,8 +63,8 @@ const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
-		'LPS-178052': { enabled: true },
 		'LPD-83570': {enabled: true}, // Phone Number field
+		'LPS-178052': {enabled: true},
 	}),
 	globalMenuPagesTest,
 	formsPagesTest,
@@ -5457,7 +5457,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 									{
 										name: 'prefixType',
 										value: 'definedByUser',
-									}
+									},
 								] as any,
 								readOnly: 'false',
 								readOnlyConditionExpression: '',
@@ -5498,23 +5498,27 @@ test.describe('Manage object entries through View Object Entries', () => {
 			await test.step('Select the "United States" prefix, fill the phone number field, and save the entry', async () => {
 				await fieldContainer.getByRole('combobox').click();
 
-				await page
-					.getByRole('option', {name: /United States/})
-					.click();
+				await page.getByRole('option', {name: /United States/}).click();
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
-				await fieldContainer.locator('input[type="tel"]').fill(localNumber);
+				await fieldContainer
+					.locator('input[type="tel"]')
+					.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-				await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+				await expect(
+					viewObjectEntriesPage.successMessage
+				).toBeVisible();
 			});
 
 			await test.step('Verify the phone number field values are saved', async () => {
 				await viewObjectEntriesPage.backButton.click();
 
-				await viewObjectEntriesPage.frontendDatasetItems.first().click();
+				await viewObjectEntriesPage.frontendDatasetItems
+					.first()
+					.click();
 
 				await expect(fieldContainer.getByRole('combobox')).toHaveText(
 					prefix
@@ -5611,17 +5615,23 @@ test.describe('Manage object entries through View Object Entries', () => {
 			await test.step('Fill the phone number field and save the entry', async () => {
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
-				await fieldContainer.locator('input[type="tel"]').fill(localNumber);
+				await fieldContainer
+					.locator('input[type="tel"]')
+					.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-				await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+				await expect(
+					viewObjectEntriesPage.successMessage
+				).toBeVisible();
 			});
 
 			await test.step('Verify the phone number field values are saved', async () => {
 				await viewObjectEntriesPage.backButton.click();
 
-				await viewObjectEntriesPage.frontendDatasetItems.first().click();
+				await viewObjectEntriesPage.frontendDatasetItems
+					.first()
+					.click();
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 

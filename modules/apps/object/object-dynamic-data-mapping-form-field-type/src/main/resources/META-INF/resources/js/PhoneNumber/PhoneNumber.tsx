@@ -65,19 +65,24 @@ const PhoneNumber = ({
 		countries[0]
 	);
 
-	const currentPrefix = prefixType === 'fixed' ? (prefix || '') : `+${selectedCountry.idd}`;
+	const currentPrefix =
+		prefixType === 'fixed' ? prefix || '' : `+${selectedCountry.idd}`;
 
 	const combinedValue = `${currentPrefix}${localNumber.replace(/\D/g, '')}`;
 
 	const disabled = readOnly || (otherProps.disabled as boolean);
 
-	const fixedCountry = prefixType === 'fixed' ? countries.find((country) => `+${country.idd}` === prefix) : null;
+	const fixedCountry =
+		prefixType === 'fixed'
+			? countries.find((country) => `+${country.idd}` === prefix)
+			: null;
 
 	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
 
 	const handleValueChange = (country: CountryInfo, number: string) => {
 		if (onChange) {
-			const resolvedPrefix = prefixType === 'fixed' ? (prefix || '') : `+${country.idd}`;
+			const resolvedPrefix =
+				prefixType === 'fixed' ? prefix || '' : `+${country.idd}`;
 
 			onChange({
 				target: {
@@ -96,13 +101,19 @@ const PhoneNumber = ({
 				setLocalNumber(phoneValue.substring(prefix.length));
 			}
 			else {
-				const {localNumber: parsedLocalNumber} = parsePhoneValue(phoneValue, countries);
+				const {localNumber: parsedLocalNumber} = parsePhoneValue(
+					phoneValue,
+					countries
+				);
 
 				setLocalNumber(parsedLocalNumber);
 			}
 		}
 		else {
-			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(phoneValue, countries);
+			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(
+				phoneValue,
+				countries
+			);
 
 			const country = countries.find(
 				(country) => country.a2 === countryA2
@@ -142,7 +153,10 @@ const PhoneNumber = ({
 
 								if (selectedCountry) {
 									setSelectedCountry(selectedCountry);
-									handleValueChange(selectedCountry, localNumber);
+									handleValueChange(
+										selectedCountry,
+										localNumber
+									);
 								}
 							}}
 							searchable
@@ -160,7 +174,9 @@ const PhoneNumber = ({
 										<div className="autofit-row">
 											<div className="autofit-col">
 												{flagSymbol && (
-													<ClayIcon symbol={flagSymbol} />
+													<ClayIcon
+														symbol={flagSymbol}
+													/>
 												)}
 											</div>
 

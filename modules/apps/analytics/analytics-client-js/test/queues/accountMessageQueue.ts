@@ -35,7 +35,7 @@ describe('AccountMessageQueue', () => {
 
 	it('posts to the demandbase-account endpoint', async () => {
 		accountMessageQueue.addItem({
-			companyProfile: {company_name: 'Acme'},
+			company_name: 'Acme',
 			emailAddressHashed: 'hashed-email',
 			id: 'hash-1',
 			userId: 'user-1',

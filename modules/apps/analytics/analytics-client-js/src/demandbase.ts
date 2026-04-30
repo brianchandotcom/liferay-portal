@@ -127,9 +127,9 @@ class Demandbase {
 			const {emailAddressHashed} = this.analyticsInstance.config.identity;
 
 			const messageHash = hash({
-				companyProfile: profile,
 				emailAddressHashed,
 				userId,
+				webSite: profile.web_site,
 			});
 			const storedHash = getItem<string>(
 				AnalyticsType.Keys.DemandbaseAccount
@@ -143,7 +143,7 @@ class Demandbase {
 
 			this.analyticsInstance[AnalyticsType.Queues.AccountMessage].addItem(
 				{
-					companyProfile: profile,
+					...profile,
 					emailAddressHashed,
 					id: messageHash,
 					userId,

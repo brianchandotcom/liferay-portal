@@ -6,24 +6,41 @@
 package com.liferay.headless.admin.fragment.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.exception.DuplicateFragmentCollectionKeyException;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.headless.admin.fragment.client.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.client.pagination.Page;
 import com.liferay.headless.admin.fragment.client.problem.Problem;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.io.InputStream;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipInputStream;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -121,6 +138,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			() -> fragmentSetResource.postSiteFragmentSet(
 				testGroup.getExternalReferenceCode(), duplicateKeyFragmentSet),
 			duplicateKeyFragmentSet.getKey());
+
+		_testPostSiteFragmentSetBatch();
 	}
 
 	@Override
@@ -228,6 +247,32 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			testGroup.getExternalReferenceCode(), fragmentSet);
 	}
 
+	private void _assertFragmentCollection(
+		FragmentSet fragmentSet, Group group) {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					fragmentSet.getExternalReferenceCode(), group.getGroupId());
+
+		Assert.assertNotNull(fragmentCollection);
+		Assert.assertEquals(
+			fragmentSet.getName(), fragmentCollection.getName());
+		Assert.assertEquals(
+			fragmentSet.getDescription(), fragmentCollection.getDescription());
+	}
+
+	private void _assertFragmentCollectionNull(
+		FragmentSet fragmentSet, Group group) {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					fragmentSet.getExternalReferenceCode(), group.getGroupId());
+
+		Assert.assertNull(fragmentCollection);
+	}
+
 	private void _assertGetSiteFragmentSetsPageWithFilter(
 			FragmentSet expectedFragmentSet, String filterString,
 			FragmentSet notExpectedFragmentSet)
@@ -265,6 +310,111 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				_language.format(
 					LocaleUtil.getDefault(), titleKey, titleArguments),
 				problem.getTitle());
+		}
+	}
+
+	private String _exportFragmentSetsToJSON(String siteExternalReferenceCode)
+		throws Exception {
+
+		JSONObject exportTaskJSONObject = _waitForExportFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-admin-fragment/v1.0/sites/" +
+					siteExternalReferenceCode +
+						"/fragment-sets/export-batch?contentType=JSON",
+				Http.Method.POST));
+
+		try (InputStream inputStream = HTTPTestUtil.invokeToInputStream(
+				null,
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/export-task",
+					"/by-external-reference-code/",
+					exportTaskJSONObject.getString("externalReferenceCode"),
+					"/content"),
+				HashMapBuilder.put(
+					HttpHeaders.ACCEPT, ContentTypes.APPLICATION_OCTET_STREAM
+				).build(),
+				Http.Method.GET)) {
+
+			ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+
+			zipInputStream.getNextEntry();
+
+			return StringUtil.read(zipInputStream);
+		}
+	}
+
+	private void _testPostSiteFragmentSetBatch() throws Exception {
+		FragmentSet fragmentSet1 = testPostSiteFragmentSet_addFragmentSet(
+			randomFragmentSet());
+		FragmentSet fragmentSet2 = testPostSiteFragmentSet_addFragmentSet(
+			randomFragmentSet());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				_exportFragmentSetsToJSON(testGroup.getExternalReferenceCode()),
+				"headless-admin-fragment/v1.0/sites/" +
+					irrelevantGroup.getExternalReferenceCode() +
+						"/fragment-sets/batch?createStrategy=INSERT",
+				Http.Method.POST));
+
+		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
+		_assertFragmentCollection(fragmentSet2, irrelevantGroup);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			waitForFinish(
+				"FAILED",
+				HTTPTestUtil.invokeToJSONObject(
+					_exportFragmentSetsToJSON(
+						testGroup.getExternalReferenceCode()),
+					"headless-admin-fragment/v1.0/sites/" +
+						irrelevantGroup.getExternalReferenceCode() +
+							"/fragment-sets/batch?createStrategy=INSERT",
+					Http.Method.POST));
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertFalse(logEntries.toString(), logEntries.isEmpty());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertTrue(
+				String.valueOf(throwable),
+				throwable instanceof DuplicateFragmentCollectionKeyException);
+		}
+	}
+
+	private JSONObject _waitForExportFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-batch-engine/v1.0/export-task" +
+					"/by-external-reference-code/" + externalReferenceCode,
+				Http.Method.GET);
+
+			String executeStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals(expectedExecuteStatus, executeStatus);
+
+				return jsonObject;
+			}
 		}
 	}
 

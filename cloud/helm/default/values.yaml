@@ -251,15 +251,7 @@ image:
     tag: latest
 initContainers: []
 keda:
-    defaultTriggers:
-        -   metadata:
-                metricName: hikari_active_connections
-                query: max({__name__=~"com_zaxxer_hikari_pool_hikaripool_.*_activeconnections"})
-                threshold: "50"
-        -   metadata:
-                metricName: jvm_threads_current
-                query: jvm_threads_current
-                threshold: "500"
+    customTriggers: []
     enabled: false
     maxReplicaCount: 100
     minReplicaCount: 1
@@ -268,7 +260,15 @@ keda:
     triggerAuthentication:
         annotations: {}
         spec: {}
-    triggers: []
+    triggers:
+        -   metadata:
+                metricName: hikari_active_connections
+                query: max({__name__=~"com_zaxxer_hikari_pool_hikaripool_.*_activeconnections"})
+                threshold: "50"
+        -   metadata:
+                metricName: jvm_threads_current
+                query: jvm_threads_current
+                threshold: "500"
 livenessProbe:
     failureThreshold: 3
     httpGet:

@@ -1,0 +1,197 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.order.content.web.internal.fragment.renderer.test;
+
+import com.liferay.account.model.AccountEntry;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CommerceFragmentRendererKeys;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderAttachment;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.service.CommerceOrderAttachmentLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.test.util.CommerceOrderAttachmentTestUtil;
+import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.props.test.util.PropsTemporarySwapper;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.ByteArrayInputStream;
+
+import java.util.Collections;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @author Stefano Motta
+ */
+@RunWith(Arquillian.class)
+public class InfoBoxFragmentRendererTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		CommerceOrderAttachmentTestUtil.initialize(getClass());
+
+		_group = GroupTestUtil.addGroup();
+
+		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+
+		_commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		_user = UserTestUtil.addUser();
+
+		_accountEntry = CommerceAccountTestUtil.addPersonAccountEntry(
+			_user.getUserId(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
+
+		_commerceOrder = _commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), _commerceChannel.getGroupId(),
+			_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+	}
+
+	@Test
+	public void testGetPurchaseOrderDocumentAdditionalProps() throws Exception {
+		Assert.assertEquals(
+			Collections.emptyMap(),
+			_getPurchaseOrderDocumentAdditionalProps(
+				PermissionThreadLocal.getPermissionChecker()));
+
+		_commerceOrderLocalService.addAttachmentFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString(),
+			new ByteArrayInputStream("Liferay".getBytes()));
+
+		Map<String, Object> additionalProps =
+			_getPurchaseOrderDocumentAdditionalProps(
+				PermissionThreadLocal.getPermissionChecker());
+
+		Assert.assertNotNull(additionalProps.get("downloadURL"));
+		Assert.assertFalse(additionalProps.containsKey("fdsId"));
+		Assert.assertFalse(additionalProps.containsKey("isOwner"));
+		Assert.assertNotNull(additionalProps.get("value"));
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					FeatureFlagConstants.getKey("LPD-6252"),
+					Boolean.TRUE.toString())) {
+
+			additionalProps = _getPurchaseOrderDocumentAdditionalProps(
+				PermissionThreadLocal.getPermissionChecker());
+
+			Assert.assertFalse(additionalProps.containsKey("downloadURL"));
+			Assert.assertEquals(
+				CommerceFragmentRendererKeys.ORDER_ATTACHMENTS_DATA_SET +
+					"-pendingOrderAttachments",
+				additionalProps.get("fdsId"));
+			Assert.assertFalse(additionalProps.containsKey("isOwner"));
+			Assert.assertFalse(additionalProps.containsKey("value"));
+
+			CommerceOrderAttachment commerceOrderAttachment =
+				_commerceOrderAttachmentLocalService.addCommerceOrderAttachment(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_commerceOrder.getCommerceOrderId(),
+					RandomTestUtil.nextDouble(), false,
+					RandomTestUtil.randomString(), "purchaseOrderDocument",
+					RandomTestUtil.randomString(),
+					new ByteArrayInputStream("Liferay".getBytes()));
+
+			additionalProps = _getPurchaseOrderDocumentAdditionalProps(
+				PermissionThreadLocal.getPermissionChecker());
+
+			Assert.assertEquals(
+				CommerceFragmentRendererKeys.ORDER_ATTACHMENTS_DATA_SET +
+					"-pendingOrderAttachments",
+				additionalProps.get("fdsId"));
+			Assert.assertNotNull(additionalProps.get("downloadURL"));
+			Assert.assertTrue(
+				GetterUtil.getBoolean(additionalProps.get("isOwner")));
+			Assert.assertEquals(
+				commerceOrderAttachment.getCommerceOrderAttachmentId(),
+				additionalProps.get("value"));
+
+			User user = UserTestUtil.addOmniadminUser();
+
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					user, PermissionCheckerFactoryUtil.create(user))) {
+
+				additionalProps = _getPurchaseOrderDocumentAdditionalProps(
+					PermissionThreadLocal.getPermissionChecker());
+
+				Assert.assertFalse(
+					GetterUtil.getBoolean(additionalProps.get("isOwner")));
+			}
+		}
+	}
+
+	private Map<String, Object> _getPurchaseOrderDocumentAdditionalProps(
+			PermissionChecker permissionChecker)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_infoBoxFragmentRenderer,
+			"_getPurchaseOrderDocumentAdditionalProps",
+			new Class<?>[] {CommerceOrder.class, PermissionChecker.class},
+			_commerceOrder, permissionChecker);
+	}
+
+	private AccountEntry _accountEntry;
+	private CommerceChannel _commerceChannel;
+	private CommerceCurrency _commerceCurrency;
+	private CommerceOrder _commerceOrder;
+
+	@Inject
+	private CommerceOrderAttachmentLocalService
+		_commerceOrderAttachmentLocalService;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	private Group _group;
+
+	@Inject(
+		filter = "component.name=com.liferay.commerce.order.content.web.internal.fragment.renderer.InfoBoxFragmentRenderer"
+	)
+	private FragmentRenderer _infoBoxFragmentRenderer;
+
+	private User _user;
+
+}

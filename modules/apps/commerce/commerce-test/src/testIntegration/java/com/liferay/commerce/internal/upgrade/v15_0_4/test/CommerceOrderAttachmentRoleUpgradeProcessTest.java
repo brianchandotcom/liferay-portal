@@ -76,10 +76,22 @@ public class CommerceOrderAttachmentRoleUpgradeProcessTest {
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, ActionKeys.VIEW);
 		_removeResourcePermission(
+			companyId, CommerceOrderConstants.RESOURCE_NAME,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
+		_removeResourcePermission(
 			companyId, CommerceOrderAttachment.class.getName(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, ActionKeys.VIEW);
+		_removeResourcePermission(
+			companyId, CommerceOrderConstants.RESOURCE_NAME,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
 		_removeResourcePermission(
 			companyId, CommerceOrderAttachment.class.getName(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -132,10 +144,22 @@ public class CommerceOrderAttachmentRoleUpgradeProcessTest {
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, ActionKeys.VIEW);
 		_assertResourcePermission(
+			companyId, CommerceOrderConstants.RESOURCE_NAME,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
+		_assertResourcePermission(
 			companyId, CommerceOrderAttachment.class.getName(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, ActionKeys.VIEW);
+		_assertResourcePermission(
+			companyId, CommerceOrderConstants.RESOURCE_NAME,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER,
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT);
 		_assertResourcePermission(
 			companyId, CommerceOrderAttachment.class.getName(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,

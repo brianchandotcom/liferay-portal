@@ -10,7 +10,7 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import {CacheStatus} from '../contexts/CacheContext';
+export type Status = 'idle' | 'saving' | 'saved' | 'stale';
 
 type Item = {icon?: string; id: number; logoURL?: string; name: string};
 
@@ -24,7 +24,7 @@ type Props<T> = {
 	placeholder?: string;
 	selectedKey: React.Key;
 	small?: boolean;
-	status: CacheStatus;
+	status: Status;
 	width?: number;
 };
 
@@ -39,7 +39,7 @@ const Trigger = React.forwardRef(
 		}: {
 			open: boolean;
 			small: boolean;
-			status: CacheStatus;
+			status: Status;
 			value: string;
 		},
 		ref: React.Ref<HTMLButtonElement>

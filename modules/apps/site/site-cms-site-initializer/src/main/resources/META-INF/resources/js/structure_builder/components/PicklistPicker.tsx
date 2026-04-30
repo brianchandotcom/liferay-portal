@@ -13,12 +13,12 @@ import {FieldFeedback, useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import AsyncPicker from '../../common/components/AsyncPicker';
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectErrors from '../selectors/selectErrors';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import {Field, SelectFromListField} from '../utils/field';
-import AsyncPicker from './AsyncPicker';
 
 export default function PicklistPicker({
 	disabled,

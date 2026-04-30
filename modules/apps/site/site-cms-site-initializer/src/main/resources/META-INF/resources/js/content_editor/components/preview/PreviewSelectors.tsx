@@ -10,8 +10,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import AsyncPicker from '../../../structure_builder/components/AsyncPicker';
-import {CacheStatus} from '../../../structure_builder/contexts/CacheContext';
+import AsyncPicker, {Status} from '../../../common/components/AsyncPicker';
 import {Site} from './usePreviewState';
 
 type Channel = {icon?: string; id: number; logoURL?: string; name: string};
@@ -26,7 +25,7 @@ type Props = {
 	selectedDisplayPageKey: React.Key;
 	setSelectedDisplayPageKey: (key: React.Key) => void;
 	showPreviewInNewTabLink?: boolean;
-	sitesStatus: CacheStatus;
+	sitesStatus: Status;
 	vertical?: boolean;
 };
 

@@ -65,7 +65,20 @@ public class FeatureFlagManagerUtil {
 			_featureFlagManagerSnapshot.get();
 
 		if (featureFlagManager != null) {
-			return featureFlagManager.isEnabled(companyId, key);
+			try {
+				return featureFlagManager.isEnabled(companyId, key);
+			}
+			catch (IllegalStateException illegalStateException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Feature flag key ", key,
+							" is not registered for company ", companyId),
+						illegalStateException);
+				}
+
+				return false;
+			}
 		}
 
 		if (_log.isInfoEnabled()) {

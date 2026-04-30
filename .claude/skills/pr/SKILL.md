@@ -130,6 +130,20 @@ When the review transition fails (for example, because the ticket is already in 
 
 Set the **Git Pull Request** field (`customfield_10201`) on the target ticket to the new pull request URL.
 
+### Existing Pull Request
+
+When the **Git Pull Request** field already holds one or more pull request URLs, ask the user whether the new pull request **supersedes** the existing one or is **added** alongside it.
+
+When the user chooses **supersede**:
+
+1. Overwrite **Git Pull Request** with the new pull request URL, dropping the previous value.
+
+1. Add a comment on the previous pull request linking to the new one (for example, `Superseded by <new-pr-url>.`).
+
+When the user chooses **add**:
+
+1. Append the new pull request URL to the existing value, separating each URL with a comma and a space.
+
 ### Summary
 
 Report back to the user with:

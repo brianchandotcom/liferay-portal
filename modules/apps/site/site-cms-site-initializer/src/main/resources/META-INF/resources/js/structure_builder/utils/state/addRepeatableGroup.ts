@@ -72,6 +72,7 @@ export default function addRepeatableGroup({
 			label: {
 				[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 					DEFAULT_GROUP_LABEL,
+				[Liferay.ThemeDisplay.getLanguageId()]: DEFAULT_GROUP_LABEL,
 			},
 			name: getRandomName({capitalize: true}),
 			parent: groupParent,

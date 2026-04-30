@@ -643,8 +643,7 @@ function reducer(state: State, action: Action): State {
 			const {name, uuid} = action;
 			const {structure} = state;
 
-			const defaultLanguageId =
-				Liferay.ThemeDisplay.getDefaultLanguageId();
+			const languageId = Liferay.ThemeDisplay.getLanguageId();
 
 			if (uuid === structure.uuid) {
 				return {
@@ -652,7 +651,7 @@ function reducer(state: State, action: Action): State {
 					renamingItemUuid: null,
 					structure: {
 						...structure,
-						label: {...structure.label, [defaultLanguageId]: name},
+						label: {...structure.label, [languageId]: name},
 					},
 				};
 			}
@@ -666,7 +665,7 @@ function reducer(state: State, action: Action): State {
 			const children = updateChild({
 				child: {
 					...child,
-					label: {...child.label, [defaultLanguageId]: name},
+					label: {...child.label, [languageId]: name},
 				},
 				root: structure,
 			});

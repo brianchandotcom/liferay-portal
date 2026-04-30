@@ -70,6 +70,8 @@ export default function AddChildDropdown({
 				label: {
 					[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 						Liferay.Language.get('select-related-content'),
+					[Liferay.ThemeDisplay.getLanguageId()]:
+						Liferay.Language.get('select-related-content'),
 				},
 				multiselection: false,
 				name: getRandomName(),

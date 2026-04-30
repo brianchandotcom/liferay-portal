@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -851,60 +850,9 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			(Serializable)CPSpecificationOptionListTypeDefinitionRelId);
 	}
 
-	/**
-	 * Returns the cp specification option list type definition rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp specification option list type definition rel
-	 * @return the cp specification option list type definition rel, or <code>null</code> if a cp specification option list type definition rel with the primary key could not be found
-	 */
 	@Override
-	public CPSpecificationOptionListTypeDefinitionRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CPSpecificationOptionListTypeDefinitionRel.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel =
-				(CPSpecificationOptionListTypeDefinitionRel)
-					entityCache.getResult(
-						CPSpecificationOptionListTypeDefinitionRelImpl.class,
-						primaryKey);
-
-		if (cpSpecificationOptionListTypeDefinitionRel != null) {
-			return cpSpecificationOptionListTypeDefinitionRel;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpSpecificationOptionListTypeDefinitionRel =
-				(CPSpecificationOptionListTypeDefinitionRel)session.get(
-					CPSpecificationOptionListTypeDefinitionRelImpl.class,
-					primaryKey);
-
-			if (cpSpecificationOptionListTypeDefinitionRel != null) {
-				cacheResult(cpSpecificationOptionListTypeDefinitionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpSpecificationOptionListTypeDefinitionRel;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -919,148 +867,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 
 		return fetchByPrimaryKey(
 			(Serializable)CPSpecificationOptionListTypeDefinitionRelId);
-	}
-
-	@Override
-	public Map<Serializable, CPSpecificationOptionListTypeDefinitionRel>
-		fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CPSpecificationOptionListTypeDefinitionRel.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPSpecificationOptionListTypeDefinitionRel> map =
-			new HashMap
-				<Serializable, CPSpecificationOptionListTypeDefinitionRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel = fetchByPrimaryKey(
-					primaryKey);
-
-			if (cpSpecificationOptionListTypeDefinitionRel != null) {
-				map.put(primaryKey, cpSpecificationOptionListTypeDefinitionRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPSpecificationOptionListTypeDefinitionRel.class,
-						primaryKey)) {
-
-				CPSpecificationOptionListTypeDefinitionRel
-					cpSpecificationOptionListTypeDefinitionRel =
-						(CPSpecificationOptionListTypeDefinitionRel)
-							entityCache.getResult(
-								CPSpecificationOptionListTypeDefinitionRelImpl.
-									class,
-								primaryKey);
-
-				if (cpSpecificationOptionListTypeDefinitionRel == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(
-						primaryKey, cpSpecificationOptionListTypeDefinitionRel);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPSpecificationOptionListTypeDefinitionRel
-					cpSpecificationOptionListTypeDefinitionRel :
-						(List<CPSpecificationOptionListTypeDefinitionRel>)
-							query.list()) {
-
-				map.put(
-					cpSpecificationOptionListTypeDefinitionRel.
-						getPrimaryKeyObj(),
-					cpSpecificationOptionListTypeDefinitionRel);
-
-				cacheResult(cpSpecificationOptionListTypeDefinitionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1544,4 +1350,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1280466934
+// LIFERAY-SERVICE-BUILDER-HASH:1050451447

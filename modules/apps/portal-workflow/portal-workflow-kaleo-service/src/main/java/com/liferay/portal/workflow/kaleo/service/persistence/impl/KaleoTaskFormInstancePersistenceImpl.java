@@ -49,9 +49,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1268,53 +1266,9 @@ public class KaleoTaskFormInstancePersistenceImpl
 		return findByPrimaryKey((Serializable)kaleoTaskFormInstanceId);
 	}
 
-	/**
-	 * Returns the kaleo task form instance with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kaleo task form instance
-	 * @return the kaleo task form instance, or <code>null</code> if a kaleo task form instance with the primary key could not be found
-	 */
 	@Override
-	public KaleoTaskFormInstance fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				KaleoTaskFormInstance.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		KaleoTaskFormInstance kaleoTaskFormInstance =
-			(KaleoTaskFormInstance)entityCache.getResult(
-				KaleoTaskFormInstanceImpl.class, primaryKey);
-
-		if (kaleoTaskFormInstance != null) {
-			return kaleoTaskFormInstance;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			kaleoTaskFormInstance = (KaleoTaskFormInstance)session.get(
-				KaleoTaskFormInstanceImpl.class, primaryKey);
-
-			if (kaleoTaskFormInstance != null) {
-				cacheResult(kaleoTaskFormInstance);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return kaleoTaskFormInstance;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1328,135 +1282,6 @@ public class KaleoTaskFormInstancePersistenceImpl
 		long kaleoTaskFormInstanceId) {
 
 		return fetchByPrimaryKey((Serializable)kaleoTaskFormInstanceId);
-	}
-
-	@Override
-	public Map<Serializable, KaleoTaskFormInstance> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(KaleoTaskFormInstance.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KaleoTaskFormInstance> map =
-			new HashMap<Serializable, KaleoTaskFormInstance>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KaleoTaskFormInstance kaleoTaskFormInstance = fetchByPrimaryKey(
-				primaryKey);
-
-			if (kaleoTaskFormInstance != null) {
-				map.put(primaryKey, kaleoTaskFormInstance);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						KaleoTaskFormInstance.class, primaryKey)) {
-
-				KaleoTaskFormInstance kaleoTaskFormInstance =
-					(KaleoTaskFormInstance)entityCache.getResult(
-						KaleoTaskFormInstanceImpl.class, primaryKey);
-
-				if (kaleoTaskFormInstance == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, kaleoTaskFormInstance);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (KaleoTaskFormInstance kaleoTaskFormInstance :
-					(List<KaleoTaskFormInstance>)query.list()) {
-
-				map.put(
-					kaleoTaskFormInstance.getPrimaryKeyObj(),
-					kaleoTaskFormInstance);
-
-				cacheResult(kaleoTaskFormInstance);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2017,4 +1842,4 @@ public class KaleoTaskFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1571521770
+// LIFERAY-SERVICE-BUILDER-HASH:-243574558

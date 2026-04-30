@@ -52,7 +52,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -774,53 +773,9 @@ public class DDLRecordSetVersionPersistenceImpl
 		return findByPrimaryKey((Serializable)recordSetVersionId);
 	}
 
-	/**
-	 * Returns the ddl record set version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the ddl record set version
-	 * @return the ddl record set version, or <code>null</code> if a ddl record set version with the primary key could not be found
-	 */
 	@Override
-	public DDLRecordSetVersion fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DDLRecordSetVersion.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DDLRecordSetVersion ddlRecordSetVersion =
-			(DDLRecordSetVersion)entityCache.getResult(
-				DDLRecordSetVersionImpl.class, primaryKey);
-
-		if (ddlRecordSetVersion != null) {
-			return ddlRecordSetVersion;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ddlRecordSetVersion = (DDLRecordSetVersion)session.get(
-				DDLRecordSetVersionImpl.class, primaryKey);
-
-			if (ddlRecordSetVersion != null) {
-				cacheResult(ddlRecordSetVersion);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return ddlRecordSetVersion;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -832,135 +787,6 @@ public class DDLRecordSetVersionPersistenceImpl
 	@Override
 	public DDLRecordSetVersion fetchByPrimaryKey(long recordSetVersionId) {
 		return fetchByPrimaryKey((Serializable)recordSetVersionId);
-	}
-
-	@Override
-	public Map<Serializable, DDLRecordSetVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DDLRecordSetVersion.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DDLRecordSetVersion> map =
-			new HashMap<Serializable, DDLRecordSetVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DDLRecordSetVersion ddlRecordSetVersion = fetchByPrimaryKey(
-				primaryKey);
-
-			if (ddlRecordSetVersion != null) {
-				map.put(primaryKey, ddlRecordSetVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DDLRecordSetVersion.class, primaryKey)) {
-
-				DDLRecordSetVersion ddlRecordSetVersion =
-					(DDLRecordSetVersion)entityCache.getResult(
-						DDLRecordSetVersionImpl.class, primaryKey);
-
-				if (ddlRecordSetVersion == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, ddlRecordSetVersion);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DDLRecordSetVersion ddlRecordSetVersion :
-					(List<DDLRecordSetVersion>)query.list()) {
-
-				map.put(
-					ddlRecordSetVersion.getPrimaryKeyObj(),
-					ddlRecordSetVersion);
-
-				cacheResult(ddlRecordSetVersion);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1419,4 +1245,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:568993749
+// LIFERAY-SERVICE-BUILDER-HASH:-314674212

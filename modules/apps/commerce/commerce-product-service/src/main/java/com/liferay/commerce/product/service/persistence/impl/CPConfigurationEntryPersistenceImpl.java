@@ -61,7 +61,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1614,53 +1613,9 @@ public class CPConfigurationEntryPersistenceImpl
 		return findByPrimaryKey((Serializable)CPConfigurationEntryId);
 	}
 
-	/**
-	 * Returns the cp configuration entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp configuration entry
-	 * @return the cp configuration entry, or <code>null</code> if a cp configuration entry with the primary key could not be found
-	 */
 	@Override
-	public CPConfigurationEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CPConfigurationEntry.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPConfigurationEntry cpConfigurationEntry =
-			(CPConfigurationEntry)entityCache.getResult(
-				CPConfigurationEntryImpl.class, primaryKey);
-
-		if (cpConfigurationEntry != null) {
-			return cpConfigurationEntry;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpConfigurationEntry = (CPConfigurationEntry)session.get(
-				CPConfigurationEntryImpl.class, primaryKey);
-
-			if (cpConfigurationEntry != null) {
-				cacheResult(cpConfigurationEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpConfigurationEntry;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1672,135 +1627,6 @@ public class CPConfigurationEntryPersistenceImpl
 	@Override
 	public CPConfigurationEntry fetchByPrimaryKey(long CPConfigurationEntryId) {
 		return fetchByPrimaryKey((Serializable)CPConfigurationEntryId);
-	}
-
-	@Override
-	public Map<Serializable, CPConfigurationEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CPConfigurationEntry.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPConfigurationEntry> map =
-			new HashMap<Serializable, CPConfigurationEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPConfigurationEntry cpConfigurationEntry = fetchByPrimaryKey(
-				primaryKey);
-
-			if (cpConfigurationEntry != null) {
-				map.put(primaryKey, cpConfigurationEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPConfigurationEntry.class, primaryKey)) {
-
-				CPConfigurationEntry cpConfigurationEntry =
-					(CPConfigurationEntry)entityCache.getResult(
-						CPConfigurationEntryImpl.class, primaryKey);
-
-				if (cpConfigurationEntry == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, cpConfigurationEntry);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPConfigurationEntry cpConfigurationEntry :
-					(List<CPConfigurationEntry>)query.list()) {
-
-				map.put(
-					cpConfigurationEntry.getPrimaryKeyObj(),
-					cpConfigurationEntry);
-
-				cacheResult(cpConfigurationEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2425,4 +2251,4 @@ public class CPConfigurationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1587466030
+// LIFERAY-SERVICE-BUILDER-HASH:1152781501

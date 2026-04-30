@@ -46,9 +46,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -622,56 +620,9 @@ public class JournalArticleLocalizationPersistenceImpl
 		return findByPrimaryKey((Serializable)articleLocalizationId);
 	}
 
-	/**
-	 * Returns the journal article localization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal article localization
-	 * @return the journal article localization, or <code>null</code> if a journal article localization with the primary key could not be found
-	 */
 	@Override
-	public JournalArticleLocalization fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				JournalArticleLocalization.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		JournalArticleLocalization journalArticleLocalization =
-			(JournalArticleLocalization)entityCache.getResult(
-				JournalArticleLocalizationImpl.class, primaryKey);
-
-		if (journalArticleLocalization != null) {
-			return journalArticleLocalization;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			journalArticleLocalization =
-				(JournalArticleLocalization)session.get(
-					JournalArticleLocalizationImpl.class, primaryKey);
-
-			if (journalArticleLocalization != null) {
-				cacheResult(journalArticleLocalization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return journalArticleLocalization;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -685,137 +636,6 @@ public class JournalArticleLocalizationPersistenceImpl
 		long articleLocalizationId) {
 
 		return fetchByPrimaryKey((Serializable)articleLocalizationId);
-	}
-
-	@Override
-	public Map<Serializable, JournalArticleLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				JournalArticleLocalization.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticleLocalization> map =
-			new HashMap<Serializable, JournalArticleLocalization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticleLocalization journalArticleLocalization =
-				fetchByPrimaryKey(primaryKey);
-
-			if (journalArticleLocalization != null) {
-				map.put(primaryKey, journalArticleLocalization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						JournalArticleLocalization.class, primaryKey)) {
-
-				JournalArticleLocalization journalArticleLocalization =
-					(JournalArticleLocalization)entityCache.getResult(
-						JournalArticleLocalizationImpl.class, primaryKey);
-
-				if (journalArticleLocalization == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, journalArticleLocalization);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (JournalArticleLocalization journalArticleLocalization :
-					(List<JournalArticleLocalization>)query.list()) {
-
-				map.put(
-					journalArticleLocalization.getPrimaryKeyObj(),
-					journalArticleLocalization);
-
-				cacheResult(journalArticleLocalization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1241,4 +1061,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1022627955
+// LIFERAY-SERVICE-BUILDER-HASH:-1526770591

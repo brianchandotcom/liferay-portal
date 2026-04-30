@@ -46,9 +46,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -878,53 +876,9 @@ public class DLFileVersionPreviewPersistenceImpl
 		return findByPrimaryKey((Serializable)dlFileVersionPreviewId);
 	}
 
-	/**
-	 * Returns the dl file version preview with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the dl file version preview
-	 * @return the dl file version preview, or <code>null</code> if a dl file version preview with the primary key could not be found
-	 */
 	@Override
-	public DLFileVersionPreview fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DLFileVersionPreview.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DLFileVersionPreview dlFileVersionPreview =
-			(DLFileVersionPreview)entityCache.getResult(
-				DLFileVersionPreviewImpl.class, primaryKey);
-
-		if (dlFileVersionPreview != null) {
-			return dlFileVersionPreview;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			dlFileVersionPreview = (DLFileVersionPreview)session.get(
-				DLFileVersionPreviewImpl.class, primaryKey);
-
-			if (dlFileVersionPreview != null) {
-				cacheResult(dlFileVersionPreview);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return dlFileVersionPreview;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -936,135 +890,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	@Override
 	public DLFileVersionPreview fetchByPrimaryKey(long dlFileVersionPreviewId) {
 		return fetchByPrimaryKey((Serializable)dlFileVersionPreviewId);
-	}
-
-	@Override
-	public Map<Serializable, DLFileVersionPreview> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DLFileVersionPreview.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DLFileVersionPreview> map =
-			new HashMap<Serializable, DLFileVersionPreview>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DLFileVersionPreview dlFileVersionPreview = fetchByPrimaryKey(
-				primaryKey);
-
-			if (dlFileVersionPreview != null) {
-				map.put(primaryKey, dlFileVersionPreview);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DLFileVersionPreview.class, primaryKey)) {
-
-				DLFileVersionPreview dlFileVersionPreview =
-					(DLFileVersionPreview)entityCache.getResult(
-						DLFileVersionPreviewImpl.class, primaryKey);
-
-				if (dlFileVersionPreview == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, dlFileVersionPreview);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DLFileVersionPreview dlFileVersionPreview :
-					(List<DLFileVersionPreview>)query.list()) {
-
-				map.put(
-					dlFileVersionPreview.getPrimaryKeyObj(),
-					dlFileVersionPreview);
-
-				cacheResult(dlFileVersionPreview);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1535,4 +1360,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1455348223
+// LIFERAY-SERVICE-BUILDER-HASH:620594891

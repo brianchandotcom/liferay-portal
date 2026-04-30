@@ -65,7 +65,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17194,52 +17193,9 @@ public class JournalArticlePersistenceImpl
 		return findByPrimaryKey((Serializable)id);
 	}
 
-	/**
-	 * Returns the journal article with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the journal article
-	 * @return the journal article, or <code>null</code> if a journal article with the primary key could not be found
-	 */
 	@Override
-	public JournalArticle fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				JournalArticle.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		JournalArticle journalArticle = (JournalArticle)entityCache.getResult(
-			JournalArticleImpl.class, primaryKey);
-
-		if (journalArticle != null) {
-			return journalArticle;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			journalArticle = (JournalArticle)session.get(
-				JournalArticleImpl.class, primaryKey);
-
-			if (journalArticle != null) {
-				cacheResult(journalArticle);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return journalArticle;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -17251,132 +17207,6 @@ public class JournalArticlePersistenceImpl
 	@Override
 	public JournalArticle fetchByPrimaryKey(long id) {
 		return fetchByPrimaryKey((Serializable)id);
-	}
-
-	@Override
-	public Map<Serializable, JournalArticle> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(JournalArticle.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, JournalArticle> map =
-			new HashMap<Serializable, JournalArticle>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			JournalArticle journalArticle = fetchByPrimaryKey(primaryKey);
-
-			if (journalArticle != null) {
-				map.put(primaryKey, journalArticle);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						JournalArticle.class, primaryKey)) {
-
-				JournalArticle journalArticle =
-					(JournalArticle)entityCache.getResult(
-						JournalArticleImpl.class, primaryKey);
-
-				if (journalArticle == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, journalArticle);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (JournalArticle journalArticle :
-					(List<JournalArticle>)query.list()) {
-
-				map.put(journalArticle.getPrimaryKeyObj(), journalArticle);
-
-				cacheResult(journalArticle);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -19062,4 +18892,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-845177885
+// LIFERAY-SERVICE-BUILDER-HASH:-1030184828

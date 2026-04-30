@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2140,49 +2139,9 @@ public class KBFolderPersistenceImpl
 		return findByPrimaryKey((Serializable)kbFolderId);
 	}
 
-	/**
-	 * Returns the kb folder with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the kb folder
-	 * @return the kb folder, or <code>null</code> if a kb folder with the primary key could not be found
-	 */
 	@Override
-	public KBFolder fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(KBFolder.class, primaryKey)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		KBFolder kbFolder = (KBFolder)entityCache.getResult(
-			KBFolderImpl.class, primaryKey);
-
-		if (kbFolder != null) {
-			return kbFolder;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			kbFolder = (KBFolder)session.get(KBFolderImpl.class, primaryKey);
-
-			if (kbFolder != null) {
-				cacheResult(kbFolder);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return kbFolder;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2194,128 +2153,6 @@ public class KBFolderPersistenceImpl
 	@Override
 	public KBFolder fetchByPrimaryKey(long kbFolderId) {
 		return fetchByPrimaryKey((Serializable)kbFolderId);
-	}
-
-	@Override
-	public Map<Serializable, KBFolder> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(KBFolder.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, KBFolder> map = new HashMap<Serializable, KBFolder>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			KBFolder kbFolder = fetchByPrimaryKey(primaryKey);
-
-			if (kbFolder != null) {
-				map.put(primaryKey, kbFolder);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						KBFolder.class, primaryKey)) {
-
-				KBFolder kbFolder = (KBFolder)entityCache.getResult(
-					KBFolderImpl.class, primaryKey);
-
-				if (kbFolder == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, kbFolder);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (KBFolder kbFolder : (List<KBFolder>)query.list()) {
-				map.put(kbFolder.getPrimaryKeyObj(), kbFolder);
-
-				cacheResult(kbFolder);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2950,4 +2787,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1620002782
+// LIFERAY-SERVICE-BUILDER-HASH:-1784252829

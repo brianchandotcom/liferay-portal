@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -3667,53 +3666,9 @@ public class FragmentCollectionPersistenceImpl
 		return findByPrimaryKey((Serializable)fragmentCollectionId);
 	}
 
-	/**
-	 * Returns the fragment collection with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the fragment collection
-	 * @return the fragment collection, or <code>null</code> if a fragment collection with the primary key could not be found
-	 */
 	@Override
-	public FragmentCollection fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				FragmentCollection.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		FragmentCollection fragmentCollection =
-			(FragmentCollection)entityCache.getResult(
-				FragmentCollectionImpl.class, primaryKey);
-
-		if (fragmentCollection != null) {
-			return fragmentCollection;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			fragmentCollection = (FragmentCollection)session.get(
-				FragmentCollectionImpl.class, primaryKey);
-
-			if (fragmentCollection != null) {
-				cacheResult(fragmentCollection);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return fragmentCollection;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -3725,134 +3680,6 @@ public class FragmentCollectionPersistenceImpl
 	@Override
 	public FragmentCollection fetchByPrimaryKey(long fragmentCollectionId) {
 		return fetchByPrimaryKey((Serializable)fragmentCollectionId);
-	}
-
-	@Override
-	public Map<Serializable, FragmentCollection> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(FragmentCollection.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, FragmentCollection> map =
-			new HashMap<Serializable, FragmentCollection>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			FragmentCollection fragmentCollection = fetchByPrimaryKey(
-				primaryKey);
-
-			if (fragmentCollection != null) {
-				map.put(primaryKey, fragmentCollection);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						FragmentCollection.class, primaryKey)) {
-
-				FragmentCollection fragmentCollection =
-					(FragmentCollection)entityCache.getResult(
-						FragmentCollectionImpl.class, primaryKey);
-
-				if (fragmentCollection == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, fragmentCollection);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (FragmentCollection fragmentCollection :
-					(List<FragmentCollection>)query.list()) {
-
-				map.put(
-					fragmentCollection.getPrimaryKeyObj(), fragmentCollection);
-
-				cacheResult(fragmentCollection);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4424,4 +4251,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1675797249
+// LIFERAY-SERVICE-BUILDER-HASH:-1709900311

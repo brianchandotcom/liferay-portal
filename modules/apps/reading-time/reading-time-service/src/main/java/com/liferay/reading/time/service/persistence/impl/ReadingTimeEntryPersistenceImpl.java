@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -905,53 +904,9 @@ public class ReadingTimeEntryPersistenceImpl
 		return findByPrimaryKey((Serializable)readingTimeEntryId);
 	}
 
-	/**
-	 * Returns the reading time entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the reading time entry
-	 * @return the reading time entry, or <code>null</code> if a reading time entry with the primary key could not be found
-	 */
 	@Override
-	public ReadingTimeEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				ReadingTimeEntry.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		ReadingTimeEntry readingTimeEntry =
-			(ReadingTimeEntry)entityCache.getResult(
-				ReadingTimeEntryImpl.class, primaryKey);
-
-		if (readingTimeEntry != null) {
-			return readingTimeEntry;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			readingTimeEntry = (ReadingTimeEntry)session.get(
-				ReadingTimeEntryImpl.class, primaryKey);
-
-			if (readingTimeEntry != null) {
-				cacheResult(readingTimeEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return readingTimeEntry;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -963,132 +918,6 @@ public class ReadingTimeEntryPersistenceImpl
 	@Override
 	public ReadingTimeEntry fetchByPrimaryKey(long readingTimeEntryId) {
 		return fetchByPrimaryKey((Serializable)readingTimeEntryId);
-	}
-
-	@Override
-	public Map<Serializable, ReadingTimeEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(ReadingTimeEntry.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ReadingTimeEntry> map =
-			new HashMap<Serializable, ReadingTimeEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ReadingTimeEntry readingTimeEntry = fetchByPrimaryKey(primaryKey);
-
-			if (readingTimeEntry != null) {
-				map.put(primaryKey, readingTimeEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						ReadingTimeEntry.class, primaryKey)) {
-
-				ReadingTimeEntry readingTimeEntry =
-					(ReadingTimeEntry)entityCache.getResult(
-						ReadingTimeEntryImpl.class, primaryKey);
-
-				if (readingTimeEntry == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, readingTimeEntry);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (ReadingTimeEntry readingTimeEntry :
-					(List<ReadingTimeEntry>)query.list()) {
-
-				map.put(readingTimeEntry.getPrimaryKeyObj(), readingTimeEntry);
-
-				cacheResult(readingTimeEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1561,4 +1390,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:127997027
+// LIFERAY-SERVICE-BUILDER-HASH:-1929097526

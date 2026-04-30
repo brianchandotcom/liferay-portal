@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutSetPrototypeUtil;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -55,7 +56,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1899,53 +1899,9 @@ public class LayoutSetPrototypePersistenceImpl
 		return findByPrimaryKey((Serializable)layoutSetPrototypeId);
 	}
 
-	/**
-	 * Returns the layout set prototype with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the layout set prototype
-	 * @return the layout set prototype, or <code>null</code> if a layout set prototype with the primary key could not be found
-	 */
 	@Override
-	public LayoutSetPrototype fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(
-				LayoutSetPrototype.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		LayoutSetPrototype layoutSetPrototype =
-			(LayoutSetPrototype)EntityCacheUtil.getResult(
-				LayoutSetPrototypeImpl.class, primaryKey);
-
-		if (layoutSetPrototype != null) {
-			return layoutSetPrototype;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			layoutSetPrototype = (LayoutSetPrototype)session.get(
-				LayoutSetPrototypeImpl.class, primaryKey);
-
-			if (layoutSetPrototype != null) {
-				cacheResult(layoutSetPrototype);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return layoutSetPrototype;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return CTPersistenceHelperUtil.getCTPersistenceHelper();
 	}
 
 	/**
@@ -1957,136 +1913,6 @@ public class LayoutSetPrototypePersistenceImpl
 	@Override
 	public LayoutSetPrototype fetchByPrimaryKey(long layoutSetPrototypeId) {
 		return fetchByPrimaryKey((Serializable)layoutSetPrototypeId);
-	}
-
-	@Override
-	public Map<Serializable, LayoutSetPrototype> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(
-				LayoutSetPrototype.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, LayoutSetPrototype> map =
-			new HashMap<Serializable, LayoutSetPrototype>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			LayoutSetPrototype layoutSetPrototype = fetchByPrimaryKey(
-				primaryKey);
-
-			if (layoutSetPrototype != null) {
-				map.put(primaryKey, layoutSetPrototype);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						LayoutSetPrototype.class, primaryKey)) {
-
-				LayoutSetPrototype layoutSetPrototype =
-					(LayoutSetPrototype)EntityCacheUtil.getResult(
-						LayoutSetPrototypeImpl.class, primaryKey);
-
-				if (layoutSetPrototype == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, layoutSetPrototype);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (LayoutSetPrototype layoutSetPrototype :
-					(List<LayoutSetPrototype>)query.list()) {
-
-				map.put(
-					layoutSetPrototype.getPrimaryKeyObj(), layoutSetPrototype);
-
-				cacheResult(layoutSetPrototype);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2573,4 +2399,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1026726404
+// LIFERAY-SERVICE-BUILDER-HASH:375924081

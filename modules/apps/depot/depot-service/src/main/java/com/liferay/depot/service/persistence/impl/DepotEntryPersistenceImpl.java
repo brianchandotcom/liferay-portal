@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1028,52 +1027,9 @@ public class DepotEntryPersistenceImpl
 		return findByPrimaryKey((Serializable)depotEntryId);
 	}
 
-	/**
-	 * Returns the depot entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the depot entry
-	 * @return the depot entry, or <code>null</code> if a depot entry with the primary key could not be found
-	 */
 	@Override
-	public DepotEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DepotEntry.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DepotEntry depotEntry = (DepotEntry)entityCache.getResult(
-			DepotEntryImpl.class, primaryKey);
-
-		if (depotEntry != null) {
-			return depotEntry;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			depotEntry = (DepotEntry)session.get(
-				DepotEntryImpl.class, primaryKey);
-
-			if (depotEntry != null) {
-				cacheResult(depotEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return depotEntry;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1085,129 +1041,6 @@ public class DepotEntryPersistenceImpl
 	@Override
 	public DepotEntry fetchByPrimaryKey(long depotEntryId) {
 		return fetchByPrimaryKey((Serializable)depotEntryId);
-	}
-
-	@Override
-	public Map<Serializable, DepotEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DepotEntry.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DepotEntry> map =
-			new HashMap<Serializable, DepotEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DepotEntry depotEntry = fetchByPrimaryKey(primaryKey);
-
-			if (depotEntry != null) {
-				map.put(primaryKey, depotEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DepotEntry.class, primaryKey)) {
-
-				DepotEntry depotEntry = (DepotEntry)entityCache.getResult(
-					DepotEntryImpl.class, primaryKey);
-
-				if (depotEntry == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, depotEntry);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DepotEntry depotEntry : (List<DepotEntry>)query.list()) {
-				map.put(depotEntry.getPrimaryKeyObj(), depotEntry);
-
-				cacheResult(depotEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1697,4 +1530,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1931135887
+// LIFERAY-SERVICE-BUILDER-HASH:-1488207835

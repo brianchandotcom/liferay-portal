@@ -59,7 +59,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4093,53 +4092,9 @@ public class StyleBookEntryVersionPersistenceImpl
 		return findByPrimaryKey((Serializable)styleBookEntryVersionId);
 	}
 
-	/**
-	 * Returns the style book entry version with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the style book entry version
-	 * @return the style book entry version, or <code>null</code> if a style book entry version with the primary key could not be found
-	 */
 	@Override
-	public StyleBookEntryVersion fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				StyleBookEntryVersion.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		StyleBookEntryVersion styleBookEntryVersion =
-			(StyleBookEntryVersion)entityCache.getResult(
-				StyleBookEntryVersionImpl.class, primaryKey);
-
-		if (styleBookEntryVersion != null) {
-			return styleBookEntryVersion;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			styleBookEntryVersion = (StyleBookEntryVersion)session.get(
-				StyleBookEntryVersionImpl.class, primaryKey);
-
-			if (styleBookEntryVersion != null) {
-				cacheResult(styleBookEntryVersion);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return styleBookEntryVersion;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -4153,135 +4108,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		long styleBookEntryVersionId) {
 
 		return fetchByPrimaryKey((Serializable)styleBookEntryVersionId);
-	}
-
-	@Override
-	public Map<Serializable, StyleBookEntryVersion> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(StyleBookEntryVersion.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, StyleBookEntryVersion> map =
-			new HashMap<Serializable, StyleBookEntryVersion>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			StyleBookEntryVersion styleBookEntryVersion = fetchByPrimaryKey(
-				primaryKey);
-
-			if (styleBookEntryVersion != null) {
-				map.put(primaryKey, styleBookEntryVersion);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						StyleBookEntryVersion.class, primaryKey)) {
-
-				StyleBookEntryVersion styleBookEntryVersion =
-					(StyleBookEntryVersion)entityCache.getResult(
-						StyleBookEntryVersionImpl.class, primaryKey);
-
-				if (styleBookEntryVersion == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, styleBookEntryVersion);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (StyleBookEntryVersion styleBookEntryVersion :
-					(List<StyleBookEntryVersion>)query.list()) {
-
-				map.put(
-					styleBookEntryVersion.getPrimaryKeyObj(),
-					styleBookEntryVersion);
-
-				cacheResult(styleBookEntryVersion);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -5478,4 +5304,4 @@ public class StyleBookEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-674054042
+// LIFERAY-SERVICE-BUILDER-HASH:-1041793744

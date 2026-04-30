@@ -49,7 +49,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1211,52 +1210,9 @@ public class CTSContentPersistenceImpl
 		return findByPrimaryKey((Serializable)ctsContentId);
 	}
 
-	/**
-	 * Returns the cts content with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cts content
-	 * @return the cts content, or <code>null</code> if a cts content with the primary key could not be found
-	 */
 	@Override
-	public CTSContent fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CTSContent.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CTSContent ctsContent = (CTSContent)entityCache.getResult(
-			CTSContentImpl.class, primaryKey);
-
-		if (ctsContent != null) {
-			return ctsContent;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ctsContent = (CTSContent)session.get(
-				CTSContentImpl.class, primaryKey);
-
-			if (ctsContent != null) {
-				cacheResult(ctsContent);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return ctsContent;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1268,129 +1224,6 @@ public class CTSContentPersistenceImpl
 	@Override
 	public CTSContent fetchByPrimaryKey(long ctsContentId) {
 		return fetchByPrimaryKey((Serializable)ctsContentId);
-	}
-
-	@Override
-	public Map<Serializable, CTSContent> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CTSContent.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CTSContent> map =
-			new HashMap<Serializable, CTSContent>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CTSContent ctsContent = fetchByPrimaryKey(primaryKey);
-
-			if (ctsContent != null) {
-				map.put(primaryKey, ctsContent);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CTSContent.class, primaryKey)) {
-
-				CTSContent ctsContent = (CTSContent)entityCache.getResult(
-					CTSContentImpl.class, primaryKey);
-
-				if (ctsContent == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, ctsContent);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CTSContent ctsContent : (List<CTSContent>)query.list()) {
-				map.put(ctsContent.getPrimaryKeyObj(), ctsContent);
-
-				cacheResult(ctsContent);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1950,4 +1783,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:700860121
+// LIFERAY-SERVICE-BUILDER-HASH:811361746

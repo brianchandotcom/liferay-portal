@@ -52,9 +52,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2141,52 +2139,9 @@ public class IndexEntryPersistenceImpl
 		return findByPrimaryKey((Serializable)indexEntryId);
 	}
 
-	/**
-	 * Returns the index entry with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the index entry
-	 * @return the index entry, or <code>null</code> if a index entry with the primary key could not be found
-	 */
 	@Override
-	public IndexEntry fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				IndexEntry.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		IndexEntry indexEntry = (IndexEntry)entityCache.getResult(
-			IndexEntryImpl.class, primaryKey);
-
-		if (indexEntry != null) {
-			return indexEntry;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			indexEntry = (IndexEntry)session.get(
-				IndexEntryImpl.class, primaryKey);
-
-			if (indexEntry != null) {
-				cacheResult(indexEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return indexEntry;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2198,129 +2153,6 @@ public class IndexEntryPersistenceImpl
 	@Override
 	public IndexEntry fetchByPrimaryKey(long indexEntryId) {
 		return fetchByPrimaryKey((Serializable)indexEntryId);
-	}
-
-	@Override
-	public Map<Serializable, IndexEntry> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(IndexEntry.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, IndexEntry> map =
-			new HashMap<Serializable, IndexEntry>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			IndexEntry indexEntry = fetchByPrimaryKey(primaryKey);
-
-			if (indexEntry != null) {
-				map.put(primaryKey, indexEntry);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						IndexEntry.class, primaryKey)) {
-
-				IndexEntry indexEntry = (IndexEntry)entityCache.getResult(
-					IndexEntryImpl.class, primaryKey);
-
-				if (indexEntry == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, indexEntry);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (IndexEntry indexEntry : (List<IndexEntry>)query.list()) {
-				map.put(indexEntry.getPrimaryKeyObj(), indexEntry);
-
-				cacheResult(indexEntry);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2999,4 +2831,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1758710309
+// LIFERAY-SERVICE-BUILDER-HASH:-1149839415

@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2016,53 +2015,9 @@ public class CPDefinitionOptionRelPersistenceImpl
 		return findByPrimaryKey((Serializable)CPDefinitionOptionRelId);
 	}
 
-	/**
-	 * Returns the cp definition option rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp definition option rel
-	 * @return the cp definition option rel, or <code>null</code> if a cp definition option rel with the primary key could not be found
-	 */
 	@Override
-	public CPDefinitionOptionRel fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CPDefinitionOptionRel.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPDefinitionOptionRel cpDefinitionOptionRel =
-			(CPDefinitionOptionRel)entityCache.getResult(
-				CPDefinitionOptionRelImpl.class, primaryKey);
-
-		if (cpDefinitionOptionRel != null) {
-			return cpDefinitionOptionRel;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpDefinitionOptionRel = (CPDefinitionOptionRel)session.get(
-				CPDefinitionOptionRelImpl.class, primaryKey);
-
-			if (cpDefinitionOptionRel != null) {
-				cacheResult(cpDefinitionOptionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpDefinitionOptionRel;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2076,135 +2031,6 @@ public class CPDefinitionOptionRelPersistenceImpl
 		long CPDefinitionOptionRelId) {
 
 		return fetchByPrimaryKey((Serializable)CPDefinitionOptionRelId);
-	}
-
-	@Override
-	public Map<Serializable, CPDefinitionOptionRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CPDefinitionOptionRel.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDefinitionOptionRel> map =
-			new HashMap<Serializable, CPDefinitionOptionRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDefinitionOptionRel cpDefinitionOptionRel = fetchByPrimaryKey(
-				primaryKey);
-
-			if (cpDefinitionOptionRel != null) {
-				map.put(primaryKey, cpDefinitionOptionRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPDefinitionOptionRel.class, primaryKey)) {
-
-				CPDefinitionOptionRel cpDefinitionOptionRel =
-					(CPDefinitionOptionRel)entityCache.getResult(
-						CPDefinitionOptionRelImpl.class, primaryKey);
-
-				if (cpDefinitionOptionRel == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, cpDefinitionOptionRel);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDefinitionOptionRel cpDefinitionOptionRel :
-					(List<CPDefinitionOptionRel>)query.list()) {
-
-				map.put(
-					cpDefinitionOptionRel.getPrimaryKeyObj(),
-					cpDefinitionOptionRel);
-
-				cacheResult(cpDefinitionOptionRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2911,4 +2737,4 @@ public class CPDefinitionOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1276861881
+// LIFERAY-SERVICE-BUILDER-HASH:139764945

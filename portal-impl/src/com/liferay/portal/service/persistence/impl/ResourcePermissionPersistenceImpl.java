@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionUtil;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -47,9 +48,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4487,53 +4486,9 @@ public class ResourcePermissionPersistenceImpl
 		return findByPrimaryKey((Serializable)resourcePermissionId);
 	}
 
-	/**
-	 * Returns the resource permission with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the resource permission
-	 * @return the resource permission, or <code>null</code> if a resource permission with the primary key could not be found
-	 */
 	@Override
-	public ResourcePermission fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(
-				ResourcePermission.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		ResourcePermission resourcePermission =
-			(ResourcePermission)EntityCacheUtil.getResult(
-				ResourcePermissionImpl.class, primaryKey);
-
-		if (resourcePermission != null) {
-			return resourcePermission;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			resourcePermission = (ResourcePermission)session.get(
-				ResourcePermissionImpl.class, primaryKey);
-
-			if (resourcePermission != null) {
-				cacheResult(resourcePermission);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return resourcePermission;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return CTPersistenceHelperUtil.getCTPersistenceHelper();
 	}
 
 	/**
@@ -4545,136 +4500,6 @@ public class ResourcePermissionPersistenceImpl
 	@Override
 	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId) {
 		return fetchByPrimaryKey((Serializable)resourcePermissionId);
-	}
-
-	@Override
-	public Map<Serializable, ResourcePermission> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(
-				ResourcePermission.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, ResourcePermission> map =
-			new HashMap<Serializable, ResourcePermission>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			ResourcePermission resourcePermission = fetchByPrimaryKey(
-				primaryKey);
-
-			if (resourcePermission != null) {
-				map.put(primaryKey, resourcePermission);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						ResourcePermission.class, primaryKey)) {
-
-				ResourcePermission resourcePermission =
-					(ResourcePermission)EntityCacheUtil.getResult(
-						ResourcePermissionImpl.class, primaryKey);
-
-				if (resourcePermission == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, resourcePermission);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (ResourcePermission resourcePermission :
-					(List<ResourcePermission>)query.list()) {
-
-				map.put(
-					resourcePermission.getPrimaryKeyObj(), resourcePermission);
-
-				cacheResult(resourcePermission);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -5375,4 +5200,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-521298377
+// LIFERAY-SERVICE-BUILDER-HASH:1151604313

@@ -1017,4 +1017,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1031017668
+// LIFERAY-SERVICE-BUILDER-HASH:1230820230

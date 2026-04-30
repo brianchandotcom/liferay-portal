@@ -51,7 +51,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -861,53 +860,9 @@ public class WikiPageResourcePersistenceImpl
 		return findByPrimaryKey((Serializable)resourcePrimKey);
 	}
 
-	/**
-	 * Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the wiki page resource
-	 * @return the wiki page resource, or <code>null</code> if a wiki page resource with the primary key could not be found
-	 */
 	@Override
-	public WikiPageResource fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				WikiPageResource.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		WikiPageResource wikiPageResource =
-			(WikiPageResource)entityCache.getResult(
-				WikiPageResourceImpl.class, primaryKey);
-
-		if (wikiPageResource != null) {
-			return wikiPageResource;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			wikiPageResource = (WikiPageResource)session.get(
-				WikiPageResourceImpl.class, primaryKey);
-
-			if (wikiPageResource != null) {
-				cacheResult(wikiPageResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return wikiPageResource;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -919,132 +874,6 @@ public class WikiPageResourcePersistenceImpl
 	@Override
 	public WikiPageResource fetchByPrimaryKey(long resourcePrimKey) {
 		return fetchByPrimaryKey((Serializable)resourcePrimKey);
-	}
-
-	@Override
-	public Map<Serializable, WikiPageResource> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(WikiPageResource.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, WikiPageResource> map =
-			new HashMap<Serializable, WikiPageResource>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			WikiPageResource wikiPageResource = fetchByPrimaryKey(primaryKey);
-
-			if (wikiPageResource != null) {
-				map.put(primaryKey, wikiPageResource);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						WikiPageResource.class, primaryKey)) {
-
-				WikiPageResource wikiPageResource =
-					(WikiPageResource)entityCache.getResult(
-						WikiPageResourceImpl.class, primaryKey);
-
-				if (wikiPageResource == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, wikiPageResource);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (WikiPageResource wikiPageResource :
-					(List<WikiPageResource>)query.list()) {
-
-				map.put(wikiPageResource.getPrimaryKeyObj(), wikiPageResource);
-
-				cacheResult(wikiPageResource);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1505,4 +1334,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:359649594
+// LIFERAY-SERVICE-BUILDER-HASH:1098162089

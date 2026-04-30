@@ -46,9 +46,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -709,53 +707,9 @@ public class DepotAppCustomizationPersistenceImpl
 		return findByPrimaryKey((Serializable)depotAppCustomizationId);
 	}
 
-	/**
-	 * Returns the depot app customization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the depot app customization
-	 * @return the depot app customization, or <code>null</code> if a depot app customization with the primary key could not be found
-	 */
 	@Override
-	public DepotAppCustomization fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				DepotAppCustomization.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		DepotAppCustomization depotAppCustomization =
-			(DepotAppCustomization)entityCache.getResult(
-				DepotAppCustomizationImpl.class, primaryKey);
-
-		if (depotAppCustomization != null) {
-			return depotAppCustomization;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			depotAppCustomization = (DepotAppCustomization)session.get(
-				DepotAppCustomizationImpl.class, primaryKey);
-
-			if (depotAppCustomization != null) {
-				cacheResult(depotAppCustomization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return depotAppCustomization;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -769,135 +723,6 @@ public class DepotAppCustomizationPersistenceImpl
 		long depotAppCustomizationId) {
 
 		return fetchByPrimaryKey((Serializable)depotAppCustomizationId);
-	}
-
-	@Override
-	public Map<Serializable, DepotAppCustomization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(DepotAppCustomization.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, DepotAppCustomization> map =
-			new HashMap<Serializable, DepotAppCustomization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			DepotAppCustomization depotAppCustomization = fetchByPrimaryKey(
-				primaryKey);
-
-			if (depotAppCustomization != null) {
-				map.put(primaryKey, depotAppCustomization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						DepotAppCustomization.class, primaryKey)) {
-
-				DepotAppCustomization depotAppCustomization =
-					(DepotAppCustomization)entityCache.getResult(
-						DepotAppCustomizationImpl.class, primaryKey);
-
-				if (depotAppCustomization == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, depotAppCustomization);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (DepotAppCustomization depotAppCustomization :
-					(List<DepotAppCustomization>)query.list()) {
-
-				map.put(
-					depotAppCustomization.getPrimaryKeyObj(),
-					depotAppCustomization);
-
-				cacheResult(depotAppCustomization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1324,4 +1149,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1290807637
+// LIFERAY-SERVICE-BUILDER-HASH:-651300759

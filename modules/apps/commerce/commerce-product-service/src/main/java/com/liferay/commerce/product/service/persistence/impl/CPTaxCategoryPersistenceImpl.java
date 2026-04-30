@@ -64,7 +64,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -1687,52 +1686,9 @@ public class CPTaxCategoryPersistenceImpl
 		return findByPrimaryKey((Serializable)CPTaxCategoryId);
 	}
 
-	/**
-	 * Returns the cp tax category with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp tax category
-	 * @return the cp tax category, or <code>null</code> if a cp tax category with the primary key could not be found
-	 */
 	@Override
-	public CPTaxCategory fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CPTaxCategory.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPTaxCategory cpTaxCategory = (CPTaxCategory)entityCache.getResult(
-			CPTaxCategoryImpl.class, primaryKey);
-
-		if (cpTaxCategory != null) {
-			return cpTaxCategory;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpTaxCategory = (CPTaxCategory)session.get(
-				CPTaxCategoryImpl.class, primaryKey);
-
-			if (cpTaxCategory != null) {
-				cacheResult(cpTaxCategory);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpTaxCategory;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1744,132 +1700,6 @@ public class CPTaxCategoryPersistenceImpl
 	@Override
 	public CPTaxCategory fetchByPrimaryKey(long CPTaxCategoryId) {
 		return fetchByPrimaryKey((Serializable)CPTaxCategoryId);
-	}
-
-	@Override
-	public Map<Serializable, CPTaxCategory> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CPTaxCategory.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPTaxCategory> map =
-			new HashMap<Serializable, CPTaxCategory>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPTaxCategory cpTaxCategory = fetchByPrimaryKey(primaryKey);
-
-			if (cpTaxCategory != null) {
-				map.put(primaryKey, cpTaxCategory);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPTaxCategory.class, primaryKey)) {
-
-				CPTaxCategory cpTaxCategory =
-					(CPTaxCategory)entityCache.getResult(
-						CPTaxCategoryImpl.class, primaryKey);
-
-				if (cpTaxCategory == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, cpTaxCategory);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPTaxCategory cpTaxCategory :
-					(List<CPTaxCategory>)query.list()) {
-
-				map.put(cpTaxCategory.getPrimaryKeyObj(), cpTaxCategory);
-
-				cacheResult(cpTaxCategory);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -2372,4 +2202,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1137755262
+// LIFERAY-SERVICE-BUILDER-HASH:428665248

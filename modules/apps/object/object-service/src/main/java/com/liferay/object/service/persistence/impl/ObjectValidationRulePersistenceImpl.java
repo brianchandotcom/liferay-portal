@@ -2174,4 +2174,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-520415378
+// LIFERAY-SERVICE-BUILDER-HASH:132425928

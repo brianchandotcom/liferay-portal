@@ -54,7 +54,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -993,56 +992,9 @@ public class CommercePriceListAccountRelPersistenceImpl
 		return findByPrimaryKey((Serializable)commercePriceListAccountRelId);
 	}
 
-	/**
-	 * Returns the commerce price list account rel with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the commerce price list account rel
-	 * @return the commerce price list account rel, or <code>null</code> if a commerce price list account rel with the primary key could not be found
-	 */
 	@Override
-	public CommercePriceListAccountRel fetchByPrimaryKey(
-		Serializable primaryKey) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceListAccountRel.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CommercePriceListAccountRel commercePriceListAccountRel =
-			(CommercePriceListAccountRel)entityCache.getResult(
-				CommercePriceListAccountRelImpl.class, primaryKey);
-
-		if (commercePriceListAccountRel != null) {
-			return commercePriceListAccountRel;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			commercePriceListAccountRel =
-				(CommercePriceListAccountRel)session.get(
-					CommercePriceListAccountRelImpl.class, primaryKey);
-
-			if (commercePriceListAccountRel != null) {
-				cacheResult(commercePriceListAccountRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return commercePriceListAccountRel;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -1056,137 +1008,6 @@ public class CommercePriceListAccountRelPersistenceImpl
 		long commercePriceListAccountRelId) {
 
 		return fetchByPrimaryKey((Serializable)commercePriceListAccountRelId);
-	}
-
-	@Override
-	public Map<Serializable, CommercePriceListAccountRel> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(
-				CommercePriceListAccountRel.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CommercePriceListAccountRel> map =
-			new HashMap<Serializable, CommercePriceListAccountRel>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CommercePriceListAccountRel commercePriceListAccountRel =
-				fetchByPrimaryKey(primaryKey);
-
-			if (commercePriceListAccountRel != null) {
-				map.put(primaryKey, commercePriceListAccountRel);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CommercePriceListAccountRel.class, primaryKey)) {
-
-				CommercePriceListAccountRel commercePriceListAccountRel =
-					(CommercePriceListAccountRel)entityCache.getResult(
-						CommercePriceListAccountRelImpl.class, primaryKey);
-
-				if (commercePriceListAccountRel == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, commercePriceListAccountRel);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CommercePriceListAccountRel commercePriceListAccountRel :
-					(List<CommercePriceListAccountRel>)query.list()) {
-
-				map.put(
-					commercePriceListAccountRel.getPrimaryKeyObj(),
-					commercePriceListAccountRel);
-
-				cacheResult(commercePriceListAccountRel);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1686,4 +1507,4 @@ public class CommercePriceListAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:230965763
+// LIFERAY-SERVICE-BUILDER-HASH:-1102710835

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.PortletPreferenceValueTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortletPreferenceValuePersistence;
 import com.liferay.portal.kernel.service.persistence.PortletPreferenceValueUtil;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -48,7 +49,6 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1161,53 +1161,9 @@ public class PortletPreferenceValuePersistenceImpl
 		return findByPrimaryKey((Serializable)portletPreferenceValueId);
 	}
 
-	/**
-	 * Returns the portlet preference value with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the portlet preference value
-	 * @return the portlet preference value, or <code>null</code> if a portlet preference value with the primary key could not be found
-	 */
 	@Override
-	public PortletPreferenceValue fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(
-				PortletPreferenceValue.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		PortletPreferenceValue portletPreferenceValue =
-			(PortletPreferenceValue)EntityCacheUtil.getResult(
-				PortletPreferenceValueImpl.class, primaryKey);
-
-		if (portletPreferenceValue != null) {
-			return portletPreferenceValue;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			portletPreferenceValue = (PortletPreferenceValue)session.get(
-				PortletPreferenceValueImpl.class, primaryKey);
-
-			if (portletPreferenceValue != null) {
-				cacheResult(portletPreferenceValue);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return portletPreferenceValue;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return CTPersistenceHelperUtil.getCTPersistenceHelper();
 	}
 
 	/**
@@ -1221,137 +1177,6 @@ public class PortletPreferenceValuePersistenceImpl
 		long portletPreferenceValueId) {
 
 		return fetchByPrimaryKey((Serializable)portletPreferenceValueId);
-	}
-
-	@Override
-	public Map<Serializable, PortletPreferenceValue> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(
-				PortletPreferenceValue.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, PortletPreferenceValue> map =
-			new HashMap<Serializable, PortletPreferenceValue>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			PortletPreferenceValue portletPreferenceValue = fetchByPrimaryKey(
-				primaryKey);
-
-			if (portletPreferenceValue != null) {
-				map.put(primaryKey, portletPreferenceValue);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						PortletPreferenceValue.class, primaryKey)) {
-
-				PortletPreferenceValue portletPreferenceValue =
-					(PortletPreferenceValue)EntityCacheUtil.getResult(
-						PortletPreferenceValueImpl.class, primaryKey);
-
-				if (portletPreferenceValue == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, portletPreferenceValue);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (PortletPreferenceValue portletPreferenceValue :
-					(List<PortletPreferenceValue>)query.list()) {
-
-				map.put(
-					portletPreferenceValue.getPrimaryKeyObj(),
-					portletPreferenceValue);
-
-				cacheResult(portletPreferenceValue);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1870,4 +1695,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-37120359
+// LIFERAY-SERVICE-BUILDER-HASH:573990926

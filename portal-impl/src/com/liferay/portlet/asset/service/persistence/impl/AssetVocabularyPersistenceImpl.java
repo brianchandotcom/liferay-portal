@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -65,7 +66,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -4061,53 +4061,9 @@ public class AssetVocabularyPersistenceImpl
 		return findByPrimaryKey((Serializable)vocabularyId);
 	}
 
-	/**
-	 * Returns the asset vocabulary with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the asset vocabulary
-	 * @return the asset vocabulary, or <code>null</code> if a asset vocabulary with the primary key could not be found
-	 */
 	@Override
-	public AssetVocabulary fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(
-				AssetVocabulary.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		AssetVocabulary assetVocabulary =
-			(AssetVocabulary)EntityCacheUtil.getResult(
-				AssetVocabularyImpl.class, primaryKey);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			assetVocabulary = (AssetVocabulary)session.get(
-				AssetVocabularyImpl.class, primaryKey);
-
-			if (assetVocabulary != null) {
-				cacheResult(assetVocabulary);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return assetVocabulary;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return CTPersistenceHelperUtil.getCTPersistenceHelper();
 	}
 
 	/**
@@ -4119,132 +4075,6 @@ public class AssetVocabularyPersistenceImpl
 	@Override
 	public AssetVocabulary fetchByPrimaryKey(long vocabularyId) {
 		return fetchByPrimaryKey((Serializable)vocabularyId);
-	}
-
-	@Override
-	public Map<Serializable, AssetVocabulary> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(AssetVocabulary.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, AssetVocabulary> map =
-			new HashMap<Serializable, AssetVocabulary>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			AssetVocabulary assetVocabulary = fetchByPrimaryKey(primaryKey);
-
-			if (assetVocabulary != null) {
-				map.put(primaryKey, assetVocabulary);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						AssetVocabulary.class, primaryKey)) {
-
-				AssetVocabulary assetVocabulary =
-					(AssetVocabulary)EntityCacheUtil.getResult(
-						AssetVocabularyImpl.class, primaryKey);
-
-				if (assetVocabulary == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, assetVocabulary);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (AssetVocabulary assetVocabulary :
-					(List<AssetVocabulary>)query.list()) {
-
-				map.put(assetVocabulary.getPrimaryKeyObj(), assetVocabulary);
-
-				cacheResult(assetVocabulary);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -4801,4 +4631,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:575798326
+// LIFERAY-SERVICE-BUILDER-HASH:230965981

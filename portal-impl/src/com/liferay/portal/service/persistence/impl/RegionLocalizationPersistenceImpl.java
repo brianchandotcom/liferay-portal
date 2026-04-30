@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.RegionLocalizationTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RegionLocalizationUtil;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
@@ -45,9 +46,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -580,53 +579,9 @@ public class RegionLocalizationPersistenceImpl
 		return findByPrimaryKey((Serializable)regionLocalizationId);
 	}
 
-	/**
-	 * Returns the region localization with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the region localization
-	 * @return the region localization, or <code>null</code> if a region localization with the primary key could not be found
-	 */
 	@Override
-	public RegionLocalization fetchByPrimaryKey(Serializable primaryKey) {
-		if (CTPersistenceHelperUtil.isProductionMode(
-				RegionLocalization.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		RegionLocalization regionLocalization =
-			(RegionLocalization)EntityCacheUtil.getResult(
-				RegionLocalizationImpl.class, primaryKey);
-
-		if (regionLocalization != null) {
-			return regionLocalization;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			regionLocalization = (RegionLocalization)session.get(
-				RegionLocalizationImpl.class, primaryKey);
-
-			if (regionLocalization != null) {
-				cacheResult(regionLocalization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return regionLocalization;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return CTPersistenceHelperUtil.getCTPersistenceHelper();
 	}
 
 	/**
@@ -638,136 +593,6 @@ public class RegionLocalizationPersistenceImpl
 	@Override
 	public RegionLocalization fetchByPrimaryKey(long regionLocalizationId) {
 		return fetchByPrimaryKey((Serializable)regionLocalizationId);
-	}
-
-	@Override
-	public Map<Serializable, RegionLocalization> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (CTPersistenceHelperUtil.isProductionMode(
-				RegionLocalization.class)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, RegionLocalization> map =
-			new HashMap<Serializable, RegionLocalization>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			RegionLocalization regionLocalization = fetchByPrimaryKey(
-				primaryKey);
-
-			if (regionLocalization != null) {
-				map.put(primaryKey, regionLocalization);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-						RegionLocalization.class, primaryKey)) {
-
-				RegionLocalization regionLocalization =
-					(RegionLocalization)EntityCacheUtil.getResult(
-						RegionLocalizationImpl.class, primaryKey);
-
-				if (regionLocalization == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, regionLocalization);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (RegionLocalization regionLocalization :
-					(List<RegionLocalization>)query.list()) {
-
-				map.put(
-					regionLocalization.getPrimaryKeyObj(), regionLocalization);
-
-				cacheResult(regionLocalization);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -1139,4 +964,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:978495871
+// LIFERAY-SERVICE-BUILDER-HASH:-1804898703

@@ -55,7 +55,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -2399,53 +2398,9 @@ public class CPDisplayLayoutPersistenceImpl
 		return findByPrimaryKey((Serializable)CPDisplayLayoutId);
 	}
 
-	/**
-	 * Returns the cp display layout with the primary key or returns <code>null</code> if it could not be found.
-	 *
-	 * @param primaryKey the primary key of the cp display layout
-	 * @return the cp display layout, or <code>null</code> if a cp display layout with the primary key could not be found
-	 */
 	@Override
-	public CPDisplayLayout fetchByPrimaryKey(Serializable primaryKey) {
-		if (ctPersistenceHelper.isProductionMode(
-				CPDisplayLayout.class, primaryKey)) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKey(primaryKey);
-			}
-		}
-
-		CPDisplayLayout cpDisplayLayout =
-			(CPDisplayLayout)entityCache.getResult(
-				CPDisplayLayoutImpl.class, primaryKey);
-
-		if (cpDisplayLayout != null) {
-			return cpDisplayLayout;
-		}
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			cpDisplayLayout = (CPDisplayLayout)session.get(
-				CPDisplayLayoutImpl.class, primaryKey);
-
-			if (cpDisplayLayout != null) {
-				cacheResult(cpDisplayLayout);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return cpDisplayLayout;
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return ctPersistenceHelper;
 	}
 
 	/**
@@ -2457,132 +2412,6 @@ public class CPDisplayLayoutPersistenceImpl
 	@Override
 	public CPDisplayLayout fetchByPrimaryKey(long CPDisplayLayoutId) {
 		return fetchByPrimaryKey((Serializable)CPDisplayLayoutId);
-	}
-
-	@Override
-	public Map<Serializable, CPDisplayLayout> fetchByPrimaryKeys(
-		Set<Serializable> primaryKeys) {
-
-		if (ctPersistenceHelper.isProductionMode(CPDisplayLayout.class)) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				return super.fetchByPrimaryKeys(primaryKeys);
-			}
-		}
-
-		if (primaryKeys.isEmpty()) {
-			return Collections.emptyMap();
-		}
-
-		Map<Serializable, CPDisplayLayout> map =
-			new HashMap<Serializable, CPDisplayLayout>();
-
-		if (primaryKeys.size() == 1) {
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			Serializable primaryKey = iterator.next();
-
-			CPDisplayLayout cpDisplayLayout = fetchByPrimaryKey(primaryKey);
-
-			if (cpDisplayLayout != null) {
-				map.put(primaryKey, cpDisplayLayout);
-			}
-
-			return map;
-		}
-
-		Set<Serializable> uncachedPrimaryKeys = null;
-
-		for (Serializable primaryKey : primaryKeys) {
-			try (SafeCloseable safeCloseable =
-					ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-						CPDisplayLayout.class, primaryKey)) {
-
-				CPDisplayLayout cpDisplayLayout =
-					(CPDisplayLayout)entityCache.getResult(
-						CPDisplayLayoutImpl.class, primaryKey);
-
-				if (cpDisplayLayout == null) {
-					if (uncachedPrimaryKeys == null) {
-						uncachedPrimaryKeys = new HashSet<>();
-					}
-
-					uncachedPrimaryKeys.add(primaryKey);
-				}
-				else {
-					map.put(primaryKey, cpDisplayLayout);
-				}
-			}
-		}
-
-		if (uncachedPrimaryKeys == null) {
-			return map;
-		}
-
-		if ((databaseInMaxParameters > 0) &&
-			(primaryKeys.size() > databaseInMaxParameters)) {
-
-			Iterator<Serializable> iterator = primaryKeys.iterator();
-
-			while (iterator.hasNext()) {
-				Set<Serializable> page = new HashSet<>();
-
-				for (int i = 0;
-					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
-
-					page.add(iterator.next());
-				}
-
-				map.putAll(fetchByPrimaryKeys(page));
-			}
-
-			return map;
-		}
-
-		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
-
-		sb.append(getSelectSQL());
-		sb.append(" WHERE ");
-		sb.append(getPKDBName());
-		sb.append(" IN (");
-
-		for (Serializable primaryKey : primaryKeys) {
-			sb.append((long)primaryKey);
-
-			sb.append(",");
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(")");
-
-		String sql = sb.toString();
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Query query = session.createQuery(sql);
-
-			for (CPDisplayLayout cpDisplayLayout :
-					(List<CPDisplayLayout>)query.list()) {
-
-				map.put(cpDisplayLayout.getPrimaryKeyObj(), cpDisplayLayout);
-
-				cacheResult(cpDisplayLayout);
-			}
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-
-		return map;
 	}
 
 	/**
@@ -3251,4 +3080,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1358613615
+// LIFERAY-SERVICE-BUILDER-HASH:-2135636254

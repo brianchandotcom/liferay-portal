@@ -13,9 +13,7 @@ export class ServiceAccessPolicyPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.newButton = page.getByRole('button').filter({
-			hasText: 'New',
-		});
+		this.newButton = page.getByRole('link', {exact: true, name: 'New'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);

@@ -6,27 +6,41 @@
 import {Locator, Page} from '@playwright/test';
 
 export class EditServiceAccessPolicyPage {
-	readonly enabledButton: Locator;
+	readonly addRowButton: Locator;
 	readonly defaultButton: Locator;
-	readonly methodNameField: Locator;
+	readonly enabledButton: Locator;
 	readonly nameField: Locator;
-	readonly saveButton: Locator;
-	readonly serviceClassField: Locator;
-	readonly successMessage: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
+	readonly successMessage: Locator;
+	readonly titleField: Locator;
 
 	constructor(page: Page) {
-		this.enabledButton = page.getByLabel('Enabled');
+		this.addRowButton = page.locator('button.add-row').first();
 		this.defaultButton = page.getByLabel('Default');
-		this.methodNameField = page.getByLabel('Default');
-		this.nameField = page.getByLabel('Name');
+		this.enabledButton = page.getByLabel('Enabled');
+		this.nameField = page.getByRole('textbox', {name: 'Name Required'});
+		this.page = page;
 		this.saveButton = page.getByRole('button').filter({
 			hasText: 'Save',
 		});
-		this.serviceClassField = page.getByLabel('Default');
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
 		);
-		this.page = page;
+		this.titleField = page.getByRole('textbox', {name: 'Title Required'});
+	}
+
+	methodNameField(rowIndex = 0): Locator {
+		return this.page
+			.locator('.lfr-form-row')
+			.nth(rowIndex)
+			.locator('.action-method-name');
+	}
+
+	serviceClassField(rowIndex = 0): Locator {
+		return this.page
+			.locator('.lfr-form-row')
+			.nth(rowIndex)
+			.locator('.service-class-name');
 	}
 }

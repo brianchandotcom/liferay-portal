@@ -50,6 +50,22 @@ export default function ContentContainer({
 	setValues,
 	values,
 }: ContentContainerProps) {
+	const handleSelectedLocaleChange = (label: Liferay.Language.Locale) => {
+		const currentSubjectValue = values.subject[selectedLocale];
+		const targetSubjectValue = values.subject[label];
+
+		if (!targetSubjectValue && currentSubjectValue) {
+			setValues({
+				subject: {
+					...values.subject,
+					[label]: currentSubjectValue,
+				},
+			});
+		}
+
+		setSelectedLocale(label);
+	};
+
 	return (
 		<Card title={Liferay.Language.get('content')}>
 			<Text as="span" color="secondary">
@@ -102,7 +118,7 @@ export default function ContentContainer({
 							label={Liferay.Language.get('template')}
 							name="template"
 							onSelectedLocaleChange={({label}) =>
-								setSelectedLocale(label)
+								handleSelectedLocaleChange(label)
 							}
 							onTranslationsChange={(translation) => {
 								setValues({
@@ -120,7 +136,7 @@ export default function ContentContainer({
 								baseResourceURL={baseResourceURL}
 								objectDefinitions={objectDefinitions}
 								selectedLocale={selectedLocale}
-								setSelectedLocale={setSelectedLocale}
+								setSelectedLocale={handleSelectedLocaleChange}
 								setValues={setValues}
 								values={values}
 							/>

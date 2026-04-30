@@ -16,11 +16,6 @@ import org.osgi.service.component.annotations.Component;
 public class MCPServerConfigurationCategory implements ConfigurationCategory {
 
 	@Override
-	public String getCategoryIcon() {
-		return "server";
-	}
-
-	@Override
 	public String getCategoryKey() {
 		return "mcp-server";
 	}

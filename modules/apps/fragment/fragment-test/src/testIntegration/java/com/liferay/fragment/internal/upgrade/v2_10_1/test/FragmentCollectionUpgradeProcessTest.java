@@ -114,7 +114,7 @@ public class FragmentCollectionUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;

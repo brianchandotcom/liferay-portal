@@ -133,7 +133,7 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private EntityCache _entityCache;

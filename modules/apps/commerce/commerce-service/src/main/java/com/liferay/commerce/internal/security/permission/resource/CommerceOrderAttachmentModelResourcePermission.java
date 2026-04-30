@@ -71,6 +71,12 @@ public class CommerceOrderAttachmentModelResourcePermission
 			return false;
 		}
 
+		if (permissionChecker.hasPermission(
+				null, CommerceOrderAttachment.class.getName(), 0, actionId)) {
+
+			return true;
+		}
+
 		if (commerceOrderAttachment.isRestricted()) {
 			CommerceOrder commerceOrder =
 				_commerceOrderLocalService.getCommerceOrder(

@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
-import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
-import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,15 +72,8 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _fixElementInstancesJSON(String elementInstanceJSON)
+	private String _fixElementInstancesJSON(JSONArray elementInstanceJSONArray)
 		throws Exception {
-
-		if (Validator.isBlank(elementInstanceJSON)) {
-			return elementInstanceJSON;
-		}
-
-		JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
-			elementInstanceJSON);
 
 		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
 			JSONObject elementInstanceJSONObject =
@@ -114,13 +104,21 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _hasLimitSearchToTheseSites(
-		ElementInstance[] elementInstances) {
+		JSONArray elementInstanceJSONArray) {
 
-		for (ElementInstance elementInstance : elementInstances) {
-			SXPElement sxpElement = elementInstance.getSxpElement();
+		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
+			JSONObject elementInstanceJSONObject =
+				elementInstanceJSONArray.getJSONObject(i);
+
+			JSONObject sxpElementJSONObject =
+				elementInstanceJSONObject.getJSONObject("sxpElement");
+
+			if (sxpElementJSONObject == null) {
+				continue;
+			}
 
 			if (Objects.equals(
-					sxpElement.getExternalReferenceCode(),
+					sxpElementJSONObject.getString("externalReferenceCode"),
 					"LIMIT_SEARCH_TO_THESE_SITES")) {
 
 				return true;
@@ -212,18 +210,20 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		String elementInstancesJSON = resultSet.getString(
 			"elementInstancesJSON");
 
-		ElementInstance[] elementInstances =
-			ElementInstanceUtil.toElementInstances(elementInstancesJSON);
-
-		if ((elementInstances == null) ||
-			!_hasLimitSearchToTheseSites(elementInstances)) {
-
+		if (Validator.isBlank(elementInstancesJSON)) {
 			return;
 		}
 
 		try {
+			JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
+				elementInstancesJSON);
+
+			if (!_hasLimitSearchToTheseSites(elementInstanceJSONArray)) {
+				return;
+			}
+
 			preparedStatement2.setString(
-				1, _fixElementInstancesJSON(elementInstancesJSON));
+				1, _fixElementInstancesJSON(elementInstanceJSONArray));
 			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
 
 			preparedStatement2.addBatch();

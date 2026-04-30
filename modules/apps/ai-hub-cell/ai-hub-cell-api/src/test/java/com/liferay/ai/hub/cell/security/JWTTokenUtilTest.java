@@ -46,12 +46,11 @@ public class JWTTokenUtilTest {
 			String token = JWTTokenUtil.generateToken(
 				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
-			Assert.assertNotNull(token);
 			Assert.assertFalse(token.isEmpty());
 
-			SignedJWT signedJWT = SignedJWT.parse(token);
-
-			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
+			JWTClaimsSet jwtClaimsSet = SignedJWT.parse(
+				token
+			).getJWTClaimsSet();
 
 			Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
 			Assert.assertEquals(
@@ -98,9 +97,6 @@ public class JWTTokenUtilTest {
 	}
 
 	private AIHubCellConfiguration _mockAIHubCellConfiguration() {
-		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
-			AIHubCellConfiguration.class);
-
 		int sha256BlockSize = 64;
 
 		byte[] secretBytes = new byte[sha256BlockSize];
@@ -108,6 +104,9 @@ public class JWTTokenUtilTest {
 		for (int i = 0; i < secretBytes.length; i++) {
 			secretBytes[i] = SecureRandomUtil.nextByte();
 		}
+
+		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
+			AIHubCellConfiguration.class);
 
 		Mockito.when(
 			aiHubCellConfiguration.secret()
@@ -125,11 +124,14 @@ public class JWTTokenUtilTest {
 			configurationProviderUtilMockedStatic = Mockito.mockStatic(
 				ConfigurationProviderUtil.class);
 
+		AIHubCellConfiguration aiHubCellConfiguration =
+			_mockAIHubCellConfiguration();
+
 		configurationProviderUtilMockedStatic.when(
 			() -> ConfigurationProviderUtil.getCompanyConfiguration(
 				Mockito.eq(AIHubCellConfiguration.class), Mockito.anyLong())
-		).thenAnswer(
-			invocation -> _mockAIHubCellConfiguration()
+		).thenReturn(
+			aiHubCellConfiguration
 		);
 
 		return configurationProviderUtilMockedStatic;

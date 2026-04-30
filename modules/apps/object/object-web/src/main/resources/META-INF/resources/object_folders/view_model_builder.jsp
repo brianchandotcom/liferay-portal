@@ -43,6 +43,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			).put(
 				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(
+				"countries", objectDefinitionsFieldsDisplayContext.getCountries()
+			).put(
 				"decimalSeparator", String.valueOf(decimalFormatSymbols.getDecimalSeparator())
 			).put(
 				"editObjectDefinitionURL", objectDefinitionsDetailsDisplayContext.getEditObjectDefinitionURL()

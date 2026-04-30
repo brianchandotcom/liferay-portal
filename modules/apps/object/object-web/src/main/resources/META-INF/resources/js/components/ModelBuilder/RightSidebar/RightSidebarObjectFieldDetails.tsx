@@ -36,6 +36,7 @@ export function RightSidebarObjectFieldDetails() {
 		{
 			baseResourceURL,
 			ckEditor5Config,
+			countries,
 			decimalSeparator,
 			filterOperators,
 			forbiddenChars,
@@ -207,6 +208,7 @@ export function RightSidebarObjectFieldDetails() {
 							baseResourceURL={baseResourceURL}
 							ckEditor5Config={ckEditor5Config}
 							containerWrapper={ClayPanel}
+							countries={countries}
 							creationLanguageId={
 								objectDefinitionNodeData.defaultLanguageId
 							}

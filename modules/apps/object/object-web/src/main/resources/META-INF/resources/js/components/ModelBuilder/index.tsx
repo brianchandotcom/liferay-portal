@@ -8,6 +8,7 @@ import React from 'react';
 import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {Scope} from '../ObjectDetails/EditObjectDetails';
+import {CountryInfo} from '../ObjectField/Tabs/BasicInfo/PhoneNumberProperties';
 import EditObjectFolder from './EditObjectFolder';
 import {ObjectFolderContextProvider} from './ModelBuilderContext/objectFolderContext';
 
@@ -15,6 +16,7 @@ interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
 	ckEditor5Config?: object;
 	companies: Scope[];
+	countries: CountryInfo[];
 	decimalSeparator?: string;
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
@@ -39,6 +41,7 @@ export default function CustomObjectFolderWrapper({
 	baseResourceURL,
 	ckEditor5Config,
 	companies,
+	countries,
 	decimalSeparator,
 	editObjectDefinitionURL,
 	filterOperators,
@@ -60,6 +63,7 @@ export default function CustomObjectFolderWrapper({
 				value={{
 					baseResourceURL,
 					ckEditor5Config,
+					countries,
 					decimalSeparator,
 					editObjectDefinitionURL,
 					filterOperators,

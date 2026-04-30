@@ -642,6 +642,154 @@ test(
 );
 
 test(
+	'Can perform asset actions on Recent Assets rows',
+	{tag: '@LPD-87568'},
+	async ({apiHelpers, homePage, page}) => {
+		const contentApplicationName = 'cms/basic-web-contents';
+		const contentTitle = `content ${getRandomString()}`;
+		const fileApplicationName = 'cms/basic-documents';
+		const fileName = `file_${getRandomString()}.png`;
+		const fileTitle = `file ${getRandomString()}`;
+
+		let contentEntry;
+		let fileEntry;
+
+		try {
+			contentEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				contentApplicationName,
+				'Default'
+			);
+
+			fileEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: fileName,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: fileTitle,
+				},
+				fileApplicationName,
+				'Default'
+			);
+
+			apiHelpers.data.push({
+				id: fileEntry.file.id,
+				type: 'document',
+			});
+
+			const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+
+			await homePage.goto();
+
+			await test.step('Recent Assets shows the content and file rows', async () => {
+				await expect(
+					dataSetFragmentPage.table.bodyRows
+						.getByLabel(contentTitle)
+						.getByText(contentTitle)
+				).toBeVisible();
+
+				await expect(
+					dataSetFragmentPage.table.bodyRows
+						.getByLabel(fileTitle)
+						.getByText(fileTitle)
+				).toBeVisible();
+			});
+
+			await test.step('File row action menu shows Download and inherited actions', async () => {
+				await dataSetFragmentPage
+					.getRow(fileTitle)
+					.getByRole('button', {name: `${fileTitle} Actions`})
+					.click();
+
+				for (const action of [
+					'Delete',
+					'Download',
+					'Edit',
+					'Permissions',
+					'Share',
+					'View History',
+				]) {
+					await expect(
+						page.getByRole('menuitem', {
+							exact: true,
+							name: action,
+						})
+					).toBeVisible();
+				}
+
+				await page.keyboard.press('Escape');
+			});
+
+			await test.step('Content row action menu shows inherited actions but no Download', async () => {
+				await dataSetFragmentPage
+					.getRow(contentTitle)
+					.getByRole('button', {
+						name: `${contentTitle} Actions`,
+					})
+					.click();
+
+				for (const action of [
+					'Delete',
+					'Edit',
+					'Permissions',
+					'Share',
+					'View History',
+				]) {
+					await expect(
+						page.getByRole('menuitem', {
+							exact: true,
+							name: action,
+						})
+					).toBeVisible();
+				}
+
+				await expect(
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Download',
+					})
+				).toBeHidden();
+
+				await page.keyboard.press('Escape');
+			});
+
+			await test.step('Can download a file asset from Recent Assets', async () => {
+				const downloadPromise = page.waitForEvent('download');
+
+				await dataSetFragmentPage.execItemAction({
+					action: 'Download',
+					filter: fileTitle,
+				});
+
+				const download = await downloadPromise;
+
+				expect(download.suggestedFilename()).toBe(fileName);
+			});
+		}
+		finally {
+			if (contentEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					contentApplicationName,
+					String(contentEntry.id)
+				);
+			}
+
+			if (fileEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					fileApplicationName,
+					String(fileEntry.id)
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Can use Quick Actions to create new content',
 	{tag: '@LPD-58793'},
 	async ({apiHelpers, homePage, page}) => {

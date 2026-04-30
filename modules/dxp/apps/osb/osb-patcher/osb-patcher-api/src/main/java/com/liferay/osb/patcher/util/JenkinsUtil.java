@@ -10,6 +10,7 @@ import com.liferay.osb.patcher.constants.JenkinsConstants;
 import com.liferay.osb.patcher.constants.PatcherActionKeys;
 import com.liferay.osb.patcher.constants.PatcherBuildConstants;
 import com.liferay.osb.patcher.constants.PatcherConstants;
+import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.PatcherProductVersionConstants;
 import com.liferay.osb.patcher.constants.PatcherProjectVersionConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
@@ -118,9 +119,15 @@ public class JenkinsUtil {
 				PatcherFix patcherFix)
 		throws Exception {
 
-		Map<String, String> jenkinsRequestParameters = HashMapBuilder.put(
-			"osb.patcher.committish", String.valueOf(patcherFix.getCommittish())
-		).build();
+		Map<String, String> jenkinsRequestParameters = new HashMap<>();
+
+		if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
+			jenkinsRequestParameters.put("osb.patcher.autoFix", "true");
+		}
+
+		jenkinsRequestParameters.put(
+			"osb.patcher.committish",
+			String.valueOf(patcherFix.getCommittish()));
 
 		if (patcherFix.getStatus() == WorkflowConstants.STATUS_FIX_REBASING) {
 			List<Long> parentPatcherFixIds =
@@ -139,6 +146,11 @@ public class JenkinsUtil {
 			"osb.patcher.fixIds", String.valueOf(patcherFix.getPatcherFixId()));
 		jenkinsRequestParameters.put(
 			"osb.patcher.gitRemoteURL", patcherFix.getGitRemoteURL());
+
+		if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
+			jenkinsRequestParameters.put(
+				"osb.patcher.tickets", patcherFix.getName());
+		}
 
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(

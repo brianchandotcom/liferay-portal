@@ -140,6 +140,8 @@ When the user chooses **supersede**:
 
 1. Add a comment on the previous pull request linking to the new one (for example, `Superseded by <new-pr-url>.`).
 
+1. Close the previous pull request when possible. When the user lacks permission to close it directly, add a `ci:close` comment instead so the CI bot closes it.
+
 When the user chooses **add**:
 
 1. Append the new pull request URL to the existing value, separating each URL with a comma and a space.

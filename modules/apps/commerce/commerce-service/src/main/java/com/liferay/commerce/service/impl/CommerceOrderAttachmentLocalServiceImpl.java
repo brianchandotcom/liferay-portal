@@ -245,8 +245,8 @@ public class CommerceOrderAttachmentLocalServiceImpl
 			}
 
 			file = FileUtil.createTempFile(inputStream);
-			fileName = DLUtil.getUniqueTitle(
-				folder.getGroupId(), folder.getFolderId(), fileName);
+			fileName = DLUtil.getUniqueFileName(
+				folder.getGroupId(), folder.getFolderId(), fileName, false);
 
 			ServiceContext serviceContext = new ServiceContext();
 

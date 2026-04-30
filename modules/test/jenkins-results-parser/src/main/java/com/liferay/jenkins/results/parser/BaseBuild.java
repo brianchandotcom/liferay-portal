@@ -447,6 +447,13 @@ public abstract class BaseBuild implements Build {
 			for (FailureMessageGenerator failureMessageGenerator :
 					getFailureMessageGenerators()) {
 
+				if ((failureMessageGenerator instanceof
+						GenericFailureMessageGenerator) &&
+					!failureReportsJSONArray.isEmpty()) {
+
+					continue;
+				}
+
 				String failureMessage = failureMessageGenerator.getMessage(
 					this);
 

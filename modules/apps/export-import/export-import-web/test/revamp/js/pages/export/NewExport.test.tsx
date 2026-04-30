@@ -12,7 +12,12 @@ import React from 'react';
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
 
 const renderComponent = () => {
-	return render(<NewExport backURL="/some/back/url" />);
+	return render(
+		<NewExport
+			backURL="/some/back/url"
+			exportPreviewAPIURL="/o/export-import/v1.0/export-preview"
+		/>
+	);
 };
 
 describe('NewExport', () => {

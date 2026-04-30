@@ -52,6 +52,7 @@ const OBJECT_DEFINITIONS: ObjectDefinitions = {
 };
 
 const DEFAULT_STATE: State = {
+	clipboard: null,
 	history: {
 		deletedChildren: [],
 		deletedGroupERCs: [],

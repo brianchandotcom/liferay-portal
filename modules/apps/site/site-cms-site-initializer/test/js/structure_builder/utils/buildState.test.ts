@@ -104,6 +104,7 @@ describe('buildState', () => {
 		};
 
 		const initialState: State = {
+			clipboard: null,
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],
@@ -161,6 +162,7 @@ describe('buildState', () => {
 		};
 
 		const initialState: State = {
+			clipboard: null,
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],
@@ -229,6 +231,7 @@ describe('buildState', () => {
 		};
 
 		const initialState: State = {
+			clipboard: null,
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],

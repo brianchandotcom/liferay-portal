@@ -6,8 +6,22 @@
 import {deepClone} from 'frontend-js-web';
 
 import {IView} from '../utils/types';
-import {ISnapshot} from './ViewsContext';
+import {ISnapshot, ISnapshotGroup} from './ViewsContext';
 import getViewComponent from './getViewComponent';
+
+const OWNED_GROUP_KEY = 'owned';
+
+const mapSnapshotInGroups = (
+	snapshotGroups: Array<ISnapshotGroup>,
+	erc: string,
+	updater: (snapshot: ISnapshot) => ISnapshot
+) =>
+	snapshotGroups.map((group) => ({
+		...group,
+		items: group.items.map((snapshot) =>
+			snapshot.erc === erc ? updater(snapshot) : snapshot
+		),
+	}));
 
 export enum EViewsActionTypes {
 	ADD_OR_UPDATE_SNAPSHOT = 'ADD_OR_UPDATE_SNAPSHOT',
@@ -34,34 +48,48 @@ type TViewsActions = {
 
 const viewsActions: TViewsActions = {
 	[EViewsActionTypes.ADD_OR_UPDATE_SNAPSHOT]: (state, value) => {
-		const {snapshots} = state;
+		const {snapshotGroups}: {snapshotGroups: Array<ISnapshotGroup>} = state;
 
 		const {configuration, erc} = value;
 
-		const existentSnapshot = snapshots.find(
-			(snapshot: ISnapshot) => snapshot.erc === erc
+		const existsInGroups = snapshotGroups.some((group) =>
+			group.items.some((snapshot) => snapshot.erc === erc)
 		);
 
-		let updatedSnapshots;
+		let updatedGroups: Array<ISnapshotGroup>;
 
-		if (!existentSnapshot) {
-			updatedSnapshots = snapshots.concat([value]);
+		if (existsInGroups) {
+			updatedGroups = mapSnapshotInGroups(
+				snapshotGroups,
+				erc,
+				(snapshot) => ({...snapshot, configuration})
+			);
 		}
 		else {
-			updatedSnapshots = snapshots.map((snapshot: ISnapshot) => {
-				if (snapshot.erc === erc) {
-					snapshot.configuration = configuration;
-				}
+			const ownedGroupIndex = snapshotGroups.findIndex(
+				(group) => group.key === OWNED_GROUP_KEY
+			);
 
-				return snapshot;
-			});
+			if (ownedGroupIndex >= 0) {
+				updatedGroups = snapshotGroups.map((group, index) =>
+					index === ownedGroupIndex
+						? {...group, items: [...group.items, value]}
+						: group
+				);
+			}
+			else {
+				updatedGroups = [
+					{items: [value], key: OWNED_GROUP_KEY},
+					...snapshotGroups,
+				];
+			}
 		}
 
 		return {
 			...state,
 			activeSnapshotERC: erc,
+			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
-			snapshots: updatedSnapshots,
 		};
 	},
 	[EViewsActionTypes.BATCH_UPDATE]: (state, stateUpdates) => {
@@ -80,36 +108,49 @@ const viewsActions: TViewsActions = {
 		}, state);
 	},
 	[EViewsActionTypes.DELETE_SNAPSHOT]: (state, value) => {
-		const {defaultSnapshot, snapshots} = state;
+		const {
+			defaultSnapshot,
+			snapshotGroups,
+		}: {
+			defaultSnapshot: any;
+			snapshotGroups: Array<ISnapshotGroup>;
+		} = state;
 
-		const remainingSnapshots = snapshots.filter(
-			(snapshot: ISnapshot) => snapshot.erc !== value.snapshotERC
-		);
+		const updatedGroups = snapshotGroups.map((group) => ({
+			...group,
+			items: group.items.filter(
+				(snapshot) => snapshot.erc !== value.snapshotERC
+			),
+		}));
 
 		return {
 			...state,
 			...defaultSnapshot,
 			activeSnapshotERC: null,
+			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
-			snapshots: remainingSnapshots,
 		};
 	},
 	[EViewsActionTypes.NOOP]: (state) => state,
 	[EViewsActionTypes.RENAME_ACTIVE_SNAPSHOT]: (state, value) => {
-		const {activeSnapshotERC, snapshots} = state;
+		const {
+			activeSnapshotERC,
+			snapshotGroups,
+		}: {
+			activeSnapshotERC: string;
+			snapshotGroups: Array<ISnapshotGroup>;
+		} = state;
 
-		const updatedSnapshots = snapshots.map((snapshot: ISnapshot) => {
-			if (snapshot.erc === activeSnapshotERC) {
-				snapshot.label = value.label;
-			}
-
-			return snapshot;
-		});
+		const updatedGroups = mapSnapshotInGroups(
+			snapshotGroups,
+			activeSnapshotERC,
+			(snapshot) => ({...snapshot, label: value.label})
+		);
 
 		return {
 			...state,
+			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
-			snapshots: [...updatedSnapshots],
 		};
 	},
 	[EViewsActionTypes.RESET_TO_DEFAULT_SNAPSHOT]: (state) => {

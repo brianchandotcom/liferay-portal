@@ -13,6 +13,7 @@ const baseAttributes = [
 	'eulaBaseURL',
 	'featureFlags',
 	'featurePreview',
+	'lastYearProjectsUsingMarketplaceAppsCount',
 	'marketoFormIdDefault',
 	'marketoFormIdLiferayProduct',
 	'productId',

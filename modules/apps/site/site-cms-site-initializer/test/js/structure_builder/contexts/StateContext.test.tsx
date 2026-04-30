@@ -48,6 +48,7 @@ function buildInitialState(field: Field): State {
 	children.set(field.uuid, field);
 
 	return {
+		clipboard: null,
 		history: {
 			deletedChildren: [],
 			deletedGroupERCs: [],

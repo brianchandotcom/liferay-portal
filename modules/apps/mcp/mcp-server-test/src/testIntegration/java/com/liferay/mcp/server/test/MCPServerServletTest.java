@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,8 +47,6 @@ import java.net.http.HttpResponse;
 
 import java.util.Base64;
 import java.util.Collections;
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
@@ -463,12 +462,12 @@ public class MCPServerServletTest {
 				_MCP_SERVER_CONFIGURATION_PID,
 				String.valueOf(TestPropsValues.getCompanyId()), "?");
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("companyId", TestPropsValues.getCompanyId());
-		properties.put("enabled", enabled);
-
-		configuration.update(properties);
+		configuration.update(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"enabled", enabled
+			).build());
 	}
 
 	private static final String _MCP_SERVER_CONFIGURATION_PID =

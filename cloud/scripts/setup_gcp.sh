@@ -9,6 +9,7 @@ trap "_recover_kubectl_context \${?}" ERR
 
 _GCP_DEPLOYMENT_NAME=""
 _GCP_PROJECT_ID=""
+_GITOPS_RESOURCE_TF_VARS=()
 
 _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -33,11 +34,11 @@ function main {
 
 	local terraform_args
 
-	terraform_args="$(_get_terraform_apply_args "${1}" "${2}")"
+	readarray -t terraform_args < <(_get_terraform_apply_args "${1}" "${2}")
 
-	_set_up_gcp_gke "${terraform_args}"
+	_set_up_gcp_gke "${terraform_args[@]}"
 
-	_set_up_gcp_gitops "${terraform_args}"
+	_set_up_gcp_gitops "${terraform_args[@]}"
 }
 
 function _generate_tfvars {
@@ -129,7 +130,7 @@ function _get_terraform_apply_args {
 		apply_args+=("-parallelism=${parallelism}")
 	fi
 
-	echo "${apply_args[@]}"
+	printf '%s\n' "${apply_args[@]}"
 }
 
 function _popd {
@@ -187,7 +188,7 @@ function _set_up_gcp_gke {
 
 	echo "Setting up the Google GKE cluster."
 
-	_terraform_init_and_apply "." "${1}"
+	_terraform_init_and_apply "." "$@"
 
 	gcloud auth login
 
@@ -199,6 +200,8 @@ function _set_up_gcp_gke {
 		"$(terraform output -raw membership_name)" \
 		--project "$(terraform output -raw project_id)"
 
+	_GITOPS_RESOURCE_TF_VARS+=(-var "vpc_name=$(terraform output -raw network_name)")
+
 	echo "Google GKE cluster setup complete."
 
 	_popd
@@ -209,9 +212,9 @@ function _set_up_gcp_gitops {
 
 	echo "Setting up the Google GCP GitOps infrastructure."
 
-	_terraform_init_and_apply "./platform" "${1}"
+	_terraform_init_and_apply "./platform" "$@"
 
-	_terraform_init_and_apply "./resources" "${1}"
+	_terraform_init_and_apply "./resources" "$@" "${_GITOPS_RESOURCE_TF_VARS[@]}"
 
 	echo "Google GCP GitOps infrastructure setup complete."
 
@@ -223,7 +226,7 @@ function _terraform_init_and_apply {
 
 	terraform init -upgrade
 
-	terraform apply ${@:2}
+	terraform apply "${@:2}"
 
 	_popd
 }

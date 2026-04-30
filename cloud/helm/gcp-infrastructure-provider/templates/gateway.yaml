@@ -37,7 +37,6 @@ spec:
                 minReplicas: 3
             envoyService:
                 annotations:
-                    cloud.google.com/neg: "{\"ingress\": true}"
                     {{- if not .Values.gateway.internetFacing }}
                     networking.gke.io/internal-load-balancer-allow-global-access: "true"
                     networking.gke.io/load-balancer-type: Internal

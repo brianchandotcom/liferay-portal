@@ -222,6 +222,10 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 									value=var.crossplane_namespace
 								},
 								{
+									name="crossplaneGsaEmail"
+									value=google_service_account.cloudplatform_gsa.email
+								},
+								{
 									name="deploymentName"
 									value=var.deployment_name
 								},
@@ -240,6 +244,10 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 								{
 									name="global.gcp.projectNumber"
 									value=data.google_project.project.number
+								},
+								{
+									name="global.gcp.vpcName"
+									value=var.vpc_name
 								},
 							]
 							valueFiles=[

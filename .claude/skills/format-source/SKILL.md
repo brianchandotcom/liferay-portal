@@ -397,3 +397,27 @@ It applies to workflow and other YAML scripted output.
 -                        echo "No entries found for ${id}."
 +                        echo "No entries were found for ${id}."
 ```
+
+### Rule 19: Use "Delete" for Helpers That Delete Entities
+
+**Why:** Liferay's persistence APIs spell entity destruction as `delete*` (`deleteUser`, `deleteEntry`); naming a private helper `_delete*` when its body calls a `delete*` service keeps the helper's verb aligned with the operation it performs.
+
+**Examples:**
+
+```diff
+-private void _removeStaleFoos(Map<Long, List<String>> deletedIdsMap)
++private void _deleteStaleFoos(Map<Long, List<String>> deletedIdsMap)
+ 		throws Exception {
+
+ 	...
+
+ 	_fooLocalService.deleteFoo(foo);
+ }
+```
+
+Update the call sites at the same time.
+
+```diff
+-_removeStaleFoos(deletedIdsMap);
++_deleteStaleFoos(deletedIdsMap);
+```

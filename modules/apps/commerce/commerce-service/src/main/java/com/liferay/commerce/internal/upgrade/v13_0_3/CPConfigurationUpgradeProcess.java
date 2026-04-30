@@ -28,6 +28,8 @@ import java.sql.ResultSet;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Matyas Wollner
@@ -109,6 +111,8 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 			ResultSet configurationListResultSet =
 				configurationListPreparedStatement.executeQuery();
 
+			Map<Long, Boolean> ctCollectionIdsMap = new HashMap<>();
+
 			while (configurationListResultSet.next()) {
 				long cpConfigurationListId = GetterUtil.getLong(
 					configurationListResultSet.getLong(
@@ -157,12 +161,23 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 					long ctCollectionId = configurationEntryResultSet.getLong(
 						"ctCollectionId");
 
-					CTCollection ctCollection =
-						_ctCollectionLocalService.fetchCTCollection(
+					if (ctCollectionId > 0) {
+						Boolean readOnly = ctCollectionIdsMap.get(
 							ctCollectionId);
 
-					if (_isCTCollectionReadOnly(ctCollection)) {
-						continue;
+						if (readOnly == null) {
+							CTCollection ctCollection =
+								_ctCollectionLocalService.fetchCTCollection(
+									ctCollectionId);
+
+							readOnly = _isCTCollectionReadOnly(ctCollection);
+
+							ctCollectionIdsMap.put(ctCollectionId, readOnly);
+						}
+
+						if (readOnly) {
+							continue;
+						}
 					}
 
 					try (SafeCloseable safeCloseable =
@@ -174,7 +189,7 @@ public class CPConfigurationUpgradeProcess extends UpgradeProcess {
 							addCPConfigurationEntry(
 								null, userId, groupId, cpDefinitionClassNameId,
 								configurationEntryResultSet.getLong(
-									"CpDefinitionId"),
+									"CPDefinitionId"),
 								cpConfigurationListId,
 								configurationEntryResultSet.getLong(
 									"CPTaxCategoryId"),

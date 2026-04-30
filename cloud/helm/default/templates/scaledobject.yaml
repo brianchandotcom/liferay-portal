@@ -18,7 +18,7 @@ spec:
         kind: StatefulSet
         name: {{ include "liferay.name" . }}
     {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
-    {{- $rawTriggers := concat (.Values.keda.defaultTriggers | default list) (.Values.keda.triggers | default list) }}
+    {{- $rawTriggers := concat (.Values.keda.triggers | default list) (.Values.keda.customTriggers | default list) }}
     {{- $triggers := list }}
     {{- range $rawTriggers }}
         {{- $trigger := deepCopy . }}

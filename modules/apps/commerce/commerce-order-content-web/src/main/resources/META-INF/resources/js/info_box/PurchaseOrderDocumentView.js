@@ -43,18 +43,36 @@ const PurchaseOrderDocumentView = ({
 	const [inputValue, setInputValue] = useState(
 		additionalProps?.value ? additionalProps?.value : null
 	);
+	const [isOwner, setIsOwner] = useState(additionalProps?.isOwner);
 	const [value, setValue] = useState(fieldValue);
 
+	const refreshAttachmentsTable = () => {
+		if (additionalProps?.fdsId) {
+			window.top.Liferay.fire('fds-update-display', {
+				id: additionalProps.fdsId,
+			});
+		}
+	};
+
 	const addAttachment = async (file) => {
+		const payload = {
+			attachment: await getBase64(file),
+			title: file.name,
+		};
+
+		if (Liferay.FeatureFlags['LPD-6252']) {
+			payload.type = 'purchaseOrderDocument';
+		}
+
 		CommerceServiceProvider.DeliveryCartAPI('v1')
-			.addAttachment(orderId, {
-				attachment: await getBase64(file),
-				title: file.name,
-			})
+			.addAttachment(orderId, payload)
 			.then((response) => {
 				setDownloadURL(response.url);
 				setInputValue(response.id);
+				setIsOwner(true);
 				setValue(response.title);
+
+				refreshAttachmentsTable();
 			})
 			.catch((error) => {
 				openToast({
@@ -73,6 +91,8 @@ const PurchaseOrderDocumentView = ({
 				setDownloadURL(null);
 				setInputValue(null);
 				setValue('');
+
+				refreshAttachmentsTable();
 			})
 			.catch((error) => {
 				openToast({
@@ -169,7 +189,8 @@ const PurchaseOrderDocumentView = ({
 					{hasUpdatePermission &&
 					!readOnly &&
 					value &&
-					isEditable(field, isOpen) ? (
+					isEditable(field, isOpen) &&
+					(!Liferay.FeatureFlags['LPD-6252'] || isOwner) ? (
 						<ClayButton.Group className="flex-nowrap">
 							<ClayButtonWithIcon
 								aria-label={sub(

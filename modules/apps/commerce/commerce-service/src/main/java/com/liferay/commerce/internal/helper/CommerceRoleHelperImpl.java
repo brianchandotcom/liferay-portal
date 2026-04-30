@@ -329,6 +329,11 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			groupResourceActionIds.put(
 				CommerceOrderAttachment.class.getName(),
 				new String[] {ActionKeys.VIEW});
+			groupResourceActionIds.put(
+				"com.liferay.commerce.order",
+				new String[] {
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT
+				});
 		}
 		else if (name.equals(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
@@ -354,6 +359,7 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 				"com.liferay.commerce.order",
 				new String[] {
 					CommerceOrderActionKeys.ADD_COMMERCE_ORDER,
+					CommerceOrderActionKeys.ADD_COMMERCE_ORDER_ATTACHMENT,
 					CommerceOrderActionKeys.CHECKOUT_OPEN_COMMERCE_ORDERS,
 					CommerceOrderActionKeys.
 						MANAGE_COMMERCE_ORDER_DELIVERY_TERMS,

@@ -16140,22 +16140,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						docker exec ${database.host} /bin/bash /tmp/import-database.sh
 					]]>
 				</execute>
-
-				<get-testcase-property property.name="custom.mysql.sql.statement" />
-
-				<if>
-					<and>
-						<equals arg1="${database.type}" arg2="mysql" />
-						<isset property="custom.mysql.sql.statement" />
-					</and>
-					<then>
-						<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
-							<![CDATA[
-								${custom.mysql.sql.statement}
-							]]>
-						</sql>
-					</then>
-				</if>
 			</then>
 			<else>
 				<if>
@@ -16258,22 +16242,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									<exec executable="mysql_upgrade" />
 								</then>
 							</if>
-
-							<get-testcase-property property.name="custom.mysql.sql.statement" />
-
-							<if>
-								<and>
-									<equals arg1="${database.type}" arg2="mysql" />
-									<isset property="custom.mysql.sql.statement" />
-								</and>
-								<then>
-									<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
-										<![CDATA[
-											${custom.mysql.sql.statement}
-										]]>
-									</sql>
-								</then>
-							</if>
 						</then>
 					</elseif>
 					<elseif>
@@ -16347,6 +16315,35 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 					</elseif>
 				</if>
 			</else>
+		</if>
+
+		<get-testcase-property property.name="custom.${database.type}.sql.statement" />
+
+		<local name="custom.sql.statement" />
+
+		<propertycopy from="custom.${database.type}.sql.statement" name="custom.sql.statement" silent="true" />
+
+		<if>
+			<isset property="custom.sql.statement" />
+			<then>
+				<local name="custom.sql.driver" />
+				<local name="custom.sql.driver.jar" />
+				<local name="custom.sql.password" />
+				<local name="custom.sql.url" />
+				<local name="custom.sql.username" />
+
+				<propertycopy from="jdbc.${database.type}.driver" name="custom.sql.driver.jar" silent="true" />
+				<propertycopy from="database.${database.type}.driver" name="custom.sql.driver" silent="true" />
+				<propertycopy from="database.${database.type}.password" name="custom.sql.password" silent="true" />
+				<propertycopy from="database.${database.type}.url" name="custom.sql.url" silent="true" />
+				<propertycopy from="database.${database.type}.username" name="custom.sql.username" silent="true" />
+
+				<sql classpath="${app.server.shielded-container-lib.portal.dir}/${custom.sql.driver.jar}" driver="${custom.sql.driver}" onerror="continue" output="output.txt" password="${custom.sql.password}" print="true" url="${custom.sql.url}" userid="${custom.sql.username}">
+					<![CDATA[
+						${custom.sql.statement}
+					]]>
+				</sql>
+			</then>
 		</if>
 
 		<delete file="sql/create-bare/create-bare-mysql-utf8mb3.sql" quiet="true" />

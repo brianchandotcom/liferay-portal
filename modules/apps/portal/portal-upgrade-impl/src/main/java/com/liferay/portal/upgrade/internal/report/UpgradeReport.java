@@ -753,10 +753,16 @@ public class UpgradeReport {
 		File reportFile = new File(reportsDir, reportFileName);
 
 		if (reportFile.exists()) {
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+				"yyyyMMdd_HHmmss", LocaleUtil.US);
+
+			simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+			String timestamp = simpleDateFormat.format(
+				new Date(reportFile.lastModified()));
+
 			reportFile.renameTo(
-				new File(
-					reportsDir,
-					reportFileName + "." + reportFile.lastModified()));
+				new File(reportsDir, reportFileName + "." + timestamp));
 
 			reportFile = new File(reportsDir, reportFileName);
 		}

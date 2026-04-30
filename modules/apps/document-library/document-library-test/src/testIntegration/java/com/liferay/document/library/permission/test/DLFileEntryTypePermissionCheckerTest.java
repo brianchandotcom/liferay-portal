@@ -105,17 +105,17 @@ public class DLFileEntryTypePermissionCheckerTest
 		return DLConstants.RESOURCE_NAME;
 	}
 
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
-	)
-	private ModelResourcePermission<DLFileEntryType>
-		_dlFileEntryTypeModelResourcePermission;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
+	)
+	private ModelResourcePermission<DLFileEntryType>
+		_dlFileEntryTypeModelResourcePermission;
 
 	@DeleteAfterTestRun
 	private Group _group;

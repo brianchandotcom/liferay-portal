@@ -88,9 +88,9 @@ public class DLFileVersionTableReferenceDefinitionTest
 		return _dlFileEntry.getFileVersion();
 	}
 
+	private DLFileEntry _dlFileEntry;
+
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	private DLFileEntry _dlFileEntry;
 
 }

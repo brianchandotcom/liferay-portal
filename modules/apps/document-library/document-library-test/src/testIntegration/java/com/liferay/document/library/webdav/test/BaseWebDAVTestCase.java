@@ -326,9 +326,6 @@ public class BaseWebDAVTestCase {
 
 	private static final String _SERVLET_PATH = "";
 
-	@Inject
-	private WebDAVStorage _webDAVStorage;
-
 	static {
 		_LOCK_XML = StringBundler.concat(
 			"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n",
@@ -343,5 +340,8 @@ public class BaseWebDAVTestCase {
 			"<D:propfind xmlns:D=\"DAV:\">\n", "<D:allprop/>\n",
 			"</D:propfind>");
 	}
+
+	@Inject
+	private WebDAVStorage _webDAVStorage;
 
 }

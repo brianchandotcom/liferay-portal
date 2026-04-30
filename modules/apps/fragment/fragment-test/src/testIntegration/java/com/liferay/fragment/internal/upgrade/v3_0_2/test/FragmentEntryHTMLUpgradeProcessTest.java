@@ -130,11 +130,6 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -156,5 +151,10 @@ public class FragmentEntryHTMLUpgradeProcessTest {
 	private MultiVMPool _multiVMPool;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

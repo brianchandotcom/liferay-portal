@@ -107,12 +107,12 @@ public class TensorFlowModelUpgradeProcessTest {
 			"configuration." +
 				"TensorFlowImageAssetAutoTagProviderCompanyConfiguration";
 
+	@Inject(filter = "default=true")
+	private Store _store;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.upgrade.registry.TensorFlowAssetAutoTagProviderUpgradeStepRegistrator))"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject(filter = "default=true")
-	private Store _store;
 
 }

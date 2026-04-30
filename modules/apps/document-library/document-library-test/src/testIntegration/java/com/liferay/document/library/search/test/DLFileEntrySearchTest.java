@@ -609,13 +609,13 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
 
 	@Inject
-	private DDMIndexer _ddmIndexer;
-
-	@Inject
 	private DDM _ddm;
 
 	@Inject
 	private DDMBeanTranslator _ddmBeanTranslator;
+
+	@Inject
+	private DDMIndexer _ddmIndexer;
 
 	private DDMStructure _ddmStructure;
 

@@ -1538,12 +1538,6 @@ public class FragmentEntryProcessorHelperTest {
 	}
 
 	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
-
-	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	private AssetVocabulary _assetVocabulary;
@@ -1570,7 +1564,13 @@ public class FragmentEntryProcessorHelperTest {
 	private Group _group;
 
 	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private JournalConverter _journalConverter;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	private Layout _layout;
 

@@ -144,15 +144,15 @@ public class FragmentServiceExternalReferenceCodeUpgradeProcessTest
 		return new Version(2, 12, 0);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private FragmentCompositionService _fragmentCompositionService;
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

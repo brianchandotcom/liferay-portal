@@ -76,15 +76,15 @@ public class PollsToDDMUpgradeProcessTest {
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v7_0_4." +
 			"PollsToDDMUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

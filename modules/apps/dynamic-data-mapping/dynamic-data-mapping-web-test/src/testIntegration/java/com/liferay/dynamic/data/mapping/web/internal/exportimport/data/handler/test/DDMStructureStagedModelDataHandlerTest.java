@@ -561,13 +561,14 @@ public class DDMStructureStagedModelDataHandlerTest
 		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 
 	private Set<Locale> _availableLocales;
+
+	@Inject(filter = "ddm.data.provider.type=rest")
+	private DDMDataProvider _ddmDataProvider;
+
 	private Locale _defaultLocale;
 
 	@Inject(filter = "ddm.form.values.deserializer.type=json")
 	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
-
-	@Inject(filter = "ddm.data.provider.type=rest")
-	private DDMDataProvider _ddmDataProvider;
 
 	@DeleteAfterTestRun
 	private Company _targetCompany;

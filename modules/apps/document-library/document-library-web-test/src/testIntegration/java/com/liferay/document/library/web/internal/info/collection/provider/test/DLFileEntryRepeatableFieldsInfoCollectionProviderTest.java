@@ -318,9 +318,6 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 
@@ -335,6 +332,9 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private Portal _portal;

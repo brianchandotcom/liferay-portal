@@ -111,11 +111,6 @@ public class FragmentCollectionUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private DLFolderLocalService _dlFolderLocalService;
 
@@ -129,5 +124,10 @@ public class FragmentCollectionUpgradeProcessTest {
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

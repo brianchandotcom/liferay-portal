@@ -124,13 +124,14 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryPermissionCheckerTest.class);
 
+	private FileEntry _fileEntry;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
 	)
 	private ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
 
-	private FileEntry _fileEntry;
 	private FileEntry _subfileEntry;
 
 }

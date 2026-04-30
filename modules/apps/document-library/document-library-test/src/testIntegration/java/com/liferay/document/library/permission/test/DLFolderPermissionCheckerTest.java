@@ -126,13 +126,13 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFolderPermissionCheckerTest.class);
 
+	private Folder _folder;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.repository.model.Folder"
 	)
-	private ModelResourcePermission<Folder>
-		_folderModelResourcePermission;
+	private ModelResourcePermission<Folder> _folderModelResourcePermission;
 
-	private Folder _folder;
 	private Folder _subfolder;
 
 }

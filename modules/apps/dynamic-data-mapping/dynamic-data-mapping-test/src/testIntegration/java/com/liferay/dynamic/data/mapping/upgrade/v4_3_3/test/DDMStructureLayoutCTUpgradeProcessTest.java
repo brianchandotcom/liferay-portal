@@ -120,11 +120,6 @@ public class DDMStructureLayoutCTUpgradeProcessTest
 		return ddmFormLayout;
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private DDMStructureLayoutLocalService _ddmStructureLayoutLocalService;
 
@@ -135,5 +130,10 @@ public class DDMStructureLayoutCTUpgradeProcessTest
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

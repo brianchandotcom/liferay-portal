@@ -222,11 +222,6 @@ public class DDMFieldAttributeUpgradeProcessTest {
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_6_1." +
 			"DDMFieldAttributeUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;
 
@@ -250,5 +245,10 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

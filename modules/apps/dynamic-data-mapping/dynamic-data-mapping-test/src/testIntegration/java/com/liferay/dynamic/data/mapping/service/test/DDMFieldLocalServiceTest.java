@@ -665,12 +665,12 @@ public class DDMFieldLocalServiceTest {
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;
 
-	@Inject
-	private JSONFactory _jsonFactory;
-
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 }

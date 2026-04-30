@@ -863,9 +863,6 @@ public class FragmentEntryFragmentRendererTest {
 	}
 
 	@Inject
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Inject
@@ -876,6 +873,9 @@ public class FragmentEntryFragmentRendererTest {
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private CTCollectionService _ctCollectionService;

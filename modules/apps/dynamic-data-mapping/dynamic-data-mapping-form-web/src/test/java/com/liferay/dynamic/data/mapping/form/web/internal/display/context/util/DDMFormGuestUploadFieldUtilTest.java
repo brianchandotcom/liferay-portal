@@ -307,9 +307,10 @@ public class DDMFormGuestUploadFieldUtilTest {
 			DDMFormInstanceRecordLocalService.class);
 	private static ServiceRegistration<DDMFormInstanceRecordLocalService>
 		_ddmFormInstanceRecordLocalServiceServiceRegistration;
-	private List<DDMFormInstanceRecord> _ddmFormInstanceRecords =
-		new ArrayList<>();
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+
+	private List<DDMFormInstanceRecord> _ddmFormInstanceRecords =
+		new ArrayList<>();
 
 }

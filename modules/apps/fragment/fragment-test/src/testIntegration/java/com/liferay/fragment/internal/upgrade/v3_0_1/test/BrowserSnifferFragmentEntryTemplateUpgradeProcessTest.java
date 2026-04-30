@@ -172,11 +172,6 @@ public class BrowserSnifferFragmentEntryTemplateUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private CTCollection _ctCollection;
 
 	@Inject
@@ -206,5 +201,10 @@ public class BrowserSnifferFragmentEntryTemplateUpgradeProcessTest {
 	private MultiVMPool _multiVMPool;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -433,11 +433,6 @@ public class DLFileEntryTypeServiceTest {
 	private static final String _TEST_DDM_STRUCTURE =
 		"dependencies/ddmstructure.xml";
 
-	@Inject(
-		filter = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
-	)
-	private Indexer<DLFileEntryType> _indexer;
-
 	private DLFileEntryType _basicDocumentDLFileEntryType;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
@@ -460,5 +455,10 @@ public class DLFileEntryTypeServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
+	)
+	private Indexer<DLFileEntryType> _indexer;
 
 }

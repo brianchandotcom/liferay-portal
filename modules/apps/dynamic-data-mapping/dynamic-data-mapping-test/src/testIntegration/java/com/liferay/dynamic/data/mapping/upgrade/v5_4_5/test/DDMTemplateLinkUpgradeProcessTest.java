@@ -73,11 +73,6 @@ public class DDMTemplateLinkUpgradeProcessTest {
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_5." +
 			"DDMTemplateLinkUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -86,5 +81,10 @@ public class DDMTemplateLinkUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

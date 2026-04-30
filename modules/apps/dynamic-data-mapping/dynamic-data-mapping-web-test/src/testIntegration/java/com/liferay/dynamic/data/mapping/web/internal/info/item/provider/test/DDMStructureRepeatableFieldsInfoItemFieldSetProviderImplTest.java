@@ -155,15 +155,15 @@ public class DDMStructureRepeatableFieldsInfoItemFieldSetProviderImplTest {
 				"/test/dependencies/" + fileName);
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private DDMStructureRepeatableFieldsInfoItemFieldSetProvider
 		_ddmStructureRepeatableFieldsInfoItemFieldSetProvider;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private Portal _portal;

@@ -972,10 +972,6 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static final String _USER_AGENT =
 		"WebDAVFS/1.8 (01808000) Darwin/10.3.0 (i386)";
 
-	private byte[] _testDeltaBytes;
-	private byte[] _testFileBytes;
-	private byte[] _testMetaBytes;
-
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;
 
@@ -989,5 +985,8 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private final Map<String, String> _lockMap = new HashMap<>();
+	private byte[] _testDeltaBytes;
+	private byte[] _testFileBytes;
+	private byte[] _testMetaBytes;
 
 }

@@ -99,11 +99,6 @@ public class DDMDataProviderInstanceCTUpgradeProcessTest
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v3_9_0." +
 			"DDMDataProviderInstanceUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private DDMDataProviderInstance _ddmDataProviderInstance;
 
@@ -117,5 +112,10 @@ public class DDMDataProviderInstanceCTUpgradeProcessTest
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

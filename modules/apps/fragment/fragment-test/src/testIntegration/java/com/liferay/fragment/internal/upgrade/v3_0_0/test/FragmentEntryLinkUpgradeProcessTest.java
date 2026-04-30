@@ -446,11 +446,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 		_assertFragmentEntryLinks(expectedValuesMap, fragmentEntryLinkIds);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Connection _connection;
 	private DB _db;
 	private DBInspector _dbInspector;
@@ -474,5 +469,10 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.fragment.internal.upgrade.registry.FragmentServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

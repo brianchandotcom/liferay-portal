@@ -189,10 +189,9 @@ public class PatcherBuildLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		patcherBuild.setCompanyId(user.getCompanyId());
-		patcherBuild.setCreateDate(new Date());
-		patcherBuild.setStatusDate(new Date());
 		patcherBuild.setUserId(user.getUserId());
 		patcherBuild.setUserName(user.getFullName());
+		patcherBuild.setCreateDate(new Date());
 
 		PatcherAccount patcherAccount =
 			_patcherAccountLocalService.fetchPatcherAccount(accountEntryCode);
@@ -204,9 +203,6 @@ public class PatcherBuildLocalServiceImpl
 
 		patcherBuild.setPatcherProductVersionId(patcherProductVersionId);
 		patcherBuild.setPatcherProjectVersionId(patcherProjectVersionId);
-		patcherBuild.setKey(
-			PatcherBuildUtil.generateKey(
-				patcherProjectVersionId, patcherBuildName, accountEntryCode));
 
 		List<String> patcherBuildTokens = PatcherUtil.sortTokens(
 			patcherBuildName);
@@ -224,9 +220,11 @@ public class PatcherBuildLocalServiceImpl
 						patcherProjectVersionId));
 		}
 
-		patcherBuild.setName(StringUtil.merge(patcherBuildTokens));
+		patcherBuild.setKey(
+			PatcherBuildUtil.generateKey(
+				patcherProjectVersionId, patcherBuildName, accountEntryCode));
 
-		patcherBuild.setType(type);
+		patcherBuild.setName(StringUtil.merge(patcherBuildTokens));
 
 		if (useExistingHotfix) {
 			PatcherBuild existingPatcherBuild =
@@ -244,6 +242,9 @@ public class PatcherBuildLocalServiceImpl
 						existingPatcherBuild.getPatcherBuildId()));
 			}
 		}
+
+		patcherBuild.setType(type);
+		patcherBuild.setStatusDate(new Date());
 
 		return patcherBuild;
 	}

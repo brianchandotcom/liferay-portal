@@ -43,6 +43,7 @@ public class DDMFormFieldTypeConstants {
 	public static final String LINK_TO_LAYOUT = "link_to_layout";
 
 	public static final String LOCALIZABLE_TEXT = "localizable_text";
+
 	public static final String MULTI_LANGUAGE_OPTION_SELECT =
 		"multi_language_option_select";
 
@@ -59,6 +60,7 @@ public class DDMFormFieldTypeConstants {
 	public static final String PASSWORD = "password";
 
 	public static final String RADIO = "radio";
+
 	public static final String REDIRECT_BUTTON = "redirect_button";
 
 	public static final String RICH_TEXT = "rich_text";

@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
+
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -279,6 +282,8 @@ public class PaymentResourceTest extends BasePaymentResourceTestCase {
 
 		commercePaymentEntry.setExternalReferenceCode(
 			payment.getExternalReferenceCode());
+		commercePaymentEntry.setCreateDate(
+			new Date(System.currentTimeMillis() - Time.HOUR));
 
 		return _commercePaymentEntryLocalService.updateCommercePaymentEntry(
 			commercePaymentEntry);

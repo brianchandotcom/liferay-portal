@@ -48,10 +48,10 @@ export namespace Analytics {
 	}
 
 	export type AccountMessage = {
-		companyProfile: {[key: string]: unknown};
 		emailAddressHashed: string;
 		id: string;
 		userId: string;
+		[key: string]: unknown;
 	};
 
 	export type Config = {

@@ -313,7 +313,7 @@ describe('Analytics', () => {
 
 			expect(items.length).toBe(1);
 			expect(items[0].userId).toBe(getItem(AnalyticsType.Keys.UserId));
-			expect(items[0].companyProfile).toEqual(COMPANY_PROFILE);
+			expect(items[0]).toMatchObject(COMPANY_PROFILE);
 			expect(items[0].emailAddressHashed).toBe(
 				Analytics.config.identity.emailAddressHashed
 			);

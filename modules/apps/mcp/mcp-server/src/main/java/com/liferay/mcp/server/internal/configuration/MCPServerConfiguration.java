@@ -13,7 +13,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Beni Herrero
  */
 @ExtendedObjectClassDefinition(
-	category = "mcp-server", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "mcp-server", featureFlagKey = "LPD-63311",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	description = "mcp-server-configuration-description",

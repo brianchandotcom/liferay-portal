@@ -2,5 +2,17 @@
 	"attribution": {
 		"commit": "",
 		"pr": ""
+	},
+	"hooks": {
+		"WorktreeCreate": [
+			{
+				"hooks": [
+					{
+						"command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/worktree-create.sh",
+						"type": "command"
+					}
+				]
+			}
+		]
 	}
 }

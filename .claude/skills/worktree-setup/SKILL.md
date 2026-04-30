@@ -55,7 +55,11 @@ Rule: strip `liferay-portal-` prefix, lowercase, replace nonalphanumeric with `_
 
 ## Full Setup
 
-### 1. Create the Worktree
+### 1. Locate or Create the Worktree
+
+If the current working directory matches `*/liferay-portal-<name>`, the worktree already exists (either created by `claude --worktree <name>` through the **WorktreeCreate** hook, or by a previous manual run). Use the current cwd as `<WORKTREE_DIR>` and the directory name as `<DIR_NAME>`, then continue.
+
+Otherwise, create one off `master`:
 
 ```bash
 git worktree add -b <BRANCH> ../<DIR_NAME> master

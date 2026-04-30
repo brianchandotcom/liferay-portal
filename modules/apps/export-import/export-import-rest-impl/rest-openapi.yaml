@@ -306,6 +306,7 @@ openapi: 3.0.1
 paths:
     "/asset-libraries/{assetLibraryExternalReferenceCode}/export-preview":
         get:
+            operationId: getAssetLibraryExportPreview
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -387,6 +388,7 @@ paths:
             tags: ["ImportProcess"]
     "/export-preview":
         get:
+            operationId: getExportPreview
             responses:
                 200:
                     content:
@@ -610,6 +612,7 @@ paths:
             tags: ["ImportProcess"]
     "/sites/{siteExternalReferenceCode}/export-preview":
         get:
+            operationId: getSiteExportPreview
             parameters:
                 -   in: path
                     name: siteExternalReferenceCode

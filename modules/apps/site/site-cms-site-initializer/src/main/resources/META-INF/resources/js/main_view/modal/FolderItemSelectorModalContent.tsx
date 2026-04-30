@@ -371,7 +371,7 @@ function FolderItemSelectorModalContent({
 
 			if (rootObjectEntryFolderExternalReferenceCode) {
 				const {data} = await ApiHelper.get<any>(
-					`/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=cmsRoot eq true and cmsSection eq '${cmsSection}' and status in (0, 2, 3)&nestedFields=embedded&scope=${space.scopeId}&pageSize=1`,
+					`/o/search/v1.0/search?emptySearch=true&entryClassNames=${OBJECT_ENTRY_FOLDER_CLASS_NAME}&filter=title eq '${cmsSection}' and folderId eq 0 and status in (0, 2, 3)&nestedFields=embedded&scope=${space.scopeId}&pageSize=1`,
 					controller.signal
 				);
 

@@ -98,6 +98,14 @@ async function handleRequest<T>(
 		};
 	}
 	catch (error) {
+		if ((error as Error).name === 'AbortError') {
+			return {
+				data: null,
+				error: null as any,
+				status: 'aborted',
+			};
+		}
+
 		return {
 			data: null,
 			error: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,

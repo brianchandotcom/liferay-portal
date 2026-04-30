@@ -21,9 +21,7 @@ import com.nimbusds.jwt.SignedJWT;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -39,59 +37,64 @@ public class JWTTokenUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_aiHubCellConfiguration = _mockAIHubCellConfiguration();
-		_setUpConfigurationProviderUtil();
-	}
-
-	@After
-	public void tearDown() {
-		_configurationProviderUtilMockedStatic.close();
-	}
-
 	@Test
 	public void testGenerateToken() throws Exception {
-		String token = JWTTokenUtil.generateToken(
-			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic =
+					_mockConfigurationProviderUtil()) {
 
-		Assert.assertNotNull(token);
-		Assert.assertFalse(token.isEmpty());
+			String token = JWTTokenUtil.generateToken(
+				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
-		SignedJWT signedJWT = SignedJWT.parse(token);
+			Assert.assertNotNull(token);
+			Assert.assertFalse(token.isEmpty());
 
-		JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
+			SignedJWT signedJWT = SignedJWT.parse(token);
 
-		Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
-		Assert.assertEquals(
-			String.valueOf(_USER_ID), jwtClaimsSet.getSubject());
+			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
+
+			Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
+			Assert.assertEquals(
+				String.valueOf(_USER_ID), jwtClaimsSet.getSubject());
+		}
 	}
 
 	@Test
 	public void testGetUserId() throws Exception {
-		String token = JWTTokenUtil.generateToken(
-			TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
+		String token = null;
 
-		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(_ISSUER, token));
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic =
+					_mockConfigurationProviderUtil()) {
 
-		_testGetUserId(
-			"Invalid JWT issuer", RandomTestUtil.randomString(),
-			JWTTokenUtil.generateToken(
-				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID));
-		_testGetUserId(
-			"Invalid JWT signature", _ISSUER,
-			token.substring(0, token.length() - 5) + "abcde");
+			token = JWTTokenUtil.generateToken(
+				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID);
 
-		_testGetUserId(
-			"The JWT token is expired", _ISSUER,
-			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
-		_testGetUserId(
-			"Unable to parse and verify the JWT token", _ISSUER,
-			RandomTestUtil.randomString());
+			Assert.assertEquals(
+				_USER_ID, JWTTokenUtil.getUserId(_ISSUER, token));
 
-		_aiHubCellConfiguration = _mockAIHubCellConfiguration();
+			_testGetUserId(
+				"Invalid JWT issuer", RandomTestUtil.randomString(),
+				JWTTokenUtil.generateToken(
+					TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID));
+			_testGetUserId(
+				"Invalid JWT signature", _ISSUER,
+				token.substring(0, token.length() - 5) + "abcde");
 
-		_testGetUserId("Invalid JWT signature", _ISSUER, token);
+			_testGetUserId(
+				"The JWT token is expired", _ISSUER,
+				JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
+			_testGetUserId(
+				"Unable to parse and verify the JWT token", _ISSUER,
+				RandomTestUtil.randomString());
+		}
+
+		try (MockedStatic<ConfigurationProviderUtil>
+				configurationProviderUtilMockedStatic =
+					_mockConfigurationProviderUtil()) {
+
+			_testGetUserId("Invalid JWT signature", _ISSUER, token);
+		}
 	}
 
 	private AIHubCellConfiguration _mockAIHubCellConfiguration() {
@@ -115,13 +118,21 @@ public class JWTTokenUtilTest {
 		return aiHubCellConfiguration;
 	}
 
-	private void _setUpConfigurationProviderUtil() {
-		_configurationProviderUtilMockedStatic.when(
+	private MockedStatic<ConfigurationProviderUtil>
+		_mockConfigurationProviderUtil() {
+
+		MockedStatic<ConfigurationProviderUtil>
+			configurationProviderUtilMockedStatic = Mockito.mockStatic(
+				ConfigurationProviderUtil.class);
+
+		configurationProviderUtilMockedStatic.when(
 			() -> ConfigurationProviderUtil.getCompanyConfiguration(
 				Mockito.eq(AIHubCellConfiguration.class), Mockito.anyLong())
 		).thenAnswer(
-			invocation -> _aiHubCellConfiguration
+			invocation -> _mockAIHubCellConfiguration()
 		);
+
+		return configurationProviderUtilMockedStatic;
 	}
 
 	private void _testGetUserId(
@@ -148,10 +159,5 @@ public class JWTTokenUtilTest {
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
-
-	private AIHubCellConfiguration _aiHubCellConfiguration;
-	private final MockedStatic<ConfigurationProviderUtil>
-		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
-			ConfigurationProviderUtil.class);
 
 }

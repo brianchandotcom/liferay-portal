@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -58,9 +59,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -450,22 +448,16 @@ public class MCPServerServletTest {
 	private void _updateMCPServerConfiguration(boolean enabled)
 		throws Exception {
 
-		Configuration configuration =
-			_configurationAdmin.getFactoryConfiguration(
-				"com.liferay.mcp.server.internal.configuration." +
-					"MCPServerConfiguration",
-				String.valueOf(TestPropsValues.getCompanyId()), "?");
-
-		configuration.update(
+		ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.mcp.server.internal.configuration." +
+				"MCPServerConfiguration",
+			String.valueOf(TestPropsValues.getCompanyId()),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", TestPropsValues.getCompanyId()
 			).put(
 				"enabled", enabled
 			).build());
 	}
-
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private Http _http;

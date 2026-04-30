@@ -251,10 +251,10 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 	boolean showContextLink = false;
 
 	if (viewSingleAsset) {
-		showContextLink = assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
+		showContextLink = Validator.isNotNull(viewInContextURL) && assetPublisherDisplayContext.isShowContextLink(assetRenderer.getGroupId(), assetRendererFactory.getPortletId()) && !print && assetEntry.isVisible();
 	}
 	else {
-		showContextLink = assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible();
+		showContextLink = Validator.isNotNull(viewInContextURL) && assetPublisherDisplayContext.isShowContextLink() && !print && assetEntry.isVisible();
 	}
 
 	boolean showRatings = assetPublisherDisplayContext.isEnableRatings() && assetRenderer.isRatable();

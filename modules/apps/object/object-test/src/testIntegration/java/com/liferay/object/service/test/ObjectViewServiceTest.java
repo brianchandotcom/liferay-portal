@@ -87,6 +87,25 @@ public class ObjectViewServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectView() throws Exception {
+		try {
+			_testDeleteObjectView(_guestUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _guestUser.getUserId() +
+						" must have DELETE permission for"));
+		}
+
+		_testDeleteObjectView(_user);
+	}
+
+	@Test
 	public void testGetObjectView() throws Exception {
 		try {
 			_testGetObjectView(_guestUser);
@@ -148,6 +167,25 @@ public class ObjectViewServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList(), Collections.emptyList(),
 				Collections.emptyList());
+		}
+		finally {
+			if (objectView != null) {
+				_objectViewLocalService.deleteObjectView(objectView);
+			}
+		}
+	}
+
+	private void _testDeleteObjectView(User user) throws Exception {
+		ObjectView objectView = null;
+
+		try {
+			_setUser(user);
+
+			objectView = _addObjectView(user);
+
+			_objectViewService.deleteObjectView(objectView.getObjectViewId());
+
+			objectView = null;
 		}
 		finally {
 			if (objectView != null) {

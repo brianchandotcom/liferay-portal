@@ -19,7 +19,7 @@ type AppDropdownActionsProps = {
 function AppDropdownActions({placedOrder}: AppDropdownActionsProps) {
 	const navigate = useNavigate();
 
-	const {canDownload, dxpProvisioningEnabled, isFreeApp, isOrderCompleted} =
+	const {canDownload, canGenerateLicenses, isFreeApp, isOrderCompleted} =
 		new MarketplaceDeliveryOrder(placedOrder);
 
 	const [placedOrderItem] = placedOrder.placedOrderItems || [{}];
@@ -32,7 +32,7 @@ function AppDropdownActions({placedOrder}: AppDropdownActionsProps) {
 
 	return (
 		<DropDown.ItemList>
-			{dxpProvisioningEnabled && (
+			{canGenerateLicenses && (
 				<>
 					<ClayTooltipProvider>
 						<DropDown.Item

@@ -41,7 +41,7 @@ The ticket key follows the pattern `LPD-12345`, `LCD-12345`, `LRCI-1234`, and si
 
 ### Target Repository
 
-The target repository defaults to `<fork-owner>/liferay-portal`. When `${ARGUMENTS}` names a different `org/repo`, use that; otherwise, ask the user to choose `<fork-owner>` from one of the team forks:
+The target repository defaults to `<fork-owner>/liferay-portal`. When `${ARGUMENTS}` names a different `org/repo`, use that; when it matches an alias below, expand the alias; otherwise, ask the user to choose `<fork-owner>` from one of the team forks:
 
 - `liferay-ac`
 - `liferay-appsec`
@@ -57,6 +57,10 @@ The target repository defaults to `<fork-owner>/liferay-portal`. When `${ARGUMEN
 - `liferay-platform-experience`
 - `liferay-search`
 - `liferay-site-management`
+
+The following short aliases resolve to a target repository:
+
+- `brian` → `brianchandotcom/liferay-portal`
 
 The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
 

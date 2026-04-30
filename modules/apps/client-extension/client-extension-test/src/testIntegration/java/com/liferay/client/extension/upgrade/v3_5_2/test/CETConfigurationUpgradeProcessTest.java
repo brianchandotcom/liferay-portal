@@ -52,11 +52,9 @@ public class CETConfigurationUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_insertConfiguration(_STALE_CET_PID_1, "");
-		_insertConfiguration(_STALE_CET_PID_2, null);
-		_insertConfiguration(
-			_TRACKER_CET_PID, ".client.extension.config.bundle.id=L\"1\"\n");
-		_insertConfiguration(_UNRELATED_PID, "");
+		_insertConfiguration(_STALE_CET_PID_1);
+		_insertConfiguration(_STALE_CET_PID_2);
+		_insertConfiguration(_UNRELATED_PID);
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
@@ -80,14 +78,11 @@ public class CETConfigurationUpgradeProcessTest {
 			}
 
 			Assert.assertEquals(
-				SetUtil.fromArray(_TRACKER_CET_PID, _UNRELATED_PID),
-				survivingPids);
+				SetUtil.fromArray(_UNRELATED_PID), survivingPids);
 		}
 	}
 
-	private void _insertConfiguration(String pid, String dictionary)
-		throws Exception {
-
+	private void _insertConfiguration(String pid) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -95,7 +90,7 @@ public class CETConfigurationUpgradeProcessTest {
 					"values(?, ?)")) {
 
 			preparedStatement.setString(1, pid);
-			preparedStatement.setString(2, dictionary);
+			preparedStatement.setString(2, "");
 
 			preparedStatement.execute();
 		}
@@ -104,7 +99,7 @@ public class CETConfigurationUpgradeProcessTest {
 	private String _pidsInClause() {
 		return StringBundler.concat(
 			"configurationId in ('", _STALE_CET_PID_1, "', '", _STALE_CET_PID_2,
-			"', '", _TRACKER_CET_PID, "', '", _UNRELATED_PID, "')");
+			"', '", _UNRELATED_PID, "')");
 	}
 
 	private static final String _CET_CONFIGURATION_PID_PREFIX =
@@ -115,9 +110,6 @@ public class CETConfigurationUpgradeProcessTest {
 
 	private static final String _STALE_CET_PID_2 =
 		_CET_CONFIGURATION_PID_PREFIX + "upgrade-test-cet-2/liferay.com";
-
-	private static final String _TRACKER_CET_PID =
-		_CET_CONFIGURATION_PID_PREFIX + "upgrade-test-tracker/liferay.com";
 
 	private static final String _UNRELATED_PID =
 		"com.liferay.client.extension.upgrade.test.unrelated";

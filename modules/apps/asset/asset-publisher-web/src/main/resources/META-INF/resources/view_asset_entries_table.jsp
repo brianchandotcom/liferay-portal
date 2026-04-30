@@ -75,9 +75,9 @@ if (stageableGroup.isLayout()) {
 						assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 					}
 				}
-				catch (Exception e) {
+				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(e);
+						_log.warn(exception);
 					}
 				}
 
@@ -97,10 +97,12 @@ if (stageableGroup.isLayout()) {
 				).build();
 
 				String title = assetRenderer.getTitle(LocaleUtil.fromLanguageId(LanguageUtil.getLanguageId(request)));
+
+				AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale, Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW));
 			%>
 
 				<tr class="<%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "table-active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
-					<td class="table-cell-expand table-title">
+					<td class="table-cell-expand table-title" <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) %>>
 						<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 						<c:choose>
@@ -123,7 +125,7 @@ if (stageableGroup.isLayout()) {
 
 						<c:choose>
 							<c:when test='<%= Objects.equals(metadataField, "author") %>'>
-								<td class="table-cell-expand">
+								<td class="table-cell-expand" <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_AUTHOR) %>>
 									<%= HtmlUtil.escape(PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName())) %>
 								</td>
 							</c:when>
@@ -149,15 +151,20 @@ if (stageableGroup.isLayout()) {
 							<c:otherwise>
 
 								<%
+								boolean dateField = false;
 								String value = null;
 
 								if (Objects.equals(metadataField, "create-date")) {
+									dateField = true;
 									value = dateFormat.format(assetEntry.getCreateDate());
 								}
 								else if (Objects.equals(metadataField, "modified-date")) {
+									dateField = true;
 									value = dateFormat.format(assetEntry.getModifiedDate());
 								}
 								else if (Objects.equals(metadataField, "publish-date")) {
+									dateField = true;
+
 									if (assetEntry.getPublishDate() == null) {
 										value = StringPool.BLANK;
 									}
@@ -166,6 +173,8 @@ if (stageableGroup.isLayout()) {
 									}
 								}
 								else if (Objects.equals(metadataField, "expiration-date")) {
+									dateField = true;
+
 									if (assetEntry.getExpirationDate() == null) {
 										value = StringPool.BLANK;
 									}
@@ -181,7 +190,7 @@ if (stageableGroup.isLayout()) {
 								}
 								%>
 
-								<td class="table-cell-expand-smallest">
+								<td class="table-cell-expand-smallest" <%= dateField ? assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, metadataField) : StringPool.BLANK %>>
 									<liferay-ui:message key="<%= value %>" />
 								</td>
 							</c:otherwise>

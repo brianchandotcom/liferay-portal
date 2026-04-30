@@ -30,7 +30,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/user" prefix="liferay-user" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.constants.AssetWebKeys" %><%@
+<%@ page import="com.liferay.analytics.asset.AssetAnalyticsAttributesProvider" %><%@
+page import="com.liferay.asset.constants.AssetWebKeys" %><%@
 page import="com.liferay.asset.display.page.constants.AssetDisplayPageConstants" %><%@
 page import="com.liferay.asset.display.page.model.AssetDisplayPageEntry" %><%@
 page import="com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalServiceUtil" %><%@

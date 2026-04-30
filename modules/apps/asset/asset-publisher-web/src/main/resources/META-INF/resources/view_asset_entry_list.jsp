@@ -102,8 +102,8 @@ for (AssetEntryResult assetEntryResult : assetPublisherDisplayContext.getAssetEn
 
 			<%
 				}
-				catch (Exception e) {
-					_log.error(e.getMessage());
+				catch (Exception exception) {
+					_log.error(exception);
 				}
 			}
 			%>

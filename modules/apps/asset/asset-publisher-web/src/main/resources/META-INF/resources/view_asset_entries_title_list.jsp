@@ -40,9 +40,9 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 			}
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e);
+				_log.warn(exception);
 			}
 		}
 
@@ -58,6 +58,8 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 		).put(
 			"fragments-editor-item-type", "fragments-editor-mapped-item"
 		).build();
+
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale, Objects.equals(ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW), Constants.VIEW));
 	%>
 
 		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
@@ -74,7 +76,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<p class="h4 list-group-title text-truncate">
+				<p class="h4 list-group-title text-truncate" <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) %>>
 					<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
 					<aui:a href="<%= assetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetRenderer, assetEntry, assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet()) %>"> <%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>
@@ -117,7 +119,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 				}
 				%>
 
-				<p class="list-group-subtitle text-truncate">
+				<p class="list-group-subtitle text-truncate" <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, "subtitle") %>>
 					<%= sb.toString() %>
 				</p>
 

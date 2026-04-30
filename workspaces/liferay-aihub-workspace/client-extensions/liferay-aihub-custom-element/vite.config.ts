@@ -12,6 +12,11 @@ export default defineConfig({
 		rollupOptions: {
 			output: {
 				assetFileNames: '[name][extname]',
+				banner:
+					'/*!\n' +
+					' * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com\n' +
+					' * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06\n' +
+					' */',
 				chunkFileNames: '[name]-[hash].js',
 				entryFileNames: 'index.js',
 			},

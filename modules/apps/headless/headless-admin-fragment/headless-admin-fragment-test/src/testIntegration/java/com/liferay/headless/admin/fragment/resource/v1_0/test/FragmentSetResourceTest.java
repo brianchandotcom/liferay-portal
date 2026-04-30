@@ -79,6 +79,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				fetchFragmentCollectionByExternalReferenceCode(
 					fragmentSet.getExternalReferenceCode(),
 					testGroup.getGroupId()));
+
+		_testDeleteSiteFragmentSetBatch();
 	}
 
 	@Override
@@ -345,6 +347,30 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 			return StringUtil.read(zipInputStream);
 		}
+	}
+
+	private void _testDeleteSiteFragmentSetBatch() throws Exception {
+		FragmentSet fragmentSet1 = testPostSiteFragmentSet_addFragmentSet(
+			randomFragmentSet());
+		FragmentSet fragmentSet2 = testPostSiteFragmentSet_addFragmentSet(
+			randomFragmentSet());
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				_exportFragmentSetsToJSON(testGroup.getExternalReferenceCode()),
+				"headless-admin-fragment/v1.0/sites/" +
+					irrelevantGroup.getExternalReferenceCode() +
+						"/fragment-sets/batch?createStrategy=INSERT",
+				Http.Method.POST));
+
+		testBatchEngineDeleteImportTask_deleteFragmentSet(
+			200, fragmentSet2.getExternalReferenceCode(),
+			"siteExternalReferenceCode",
+			irrelevantGroup.getExternalReferenceCode());
+
+		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
+		_assertFragmentCollectionNull(fragmentSet2, irrelevantGroup);
 	}
 
 	private void _testPostSiteFragmentSetBatch() throws Exception {

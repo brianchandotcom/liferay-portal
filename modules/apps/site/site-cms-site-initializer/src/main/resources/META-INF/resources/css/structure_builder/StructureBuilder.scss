@@ -61,4 +61,27 @@ $structureFieldsWidthMobile: 320px;
 			z-index: 99;
 		}
 	}
+
+	&__help-button {
+		background-color: $cadmin-dark;
+		border-color: $cadmin-dark;
+		bottom: 1rem;
+		right: 1rem;
+		z-index: 100;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: $cadmin-dark-l1;
+			border-color: $cadmin-dark-l1;
+		}
+	}
+
+	&__help-modal-nav {
+		flex-basis: 200px;
+	}
+
+	&__help-modal-shortcut {
+		flex-basis: 140px;
+	}
 }

@@ -180,7 +180,9 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 	});
 
 	await test.step('Assert that the frontend token set defined in the frontendTokenDefinition.json file is available in the style book', async () => {
-		const frontendTokenSetLabel = page.getByText('primary-buttons');
+		const frontendTokenSetLabel = page.getByRole('button', {
+			name: 'primary-buttons',
+		});
 
 		await expect(frontendTokenSetLabel).toBeVisible();
 	});

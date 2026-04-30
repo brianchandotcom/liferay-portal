@@ -68,6 +68,10 @@ function _update_chart_dependency_version {
 	local current_chart_yaml="${2}"
 	local new_version="${3}"
 
+	local subchart_dir
+
+	subchart_dir=$(cd "$(dirname "${current_chart_yaml}")" && pwd)
+
 	find "${_ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f | while read -r chart_yaml_file;
 	do
 		if [[ "${chart_yaml_file}" == "${current_chart_yaml}" ]]
@@ -75,10 +79,29 @@ function _update_chart_dependency_version {
 			continue
 		fi
 
-		if grep --quiet "name: ${chart_name}" "${chart_yaml_file}" && grep --quiet "repository: file:" "${chart_yaml_file}"
+		local dep_repository
+
+		dep_repository=$(yq ".dependencies[]? | select(.name == \"${chart_name}\" and (.repository | test(\"^file://\"))) | .repository" "${chart_yaml_file}" | head -n 1)
+
+		if [ -z "${dep_repository}" ]
 		then
-			sed --in-place "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}"
+			continue
 		fi
+
+		local parent_dir
+
+		parent_dir=$(cd "$(dirname "${chart_yaml_file}")" && pwd)
+
+		local resolved_dir
+
+		resolved_dir=$(cd "${parent_dir}/${dep_repository#file://}" 2>/dev/null && pwd)
+
+		if [[ "${resolved_dir}" != "${subchart_dir}" ]]
+		then
+			continue
+		fi
+
+		sed --in-place "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}"
 	done
 }
 

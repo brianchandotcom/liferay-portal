@@ -313,6 +313,27 @@ paths:
                     required: true
                     schema:
                         type: string
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: last
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    name: range
+                    schema:
+                        default: all
+                        enum: [all, dateRange, last]
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
+                        type: string
             responses:
                 200:
                     content:
@@ -389,6 +410,28 @@ paths:
     "/export-preview":
         get:
             operationId: getExportPreview
+            parameters:
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: last
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    name: range
+                    schema:
+                        default: all
+                        enum: [all, dateRange, last]
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
+                        type: string
             responses:
                 200:
                     content:
@@ -618,6 +661,27 @@ paths:
                     name: siteExternalReferenceCode
                     required: true
                     schema:
+                        type: string
+                -   in: query
+                    name: endDate
+                    schema:
+                        format: date-time
+                        type: string
+                -   in: query
+                    name: last
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    name: range
+                    schema:
+                        default: all
+                        enum: [all, dateRange, last]
+                        type: string
+                -   in: query
+                    name: startDate
+                    schema:
+                        format: date-time
                         type: string
             responses:
                 200:

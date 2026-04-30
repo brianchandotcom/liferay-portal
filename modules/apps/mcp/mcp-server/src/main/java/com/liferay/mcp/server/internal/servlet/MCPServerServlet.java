@@ -564,9 +564,7 @@ public class MCPServerServlet extends HttpServlet {
 			return mcpServerConfiguration.enabled();
 		}
 		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
-
-			return false;
+			throw new RuntimeException(configurationException);
 		}
 	}
 

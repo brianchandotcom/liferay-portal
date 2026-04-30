@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.cache.SkipReplicationThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
@@ -359,23 +360,36 @@ public class EntityCacheImpl
 	private void _notify(
 		String className, BaseModel<?> baseModel, boolean updateByEntityCache) {
 
-		FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
+		boolean enabled = SkipReplicationThreadLocal.isEnabled();
 
-		if (finderCacheImpl == null) {
-			return;
+		if (!enabled) {
+			SkipReplicationThreadLocal.setEnabled(true);
 		}
 
-		if (className == null) {
-			finderCacheImpl.clearCache();
+		try {
+			FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
+
+			if (finderCacheImpl == null) {
+				return;
+			}
+
+			if (className == null) {
+				finderCacheImpl.clearCache();
+			}
+			else if (baseModel == null) {
+				finderCacheImpl.clearByEntityCache(className);
+			}
+			else if (updateByEntityCache) {
+				finderCacheImpl.updateByEntityCache(className, baseModel);
+			}
+			else {
+				finderCacheImpl.removeByEntityCache(className, baseModel);
+			}
 		}
-		else if (baseModel == null) {
-			finderCacheImpl.clearByEntityCache(className);
-		}
-		else if (updateByEntityCache) {
-			finderCacheImpl.updateByEntityCache(className, baseModel);
-		}
-		else {
-			finderCacheImpl.removeByEntityCache(className, baseModel);
+		finally {
+			if (!enabled) {
+				SkipReplicationThreadLocal.setEnabled(false);
+			}
 		}
 	}
 

@@ -117,7 +117,6 @@ export default function ProjectsFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
-		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'delete') {
 				return {

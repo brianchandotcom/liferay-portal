@@ -5,7 +5,8 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0.util;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.Field;
@@ -60,15 +61,39 @@ public class DecodeSXPUtilTest {
 		Assert.assertNotNull(field.getDefaultValue());
 	}
 
-	private static final String _ELEMENT_JSON_WITH_MULTISELECT =
-		StringBundler.concat(
-			"{\"elementDefinition\": {\"uiConfiguration\": {\"fieldSets\": ",
-			"[{\"fields\": [{\"defaultValue\": [{\"label\": ",
-			"\"com.liferay.blogs.model.BlogsEntry\", \"value\": ",
-			"\"com.liferay.blogs.model.BlogsEntry\"}, {\"label\": ",
-			"\"com.liferay.journal.model.JournalArticle\", \"value\": ",
-			"\"com.liferay.journal.model.JournalArticle\"}], \"label\": ",
-			"\"Entry Class Names\", \"name\": \"entry_class_names\", ",
-			"\"type\": \"multiselect\"}]}]}}}");
+	private static JSONObject _entryClassNameOption(String entryClassName) {
+		return JSONUtil.put(
+			"label", entryClassName
+		).put(
+			"value", entryClassName
+		);
+	}
+
+	private static final String _ELEMENT_JSON_WITH_MULTISELECT = JSONUtil.put(
+		"elementDefinition",
+		JSONUtil.put(
+			"uiConfiguration",
+			JSONUtil.put(
+				"fieldSets",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"fields",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"defaultValue",
+								JSONUtil.putAll(
+									_entryClassNameOption(
+										"com.liferay.blogs.model.BlogsEntry"),
+									_entryClassNameOption(
+										"com.liferay.journal.model." +
+											"JournalArticle"))
+							).put(
+								"label", "Entry Class Names"
+							).put(
+								"name", "entry_class_names"
+							).put(
+								"type", "multiselect"
+							))))))
+	).toString();
 
 }

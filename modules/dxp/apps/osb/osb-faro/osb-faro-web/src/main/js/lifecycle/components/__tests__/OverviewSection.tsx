@@ -27,7 +27,7 @@ describe('OverviewSection', () => {
 		expect(getByText('OVERVIEW')).toBeInTheDocument();
 		expect(getByText('Net New Pipeline Generated')).toBeInTheDocument();
 		expect(getByText('Stalled Accounts')).toBeInTheDocument();
-		expect(getByText('At-Risk Accounts')).toBeInTheDocument();
+		expect(getByText('At Risk Accounts')).toBeInTheDocument();
 	});
 
 	it('should fall back to 0 for each card when no metrics are provided', () => {
@@ -51,7 +51,7 @@ describe('OverviewSection', () => {
 			'11'
 		);
 		expect(cardOf('Stalled Accounts').textContent).toContain('22');
-		expect(cardOf('At-Risk Accounts').textContent).toContain('33');
+		expect(cardOf('At Risk Accounts').textContent).toContain('33');
 	});
 
 	it('should fall back to 0 for a card without a matching metric', () => {
@@ -71,6 +71,6 @@ describe('OverviewSection', () => {
 		expect(container.querySelectorAll('.loading-root')).toHaveLength(3);
 		expect(queryByText('Net New Pipeline Generated')).toBeNull();
 		expect(queryByText('Stalled Accounts')).toBeNull();
-		expect(queryByText('At-Risk Accounts')).toBeNull();
+		expect(queryByText('At Risk Accounts')).toBeNull();
 	});
 });

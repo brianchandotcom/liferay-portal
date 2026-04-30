@@ -54,7 +54,7 @@ exports[`TotalAccounts should load with empty values when there's no data 1`] = 
             >
               0%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>
@@ -108,7 +108,7 @@ exports[`TotalAccounts should load with empty values when there's no data 1`] = 
             >
               0%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>
@@ -162,7 +162,7 @@ exports[`TotalAccounts should load with empty values when there's no data 1`] = 
             >
               0%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>
@@ -234,7 +234,7 @@ exports[`TotalAccounts should render 1`] = `
             >
               50%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>
@@ -297,7 +297,7 @@ exports[`TotalAccounts should render 1`] = `
             >
               30%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>
@@ -351,7 +351,7 @@ exports[`TotalAccounts should render 1`] = `
             >
               0%
             </span>
-             vs. Previous 90 days
+             vs. Previous 90 Days
           </span>
         </div>
       </div>

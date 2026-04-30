@@ -8,7 +8,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.StringPool;
 
 /**
- * @author Dave Truong
+ * @author David Truong
  */
 public class FriendlyURLKeywordsUtil {
 

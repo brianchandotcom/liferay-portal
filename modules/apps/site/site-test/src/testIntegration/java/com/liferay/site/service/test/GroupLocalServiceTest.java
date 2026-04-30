@@ -281,14 +281,10 @@ public class GroupLocalServiceTest {
 			try {
 				_addGroupWithFriendlyURL(reservedKeyword);
 
-				Assert.fail(
-					"Expected GroupFriendlyURLException for friendly URL: " +
-						reservedKeyword);
+				Assert.fail();
 			}
 			catch (GroupFriendlyURLException groupFriendlyURLException) {
 				Assert.assertEquals(
-					"Expected KEYWORD_CONFLICT for friendly URL: " +
-						reservedKeyword,
 					GroupFriendlyURLException.KEYWORD_CONFLICT,
 					groupFriendlyURLException.getType());
 			}
@@ -306,7 +302,6 @@ public class GroupLocalServiceTest {
 
 		for (Group expectedDescendantGroup : expectedDescendantGroups) {
 			Assert.assertTrue(
-				"Missing descendant: " + expectedDescendantGroup.toString(),
 				actualDescendantGroups.contains(expectedDescendantGroup));
 		}
 	}
@@ -335,14 +330,10 @@ public class GroupLocalServiceTest {
 				_groupLocalService.updateFriendlyURL(
 					group.getGroupId(), reservedKeyword);
 
-				Assert.fail(
-					"Expected GroupFriendlyURLException for friendly URL: " +
-						reservedKeyword);
+				Assert.fail();
 			}
 			catch (GroupFriendlyURLException groupFriendlyURLException) {
 				Assert.assertEquals(
-					"Expected KEYWORD_CONFLICT for friendly URL: " +
-						reservedKeyword,
 					GroupFriendlyURLException.KEYWORD_CONFLICT,
 					groupFriendlyURLException.getType());
 			}

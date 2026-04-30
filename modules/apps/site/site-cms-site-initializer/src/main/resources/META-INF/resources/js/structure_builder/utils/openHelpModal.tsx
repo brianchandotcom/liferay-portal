@@ -141,7 +141,7 @@ function HelpModalBody() {
 					>
 						<span className="flex-grow-1">{shortcut.label}</span>
 
-						<div className="structure-builder__help-modal-shortcut">
+						<div className="flex-shrink-0 structure-builder__help-modal-shortcut">
 							<kbd className="c-kbd c-kbd-light">
 								{shortcut.keys.map((key, keyIndex) => (
 									<React.Fragment key={keyIndex}>

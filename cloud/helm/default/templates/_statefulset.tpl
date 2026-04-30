@@ -207,6 +207,7 @@ spec:
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" .root }}-httproute
+        {{- end }}
 {{- with .statefulset.network.securityPolicyAuthorizationSpec }}
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
@@ -221,12 +222,20 @@ spec:
     authorization:
         {{- toYaml . | nindent 8 }}
     targetRefs:
+        {{- if $perHost }}
+        {{- range $hostname := $.statefulset.network.hostnames }}
+        {{- $slug := include "liferay.hostnameSlug" $hostname }}
+        -   group: gateway.networking.k8s.io
+            kind: HTTPRoute
+            name: {{ include "liferay.name" $.root }}-httproute-{{ $slug }}
+        {{- end }}
+        {{- else }}
         -   group: gateway.networking.k8s.io
             kind: HTTPRoute
             name: {{ include "liferay.name" $.root }}-httproute
+        {{- end }}
 {{- end }}
 {{- if .statefulset.network.gatewayName }}
-        {{- end }}
 {{- if $perHost }}
 {{- $ctx := . }}
 {{- range $hostname := .statefulset.network.hostnames }}

@@ -63,5 +63,5 @@ Validate that the appended rule reproduces the input commit when applied to the 
 After the self-test passes, stage only `.claude/skills/format-source/SKILL.md` and invoke the `commit` skill with this commit message format:
 
 ```
-Add rule derived from <sha>
+<ticket> Add rule derived from <sha>
 ```

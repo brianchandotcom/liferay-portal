@@ -220,7 +220,7 @@ public class DataSourceControllerTest {
 
 		List<DataSourceMappingDisplay> dataSourceMappingDisplays =
 			_dataSourceController.getDataSourceMappingDisplays(
-				32719, null, 32783);
+				32719, 32783, null);
 
 		Assert.assertEquals(
 			dataSourceMappingDisplays.toString(), 13,

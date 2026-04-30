@@ -112,8 +112,7 @@ public class UpgradeReport {
 		}
 
 		_executionDateString = _getExecutionDateString();
-		_executionTimeString =
-			(DBUpgrader.getUpgradeTime() / Time.SECOND) + " seconds";
+		_executionTimeString = _getExecutionTimeString();
 		_rootDir = _getRootDir();
 
 		Map<String, Object> reportData = _getReportData(upgradeRecorder);
@@ -150,6 +149,47 @@ public class UpgradeReport {
 		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 		return simpleDateFormat.format(new Date());
+	}
+
+	private String _getExecutionTimeString() {
+		long upgradeTime = DBUpgrader.getUpgradeTime();
+
+		List<String> parts = new ArrayList<>();
+
+		long hours = upgradeTime / Time.HOUR;
+
+		if (hours > 0) {
+			parts.add(
+				hours + " hour" + ((hours == 1) ? StringPool.BLANK : "s"));
+		}
+
+		long minutes = (upgradeTime % Time.HOUR) / Time.MINUTE;
+
+		if (minutes > 0) {
+			parts.add(
+				minutes + " minute" +
+					((minutes == 1) ? StringPool.BLANK : "s"));
+		}
+
+		long totalSeconds = upgradeTime / Time.SECOND;
+
+		if (parts.isEmpty()) {
+			return totalSeconds + " second" +
+				((totalSeconds == 1) ? StringPool.BLANK : "s");
+		}
+
+		long seconds = (upgradeTime % Time.MINUTE) / Time.SECOND;
+
+		if (seconds > 0) {
+			parts.add(
+				seconds + " second" +
+					((seconds == 1) ? StringPool.BLANK : "s"));
+		}
+
+		return StringBundler.concat(
+			totalSeconds, " seconds (",
+			StringUtil.merge(parts, StringPool.SPACE),
+			StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private List<MessagesPrinter> _getMessagesPrinters(

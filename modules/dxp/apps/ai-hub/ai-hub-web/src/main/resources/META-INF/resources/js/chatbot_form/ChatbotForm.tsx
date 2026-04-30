@@ -32,9 +32,28 @@ type AgentDefinitionOption = {
 	title: string;
 };
 
-function generateEmbedCode(externalReferenceCode: string) {
+function getPortalURL(portalURL: string) {
+	if (!portalURL) {
+		return '';
+	}
+
+	try {
+		const url = new URL(portalURL);
+
+		if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+			return '';
+		}
+
+		return url.toString().replace(/\/$/, '');
+	}
+	catch {
+		return '';
+	}
+}
+
+function generateEmbedCode(externalReferenceCode: string, portalURL: string) {
 	return `
-<link href="https://ai.hub.liferay.com/index-css" rel="stylesheet">
+<link href="${portalURL}/documents/d/global/index-css" rel="stylesheet">
 
 <script>
 	(function () {
@@ -46,9 +65,9 @@ function generateEmbedCode(externalReferenceCode: string) {
 			var scriptElement = document.createElement('script');
 
 			scriptElement.id = 'aihub-chatbot-widget-script';
-			scriptElement.setAttribute('ai-hub-url', 'https://ai.hub.liferay.com');
+			scriptElement.setAttribute('ai-hub-url', '${portalURL}');
 			scriptElement.setAttribute('chatbot-external-reference-code', '${externalReferenceCode}');
-			scriptElement.src = 'https://ai.hub.liferay.com/index-js';
+			scriptElement.src = '${portalURL}/documents/d/global/index-js';
 
 			document.body.appendChild(scriptElement);
 		}
@@ -83,10 +102,12 @@ export default function ChatbotForm({
 	accountEntryExternalReferenceCode,
 	backURL,
 	externalReferenceCode,
+	portalURL,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
 	externalReferenceCode: string;
+	portalURL: string;
 }) {
 	const [formData, setFormData] = useState<Chatbot>({} as Chatbot);
 	const [
@@ -113,7 +134,10 @@ export default function ChatbotForm({
 	};
 
 	const handleCopyEmbedCode = () => {
-		const code = generateEmbedCode(formData.externalReferenceCode);
+		const code = generateEmbedCode(
+			formData.externalReferenceCode,
+			getPortalURL(portalURL)
+		);
 
 		navigator.clipboard.writeText(code).then(() => {
 			openToast({
@@ -547,6 +571,7 @@ export default function ChatbotForm({
 
 									<button
 										className="chatbot-code-copy"
+										disabled={!getPortalURL(portalURL)}
 										onClick={handleCopyEmbedCode}
 										type="button"
 									>
@@ -567,9 +592,11 @@ export default function ChatbotForm({
 										className="chatbot-code-textarea form-control"
 										readOnly
 										value={
-											formData.externalReferenceCode
+											formData.externalReferenceCode &&
+											getPortalURL(portalURL)
 												? generateEmbedCode(
-														formData.externalReferenceCode
+														formData.externalReferenceCode,
+														getPortalURL(portalURL)
 													)
 												: ''
 										}

@@ -6,6 +6,7 @@
 package com.liferay.sharing.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,6 +40,8 @@ public class SharingServiceUpgradeStepRegistrator
 			"1.2.0", "1.3.0",
 			new com.liferay.sharing.internal.upgrade.v1_3_0.
 				SharingEntryUpgradeProcess());
+
+		registry.register("1.3.0", "1.4.0", new DummyUpgradeProcess());
 	}
 
 }

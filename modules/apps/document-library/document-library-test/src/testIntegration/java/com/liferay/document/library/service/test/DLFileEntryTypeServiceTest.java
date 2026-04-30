@@ -436,7 +436,7 @@ public class DLFileEntryTypeServiceTest {
 	@Inject(
 		filter = "indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
 	)
-	private static Indexer<DLFileEntryType> _indexer;
+	private Indexer<DLFileEntryType> _indexer;
 
 	private DLFileEntryType _basicDocumentDLFileEntryType;
 

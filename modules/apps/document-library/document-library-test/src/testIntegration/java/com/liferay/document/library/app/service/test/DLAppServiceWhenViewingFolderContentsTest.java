@@ -365,12 +365,12 @@ public class DLAppServiceWhenViewingFolderContentsTest
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	@Inject
-	private static ViewCountManager _viewCountManager;
+	private ViewCountManager _viewCountManager;
 
 }

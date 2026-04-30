@@ -687,10 +687,10 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;

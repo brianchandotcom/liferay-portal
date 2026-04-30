@@ -649,12 +649,12 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
-	private static Portal _portal;
+	private Portal _portal;
 
 }

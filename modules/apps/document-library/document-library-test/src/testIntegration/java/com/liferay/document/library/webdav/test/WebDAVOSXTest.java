@@ -972,9 +972,9 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 	private static final String _USER_AGENT =
 		"WebDAVFS/1.8 (01808000) Darwin/10.3.0 (i386)";
 
-	private static byte[] _testDeltaBytes;
-	private static byte[] _testFileBytes;
-	private static byte[] _testMetaBytes;
+	private byte[] _testDeltaBytes;
+	private byte[] _testFileBytes;
+	private byte[] _testMetaBytes;
 
 	@Inject
 	private DDMStorageEngineManager _ddmStorageEngineManager;

@@ -48,6 +48,6 @@ public class DLContentTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLContentLocalService _dlContentLocalService;
+	private DLContentLocalService _dlContentLocalService;
 
 }

@@ -304,7 +304,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 	}
 
 	@Inject
-	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _childGroup;

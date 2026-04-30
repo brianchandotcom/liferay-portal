@@ -74,9 +74,9 @@ public class DLFileEntryTypeTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
-	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

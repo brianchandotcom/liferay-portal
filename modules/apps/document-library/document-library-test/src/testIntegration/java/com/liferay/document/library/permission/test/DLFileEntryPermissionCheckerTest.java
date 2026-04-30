@@ -127,7 +127,7 @@ public class DLFileEntryPermissionCheckerTest extends BasePermissionTestCase {
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"
 	)
-	private static ModelResourcePermission<FileEntry>
+	private ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
 
 	private FileEntry _fileEntry;

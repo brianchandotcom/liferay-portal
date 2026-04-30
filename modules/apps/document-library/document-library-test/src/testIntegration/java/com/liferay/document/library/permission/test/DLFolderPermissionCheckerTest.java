@@ -129,7 +129,7 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.repository.model.Folder"
 	)
-	private static ModelResourcePermission<Folder>
+	private ModelResourcePermission<Folder>
 		_folderModelResourcePermission;
 
 	private Folder _folder;

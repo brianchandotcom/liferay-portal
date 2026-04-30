@@ -237,6 +237,6 @@ public class RangeWebServerTest extends BaseWebServerTestCase {
 	private static final String _UNICODE_DATA = "H\u4e2d\u00e9\u00fc\u00f1";
 
 	@Inject
-	private static DLAppLocalService _dlAppLocalService;
+	private DLAppLocalService _dlAppLocalService;
 
 }

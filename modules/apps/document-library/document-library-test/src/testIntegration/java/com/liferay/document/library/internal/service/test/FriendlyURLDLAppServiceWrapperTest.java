@@ -319,10 +319,10 @@ public class FriendlyURLDLAppServiceWrapperTest extends BaseDLAppTestCase {
 	}
 
 	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
-	private static Portal _portal;
+	private Portal _portal;
 
 	@Inject
 	private DLTrashService _dlTrashService;

@@ -125,7 +125,7 @@ public class DLFileEntryMetadataDDMStructureIndexerTest
 	protected IndexerFixture<DLFileEntry> indexerFixture;
 
 	@Inject
-	private static MessageBus _messageBus;
+	private MessageBus _messageBus;
 
 	@Inject(
 		filter = "ddm.structure.indexer.class.name=com.liferay.document.library.kernel.model.DLFileEntryMetadata"

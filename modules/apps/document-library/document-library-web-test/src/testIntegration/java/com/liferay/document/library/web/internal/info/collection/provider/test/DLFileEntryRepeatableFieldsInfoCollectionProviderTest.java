@@ -319,7 +319,7 @@ public class DLFileEntryRepeatableFieldsInfoCollectionProviderTest {
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private DLAppHelperLocalService _dlAppHelperLocalService;

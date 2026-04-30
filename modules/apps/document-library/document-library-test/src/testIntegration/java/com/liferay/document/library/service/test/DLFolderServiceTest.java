@@ -504,19 +504,19 @@ public class DLFolderServiceTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 	@Inject
-	private static DLFileEntryTypeService _dlFileEntryTypeService;
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Inject
-	private static DLFolderService _dlFolderService;
+	private DLFolderService _dlFolderService;
 
 	@Inject
-	private static ViewCountManager _viewCountManager;
+	private ViewCountManager _viewCountManager;
 
 	@DeleteAfterTestRun
 	private Group _alternativeGroup;

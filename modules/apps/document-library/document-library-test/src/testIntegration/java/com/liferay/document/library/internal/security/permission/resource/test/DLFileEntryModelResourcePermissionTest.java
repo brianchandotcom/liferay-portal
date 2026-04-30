@@ -248,13 +248,13 @@ public class DLFileEntryModelResourcePermissionTest {
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 	)
-	private static ModelResourcePermission<DLFileEntry>
+	private ModelResourcePermission<DLFileEntry>
 		_dlFileEntryModelResourcePermission;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFolder"
 	)
-	private static ModelResourcePermission<DLFolder>
+	private ModelResourcePermission<DLFolder>
 		_dlFolderModelResourcePermission;
 
 	@Inject

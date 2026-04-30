@@ -99,7 +99,7 @@ public class DLFolderAdvancedUpdateResourcePermissionUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private EntityCache _entityCache;

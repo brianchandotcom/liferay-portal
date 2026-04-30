@@ -167,17 +167,17 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private static DLFileEntryMetadataLocalService
+	private DLFileEntryMetadataLocalService
 		_dlFileEntryMetadataLocalService;
 
 	@Inject
-	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private DDMStructure _ddmStructure;
 	private DLFileEntry _dlFileEntry;

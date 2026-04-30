@@ -15,6 +15,8 @@ public class TicketConstants {
 
 	public static final int TYPE_IMPERSONATE = 2;
 
+	public static final int TYPE_INVITE_COLLABORATOR = 7;
+
 	public static final int TYPE_ON_DEMAND_ADMIN_LOGIN = 4;
 
 	public static final int TYPE_ON_DEMAND_USER_LOGIN = 5;

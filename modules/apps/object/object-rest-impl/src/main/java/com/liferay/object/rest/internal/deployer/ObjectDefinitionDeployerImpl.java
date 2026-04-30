@@ -75,7 +75,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -87,6 +86,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -220,8 +220,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		return new CollaboratorResourceImpl(
 			_classNameLocalService, _collaboratorDTOConverter,
 			_dtoConverterRegistry, _groupLocalService, _objectEntryLocalService,
-			_sharingEntryService, _sharingEntryLocalService,
-			_userGroupLocalService, _userLocalService);
+			_sharingEntryLocalService, _sharingEntryService,
+			_ticketLocalService, _userGroupLocalService, _userLocalService);
 	}
 
 	private CommentResourceImpl _createCommentResourceImpl(
@@ -1207,9 +1207,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
 	private Language _language;
 
 	@Reference
@@ -1298,6 +1295,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private TranslationManager _translationManager;

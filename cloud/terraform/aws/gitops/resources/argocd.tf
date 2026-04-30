@@ -172,9 +172,9 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 				},
 			]
 			sourceRepos=[
-				"${var.infrastructure_helm_chart_config.chart_url}",
+				var.infrastructure_helm_chart_config.chart_url,
 				"${var.infrastructure_helm_chart_config.chart_url}/*",
-				"${var.infrastructure_provider_helm_chart_config.chart_url}",
+				var.infrastructure_provider_helm_chart_config.chart_url,
 				"${var.infrastructure_provider_helm_chart_config.chart_url}/*",
 				local.infrastructure_git_repo_url,
 			]
@@ -490,7 +490,7 @@ resource "kubernetes_manifest" "liferay_appproject" {
 				},
 			]
 			sourceRepos=[
-				"${local.liferay_helm_chart_config.chart_url}",
+				local.liferay_helm_chart_config.chart_url,
 				"${local.liferay_helm_chart_config.chart_url}/*",
 				var.liferay_git_repo_url,
 			]

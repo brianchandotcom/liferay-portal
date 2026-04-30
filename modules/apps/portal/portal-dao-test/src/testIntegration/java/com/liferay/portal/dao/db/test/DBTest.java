@@ -707,9 +707,7 @@ public class DBTest {
 				Thread.sleep(200);
 			}
 
-			Assert.fail(
-				"No locked query containing \"waiting\" was detected within " +
-					"5 seconds");
+			Assert.fail();
 		}
 		finally {
 			if (futureTask != null) {

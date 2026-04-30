@@ -114,11 +114,6 @@ public abstract class BaseTemplateUpgradeProcessTestCase {
 		}
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private DDMTemplate _ddmTemplate;
 
 	@Inject
@@ -142,5 +137,10 @@ public abstract class BaseTemplateUpgradeProcessTestCase {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

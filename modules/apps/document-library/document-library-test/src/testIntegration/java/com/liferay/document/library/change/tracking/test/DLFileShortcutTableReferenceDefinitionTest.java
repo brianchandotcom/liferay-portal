@@ -75,12 +75,12 @@ public class DLFileShortcutTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
+	private DLFileEntry _dlFileEntry;
+
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;
-
-	private DLFileEntry _dlFileEntry;
 
 }

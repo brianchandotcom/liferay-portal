@@ -187,11 +187,6 @@ public class DDMFieldAttributeUpgradeProcessTest {
 	private static final List<String> _ddmFieldAttributeNames = Arrays.asList(
 		"availableLanguageIds", "defaultLanguageId");
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -212,5 +207,10 @@ public class DDMFieldAttributeUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

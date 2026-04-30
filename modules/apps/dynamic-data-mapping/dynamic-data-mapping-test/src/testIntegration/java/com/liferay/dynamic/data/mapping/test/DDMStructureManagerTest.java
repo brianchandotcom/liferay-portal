@@ -220,10 +220,10 @@ public class DDMStructureManagerTest {
 	private static long _classNameId;
 
 	@Inject
-	private DDMStructureManager _ddmStructureManager;
+	private static Portal _portal;
 
 	@Inject
-	private static Portal _portal;
+	private DDMStructureManager _ddmStructureManager;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -425,10 +425,10 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 	}
 
 	@Inject
-	private DDMIndexer _ddmIndexer;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
+	private DDMIndexer _ddmIndexer;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

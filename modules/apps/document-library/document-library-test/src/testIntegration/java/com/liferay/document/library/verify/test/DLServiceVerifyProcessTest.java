@@ -491,16 +491,16 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		return _verifyProcess;
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.document.library.internal.verify.DLServiceVerifyProcess",
-		type = VerifyProcess.class
-	)
-	private VerifyProcess _verifyProcess;
-
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(
+		filter = "component.name=com.liferay.document.library.internal.verify.DLServiceVerifyProcess",
+		type = VerifyProcess.class
+	)
+	private VerifyProcess _verifyProcess;
 
 }

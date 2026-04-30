@@ -621,11 +621,6 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 	private static final String _PREVIEWABLE_PROCESSOR_MAX_SIZE_KEY =
 		"previewableProcessorMaxSize";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -638,5 +633,10 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 		_originalPDFPreviewScopedConfigurationsProperties;
 	private Dictionary<String, Object>
 		_originalPDFPreviewSystemConfigurationProperties;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

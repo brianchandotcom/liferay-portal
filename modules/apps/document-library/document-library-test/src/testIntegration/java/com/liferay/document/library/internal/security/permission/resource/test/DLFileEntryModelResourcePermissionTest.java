@@ -245,23 +245,22 @@ public class DLFileEntryModelResourcePermissionTest {
 			ActionKeys.VIEW);
 	}
 
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
 	)
 	private ModelResourcePermission<DLFileEntry>
 		_dlFileEntryModelResourcePermission;
 
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFolder"
 	)
-	private ModelResourcePermission<DLFolder>
-		_dlFolderModelResourcePermission;
-
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
-	private DLFolderLocalService _dlFolderLocalService;
+	private ModelResourcePermission<DLFolder> _dlFolderModelResourcePermission;
 
 	@DeleteAfterTestRun
 	private Group _group;

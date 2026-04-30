@@ -251,16 +251,16 @@ public class UpgradeDDMFormInstanceSettingsTest {
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_3." +
 			"DDMFormInstanceSettingsUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private UpgradeProcess _ddmFormInstanceSettingsUpgradeProcess;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private JSONFactory _jsonFactory;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

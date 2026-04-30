@@ -196,9 +196,6 @@ public class AutocompleteUserMVCResourceCommandTest {
 	}
 
 	@Inject
-	private UserLocalService _userLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(filter = "mvc.command.name=/admin/autocomplete_user")
@@ -206,6 +203,9 @@ public class AutocompleteUserMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private List<User> _users = new ArrayList<>();

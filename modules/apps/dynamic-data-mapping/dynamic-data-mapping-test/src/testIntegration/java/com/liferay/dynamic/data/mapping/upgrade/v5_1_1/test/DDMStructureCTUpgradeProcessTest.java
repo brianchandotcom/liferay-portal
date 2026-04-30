@@ -125,11 +125,6 @@ public class DDMStructureCTUpgradeProcessTest
 		return _ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;
 
@@ -141,5 +136,10 @@ public class DDMStructureCTUpgradeProcessTest
 
 	@Inject(filter = "ddm.form.serializer.type=json")
 	private DDMFormSerializer _jsonDDMFormSerializer;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

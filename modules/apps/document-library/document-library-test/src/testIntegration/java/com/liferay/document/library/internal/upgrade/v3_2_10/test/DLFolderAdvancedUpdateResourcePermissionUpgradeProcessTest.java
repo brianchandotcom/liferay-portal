@@ -96,11 +96,6 @@ public class DLFolderAdvancedUpdateResourcePermissionUpgradeProcessTest {
 		"com.liferay.document.library.internal.upgrade.v3_2_10." +
 			"DLFolderAdvancedUpdateResourcePermissionUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -115,5 +110,10 @@ public class DLFolderAdvancedUpdateResourcePermissionUpgradeProcessTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

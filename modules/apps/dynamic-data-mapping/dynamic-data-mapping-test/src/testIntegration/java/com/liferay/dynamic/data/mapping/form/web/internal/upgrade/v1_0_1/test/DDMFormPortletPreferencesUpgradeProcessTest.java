@@ -159,11 +159,6 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 		"com.liferay.dynamic.data.mapping.form.web.internal.upgrade.v1_0_1." +
 			"DDMFormPortletPreferencesUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.dynamic.data.mapping.form.web.internal.upgrade.registry.DDMFormWebUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
@@ -179,5 +174,10 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.dynamic.data.mapping.form.web.internal.upgrade.registry.DDMFormWebUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

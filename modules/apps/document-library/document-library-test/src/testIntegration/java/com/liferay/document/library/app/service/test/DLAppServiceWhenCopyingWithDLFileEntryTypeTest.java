@@ -303,9 +303,6 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 			null, serviceContext);
 	}
 
-	@Inject
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
 	@DeleteAfterTestRun
 	private Group _childGroup;
 
@@ -313,6 +310,10 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	private DLFileEntryType _dlFileEntryType;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
 	private Folder _newParentFolder;
 	private Folder _targetParentFolder;
 

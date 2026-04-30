@@ -90,11 +90,6 @@ public class DDMTemplateCTUpgradeProcessTest
 		return _ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private DDMStructure _ddmStructure;
 
@@ -109,5 +104,10 @@ public class DDMTemplateCTUpgradeProcessTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

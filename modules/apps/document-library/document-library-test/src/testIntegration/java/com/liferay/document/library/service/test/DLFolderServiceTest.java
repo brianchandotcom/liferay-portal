@@ -503,29 +503,26 @@ public class DLFolderServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	@DeleteAfterTestRun
+	private Group _alternativeGroup;
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	@DeleteAfterTestRun
+	private DDMStructure _ddmStructure;
+
 	@Inject
 	private DLAppService _dlAppService;
+
+	@DeleteAfterTestRun
+	private DLFileEntryType _dlFileEntryType;
 
 	@Inject
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Inject
 	private DLFolderService _dlFolderService;
-
-	@Inject
-	private ViewCountManager _viewCountManager;
-
-	@DeleteAfterTestRun
-	private Group _alternativeGroup;
-
-	@DeleteAfterTestRun
-	private DDMStructure _ddmStructure;
-
-	@DeleteAfterTestRun
-	private DLFileEntryType _dlFileEntryType;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -534,5 +531,8 @@ public class DLFolderServiceTest {
 
 	@Inject
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Inject
+	private ViewCountManager _viewCountManager;
 
 }

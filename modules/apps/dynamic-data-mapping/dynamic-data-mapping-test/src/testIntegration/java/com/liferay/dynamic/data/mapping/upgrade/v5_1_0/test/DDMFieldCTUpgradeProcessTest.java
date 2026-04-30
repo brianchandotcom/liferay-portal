@@ -173,11 +173,6 @@ public class DDMFieldCTUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	private static final int _PRIORITY = RandomTestUtil.randomInt();
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private CounterLocalService _counterLocalService;
 
@@ -198,5 +193,10 @@ public class DDMFieldCTUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -166,21 +166,22 @@ public class DLFileEntryMetadataTableReferenceDefinitionTest
 		).build();
 	}
 
+	private DDMStructure _ddmStructure;
+
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	private DLFileEntry _dlFileEntry;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private DLFileEntryMetadataLocalService
-		_dlFileEntryMetadataLocalService;
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	private DLFileEntryType _dlFileEntryType;
 
 	@Inject
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	private DDMStructure _ddmStructure;
-	private DLFileEntry _dlFileEntry;
-	private DLFileEntryType _dlFileEntryType;
 
 }

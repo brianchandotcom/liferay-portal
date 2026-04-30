@@ -392,31 +392,32 @@ public class DLFileEntryMetadataLocalServiceTest {
 		return serviceContext;
 	}
 
-	@Inject
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
-	private DLFileEntryMetadataLocalService
-		_dlFileEntryMetadataLocalService;
-
-	@Inject
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
 	private Map<String, DDMFormValues> _ddmFormValuesMap;
 	private DDMStructure _ddmStructure;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
 	private DLFileEntryType _dlFileEntryType;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 }

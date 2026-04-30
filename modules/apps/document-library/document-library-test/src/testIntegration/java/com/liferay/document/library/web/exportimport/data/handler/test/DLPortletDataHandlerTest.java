@@ -687,16 +687,16 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Inject
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
-	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;
 
 	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Inject
 	private DLAppHelperLocalService _dlAppHelperLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	private final Collection
 		<ServiceRegistration<DLExportableRepositoryPublisher>>

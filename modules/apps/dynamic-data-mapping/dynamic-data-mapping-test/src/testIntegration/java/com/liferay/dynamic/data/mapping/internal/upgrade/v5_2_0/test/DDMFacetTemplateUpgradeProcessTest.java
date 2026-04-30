@@ -109,11 +109,6 @@ public class DDMFacetTemplateUpgradeProcessTest {
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_2_0." +
 			"DDMFacetTemplateUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -122,5 +117,10 @@ public class DDMFacetTemplateUpgradeProcessTest {
 
 	@Inject
 	private EntityCache _entityCache;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

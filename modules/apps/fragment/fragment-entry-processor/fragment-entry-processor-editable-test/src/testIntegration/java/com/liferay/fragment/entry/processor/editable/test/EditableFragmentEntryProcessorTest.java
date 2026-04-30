@@ -2613,12 +2613,6 @@ public class EditableFragmentEntryProcessorTest {
 		).toString();
 	}
 
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	private Company _company;
 	private CompanyConfigurationTemporarySwapper
 		_companyConfigurationTemporarySwapper;
@@ -2661,7 +2655,13 @@ public class EditableFragmentEntryProcessorTest {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private JournalConverter _journalConverter;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	private Layout _layout;
 

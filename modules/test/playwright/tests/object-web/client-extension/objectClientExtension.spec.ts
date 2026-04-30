@@ -4,6 +4,7 @@
  */
 
 import {
+	ObjectActionAPI,
 	ObjectDefinition,
 	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
@@ -344,33 +345,48 @@ test('Can trigger object validation as a client extension', async ({
 });
 
 test(
-	'LPD-78504 Can trigger action with unmodifiable system object definition using client extension',
+	'Can trigger action with unmodifiable system object definition using client extension',
 	{tag: '@LPD-78504'},
-	async ({apiHelpers, editObjectActionPage, page, viewObjectActionsPage}) => {
-		const notificationTemplate =
-			await apiHelpers.notification.postRandomNotificationTemplate(
-				'notificationTemplate' + getRandomInt()
+	async ({apiHelpers}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_USER',
+				{
+					active: true,
+					label: {en_US: `Custom Action ${getRandomInt()}`},
+					name: `customAction${getRandomInt()}`,
+					objectActionExecutorKey:
+						'function#liferay-sample-etc-spring-boot-object-action-2',
+					objectActionTriggerKey: 'onAfterAdd',
+					parameters: {},
+				}
 			);
 
-		apiHelpers.data.push({
-			id: notificationTemplate.id,
-			type: 'notificationTemplate',
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const givenName = `userfn${getRandomInt()}`;
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `usersn${getRandomInt()}`,
+			emailAddress: `userea${getRandomInt()}@liferay.com`,
+			familyName: 'userln',
+			givenName,
 		});
 
-		// Navigate to a system object's actions page (User is an unmodifiable system object)
+		// The client-extension action runs asynchronously after the user is
+		// created, so poll until the action's effect (alternateName patched
+		// to givenName) is visible.
 
-		await viewObjectActionsPage.goto('User');
+		await expect(async () => {
+			const updatedUser =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					user.emailAddress!
+				);
 
-		// Add a new action using notification type on the system object
-
-		await editObjectActionPage.addNewAction({
-			notificationTemplateName: notificationTemplate.name,
-			thenOption: 'Notification',
-			whenOption: 'On After Add',
-		});
-
-		// Verify the action was created by checking it appears in the actions list
-
-		await expect(page.getByText('On After Add')).toBeVisible();
+			expect(updatedUser.alternateName).toBe(givenName);
+		}).toPass();
 	}
 );

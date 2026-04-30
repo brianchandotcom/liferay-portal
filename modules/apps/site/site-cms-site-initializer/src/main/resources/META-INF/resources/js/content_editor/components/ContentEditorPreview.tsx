@@ -9,7 +9,6 @@ import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
-import CacheContextProvider from '../../structure_builder/contexts/CacheContext';
 import {
 	EVENT_CLOSE_PREVIEW,
 	EVENT_HANDLE_PREVIEW,
@@ -126,12 +125,10 @@ export default function ContentEditorPreview({
 						title={title}
 						titleId={titleId}
 					/>
-					<CacheContextProvider initialData={{}}>
-						<PreviewBody
-							getPreviewDataURL={getPreviewDataURL}
-							isContentEdited={isContentEdited}
-						/>
-					</CacheContextProvider>
+					<PreviewBody
+						getPreviewDataURL={getPreviewDataURL}
+						isContentEdited={isContentEdited}
+					/>
 				</>
 			) : null}
 

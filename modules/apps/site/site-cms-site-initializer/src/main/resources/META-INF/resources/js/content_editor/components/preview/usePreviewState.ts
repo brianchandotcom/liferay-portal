@@ -5,8 +5,8 @@
 
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import {Status} from '../../../common/components/AsyncPicker';
 import ApiHelper from '../../../common/services/ApiHelper';
-import {useCache} from '../../../structure_builder/contexts/CacheContext';
 
 export type Site = {
 	displayPageTemplates: {
@@ -26,6 +26,8 @@ export default function usePreviewState(getPreviewDataURL: string) {
 	const [selectedChannelKey, setSelectedChannelKey] = useState<React.Key>('');
 	const [selectedDisplayPageKey, setSelectedDisplayPageKey] =
 		useState<React.Key>('');
+	const [sites, setSites] = useState<Site[]>([]);
+	const [sitesStatus, setSitesStatus] = useState<Status>('saving');
 
 	useEffect(() => {
 		const handleLocaleChanged = ({
@@ -43,21 +45,25 @@ export default function usePreviewState(getPreviewDataURL: string) {
 			);
 	}, []);
 
-	const getSites = useCallback(async () => {
+	const loadSites = useCallback(async () => {
+		setSitesStatus('saving');
+
 		const {data, error} = await ApiHelper.get<Site[]>(getPreviewDataURL);
 
+		setSitesStatus('saved');
+
 		if (data) {
+			setSites(data);
+
 			return data;
 		}
 
 		throw new Error(error);
 	}, [getPreviewDataURL]);
 
-	const {
-		data: sites = [],
-		load: loadSites,
-		status: sitesStatus,
-	} = useCache<Site[]>('sites', getSites);
+	useEffect(() => {
+		loadSites();
+	}, [loadSites]);
 
 	const channels = useMemo(
 		() => [

@@ -16,7 +16,6 @@ import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
-import CacheContextProvider from '../../structure_builder/contexts/CacheContext';
 import AIAssistantChat from './AIAssistantChat/AIAssistantChat';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
@@ -343,13 +342,11 @@ export default function ContentEditorToolbar({
 			) : null}
 
 			{showPreviewModal ? (
-				<CacheContextProvider initialData={{}}>
-					<PreviewModal
-						getPreviewDataURL={getPreviewDataURL}
-						onCloseModal={() => setShowPreviewModal(false)}
-						title={title}
-					/>
-				</CacheContextProvider>
+				<PreviewModal
+					getPreviewDataURL={getPreviewDataURL}
+					onCloseModal={() => setShowPreviewModal(false)}
+					title={title}
+				/>
 			) : null}
 		</Toolbar>
 	);

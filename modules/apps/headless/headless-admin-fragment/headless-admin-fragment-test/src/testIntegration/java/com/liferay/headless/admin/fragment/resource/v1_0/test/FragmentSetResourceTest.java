@@ -210,6 +210,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				duplicateKeyFragmentSet.getExternalReferenceCode(),
 				duplicateKeyFragmentSet),
 			duplicateKeyFragmentSet.getKey());
+
+		_testPutSiteFragmentSetBatch();
 	}
 
 	@Override
@@ -390,6 +392,39 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				String.valueOf(throwable),
 				throwable instanceof DuplicateFragmentCollectionKeyException);
 		}
+	}
+
+	private void _testPutSiteFragmentSetBatch() throws Exception {
+		FragmentSet fragmentSet1 = testPutSiteFragmentSet_addFragmentSet();
+		FragmentSet fragmentSet2 = testPutSiteFragmentSet_addFragmentSet();
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				_exportFragmentSetsToJSON(testGroup.getExternalReferenceCode()),
+				"headless-admin-fragment/v1.0/sites/" +
+					irrelevantGroup.getExternalReferenceCode() +
+						"/fragment-sets/batch?createStrategy=INSERT",
+				Http.Method.POST));
+
+		fragmentSet2.setDescription(RandomTestUtil.randomString());
+		fragmentSet2.setName(RandomTestUtil.randomString());
+
+		FragmentSet putFragmentSet2 = fragmentSetResource.putSiteFragmentSet(
+			testGroup.getExternalReferenceCode(),
+			fragmentSet2.getExternalReferenceCode(), fragmentSet2);
+
+		waitForFinish(
+			"COMPLETED",
+			HTTPTestUtil.invokeToJSONObject(
+				_exportFragmentSetsToJSON(testGroup.getExternalReferenceCode()),
+				"headless-admin-fragment/v1.0/sites/" +
+					irrelevantGroup.getExternalReferenceCode() +
+						"/fragment-sets/batch?createStrategy=UPSERT",
+				Http.Method.POST));
+
+		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
+		_assertFragmentCollection(putFragmentSet2, irrelevantGroup);
 	}
 
 	private JSONObject _waitForExportFinish(

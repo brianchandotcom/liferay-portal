@@ -30,8 +30,8 @@
 #end
 
 #if (${jakartaCompatible.equals("true")})
-		<spring.security.version>6.2.8</spring.security.version>
-		<spring.version>6.2.8</spring.version>
+		<spring.security.version>6.5.9</spring.security.version>
+		<spring.version>6.2.17</spring.version>
 #elseif (${framework.equals("portletmvc4spring")})
 		<spring.security.version>5.5.1</spring.security.version>
 		<spring.version>5.3.27</spring.version>

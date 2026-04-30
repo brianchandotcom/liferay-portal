@@ -21,6 +21,8 @@ Run across the entire codebase:
 cd <repo-root>/portal-impl && ant format-source-current-branch
 ```
 
+`ant format-source-current-branch` only inspects committed files, so run it after creating the commit and amend any formatter changes or fixes into that commit.
+
 In both cases, if there are issues to be fixed, the formatter will list them. Fix them.
 
 In addition to the automatic formatter, there is a set of manual rules that the formatter does not catch. The full workflow is to run the formatter, apply the manual rules, then rerun the formatter to clean up any fallout from the manual edits.

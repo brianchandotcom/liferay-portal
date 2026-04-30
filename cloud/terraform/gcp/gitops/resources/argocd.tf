@@ -218,12 +218,12 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 						helm={
 							parameters=[
 								{
-									name="crossplaneNamespace"
-									value=var.crossplane_namespace
-								},
-								{
 									name="crossplaneGsaEmail"
 									value=google_service_account.cloudplatform_gsa.email
+								},
+								{
+									name="crossplaneNamespace"
+									value=var.crossplane_namespace
 								},
 								{
 									name="deploymentName"

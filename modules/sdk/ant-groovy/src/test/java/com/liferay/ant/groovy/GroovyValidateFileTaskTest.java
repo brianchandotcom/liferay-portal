@@ -112,34 +112,6 @@ public class GroovyValidateFileTaskTest {
 	}
 
 	@Test
-	public void testCatchesUnescapedDollarIdentifierInterpolation()
-		throws Exception {
-
-		File xmlFile = _writeFile(
-			"<project>\n<groovy>\n<![CDATA[\nString x = \"prefix-$jobName" +
-				"\";\n]]>\n</groovy>\n</project>",
-			"unescaped-dollar-identifier.xml");
-
-		GroovyValidateFileTask groovyValidateFileTask =
-			_newGroovyValidateFileTask();
-
-		groovyValidateFileTask.setFile(xmlFile);
-
-		try {
-			groovyValidateFileTask.execute();
-
-			Assert.fail("Expected BuildException for unescaped GString");
-		}
-		catch (BuildException buildException) {
-			String message = buildException.getMessage();
-
-			Assert.assertTrue(
-				"Expected message to mention failure, got: " + message,
-				message.contains("Groovy validation failed"));
-		}
-	}
-
-	@Test
 	public void testMissingFileThrows() throws Exception {
 		GroovyValidateFileTask groovyValidateFileTask =
 			_newGroovyValidateFileTask();
@@ -173,6 +145,21 @@ public class GroovyValidateFileTaskTest {
 
 			Assert.assertTrue(message.contains("Specify"));
 		}
+	}
+
+	@Test
+	public void testToleratesBareDollarIdentifier() throws Exception {
+		File xmlFile = _writeFile(
+			"<project>\n<groovy>\n<![CDATA[\nString s = \"java.lang.String" +
+				"$CaseInsensitiveComparator\";\n]]>\n</groovy>\n</project>",
+			"bare-dollar-identifier.xml");
+
+		GroovyValidateFileTask groovyValidateFileTask =
+			_newGroovyValidateFileTask();
+
+		groovyValidateFileTask.setFile(xmlFile);
+
+		groovyValidateFileTask.execute();
 	}
 
 	@Test

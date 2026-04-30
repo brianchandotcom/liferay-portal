@@ -21,7 +21,7 @@ function main {
 	name="$(jq --exit-status --raw-output '.name' <<< "${input}")" || _die "missing name in input: ${input}"
 	cwd="$(jq --exit-status --raw-output '.cwd' <<< "${input}")" || _die "missing cwd in input: ${input}"
 
-	target_path="$(dirname "${cwd}")/liferay-portal-${name}"
+	target_path="$(git -C "${cwd}" rev-parse --show-toplevel)/../liferay-portal-${name}"
 
 	if git -C "${cwd}" show-ref --quiet --verify "refs/heads/${name}"; then
 		git -C "${cwd}" worktree add "${target_path}" "${name}" >&2

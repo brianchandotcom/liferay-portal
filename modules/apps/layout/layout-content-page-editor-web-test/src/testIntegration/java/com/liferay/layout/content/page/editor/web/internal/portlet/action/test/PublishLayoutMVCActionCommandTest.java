@@ -43,7 +43,6 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -443,65 +442,55 @@ public class PublishLayoutMVCActionCommandTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		try {
-			Layout originalLayout = _layoutLocalService.addLayout(
-				null, user.getUserId(), _group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-				StringPool.BLANK, serviceContext);
+		Layout originalLayout = _layoutLocalService.addLayout(
+			null, user.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_PORTLET, false, StringPool.BLANK,
+			serviceContext);
 
-			Assert.assertEquals(user.getUserId(), originalLayout.getUserId());
-			Assert.assertTrue(originalLayout.isTypePortlet());
+		Assert.assertEquals(user.getUserId(), originalLayout.getUserId());
+		Assert.assertTrue(originalLayout.isTypePortlet());
 
-			serviceContext = ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+		serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			try {
-				_deleteUser(user, serviceContext);
+		_deleteUser(user, serviceContext);
 
-				_bulkLayoutConverter.convertLayout(originalLayout.getPlid());
+		_bulkLayoutConverter.convertLayout(originalLayout.getPlid());
 
-				originalLayout = _layoutLocalService.getLayout(
-					originalLayout.getPlid());
+		originalLayout = _layoutLocalService.getLayout(
+			originalLayout.getPlid());
 
-				Assert.assertTrue(originalLayout.isTypePortlet());
+		Assert.assertTrue(originalLayout.isTypePortlet());
 
-				Layout conversionDraftLayout =
-					originalLayout.fetchDraftLayout();
+		Layout conversionDraftLayout = originalLayout.fetchDraftLayout();
 
-				Assert.assertNotNull(conversionDraftLayout);
-				Assert.assertEquals(
-					TestPropsValues.getUserId(),
-					conversionDraftLayout.getUserId());
-				Assert.assertTrue(conversionDraftLayout.isTypeContent());
+		Assert.assertNotNull(conversionDraftLayout);
+		Assert.assertEquals(
+			TestPropsValues.getUserId(), conversionDraftLayout.getUserId());
+		Assert.assertTrue(conversionDraftLayout.isTypeContent());
 
-				ContentLayoutTestUtil.publishLayout(
-					conversionDraftLayout, originalLayout);
+		ContentLayoutTestUtil.publishLayout(
+			conversionDraftLayout, originalLayout);
 
-				originalLayout = _layoutLocalService.getLayout(
-					originalLayout.getPlid());
+		originalLayout = _layoutLocalService.getLayout(
+			originalLayout.getPlid());
 
-				Assert.assertTrue(originalLayout.isPublished());
-				Assert.assertTrue(originalLayout.isTypeContent());
+		Assert.assertTrue(originalLayout.isPublished());
+		Assert.assertTrue(originalLayout.isTypeContent());
 
-				Layout draftLayout = originalLayout.fetchDraftLayout();
+		Layout draftLayout = originalLayout.fetchDraftLayout();
 
-				Assert.assertNotNull(draftLayout);
-				Assert.assertEquals(
-					conversionDraftLayout.getPlid(), draftLayout.getPlid());
+		Assert.assertNotNull(draftLayout);
+		Assert.assertEquals(
+			conversionDraftLayout.getPlid(), draftLayout.getPlid());
 
-				Assert.assertTrue(draftLayout.isApproved());
-			}
-			finally {
-				ServiceContextThreadLocal.popServiceContext();
-			}
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		Assert.assertTrue(draftLayout.isApproved());
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -955,7 +944,7 @@ public class PublishLayoutMVCActionCommandTest {
 	}
 
 	private void _deleteUser(User user, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		_userLocalService.updateStatus(
 			user, WorkflowConstants.STATUS_INACTIVE, serviceContext);

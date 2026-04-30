@@ -85,6 +85,7 @@ public class UserSegmentsEntryMembershipChecker {
 		String parsedFilterString = filterString;
 
 		parsedFilterString = _processContainsOperations(parsedFilterString);
+		parsedFilterString = _processInOperations(parsedFilterString);
 		parsedFilterString = _processLogicalOperations(parsedFilterString);
 		parsedFilterString = _processNotOperations(parsedFilterString);
 		parsedFilterString = _processOperations(parsedFilterString);
@@ -186,6 +187,44 @@ public class UserSegmentsEntryMembershipChecker {
 				"') : -1) >= 0)");
 
 			matcher.appendReplacement(sb, replacement);
+		}
+
+		matcher.appendTail(sb);
+
+		return sb.toString();
+	}
+
+	private static String _processInOperations(String filterString) {
+		StringBuffer sb = new StringBuffer();
+
+		Matcher matcher = _inOperationPattern.matcher(filterString);
+
+		while (matcher.find()) {
+			String fieldName = matcher.group(1);
+
+			String values = matcher.group(2);
+
+			String[] valueArray = values.split("\\s*,\\s*");
+
+			StringBundler replacementSB = new StringBundler(
+				(4 * valueArray.length) + 1);
+
+			replacementSB.append("(");
+
+			for (int i = 0; i < valueArray.length; i++) {
+				if (i > 0) {
+					replacementSB.append(" or ");
+				}
+
+				replacementSB.append(fieldName);
+				replacementSB.append(" eq ");
+				replacementSB.append(valueArray[i]);
+			}
+
+			replacementSB.append(")");
+
+			matcher.appendReplacement(
+				sb, Matcher.quoteReplacement(replacementSB.toString()));
 		}
 
 		matcher.appendTail(sb);
@@ -321,6 +360,9 @@ public class UserSegmentsEntryMembershipChecker {
 					});
 			}
 		});
+	private static final Pattern _inOperationPattern = Pattern.compile(
+		"((?:customField/)?\\w+)\\s+in\\s+\\(\\s*" +
+			"('[^']*'(?:\\s*,\\s*'[^']*')*)\\s*\\)");
 	private static final Map<String, Object> _locks = new ConcurrentHashMap<>();
 	private static final Pattern _logicalOperationPattern = Pattern.compile(
 		"\\s+(and|or)\\s+");
@@ -328,8 +370,8 @@ public class UserSegmentsEntryMembershipChecker {
 		"not(?=\\s*\\()");
 	private static final Pattern _operationPattern = Pattern.compile(
 		StringBundler.concat(
-			"((?:customField/)?\\w*)\\s+(eq|ge|gt|in|le|lt)\\s+",
-			"('([^')]*)'|\\('([^')]*)'\\)|false|true|CLASS_PK|",
+			"((?:customField/)?\\w*)\\s+(eq|ge|gt|le|lt)\\s+",
+			"('([^')]*)'|false|true|CLASS_PK|",
 			"\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}:\\d{2}.\\d{3}){0,1}((Z)|",
 			"((\\+|\\-)(\\d*))){0,1})"));
 	private static final Map<String, String> _operators = HashMapBuilder.put(

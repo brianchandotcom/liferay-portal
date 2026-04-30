@@ -5,9 +5,11 @@
 
 package com.liferay.ai.hub.cell.security;
 
+import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -19,9 +21,14 @@ import com.nimbusds.jwt.SignedJWT;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Rafael Praxedes
@@ -31,6 +38,17 @@ public class JWTTokenUtilTest {
 	@ClassRule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_aiHubCellConfiguration = _mockAIHubCellConfiguration();
+		_setUpConfigurationProviderUtil();
+	}
+
+	@After
+	public void tearDown() {
+		_configurationProviderUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testGenerateToken() throws Exception {
@@ -56,19 +74,6 @@ public class JWTTokenUtilTest {
 
 		Assert.assertEquals(_USER_ID, JWTTokenUtil.getUserId(_ISSUER, token));
 
-		byte[] secret = new byte[64];
-
-		for (int i = 0; i < secret.length; i++) {
-			secret[i] = SecureRandomUtil.nextByte();
-		}
-
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					JWTTokenUtil.class, "_SECRET", secret)) {
-
-			_testGetUserId("Invalid JWT signature", _ISSUER, token);
-		}
-
 		_testGetUserId(
 			"Invalid JWT issuer", RandomTestUtil.randomString(),
 			JWTTokenUtil.generateToken(
@@ -76,12 +81,47 @@ public class JWTTokenUtilTest {
 		_testGetUserId(
 			"Invalid JWT signature", _ISSUER,
 			token.substring(0, token.length() - 5) + "abcde");
+
 		_testGetUserId(
 			"The JWT token is expired", _ISSUER,
 			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));
 		_testGetUserId(
 			"Unable to parse and verify the JWT token", _ISSUER,
 			RandomTestUtil.randomString());
+
+		_aiHubCellConfiguration = _mockAIHubCellConfiguration();
+
+		_testGetUserId("Invalid JWT signature", _ISSUER, token);
+	}
+
+	private AIHubCellConfiguration _mockAIHubCellConfiguration() {
+		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
+			AIHubCellConfiguration.class);
+
+		int sha256BlockSize = 64;
+
+		byte[] secretBytes = new byte[sha256BlockSize];
+
+		for (int i = 0; i < secretBytes.length; i++) {
+			secretBytes[i] = SecureRandomUtil.nextByte();
+		}
+
+		Mockito.when(
+			aiHubCellConfiguration.secret()
+		).thenReturn(
+			Base64.encode(secretBytes)
+		);
+
+		return aiHubCellConfiguration;
+	}
+
+	private void _setUpConfigurationProviderUtil() {
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getCompanyConfiguration(
+				Mockito.eq(AIHubCellConfiguration.class), Mockito.anyLong())
+		).thenAnswer(
+			invocation -> _aiHubCellConfiguration
+		);
 	}
 
 	private void _testGetUserId(
@@ -108,5 +148,10 @@ public class JWTTokenUtilTest {
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	private static final long _USER_ID = RandomTestUtil.randomLong();
+
+	private AIHubCellConfiguration _aiHubCellConfiguration;
+	private final MockedStatic<ConfigurationProviderUtil>
+		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
 
 }

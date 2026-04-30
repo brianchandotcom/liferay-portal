@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredGroupException;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -71,7 +73,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -313,7 +315,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			_portal.getClassNameId(Company.class.getName()),
 			_portal.getClassNameId(Group.class.getName())
 		};
-		LinkedHashMap<String, Object> params =
+
+		List<Group> groups = _groupService.search(
+			contextCompany.getCompanyId(), classNameIds, search, null,
 			LinkedHashMapBuilder.<String, Object>put(
 				"active",
 				() -> {
@@ -325,7 +329,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				}
 			).put(
 				"site", true
-			).build();
+			).build(),
+			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new GroupNameComparator());
 
 		return Page.of(
 			HashMapBuilder.put(
@@ -344,14 +350,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					null)
 			).build(),
 			transform(
-				_groupService.search(
-					contextCompany.getCompanyId(), classNameIds, search, null,
-					params, true, pagination.getStartPosition(),
-					pagination.getEndPosition(), new GroupNameComparator()),
+				ListUtil.subList(
+					groups, pagination.getStartPosition(),
+					pagination.getEndPosition()),
 				this::_toSite),
-			pagination,
-			_groupService.searchCount(
-				contextCompany.getCompanyId(), classNameIds, search, params));
+			pagination, groups.size());
 	}
 
 	@Override

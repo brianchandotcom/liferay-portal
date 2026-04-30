@@ -18,7 +18,7 @@ String mode = editCommerceOrderAttachmentDisplayContext.getMode();
 <liferay-frontend:side-panel-content
 	title='<%= LanguageUtil.get(request, Objects.equals(mode, "edit") ? "edit-attachment" : "add-attachment") %>'
 >
-	<aui:form method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "editOrderAttachment(event, this.form)" %>'>
+	<aui:form method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "editCommerceOrderAttachment(event, this.form)" %>'>
 		<aui:input name="attachmentId" type="hidden" value="<%= attachmentId %>" />
 
 		<commerce-ui:panel
@@ -92,7 +92,7 @@ String mode = editCommerceOrderAttachmentDisplayContext.getMode();
 					"namespace", liferayPortletResponse.getNamespace()
 				).build()
 			%>'
-			module="{editOrderAttachment} from commerce-order-web"
+			module="{editCommerceOrderAttachment} from commerce-order-web"
 		/>
 	</aui:form>
 </liferay-frontend:side-panel-content>

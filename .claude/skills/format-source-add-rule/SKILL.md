@@ -57,3 +57,11 @@ For rules with nuance, use several diff blocks for each additional case. Add a s
 ### Self-Test the Rule
 
 Validate that the appended rule reproduces the input commit when applied to the commit's parent state. To do this, create a new branch at the commit's parent and run `/format-source` scoped to only the files touched by the commit, applying only the manual rules (skip the automatic formatter). Compare the result with the commit. If the rule does not produce an equivalent change, revise the rule and repeat until it does.
+
+### Commit the Rule
+
+After the self-test passes, stage only `.claude/skills/format-source/SKILL.md` and invoke the `commit` skill with this commit message format:
+
+```
+<ticket> Add rule derived from <sha>
+```

@@ -249,13 +249,7 @@ mysql --execute 'CREATE DATABASE IF NOT EXISTS <DB_NAME> CHARACTER SET utf8mb4 C
 
 If `mysql` CLI is unavailable or fails, print the command for the user to run manually. Show errors — never swallow them with `2>/dev/null`.
 
-#### 4j. Clear OSGi State
-
-```bash
-rm -rf <BUNDLE>/osgi/state
-```
-
-#### 4k. Print Summary
+#### 4j. Print Summary
 
 Print a table of all assigned ports, the DB name, the Liferay URL, and the Glowroot URL.
 

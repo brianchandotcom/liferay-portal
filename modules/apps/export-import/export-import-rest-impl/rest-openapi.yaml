@@ -16,6 +16,40 @@ components:
                     readOnly: true
                     type: array
             type: object
+        ImportPreview:
+            properties:
+                additionCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                author:
+                    readOnly: true
+                    type: string
+                deletionCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                exportDate:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                fileEntryId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                fileName:
+                    readOnly: true
+                    type: string
+                fileSize:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                portletDataHandlerSections:
+                    items:
+                        $ref: "#/components/schemas/PortletDataHandlerSection"
+                    readOnly: true
+                    type: array
+            type: object
         ImportProcess:
             properties:
                 creator:
@@ -358,6 +392,34 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/import-preview":
+        post:
+            operationId: postAssetLibraryImportPreview
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+            tags: ["ImportPreview"]
     "/asset-libraries/{assetLibraryId}/import-processes":
         description:
             Retrieves the import process entries for the specified asset library.
@@ -456,6 +518,28 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
+    "/import-preview":
+        post:
+            operationId: postImportPreview
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+            tags: ["ImportPreview"]
     "/import-processes":
         description:
             Retrieves all the import process entries.
@@ -707,6 +791,34 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ExportPreview"
             tags: ["ExportPreview"]
+    "/sites/{siteExternalReferenceCode}/import-preview":
+        post:
+            operationId: postSiteImportPreview
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportPreview"
+            tags: ["ImportPreview"]
     "/sites/{siteId}/import-processes":
         description:
             Retrieves the import process entries for the specified site.

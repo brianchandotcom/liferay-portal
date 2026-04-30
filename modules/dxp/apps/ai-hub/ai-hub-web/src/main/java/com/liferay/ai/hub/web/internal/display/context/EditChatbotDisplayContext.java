@@ -47,6 +47,8 @@ public class EditChatbotDisplayContext {
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
+		).put(
+			"portalURL", _themeDisplay.getPortalURL()
 		).build();
 	}
 

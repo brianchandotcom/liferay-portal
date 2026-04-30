@@ -29,7 +29,6 @@ export function RedirectToEditObjectDetailsModal({
 		<>
 			<ClayModalProvider>
 				<ClayModal center observer={observer} status="info">
-					<ClayForm>
 						<ClayModal.Header
 							closeButtonAriaLabel={Liferay.Language.get('close')}
 						>
@@ -39,11 +38,13 @@ export function RedirectToEditObjectDetailsModal({
 						</ClayModal.Header>
 
 						<ClayModal.Body>
+							<ClayForm>
 							<p>
 								{Liferay.Language.get(
 									'you-are-leaving-object-model-builder-and-opening-the-object-admin-page-view-in-a-new-tab'
 								)}
 							</p>
+							</ClayForm>
 						</ClayModal.Body>
 
 						<ClayModal.Footer
@@ -71,7 +72,6 @@ export function RedirectToEditObjectDetailsModal({
 								</ClayButton.Group>
 							}
 						/>
-					</ClayForm>
 				</ClayModal>
 			</ClayModalProvider>
 		</>

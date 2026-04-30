@@ -17,6 +17,10 @@ public class TestReportFailureReport extends BaseFailureReport {
 			"\n\nError Stack Trace:\n", _testReport.getErrorStackTrace());
 	}
 
+	public TestReport getTestReport() {
+		return _testReport;
+	}
+
 	protected TestReportFailureReport(
 		BuildReport buildReport, TestReport testReport) {
 

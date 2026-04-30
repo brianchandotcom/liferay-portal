@@ -9,7 +9,7 @@
 
 <aui:script position="inline">
 	(function () {
-		if (document.getElementById('aihub-chat-widget-script')) {
+		if (document.getElementById('aihub-chatbot-widget-script')) {
 			return;
 		}
 

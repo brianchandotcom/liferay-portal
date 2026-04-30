@@ -1,21 +1,35 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-input=$(cat)
-name=$(jq --raw-output '.name' <<< "${input}")
-cwd=$(jq --raw-output '.cwd' <<< "${input}")
+set -o errexit
+set -o nounset
+set -o pipefail
 
-if [[ "${name}" == "null" || "${cwd}" == "null" ]]; then
-	echo "WorktreeCreate hook: missing name or cwd in input: ${input}" >&2
+function _die {
+	echo "WorktreeCreate hook: ${*}" >&2
+
 	exit 1
-fi
+}
 
-target_path="$(dirname "${cwd}")/liferay-portal-${name}"
+function main {
+	local cwd
+	local input
+	local name
+	local target_path
 
-if git -C "${cwd}" show-ref --quiet --verify "refs/heads/${name}"; then
-	git -C "${cwd}" worktree add "${target_path}" "${name}" >&2
-else
-	git -C "${cwd}" worktree add -b "${name}" "${target_path}" HEAD >&2
-fi
+	input="$(cat)"
 
-echo "${target_path}"
+	name="$(jq --exit-status --raw-output '.name' <<< "${input}")" || _die "missing name in input: ${input}"
+	cwd="$(jq --exit-status --raw-output '.cwd' <<< "${input}")" || _die "missing cwd in input: ${input}"
+
+	target_path="$(dirname "${cwd}")/liferay-portal-${name}"
+
+	if git -C "${cwd}" show-ref --quiet --verify "refs/heads/${name}"; then
+		git -C "${cwd}" worktree add "${target_path}" "${name}" >&2
+	else
+		git -C "${cwd}" worktree add -b "${name}" "${target_path}" HEAD >&2
+	fi
+
+	echo "${target_path}"
+}
+
+main "$@"

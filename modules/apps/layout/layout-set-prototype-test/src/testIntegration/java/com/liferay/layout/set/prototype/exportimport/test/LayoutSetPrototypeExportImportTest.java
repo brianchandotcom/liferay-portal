@@ -142,11 +142,12 @@ public class LayoutSetPrototypeExportImportTest
 			LayoutSetPrototypeLocalServiceUtil.
 				getLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
 
-		Group importedGroup = importedLayoutSetPrototype.getGroup();
+		Group importedLayoutSetPrototypeGroup =
+			importedLayoutSetPrototype.getGroup();
 
 		Assert.assertEquals(
 			privateLayoutsPageCount,
-			importedGroup.getPrivateLayoutsPageCount());
+			importedLayoutSetPrototypeGroup.getPrivateLayoutsPageCount());
 
 		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
 			importedLayoutSetPrototype);

@@ -12,7 +12,7 @@ Prepare a Liferay ticket for development. Drive every Jira interaction through t
 
 ## 1. Resolve the Ticket
 
-Accept a key (`LPD-86295`) or a browse URL from `${ARGUMENTS}`. Ask the user when nothing is supplied.
+Accept a key (`LPD-86295`) or a browse URL from `${ARGUMENTS}`. When nothing is supplied and `${PWD}` matches `*/liferay-portal-<KEY>` where `<KEY>` matches the Jira pattern `[A-Z]+-[0-9]+`, derive the key from the directory name. Otherwise ask the user.
 
 ## 2. Prerequisites
 

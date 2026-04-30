@@ -14,6 +14,9 @@ import jakarta.annotation.Generated;
 
 import java.net.URL;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -33,23 +36,33 @@ public interface ExportPreviewResource {
 	}
 
 	public ExportPreview getAssetLibraryExportPreview(
-			String assetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode, java.util.Date endDate,
+			Integer last, String range, java.util.Date startDate)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAssetLibraryExportPreviewHttpResponse(
-			String assetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode, java.util.Date endDate,
+			Integer last, String range, java.util.Date startDate)
 		throws Exception;
 
-	public ExportPreview getExportPreview() throws Exception;
-
-	public HttpInvoker.HttpResponse getExportPreviewHttpResponse()
+	public ExportPreview getExportPreview(
+			java.util.Date endDate, Integer last, String range,
+			java.util.Date startDate)
 		throws Exception;
 
-	public ExportPreview getSiteExportPreview(String siteExternalReferenceCode)
+	public HttpInvoker.HttpResponse getExportPreviewHttpResponse(
+			java.util.Date endDate, Integer last, String range,
+			java.util.Date startDate)
+		throws Exception;
+
+	public ExportPreview getSiteExportPreview(
+			String siteExternalReferenceCode, java.util.Date endDate,
+			Integer last, String range, java.util.Date startDate)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteExportPreviewHttpResponse(
-			String siteExternalReferenceCode)
+			String siteExternalReferenceCode, java.util.Date endDate,
+			Integer last, String range, java.util.Date startDate)
 		throws Exception;
 
 	public static class Builder {
@@ -162,12 +175,15 @@ public interface ExportPreviewResource {
 		implements ExportPreviewResource {
 
 		public ExportPreview getAssetLibraryExportPreview(
-				String assetLibraryExternalReferenceCode)
+				String assetLibraryExternalReferenceCode,
+				java.util.Date endDate, Integer last, String range,
+				java.util.Date startDate)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAssetLibraryExportPreviewHttpResponse(
-					assetLibraryExternalReferenceCode);
+					assetLibraryExternalReferenceCode, endDate, last, range,
+					startDate);
 
 			String content = httpResponse.getContent();
 
@@ -230,7 +246,9 @@ public interface ExportPreviewResource {
 
 		public HttpInvoker.HttpResponse
 				getAssetLibraryExportPreviewHttpResponse(
-					String assetLibraryExternalReferenceCode)
+					String assetLibraryExternalReferenceCode,
+					java.util.Date endDate, Integer last, String range,
+					java.util.Date startDate)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -254,6 +272,27 @@ public interface ExportPreviewResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ssXX");
+
+			if (endDate != null) {
+				httpInvoker.parameter(
+					"endDate", liferayToJSONDateFormat.format(endDate));
+			}
+
+			if (last != null) {
+				httpInvoker.parameter("last", String.valueOf(last));
+			}
+
+			if (range != null) {
+				httpInvoker.parameter("range", String.valueOf(range));
+			}
+
+			if (startDate != null) {
+				httpInvoker.parameter(
+					"startDate", liferayToJSONDateFormat.format(startDate));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -271,9 +310,13 @@ public interface ExportPreviewResource {
 			return httpInvoker.invoke();
 		}
 
-		public ExportPreview getExportPreview() throws Exception {
+		public ExportPreview getExportPreview(
+				java.util.Date endDate, Integer last, String range,
+				java.util.Date startDate)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getExportPreviewHttpResponse();
+				getExportPreviewHttpResponse(endDate, last, range, startDate);
 
 			String content = httpResponse.getContent();
 
@@ -334,7 +377,9 @@ public interface ExportPreviewResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getExportPreviewHttpResponse()
+		public HttpInvoker.HttpResponse getExportPreviewHttpResponse(
+				java.util.Date endDate, Integer last, String range,
+				java.util.Date startDate)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -358,6 +403,27 @@ public interface ExportPreviewResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ssXX");
+
+			if (endDate != null) {
+				httpInvoker.parameter(
+					"endDate", liferayToJSONDateFormat.format(endDate));
+			}
+
+			if (last != null) {
+				httpInvoker.parameter("last", String.valueOf(last));
+			}
+
+			if (range != null) {
+				httpInvoker.parameter("range", String.valueOf(range));
+			}
+
+			if (startDate != null) {
+				httpInvoker.parameter(
+					"startDate", liferayToJSONDateFormat.format(startDate));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -372,11 +438,13 @@ public interface ExportPreviewResource {
 		}
 
 		public ExportPreview getSiteExportPreview(
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, java.util.Date endDate,
+				Integer last, String range, java.util.Date startDate)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteExportPreviewHttpResponse(siteExternalReferenceCode);
+				getSiteExportPreviewHttpResponse(
+					siteExternalReferenceCode, endDate, last, range, startDate);
 
 			String content = httpResponse.getContent();
 
@@ -438,7 +506,8 @@ public interface ExportPreviewResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteExportPreviewHttpResponse(
-				String siteExternalReferenceCode)
+				String siteExternalReferenceCode, java.util.Date endDate,
+				Integer last, String range, java.util.Date startDate)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -461,6 +530,27 @@ public interface ExportPreviewResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ssXX");
+
+			if (endDate != null) {
+				httpInvoker.parameter(
+					"endDate", liferayToJSONDateFormat.format(endDate));
+			}
+
+			if (last != null) {
+				httpInvoker.parameter("last", String.valueOf(last));
+			}
+
+			if (range != null) {
+				httpInvoker.parameter("range", String.valueOf(range));
+			}
+
+			if (startDate != null) {
+				httpInvoker.parameter(
+					"startDate", liferayToJSONDateFormat.format(startDate));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -490,4 +580,4 @@ public interface ExportPreviewResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1702804063
+// LIFERAY-REST-BUILDER-HASH:-621552130

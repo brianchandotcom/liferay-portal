@@ -29,6 +29,7 @@ interface ObjectFolderContextProviderProps
 const ObjectFolderContext = createContext({} as ObjectFolderContextProps);
 
 const initialState = {
+	countries: [],
 	deletedObjectDefinition: {} as DeletedObjectDefinition,
 	elements: [] as Elements<
 		ObjectDefinitionNodeData | ObjectRelationshipEdgeData[]

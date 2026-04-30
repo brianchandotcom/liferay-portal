@@ -6,6 +6,7 @@
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import {Edge, Elements, Node} from 'react-flow-renderer';
 
+import {CountryInfo} from '../ObjectField/Tabs/BasicInfo/PhoneNumberProperties';
 import {TYPES} from './ModelBuilderContext/typesEnum';
 
 declare type TDropDownType =
@@ -227,6 +228,7 @@ export type TAction =
 export type TState = {
 	baseResourceURL: string;
 	ckEditor5Config?: object;
+	countries: CountryInfo[];
 	decimalSeparator: string;
 	deletedObjectDefinition: DeletedObjectDefinition | null;
 	editObjectDefinitionURL: string;

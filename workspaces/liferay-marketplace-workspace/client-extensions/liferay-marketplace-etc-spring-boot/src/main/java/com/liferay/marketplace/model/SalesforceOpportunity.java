@@ -191,11 +191,8 @@ public class SalesforceOpportunity {
 	}
 
 	private JSONObject _getProjectJSONObject() {
-		Map<String, String> customFields =
-			(Map<String, String>)_order.getCustomFields();
-
-		JSONObject orderMetadataJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}"));
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			_order);
 
 		JSONObject provisioningFormJSONObject =
 			orderMetadataJSONObject.getJSONObject("provisioningForm");

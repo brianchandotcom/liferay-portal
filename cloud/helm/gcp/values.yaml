@@ -1,3 +1,6 @@
+global:
+    gcp:
+        projectId: ""
 liferay-default:
     annotations:
         instrumentation.opentelemetry.io/inject-dotnet: "false"
@@ -126,6 +129,12 @@ liferay-default:
                     defaultMode: 0755
                     name: liferay-init-scripts-gcp
                 name: liferay-init-scripts-gcp
+    keda:
+        prometheusServerAddress: https://monitoring.googleapis.com/v1/projects/{{ .Values.global.gcp.projectId }}/location/global/prometheus/
+        triggerAuthentication:
+            spec:
+                podIdentity:
+                    provider: gcp
     network:
         enabled: true
         hostnames: []

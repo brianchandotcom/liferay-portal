@@ -640,4 +640,4 @@ public class ManyColumnsEntryPersistenceImpl
 		ManyColumnsEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:332195331
+// LIFERAY-SERVICE-BUILDER-HASH:1588702847

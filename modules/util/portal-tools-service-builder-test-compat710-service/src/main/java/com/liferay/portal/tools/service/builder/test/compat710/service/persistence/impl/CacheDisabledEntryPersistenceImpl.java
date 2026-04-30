@@ -1140,4 +1140,4 @@ public class CacheDisabledEntryPersistenceImpl
 		CacheDisabledEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-750268980
+// LIFERAY-SERVICE-BUILDER-HASH:-2081543466

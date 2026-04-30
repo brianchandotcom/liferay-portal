@@ -63,7 +63,7 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(_COMPANY_ID)) {
 
 			_testGetLayoutDisplayPageObjectProviderWithGroupPrefix();
-			_testGetLayoutDisplayPageObjectProviderWithGroupPrefixAndNestedUrlTitle();
+			_testGetLayoutDisplayPageObjectProviderWithGroupPrefixAndNestedURLTitle();
 			_testGetLayoutDisplayPageObjectProviderWithSlashWithoutGroupPrefix();
 			_testGetLayoutDisplayPageObjectProviderWithoutSlash();
 		}
@@ -78,7 +78,6 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 					getLayoutDisplayPageObjectProvider(
 						_REQUEST_GROUP_ID, urlTitle);
 
-		Assert.assertNotNull(layoutDisplayPageObjectProvider);
 		Assert.assertSame(
 			expectedObjectEntry,
 			layoutDisplayPageObjectProvider.getDisplayObject());
@@ -123,7 +122,7 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 			objectEntry, _GROUP_FRIENDLY_URL + "/parent/child");
 	}
 
-	private void _testGetLayoutDisplayPageObjectProviderWithGroupPrefixAndNestedUrlTitle() {
+	private void _testGetLayoutDisplayPageObjectProviderWithGroupPrefixAndNestedURLTitle() {
 		ObjectEntry objectEntry = _setUpObjectEntry(
 			_GROUP_ID, "parent/child/grandchild");
 

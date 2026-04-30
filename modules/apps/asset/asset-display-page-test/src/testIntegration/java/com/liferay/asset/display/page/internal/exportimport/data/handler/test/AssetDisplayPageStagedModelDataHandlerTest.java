@@ -17,6 +17,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
@@ -35,6 +36,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -108,7 +112,11 @@ public class AssetDisplayPageStagedModelDataHandlerTest
 
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
-			try {
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					"com.liferay.exportimport.internal.lifecycle." +
+						"LoggerExportImportLifecycleListener",
+					LoggerTestUtil.ERROR)) {
+
 				AssertUtils.assertFailure(
 					PortalException.class,
 					StringBundler.concat(
@@ -117,6 +125,34 @@ public class AssetDisplayPageStagedModelDataHandlerTest
 						", groupId=", liveGroup.getGroupId(), "}"),
 					() -> StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext, exportedStagedModel));
+
+				List<LogEntry> logEntries = logCapture.getLogEntries();
+
+				Assert.assertEquals(
+					logEntries.toString(), 1, logEntries.size());
+
+				LogEntry logEntry = logEntries.get(0);
+
+				Assert.assertEquals(
+					LoggerTestUtil.ERROR, logEntry.getPriority());
+				Assert.assertEquals(
+					StringBundler.concat(
+						"Staged model {class: ",
+						AssetDisplayPageEntry.class.getName(), ", uuid: ",
+						exportedStagedModel.getUuid(), "} import failed"),
+					logEntry.getMessage());
+
+				Throwable throwable = logEntry.getThrowable();
+
+				Assert.assertEquals(
+					NoSuchPageTemplateEntryException.class,
+					throwable.getClass());
+				Assert.assertEquals(
+					StringBundler.concat(
+						"No LayoutPageTemplateEntry exists with the key ",
+						"{externalReferenceCode=", externalReferenceCode,
+						", groupId=", liveGroup.getGroupId(), "}"),
+					throwable.getMessage());
 			}
 			finally {
 				ExportImportThreadLocal.setPortletImportInProcess(false);

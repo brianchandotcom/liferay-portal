@@ -397,3 +397,16 @@ It applies to workflow and other YAML scripted output.
 -                        echo "No entries found for ${id}."
 +                        echo "No entries were found for ${id}."
 ```
+
+### Rule 19: Drop Redundant Help Strings
+
+**Why:** A `*-help` property whose value only paraphrases its toggle's label tells the reader nothing the label does not already convey, and forces every locale to translate empty content; deleting the entry is better than rewording it.
+
+**Examples:**
+
+```diff
+ show-foo=Show Foo
+ show-foo-bar=Show Foo Bar
+-show-foo-help=When enabled, the foo will be shown.
+ show-qux=Show Qux
+```

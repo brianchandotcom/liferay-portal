@@ -219,7 +219,7 @@ public class SystemFDSSerializer
 			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
 
 		if (systemFDSEntry == null) {
-			return false;
+			return _systemFDSEntry.getHideManagementBarInEmptyState();
 		}
 
 		return systemFDSEntry.getHideManagementBarInEmptyState();
@@ -305,7 +305,7 @@ public class SystemFDSSerializer
 			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
 
 		if (systemFDSEntry == null) {
-			return true;
+			return _systemFDSEntry.getShowSearch();
 		}
 
 		return systemFDSEntry.getShowSearch();

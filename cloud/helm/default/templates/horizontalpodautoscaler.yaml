@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-    {{- with .Values.autoscaling.annotations }}
+    {{- with .Values.autoscaling.hpa.annotations }}
     annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -11,16 +11,16 @@ metadata:
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
-    {{- with .Values.autoscaling.behavior }}
+    {{- with .Values.autoscaling.hpa.behavior }}
     behavior:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    maxReplicas: {{ .Values.autoscaling.maxReplicas }}
-    {{- with .Values.autoscaling.metrics }}
+    maxReplicas: {{ .Values.autoscaling.hpa.maxReplicas }}
+    {{- with .Values.autoscaling.hpa.metrics }}
     metrics:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    minReplicas: {{ .Values.autoscaling.minReplicas }}
+    minReplicas: {{ .Values.autoscaling.hpa.minReplicas }}
     scaleTargetRef:
         apiVersion: apps/v1
         kind: StatefulSet

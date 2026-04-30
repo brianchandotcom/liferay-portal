@@ -29,6 +29,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -148,6 +149,47 @@ public class MySQLDB extends BaseDB {
 		}
 
 		return indexes;
+	}
+
+	@Override
+	public List<QueryInfo> getLockedQueryInfos(Connection connection)
+		throws SQLException {
+
+		List<QueryInfo> lockedQueryInfos = new ArrayList<>();
+
+		String sql = StringBundler.concat(
+			"select p.id as id, p.db as schema_, p.time as duration, ",
+			"coalesce(t.trx_state, p.state) as state, p.info as query from ",
+			"information_schema.processlist p left join ",
+			"information_schema.innodb_trx t on p.id = t.trx_mysql_thread_id ",
+			"where p.command != 'Sleep' and p.info is not null and p.id != ",
+			"connection_id() and ((t.trx_state = 'LOCK WAIT' or p.state like ",
+			"'%lock%') and p.time >= ?)");
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
+
+			long threshold = (long)Math.ceil(
+				PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD / 1000.0);
+
+			preparedStatement.setLong(1, threshold);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long duration = TimeUnit.SECONDS.toMillis(
+						resultSet.getLong("duration"));
+					String id = resultSet.getString("id");
+					String query = resultSet.getString("query");
+					String schema = resultSet.getString("schema_");
+					String state = resultSet.getString("state");
+
+					lockedQueryInfos.add(
+						new QueryInfo(duration, id, query, schema, state));
+				}
+			}
+		}
+
+		return lockedQueryInfos;
 	}
 
 	@Override

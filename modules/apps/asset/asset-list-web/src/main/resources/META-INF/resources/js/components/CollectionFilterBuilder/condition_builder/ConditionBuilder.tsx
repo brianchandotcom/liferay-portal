@@ -103,7 +103,7 @@ function ConditionRow({
 							});
 						}}
 						placeholder={Liferay.Language.get('select')}
-						selectedKey={condition.propertyName}
+						selectedKey={condition.propertyName ?? ''}
 					>
 						{(item) => (
 							<Option key={item.value}>{item.label}</Option>
@@ -129,7 +129,7 @@ function ConditionRow({
 								})
 							}
 							placeholder={Liferay.Language.get('select')}
-							selectedKey={condition.operatorName}
+							selectedKey={condition.operatorName ?? ''}
 						>
 							{(item) => (
 								<Option key={item.value}>{item.label}</Option>

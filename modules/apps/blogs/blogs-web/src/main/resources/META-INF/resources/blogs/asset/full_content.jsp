@@ -19,10 +19,12 @@
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 String entryTitle = BlogsEntryUtil.getDisplayTitle(resourceBundle, entry);
+
+boolean hasAnalyticsAttributes = GetterUtil.getBoolean(request.getAttribute(AssetAnalyticsAttributesProvider.HAS_ANALYTICS_ATTRIBUTES));
 %>
 
 <div class="portlet-blogs">
-	<div class="widget-mode-simple" data-analytics-asset-id="<%= String.valueOf(entry.getEntryId()) %>" data-analytics-asset-title="<%= HtmlUtil.escapeAttribute(entryTitle) %>" data-analytics-asset-type="blog">
+	<div class="widget-mode-simple" <%= hasAnalyticsAttributes ? StringPool.BLANK : String.format("data-analytics-asset-id=\"%s\" data-analytics-asset-title=\"%s\" data-analytics-asset-type=\"blog\"", String.valueOf(entry.getEntryId()), HtmlUtil.escapeAttribute(entryTitle)) %>>
 		<div class="widget-mode-simple-entry">
 			<div class="widget-content" id="<portlet:namespace /><%= entry.getEntryId() %>">
 				<liferay-util:include page="/blogs/entry_cover_image_caption.jsp" servletContext="<%= application %>">

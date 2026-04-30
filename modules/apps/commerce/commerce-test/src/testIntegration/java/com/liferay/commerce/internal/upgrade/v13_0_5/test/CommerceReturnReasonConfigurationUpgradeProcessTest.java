@@ -84,11 +84,6 @@ public class CommerceReturnReasonConfigurationUpgradeProcessTest {
 		"com.liferay.commerce.internal.upgrade.v13_0_5." +
 			"CommerceReturnReasonConfigurationUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -97,5 +92,10 @@ public class CommerceReturnReasonConfigurationUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

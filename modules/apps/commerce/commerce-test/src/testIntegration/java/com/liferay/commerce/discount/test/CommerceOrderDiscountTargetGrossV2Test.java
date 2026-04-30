@@ -574,8 +574,6 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -608,5 +606,6 @@ public class CommerceOrderDiscountTargetGrossV2Test {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

@@ -79,14 +79,15 @@ public class
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	@Inject
-	private static AccountGroupLocalService _accountGroupLocalService;
-
-	@Inject
-	private static CommercePriceListCommerceAccountGroupRelLocalService
-		_commercePriceListCommerceAccountGroupRelLocalService;
-
 	private AccountGroup _accountGroup;
+
+	@Inject
+	private AccountGroupLocalService _accountGroupLocalService;
+
 	private CommercePriceList _commercePriceList;
+
+	@Inject
+	private CommercePriceListCommerceAccountGroupRelLocalService
+		_commercePriceListCommerceAccountGroupRelLocalService;
 
 }

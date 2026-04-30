@@ -397,8 +397,6 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 		return _cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
-	private static User _user;
-
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
 
@@ -433,5 +431,6 @@ public class CommerceVirtualOrderItemLocalServiceTest {
 	private CPInstanceLocalService _cpInstanceLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

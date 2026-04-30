@@ -416,9 +416,6 @@ public class CommerceOrderIndexerTest {
 		modifiableSettings.store();
 	}
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -452,6 +449,10 @@ public class CommerceOrderIndexerTest {
 
 	private Group _group;
 	private Indexer<CommerceOrder> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
+
 	private Role _orderManagerRole;
 
 	@Inject

@@ -169,8 +169,6 @@ public class CommercePaymentSubscriptionsTest {
 			commerceSubscriptionEntry.getSubscriptionStatus());
 	}
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
@@ -192,5 +190,6 @@ public class CommercePaymentSubscriptionsTest {
 		_commerceSubscriptionEntryLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

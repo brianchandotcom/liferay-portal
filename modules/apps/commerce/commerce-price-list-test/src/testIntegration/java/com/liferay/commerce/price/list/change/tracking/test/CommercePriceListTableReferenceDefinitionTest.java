@@ -62,9 +62,9 @@ public class CommercePriceListTableReferenceDefinitionTest
 			CommercePriceListConstants.TYPE_PRICE_LIST, 1.0);
 	}
 
-	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
-
 	private CommerceCatalog _commerceCatalog;
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 }

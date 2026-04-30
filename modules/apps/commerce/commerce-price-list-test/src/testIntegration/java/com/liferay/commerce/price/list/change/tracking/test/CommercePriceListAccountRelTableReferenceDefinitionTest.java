@@ -78,14 +78,15 @@ public class CommercePriceListAccountRelTableReferenceDefinitionTest
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
-
-	@Inject
-	private static CommercePriceListAccountRelLocalService
-		_commercePriceListAccountRelLocalService;
-
 	private AccountEntry _accountEntry;
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
 	private CommercePriceList _commercePriceList;
+
+	@Inject
+	private CommercePriceListAccountRelLocalService
+		_commercePriceListAccountRelLocalService;
 
 }

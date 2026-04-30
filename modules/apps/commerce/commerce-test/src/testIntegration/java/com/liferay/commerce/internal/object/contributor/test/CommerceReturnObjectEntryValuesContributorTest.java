@@ -180,9 +180,6 @@ public class CommerceReturnObjectEntryValuesContributorTest {
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@DeleteAfterTestRun
-	private static User _user;
-
-	@DeleteAfterTestRun
 	private CommerceCatalog _commerceCatalog;
 
 	@DeleteAfterTestRun
@@ -216,5 +213,8 @@ public class CommerceReturnObjectEntryValuesContributorTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

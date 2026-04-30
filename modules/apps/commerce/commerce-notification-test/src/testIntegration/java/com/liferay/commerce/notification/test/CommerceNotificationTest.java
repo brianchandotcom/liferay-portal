@@ -627,8 +627,6 @@ public class CommerceNotificationTest {
 		return userGroup.getName();
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private User _accountAdmin;
 
@@ -667,6 +665,7 @@ public class CommerceNotificationTest {
 	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

@@ -393,8 +393,6 @@ public class CommerceSubscriptionEntryTest {
 		}
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -428,5 +426,6 @@ public class CommerceSubscriptionEntryTest {
 	private CPOptionLocalService _cpOptionLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

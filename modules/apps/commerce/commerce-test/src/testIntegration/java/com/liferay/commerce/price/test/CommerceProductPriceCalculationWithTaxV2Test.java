@@ -360,8 +360,6 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		return commerceProductPriceRequest;
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -387,5 +385,6 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

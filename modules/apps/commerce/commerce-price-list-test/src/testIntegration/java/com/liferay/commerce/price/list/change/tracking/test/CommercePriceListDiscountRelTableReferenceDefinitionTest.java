@@ -85,15 +85,17 @@ public class CommercePriceListDiscountRelTableReferenceDefinitionTest
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	@Inject
-	private static CommerceDiscountLocalService _commerceDiscountLocalService;
+	private CommerceDiscount _commerceDiscount;
 
 	@Inject
-	private static CommercePriceListDiscountRelLocalService
+	private CommerceDiscountLocalService _commerceDiscountLocalService;
+
+	private CommercePriceList _commercePriceList;
+
+	@Inject
+	private CommercePriceListDiscountRelLocalService
 		_commercePriceListDiscountRelLocalService;
 
-	private CommerceDiscount _commerceDiscount;
-	private CommercePriceList _commercePriceList;
 	private User _user;
 
 }

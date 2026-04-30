@@ -695,8 +695,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	private static User _user;
-
 	private AccountEntry _accountEntry1;
 	private AccountEntry _accountEntry2;
 	private AccountEntry _accountEntry3;
@@ -741,5 +739,6 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

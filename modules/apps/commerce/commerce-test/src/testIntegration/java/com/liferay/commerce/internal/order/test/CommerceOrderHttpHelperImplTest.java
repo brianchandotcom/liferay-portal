@@ -440,8 +440,6 @@ public class CommerceOrderHttpHelperImplTest {
 			mockHttpServletRequest);
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -482,6 +480,7 @@ public class CommerceOrderHttpHelperImplTest {
 	private RoleLocalService _roleLocalService;
 
 	private ThemeDisplay _themeDisplay;
+	private User _user;
 
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

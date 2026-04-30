@@ -191,25 +191,24 @@ public class ReturnsManagerRoleUpgradeProcessTest {
 		"com.liferay.commerce.internal.upgrade.v13_0_1." +
 			"ReturnsManagerRoleUpgradeProcess";
 
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
 
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	@DeleteAfterTestRun
 	private Role _role;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

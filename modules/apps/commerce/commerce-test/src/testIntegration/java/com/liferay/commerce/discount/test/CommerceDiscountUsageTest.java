@@ -824,8 +824,6 @@ public class CommerceDiscountUsageTest {
 			commerceOrder, _user.getUserId());
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -894,5 +892,6 @@ public class CommerceDiscountUsageTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

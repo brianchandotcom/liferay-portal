@@ -114,11 +114,11 @@ public class CPTaxCategoryUpgradeProcessTest {
 			"CPTaxCategoryUpgradeProcess";
 
 	@Inject
-	private static CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

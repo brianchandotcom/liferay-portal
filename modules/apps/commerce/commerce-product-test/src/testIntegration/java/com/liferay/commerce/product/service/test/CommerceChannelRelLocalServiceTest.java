@@ -215,8 +215,6 @@ public class CommerceChannelRelLocalServiceTest {
 			count + 1);
 	}
 
-	private static User _user;
-
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -242,5 +240,6 @@ public class CommerceChannelRelLocalServiceTest {
 	private CPDefinition _cpDefinition;
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

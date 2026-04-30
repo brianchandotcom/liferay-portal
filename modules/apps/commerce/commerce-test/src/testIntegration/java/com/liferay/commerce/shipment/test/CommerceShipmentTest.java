@@ -1179,8 +1179,6 @@ public class CommerceShipmentTest {
 		return CPTestUtil.addCPInstanceWithRandomSku(groupId);
 	}
 
-	private static User _user;
-
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -1227,6 +1225,8 @@ public class CommerceShipmentTest {
 
 	@Inject
 	private Portal _portal;
+
+	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

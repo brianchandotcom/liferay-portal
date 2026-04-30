@@ -224,8 +224,6 @@ public class SpecificationOptionFacetsTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -250,5 +248,7 @@ public class SpecificationOptionFacetsTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private User _user;
 
 }

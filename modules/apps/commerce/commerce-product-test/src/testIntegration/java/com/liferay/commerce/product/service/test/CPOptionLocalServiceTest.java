@@ -261,8 +261,6 @@ public class CPOptionLocalServiceTest {
 		}
 	}
 
-	private static User _user;
-
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
@@ -280,5 +278,6 @@ public class CPOptionLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

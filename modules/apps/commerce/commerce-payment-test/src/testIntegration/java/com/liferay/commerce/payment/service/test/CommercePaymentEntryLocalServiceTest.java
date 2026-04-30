@@ -643,9 +643,6 @@ public class CommercePaymentEntryLocalServiceTest {
 			reasonKey, refundCommercePaymentEntry.getReasonKey());
 	}
 
-	@DeleteAfterTestRun
-	private static User _user;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -681,5 +678,8 @@ public class CommercePaymentEntryLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

@@ -1633,8 +1633,6 @@ public class CommerceDiscountTargetGrossV2Test {
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -1674,5 +1672,6 @@ public class CommerceDiscountTargetGrossV2Test {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

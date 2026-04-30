@@ -1105,8 +1105,6 @@ public class CommerceInventoryEngineTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private CommerceChannel _commerceChannel;
 
@@ -1156,5 +1154,6 @@ public class CommerceInventoryEngineTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

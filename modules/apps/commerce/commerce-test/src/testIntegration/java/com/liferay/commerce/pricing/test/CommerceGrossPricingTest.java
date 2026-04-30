@@ -1869,8 +1869,6 @@ public class CommerceGrossPricingTest {
 			calendar.get(Calendar.MINUTE), neverExpire, serviceContext);
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -1922,5 +1920,6 @@ public class CommerceGrossPricingTest {
 	private Group _group;
 	private double _rate;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

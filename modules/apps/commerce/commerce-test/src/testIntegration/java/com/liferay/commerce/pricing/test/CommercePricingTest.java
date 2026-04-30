@@ -1350,8 +1350,6 @@ public class CommercePricingTest {
 
 	private static final int _SCALE = 10;
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -1396,5 +1394,6 @@ public class CommercePricingTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

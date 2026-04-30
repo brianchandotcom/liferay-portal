@@ -153,10 +153,6 @@ public class CommercePriceListIndexerTest {
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	private static Company _company;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static Indexer<CommercePriceList> _indexer;
 
 	@Inject
@@ -167,6 +163,9 @@ public class CommercePriceListIndexerTest {
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private Group _group;
 

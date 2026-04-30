@@ -501,8 +501,6 @@ public class CommercePriceModifierTest {
 				commercePriceList.getGroupId()));
 	}
 
-	private static User _user;
-
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
@@ -523,5 +521,6 @@ public class CommercePriceModifierTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

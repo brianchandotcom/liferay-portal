@@ -829,9 +829,6 @@ public class CommerceCheckoutTest {
 			RandomTestUtil.randomString(), _serviceContext);
 	}
 
-	private static Company _company;
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -863,6 +860,8 @@ public class CommerceCheckoutTest {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
+	private Company _company;
+
 	@Inject
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
@@ -875,5 +874,6 @@ public class CommerceCheckoutTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

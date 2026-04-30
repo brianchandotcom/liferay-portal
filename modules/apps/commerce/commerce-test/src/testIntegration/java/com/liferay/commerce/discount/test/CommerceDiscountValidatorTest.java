@@ -184,11 +184,10 @@ public class CommerceDiscountValidatorTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@Inject
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

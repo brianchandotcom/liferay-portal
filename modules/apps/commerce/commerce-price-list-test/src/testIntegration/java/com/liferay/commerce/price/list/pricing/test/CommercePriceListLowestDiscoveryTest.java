@@ -561,8 +561,6 @@ public class CommercePriceListLowestDiscoveryTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private AccountGroup _accountGroup;
 
@@ -596,5 +594,6 @@ public class CommercePriceListLowestDiscoveryTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

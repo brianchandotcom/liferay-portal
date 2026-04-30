@@ -244,12 +244,6 @@ public class CommerceOrderImporterTypeTest {
 		Assert.assertNull(commerceOrderImporterItem.getErrorMessages());
 	}
 
-	@Inject
-	private static CommerceOrderImporterTypeRegistry
-		_commerceOrderImporterTypeRegistry;
-
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -266,11 +260,16 @@ public class CommerceOrderImporterTypeTest {
 	private CommerceOrder _commerceOrder;
 
 	@Inject
+	private CommerceOrderImporterTypeRegistry
+		_commerceOrderImporterTypeRegistry;
+
+	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

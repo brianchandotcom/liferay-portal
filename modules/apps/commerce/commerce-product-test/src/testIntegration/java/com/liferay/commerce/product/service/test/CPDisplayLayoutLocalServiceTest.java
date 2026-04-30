@@ -167,8 +167,6 @@ public class CPDisplayLayoutLocalServiceTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AssetVocabulary _assetVocabulary;
 
@@ -194,5 +192,6 @@ public class CPDisplayLayoutLocalServiceTest {
 	private Group _group3;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

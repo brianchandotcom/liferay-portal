@@ -271,8 +271,6 @@ public class CommercePaymentServletTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -315,5 +313,7 @@ public class CommercePaymentServletTest {
 		filter = "osgi.http.whiteboard.servlet.name=com.liferay.commerce.payment.internal.servlet.CommercePaymentServlet"
 	)
 	private Servlet _servlet;
+
+	private User _user;
 
 }

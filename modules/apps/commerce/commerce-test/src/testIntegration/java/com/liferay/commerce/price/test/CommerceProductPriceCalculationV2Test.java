@@ -2034,8 +2034,6 @@ public class CommerceProductPriceCalculationV2Test {
 
 	private static final BigDecimal _ONE = BigDecimal.ONE;
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -2067,5 +2065,6 @@ public class CommerceProductPriceCalculationV2Test {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

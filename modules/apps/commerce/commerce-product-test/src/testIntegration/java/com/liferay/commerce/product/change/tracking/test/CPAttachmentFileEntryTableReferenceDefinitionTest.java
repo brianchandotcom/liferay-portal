@@ -109,12 +109,6 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
-
-	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
@@ -123,6 +117,13 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 
 	private CPDefinition _cpDefinition;
 	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
+
 	private ServiceContext _serviceContext;
 
 }

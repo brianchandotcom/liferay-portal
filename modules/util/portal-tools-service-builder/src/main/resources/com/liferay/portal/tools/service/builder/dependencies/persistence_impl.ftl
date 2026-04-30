@@ -1526,7 +1526,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return map;
 			</#if>
 		}
-	<#elseif entity.isChangeTrackingEnabled()>
+	<#elseif entity.isChangeTrackingEnabled() && !serviceBuilder.isVersionGTE_7_4_0()>
 		@Override
 		public Map<Serializable, ${entity.name}> fetchByPrimaryKeys(Set<Serializable> primaryKeys) {
 			if (${ctPersistenceHelper}.isProductionMode(${entity.name}.class)) {

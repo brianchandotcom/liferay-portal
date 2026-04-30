@@ -48,9 +48,9 @@ public class JWTTokenUtilTest {
 
 			Assert.assertFalse(token.isEmpty());
 
-			JWTClaimsSet jwtClaimsSet = SignedJWT.parse(
-				token
-			).getJWTClaimsSet();
+			SignedJWT signedJWT = SignedJWT.parse(token);
+
+			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
 
 			Assert.assertEquals(_ISSUER, jwtClaimsSet.getIssuer());
 			Assert.assertEquals(
@@ -97,6 +97,9 @@ public class JWTTokenUtilTest {
 	}
 
 	private AIHubCellConfiguration _mockAIHubCellConfiguration() {
+		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
+			AIHubCellConfiguration.class);
+
 		int sha256BlockSize = 64;
 
 		byte[] secretBytes = new byte[sha256BlockSize];
@@ -104,9 +107,6 @@ public class JWTTokenUtilTest {
 		for (int i = 0; i < secretBytes.length; i++) {
 			secretBytes[i] = SecureRandomUtil.nextByte();
 		}
-
-		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
-			AIHubCellConfiguration.class);
 
 		Mockito.when(
 			aiHubCellConfiguration.secret()

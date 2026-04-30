@@ -18,7 +18,6 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportProcess;
 import com.liferay.exportimport.rest.client.dto.v1_0.Type;
-import com.liferay.exportimport.rest.client.dto.v1_0.ValidationResponse;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.pagination.Page;
 import com.liferay.exportimport.rest.client.pagination.Pagination;
@@ -1418,11 +1417,6 @@ public abstract class BaseImportProcessResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	@Test
-	public void testPostScopeScopeKeyValidate() throws Exception {
-		Assert.assertTrue(true);
-	}
-
 	protected void assertContains(
 		ImportProcess importProcess, List<ImportProcess> importProcesses) {
 
@@ -1468,15 +1462,6 @@ public abstract class BaseImportProcessResourceTestCase {
 
 			assertEquals(importProcess1, importProcess2);
 		}
-	}
-
-	protected void assertEquals(
-		ValidationResponse validationResponse1,
-		ValidationResponse validationResponse2) {
-
-		Assert.assertTrue(
-			validationResponse1 + " does not equal " + validationResponse2,
-			equals(validationResponse1, validationResponse2));
 	}
 
 	protected void assertEqualsIgnoringOrder(
@@ -1595,49 +1580,7 @@ public abstract class BaseImportProcessResourceTestCase {
 		}
 	}
 
-	protected void assertValid(ValidationResponse validationResponse) {
-		boolean valid = true;
-
-		for (String additionalAssertFieldName :
-				getAdditionalValidationResponseAssertFieldNames()) {
-
-			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
-				if (validationResponse.getErrorMessages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("fileEntryId", additionalAssertFieldName)) {
-				if (validationResponse.getFileEntryId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("success", additionalAssertFieldName)) {
-				if (validationResponse.getSuccess() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid additional assert field name " +
-					additionalAssertFieldName);
-		}
-
-		Assert.assertTrue(valid);
-	}
-
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[0];
-	}
-
-	protected String[] getAdditionalValidationResponseAssertFieldNames() {
 		return new String[0];
 	}
 
@@ -1803,58 +1746,6 @@ public abstract class BaseImportProcessResourceTestCase {
 		}
 
 		return false;
-	}
-
-	protected boolean equals(
-		ValidationResponse validationResponse1,
-		ValidationResponse validationResponse2) {
-
-		if (validationResponse1 == validationResponse2) {
-			return true;
-		}
-
-		for (String additionalAssertFieldName :
-				getAdditionalValidationResponseAssertFieldNames()) {
-
-			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						validationResponse1.getErrorMessages(),
-						validationResponse2.getErrorMessages())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("fileEntryId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						validationResponse1.getFileEntryId(),
-						validationResponse2.getFileEntryId())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("success", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						validationResponse1.getSuccess(),
-						validationResponse2.getSuccess())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid additional assert field name " +
-					additionalAssertFieldName);
-		}
-
-		return true;
 	}
 
 	protected java.lang.reflect.Field[] getDeclaredFields(Class clazz)
@@ -2114,15 +2005,6 @@ public abstract class BaseImportProcessResourceTestCase {
 		return randomImportProcess();
 	}
 
-	protected ValidationResponse randomValidationResponse() throws Exception {
-		return new ValidationResponse() {
-			{
-				fileEntryId = RandomTestUtil.randomLong();
-				success = RandomTestUtil.randomBoolean();
-			}
-		};
-	}
-
 	protected ImportProcessResource importProcessResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
@@ -2359,4 +2241,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1057085128
+// LIFERAY-REST-BUILDER-HASH:858610598

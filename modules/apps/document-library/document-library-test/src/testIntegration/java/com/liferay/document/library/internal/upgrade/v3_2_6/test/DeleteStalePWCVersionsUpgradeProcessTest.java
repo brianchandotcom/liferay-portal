@@ -262,12 +262,12 @@ public class DeleteStalePWCVersionsUpgradeProcessTest {
 			"DeleteStalePWCVersionsUpgradeProcess";
 
 	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
+	private CTProcessLocalService _ctProcessLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

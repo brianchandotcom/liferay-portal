@@ -53,7 +53,7 @@ public class RepositoryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static RepositoryLocalService _repositoryLocalService;
+	private RepositoryLocalService _repositoryLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -327,7 +327,7 @@ public class BaseWebDAVTestCase {
 	private static final String _SERVLET_PATH = "";
 
 	@Inject
-	private static WebDAVStorage _webDAVStorage;
+	private WebDAVStorage _webDAVStorage;
 
 	static {
 		_LOCK_XML = StringBundler.concat(

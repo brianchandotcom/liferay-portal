@@ -80,9 +80,9 @@ public class DLFolderTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
 
 }

@@ -89,7 +89,7 @@ public class DLFolderNameConstraintResolverTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;

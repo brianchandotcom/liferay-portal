@@ -108,7 +108,7 @@ public class DLFileEntryTypePermissionCheckerTest
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType"
 	)
-	private static ModelResourcePermission<DLFileEntryType>
+	private ModelResourcePermission<DLFileEntryType>
 		_dlFileEntryTypeModelResourcePermission;
 
 	@Inject

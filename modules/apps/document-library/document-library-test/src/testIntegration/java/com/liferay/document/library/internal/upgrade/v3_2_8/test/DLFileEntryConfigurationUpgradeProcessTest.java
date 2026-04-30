@@ -624,7 +624,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.document.library.internal.upgrade.registry.DLServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

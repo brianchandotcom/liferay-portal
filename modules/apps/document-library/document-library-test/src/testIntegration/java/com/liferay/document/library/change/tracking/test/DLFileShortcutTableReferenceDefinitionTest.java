@@ -76,10 +76,10 @@ public class DLFileShortcutTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private static DLFileShortcutLocalService _dlFileShortcutLocalService;
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
 
 	private DLFileEntry _dlFileEntry;
 

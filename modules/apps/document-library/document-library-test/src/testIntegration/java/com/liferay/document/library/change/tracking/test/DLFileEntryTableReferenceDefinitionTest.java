@@ -60,6 +60,6 @@ public class DLFileEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

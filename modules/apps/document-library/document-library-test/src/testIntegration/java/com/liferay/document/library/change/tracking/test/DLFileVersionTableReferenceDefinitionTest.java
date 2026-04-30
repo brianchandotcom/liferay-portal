@@ -89,7 +89,7 @@ public class DLFileVersionTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private DLFileEntry _dlFileEntry;
 

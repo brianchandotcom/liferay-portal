@@ -93,7 +93,7 @@ public class DLFolderActivityInterpreterTest
 	@Inject(
 		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFolder"
 	)
-	private static SocialActivityInterpreter _socialActivityInterpreter;
+	private SocialActivityInterpreter _socialActivityInterpreter;
 
 	private Folder _folder;
 

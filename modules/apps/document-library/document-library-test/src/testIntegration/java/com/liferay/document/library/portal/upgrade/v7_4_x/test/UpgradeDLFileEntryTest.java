@@ -184,7 +184,7 @@ public class UpgradeDLFileEntryTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

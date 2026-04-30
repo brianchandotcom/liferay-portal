@@ -1,8 +1,8 @@
-{{- if and .Values.keda.enabled .Values.keda.triggerAuthentication.spec }}
+{{- if and .Values.autoscaling.enabled (eq .Values.autoscaling.type "keda") .Values.autoscaling.keda.triggerAuthentication.spec }}
 apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
-    {{- with .Values.keda.triggerAuthentication.annotations }}
+    {{- with .Values.autoscaling.keda.triggerAuthentication.annotations }}
     annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -11,5 +11,5 @@ metadata:
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
-    {{- toYaml .Values.keda.triggerAuthentication.spec | nindent 4 }}
+    {{- toYaml .Values.autoscaling.keda.triggerAuthentication.spec | nindent 4 }}
 {{- end }}

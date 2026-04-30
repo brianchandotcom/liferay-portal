@@ -1,7 +1,4 @@
-{{- if and .Values.autoscaling.enabled .Values.keda.enabled -}}
-{{- fail "Cannot enable both .Values.autoscaling.enabled and .Values.keda.enabled. KEDA manages its own HorizontalPodAutoscaler." -}}
-{{- end }}
-{{- if .Values.keda.enabled }}
+{{- if and .Values.autoscaling.enabled (eq .Values.autoscaling.type "keda") }}
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
@@ -10,15 +7,15 @@ metadata:
     name: {{ include "liferay.name" . }}
     namespace: {{ include "liferay.namespace" . }}
 spec:
-    maxReplicaCount: {{ .Values.keda.maxReplicaCount }}
-    minReplicaCount: {{ .Values.keda.minReplicaCount }}
-    pollingInterval: {{ .Values.keda.pollingInterval }}
+    maxReplicaCount: {{ .Values.autoscaling.keda.maxReplicaCount }}
+    minReplicaCount: {{ .Values.autoscaling.keda.minReplicaCount }}
+    pollingInterval: {{ .Values.autoscaling.keda.pollingInterval }}
     scaleTargetRef:
         apiVersion: apps/v1
         kind: StatefulSet
         name: {{ include "liferay.name" . }}
     {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
-    {{- $rawTriggers := concat (.Values.keda.triggers | default list) (.Values.keda.customTriggers | default list) }}
+    {{- $rawTriggers := concat (.Values.autoscaling.keda.triggers | default list) (.Values.autoscaling.keda.customTriggers | default list) }}
     {{- $triggers := list }}
     {{- range $rawTriggers }}
         {{- $trigger := deepCopy . }}

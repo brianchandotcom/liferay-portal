@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- define "liferay.keda.prometheusServerAddress" -}}
-{{- tpl (.Values.keda.prometheusServerAddress | default "") . -}}
+{{- tpl (.Values.autoscaling.keda.prometheusServerAddress | default "") . -}}
 {{- end }}
 
 {{- define "liferay.fullname" -}}

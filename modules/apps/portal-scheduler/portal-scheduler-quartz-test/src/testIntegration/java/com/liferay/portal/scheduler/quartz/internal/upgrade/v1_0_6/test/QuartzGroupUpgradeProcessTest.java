@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class QuartzDispatchGroupUpgradeProcessTest {
+public class QuartzGroupUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -69,35 +69,36 @@ public class QuartzDispatchGroupUpgradeProcessTest {
 
 		long dispatchTriggerId = _dispatchTrigger.getDispatchTriggerId();
 
+		String jobName = StringBundler.concat(
+			"DISPATCH_JOB_", String.format("%07d", dispatchTriggerId),
+			StringPool.AT, companyId);
+
 		_oldGroupName =
 			"DISPATCH_GROUP_" + String.format("%07d", dispatchTriggerId);
 
 		_newGroupName = StringBundler.concat(
 			_oldGroupName, StringPool.AT, companyId);
 
-		String renamedJobName = StringBundler.concat(
-			"DISPATCH_JOB_", String.format("%07d", dispatchTriggerId),
-			StringPool.AT, companyId);
+		Message message = new Message();
 
-		_scheduleDispatchJob(renamedJobName, _oldGroupName, dispatchTriggerId);
+		message.put("companyId", companyId);
+		message.setPayload(
+			StringBundler.concat(
+				"{\"dispatchTriggerId\": ", dispatchTriggerId, "}"));
 
-		_scheduleDispatchJob(renamedJobName, _newGroupName, dispatchTriggerId);
-
-		Assert.assertNotNull(
-			_schedulerEngine.getScheduledJob(
-				renamedJobName, _oldGroupName, StorageType.PERSISTED));
-		Assert.assertNotNull(
-			_schedulerEngine.getScheduledJob(
-				renamedJobName, _newGroupName, StorageType.PERSISTED));
+		_scheduleJob(
+			jobName, _oldGroupName, _DISPATCH_DESTINATION_NAME, message);
+		_scheduleJob(
+			jobName, _newGroupName, _DISPATCH_DESTINATION_NAME, message);
 
 		_runUpgrade();
 
 		Assert.assertNull(
 			_schedulerEngine.getScheduledJob(
-				renamedJobName, _oldGroupName, StorageType.PERSISTED));
+				jobName, _oldGroupName, StorageType.PERSISTED));
 		Assert.assertNotNull(
 			_schedulerEngine.getScheduledJob(
-				renamedJobName, _newGroupName, StorageType.PERSISTED));
+				jobName, _newGroupName, StorageType.PERSISTED));
 	}
 
 	@Test
@@ -112,26 +113,34 @@ public class QuartzDispatchGroupUpgradeProcessTest {
 
 		long dispatchTriggerId = _dispatchTrigger.getDispatchTriggerId();
 
+		String jobName = StringBundler.concat(
+			"DISPATCH_JOB_", String.format("%07d", dispatchTriggerId),
+			StringPool.AT, companyId);
+
 		_oldGroupName =
 			"DISPATCH_GROUP_" + String.format("%07d", dispatchTriggerId);
 
 		_newGroupName = StringBundler.concat(
 			_oldGroupName, StringPool.AT, companyId);
 
-		String renamedJobName = StringBundler.concat(
-			"DISPATCH_JOB_", String.format("%07d", dispatchTriggerId),
-			StringPool.AT, companyId);
+		Message message = new Message();
 
-		_scheduleDispatchJob(renamedJobName, _oldGroupName, dispatchTriggerId);
+		message.put("companyId", companyId);
+		message.setPayload(
+			StringBundler.concat(
+				"{\"dispatchTriggerId\": ", dispatchTriggerId, "}"));
+
+		_scheduleJob(
+			jobName, _oldGroupName, _DISPATCH_DESTINATION_NAME, message);
 
 		_runUpgrade();
 
 		Assert.assertNull(
 			_schedulerEngine.getScheduledJob(
-				renamedJobName, _oldGroupName, StorageType.PERSISTED));
+				jobName, _oldGroupName, StorageType.PERSISTED));
 		Assert.assertNotNull(
 			_schedulerEngine.getScheduledJob(
-				renamedJobName, _newGroupName, StorageType.PERSISTED));
+				jobName, _newGroupName, StorageType.PERSISTED));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -145,28 +154,22 @@ public class QuartzDispatchGroupUpgradeProcessTest {
 		}
 	}
 
-	private void _scheduleDispatchJob(
-			String jobName, String groupName, long dispatchTriggerId)
+	private void _scheduleJob(
+			String jobName, String groupName, String destinationName,
+			Message message)
 		throws Exception {
-
-		Message message = new Message();
-
-		message.put("companyId", TestPropsValues.getCompanyId());
-		message.setPayload(
-			StringBundler.concat(
-				"{\"dispatchTriggerId\": ", dispatchTriggerId, "}"));
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			jobName, groupName, null, null, 1, TimeUnit.DAY);
 
 		_schedulerEngine.schedule(
-			trigger, StringPool.BLANK, _DISPATCH_DESTINATION_NAME, message,
+			trigger, StringPool.BLANK, destinationName, message,
 			StorageType.PERSISTED);
 	}
 
 	private static final String _CLASS_NAME =
 		"com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_6." +
-			"QuartzDispatchGroupUpgradeProcess";
+			"QuartzGroupUpgradeProcess";
 
 	private static final String _DISPATCH_DESTINATION_NAME =
 		"liferay/dispatch/executor";

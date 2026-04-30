@@ -16,6 +16,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"jakarta.portlet.name=" + ExportImportPortletKeys.COMPANY_IMPORT,
+		"jakarta.portlet.name=" + ExportImportPortletKeys.EXPORT_IMPORT,
 		"jakarta.portlet.name=" + ExportImportPortletKeys.IMPORT,
 		"mvc.command.name=/export_import/view_import_report_entry_detail"
 	},

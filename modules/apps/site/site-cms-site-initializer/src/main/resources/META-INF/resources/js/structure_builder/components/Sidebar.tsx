@@ -17,8 +17,12 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
+import findChild from '../utils/findChild';
 import handleAddRepeatableGroup from '../utils/handleAddRepeatableGroup';
 import handleDeleteChildren from '../utils/handleDeleteChildren';
+import isCopyable from '../utils/isCopyable';
+import isLocked from '../utils/isLocked';
+import isReferenced from '../utils/isReferenced';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -139,6 +143,18 @@ function Toolbar({
 		);
 	}
 
+	const copyableUuids = selection.filter((uuid) =>
+		isCopyable({root: structure, uuid})
+	);
+
+	const duplicableUuids = selection.filter((uuid) => {
+		const item = findChild({root: structure, uuid});
+
+		return (
+			item && !isLocked(item) && !isReferenced({root: structure, uuid})
+		);
+	});
+
 	return (
 		<ManagementToolbar.Container
 			active
@@ -159,6 +175,27 @@ function Toolbar({
 								uuids: selection,
 							}),
 						symbolLeft: 'repeat',
+					},
+					{type: 'divider'},
+					{
+						disabled: !copyableUuids.length,
+						label: Liferay.Language.get('copy'),
+						onClick: () =>
+							dispatch({
+								type: 'copy-children',
+								uuids: copyableUuids,
+							}),
+						symbolLeft: 'copy',
+					},
+					{
+						disabled: !duplicableUuids.length,
+						label: Liferay.Language.get('duplicate'),
+						onClick: () =>
+							dispatch({
+								type: 'duplicate-children',
+								uuids: duplicableUuids,
+							}),
+						symbolLeft: 'copy',
 					},
 					{type: 'divider'},
 					{

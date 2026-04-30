@@ -844,12 +844,8 @@ function getItemActions({
 
 		actions.push({
 			label: Liferay.Language.get('duplicate'),
-			onClick: async () => {
-				dispatch({
-					type: 'duplicate-child',
-					uuid: item.uuid,
-				});
-			},
+			onClick: () =>
+				dispatch({type: 'duplicate-children', uuids: [item.uuid]}),
 			symbolLeft: 'copy',
 		});
 

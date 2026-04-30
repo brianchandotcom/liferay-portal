@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.EnvPropertiesUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -58,7 +59,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -143,12 +144,11 @@ public class UpgradeReport {
 	}
 
 	private String _getExecutionDateString() {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"EEE, MMM dd, yyyy HH:mm:ss z", LocaleUtil.US);
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"EEE, MMM dd, yyyy HH:mm:ss z", LocaleUtil.US,
+			TimeZone.getTimeZone("UTC"));
 
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-		return simpleDateFormat.format(new Date());
+		return dateFormat.format(new Date());
 	}
 
 	private String _getExecutionTimeString() {
@@ -753,12 +753,10 @@ public class UpgradeReport {
 		File reportFile = new File(reportsDir, reportFileName);
 
 		if (reportFile.exists()) {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-				"yyyyMMdd_HHmmss", LocaleUtil.US);
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyyMMdd_HHmmss", LocaleUtil.US, TimeZone.getTimeZone("UTC"));
 
-			simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-			String timestamp = simpleDateFormat.format(
+			String timestamp = dateFormat.format(
 				new Date(reportFile.lastModified()));
 
 			reportFile.renameTo(

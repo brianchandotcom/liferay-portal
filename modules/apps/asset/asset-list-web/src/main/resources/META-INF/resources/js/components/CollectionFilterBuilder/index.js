@@ -47,6 +47,14 @@ export default function CollectionFilterBuilder({
 
 	const [properties, setProperties] = useState(initialProperties || []);
 
+	const filterValuesAndOmitID = (conditions) =>
+		conditions
+			.filter(
+				({operatorName, propertyName, value}) =>
+					operatorName && propertyName && value
+			)
+			.map(({id: _id, ...props}) => props);
+
 	useEffect(() => {
 		if (!propertiesURL) {
 			return undefined;
@@ -147,15 +155,27 @@ export default function CollectionFilterBuilder({
 			<input
 				name={`${namespace}TypeSettingsProperties--conditions--`}
 				type="hidden"
-				value={JSON.stringify(
-					conditions
-						.filter(
-							({operatorName, propertyName, value}) =>
-								operatorName && propertyName && value
-						)
-						.map(({_id, ...props}) => props)
-				)}
+				value={JSON.stringify(filterValuesAndOmitID(conditions))}
 			/>
+
+			{/* Use for Developer Viewing. TO-DO: Remove */}
+			<div className="mt-4">
+				<div className="text-secondary">
+					<code>{namespace}TypeSettingsProperties--conditions</code>
+				</div>
+
+				<pre
+					style={{
+						background: '#f5f5f5',
+						borderRadius: 4,
+						fontSize: 11,
+						marginTop: 8,
+						padding: 12,
+					}}
+				>
+					{JSON.stringify(filterValuesAndOmitID(conditions), null, 2)}
+				</pre>
+			</div>
 		</>
 	);
 }

@@ -40,11 +40,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component(service = HubspotWebhookController.class)
+@Component(service = HubSpotWebhookController.class)
 @Path("/hubspot_webhooks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope(ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE)
-public class HubspotWebhookController extends BaseFaroController {
+public class HubSpotWebhookController extends BaseFaroController {
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{any:.*}")
@@ -96,6 +96,6 @@ public class HubspotWebhookController extends BaseFaroController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		HubspotWebhookController.class);
+		HubSpotWebhookController.class);
 
 }

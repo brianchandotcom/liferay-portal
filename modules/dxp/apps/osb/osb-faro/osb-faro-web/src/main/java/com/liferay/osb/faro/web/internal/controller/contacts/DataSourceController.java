@@ -34,7 +34,7 @@ import com.liferay.osb.faro.engine.client.model.credentials.OAuth1Credentials;
 import com.liferay.osb.faro.engine.client.model.credentials.OAuth2Credentials;
 import com.liferay.osb.faro.engine.client.model.provider.CSVProvider;
 import com.liferay.osb.faro.engine.client.model.provider.DemandbaseProvider;
-import com.liferay.osb.faro.engine.client.model.provider.HubspotProvider;
+import com.liferay.osb.faro.engine.client.model.provider.HubSpotProvider;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
@@ -237,23 +237,23 @@ public class DataSourceController extends BaseFaroController {
 	@Path("/hubspot")
 	@POST
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public DataSourceDisplay createTypeHubspot(
+	public DataSourceDisplay createTypeHubSpot(
 			@PathParam("groupId") long groupId,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubspotProvider.ChannelsConfiguration>
+				FaroParam<HubSpotProvider.ChannelsConfiguration>
 					channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue("ACTIVE") @FormParam("status") String status)
 		throws Exception {
 
-		HubspotProvider hubspotProvider = new HubspotProvider();
+		HubSpotProvider hubSpotProvider = new HubSpotProvider();
 
-		hubspotProvider.setChannelsConfiguration(
+		hubSpotProvider.setChannelsConfiguration(
 			channelsConfigurationFaroParam.getValue());
 
 		return create(
-			groupId, credentials, hubspotProvider, name, null, null, status);
+			groupId, credentials, hubSpotProvider, name, null, null, status);
 	}
 
 	@Path("/liferay")
@@ -1115,28 +1115,28 @@ public class DataSourceController extends BaseFaroController {
 	@PATCH
 	@Path("/{id}/hubspot")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public DataSourceDisplay patchTypeHubspot(
+	public DataSourceDisplay patchTypeHubSpot(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubspotProvider.ChannelsConfiguration>
+				FaroParam<HubSpotProvider.ChannelsConfiguration>
 					channelsConfigurationFaroParam,
 			@FormParam("status") String status)
 		throws Exception {
 
-		HubspotProvider hubspotProvider = new HubspotProvider();
+		HubSpotProvider hubSpotProvider = new HubSpotProvider();
 
-		HubspotProvider.ChannelsConfiguration channelsConfiguration =
+		HubSpotProvider.ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 
 		if (channelsConfiguration != null) {
-			hubspotProvider.setChannelsConfiguration(channelsConfiguration);
+			hubSpotProvider.setChannelsConfiguration(channelsConfiguration);
 		}
 
 		return update(
-			groupId, id, credentials, name, null, hubspotProvider,
-			HubspotProvider.TYPE, 0, null, status, null, true);
+			groupId, id, credentials, name, null, hubSpotProvider,
+			HubSpotProvider.TYPE, 0, null, status, null, true);
 	}
 
 	@PATCH
@@ -1425,24 +1425,24 @@ public class DataSourceController extends BaseFaroController {
 	@Path("/{id}/hubspot")
 	@PUT
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public DataSourceDisplay updateTypeHubspot(
+	public DataSourceDisplay updateTypeHubSpot(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubspotProvider.ChannelsConfiguration>
+				FaroParam<HubSpotProvider.ChannelsConfiguration>
 					channelsConfigurationFaroParam,
 			@FormParam("status") String status)
 		throws Exception {
 
-		HubspotProvider hubspotProvider = new HubspotProvider();
+		HubSpotProvider hubSpotProvider = new HubSpotProvider();
 
-		hubspotProvider.setChannelsConfiguration(
+		hubSpotProvider.setChannelsConfiguration(
 			channelsConfigurationFaroParam.getValue());
 
 		return update(
-			groupId, id, credentials, name, null, hubspotProvider,
-			HubspotProvider.TYPE, 0, null, status, null, false);
+			groupId, id, credentials, name, null, hubSpotProvider,
+			HubSpotProvider.TYPE, 0, null, status, null, false);
 	}
 
 	@Path("/{id}/liferay")

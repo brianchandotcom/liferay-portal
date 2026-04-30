@@ -42,8 +42,9 @@ public class EditCommerceOrderAttachmentMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		long attachmentId = ParamUtil.getLong(renderRequest, "attachmentId");
 		CommerceOrderAttachment commerceOrderAttachment = null;
+
+		long attachmentId = ParamUtil.getLong(renderRequest, "attachmentId");
 
 		if (attachmentId > 0) {
 			try {

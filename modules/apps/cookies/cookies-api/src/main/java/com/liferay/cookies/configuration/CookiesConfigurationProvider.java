@@ -71,7 +71,7 @@ public interface CookiesConfigurationProvider {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
-	public boolean isCookiesPreferenceHandlingActived(
+	public boolean isCookiesPreferenceHandlingActive(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 
 	public boolean isCookiesPreferenceHandlingConfigurationDefined(
@@ -98,7 +98,7 @@ public interface CookiesConfigurationProvider {
 		throws ConfigurationException;
 
 	public void updateCookiesPreferenceHandlingConfiguration(
-			boolean actived, int consentRenewalPeriod, boolean enabled,
+			boolean active, int consentRenewalPeriod, boolean enabled,
 			boolean explicitConsentMode,
 			ExtendedObjectClassDefinition.Scope scope, long scopePK,
 			boolean storeConsent)

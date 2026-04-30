@@ -306,14 +306,14 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
-	public boolean isCookiesPreferenceHandlingActived(
+	public boolean isCookiesPreferenceHandlingActive(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
 
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
 				_getCookiesPreferenceHandlingConfiguration(scope, scopePK);
 
-		return cookiesPreferenceHandlingConfiguration.actived();
+		return cookiesPreferenceHandlingConfiguration.active();
 	}
 
 	@Override
@@ -426,14 +426,14 @@ public class CookiesConfigurationProviderImpl
 
 	@Override
 	public void updateCookiesPreferenceHandlingConfiguration(
-			boolean actived, int consentRenewalPeriod, boolean enabled,
+			boolean active, int consentRenewalPeriod, boolean enabled,
 			boolean explicitConsentMode,
 			ExtendedObjectClassDefinition.Scope scope, long scopePK,
 			boolean storeConsent)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary = _createDictionary(
-			actived, consentRenewalPeriod, enabled, explicitConsentMode,
+			active, consentRenewalPeriod, enabled, explicitConsentMode,
 			storeConsent);
 
 		if (scope == ExtendedObjectClassDefinition.Scope.COMPANY) {
@@ -458,11 +458,11 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	private HashMapDictionary<String, Object> _createDictionary(
-		boolean actived, int consentRenewalPeriod, boolean enabled,
+		boolean active, int consentRenewalPeriod, boolean enabled,
 		boolean explicitConsentMode, boolean storeConsent) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
-			"actived", actived
+			"active", active
 		).put(
 			"consentRenewalPeriod", consentRenewalPeriod
 		).put(

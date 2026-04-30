@@ -12,7 +12,7 @@ import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 interface ConsentManagerConfiguration {
-	actived?: boolean;
+	active?: boolean;
 	consentRenewalPeriod?: string;
 	enabled?: boolean;
 	explicitCookieConsentMode?: boolean;
@@ -135,7 +135,7 @@ export async function saveOrUpdateConfiguration(dialog: boolean, page) {
 export async function updateConsentManagerConfiguration(
 	page: Page,
 	{
-		actived,
+		active,
 		consentRenewalPeriod,
 		enabled,
 		explicitCookieConsentMode,
@@ -221,16 +221,16 @@ export async function updateConsentManagerConfiguration(
 
 	await saveOrUpdateConfiguration(dialog, page);
 
-	const desiredActived = actived === undefined ? enabled === true : actived;
+	const desiredActive = active === undefined ? enabled === true : active;
 
-	if (desiredActived !== undefined && enabled !== false) {
+	if (desiredActive !== undefined && enabled !== false) {
 		const {toggleActivateButton, toggleDeactivateButton} =
 			consentManagerConfigurationPage;
 
-		const isCurrentlyActived = await toggleDeactivateButton.isVisible();
+		const isCurrentlyActive = await toggleDeactivateButton.isVisible();
 
-		if (desiredActived !== isCurrentlyActived) {
-			const toggleButton = isCurrentlyActived
+		if (desiredActive !== isCurrentlyActive) {
+			const toggleButton = isCurrentlyActive
 				? toggleDeactivateButton
 				: toggleActivateButton;
 

@@ -70,7 +70,7 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 			scopePK = 0L;
 		}
 
-		if (!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActived(
+		if (!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
 				scope, scopePK)) {
 
 			return;

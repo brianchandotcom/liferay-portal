@@ -58,7 +58,7 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		HttpServletRequest httpServletRequest) {
 
 		if (!ParamUtil.getBoolean(httpServletRequest, "enabled")) {
-			return Map.of("actived", false, "enabled", false);
+			return Map.of("active", false, "enabled", false);
 		}
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
@@ -101,7 +101,7 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"actived", ParamUtil.getBoolean(httpServletRequest, "actived")
+			"active", ParamUtil.getBoolean(httpServletRequest, "active")
 		).put(
 			"consentRenewalPeriod",
 			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod", 12)

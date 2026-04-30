@@ -14,7 +14,7 @@
 
 	if (form) {
 		form.addEventListener('submit', (event) => {
-			if (form.dataset.skipActivedWarning === 'true') {
+			if (form.dataset.skipActiveWarning === 'true') {
 				return;
 			}
 
@@ -50,7 +50,7 @@
 
 							processClose();
 
-							form.dataset.skipActivedWarning = 'true';
+							form.dataset.skipActiveWarning = 'true';
 
 							if (forceReconsent) {
 								Liferay.Util.fetch('<%= forceReconsentURL %>', {

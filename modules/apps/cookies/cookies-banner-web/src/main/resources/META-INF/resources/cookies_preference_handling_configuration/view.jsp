@@ -18,13 +18,13 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 <fieldset>
 	<legend class="sr-only"><liferay-ui:message key="consent-manager-configuration" /></legend>
 
-	<div class="alert <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() ? "alert-success" : "alert-warning" %> d-flex align-items-center justify-content-between">
+	<div class="alert <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "alert-success" : "alert-warning" %> d-flex align-items-center justify-content-between">
 		<span>
-			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "this-experience-is-live-and-visible-to-site-visitors" : "this-experience-is-in-draft-mode-and-not-visible-to-site-visitors" %>' />
 		</span>
 
-		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActivedButton" type="button">
-			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() ? "deactivate" : "activate" %>' />
+		<button class="btn <%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "btn-secondary" : "btn-warning" %> <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />toggleActiveButton" type="button">
+			<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "deactivate" : "activate" %>' />
 		</button>
 	</div>
 
@@ -145,7 +145,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 		</div>
 	</div>
 
-	<aui:input name="actived" type="hidden" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActived() %>" />
+	<aui:input name="active" type="hidden" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() %>" />
 
 	<aui:input name="modifiedDate" type="hidden" />
 
@@ -369,19 +369,18 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			});
 		}
 
-		var activedInput = document.getElementById('<portlet:namespace />actived');
-		var toggleActivedButton = document.getElementById(
-			'<portlet:namespace />toggleActivedButton'
+		var activeInput = document.getElementById('<portlet:namespace />active');
+		var toggleActiveButton = document.getElementById(
+			'<portlet:namespace />toggleActiveButton'
 		);
 
-		if (activedInput && toggleActivedButton) {
-			toggleActivedButton.addEventListener('click', function (event) {
+		if (activeInput && toggleActiveButton) {
+			toggleActiveButton.addEventListener('click', function (event) {
 				form.reset();
 
-				activedInput.value =
-					activedInput.value === 'true' ? 'false' : 'true';
+				activeInput.value = activeInput.value === 'true' ? 'false' : 'true';
 
-				form.dataset.skipActivedWarning = 'true';
+				form.dataset.skipActiveWarning = 'true';
 
 				form.requestSubmit();
 			});
@@ -430,7 +429,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
 					onConfirm: (isConfirmed) => {
 						if (isConfirmed) {
-							form.dataset.skipActivedWarning = 'true';
+							form.dataset.skipActiveWarning = 'true';
 
 							Liferay.Util.fetch('<%= forceReconsentURL %>', {
 								method: 'POST',

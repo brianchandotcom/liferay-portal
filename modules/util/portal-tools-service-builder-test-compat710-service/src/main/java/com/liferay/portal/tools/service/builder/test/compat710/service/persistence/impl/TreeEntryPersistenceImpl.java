@@ -1146,4 +1146,4 @@ public class TreeEntryPersistenceImpl
 		TreeEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-116078624
+// LIFERAY-SERVICE-BUILDER-HASH:-1596317844

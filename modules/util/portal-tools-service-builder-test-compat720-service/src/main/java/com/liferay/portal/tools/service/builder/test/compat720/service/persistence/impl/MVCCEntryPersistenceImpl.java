@@ -1530,4 +1530,4 @@ public class MVCCEntryPersistenceImpl
 		MVCCEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2075738725
+// LIFERAY-SERVICE-BUILDER-HASH:-429183551

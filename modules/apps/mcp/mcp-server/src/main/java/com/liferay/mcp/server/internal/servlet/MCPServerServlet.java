@@ -131,6 +131,12 @@ public class MCPServerServlet extends HttpServlet {
 
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
+		}
+
 		MCPServerConfiguration mcpServerConfiguration;
 
 		try {
@@ -146,9 +152,7 @@ public class MCPServerServlet extends HttpServlet {
 			return;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311") ||
-			!mcpServerConfiguration.enabled()) {
-
+		if (!mcpServerConfiguration.enabled()) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return;

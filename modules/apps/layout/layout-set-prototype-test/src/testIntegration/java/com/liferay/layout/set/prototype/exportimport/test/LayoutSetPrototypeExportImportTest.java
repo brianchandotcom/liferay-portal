@@ -95,10 +95,10 @@ public class LayoutSetPrototypeExportImportTest
 		LayoutTestUtil.addTypePortletLayout(
 			exportedLayoutSetPrototypeGroup, true);
 
-		String uuid = exportedLayoutSetPrototype.getUuid();
 		long companyId = exportedLayoutSetPrototype.getCompanyId();
 		int privateLayoutsPageCount =
 			exportedLayoutSetPrototypeGroup.getPrivateLayoutsPageCount();
+		String uuid = exportedLayoutSetPrototype.getUuid();
 
 		User user = TestPropsValues.getUser();
 

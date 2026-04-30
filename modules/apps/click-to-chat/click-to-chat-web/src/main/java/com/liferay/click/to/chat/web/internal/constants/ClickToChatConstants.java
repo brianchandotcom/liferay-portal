@@ -10,6 +10,8 @@ package com.liferay.click.to.chat.web.internal.constants;
  */
 public interface ClickToChatConstants {
 
+	public static final String CHAT_PROVIDER_ID_AIHUB = "aihub";
+
 	public static final String CHAT_PROVIDER_ID_ZENDESK_WEB_WIDGET =
 		"zendesk_web_widget";
 

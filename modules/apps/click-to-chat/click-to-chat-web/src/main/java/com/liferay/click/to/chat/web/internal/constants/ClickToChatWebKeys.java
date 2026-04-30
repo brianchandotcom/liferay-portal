@@ -10,6 +10,9 @@ package com.liferay.click.to.chat.web.internal.constants;
  */
 public interface ClickToChatWebKeys {
 
+	public static final String CLICK_TO_CHAT_AIHUB_SERVICE_URL =
+		"CLICK_TO_CHAT_AIHUB_SERVICE_URL";
+
 	public static final String CLICK_TO_CHAT_CHAT_PROVIDER_ACCOUNT_ID =
 		"CLICK_TO_CHAT_CHAT_PROVIDER_ACCOUNT_ID";
 

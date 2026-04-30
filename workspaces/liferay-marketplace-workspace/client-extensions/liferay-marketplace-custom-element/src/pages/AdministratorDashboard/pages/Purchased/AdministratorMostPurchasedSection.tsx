@@ -62,26 +62,31 @@ async function withProductDetails(
 	entries: ProductsCountEntry[]
 ): Promise<PurchasedItem[]> {
 	return Promise.all(
-		entries.map(async ({productId, total}) => {
-			let productName = '';
-			let thumbnail = '';
+		entries.map(
+			async ({orderTypeExternalReferenceCode, productId, total}) => {
+				let productName = '';
+				let thumbnail = '';
 
-			try {
-				const product =
-					await HeadlessCommerceAdminCatalog.getProduct(productId);
+				try {
+					const product =
+						await HeadlessCommerceAdminCatalog.getProduct(
+							productId
+						);
 
-				productName = product?.name?.en_US ?? '';
-				thumbnail = product?.thumbnail ?? '';
+					productName = product?.name?.en_US ?? '';
+					thumbnail = product?.thumbnail ?? '';
+				}
+				catch {}
+
+				return {
+					orderTypeExternalReferenceCode,
+					productName:
+						productName || i18n.translate('product-unavailable'),
+					purchaseCount: total,
+					thumbnail,
+				};
 			}
-			catch {}
-
-			return {
-				productName:
-					productName || i18n.translate('product-unavailable'),
-				purchaseCount: total,
-				thumbnail,
-			};
-		})
+		)
 	);
 }
 
@@ -159,7 +164,10 @@ const AdministratorMostPurchasedSection: React.FC = () => {
 				}}
 				title={i18n.translate('most-purchased-apps')}
 			>
-				<AdministratorMostPurchasedListView items={products.apps} />
+				<AdministratorMostPurchasedListView
+					items={products.apps}
+					showAppType
+				/>
 			</Page>
 
 			<Page

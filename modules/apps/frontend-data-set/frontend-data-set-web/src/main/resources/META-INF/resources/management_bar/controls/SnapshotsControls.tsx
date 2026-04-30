@@ -20,10 +20,20 @@ import React, {Ref, useContext, useState} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {DEFAULT_FETCH_HEADERS} from '../../constants';
 import getRandomId from '../../utils/getRandomId';
-import ViewsContext, {ISnapshot} from '../../views/ViewsContext';
+import ViewsContext, {
+	ISnapshot,
+	ISnapshotGroup,
+} from '../../views/ViewsContext';
 import {EViewsActionTypes} from '../../views/viewsReducer';
 
 const DEFAULT_VIEW_ID = 'DEFAULT_VIEW';
+
+const OWNED_GROUP_KEY = 'owned';
+
+const GROUP_HEADERS: Record<string, string | undefined> = {
+	[OWNED_GROUP_KEY]: undefined,
+	'shared-with-me': Liferay.Language.get('shared-with-me'),
+};
 
 const RequiredMark = () => (
 	<>
@@ -177,8 +187,8 @@ const SnapshotsControls = () => {
 			activeView,
 			defaultSnapshot,
 			paginationDelta,
+			snapshotGroups,
 			snapshotUpdated,
-			snapshots,
 			sorts,
 			visibleFieldNames,
 		},
@@ -192,6 +202,10 @@ const SnapshotsControls = () => {
 		label: Liferay.Language.get('default-view'),
 	};
 
+	const snapshots = snapshotGroups.flatMap(
+		(group: ISnapshotGroup) => group.items
+	);
+
 	const activeSnapshot: ISnapshot =
 		(snapshots.length &&
 			activeSnapshotERC &&
@@ -200,22 +214,20 @@ const SnapshotsControls = () => {
 			)) ||
 		defaultSnapshotItem;
 
-	const ownedSnapshots = snapshots.filter((view: ISnapshot) => !view.shared);
-	const sharedSnapshots = snapshots.filter((view: ISnapshot) => view.shared);
+	const ownedSnapshotGroup = snapshotGroups.find(
+		(group: ISnapshotGroup) => group.key === OWNED_GROUP_KEY
+	);
+	const otherSnapshotGroups = snapshotGroups.filter(
+		(group: ISnapshotGroup) => group.key !== OWNED_GROUP_KEY
+	);
 
-	const hasSharedSnapshots = !!sharedSnapshots.length;
-
-	type PickerItem = ISnapshot | {items: ISnapshot[]; label?: string};
-
-	const pickerItems: PickerItem[] = hasSharedSnapshots
-		? [
-				{items: [defaultSnapshotItem, ...ownedSnapshots]},
-				{
-					items: sharedSnapshots,
-					label: Liferay.Language.get('shared-with-me'),
-				},
-			]
-		: [defaultSnapshotItem, ...ownedSnapshots];
+	const pickerGroups: ISnapshotGroup[] = [
+		{
+			items: [defaultSnapshotItem, ...(ownedSnapshotGroup?.items ?? [])],
+			key: OWNED_GROUP_KEY,
+		},
+		...otherSnapshotGroups,
+	];
 
 	const activeSnapshotLabel = activeSnapshot.label ?? '';
 	const initialLabel =
@@ -467,7 +479,7 @@ const SnapshotsControls = () => {
 			<ManagementToolbar.Item>
 				<Picker
 					as={SnapshotsControlsTrigger}
-					items={pickerItems}
+					items={pickerGroups}
 					messages={{
 						itemDescribedby: Liferay.Language.get(
 							'you-are-currently-on-a-text-element,-inside-of-a-list-box'
@@ -489,22 +501,16 @@ const SnapshotsControls = () => {
 							: Liferay.Language.get('default-view')
 					}
 				>
-					{(itemOrGroup: any) =>
-						hasSharedSnapshots ? (
-							<ClayDropDown.Group
-								header={itemOrGroup.label}
-								items={itemOrGroup.items}
-							>
-								{(view: ISnapshot) => (
-									<Option key={view.erc}>{view.label}</Option>
-								)}
-							</ClayDropDown.Group>
-						) : (
-							<Option key={itemOrGroup.erc}>
-								{itemOrGroup.label}
-							</Option>
-						)
-					}
+					{(group: ISnapshotGroup) => (
+						<ClayDropDown.Group
+							header={GROUP_HEADERS[group.key]}
+							items={group.items}
+						>
+							{(view: ISnapshot) => (
+								<Option key={view.erc}>{view.label}</Option>
+							)}
+						</ClayDropDown.Group>
+					)}
 				</Picker>
 			</ManagementToolbar.Item>
 

@@ -33,6 +33,7 @@ import com.liferay.sharing.service.SharingEntryLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -82,16 +83,16 @@ public abstract class BaseFDSSerializer {
 					classNameLocalService.getClassNameId(
 						objectDefinition.getClassName()));
 
-			Set<Long> sharedClassPKs = SetUtil.fromCollection(
+			Set<Long> sharingEntriesClassPKs = SetUtil.fromCollection(
 				TransformUtil.transform(
 					sharingEntries, SharingEntry::getClassPK));
 
-			String sharedClause = "";
+			String sharingEntriesClause = "";
 
-			if (!sharedClassPKs.isEmpty()) {
-				sharedClause = StringBundler.concat(
-					" or id in ('", StringUtil.merge(sharedClassPKs, "','"),
-					"')");
+			if (!sharingEntriesClassPKs.isEmpty()) {
+				sharingEntriesClause = StringBundler.concat(
+					" or id in ('",
+					StringUtil.merge(sharingEntriesClassPKs, "','"), "')");
 			}
 
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
@@ -101,31 +102,38 @@ public abstract class BaseFDSSerializer {
 					LocaleUtil.getMostRelevantLocale(), null, null),
 				StringBundler.concat(
 					"(fdsName eq '", fdsName, "' and (creatorId eq ", userId,
-					sharedClause, "))"),
+					sharingEntriesClause, "))"),
 				null, null, null);
 
-			return JSONUtil.toJSONArray(
-				page.getItems(),
-				(ObjectEntry objectEntry) -> {
-					Map<String, Object> properties =
-						objectEntry.getProperties();
+			List<ObjectEntry> ownedEntries = new ArrayList<>();
+			List<ObjectEntry> sharedEntries = new ArrayList<>();
 
-					Object viewConfig = properties.get("viewConfig");
+			for (ObjectEntry objectEntry : page.getItems()) {
+				if (sharingEntriesClassPKs.contains(objectEntry.getId())) {
+					sharedEntries.add(objectEntry);
+				}
+				else {
+					ownedEntries.add(objectEntry);
+				}
+			}
 
-					if (Validator.isNull(viewConfig)) {
-						return null;
-					}
+			JSONArray groupsJSONArray = JSONUtil.putAll(
+				JSONUtil.put(
+					"items", _toItemsJSONArray(ownedEntries)
+				).put(
+					"key", "owned"
+				));
 
-					return JSONUtil.put(
-						"configuration", viewConfig
+			if (!sharedEntries.isEmpty()) {
+				groupsJSONArray.put(
+					JSONUtil.put(
+						"items", _toItemsJSONArray(sharedEntries)
 					).put(
-						"erc", objectEntry.getExternalReferenceCode()
-					).put(
-						"label", String.valueOf(properties.get("label"))
-					).put(
-						"shared", sharedClassPKs.contains(objectEntry.getId())
-					);
-				});
+						"key", "shared-with-me"
+					));
+			}
+
+			return groupsJSONArray;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -147,6 +155,30 @@ public abstract class BaseFDSSerializer {
 
 	@Reference
 	protected SharingEntryLocalService sharingEntryLocalService;
+
+	private JSONArray _toItemsJSONArray(List<ObjectEntry> objectEntries)
+		throws Exception {
+
+		return JSONUtil.toJSONArray(
+			objectEntries,
+			(ObjectEntry objectEntry) -> {
+				Map<String, Object> properties = objectEntry.getProperties();
+
+				Object viewConfig = properties.get("viewConfig");
+
+				if (Validator.isNull(viewConfig)) {
+					return null;
+				}
+
+				return JSONUtil.put(
+					"configuration", viewConfig
+				).put(
+					"erc", objectEntry.getExternalReferenceCode()
+				).put(
+					"label", String.valueOf(properties.get("label"))
+				);
+			});
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFDSSerializer.class);

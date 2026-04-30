@@ -5,6 +5,7 @@
 
 package com.liferay.asset.publisher.web.internal.portlet.display.template;
 
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
@@ -16,7 +17,14 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.util.AssetAnalyticsAttributesHelper;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -49,6 +57,9 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	@Override
 	public Map<String, Object> getCustomContextObjects() {
 		return HashMapBuilder.<String, Object>put(
+			"assetAnalyticsAttributesHelper",
+			new AssetAnalyticsAttributesHelper()
+		).put(
 			"assetPublisherHelper", assetPublisherHelper
 		).build();
 	}
@@ -80,6 +91,22 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		TemplateVariableGroup assetPublisherUtilTemplateVariableGroup =
 			new TemplateVariableGroup(
 				"asset-publisher-util", restrictedVariables);
+
+		if (_isAnalyticsHelperEnabled(CompanyThreadLocal.getCompanyId())) {
+			assetPublisherUtilTemplateVariableGroup.addFieldVariable(
+				"asset-analytics-attributes-helper",
+				AssetAnalyticsAttributesHelper.class,
+				"assetAnalyticsAttributesHelper",
+				"asset-analytics-attributes-helper-help",
+				"asset-analytics-attributes-helper", false,
+				(definition, languageType) -> new String[] {
+					StringBundler.concat(
+						"<#if entry?has_content>\n\t<div ",
+						"${assetAnalyticsAttributesHelper.buildAttributes(",
+						"entry, \"impression\", \"title\", locale)}>",
+						"${entry.getTitle(locale)}</div>\n</#if>")
+				});
+		}
 
 		assetPublisherUtilTemplateVariableGroup.addVariable(
 			"asset-publisher-helper", AssetPublisherHelper.class,
@@ -133,5 +160,37 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Reference
 	protected Portal portal;
+
+	private boolean _isAnalyticsHelperEnabled(long companyId) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-81914")) {
+			return false;
+		}
+
+		AnalyticsSettingsManager analyticsSettingsManager =
+			_analyticsSettingsManagerSnapshot.get();
+
+		if (analyticsSettingsManager == null) {
+			return false;
+		}
+
+		try {
+			return analyticsSettingsManager.isAnalyticsEnabled(companyId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return false;
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetPublisherPortletDisplayTemplateHandler.class);
+
+	private static final Snapshot<AnalyticsSettingsManager>
+		_analyticsSettingsManagerSnapshot = new Snapshot<>(
+			AssetPublisherPortletDisplayTemplateHandler.class,
+			AnalyticsSettingsManager.class);
 
 }

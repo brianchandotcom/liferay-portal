@@ -14,7 +14,6 @@ import React, {useEffect, useId, useState} from 'react';
 
 import ConnectedSiteService from '../../common/services/ConnectedSiteService';
 import {Site} from '../../common/types/Site';
-import {useStaleCache} from '../../structure_builder/contexts/CacheContext';
 
 const showErrorMessage = (message: string) => {
 	openToast({
@@ -41,8 +40,6 @@ const ConnectedSiteActions = ({
 	onSiteDisconnected: (site: Site) => void;
 	site: Site;
 }) => {
-	const staleCache = useStaleCache();
-
 	const {searchable} = site;
 
 	const disconnectSite = async () => {
@@ -66,8 +63,6 @@ const ConnectedSiteActions = ({
 				`<strong>${Liferay.Util.escapeHTML(site.descriptiveName)}</strong>`
 			)
 		);
-
-		staleCache('sites');
 	};
 
 	const changeSearchable = async () => {
@@ -136,8 +131,6 @@ const SitesSelector = ({
 	const [disableConnectButton, setDisableConnectButton] =
 		useState<boolean>(true);
 
-	const staleCache = useStaleCache();
-
 	const connectSiteToSpace = async () => {
 		if (site) {
 			const {data, error} = await ConnectedSiteService.connectSiteToSpace(
@@ -155,8 +148,6 @@ const SitesSelector = ({
 						`<strong>${Liferay.Util.escapeHTML(site.descriptiveName)}</strong>`
 					)
 				);
-
-				staleCache('sites');
 			}
 			else if (error) {
 				showErrorMessage(

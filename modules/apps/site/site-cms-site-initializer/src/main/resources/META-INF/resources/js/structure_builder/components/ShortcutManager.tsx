@@ -20,6 +20,7 @@ import isCopyable from '../utils/isCopyable';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
+import openHelpModal from '../utils/openHelpModal';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
 import {useValidate} from '../utils/validation';
 
@@ -220,6 +221,13 @@ export default function ShortcutManager() {
 				}),
 		});
 
+		// Open help and shortcuts modal
+
+		map.set('Shift+?', {
+			enabled: () => true,
+			handler: () => openHelpModal(),
+		});
+
 		return map;
 	}, [
 		clipboard,
@@ -276,7 +284,12 @@ function getCombo(event: KeyboardEvent): Combo {
 		keys.push('Shift');
 	}
 
-	keys.push(event.code.replace('Key', ''));
+	if (event.key === '?') {
+		keys.push('?');
+	}
+	else {
+		keys.push(event.code.replace('Key', ''));
+	}
 
 	return keys.join('+');
 }

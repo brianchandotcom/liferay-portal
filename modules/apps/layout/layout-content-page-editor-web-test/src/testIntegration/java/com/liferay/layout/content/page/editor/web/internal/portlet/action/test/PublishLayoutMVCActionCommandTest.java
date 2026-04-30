@@ -437,13 +437,13 @@ public class PublishLayoutMVCActionCommandTest {
 		User user = UserTestUtil.addCompanyAdminUser(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), user.getUserId());
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
 			Layout originalLayout = _layoutLocalService.addLayout(
 				null, user.getUserId(), _group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
@@ -459,38 +459,45 @@ public class PublishLayoutMVCActionCommandTest {
 
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-			_deleteUser(user, serviceContext);
+			try {
+				_deleteUser(user, serviceContext);
 
-			_bulkLayoutConverter.convertLayout(originalLayout.getPlid());
+				_bulkLayoutConverter.convertLayout(originalLayout.getPlid());
 
-			originalLayout = _layoutLocalService.getLayout(
-				originalLayout.getPlid());
+				originalLayout = _layoutLocalService.getLayout(
+					originalLayout.getPlid());
 
-			Assert.assertTrue(originalLayout.isTypePortlet());
+				Assert.assertTrue(originalLayout.isTypePortlet());
 
-			Layout conversionDraftLayout = originalLayout.fetchDraftLayout();
+				Layout conversionDraftLayout =
+					originalLayout.fetchDraftLayout();
 
-			Assert.assertNotNull(conversionDraftLayout);
-			Assert.assertEquals(
-				TestPropsValues.getUserId(), conversionDraftLayout.getUserId());
-			Assert.assertTrue(conversionDraftLayout.isTypeContent());
+				Assert.assertNotNull(conversionDraftLayout);
+				Assert.assertEquals(
+					TestPropsValues.getUserId(),
+					conversionDraftLayout.getUserId());
+				Assert.assertTrue(conversionDraftLayout.isTypeContent());
 
-			ContentLayoutTestUtil.publishLayout(
-				conversionDraftLayout, originalLayout);
+				ContentLayoutTestUtil.publishLayout(
+					conversionDraftLayout, originalLayout);
 
-			originalLayout = _layoutLocalService.getLayout(
-				originalLayout.getPlid());
+				originalLayout = _layoutLocalService.getLayout(
+					originalLayout.getPlid());
 
-			Assert.assertTrue(originalLayout.isPublished());
-			Assert.assertTrue(originalLayout.isTypeContent());
+				Assert.assertTrue(originalLayout.isPublished());
+				Assert.assertTrue(originalLayout.isTypeContent());
 
-			Layout draftLayout = originalLayout.fetchDraftLayout();
+				Layout draftLayout = originalLayout.fetchDraftLayout();
 
-			Assert.assertNotNull(draftLayout);
-			Assert.assertEquals(
-				conversionDraftLayout.getPlid(), draftLayout.getPlid());
+				Assert.assertNotNull(draftLayout);
+				Assert.assertEquals(
+					conversionDraftLayout.getPlid(), draftLayout.getPlid());
 
-			Assert.assertTrue(draftLayout.isApproved());
+				Assert.assertTrue(draftLayout.isApproved());
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

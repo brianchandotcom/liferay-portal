@@ -409,6 +409,18 @@ public class AnnouncementsEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnnouncementsEntry>
+			orderByComparator) {
+
+		return _announcementsEntryLocalService.getEntries(
+			companyId, classNameId, classPK, alert, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<AnnouncementsEntry> getEntries(
 		long userId, long classNameId, long[] classPKs, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -609,4 +621,4 @@ public class AnnouncementsEntryLocalServiceWrapper
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:674929502
+// LIFERAY-SERVICE-BUILDER-HASH:913899043

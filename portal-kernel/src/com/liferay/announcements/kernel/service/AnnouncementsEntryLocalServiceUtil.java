@@ -360,6 +360,16 @@ public class AnnouncementsEntryLocalServiceUtil {
 	}
 
 	public static List<AnnouncementsEntry> getEntries(
+		long companyId, long classNameId, long classPK, boolean alert,
+		int start, int end,
+		OrderByComparator<AnnouncementsEntry> orderByComparator) {
+
+		return getService().getEntries(
+			companyId, classNameId, classPK, alert, start, end,
+			orderByComparator);
+	}
+
+	public static List<AnnouncementsEntry> getEntries(
 		long userId, long classNameId, long[] classPKs, int displayDateMonth,
 		int displayDateDay, int displayDateYear, int displayDateHour,
 		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
@@ -512,4 +522,4 @@ public class AnnouncementsEntryLocalServiceUtil {
 	private static volatile AnnouncementsEntryLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296821060
+// LIFERAY-SERVICE-BUILDER-HASH:306442597

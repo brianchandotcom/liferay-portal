@@ -460,8 +460,7 @@ public class AssetEntryPersistenceImpl
 		String classUuid, int start, int end,
 		OrderByComparator<AssetEntry> orderByComparator) {
 
-		return findByClassUuid(
-			classUuid, start, end, orderByComparator, true);
+		return findByClassUuid(classUuid, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -3432,4 +3431,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2087971768
+// LIFERAY-SERVICE-BUILDER-HASH:-709211868

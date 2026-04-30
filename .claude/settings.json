@@ -13,6 +13,16 @@
 					}
 				]
 			}
+		],
+		"WorktreeRemove": [
+			{
+				"hooks": [
+					{
+						"command": "git worktree remove \"$(jq --raw-output '.worktree_path')\"",
+						"type": "command"
+					}
+				]
+			}
 		]
 	}
 }

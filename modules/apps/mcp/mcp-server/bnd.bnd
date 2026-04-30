@@ -1,4 +1,3 @@
-Bundle-Localization: content/Language
 Bundle-Name: Liferay MCP Server
 Bundle-SymbolicName: com.liferay.mcp.server
 Bundle-Version: 0.0.13

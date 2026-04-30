@@ -2394,6 +2394,8 @@ public class GitWorkingDirectory {
 			localGitCommits.add(getLocalGitCommit(gitLogEntity, patch));
 		}
 
+		Collections.reverse(localGitCommits);
+
 		return localGitCommits;
 	}
 

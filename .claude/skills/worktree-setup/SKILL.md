@@ -248,6 +248,8 @@ Print a table of all assigned ports, the DB name, the Liferay URL, and the Glowr
 
 ### 5. Start
 
+Start Tomcat in the background so the call does not block:
+
 ```bash
 <BUNDLE>/tomcat-*/bin/catalina.sh start
 ```

@@ -16,6 +16,35 @@ boolean dataAnalyticsTrackingEnabled = GetterUtil.getBoolean(request.getAttribut
 PortletURL paginationURL = (PortletURL)request.getAttribute("liferay-journal:journal-article:paginationURL");
 String viewMode = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW);
 String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-article:wrapperCssClass");
+
+AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider = null;
+
+boolean addWidgetAnalyticsWrappers = dataAnalyticsTrackingEnabled && Objects.equals(viewMode, Constants.VIEW);
+
+boolean hasAnalyticsAttributes = GetterUtil.getBoolean(request.getAttribute(AssetAnalyticsAttributesProvider.HAS_ANALYTICS_ATTRIBUTES));
+
+boolean addContentAnalyticsWrapper = addWidgetAnalyticsWrappers && !hasAnalyticsAttributes;
+
+if ((articleDisplay != null) && addWidgetAnalyticsWrappers) {
+	AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), articleDisplay.getResourcePrimKey());
+
+	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+
+	AssetRenderer<?> assetRenderer = null;
+
+	if (assetRendererFactory != null) {
+		try {
+			assetRenderer = assetRendererFactory.getAssetRenderer(articleDisplay.getResourcePrimKey());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+		}
+	}
+
+	assetAnalyticsAttributesProvider = new AssetAnalyticsAttributesProvider(assetEntry, assetRenderer, locale, addWidgetAnalyticsWrappers);
+}
 %>
 
 <c:choose>
@@ -34,14 +63,32 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 			<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle")) %>'>
 				<clay:row>
 					<clay:col>
-						<h3 class="m-0"><%= HtmlUtil.escape(articleDisplay.getTitle()) %></h3>
+						<c:choose>
+							<c:when test="<%= addWidgetAnalyticsWrappers %>">
+								<div <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, AssetAnalyticsAttributesProvider.FIELD_TITLE) %>>
+									<h3 class="m-0"><%= HtmlUtil.escape(articleDisplay.getTitle()) %></h3>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<h3 class="m-0"><%= HtmlUtil.escape(articleDisplay.getTitle()) %></h3>
+							</c:otherwise>
+						</c:choose>
 					</clay:col>
 				</clay:row>
 
 				<hr class="mb-4 separator" />
 			</c:if>
 
-			<%= articleDisplay.getContent() %>
+			<c:choose>
+				<c:when test="<%= addContentAnalyticsWrapper %>">
+					<div <%= assetAnalyticsAttributesProvider.buildAttributes(AssetAnalyticsAttributesProvider.ACTION_VIEW, AssetAnalyticsAttributesProvider.FIELD_CONTENT) %>>
+						<%= articleDisplay.getContent() %>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<%= articleDisplay.getContent() %>
+				</c:otherwise>
+			</c:choose>
 
 			<c:if test="<%= articleDisplay.isPaginate() && (paginationURL != null) %>">
 				<div>
@@ -73,3 +120,7 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 </c:choose>
 
 <liferay-util:dynamic-include key="com.liferay.journal.taglib#/journal_article/page.jsp#post" />
+
+<%!
+private static final Log _log = LogFactoryUtil.getLog("com_liferay_journal_taglib.journal_article.page_jsp");
+%>

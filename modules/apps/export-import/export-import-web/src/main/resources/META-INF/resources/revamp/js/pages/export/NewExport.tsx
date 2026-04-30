@@ -21,6 +21,7 @@ import Setup from './components/Setup';
 
 interface NewExportProps {
 	backURL: string;
+	exportPreviewAPIURL: string;
 	sections?: PortletDataHandlerSection[];
 }
 

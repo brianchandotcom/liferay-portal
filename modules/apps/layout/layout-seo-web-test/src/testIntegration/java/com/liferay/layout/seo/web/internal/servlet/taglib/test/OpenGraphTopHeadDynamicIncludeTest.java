@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -120,6 +121,10 @@ import org.springframework.mock.web.MockHttpServletResponse;
  * @author Alicia García
  * @author Cristina González
  */
+@LanguageIds(
+	availableLanguageIds = {"ar_SA", "en_US", "es_ES"},
+	defaultLanguageId = "en_US"
+)
 @RunWith(Arquillian.class)
 public class OpenGraphTopHeadDynamicIncludeTest {
 

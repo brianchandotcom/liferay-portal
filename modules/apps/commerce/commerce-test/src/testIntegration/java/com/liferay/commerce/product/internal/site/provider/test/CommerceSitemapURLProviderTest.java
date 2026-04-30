@@ -298,9 +298,6 @@ public class CommerceSitemapURLProviderTest {
 		Assert.assertTrue(xml.contains(productFriendlyURL));
 	}
 
-	private static Company _company;
-	private static User _user;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -314,6 +311,7 @@ public class CommerceSitemapURLProviderTest {
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private CommerceCurrency _commerceCurrency;
+	private Company _company;
 
 	@Inject(
 		filter = "component.name=com.liferay.commerce.product.internal.site.provider.CPDefinitionSitemapURLProvider",
@@ -350,5 +348,6 @@ public class CommerceSitemapURLProviderTest {
 
 	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
+	private User _user;
 
 }

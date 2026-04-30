@@ -104,15 +104,6 @@ public class CommercePermissionUpgradeProcessTest {
 		"com.liferay.commerce.internal.upgrade.v15_0_1." +
 			"CommercePermissionUpgradeProcess";
 
-	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -120,6 +111,14 @@ public class CommercePermissionUpgradeProcessTest {
 	private MultiVMPool _multiVMPool;
 
 	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

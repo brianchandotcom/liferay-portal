@@ -150,16 +150,15 @@ public class CommerceOrderItemsNotificationTermEvaluatorTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static Company _company;
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
+	private Company _company;
 
 	@Inject
 	private NotificationTermEvaluatorTracker _notificationTermEvaluatorTracker;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

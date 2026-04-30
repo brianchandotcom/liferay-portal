@@ -154,17 +154,17 @@ public class CPDefinitionLinkUpgradeProcessTest {
 			"CPDefinitionLinkUpgradeProcess";
 
 	@Inject
-	private static CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
-	private static CPDefinitionLocalService _cpDefinitionLocalService;
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private AssetEntryLocalService _assetEntryLocalService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

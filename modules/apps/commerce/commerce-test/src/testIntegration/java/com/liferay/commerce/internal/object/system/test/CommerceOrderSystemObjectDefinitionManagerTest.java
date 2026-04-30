@@ -163,8 +163,6 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 		Assert.assertEquals(commerceOrder.getTotal(), variables.get("total"));
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -198,5 +196,7 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 	@Inject
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	private User _user;
 
 }

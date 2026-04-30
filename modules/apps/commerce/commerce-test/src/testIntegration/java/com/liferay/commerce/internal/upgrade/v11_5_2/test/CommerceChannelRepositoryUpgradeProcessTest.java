@@ -86,6 +86,6 @@ public class CommerceChannelRepositoryUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

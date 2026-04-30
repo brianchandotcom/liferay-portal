@@ -74,7 +74,7 @@ public class CommercePriceEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CommercePriceList _commercePriceList;
 	private CPInstance _cpInstance;

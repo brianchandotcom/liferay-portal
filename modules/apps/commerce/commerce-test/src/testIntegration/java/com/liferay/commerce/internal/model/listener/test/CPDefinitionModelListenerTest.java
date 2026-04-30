@@ -159,8 +159,6 @@ public class CPDefinitionModelListenerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -180,5 +178,6 @@ public class CPDefinitionModelListenerTest {
 	private CPDefinitionInventoryService _cpDefinitionInventoryService;
 
 	private Group _group;
+	private User _user;
 
 }

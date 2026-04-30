@@ -490,8 +490,6 @@ public class CommercePriceListFinderTest {
 	private static final String _TYPE =
 		CommercePriceListConstants.TYPE_PRICE_LIST;
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private AccountGroup _accountGroup;
 
@@ -519,5 +517,6 @@ public class CommercePriceListFinderTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

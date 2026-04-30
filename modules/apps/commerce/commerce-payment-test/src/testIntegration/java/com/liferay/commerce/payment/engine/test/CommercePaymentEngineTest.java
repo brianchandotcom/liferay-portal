@@ -301,8 +301,6 @@ public class CommercePaymentEngineTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -338,5 +336,6 @@ public class CommercePaymentEngineTest {
 	private HttpServletRequest _httpServletRequest;
 	private Group _originalCommerceGroup;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

@@ -408,8 +408,6 @@ public class OrderStockManagementTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -434,6 +432,8 @@ public class OrderStockManagementTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private User _user;
 
 	@Inject
 	private UserLocalService _userLocalService;

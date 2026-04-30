@@ -252,8 +252,6 @@ public class CommerceServiceTest {
 		return role;
 	}
 
-	private static Company _company;
-
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -271,6 +269,8 @@ public class CommerceServiceTest {
 
 	@Inject
 	private CommerceOrderService _commerceOrderService;
+
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

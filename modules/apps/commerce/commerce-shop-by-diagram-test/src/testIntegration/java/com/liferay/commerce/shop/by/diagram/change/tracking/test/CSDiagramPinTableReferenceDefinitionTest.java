@@ -53,9 +53,9 @@ public class CSDiagramPinTableReferenceDefinitionTest
 			CSDiagramPinTableReferenceDefinitionTest.class.getSimpleName());
 	}
 
-	@Inject
-	private static CSDiagramPinLocalService _csDiagramPinLocalService;
-
 	private CPInstance _cpInstance;
+
+	@Inject
+	private CSDiagramPinLocalService _csDiagramPinLocalService;
 
 }

@@ -1492,8 +1492,6 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 				_serviceContext);
 	}
 
-	private static User _user;
-
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -1527,5 +1525,6 @@ public class CPDefinitionOptionValueRelLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

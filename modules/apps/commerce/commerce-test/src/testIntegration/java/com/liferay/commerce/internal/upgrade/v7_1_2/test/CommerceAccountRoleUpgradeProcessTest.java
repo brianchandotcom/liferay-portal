@@ -96,23 +96,23 @@ public class CommerceAccountRoleUpgradeProcessTest {
 			"CommerceAccountRoleUpgradeProcess";
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static RoleLocalService _roleLocalService;
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private AccountRoleLocalService _accountRoleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

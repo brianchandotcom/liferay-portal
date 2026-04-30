@@ -134,11 +134,6 @@ public class FriendlyURLEntryUpgradeProcessTest {
 		"com.liferay.commerce.product.internal.upgrade.v3_2_0." +
 			"FriendlyURLEntryUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -147,5 +142,10 @@ public class FriendlyURLEntryUpgradeProcessTest {
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

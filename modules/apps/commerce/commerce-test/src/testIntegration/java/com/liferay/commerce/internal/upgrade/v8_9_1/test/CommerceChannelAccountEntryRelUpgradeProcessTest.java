@@ -126,21 +126,21 @@ public class CommerceChannelAccountEntryRelUpgradeProcessTest {
 			"CommerceChannelAccountEntryRelUpgradeProcess";
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
-	private static CommerceChannelAccountEntryRelLocalService
+	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 
 	@Inject
-	private static CommerceChannelLocalService _commerceChannelLocalService;
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

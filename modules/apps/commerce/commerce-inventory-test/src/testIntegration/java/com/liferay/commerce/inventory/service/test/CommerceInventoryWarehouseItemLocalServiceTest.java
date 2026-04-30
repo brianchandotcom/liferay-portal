@@ -318,8 +318,6 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@Inject
 	private CommerceInventoryWarehouseItemLocalService
 		_commerceInventoryWarehouseItemLocalService;
@@ -341,5 +339,6 @@ public class CommerceInventoryWarehouseItemLocalServiceTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

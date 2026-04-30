@@ -441,8 +441,6 @@ public class CommerceShipmentItemTest {
 		_commerceShipmentLocalService.addCommerceShipment(_commerceShipment);
 	}
 
-	private static User _user;
-
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -480,5 +478,6 @@ public class CommerceShipmentItemTest {
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

@@ -291,8 +291,6 @@ public class CommerceOrderStatusNotificationTest {
 		CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED
 	};
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
@@ -331,5 +329,6 @@ public class CommerceOrderStatusNotificationTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

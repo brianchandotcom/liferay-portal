@@ -163,8 +163,6 @@ public class CommerceOrderGeneratorTest {
 				accountEntry.getAccountEntryId()));
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private List<AccountEntry> _accountEntries = new ArrayList<>();
 
@@ -210,5 +208,6 @@ public class CommerceOrderGeneratorTest {
 	private Region _region;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

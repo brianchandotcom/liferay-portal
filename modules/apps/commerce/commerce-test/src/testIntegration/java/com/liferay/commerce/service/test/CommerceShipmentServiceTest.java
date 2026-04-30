@@ -256,8 +256,6 @@ public class CommerceShipmentServiceTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static Company _company;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -269,6 +267,8 @@ public class CommerceShipmentServiceTest {
 
 	@Inject
 	private CommerceShipmentService _commerceShipmentService;
+
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

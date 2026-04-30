@@ -177,8 +177,6 @@ public class CommerceInventoryMVCCTest {
 				commerceInventoryWarehouse.getMvccVersion(), _serviceContext);
 	}
 
-	private static User _user;
-
 	@Inject
 	private CommerceInventoryReplenishmentItemLocalService
 		_commerceInventoryReplenishmentItemLocalService;
@@ -195,5 +193,6 @@ public class CommerceInventoryMVCCTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

@@ -182,8 +182,6 @@ public class CPOptionValueLocalServiceTest {
 		return CPTestUtil.addCPOptionValue(cpOption, key);
 	}
 
-	private static User _user;
-
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;
 
@@ -191,5 +189,6 @@ public class CPOptionValueLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

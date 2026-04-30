@@ -736,8 +736,6 @@ public class CommerceOrderDiscountV2Test {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry;
 
@@ -768,5 +766,6 @@ public class CommerceOrderDiscountV2Test {
 		_cpInstanceUnitOfMeasureLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

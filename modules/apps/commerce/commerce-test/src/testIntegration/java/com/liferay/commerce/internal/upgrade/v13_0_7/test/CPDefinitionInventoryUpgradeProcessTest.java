@@ -94,34 +94,32 @@ public class CPDefinitionInventoryUpgradeProcessTest {
 			"CPDefinitionInventoryUpgradeProcess";
 
 	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
-	private static CPConfigurationEntryLocalService
-		_cpConfigurationEntryLocalService;
+	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
 	@Inject
-	private static CPConfigurationListLocalService
-		_cpConfigurationListLocalService;
+	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Inject
-	private static CPDefinitionInventoryLocalService
+	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
 
 	@Inject
-	private static CPDefinitionSpecificationOptionValueLocalService
+	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Inject
-	private static CPSpecificationOptionLocalService
+	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private Portal _portal;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

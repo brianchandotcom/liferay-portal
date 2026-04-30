@@ -240,8 +240,6 @@ public class CommerceDeliverySubscriptionsTest {
 			commerceShipments.toString(), 1, commerceShipments.size());
 	}
 
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceChannel _commerceChannel;
 
@@ -272,5 +270,6 @@ public class CommerceDeliverySubscriptionsTest {
 		_commerceSubscriptionEntryLocalService;
 
 	private Group _group;
+	private User _user;
 
 }

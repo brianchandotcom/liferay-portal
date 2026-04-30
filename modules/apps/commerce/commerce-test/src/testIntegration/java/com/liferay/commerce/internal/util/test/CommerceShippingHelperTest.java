@@ -195,19 +195,17 @@ public class CommerceShippingHelperTest {
 		return _cpInstanceLocalService.updateCPInstance(cpInstance);
 	}
 
-	private static CommerceInventoryWarehouse _commerceInventoryWarehouse;
-
-	@Inject
-	private static CPInstanceLocalService _cpInstanceLocalService;
-
-	private static User _user;
-
 	private CommerceChannel _commerceChannel;
 	private CommerceCurrency _commerceCurrency;
+	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
 
 	@Inject
 	private CommerceShippingHelper _commerceShippingHelper;
 
+	@Inject
+	private CPInstanceLocalService _cpInstanceLocalService;
+
 	private Group _group;
+	private User _user;
 
 }

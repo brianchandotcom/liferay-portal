@@ -70,11 +70,11 @@ public class CPDefinitionInventoryTableReferenceDefinitionTest
 			BigDecimal.ONE);
 	}
 
-	@Inject
-	private static CPDefinitionInventoryLocalService
-		_cpDefinitionInventoryLocalService;
-
 	private CommerceCatalog _commerceCatalog;
 	private CPDefinition _cpDefinition;
+
+	@Inject
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 }

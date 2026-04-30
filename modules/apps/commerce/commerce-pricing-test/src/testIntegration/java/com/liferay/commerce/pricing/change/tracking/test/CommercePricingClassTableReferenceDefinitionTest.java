@@ -51,7 +51,6 @@ public class CommercePricingClassTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static CommercePricingClassLocalService
-		_commercePricingClassLocalService;
+	private CommercePricingClassLocalService _commercePricingClassLocalService;
 
 }

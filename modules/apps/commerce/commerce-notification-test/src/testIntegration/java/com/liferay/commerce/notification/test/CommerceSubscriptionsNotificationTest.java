@@ -233,8 +233,6 @@ public class CommerceSubscriptionsNotificationTest {
 		CommerceSubscriptionNotificationConstants.SUBSCRIPTION_SUSPENDED
 	};
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 
 	@DeleteAfterTestRun
@@ -275,5 +273,6 @@ public class CommerceSubscriptionsNotificationTest {
 	private Group _group;
 	private ServiceContext _serviceContext;
 	private User _toUser;
+	private User _user;
 
 }

@@ -835,8 +835,6 @@ public class CommerceDiscountLocalServiceTest {
 			commerceDiscount.getCommerceDiscountId());
 	}
 
-	private static User _user;
-
 	private AccountEntry _accountEntry;
 	private AccountGroup _accountGroup;
 
@@ -861,5 +859,6 @@ public class CommerceDiscountLocalServiceTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

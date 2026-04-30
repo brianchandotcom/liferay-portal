@@ -361,9 +361,6 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		return searchContext;
 	}
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
 	private AccountEntry _accountEntry;
 	private CommerceCatalog _commerceCatalog;
 
@@ -411,6 +408,10 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 	private Group _group;
 
 	private Indexer<CommerceInventoryBookedQuantity> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
+
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun

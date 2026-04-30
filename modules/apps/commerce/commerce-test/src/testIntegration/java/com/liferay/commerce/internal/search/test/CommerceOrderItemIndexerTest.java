@@ -274,16 +274,11 @@ public class CommerceOrderItemIndexerTest {
 		return _indexer.search(searchContext);
 	}
 
-	@Inject
-	private static CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
-	private static User _user;
-
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -293,5 +288,10 @@ public class CommerceOrderItemIndexerTest {
 
 	private Group _group;
 	private Indexer<CommerceOrderItem> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
+
+	private User _user;
 
 }

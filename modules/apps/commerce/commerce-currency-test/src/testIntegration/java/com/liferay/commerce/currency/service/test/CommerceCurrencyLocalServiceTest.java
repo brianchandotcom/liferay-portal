@@ -143,9 +143,9 @@ public class CommerceCurrencyLocalServiceTest {
 		Assert.assertEquals(oldExchangeRate, commerceCurrency.getRate());
 	}
 
-	private static User _user;
-
 	@Inject
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	private User _user;
 
 }

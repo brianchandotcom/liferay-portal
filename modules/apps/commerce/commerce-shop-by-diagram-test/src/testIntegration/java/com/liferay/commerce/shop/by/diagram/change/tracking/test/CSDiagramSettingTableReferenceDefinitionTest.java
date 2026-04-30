@@ -117,15 +117,6 @@ public class CSDiagramSettingTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static CSDiagramSettingLocalService _csDiagramSettingLocalService;
-
-	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
-
-	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CPAttachmentFileEntry _cpAttachmentFileEntry;
@@ -135,7 +126,18 @@ public class CSDiagramSettingTableReferenceDefinitionTest
 		_cpAttachmentFileEntryLocalService;
 
 	private CPDefinition _cpDefinition;
+
+	@Inject
+	private CSDiagramSettingLocalService _csDiagramSettingLocalService;
+
 	private DLFileEntry _dlFileEntry;
+
+	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
+
 	private ServiceContext _serviceContext;
 
 }

@@ -159,35 +159,35 @@ public class CommercePermissionUpgradeProcessTest {
 		"com.liferay.commerce.product.internal.upgrade.v6_4_0." +
 			"CommercePermissionUpgradeProcess";
 
-	@Inject
-	private static CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+	private CPTaxCategory _cpTaxCategory;
 
 	@Inject
-	private static EntityCache _entityCache;
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
 
 	@Inject
-	private static FinderCache _finderCache;
+	private EntityCache _entityCache;
 
 	@Inject
-	private static MultiVMPool _multiVMPool;
+	private FinderCache _finderCache;
 
 	@Inject
-	private static ResourceActionLocalService _resourceActionLocalService;
+	private MultiVMPool _multiVMPool;
 
 	@Inject
-	private static ResourceLocalService _resourceLocalService;
+	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Inject
-	private static ResourcePermissionLocalService
-		_resourcePermissionLocalService;
+	private ResourceLocalService _resourceLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	private Role _role;
+	private ServiceContext _serviceContext;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private CPTaxCategory _cpTaxCategory;
-	private Role _role;
-	private ServiceContext _serviceContext;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

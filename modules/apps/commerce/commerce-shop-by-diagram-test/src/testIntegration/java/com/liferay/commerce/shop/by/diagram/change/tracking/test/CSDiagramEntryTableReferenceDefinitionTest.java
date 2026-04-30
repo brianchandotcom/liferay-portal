@@ -57,9 +57,9 @@ public class CSDiagramEntryTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
-	@Inject
-	private static CSDiagramEntryLocalService _csDiagramEntryLocalService;
-
 	private CPInstance _cpInstance;
+
+	@Inject
+	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
 
 }

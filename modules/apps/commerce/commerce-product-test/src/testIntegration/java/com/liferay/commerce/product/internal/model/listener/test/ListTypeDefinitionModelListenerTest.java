@@ -121,8 +121,6 @@ public class ListTypeDefinitionModelListenerTest {
 			new ServiceContext());
 	}
 
-	private static User _user;
-
 	private CPOptionCategory _cpOptionCategory;
 
 	@Inject
@@ -139,5 +137,6 @@ public class ListTypeDefinitionModelListenerTest {
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

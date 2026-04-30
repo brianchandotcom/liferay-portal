@@ -224,8 +224,6 @@ public class CommercePricingClassLocalServiceTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private static User _user;
-
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
@@ -238,5 +236,6 @@ public class CommercePricingClassLocalServiceTest {
 
 	private Group _group;
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

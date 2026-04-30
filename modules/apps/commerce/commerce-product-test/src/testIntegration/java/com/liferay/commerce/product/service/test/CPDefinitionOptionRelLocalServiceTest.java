@@ -565,8 +565,6 @@ public class CPDefinitionOptionRelLocalServiceTest {
 				cpDefinitionOptionRel.getGroupId()));
 	}
 
-	private static User _user;
-
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -596,5 +594,6 @@ public class CPDefinitionOptionRelLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

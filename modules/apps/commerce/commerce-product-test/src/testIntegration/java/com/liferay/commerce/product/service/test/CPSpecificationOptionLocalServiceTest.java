@@ -219,8 +219,6 @@ public class CPSpecificationOptionLocalServiceTest {
 			RandomTestUtil.randomDouble(), true, serviceContext);
 	}
 
-	private static User _user;
-
 	@Inject
 	private CPSpecificationOptionListTypeDefinitionRelLocalService
 		_cpSpecificationOptionListTypeDefinitionRelLocalService;
@@ -236,5 +234,6 @@ public class CPSpecificationOptionLocalServiceTest {
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

@@ -128,22 +128,22 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 			"CPDefinitionSpecificationOptionValueUpgradeProcess";
 
 	@Inject
-	private static CommerceCatalogLocalService _commerceCatalogLocalService;
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
-	private static CPDefinitionSpecificationOptionValueLocalService
+	private CPDefinitionSpecificationOptionValueLocalService
 		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Inject
-	private static CPOptionCategoryLocalService _cpOptionCategoryLocalService;
+	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
 	@Inject
-	private static CPSpecificationOptionLocalService
+	private CPSpecificationOptionLocalService
 		_cpSpecificationOptionLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.product.internal.upgrade.registry.CommerceProductServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

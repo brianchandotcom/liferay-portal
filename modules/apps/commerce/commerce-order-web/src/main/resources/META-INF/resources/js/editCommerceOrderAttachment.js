@@ -36,7 +36,7 @@ export default function (context) {
 
 			const priorityValue = formData.get(`${context.namespace}priority`);
 
-			const buildBody = (attachment) => {
+			const buildBody = (attachment, fileName) => {
 				const body = {
 					priority: priorityValue ? Number(priorityValue) : 0,
 					restricted:
@@ -49,12 +49,16 @@ export default function (context) {
 					body.attachment = attachment;
 				}
 
+				if (fileName) {
+					body.fileName = fileName;
+				}
+
 				return body;
 			};
 
 			const updateAttachment = (attachment) =>
 				Liferay.Util.fetch(context.addURL, {
-					body: JSON.stringify(buildBody(attachment)),
+					body: JSON.stringify(buildBody(attachment, newFile?.name)),
 					headers: fetchParams.headers,
 					method: 'POST',
 				}).then((response) => {
@@ -80,7 +84,9 @@ export default function (context) {
 				Liferay.Util.fetch(
 					context.mode === 'edit' ? context.editURL : context.addURL,
 					{
-						body: JSON.stringify(buildBody(attachment)),
+						body: JSON.stringify(
+							buildBody(attachment, newFile?.name)
+						),
 						headers: fetchParams.headers,
 						method: context.mode === 'edit' ? 'PATCH' : 'POST',
 					}

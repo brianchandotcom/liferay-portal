@@ -5,15 +5,23 @@
 
 package com.liferay.osb.patcher.service.impl;
 
+import com.liferay.osb.patcher.constants.PatcherProductVersionConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
+import com.liferay.osb.patcher.model.PatcherAccount;
 import com.liferay.osb.patcher.model.PatcherBuild;
+import com.liferay.osb.patcher.service.PatcherAccountLocalService;
 import com.liferay.osb.patcher.service.base.PatcherBuildLocalServiceBaseImpl;
 import com.liferay.osb.patcher.util.EmailUtil;
+import com.liferay.osb.patcher.util.PatcherBuildUtil;
+import com.liferay.osb.patcher.util.PatcherProductVersionUtil;
+import com.liferay.osb.patcher.util.PatcherProjectVersionUtil;
+import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.util.comparator.PatcherBuildKeyVersionComparator;
 import com.liferay.osb.patcher.util.comparator.PatcherBuildSupportTicketVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -21,9 +29,11 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -163,6 +173,79 @@ public class PatcherBuildLocalServiceImpl
 	@Override
 	public boolean hasPatcherFixes(long patcherFixId) {
 		return patcherBuildPersistence.containsPatcherFixes(patcherFixId);
+	}
+
+	@Override
+	public PatcherBuild preparePatcherBuild(
+			long userId, long patcherProductVersionId,
+			long patcherProjectVersionId, String accountEntryCode,
+			String patcherBuildName, int type, boolean useExistingHotfix,
+			Locale locale)
+		throws Exception {
+
+		PatcherBuild patcherBuild = patcherBuildPersistence.create(
+			counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		patcherBuild.setCompanyId(user.getCompanyId());
+		patcherBuild.setCreateDate(new Date());
+		patcherBuild.setStatusDate(new Date());
+		patcherBuild.setUserId(user.getUserId());
+		patcherBuild.setUserName(user.getFullName());
+
+		PatcherAccount patcherAccount =
+			_patcherAccountLocalService.fetchPatcherAccount(accountEntryCode);
+
+		if (patcherAccount != null) {
+			patcherBuild.setPatcherAccountId(
+				patcherAccount.getPatcherAccountId());
+		}
+
+		patcherBuild.setPatcherProductVersionId(patcherProductVersionId);
+		patcherBuild.setPatcherProjectVersionId(patcherProjectVersionId);
+		patcherBuild.setKey(
+			PatcherBuildUtil.generateKey(
+				patcherProjectVersionId, patcherBuildName, accountEntryCode));
+
+		List<String> patcherBuildTokens = PatcherUtil.sortTokens(
+			patcherBuildName);
+
+		if (patcherProductVersionId !=
+				PatcherProductVersionUtil.getPatcherProductVersionId(
+					PatcherProductVersionConstants.
+						LABEL_PRODUCT_VERSION_PORTAL_6X)) {
+
+			patcherBuild.setInitialName(StringUtil.merge(patcherBuildTokens));
+
+			patcherBuildTokens.removeAll(
+				PatcherProjectVersionUtil.
+					getCumulativePatcherProjectVersionFixedIssues(
+						patcherProjectVersionId));
+		}
+
+		patcherBuild.setName(StringUtil.merge(patcherBuildTokens));
+
+		patcherBuild.setType(type);
+
+		if (useExistingHotfix) {
+			PatcherBuild existingPatcherBuild =
+				PatcherBuildUtil.getLatestEquivalentPatcherBuild(
+					patcherBuild.getPatcherProjectVersionId(),
+					patcherBuild.getName());
+
+			if (existingPatcherBuild != null) {
+				patcherBuild.setFileName(existingPatcherBuild.getFileName());
+				patcherBuild.setQaComments(
+					LanguageUtil.format(
+						locale,
+						"the-build-process-was-skipped-because-a-pre-" +
+							"existing-hotfix-was-used-original-build-id-x",
+						existingPatcherBuild.getPatcherBuildId()));
+			}
+		}
+
+		return patcherBuild;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -454,6 +537,9 @@ public class PatcherBuildLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PatcherBuildLocalServiceImpl.class);
+
+	@Reference
+	private PatcherAccountLocalService _patcherAccountLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

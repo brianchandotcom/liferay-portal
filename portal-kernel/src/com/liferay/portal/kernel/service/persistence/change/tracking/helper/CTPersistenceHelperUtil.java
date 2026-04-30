@@ -17,6 +17,10 @@ import java.io.Serializable;
  */
 public class CTPersistenceHelperUtil {
 
+	public static CTPersistenceHelper getCTPersistenceHelper() {
+		return _ctPersistenceHelperSnapshot.get();
+	}
+
 	public static <T extends CTModel<T>> boolean isInsert(T ctModel) {
 		CTPersistenceHelper ctPersistenceHelper =
 			_ctPersistenceHelperSnapshot.get();

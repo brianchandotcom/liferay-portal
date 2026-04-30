@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -31,6 +32,7 @@ import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.sql.dsl.spi.query.SetOperation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -68,6 +70,7 @@ import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -406,44 +409,22 @@ public class BasePersistenceImpl
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public T fetchByPrimaryKey(Serializable primaryKey) {
-		EntityCache entityCache = getEntityCache();
+		CTPersistenceHelper ctPersistenceHelper = getCTPersistenceHelper();
 
-		Serializable serializable = entityCache.getResult(
-			_modelImplClass, primaryKey);
+		if ((ctPersistenceHelper != null) &&
+			ctPersistenceHelper.isProductionMode(
+				(Class)_modelClass, primaryKey)) {
 
-		if (serializable == nullModel) {
-			return null;
-		}
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
 
-		T model = (T)serializable;
-
-		if (model == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				model = (T)session.get(_modelImplClass, primaryKey);
-
-				if (model == null) {
-					entityCache.putResult(
-						_modelImplClass, primaryKey, nullModel);
-				}
-				else {
-					cacheResult(model);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
+				return _fetchByPrimaryKey(primaryKey);
 			}
 		}
 
-		return model;
+		return _fetchByPrimaryKey(primaryKey);
 	}
 
 	@Override
@@ -1044,6 +1025,10 @@ public class BasePersistenceImpl
 		return fieldName;
 	}
 
+	protected CTPersistenceHelper getCTPersistenceHelper() {
+		return null;
+	}
+
 	protected EntityCache getEntityCache() {
 		throw new UnsupportedOperationException();
 	}
@@ -1205,6 +1190,46 @@ public class BasePersistenceImpl
 	 */
 	@Deprecated
 	protected boolean finderCacheEnabled = true;
+
+	@SuppressWarnings("unchecked")
+	private T _fetchByPrimaryKey(Serializable primaryKey) {
+		EntityCache entityCache = getEntityCache();
+
+		Serializable serializable = entityCache.getResult(
+			_modelImplClass, primaryKey);
+
+		if (serializable == nullModel) {
+			return null;
+		}
+
+		T model = (T)serializable;
+
+		if (model == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				model = (T)session.get(_modelImplClass, primaryKey);
+
+				if (model == null) {
+					entityCache.putResult(
+						_modelImplClass, primaryKey, nullModel);
+				}
+				else {
+					cacheResult(model);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return model;
+	}
 
 	private String[] _getAliasTypes(
 		Collection<? extends Expression<?>> expressions) {

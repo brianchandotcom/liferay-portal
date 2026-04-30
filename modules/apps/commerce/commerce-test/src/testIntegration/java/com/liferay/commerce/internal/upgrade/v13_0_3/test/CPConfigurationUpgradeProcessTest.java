@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -139,7 +140,8 @@ public class CPConfigurationUpgradeProcessTest {
 
 				cpDefinition.setDepth(depth2);
 
-				_cpDefinitionLocalService.updateCPDefinition(cpDefinition);
+				cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+					cpDefinition);
 			}
 
 			_cpConfigurationListLocalService.deleteCPConfigurationList(
@@ -172,17 +174,27 @@ public class CPConfigurationUpgradeProcessTest {
 				ctCollection.getCtCollectionId(), depth2
 			).build();
 
-			for (CPConfigurationEntry cpConfigurationEntry :
-					cpConfigurationEntries) {
+			for (Long ctCollectionId : expectedDepths.keySet()) {
+				try (SafeCloseable safeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ctCollectionId)) {
 
-				long entryCtCollectionId =
-					cpConfigurationEntry.getCtCollectionId();
+					CPConfigurationEntry cpConfigurationEntry =
+						_cpConfigurationEntryLocalService.
+							getCPConfigurationEntry(
+								_portal.getClassNameId(CPDefinition.class),
+								cpDefinition.getCPDefinitionId(),
+								cpConfigurationList.getCPConfigurationListId());
 
-				Assert.assertTrue(
-					expectedDepths.containsKey(entryCtCollectionId));
-				Assert.assertEquals(
-					expectedDepths.get(entryCtCollectionId),
-					cpConfigurationEntry.getDepth(), 0.0);
+					Assert.assertTrue(
+						expectedDepths.containsKey(
+							cpConfigurationEntry.getCtCollectionId()));
+					Assert.assertEquals(
+						expectedDepths.get(
+							cpConfigurationEntry.getCtCollectionId()),
+						cpConfigurationEntry.getDepth(), 0.0);
+				}
 			}
 		}
 	}
@@ -211,6 +223,9 @@ public class CPConfigurationUpgradeProcessTest {
 
 	@Inject
 	private static CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private static Portal _portal;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"

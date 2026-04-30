@@ -13,7 +13,7 @@ jobs:
             -   name: Set up Kubeconform
                 uses: bmuschko/setup-kubeconform@v1
                 with:
-                    kubeconform-version: "0.7.0"
+                    kubeconform-version: 0.7.0
             -   name: Update Helm dependencies
                 run: helm dependency update --skip-refresh
                 working-directory: ./cloud/helm/${{matrix.chart}}

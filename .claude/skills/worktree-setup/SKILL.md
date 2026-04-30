@@ -86,7 +86,7 @@ Check whether a bundle already exists by looking for a `tomcat-*` directory insi
 - **No bundle:** Before running `ant all`, try to reuse the main worktree's bundle. Locate the `liferay-portal` worktree (no suffix) via `git worktree list --porcelain`, resolve its bundle directory using the same logic as step 4a, and read `.githash` from it. When that hash equals `git rev-parse HEAD` in the current worktree, or when the user explicitly asks to copy or reuse the main bundle, reuse it into `<WORKTREE_DIR>/bundle` and skip `ant all`. Always reuse by making a full copy — never by symlinking or sharing the folder. Otherwise run it:
 
 ```bash
-cd <WORKTREE_DIR> && ant all
+cd <WORKTREE_DIR> && ant setup-profile-dxp && ant all
 ```
 
 If `ant all` fails, stop and surface the full error to the user — do not continue to port configuration.

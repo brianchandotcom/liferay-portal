@@ -254,6 +254,38 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
+	private JSONObject _getExistingReportValueJSONObject(
+		String externalReferenceCode) {
+
+		try {
+			String response = get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				UriComponentsBuilder.fromPath(
+					"/o/c/reports/by-external-reference-code/" +
+						externalReferenceCode
+				).build(
+				).toUri());
+
+			JSONObject responseJSONObject = new JSONObject(response);
+
+			String value = responseJSONObject.optString("value", null);
+
+			if (Validator.isNull(value)) {
+				return null;
+			}
+
+			return new JSONObject(value);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to fetch existing report " + externalReferenceCode,
+				exception);
+
+			return null;
+		}
+	}
+
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -494,6 +526,17 @@ public class MarketplaceCommandLineRunner
 			UriComponentsBuilder.fromPath(
 				"/o/c/reports/by-external-reference-code/" +
 					externalReferenceCode
+			).build(
+			).toUri());
+	}
+
+	private void _postReport(String data) {
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			data,
+			UriComponentsBuilder.fromPath(
+				"/o/c/reports/"
 			).build(
 			).toUri());
 	}
@@ -809,9 +852,12 @@ public class MarketplaceCommandLineRunner
 
 		_forEachOrder(
 			StringBundler.concat(
-				"createDate gt ",
+				"createDate ge ",
 				LocalDate.of(
-					2025, 1, 1
+					ZonedDateTime.now(
+						ZoneOffset.UTC
+					).getYear(),
+					1, 1
 				).atStartOfDay(
 					ZoneOffset.UTC
 				),
@@ -887,20 +933,49 @@ public class MarketplaceCommandLineRunner
 				);
 			});
 
-		_patchReport(
-			new JSONObject(
-			).put(
-				"value",
-				new JSONObject(
-					projectsUsingMarketplace
-				).toString()
-			).toString(),
-			"PROJECTS-USING-MARKETPLACE");
+		for (Map.Entry<String, JSONObject> entry :
+				projectsUsingMarketplace.entrySet()) {
+
+			String koroneikiProjectKey = "KORONEIKI-PROJECT-" + entry.getKey();
+
+			try {
+				String valuePayload = entry.getValue(
+				).toString();
+
+				if (_getExistingReportValueJSONObject(koroneikiProjectKey) !=
+						null) {
+
+					_patchReport(
+						new JSONObject(
+						).put(
+							"name", koroneikiProjectKey
+						).put(
+							"value", valuePayload
+						).toString(),
+						koroneikiProjectKey);
+				}
+				else {
+					_postReport(
+						new JSONObject(
+						).put(
+							"externalReferenceCode", koroneikiProjectKey
+						).put(
+							"name", koroneikiProjectKey
+						).put(
+							"value", valuePayload
+						).toString());
+				}
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to write report " + koroneikiProjectKey, exception);
+			}
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"There are " + projectsUsingMarketplace.size() +
-					" projects with Marketplace apps");
+				"Wrote " + projectsUsingMarketplace.size() +
+					" KORONEIKI-PROJECT-* reports");
 		}
 	}
 

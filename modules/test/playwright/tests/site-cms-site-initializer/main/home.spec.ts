@@ -546,6 +546,102 @@ test(
 );
 
 test(
+	'Can only see Recent Assets the user has VIEW permission on',
+	{tag: '@LPD-87568'},
+	async ({apiHelpers, homePage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const restrictedTitle = `restricted ${getRandomString()}`;
+		const visibleTitle = `visible ${getRandomString()}`;
+
+		const restrictedSpace =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: `Space ${getRandomString()}`,
+				settings: {
+					logoColor: 'outline-3',
+					sharingEnabled: true,
+				},
+				type: 'Space',
+			});
+
+		let restrictedEntry;
+		let visibleEntry;
+
+		try {
+			restrictedEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: restrictedTitle,
+				},
+				applicationName,
+				restrictedSpace.name
+			);
+
+			visibleEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: visibleTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			const dataSetFragmentPage: DataSetPage = new DataSetPage(page);
+
+			await test.step('Default admin can see both assets in Recent Assets', async () => {
+				await homePage.goto();
+
+				await expect(
+					dataSetFragmentPage.table.bodyRows
+						.getByLabel(visibleTitle)
+						.getByText(visibleTitle)
+				).toBeVisible();
+
+				await expect(
+					dataSetFragmentPage.table.bodyRows
+						.getByLabel(restrictedTitle)
+						.getByText(restrictedTitle)
+				).toBeVisible();
+			});
+
+			await test.step('Space User cannot see the restricted asset in Recent Assets', async () => {
+				await performUserSwitch(page, spaceUser.alternateName);
+
+				await homePage.goto();
+
+				await expect(
+					dataSetFragmentPage.table.bodyRows
+						.getByLabel(visibleTitle)
+						.getByText(visibleTitle)
+				).toBeVisible();
+
+				await expect(
+					dataSetFragmentPage.table.bodyRows.getByLabel(
+						restrictedTitle
+					)
+				).toBeHidden();
+			});
+		}
+		finally {
+			await performUserSwitch(page, 'test');
+
+			if (restrictedEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(restrictedEntry.id)
+				);
+			}
+
+			if (visibleEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(visibleEntry.id)
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Can use Quick Actions to create new content',
 	{tag: '@LPD-58793'},
 	async ({apiHelpers, homePage, page}) => {

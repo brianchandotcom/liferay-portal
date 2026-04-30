@@ -15,16 +15,20 @@ spec:
     {{- if .Values.gateway.clientTrafficPolicySpec }}
     {{- toYaml .Values.gateway.clientTrafficPolicySpec | nindent 4 }}
     {{- end }}
-    targetRefs:
+    targetSelectors:
         -   group: gateway.networking.k8s.io
             kind: Gateway
-            name: {{ .Values.gateway.name }}
+            matchLabels:
+                name: {{ .Values.gateway.name }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-30"
+        {{- with .Values.gateway.annotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     labels:
         app: liferay
         component: gateway

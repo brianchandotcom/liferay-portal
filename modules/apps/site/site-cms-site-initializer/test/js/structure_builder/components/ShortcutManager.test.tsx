@@ -129,8 +129,8 @@ describe('ShortcutManager', () => {
 		fireEvent.keyDown(document.body, {code: 'KeyD', ctrlKey: true});
 
 		expect(mockDispatch).toHaveBeenCalledWith({
-			type: 'duplicate-child',
-			uuid: FIELD_UUID,
+			type: 'duplicate-children',
+			uuids: [FIELD_UUID],
 		});
 	});
 

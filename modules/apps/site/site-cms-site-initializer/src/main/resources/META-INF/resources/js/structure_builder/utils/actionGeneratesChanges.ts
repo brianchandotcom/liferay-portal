@@ -12,8 +12,9 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-related-content':
 		case 'add-repeatable-group':
 		case 'delete-children':
-		case 'duplicate-child':
+		case 'duplicate-children':
 		case 'move-children':
+		case 'paste':
 		case 'rename-item':
 		case 'set-workflow':
 		case 'ungroup':
@@ -24,6 +25,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 			return true;
 		case 'add-error':
 		case 'clear-errors':
+		case 'copy-children':
 		case 'create-structure':
 		case 'publish-structure':
 		case 'refresh-referenced-structures':

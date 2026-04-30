@@ -66,7 +66,7 @@ export default function ShortcutManager() {
 				return true;
 			},
 			handler: () =>
-				dispatch({type: 'duplicate-child', uuid: selection[0]}),
+				dispatch({type: 'duplicate-children', uuids: [selection[0]]}),
 		});
 
 		// Rename item

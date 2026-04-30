@@ -28,6 +28,7 @@ export default function buildState({
 	});
 
 	return {
+		clipboard: null,
 		history: {
 			deletedChildren: [],
 			deletedGroupERCs: [],

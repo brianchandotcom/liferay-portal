@@ -128,11 +128,8 @@ public class ObjectActionProductPurchaseRestController
 	}
 
 	private String _getExchangeRate(Order order) {
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		JSONObject orderMetadataJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}"));
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			order);
 
 		if (!Objects.equals(order.getCurrencyCode(), "USD") ||
 			!orderMetadataJSONObject.has("exchangeRate")) {
@@ -461,11 +458,8 @@ public class ObjectActionProductPurchaseRestController
 			return;
 		}
 
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		JSONObject orderMetadataJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}"));
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			order);
 
 		if (_koroneikiService.hasEntitlement(
 				_koroneikiService.getKoroneikiAccount(

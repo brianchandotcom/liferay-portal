@@ -567,11 +567,8 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private void _setExchangeRate(Order order) throws Exception {
-		Map<String, String> customFields =
-			(Map<String, String>)order.getCustomFields();
-
-		JSONObject orderMetadataJSONObject = new JSONObject(
-			customFields.getOrDefault("order-metadata", "{}"));
+		JSONObject orderMetadataJSONObject = MarketplaceUtil.getOrderMetadata(
+			order);
 
 		if (orderMetadataJSONObject.has("exchangeRate")) {
 			return;
@@ -592,6 +589,9 @@ public class MarketplaceRestController extends BaseRestController {
 		if (currency == null) {
 			return;
 		}
+
+		Map<String, String> customFields =
+			(Map<String, String>)order.getCustomFields();
 
 		customFields.put(
 			"order-metadata",

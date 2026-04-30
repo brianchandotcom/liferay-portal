@@ -227,7 +227,7 @@ public class DDMDataDefinitionConverterTest {
 	}
 
 	@Inject
-	private static DDMDataDefinitionConverter _ddmDataDefinitionConverter;
+	private DDMDataDefinitionConverter _ddmDataDefinitionConverter;
 
 	private ObjectMapper _objectMapper;
 

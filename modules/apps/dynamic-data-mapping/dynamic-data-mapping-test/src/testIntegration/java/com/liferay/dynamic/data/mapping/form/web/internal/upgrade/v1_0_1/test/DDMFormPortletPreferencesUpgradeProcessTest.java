@@ -162,7 +162,7 @@ public class DDMFormPortletPreferencesUpgradeProcessTest {
 	@Inject(
 		filter = "component.name=com.liferay.dynamic.data.mapping.form.web.internal.upgrade.registry.DDMFormWebUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

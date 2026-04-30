@@ -136,7 +136,7 @@ public class DDMFormPageChangeTest {
 		RandomTestUtil.randomString();
 
 	@Inject
-	private static DDMFormPageChangeRegistry _ddmFormPageChangeRegistry;
+	private DDMFormPageChangeRegistry _ddmFormPageChangeRegistry;
 
 	private static ServiceRegistration<DDMFormPageChange> _serviceRegistration;
 

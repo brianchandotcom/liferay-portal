@@ -106,25 +106,25 @@ Use a direct, to-the-point style. Avoid being verbose. Present the proposed titl
 
 Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the pull request URL is recorded:
 
-| Ticket Type              | Target                               |
+| Ticket Type | Target |
 | ------------------------ | ------------------------------------ |
-| Bug (`10004`)            | The bug itself                       |
-| Task (`10002`)           | Its Technical Task (`10153`) subtask |
-| Technical Task (`10153`) | Itself                               |
+| Bug (`10004`) | The bug itself |
+| Task (`10002`) | Its Technical Task (`10153`) subtask |
+| Technical Task (`10153`) | Itself |
 
 When the target is not already in an in-progress status, transition it first:
 
-| Target Type    | Destination | Transition ID |
+| Target Type | Destination | Transition ID |
 | -------------- | ----------- | ------------- |
-| Bug            | In Progress | `61`          |
-| Technical Task | In Progress | `41`          |
+| Bug | In Progress | `61` |
+| Technical Task | In Progress | `41` |
 
 Then transition it to review:
 
-| Target Type    | Destination    | Transition ID |
+| Target Type | Destination | Transition ID |
 | -------------- | -------------- | ------------- |
-| Bug            | In Review      | `71`          |
-| Technical Task | In Peer Review | `31`          |
+| Bug | In Review | `71` |
+| Technical Task | In Peer Review | `31` |
 
 When the review transition fails (for example, because the ticket is already in a later status), still proceed to record the pull request URL.
 

@@ -254,38 +254,6 @@ public class MarketplaceCommandLineRunner
 		return localDate.getYear() + " Q" + quarter;
 	}
 
-	private JSONObject _getExistingReportValueJSONObject(
-		String externalReferenceCode) {
-
-		try {
-			String response = get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes),
-				UriComponentsBuilder.fromPath(
-					"/o/c/reports/by-external-reference-code/" +
-						externalReferenceCode
-				).build(
-				).toUri());
-
-			JSONObject responseJSONObject = new JSONObject(response);
-
-			String value = responseJSONObject.optString("value", null);
-
-			if (Validator.isNull(value)) {
-				return null;
-			}
-
-			return new JSONObject(value);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to fetch existing report " + externalReferenceCode,
-				exception);
-
-			return null;
-		}
-	}
-
 	private String _getKoroneikiProject(Order order) {
 		JSONArray jsonArray = new JSONArray();
 
@@ -518,29 +486,6 @@ public class MarketplaceCommandLineRunner
 			).toUri());
 	}
 
-	private void _patchReport(String data, String externalReferenceCode) {
-		patch(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				_liferayOAuthApplicationExternalReferenceCodes),
-			data,
-			UriComponentsBuilder.fromPath(
-				"/o/c/reports/by-external-reference-code/" +
-					externalReferenceCode
-			).build(
-			).toUri());
-	}
-
-	private void _postReport(String data) {
-		post(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				_liferayOAuthApplicationExternalReferenceCodes),
-			data,
-			UriComponentsBuilder.fromPath(
-				"/o/c/reports/"
-			).build(
-			).toUri());
-	}
-
 	private void _postRequestProductFeedback(long orderId) throws Exception {
 		post(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
@@ -743,7 +688,7 @@ public class MarketplaceCommandLineRunner
 				}
 			});
 
-		_patchReport(
+		_putReport(
 			new JSONObject(
 			).put(
 				"value",
@@ -892,11 +837,11 @@ public class MarketplaceCommandLineRunner
 					orderResource.patchOrder(order.getId(), order);
 				}
 
-				JSONObject jsonObject = new JSONArray(
-					koroneikiProject
-				).getJSONObject(
-					0
-				);
+				JSONArray koroneikiProjectsJSONArray = new JSONArray(
+					koroneikiProject);
+
+				JSONObject jsonObject =
+					koroneikiProjectsJSONArray.getJSONObject(0);
 
 				String key = jsonObject.getString("key");
 
@@ -928,7 +873,7 @@ public class MarketplaceCommandLineRunner
 						"orderTypeExternalReferenceCode",
 						order.getOrderTypeExternalReferenceCode()
 					).put(
-						"projects", new JSONArray(koroneikiProject)
+						"projects", koroneikiProjectsJSONArray
 					)
 				);
 			});
@@ -939,32 +884,16 @@ public class MarketplaceCommandLineRunner
 			String koroneikiProjectKey = "KORONEIKI-PROJECT-" + entry.getKey();
 
 			try {
-				String valuePayload = entry.getValue(
-				).toString();
-
-				if (_getExistingReportValueJSONObject(koroneikiProjectKey) !=
-						null) {
-
-					_patchReport(
-						new JSONObject(
-						).put(
-							"name", koroneikiProjectKey
-						).put(
-							"value", valuePayload
-						).toString(),
-						koroneikiProjectKey);
-				}
-				else {
-					_postReport(
-						new JSONObject(
-						).put(
-							"externalReferenceCode", koroneikiProjectKey
-						).put(
-							"name", koroneikiProjectKey
-						).put(
-							"value", valuePayload
-						).toString());
-				}
+				_putReport(
+					new JSONObject(
+					).put(
+						"name", koroneikiProjectKey
+					).put(
+						"value",
+						entry.getValue(
+						).toString()
+					).toString(),
+					koroneikiProjectKey);
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -1094,6 +1023,18 @@ public class MarketplaceCommandLineRunner
 					exception);
 			}
 		}
+	}
+
+	private void _putReport(String data, String externalReferenceCode) {
+		put(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			data,
+			UriComponentsBuilder.fromPath(
+				"/o/c/reports/by-external-reference-code/" +
+					externalReferenceCode
+			).build(
+			).toUri());
 	}
 
 	private void _updateOrder(long orderId, int orderStatus) throws Exception {

@@ -6,6 +6,7 @@
 package com.liferay.portal.dao.db.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -14,12 +15,16 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -32,6 +37,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -641,6 +648,82 @@ public class DBTest {
 	}
 
 	@Test
+	public void testGetLockedQueryInfos() throws Exception {
+		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
+
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
+				" (id, notNilColumn) values (1, '1')");
+
+		FutureTask<Void> futureTask = null;
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD", 0L);
+			Connection lockingConnection = DataAccess.getConnection()) {
+
+			lockingConnection.setAutoCommit(false);
+
+			db.runSQL(
+				lockingConnection,
+				"update " + TABLE_NAME_1 +
+					" set nilColumn = 'locked' where id = 1");
+
+			futureTask = new FutureTask<>(
+				() -> {
+					db.runSQL(
+						connection,
+						"update " + TABLE_NAME_1 +
+							" set nilColumn = 'waiting' where id = 1");
+
+					return null;
+				});
+
+			Thread thread = new Thread(futureTask);
+
+			thread.setDaemon(true);
+
+			thread.start();
+
+			long endTime = System.currentTimeMillis() + 5000;
+
+			while (System.currentTimeMillis() < endTime) {
+				for (DB.QueryInfo lockedQueryInfo :
+						db.getLockedQueryInfos(lockingConnection)) {
+
+					String query = lockedQueryInfo.getQuery();
+
+					if ((query != null) && query.contains("waiting")) {
+						Assert.assertNotNull(lockedQueryInfo.getId());
+						Assert.assertNotNull(lockedQueryInfo.getSchema());
+						Assert.assertTrue(
+							StringUtil.containsIgnoreCase(
+								lockedQueryInfo.getState(), "LOCK WAIT"));
+
+						return;
+					}
+				}
+
+				Thread.sleep(200);
+			}
+
+			Assert.fail(
+				"No locked query containing \"waiting\" was detected within " +
+					"5 seconds");
+		}
+		finally {
+			if (futureTask != null) {
+				try {
+					futureTask.get(5, TimeUnit.SECONDS);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+		}
+	}
+
+	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
 		db.runSQL(_SQL_CREATE_TABLE_2);
 
@@ -673,9 +756,6 @@ public class DBTest {
 			connection, new ObjectValuePair<>(TABLE_NAME_1, _TABLE_NAME_3),
 			new ObjectValuePair<>(_TABLE_NAME_2, TABLE_NAME_1),
 			new ObjectValuePair<>(_TABLE_NAME_3, _TABLE_NAME_2));
-
-		Assert.assertTrue(dbInspector.hasTable(TABLE_NAME_1));
-		Assert.assertTrue(dbInspector.hasTable(_TABLE_NAME_2));
 
 		Assert.assertTrue(dbInspector.hasColumn(TABLE_NAME_1, "id1"));
 		Assert.assertTrue(dbInspector.hasColumn(_TABLE_NAME_2, "id"));
@@ -996,5 +1076,7 @@ public class DBTest {
 	private static final String _TABLE_NAME_2 = "DBTest2";
 
 	private static final String _TABLE_NAME_3 = "DBTest3";
+
+	private static final Log _log = LogFactoryUtil.getLog(DBTest.class);
 
 }

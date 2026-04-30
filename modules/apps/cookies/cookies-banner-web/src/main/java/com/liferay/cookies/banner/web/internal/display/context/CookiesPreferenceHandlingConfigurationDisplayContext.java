@@ -22,8 +22,8 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 		_scopePK = scopePK;
 	}
 
-	public boolean getCookiesPreferenceHandlingActived() {
-		return _cookiesConfigurationProvider.isCookiesPreferenceHandlingActived(
+	public boolean getCookiesPreferenceHandlingActive() {
+		return _cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
 			_scope, _scopePK);
 	}
 

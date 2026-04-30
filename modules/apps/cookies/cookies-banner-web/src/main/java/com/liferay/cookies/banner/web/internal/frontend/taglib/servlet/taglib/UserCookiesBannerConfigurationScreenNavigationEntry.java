@@ -71,7 +71,7 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingEnabled(
 				ExtendedObjectClassDefinition.Scope.COMPANY,
 				user.getCompanyId()) ||
-			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActived(
+			!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
 				ExtendedObjectClassDefinition.Scope.COMPANY,
 				user.getCompanyId())) {
 

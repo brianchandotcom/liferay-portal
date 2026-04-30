@@ -24,7 +24,7 @@ export const test = mergeTests(
 	systemSettingsPageTest
 );
 
-async function toggleActivedAndWait(
+async function toggleActiveAndWait(
 	consentManagerConfigurationPage: ConsentManagerConfigurationPage
 ) {
 	const {toggleActivateButton, toggleDeactivateButton} =
@@ -59,9 +59,9 @@ test(
 		page,
 		systemSettingsPage,
 	}) => {
-		await test.step('Enable Consent Manager leaving actived off', async () => {
+		await test.step('Enable Consent Manager leaving active off', async () => {
 			await updateConsentManagerConfiguration(page, {
-				actived: false,
+				active: false,
 				enabled: true,
 				forceReload: true,
 			});
@@ -121,16 +121,16 @@ test(
 		consentManagerConfigurationPage,
 		page,
 	}) => {
-		await test.step('Enable Consent Manager leaving actived off', async () => {
+		await test.step('Enable Consent Manager leaving active off', async () => {
 			await updateConsentManagerConfiguration(page, {
-				actived: false,
+				active: false,
 				enabled: true,
 				forceReload: true,
 			});
 		});
 
 		await test.step('Click Activate and verify the button now reads Deactivate', async () => {
-			await toggleActivedAndWait(consentManagerConfigurationPage);
+			await toggleActiveAndWait(consentManagerConfigurationPage);
 
 			await expect(
 				consentManagerConfigurationPage.toggleDeactivateButton
@@ -183,7 +183,7 @@ test(
 		});
 
 		await test.step('Click Deactivate and verify the button now reads Activate', async () => {
-			await toggleActivedAndWait(consentManagerConfigurationPage);
+			await toggleActiveAndWait(consentManagerConfigurationPage);
 
 			await expect(
 				consentManagerConfigurationPage.toggleActivateButton

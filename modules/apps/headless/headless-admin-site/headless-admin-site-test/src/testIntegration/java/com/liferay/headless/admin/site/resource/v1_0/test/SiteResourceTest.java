@@ -176,6 +176,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		_testGetSitesPageWithActiveOrSiteGroups(true, false);
 		_testGetSitesPageWithDepotEntry();
 		_testGetSitesPageWithInactiveSites();
+		_testGetSitesPageWithoutSiteMembership();
 		_testGetSitesPageWithSearch();
 		_testGetSitesPageWithoutAuthentication();
 	}
@@ -528,6 +529,35 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 			Assert.assertEquals("403", problem.getStatus());
 		}
+	}
+
+	private void _testGetSitesPageWithoutSiteMembership() throws Exception {
+		_testPostSite_addSite(randomSite());
+		_testPostSite_addSite(randomSite());
+
+		User user = UserTestUtil.addUser(false);
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), "test", "test", false, true);
+
+		SiteResource siteResource = SiteResource.builder(
+		).authentication(
+			user.getEmailAddress(), "test"
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		Page<Site> page = siteResource.getSitesPage(
+			null, null, Pagination.of(1, 100));
+
+		Assert.assertEquals(
+			page.getItems(
+			).toString(),
+			page.getItems(
+			).size(),
+			page.getTotalCount());
 	}
 
 	private void _testGetSitesPageWithSearch() throws Exception {

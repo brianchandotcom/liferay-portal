@@ -30,7 +30,7 @@ export default class MarketplaceDeliveryOrder {
 		return this.order.createDate;
 	}
 
-	get dxpProvisioningEnabled() {
+	get canGenerateLicenses() {
 		return (
 			[
 				OrderTypes.CLIENT_EXTENSION,

@@ -765,8 +765,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		PrincipalThreadLocal.setName(_siteAdminUser.getUserId());
 	}
 
-	private static long _recordSetClassNameId;
-	private static long _structureClassNameId;
+	private long _recordSetClassNameId;
+	private long _structureClassNameId;
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;

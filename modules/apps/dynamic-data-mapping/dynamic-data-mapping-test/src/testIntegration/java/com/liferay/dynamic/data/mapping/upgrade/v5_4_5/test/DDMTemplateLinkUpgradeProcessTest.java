@@ -76,7 +76,7 @@ public class DDMTemplateLinkUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

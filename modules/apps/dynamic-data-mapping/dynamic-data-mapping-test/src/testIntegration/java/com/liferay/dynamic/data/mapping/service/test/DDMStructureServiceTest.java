@@ -565,7 +565,7 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			ServiceContextTestUtil.getServiceContext(structure.getGroupId()));
 	}
 
-	private static long _classNameId;
+	private long _classNameId;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

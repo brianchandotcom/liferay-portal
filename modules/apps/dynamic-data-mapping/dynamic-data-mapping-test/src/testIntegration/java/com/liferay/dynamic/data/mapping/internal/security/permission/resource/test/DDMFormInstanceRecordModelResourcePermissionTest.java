@@ -159,7 +159,7 @@ public class DDMFormInstanceRecordModelResourcePermissionTest
 		PrincipalThreadLocal.setName(_siteUser.getUserId());
 	}
 
-	private static long _classNameId;
+	private long _classNameId;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",

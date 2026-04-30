@@ -530,7 +530,7 @@ public class DDMFormTemplateContextFactoryTest {
 		DDMFormTemplateContextFactoryTest.class);
 
 	@Inject
-	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
+	private DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;
 
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayDefaultLocale;

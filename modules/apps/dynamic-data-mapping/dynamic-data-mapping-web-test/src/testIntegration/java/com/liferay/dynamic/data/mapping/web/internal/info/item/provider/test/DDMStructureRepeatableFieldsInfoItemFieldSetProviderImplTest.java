@@ -156,7 +156,7 @@ public class DDMStructureRepeatableFieldsInfoItemFieldSetProviderImplTest {
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private DDMStructureRepeatableFieldsInfoItemFieldSetProvider

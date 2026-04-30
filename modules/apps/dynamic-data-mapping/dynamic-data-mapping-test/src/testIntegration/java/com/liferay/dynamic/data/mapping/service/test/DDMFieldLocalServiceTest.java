@@ -660,13 +660,13 @@ public class DDMFieldLocalServiceTest {
 	private static final long _STORAGE_ID = 0;
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static DDMFieldLocalService _ddmFieldLocalService;
+	private DDMFieldLocalService _ddmFieldLocalService;
 
 	@Inject
-	private static JSONFactory _jsonFactory;
+	private JSONFactory _jsonFactory;
 
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 

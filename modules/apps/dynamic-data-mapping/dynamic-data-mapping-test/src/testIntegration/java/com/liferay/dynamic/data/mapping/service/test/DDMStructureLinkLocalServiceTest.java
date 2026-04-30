@@ -172,7 +172,7 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 		Assert.assertEquals(ddmStructure2, ddmStructures.get(0));
 	}
 
-	private static long _classNameId;
-	private static long _classPK;
+	private long _classNameId;
+	private long _classPK;
 
 }

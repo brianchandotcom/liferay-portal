@@ -93,7 +93,7 @@ public class DDMDataProviderTest {
 	}
 
 	@Inject
-	private static DDMDataProviderRegistry _ddmDataProviderRegistry;
+	private DDMDataProviderRegistry _ddmDataProviderRegistry;
 
 	private static ServiceRegistration<DDMDataProvider> _serviceRegistration;
 

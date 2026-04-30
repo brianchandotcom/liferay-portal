@@ -199,7 +199,7 @@ public class DDMStorageAdapterTest {
 	private static final String _STORAGE_TYPE_TEST = "test";
 
 	@Inject
-	private static DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
 	private static ServiceRegistration<DDMStorageAdapter> _serviceRegistration;
 

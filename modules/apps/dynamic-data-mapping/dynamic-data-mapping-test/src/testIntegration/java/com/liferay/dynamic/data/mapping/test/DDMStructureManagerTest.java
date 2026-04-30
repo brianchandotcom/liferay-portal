@@ -220,7 +220,7 @@ public class DDMStructureManagerTest {
 	private static long _classNameId;
 
 	@Inject
-	private static DDMStructureManager _ddmStructureManager;
+	private DDMStructureManager _ddmStructureManager;
 
 	@Inject
 	private static Portal _portal;

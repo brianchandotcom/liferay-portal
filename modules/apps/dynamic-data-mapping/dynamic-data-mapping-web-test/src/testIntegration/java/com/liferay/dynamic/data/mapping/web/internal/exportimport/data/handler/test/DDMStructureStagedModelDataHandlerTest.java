@@ -560,11 +560,11 @@ public class DDMStructureStagedModelDataHandlerTest
 	private static final String _CLASS_NAME =
 		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 
-	private static Set<Locale> _availableLocales;
-	private static Locale _defaultLocale;
+	private Set<Locale> _availableLocales;
+	private Locale _defaultLocale;
 
 	@Inject(filter = "ddm.form.values.deserializer.type=json")
-	private static DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
+	private DDMFormValuesDeserializer _jsonDDMFormValuesDeserializer;
 
 	@Inject(filter = "ddm.data.provider.type=rest")
 	private DDMDataProvider _ddmDataProvider;

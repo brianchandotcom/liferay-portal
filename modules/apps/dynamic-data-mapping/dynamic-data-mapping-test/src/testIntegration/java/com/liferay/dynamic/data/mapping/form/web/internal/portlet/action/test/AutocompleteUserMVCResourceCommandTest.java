@@ -196,7 +196,7 @@ public class AutocompleteUserMVCResourceCommandTest {
 	}
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

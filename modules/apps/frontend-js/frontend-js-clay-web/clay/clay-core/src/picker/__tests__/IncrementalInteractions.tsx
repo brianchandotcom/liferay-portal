@@ -195,7 +195,9 @@ describe('Picker incremental interactions', () => {
 		const LIST_CLIENT_HEIGHT = 200;
 
 		const originalScrollTo = HTMLElement.prototype.scrollTo;
+
 		HTMLElement.prototype.scrollTo = jest.fn() as any;
+
 		const getBoundingClientRectSpy = jest
 			.spyOn(Element.prototype, 'getBoundingClientRect')
 			.mockImplementation(function (this: HTMLElement) {
@@ -207,11 +209,11 @@ describe('Picker incremental interactions', () => {
 						height: ITEM_HEIGHT,
 						left: 0,
 						right: 0,
+						toJSON: () => ({}),
 						top,
 						width: 0,
 						x: 0,
 						y: top,
-						toJSON: () => ({}),
 					};
 				}
 
@@ -221,11 +223,11 @@ describe('Picker incremental interactions', () => {
 						height: LIST_CLIENT_HEIGHT,
 						left: 0,
 						right: 0,
+						toJSON: () => ({}),
 						top: 0,
 						width: 0,
 						x: 0,
 						y: 0,
-						toJSON: () => ({}),
 					};
 				}
 
@@ -234,13 +236,14 @@ describe('Picker incremental interactions', () => {
 					height: 0,
 					left: 0,
 					right: 0,
+					toJSON: () => ({}),
 					top: 0,
 					width: 0,
 					x: 0,
 					y: 0,
-					toJSON: () => ({}),
 				};
 			});
+
 		const clientHeightSpy = jest
 			.spyOn(HTMLElement.prototype, 'clientHeight', 'get')
 			.mockImplementation(function (this: HTMLElement) {
@@ -248,6 +251,7 @@ describe('Picker incremental interactions', () => {
 					? LIST_CLIENT_HEIGHT
 					: 0;
 			});
+
 		const scrollHeightSpy = jest
 			.spyOn(HTMLElement.prototype, 'scrollHeight', 'get')
 			.mockImplementation(function (this: HTMLElement) {
@@ -266,6 +270,7 @@ describe('Picker incremental interactions', () => {
 			userEvent.click(getByRole('combobox'));
 
 			const selectedIndex = items.indexOf('Item 40');
+
 			const expected = Math.max(
 				0,
 				Math.min(
@@ -279,8 +284,11 @@ describe('Picker incremental interactions', () => {
 		}
 		finally {
 			getBoundingClientRectSpy.mockRestore();
+
 			clientHeightSpy.mockRestore();
+
 			scrollHeightSpy.mockRestore();
+
 			HTMLElement.prototype.scrollTo = originalScrollTo;
 		}
 	});

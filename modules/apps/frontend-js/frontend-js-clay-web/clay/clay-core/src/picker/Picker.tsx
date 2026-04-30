@@ -417,26 +417,27 @@ export function Picker<T extends Record<string, any> | string | number>({
 			return;
 		}
 
-		const key =
-			selectedKey || selectedKey === 0
-				? selectedKey
-				: activeDescendant;
+		const key = selectedKey ?? activeDescendant;
 
-		if (!key && key !== 0) {
-			return;
-		}
-
-		const item = document.getElementById(String(key));
-
-		if (!item || !listRef.current.contains(item)) {
+		if (key === undefined) {
 			return;
 		}
 
 		const list = listRef.current;
+
+		const item = list.querySelector<HTMLElement>(
+			`[id="${CSS.escape(String(key))}"]`
+		);
+
+		if (!item) {
+			return;
+		}
+
 		const itemRect = item.getBoundingClientRect();
 		const listRect = list.getBoundingClientRect();
-		const itemOffsetInList =
-			itemRect.top - listRect.top + list.scrollTop;
+
+		const itemOffsetInList = itemRect.top - listRect.top + list.scrollTop;
+
 		const centeredTop =
 			itemOffsetInList - (list.clientHeight - itemRect.height) / 2;
 

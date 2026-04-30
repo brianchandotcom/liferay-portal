@@ -23,7 +23,7 @@ const readFileAsBase64 = (file) =>
 export default function (context) {
 	Liferay.provide(
 		window,
-		`${context.namespace}editOrderAttachment`,
+		`${context.namespace}editCommerceOrderAttachment`,
 		(event, form) => {
 			event.preventDefault();
 

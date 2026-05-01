@@ -7,6 +7,10 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
+<%
+String clickToChatAIHubServiceURL = (String)request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_AIHUB_SERVICE_URL);
+%>
+
 <aui:script position="inline">
 	(function () {
 		if (document.getElementById('aihub-chatbot-widget-script')) {

@@ -21,8 +21,8 @@ import type {GenericProperty} from './types';
 export function DefaultValueInput(
 	property: GenericProperty,
 	_operator: string,
-	value: string | undefined,
-	onChange: (value: string) => void
+	value: string | Array<string | object> | undefined,
+	onChange: (value: string | Array<string | object>) => void
 ): React.ReactNode {
 	const {options, type} = property;
 
@@ -39,7 +39,7 @@ export function DefaultValueInput(
 				items={items}
 				onSelectionChange={(key) => onChange(key as string)}
 				placeholder={Liferay.Language.get('select')}
-				selectedKey={value}
+				selectedKey={value as string}
 			>
 				{(item) => <Option key={item.value}>{item.label}</Option>}
 			</Picker>
@@ -54,7 +54,7 @@ export function DefaultValueInput(
 				items={options}
 				onSelectionChange={(key) => onChange(key as string)}
 				placeholder={Liferay.Language.get('select')}
-				selectedKey={value}
+				selectedKey={value as string}
 			>
 				{(item) => <Option key={item.value}>{item.label}</Option>}
 			</Picker>
@@ -69,7 +69,7 @@ export function DefaultValueInput(
 				onChange={(event) => onChange(event.target.value)}
 				placeholder={Liferay.Language.get('enter-value')}
 				type="number"
-				value={value ?? ''}
+				value={(value as string) ?? ''}
 			/>
 		);
 	}
@@ -81,7 +81,7 @@ export function DefaultValueInput(
 				className="form-control-sm"
 				onChange={(event) => onChange(event.target.value)}
 				type={type === 'date-time' ? 'datetime-local' : 'date'}
-				value={value ?? ''}
+				value={(value as string) ?? ''}
 			/>
 		);
 	}
@@ -93,7 +93,7 @@ export function DefaultValueInput(
 			onChange={(event) => onChange(event.target.value)}
 			placeholder={Liferay.Language.get('enter-value')}
 			type="text"
-			value={value ?? ''}
+			value={(value as string) ?? ''}
 		/>
 	);
 }

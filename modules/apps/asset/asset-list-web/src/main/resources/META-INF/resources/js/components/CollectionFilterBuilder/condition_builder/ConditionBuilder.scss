@@ -11,4 +11,21 @@
 	&__value-input .form-control-sm {
 		max-width: 180px;
 	}
+
+	&__asset-selector {
+		.form-control,
+		.form-control-tag-group {
+			border-radius: 0.25rem;
+			font-size: 0.875rem;
+			height: auto;
+			line-height: 1.5;
+			min-height: 2rem;
+			padding: 0 0.25rem;
+		}
+
+		.btn {
+			font-size: 0.875rem;
+			padding: 0.1875rem 0.75rem;
+		}
+	}
 }

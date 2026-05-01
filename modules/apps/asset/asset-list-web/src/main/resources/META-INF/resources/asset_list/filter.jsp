@@ -47,6 +47,10 @@
 					module="{CollectionFilterBuilder} from asset-list-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
+							"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
+						).put(
+							"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
+						).put(
 							"initialConditions", editAssetListDisplayContext.getFilters()
 						).put(
 							"namespace", liferayPortletResponse.getNamespace()
@@ -54,6 +58,10 @@
 							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
 						).put(
 							"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
+						).put(
+							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
+						).put(
+							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
 						).build()
 					%>'
 				/>

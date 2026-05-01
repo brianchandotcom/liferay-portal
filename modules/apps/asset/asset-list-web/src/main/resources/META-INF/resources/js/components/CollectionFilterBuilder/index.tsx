@@ -4,22 +4,25 @@
  */
 
 import {addParams, fetch} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
+import renderValueInput from './ValueInput';
 import {
 	ConditionBuilder,
 	generateConditionId,
 } from './condition_builder/ConditionBuilder';
-import {DefaultValueInput} from './condition_builder/DefaultValueInput';
 import {getCollectionOperators} from './operators';
 
 import type {
 	ConditionType,
 	FilterCondition,
 	GenericProperty,
+	PropertyGroup,
 } from './condition_builder/types';
 
 interface CollectionFilterBuilderProps {
+	categorySelectorURL?: string;
+	groupIds?: string[];
 	initialConditionType?: ConditionType;
 	initialConditions?: Array<Omit<FilterCondition, 'id'>>;
 	namespace: string;
@@ -29,6 +32,8 @@ interface CollectionFilterBuilderProps {
 	}) => void;
 	properties: GenericProperty[];
 	propertiesURL?: string;
+	tagSelectorURL?: string;
+	vocabularyIds?: string[];
 }
 
 /**
@@ -38,12 +43,16 @@ interface CollectionFilterBuilderProps {
  * picks it up on form submit.
  */
 export default function CollectionFilterBuilder({
+	categorySelectorURL,
+	groupIds,
 	initialConditionType = 'all',
 	initialConditions,
 	namespace,
 	onChange,
 	properties: initialProperties,
 	propertiesURL,
+	tagSelectorURL,
+	vocabularyIds,
 }: CollectionFilterBuilderProps) {
 	const [conditions, setConditions] = useState<FilterCondition[]>(
 		initialConditions?.length
@@ -59,6 +68,54 @@ export default function CollectionFilterBuilder({
 
 	const [properties, setProperties] = useState<GenericProperty[]>(
 		initialProperties || []
+	);
+
+	const propertiesWithAssetFields = useMemo<PropertyGroup[]>(
+		() => [
+			{
+				items: [
+					{
+						label: Liferay.Language.get('tags'),
+						name: 'assetTags',
+						type: 'asset-tags',
+					},
+					{
+						label: Liferay.Language.get('categories'),
+						name: 'assetCategories',
+						type: 'asset-categories',
+					},
+					{
+						label: Liferay.Language.get('keywords'),
+						name: 'keywords',
+						type: 'string',
+					},
+				],
+				label: '',
+			},
+			{
+				items: properties,
+				label: Liferay.Language.get('common-fields'),
+			},
+		],
+		[properties]
+	);
+
+	const renderCustomValueInput = useMemo(
+		() =>
+			renderValueInput({
+				categorySelectorURL,
+				groupIds,
+				namespace,
+				tagSelectorURL,
+				vocabularyIds,
+			}),
+		[
+			categorySelectorURL,
+			groupIds,
+			namespace,
+			tagSelectorURL,
+			vocabularyIds,
+		]
 	);
 
 	const filterValuesAndOmitID = (conditions: FilterCondition[]) =>
@@ -164,8 +221,8 @@ export default function CollectionFilterBuilder({
 				conditions={conditions}
 				getOperators={getCollectionOperators}
 				onChange={handleChange}
-				properties={properties}
-				renderValueInput={DefaultValueInput}
+				properties={propertiesWithAssetFields}
+				renderValueInput={renderCustomValueInput}
 				showConjunctionPicker={false}
 			/>
 

@@ -6,25 +6,39 @@
 package com.liferay.login.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 
-import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Debora Buriti
@@ -35,66 +49,98 @@ public class UpdateEmailAddressActionTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testRefererParameterIsSanitized() throws Exception {
-		Http.Options loginOptions = new Http.Options();
-
-		loginOptions.addPart(
-			"login",
-			TestPropsValues.getUser(
-			).getEmailAddress());
-		loginOptions.addPart("password", TestPropsValues.USER_PASSWORD);
-		loginOptions.setCookies(new Cookie[] {new Cookie("_", "_")});
-		loginOptions.setFollowRedirects(false);
-		loginOptions.setLocation(
-			TestPropsValues.PORTAL_URL + "/c/portal/login");
-		loginOptions.setPost(true);
-
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"AUTH_TOKEN_CHECK_ENABLED", false)) {
-
-			HttpUtil.URLtoString(loginOptions);
-		}
-
-		String jsessionId = _getJsessionId(HttpUtil.getCookies());
-
-		String randomDomain = RandomTestUtil.randomString(
-		).toLowerCase();
-
-		String maliciousReferer = StringBundler.concat(
-			"http://www.", randomDomain, ".com");
-
-		Http.Options options = new Http.Options();
-
-		options.addHeader("Cookie", "JSESSIONID=" + jsessionId);
-		options.setCookieSpec(Http.CookieSpec.IGNORE_COOKIES);
-		options.setLocation(
-			StringBundler.concat(
-				TestPropsValues.PORTAL_URL,
-				"/c/portal/update_email_address?referer=", maliciousReferer));
-		options.setMethod(Http.Method.GET);
-
-		String response = HttpUtil.URLtoString(options);
-
-		Assert.assertFalse(
-			response.contains("value=\"" + maliciousReferer + "\""));
+	public void testRenderRefererURLWhenURLIsInvalid() throws Exception {
+		_testRenderRefererURL(
+			StringPool.BLANK,
+			"http://" + RandomTestUtil.randomString() + ".com");
 	}
 
-	private String _getJsessionId(Cookie[] cookies) {
-		if (cookies == null) {
-			return null;
-		}
-
-		for (Cookie cookie : cookies) {
-			if (Objects.equals(cookie.getName(), "JSESSIONID")) {
-				return cookie.getValue();
-			}
-		}
-
-		return null;
+	@Test
+	public void testRenderRefererURLWhenURLIsValid() throws Exception {
+		_testRenderRefererURL("http://localhost:8080", "http://localhost:8080");
 	}
+
+	private void _testRenderRefererURL(
+			String expectedRenderedRefererURL, String referURL)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
+
+				@Override
+				public RequestDispatcher getRequestDispatcher(String path) {
+					ServletContext servletContext = ServletContextPool.get(
+						StringPool.BLANK);
+
+					return servletContext.getRequestDispatcher(path);
+				}
+
+			};
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.getDefault());
+		themeDisplay.setLookAndFeel(
+			_themeLocalService.getTheme(
+				TestPropsValues.getCompanyId(),
+				PropsValues.DEFAULT_REGULAR_THEME_ID),
+			null);
+		themeDisplay.setPathMain("/c");
+		themeDisplay.setPermissionChecker(
+			PermissionThreadLocal.getPermissionChecker());
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://localhost:8080");
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+		mockHttpServletRequest.setParameter(WebKeys.REFERER, referURL);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		RequestDispatcher requestDispatcher =
+			mockHttpServletRequest.getRequestDispatcher(
+				"/html/portal/update_email_address.jsp");
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setPortalURL("http://localhost:8080");
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			requestDispatcher.include(
+				mockHttpServletRequest, mockHttpServletResponse);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		String responseString = mockHttpServletResponse.getContentAsString();
+
+		Matcher matcher = _refererValuePattern.matcher(responseString);
+
+		Assert.assertTrue(responseString, matcher.find());
+
+		Assert.assertEquals(expectedRenderedRefererURL, matcher.group(1));
+	}
+
+	private static final Pattern _refererValuePattern = Pattern.compile(
+		"id=\"referer\"[^>]*value=\"([^\"]*)\"");
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ThemeLocalService _themeLocalService;
 
 }

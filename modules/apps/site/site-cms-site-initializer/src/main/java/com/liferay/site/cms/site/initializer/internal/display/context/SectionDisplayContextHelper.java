@@ -172,44 +172,10 @@ public class SectionDisplayContextHelper {
 	public List<DropdownItem> getAllSectionBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				"#", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), null, null,
-				null),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"move-folder"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "move-to")
-			).build(
-				"move-to"
-			),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"copy"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "copy-to")
-			).build(
-				"copy-to"
-			),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"time"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "expire")
-			).build(
-				"expire"
-			),
+		List<DropdownItem> bulkActionDropdownItems =
+			_getBulkActionDropdownItems(httpServletRequest);
+
+		bulkActionDropdownItems.add(
 			FDSActionDropdownItemBuilder.setHighlighted(
 				true
 			).setHref(
@@ -220,19 +186,17 @@ public class SectionDisplayContextHelper {
 				LanguageUtil.get(httpServletRequest, "export-for-translation")
 			).build(
 				"export-for-translation"
-			),
+			));
+		bulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				"#", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null),
+				null));
+
+		_addEditCategoriesAndTagsBulkActions(
+			bulkActionDropdownItems, httpServletRequest);
+
+		bulkActionDropdownItems.add(
 			FDSActionDropdownItemBuilder.setHighlighted(
 				true
 			).setHref(
@@ -243,33 +207,11 @@ public class SectionDisplayContextHelper {
 				LanguageUtil.get(httpServletRequest, "find-and-replace")
 			).build(
 				"find-and-replace"
-			),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "default-permissions",
-				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-default-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-default-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"reset-to-default-permissions",
-				LanguageUtil.get(
-					httpServletRequest, "reset-to-default-permissions"),
-				null, null, null));
+			));
+
+		_addPermissionsBulkActions(bulkActionDropdownItems, httpServletRequest);
+
+		return bulkActionDropdownItems;
 	}
 
 	public List<FDSActionDropdownItem> getAllSectionFDSActionDropdownItems(
@@ -291,44 +233,10 @@ public class SectionDisplayContextHelper {
 	public List<DropdownItem> getContentsBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				"#", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), null, null,
-				null),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"move-folder"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "move-to")
-			).build(
-				"move-to"
-			),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"copy"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "copy-to")
-			).build(
-				"copy-to"
-			),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"time"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "expire")
-			).build(
-				"expire"
-			),
+		List<DropdownItem> bulkActionDropdownItems =
+			_getBulkActionDropdownItems(httpServletRequest);
+
+		bulkActionDropdownItems.add(
 			FDSActionDropdownItemBuilder.setHighlighted(
 				true
 			).setHref(
@@ -339,41 +247,13 @@ public class SectionDisplayContextHelper {
 				LanguageUtil.get(httpServletRequest, "export-for-translation")
 			).build(
 				"export-for-translation"
-			),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "default-permissions",
-				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-default-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-default-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"reset-to-default-permissions",
-				LanguageUtil.get(
-					httpServletRequest, "reset-to-default-permissions"),
-				null, null, null));
+			));
+
+		_addEditCategoriesAndTagsBulkActions(
+			bulkActionDropdownItems, httpServletRequest);
+		_addPermissionsBulkActions(bulkActionDropdownItems, httpServletRequest);
+
+		return bulkActionDropdownItems;
 	}
 
 	public List<FDSActionDropdownItem> getContentsFDSActionDropdownItems(
@@ -642,6 +522,107 @@ public class SectionDisplayContextHelper {
 	public List<DropdownItem> getFilesBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
+		List<DropdownItem> bulkActionDropdownItems =
+			_getBulkActionDropdownItems(httpServletRequest);
+
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				"#", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), null, null,
+				null));
+
+		_addEditCategoriesAndTagsBulkActions(
+			bulkActionDropdownItems, httpServletRequest);
+		_addPermissionsBulkActions(bulkActionDropdownItems, httpServletRequest);
+
+		return bulkActionDropdownItems;
+	}
+
+	public List<FDSActionDropdownItem> getFilesFDSActionDropdownItems(
+		HttpServletRequest httpServletRequest) {
+
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			getFDSActionDropdownItems(httpServletRequest);
+
+		fdsActionDropdownItems.add(
+			6,
+			new FDSActionDropdownItem(
+				"{embedded.file.link.href}", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
+		fdsActionDropdownItems.add(
+			7,
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class),
+					"/{embedded.id}"),
+				"download", "download-folder",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link",
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", ObjectEntryFolder.class.getName()
+				).build()));
+
+		return fdsActionDropdownItems;
+	}
+
+	private void _addEditCategoriesAndTagsBulkActions(
+		List<DropdownItem> bulkActionDropdownItems,
+		HttpServletRequest httpServletRequest) {
+
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				null, "pencil", "edit-categories",
+				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
+				"edit-categories", null));
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				null, "pencil", "edit-tags",
+				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
+				"edit-tags", null));
+	}
+
+	private void _addPermissionsBulkActions(
+		List<DropdownItem> bulkActionDropdownItems,
+		HttpServletRequest httpServletRequest) {
+
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				"#", "password-policies", "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
+				null));
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				"#", "password-policies", "default-permissions",
+				LanguageUtil.get(httpServletRequest, "default-permissions"),
+				null, null, null));
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"edit-default-permissions-by-role",
+				LanguageUtil.get(
+					httpServletRequest, "edit-default-permissions-by-role"),
+				null, null, null));
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"edit-permissions-by-role",
+				LanguageUtil.get(
+					httpServletRequest, "edit-permissions-by-role"),
+				null, null, null));
+		bulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"reset-to-default-permissions",
+				LanguageUtil.get(
+					httpServletRequest, "reset-to-default-permissions"),
+				null, null, null));
+	}
+
+	private List<DropdownItem> _getBulkActionDropdownItems(
+		HttpServletRequest httpServletRequest) {
+
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				"#", "trash", "delete",
@@ -679,74 +660,7 @@ public class SectionDisplayContextHelper {
 				LanguageUtil.get(httpServletRequest, "expire")
 			).build(
 				"expire"
-			),
-			new FDSActionDropdownItem(
-				"#", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null),
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				"#", "password-policies", "default-permissions",
-				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-default-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-default-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-permissions-by-role"),
-				null, null, null),
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"reset-to-default-permissions",
-				LanguageUtil.get(
-					httpServletRequest, "reset-to-default-permissions"),
-				null, null, null));
-	}
-
-	public List<FDSActionDropdownItem> getFilesFDSActionDropdownItems(
-		HttpServletRequest httpServletRequest) {
-
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			getFDSActionDropdownItems(httpServletRequest);
-
-		fdsActionDropdownItems.add(
-			6,
-			new FDSActionDropdownItem(
-				"{embedded.file.link.href}", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link"));
-		fdsActionDropdownItems.add(
-			7,
-			new FDSActionDropdownItem(
-				StringBundler.concat(
-					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
-					"/{embedded.id}"),
-				"download", "download-folder",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link",
-				HashMapBuilder.<String, Object>put(
-					"entryClassName", ObjectEntryFolder.class.getName()
-				).build()));
-
-		return fdsActionDropdownItems;
+			));
 	}
 
 	private JSONArray _getDepotEntriesJSONArray(

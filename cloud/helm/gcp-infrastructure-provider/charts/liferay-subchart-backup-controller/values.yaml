@@ -5,7 +5,7 @@ env:
     LCP_ENABLE_DATABASE_DUMPS: false
     LCP_ENABLE_DEPLOYMENT_MUTATION: false
     LCP_ENABLE_SANDBOX_FILTER: false
-imageTag: master
+imageTag: 1.7.0
 memoryLimit: 1Gi
 memoryRequest: 1Gi
 replicas: 3

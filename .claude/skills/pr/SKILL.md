@@ -107,7 +107,7 @@ Use a direct, to-the-point style. Avoid being verbose. Present the proposed titl
 Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the pull request URL is recorded:
 
 | Ticket Type | Target |
-| ------------------------ | ------------------------------------ |
+| --- | --- |
 | Bug (`10004`) | The bug itself |
 | Task (`10002`) | Its Technical Task (`10153`) subtask |
 | Technical Task (`10153`) | Itself |
@@ -115,14 +115,14 @@ Fetch the input ticket (issue type, status, subtasks) and resolve the **target t
 When the target is not already in an in-progress status, transition it first:
 
 | Target Type | Destination | Transition ID |
-| -------------- | ----------- | ------------- |
+| --- | --- | --- |
 | Bug | In Progress | `61` |
 | Technical Task | In Progress | `41` |
 
 Then transition it to review:
 
 | Target Type | Destination | Transition ID |
-| -------------- | -------------- | ------------- |
+| --- | --- | --- |
 | Bug | In Review | `71` |
 | Technical Task | In Peer Review | `31` |
 
@@ -138,9 +138,9 @@ When the user chooses **supersede**:
 
 1. Overwrite **Git Pull Request** with the new pull request URL, dropping the previous value.
 
-1. Add a comment on the previous pull request linking to the new one (for example, `Superseded by <new-pr-url>.`).
+1. Add a comment on the previous pull request, linking to the new one (for example, `Superseded by <new-pr-url>.`).
 
-1. Close the previous pull request when possible. When the user lacks permission to close it directly, add a `ci:close` comment instead so the CI bot closes it.
+1. Close the previous pull request when possible. When the user lacks permission to close it directly, add a `ci:close` comment instead, so the CI bot closes it.
 
 When the user chooses **add**:
 

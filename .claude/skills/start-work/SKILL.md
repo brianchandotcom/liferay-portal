@@ -30,7 +30,7 @@ Fetch the ticket (issue type, current assignee, subtasks) and resolve the **targ
 Assign the parent to the user and apply the transitions below. If the parent is already in an in-progress status by a different user, refuse to continue.
 
 | Parent Type | Destination | Transition IDs |
-| ----------- | -------------- | --------------- |
+| --- | --- | --- |
 | Bug | In Progress | `61` |
 | Story | In Development | `41`, then `61` |
 | Task | In Progress | `21` |
@@ -42,7 +42,7 @@ For a Story, apply the two transitions in sequence: `41` moves it to **Ready for
 Skip for **Bug**. For **Story** / **Task**, refetch the parent's subtasks until the **Technical Task** appears, then assign it to the user and transition it:
 
 | Child Type | Destination | Transition ID |
-| -------------- | ----------- | ------------- |
+| --- | --- | --- |
 | Technical Task | In Progress | `41` |
 
 ## 6. Create a Git Branch

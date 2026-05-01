@@ -4,7 +4,7 @@ All language keys live in the global file at `modules/apps/portal-language/porta
 
 ## Adding or Updating Keys
 
-1. Edit `modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties` keeping alphabetical order.
+1. Edit `modules/apps/portal-language/portal-language-lang/src/main/resources/content/Language.properties`, keeping alphabetical order.
 
 1. Commit the source edit.
 

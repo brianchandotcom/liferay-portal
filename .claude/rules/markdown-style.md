@@ -101,6 +101,11 @@ gh pr create \
 
 - Brace every reference as `${VAR}`, both in code and prose.
 
+## Tables
+
+- Use `---` for each separator cell (or `:---`, `---:`, or `:---:` for alignment). Do not pad separator cells to match column widths.
+- Use a single space of padding inside each header and data cell.
+
 ## URLs
 
 - Do not end URLs with a trailing slash.

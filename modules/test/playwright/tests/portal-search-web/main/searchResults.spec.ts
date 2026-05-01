@@ -517,7 +517,7 @@ test.describe('URL Parameters Are Sorted', () => {
 
 			expect(deltaKeys).toEqual([...deltaKeys].sort());
 		});
-		
+
 		await test.step('Verify URL parameters are sorted after clicking pagination page number', async () => {
 			await searchPage.selectPaginationPageNumber(2);
 
@@ -531,9 +531,7 @@ test.describe('URL Parameters Are Sorted', () => {
 		await test.step('Verify URL parameters are sorted after clicking sort option', async () => {
 			const sortPortlet = page.locator('.portlet-sort');
 
-			await sortPortlet
-				.getByRole('button', {name: 'Sort By'})
-				.click();
+			await sortPortlet.getByRole('button', {name: 'Sort By'}).click();
 
 			await page.getByRole('menuitem', {name: 'Title'}).click();
 

@@ -1,0 +1,150 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import React, {useEffect, useState} from 'react';
+
+import {CountryCodePicker} from './CountryCodePicker';
+import {CountryInfo, getFlagSymbol, parsePhoneValue} from './phoneNumberUtil';
+
+interface PhoneNumberInputProps {
+	countries?: CountryInfo[];
+	disabled?: boolean;
+	id?: string;
+	name: string;
+	onBlur?: (event: React.FocusEvent) => void;
+	onChange?: (event: {target: {value: string}}) => void;
+	onFocus?: (event: React.FocusEvent) => void;
+	predefinedValue?: string;
+	prefix?: string;
+	prefixType?: 'definedByUser' | 'fixed';
+	value?: string;
+}
+
+export function PhoneNumberInput({
+	countries = [],
+	disabled,
+	id,
+	name,
+	onBlur,
+	onChange,
+	onFocus,
+	predefinedValue,
+	prefix,
+	prefixType = 'definedByUser',
+	value: initialValue,
+}: PhoneNumberInputProps) {
+	const [localNumber, setLocalNumber] = useState('');
+	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
+		countries[0]
+	);
+
+	const fixedCountry =
+		prefixType === 'fixed'
+			? countries.find((country) => `+${country.idd}` === prefix)
+			: null;
+
+	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
+
+	const handleValueChange = (country: CountryInfo, number: string) => {
+		if (onChange) {
+			const resolvedPrefix =
+				prefixType === 'fixed' ? prefix || '' : `+${country.idd}`;
+
+			onChange({
+				target: {
+					value: `${resolvedPrefix}${number.replace(/\D/g, '')}`,
+				},
+			});
+		}
+	};
+
+	/** Parse the phone value to set the initial states. */
+	useEffect(() => {
+		const phoneValue = initialValue || predefinedValue || '';
+
+		if (prefixType === 'fixed') {
+			if (prefix && phoneValue.startsWith(prefix)) {
+				setLocalNumber(phoneValue.substring(prefix.length));
+			}
+			else {
+				const {localNumber: parsedLocalNumber} = parsePhoneValue(
+					phoneValue,
+					countries
+				);
+
+				setLocalNumber(parsedLocalNumber);
+			}
+		}
+		else {
+			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(
+				phoneValue,
+				countries
+			);
+
+			const country = countries.find(
+				(country) => country.a2 === countryA2
+			);
+
+			setSelectedCountry(country || countries[0]);
+			setLocalNumber(parsedLocalNumber);
+		}
+
+		// eslint-disable-next-line react-compiler/react-compiler
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<>
+			<ClayInput.GroupItem prepend={prefixType === 'fixed'} shrink>
+				{prefixType === 'fixed' ? (
+					<ClayInput.GroupText>
+						{fixedFlagSymbol && (
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol={fixedFlagSymbol} />
+							</span>
+						)}
+
+						{prefix}
+					</ClayInput.GroupText>
+				) : (
+					<CountryCodePicker
+						countries={countries}
+						disabled={disabled}
+						onSelectionChange={(country) => {
+							setSelectedCountry(country);
+							handleValueChange(country, localNumber);
+						}}
+						selectedKey={selectedCountry?.a2 ?? ''}
+					/>
+				)}
+			</ClayInput.GroupItem>
+
+			<ClayInput.GroupItem prepend={prefixType === 'fixed'}>
+				<ClayInput
+					className="ddm-field-text form-control"
+					disabled={disabled}
+					id={id ?? name}
+					name={`${name}_localNumber`}
+					onBlur={onBlur}
+					onChange={(event) => {
+						const newNumber = event.target.value.replace(
+							/[^0-9\s\-().]/g,
+							''
+						);
+
+						setLocalNumber(newNumber);
+						handleValueChange(selectedCountry, newNumber);
+					}}
+					onFocus={onFocus}
+					pattern="[0-9\s\-\(\).]*"
+					type="tel"
+					value={localNumber}
+				/>
+			</ClayInput.GroupItem>
+		</>
+	);
+}

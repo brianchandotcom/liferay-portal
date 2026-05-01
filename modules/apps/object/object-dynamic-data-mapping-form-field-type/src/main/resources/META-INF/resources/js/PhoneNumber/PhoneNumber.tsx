@@ -3,66 +3,50 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {Option, Picker} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import {CountryInfo, PhoneNumberInput} from '@liferay/object-js-components-web';
+import {useFormState} from 'data-engine-js-components-web';
+import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
-import LocalizablePhoneNumber from './LocalizablePhoneNumber';
-import {CountryInfo, getFlagSymbol, parsePhoneValue} from './phoneNumberUtil';
+import type {
+	FieldChangeEventHandler,
+	LocalizedValue,
+} from 'dynamic-data-mapping-form-field-type';
 
-import type {LocalizedValue} from 'dynamic-data-mapping-form-field-type';
-
-interface PhoneNumberInputProps {
+interface BasePhoneNumberProps {
 	countries?: CountryInfo[];
 	disabled?: boolean;
+	fieldName: string;
 	id?: string;
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
-	onChange?: (event: {target: {value: string}}) => void;
 	onFocus?: (event: React.FocusEvent) => void;
 	predefinedValue?: string;
 	prefix?: string;
 	prefixType?: 'definedByUser' | 'fixed';
-	value?: string;
-}
-
-interface PhoneNumberProps extends Omit<PhoneNumberInputProps, 'value'> {
-	fieldName: string;
-	localizedObjectField?: boolean;
-	onChange?: (event: {target: {value: any}}) => void;
 	readOnly?: boolean;
-	value?: string | LocalizedValue<string>;
 	[key: string]: unknown;
 }
 
-const PickerTrigger = React.forwardRef<
-	HTMLDivElement,
-	{selectedCountry: CountryInfo & {symbol?: string}} & React.ComponentProps<
-		typeof ClayButton
-	>
->(({selectedCountry, ...otherProps}, ref) => {
-	const flagSymbol = getFlagSymbol(selectedCountry.a2);
+interface LocalizablePhoneNumberProps extends BasePhoneNumberProps {
+	onChange?: FieldChangeEventHandler<LocalizedValue<string>>;
+	value?: LocalizedValue<string>;
+}
 
-	return (
-		<div {...(otherProps as any)} ref={ref}>
-			{flagSymbol && (
-				<span className="inline-item inline-item-before">
-					<ClayIcon symbol={flagSymbol} />
-				</span>
-			)}
+interface NonLocalizablePhoneNumberProps extends BasePhoneNumberProps {
+	onChange?: (event: {target: {value: string}}) => void;
+	value?: string;
+}
 
-			<span>+{selectedCountry.idd}</span>
-		</div>
-	);
-});
+type PhoneNumberProps =
+	| (LocalizablePhoneNumberProps & {localizedObjectField: true})
+	| (NonLocalizablePhoneNumberProps & {localizedObjectField?: false});
 
-export function PhoneNumberInput({
+const LocalizablePhoneNumber = ({
 	countries = [],
-	disabled,
-	id,
+	fieldName,
 	name,
 	onBlur,
 	onChange,
@@ -70,158 +54,52 @@ export function PhoneNumberInput({
 	predefinedValue,
 	prefix,
 	prefixType = 'definedByUser',
-	value: initialValue,
-}: PhoneNumberInputProps) {
-	const [localNumber, setLocalNumber] = useState('');
-	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
-		countries[0]
-	);
+	readOnly,
+	value = {} as LocalizedValue<string>,
+	...otherProps
+}: LocalizablePhoneNumberProps) => {
+	const {availableLocales, editingLanguageId} = useFormState();
 
-	const fixedCountry =
-		prefixType === 'fixed'
-			? countries.find((country) => `+${country.idd}` === prefix)
-			: null;
+	const disabled = readOnly || (otherProps.disabled as boolean);
 
-	const fixedFlagSymbol = fixedCountry ? getFlagSymbol(fixedCountry.a2) : '';
+	const handleLocalChange = (event: {target: {value: string}}) => {
+		const nextValue = {
+			...value,
+			[editingLanguageId]: event.target.value,
+		} as LocalizedValue<string>;
 
-	const handleValueChange = (country: CountryInfo, number: string) => {
-		if (onChange) {
-			const resolvedPrefix =
-				prefixType === 'fixed' ? prefix || '' : `+${country.idd}`;
-
-			onChange({
-				target: {
-					value: `${resolvedPrefix}${number.replace(/\D/g, '')}`,
-				},
-			});
-		}
+		onChange?.({target: {value: nextValue}});
 	};
 
-	/** Parse the phone value to set the initial states. */
-	useEffect(() => {
-		const phoneValue = initialValue || predefinedValue || '';
-
-		if (prefixType === 'fixed') {
-			if (prefix && phoneValue.startsWith(prefix)) {
-				setLocalNumber(phoneValue.substring(prefix.length));
-			}
-			else {
-				const {localNumber: parsedLocalNumber} = parsePhoneValue(
-					phoneValue,
-					countries
-				);
-
-				setLocalNumber(parsedLocalNumber);
-			}
-		}
-		else {
-			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(
-				phoneValue,
-				countries
-			);
-
-			const country = countries.find(
-				(country) => country.a2 === countryA2
-			);
-
-			setSelectedCountry(country || countries[0]);
-			setLocalNumber(parsedLocalNumber);
-		}
-
-		// eslint-disable-next-line react-compiler/react-compiler
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
-		<>
-			<ClayInput.GroupItem prepend={prefixType === 'fixed'} shrink>
-				{prefixType === 'fixed' ? (
-					<ClayInput.GroupText>
-						{fixedFlagSymbol && (
-							<span className="inline-item inline-item-before">
-								<ClayIcon symbol={fixedFlagSymbol} />
-							</span>
-						)}
-
-						{prefix}
-					</ClayInput.GroupText>
-				) : (
-					<Picker
-						as={PickerTrigger}
-						disabled={disabled}
-						items={countries}
-						onSelectionChange={(key) => {
-							const selectedCountry = countries.find(
-								(country) => country.a2 === key
-							);
-
-							if (selectedCountry) {
-								setSelectedCountry(selectedCountry);
-								handleValueChange(selectedCountry, localNumber);
-							}
-						}}
-						searchable
-						selectedCountry={selectedCountry}
-						selectedKey={selectedCountry.a2}
-					>
-						{(country) => {
-							const flagSymbol = getFlagSymbol(country.a2);
-
-							return (
-								<Option
-									key={country.a2}
-									textValue={`+${country.idd} ${country.name}`}
-								>
-									<div className="autofit-row">
-										<div className="autofit-col">
-											{flagSymbol && (
-												<ClayIcon symbol={flagSymbol} />
-											)}
-										</div>
-
-										<div
-											className="autofit-col"
-											style={{minWidth: '45px'}}
-										>
-											{`+${country.idd}`}
-										</div>
-
-										<div className="autofit-col autofit-col-expand">
-											{country.name}
-										</div>
-									</div>
-								</Option>
-							);
-						}}
-					</Picker>
-				)}
-			</ClayInput.GroupItem>
-
-			<ClayInput.GroupItem prepend={prefixType === 'fixed'}>
-				<ClayInput
-					className="ddm-field-text form-control"
+		<FieldBase {...otherProps} name={name} readOnly={disabled}>
+			<ClayInput.Group>
+				<PhoneNumberInput
+					countries={countries}
 					disabled={disabled}
-					id={id ?? name}
-					name={`${name}_localNumber`}
+					id={otherProps.id as string}
+					key={editingLanguageId}
+					name={name}
 					onBlur={onBlur}
-					onChange={(event) => {
-						const newNumber = event.target.value.replace(
-							/[^0-9\s\-().]/g,
-							''
-						);
-
-						setLocalNumber(newNumber);
-						handleValueChange(selectedCountry, newNumber);
-					}}
+					onChange={handleLocalChange}
 					onFocus={onFocus}
-					pattern="[0-9\s\-\(\).]*"
-					type="tel"
-					value={localNumber}
+					predefinedValue={predefinedValue}
+					prefix={prefix}
+					prefixType={prefixType}
+					value={value[editingLanguageId] ?? ''}
 				/>
-			</ClayInput.GroupItem>
-		</>
+
+				<ClayInput.GroupItem shrink>
+					<LocalesDropdown
+						availableLocales={availableLocales}
+						fieldName={fieldName}
+						value={value}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		</FieldBase>
 	);
-}
+};
 
 const NonLocalizablePhoneNumber = ({
 	countries = [],
@@ -235,7 +113,7 @@ const NonLocalizablePhoneNumber = ({
 	readOnly,
 	value: initialValue,
 	...otherProps
-}: Omit<PhoneNumberProps, 'value'> & {value?: string}) => {
+}: NonLocalizablePhoneNumberProps) => {
 	const disabled = readOnly || (otherProps.disabled as boolean);
 
 	const [combinedValue, setCombinedValue] = useState(
@@ -268,17 +146,11 @@ const NonLocalizablePhoneNumber = ({
 	);
 };
 
-const PhoneNumber = ({localizedObjectField, ...otherProps}: PhoneNumberProps) =>
-	localizedObjectField ? (
-		<LocalizablePhoneNumber
-			{...(otherProps as React.ComponentProps<typeof LocalizablePhoneNumber>)}
-		/>
+const PhoneNumber = (props: PhoneNumberProps) =>
+	props.localizedObjectField ? (
+		<LocalizablePhoneNumber {...props} />
 	) : (
-		<NonLocalizablePhoneNumber
-			{...(otherProps as React.ComponentProps<
-				typeof NonLocalizablePhoneNumber
-			>)}
-		/>
+		<NonLocalizablePhoneNumber {...props} />
 	);
 
 export default PhoneNumber;

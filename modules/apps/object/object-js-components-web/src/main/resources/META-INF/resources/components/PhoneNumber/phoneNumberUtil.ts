@@ -115,6 +115,20 @@ const FLAG_ICON_MAP: Record<string, string> = {
 	ZA: 'en-gb',
 };
 
+export function getCombinedValue(
+	countryA2: string,
+	localNumber: string,
+	countries: CountryInfo[] = DEFAULT_COUNTRIES
+): string {
+	const country = countries.find((c) => c.a2 === countryA2);
+
+	if (country && localNumber) {
+		return `+${country.idd}${localNumber}`;
+	}
+
+	return localNumber;
+}
+
 export function getFlagSymbol(a2: string): string {
 	return FLAG_ICON_MAP[a2.toUpperCase()] || '';
 }
@@ -150,18 +164,4 @@ export function parsePhoneValue(
 	}
 
 	return {countryA2: '', localNumber: value};
-}
-
-export function getCombinedValue(
-	countryA2: string,
-	localNumber: string,
-	countries: CountryInfo[] = DEFAULT_COUNTRIES
-): string {
-	const country = countries.find((c) => c.a2 === countryA2);
-
-	if (country && localNumber) {
-		return `+${country.idd}${localNumber}`;
-	}
-
-	return localNumber;
 }

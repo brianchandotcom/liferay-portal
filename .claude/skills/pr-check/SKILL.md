@@ -20,15 +20,19 @@ The script writes `${REPO_ROOT}/tmp/pr-check/results/<SHA>.status` (`PASS` or `F
 ### 1. Compute the Diff and Resolve Preconditions
 
 ```bash
-# Find the remote whose URL matches liferay/liferay-portal (reject `origin` on a fork)
-UPSTREAM=$(git remote -v | awk '/liferay\/liferay-portal/ {print $1; exit}')
-git fetch "${UPSTREAM}" master
-
-# Three-dot form: files unique to this branch
-git diff --name-status "$(git merge-base HEAD "${UPSTREAM}/master")...HEAD"
+# Three-dot form: files unique to this branch, baselined on local master
+git diff --name-status "$(git merge-base HEAD master)...HEAD"
 ```
 
-Warn if the branch is significantly behind before continuing.
+This SKILL works against local `master` deliberately. It does not fetch from any remote and does not compare against an `upstream/master` ref. Whether the developer's local `master` is up to date with the canonical upstream is the developer's call — pr-check stays predictable across detached forks, mirrored repos, and offline workstations.
+
+**The current branch must be rebased on top of local `master`.** Compare:
+
+```bash
+test "$(git merge-base HEAD master)" = "$(git rev-parse master)"
+```
+
+When they differ, abort and tell the developer to rebase (`git rebase master`). The `format-source-current-branch` validation diffs against the local `master` tip to decide which files to format — when the branch's merge-base lags behind that tip, SF picks up reverse-direction diffs from the master commits the branch has not absorbed and the `<TICKET> SF` auto-commit captures unrelated rewrites. This rule exists because the failure mode actually happened — files that changed between an old and new master tip ended up in an SF commit on a branch that had never touched them.
 
 Resolve the ticket ID. When `${ARGUMENTS}` supplies a ticket, use it (the `pr` skill passes the ticket it already resolved). Otherwise extract `[A-Z]+-[0-9]+` from the branch name; when the branch name lacks one, scan the last five commit messages; when no ticket surfaces, prompt the developer. The ticket is baked into `check.sh` for the auto-commit messages emitted by drift checks and **Source Format**.
 
@@ -270,7 +274,7 @@ exit ${EXIT_CODE}
 
 ## Guidelines
 
-- Treat the `liferay/liferay-portal` URL match as the upstream remote. On a fork, `origin` points at the developer's fork; using it as the diff baseline gives wrong results.
+- The diff baseline is local `master`. The SKILL never fetches from a remote; the developer is responsible for keeping `master` fresh and for rebasing the branch onto it before invoking pr-check.
 
 - Verify every test file exists before adding it to the script.
 

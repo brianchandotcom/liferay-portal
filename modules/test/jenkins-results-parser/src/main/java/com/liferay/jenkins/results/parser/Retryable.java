@@ -72,7 +72,7 @@ public abstract class Retryable<T> {
 		}
 	}
 
-	protected final void breakOut() {
+	protected final void breakLoop() {
 		maxRetries = 0;
 	}
 

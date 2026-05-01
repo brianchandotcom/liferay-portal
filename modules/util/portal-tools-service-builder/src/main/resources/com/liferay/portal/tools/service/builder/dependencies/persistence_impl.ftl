@@ -312,8 +312,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private int _databaseInMaxParameters;
 	</#if>
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		private FinderPath _finderPathWithPaginationFindAll;
+		private FinderPath _finderPathWithoutPaginationFindAll;
+	</#if>
+
 	private FinderPath _finderPathCountAll;
 
 	<#if entity.isHierarchicalTree()>
@@ -1638,142 +1641,144 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
-	/**
-	 * Returns all the ${entity.pluralHumanName}.
-	 *
-	 * @return the ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ${entity.pluralHumanName}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ${entity.pluralHumanName}
-	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-	 * @return the range of ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the ${entity.pluralHumanName}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ${entity.pluralHumanName}
-	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ${entity.pluralHumanName}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ${entity.pluralHumanName}
-	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
-		<#if entity.isChangeTrackingEnabled()>
-			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-		</#if>
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Returns all the ${entity.pluralHumanName}.
+		 *
+		 * @return the ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findAll() {
+			return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 
-		List<${entity.name}> list = null;
-
-		if (useFinderCache) {
-			list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
+		/**
+		 * Returns a range of all the ${entity.pluralHumanName}.
+		 *
+		 * <p>
+		 * <#include "range_comment.ftl">
+		 * </p>
+		 *
+		 * @param start the lower bound of the range of ${entity.pluralHumanName}
+		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+		 * @return the range of ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findAll(int start, int end) {
+			return findAll(start, end, null);
 		}
 
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
+		/**
+		 * Returns an ordered range of all the ${entity.pluralHumanName}.
+		 *
+		 * <p>
+		 * <#include "range_comment.ftl">
+		 * </p>
+		 *
+		 * @param start the lower bound of the range of ${entity.pluralHumanName}
+		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+		 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+		 * @return the ordered range of ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+			return findAll(start, end, orderByComparator, true);
+		}
 
-			if (orderByComparator != null) {
-				sb = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 2));
+		/**
+		 * Returns an ordered range of all the ${entity.pluralHumanName}.
+		 *
+		 * <p>
+		 * <#include "range_comment.ftl">
+		 * </p>
+		 *
+		 * @param start the lower bound of the range of ${entity.pluralHumanName}
+		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+		 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+		 * @param useFinderCache whether to use the finder cache
+		 * @return the ordered range of ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findAll(int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean useFinderCache) {
+			<#if entity.isChangeTrackingEnabled()>
+				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+			</#if>
 
-				sb.append(_SQL_SELECT_${entity.alias?upper_case});
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
 
-				appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_${entity.alias?upper_case};
-
-				sql = sql.concat(${entity.name}ModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
-
-				cacheResult(list);
-
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
 				if (useFinderCache) {
-					${finderCache}.putResult(finderPath, finderArgs, list);
+					finderPath = _finderPathWithoutPaginationFindAll;
+					finderArgs = FINDER_ARGS_EMPTY;
 				}
 			}
-			catch (Exception exception) {
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindAll;
+				finderArgs = new Object[] {start, end, orderByComparator};
+			}
+
+			List<${entity.name}> list = null;
+
+			if (useFinderCache) {
+				list = (List<${entity.name}>)${finderCache}.getResult(finderPath, finderArgs, this);
+			}
+
+			if (list == null) {
+				StringBundler sb = null;
+				String sql = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(2 + (orderByComparator.getOrderByFields().length * 2));
+
+					sb.append(_SQL_SELECT_${entity.alias?upper_case});
+
+					appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
+
+					sql = sb.toString();
+				}
+				else {
+					sql = _SQL_SELECT_${entity.alias?upper_case};
+
+					sql = sql.concat(${entity.name}ModelImpl.ORDER_BY_JPQL);
+				}
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					list = (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
+
+					cacheResult(list);
+
 					if (useFinderCache) {
-						${finderCache}.removeResult(finderPath, finderArgs);
+						${finderCache}.putResult(finderPath, finderArgs, list);
 					}
-				</#if>
+				}
+				catch (Exception exception) {
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						if (useFinderCache) {
+							${finderCache}.removeResult(finderPath, finderArgs);
+						}
+					</#if>
 
-				throw processException(exception);
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			finally {
-				closeSession(session);
-			}
+
+			return list;
+
+			<#if entity.isChangeTrackingEnabled()>
+				}
+			</#if>
 		}
-
-		return list;
-
-		<#if entity.isChangeTrackingEnabled()>
-			}
-		</#if>
-	}
+	</#if>
 
 	/**
 	 * Removes all the ${entity.pluralHumanName} from the database.
@@ -2632,41 +2637,39 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#list>
 
-		_finderPathWithPaginationFindAll =
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
-			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-				_createFinderPath(
-			<#else>
-				new FinderPath(
-					${entityCacheEnabled},
-					${finderCacheEnabled},
-					${entity.name}Impl.class,
-			</#if>
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findAll", new String[0]
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				, new String[0], true
-			</#if>
-			);
+		<#if !serviceBuilder.isVersionGTE_7_4_0()>
+			_finderPathWithPaginationFindAll =
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					_createFinderPath(
+				<#else>
+					new FinderPath(
+						${entityCacheEnabled},
+						${finderCacheEnabled},
+						${entity.name}Impl.class,
+				</#if>
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findAll", new String[0]
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					, new String[0], true
+				</#if>
+				);
 
-		_finderPathWithoutPaginationFindAll =
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
-			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-				_createFinderPath(
-			<#else>
-				new FinderPath(
-					${entityCacheEnabled},
-					${finderCacheEnabled},
-					${entity.name}Impl.class,
-			</#if>
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findAll", new String[0]
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				, new String[0], true
-			</#if>
-			);
+			_finderPathWithoutPaginationFindAll =
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					_createFinderPath(
+				<#else>
+					new FinderPath(
+						${entityCacheEnabled},
+						${finderCacheEnabled},
+						${entity.name}Impl.class,
+				</#if>
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findAll", new String[0]
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					, new String[0], true
+				</#if>
+				);
+		</#if>
 
 		_finderPathCountAll =
 			<#if serviceBuilder.isVersionGTE_7_4_0()>

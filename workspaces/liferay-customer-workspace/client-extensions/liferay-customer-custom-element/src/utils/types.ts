@@ -47,7 +47,7 @@ export interface IBusinessEvent {
 		key: string;
 		name: string;
 	};
-	id?: string | number;
+	id?: string;
 	lastComment?: string;
 	name?: string;
 	newLiferayVersion?: {
@@ -56,7 +56,6 @@ export interface IBusinessEvent {
 	};
 	plannedEventDate?: string;
 	plannedEventTime?: string;
-	r_accountEntryToBusinessEvents_accountEntryId?: number;
 	timeZone?: {
 		key: string;
 		name: string;
@@ -64,17 +63,13 @@ export interface IBusinessEvent {
 }
 
 export interface IBusinessEventVersion {
+	author?: string;
 	change?: {
 		key: string;
 		name: string;
 	};
 	comment?: string;
-	creator?: {
-		name: string;
-	};
-	dateModified?: string;
-	r_accountEntryToBusinessEventVersions_accountEntryId?: number;
-	r_businessEventToBusinessEventVersions_c_businessEventId?: number;
+	createdDate?: string;
 }
 
 export interface IKoroneikiAccount {

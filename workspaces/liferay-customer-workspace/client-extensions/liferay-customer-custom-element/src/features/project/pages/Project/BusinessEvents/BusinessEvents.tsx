@@ -28,7 +28,6 @@ import ManageEventModal from './components/ManageEventModal';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
-import useIsJiraBackend from './hooks/useIsJiraBackend';
 import parseAssociatedTickets from './utils/parseAssociatedTickets';
 import useIsSaasOnly from './utils/useIsSaasOnly';
 
@@ -61,7 +60,7 @@ const columns = [
 ];
 
 const BusinessEvents = () => {
-	const [{project, subscriptionGroups}] = useAppContext();
+	const [{subscriptionGroups}] = useAppContext();
 
 	const accountKey = useAccountKey();
 
@@ -69,7 +68,6 @@ const BusinessEvents = () => {
 
 	const {businessEvents, fetchBusinessEvents, loading} =
 		useGetBusinessEvents();
-	const isJiraBackend = useIsJiraBackend();
 	const [modalType, setModalType] = useState('');
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
@@ -109,10 +107,6 @@ const BusinessEvents = () => {
 	}, [fetchBusinessEvents]);
 
 	const filteredBusinessEvents = useMemo(() => {
-		if (!isJiraBackend) {
-			return businessEvents;
-		}
-
 		const normalize = (value?: string) =>
 			(value || '').toLowerCase().replace(/[\s_-]/g, '');
 
@@ -192,7 +186,7 @@ const BusinessEvents = () => {
 
 			return true;
 		});
-	}, [businessEvents, filters, isJiraBackend]);
+	}, [businessEvents, filters]);
 
 	const rows = useMemo(() => {
 		if (filteredBusinessEvents?.length > 0) {
@@ -269,7 +263,7 @@ const BusinessEvents = () => {
 
 				if (
 					hasAllEventsPermissions &&
-					!['canceled', 'completed'].includes(
+					!['Canceled', 'Completed'].includes(
 						businessEvent.eventStatus?.key!
 					)
 				) {
@@ -375,7 +369,7 @@ const BusinessEvents = () => {
 					status: (
 						<div className="align-items-center d-flex">
 							<div
-								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} px-2 py-1`}
+								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} px-2 py-1`}
 							>
 								{i18n.translate(
 									getKebabCase(

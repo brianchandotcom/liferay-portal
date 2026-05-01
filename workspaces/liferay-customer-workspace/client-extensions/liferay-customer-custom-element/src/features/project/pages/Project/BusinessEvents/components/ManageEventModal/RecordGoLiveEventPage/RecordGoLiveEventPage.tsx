@@ -9,7 +9,6 @@ import {Badge, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEventLegacy} from '~/services/liferay/api';
 import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent, IOption} from '~/utils/types';
@@ -20,9 +19,7 @@ import {Observer} from '@clayui/modal/lib/types';
 import classNames from 'classnames';
 import {isValidDate} from '~/utils/validations.form';
 
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
-import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
@@ -58,15 +55,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
-	const isJiraBackend = useIsJiraBackend();
 	const [isValidRecordDate, setIsValidRecordDate] = useState<boolean>(false);
-
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		accountExternalReferenceCode,
-		businessEvent,
-		false,
-		true
-	);
 
 	const emptyOption = useMemo(
 		() => ({
@@ -133,36 +122,27 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 
 		const updatedBusinessEvent = {...values?.businessEvent};
 		const formattedBusinessEvent = {
+			...businessEvent,
 			actualEventDate: getFormattedEventDateTime(
 				updatedBusinessEvent.actualEventDate,
 				updatedBusinessEvent.actualEventTime
 			),
-			eventStatus: {key: 'Completed'},
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			eventStatus: 'Completed',
+			eventType: businessEvent.eventType?.key,
 			lastComment: updatedBusinessEvent?.lastComment,
-			plannedEventDate: businessEvent.plannedEventDate,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			if (isJiraBackend) {
-				await updateBusinessEvent(
-					accountExternalReferenceCode,
-					businessEventId,
-					formattedBusinessEvent
-				);
-			}
-			else {
-				await updateAccountBusinessEvents();
-
-				await updateBusinessEventLegacy(
-					businessEventId,
-					formattedBusinessEvent
-				);
-			}
+			await updateBusinessEvent(
+				accountExternalReferenceCode,
+				businessEventId,
+				formattedBusinessEvent
+			);
 
 			closeFunction(false);
 
@@ -179,7 +159,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		}
 	};
 
-	const isEditable = ['open', 'overdue'].includes(
+	const isEditable = ['Open', 'Overdue'].includes(
 		businessEvent.eventStatus?.key!
 	);
 

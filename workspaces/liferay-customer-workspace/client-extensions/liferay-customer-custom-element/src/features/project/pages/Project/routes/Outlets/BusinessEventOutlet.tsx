@@ -6,9 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 import {Navigate, Outlet, useParams} from 'react-router-dom';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEventByIdLegacy} from '~/services/liferay/api';
 import {getBusinessEventById} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 
@@ -17,8 +15,6 @@ interface BusinessEventOutletProps {
 }
 
 const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
-	const {featureFlags} = useAppPropertiesContext();
-	const isJiraBackend = featureFlags.includes('LRSD-11821');
 	const {accountKey, id} = useParams();
 	const [isValidBusinessEvent, setIsValidBusinessEvent] = useState<
 		boolean | null
@@ -39,12 +35,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
 			}
 
 			try {
-				if (isJiraBackend) {
-					await getBusinessEventById(accountKey, id);
-				}
-				else {
-					await getBusinessEventByIdLegacy(id);
-				}
+				await getBusinessEventById(accountKey, id);
 
 				setIsValidBusinessEvent(true);
 			}
@@ -64,7 +55,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
 		};
 
 		validateBusinessEvent();
-	}, [id, accountKey, isJiraBackend, skip]);
+	}, [id, accountKey, skip]);
 
 	if (isLoading || skip) {
 		return (

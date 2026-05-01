@@ -16,6 +16,7 @@ export default function getInitialEvent() {
 		eventType: {
 			key: '',
 		},
+		lastComment: 'New business event has been created.',
 		name: '',
 		newLiferayVersion: {
 			key: '',
@@ -25,7 +26,6 @@ export default function getInitialEvent() {
 			hours: '--',
 			minutes: '--',
 		},
-		r_accountEntryToBusinessEvents_accountEntryId: '',
 		timeZone: {
 			key: '',
 		},

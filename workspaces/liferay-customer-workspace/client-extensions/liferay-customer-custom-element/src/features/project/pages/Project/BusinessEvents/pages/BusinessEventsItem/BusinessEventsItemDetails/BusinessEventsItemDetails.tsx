@@ -167,7 +167,7 @@ const BusinessEventsItemDetails = () => {
 
 			<div>
 				<div
-					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} mb-1 d-inline px-2 py-1`}
 				>
 					{i18n.translate(
 						getKebabCase(
@@ -182,7 +182,7 @@ const BusinessEventsItemDetails = () => {
 					</div>
 
 					{hasAllEventsPermissions &&
-						!['canceled', 'completed'].includes(
+						!['Canceled', 'Completed'].includes(
 							businessEvent.eventStatus?.key!
 						) && (
 							<div className="be-actions">

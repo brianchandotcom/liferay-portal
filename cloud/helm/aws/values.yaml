@@ -88,7 +88,7 @@ liferay-default:
 
                                 if [ "${http_code}" != "200" ]
                                 then
-                                    echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
+                                    echo "Unable to download OpenSearch modules for product version ${product_version} from ${url}." >&2
 
                                     rm --force --verbose /temp/liferay/deploy/com.liferay.portal.search.opensearch2.${1}.jar
 

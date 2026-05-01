@@ -1782,16 +1782,18 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
-	/**
-	 * Removes all the ${entity.pluralHumanName} from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (${entity.name} ${entity.variableName} : findAll()) {
-			remove(${entity.variableName});
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Removes all the ${entity.pluralHumanName} from the database.
+		 *
+		 */
+		@Override
+		public void removeAll() {
+			for (${entity.name} ${entity.variableName} : findAll()) {
+				remove(${entity.variableName});
+			}
 		}
-	}
+	</#if>
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>
 		/**

@@ -289,12 +289,7 @@ export class ChangeTrackingPage {
 	}
 
 	async goToPublicationsViaApplicationMenu() {
-		await this.globalMenuPage.goToApplications();
-
-		await this.page
-			.locator('.nav-link[href]')
-			.getByText('Publications')
-			.click();
+		await this.globalMenuPage.goToApplications('Publications');
 
 		const enablePublications = this.page.getByText('Enable Publications');
 

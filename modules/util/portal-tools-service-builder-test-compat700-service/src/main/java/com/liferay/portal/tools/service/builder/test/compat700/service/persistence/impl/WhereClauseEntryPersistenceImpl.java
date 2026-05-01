@@ -253,7 +253,7 @@ public class WhereClauseEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(WhereClauseEntryModelImpl.ORDER_BY_JPQL);
@@ -493,7 +493,7 @@ public class WhereClauseEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -519,7 +519,7 @@ public class WhereClauseEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1284,7 +1284,7 @@ public class WhereClauseEntryPersistenceImpl
 				sb.append(_SQL_SELECT_WHERECLAUSEENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1352,7 +1352,8 @@ public class WhereClauseEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_WHERECLAUSEENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(whereClauseEntry) FROM WhereClauseEntry whereClauseEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1458,6 +1459,9 @@ public class WhereClauseEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		WhereClauseEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_WHERECLAUSEENTRY =
 		"SELECT whereClauseEntry FROM WhereClauseEntry whereClauseEntry";
 
@@ -1467,13 +1471,8 @@ public class WhereClauseEntryPersistenceImpl
 	private static final String _SQL_SELECT_WHERECLAUSEENTRY_WHERE =
 		"SELECT whereClauseEntry FROM WhereClauseEntry whereClauseEntry WHERE ";
 
-	private static final String _SQL_COUNT_WHERECLAUSEENTRY =
-		"SELECT COUNT(whereClauseEntry) FROM WhereClauseEntry whereClauseEntry";
-
 	private static final String _SQL_COUNT_WHERECLAUSEENTRY_WHERE =
 		"SELECT COUNT(whereClauseEntry) FROM WhereClauseEntry whereClauseEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "whereClauseEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No WhereClauseEntry exists with the primary key ";
@@ -1485,4 +1484,4 @@ public class WhereClauseEntryPersistenceImpl
 		WhereClauseEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:686561616
+// LIFERAY-SERVICE-BUILDER-HASH:-1336172740

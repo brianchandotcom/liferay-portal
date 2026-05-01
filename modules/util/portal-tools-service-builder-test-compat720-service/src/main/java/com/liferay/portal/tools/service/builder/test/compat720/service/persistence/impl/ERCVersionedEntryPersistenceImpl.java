@@ -217,7 +217,7 @@ public class ERCVersionedEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(ERCVersionedEntryModelImpl.ORDER_BY_JPQL);
@@ -457,7 +457,7 @@ public class ERCVersionedEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -483,7 +483,7 @@ public class ERCVersionedEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1027,7 +1027,7 @@ public class ERCVersionedEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(ERCVersionedEntryModelImpl.ORDER_BY_JPQL);
@@ -1288,7 +1288,7 @@ public class ERCVersionedEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -1314,7 +1314,7 @@ public class ERCVersionedEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -2417,7 +2417,7 @@ public class ERCVersionedEntryPersistenceImpl
 				sb.append(_SQL_SELECT_ERCVERSIONEDENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -2485,7 +2485,8 @@ public class ERCVersionedEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_ERCVERSIONEDENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(ercVersionedEntry) FROM ERCVersionedEntry ercVersionedEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -2656,19 +2657,17 @@ public class ERCVersionedEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		ERCVersionedEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ERCVERSIONEDENTRY =
 		"SELECT ercVersionedEntry FROM ERCVersionedEntry ercVersionedEntry";
 
 	private static final String _SQL_SELECT_ERCVERSIONEDENTRY_WHERE =
 		"SELECT ercVersionedEntry FROM ERCVersionedEntry ercVersionedEntry WHERE ";
 
-	private static final String _SQL_COUNT_ERCVERSIONEDENTRY =
-		"SELECT COUNT(ercVersionedEntry) FROM ERCVersionedEntry ercVersionedEntry";
-
 	private static final String _SQL_COUNT_ERCVERSIONEDENTRY_WHERE =
 		"SELECT COUNT(ercVersionedEntry) FROM ERCVersionedEntry ercVersionedEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "ercVersionedEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No ERCVersionedEntry exists with the primary key ";
@@ -2683,4 +2682,4 @@ public class ERCVersionedEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:154139349
+// LIFERAY-SERVICE-BUILDER-HASH:-1677579141

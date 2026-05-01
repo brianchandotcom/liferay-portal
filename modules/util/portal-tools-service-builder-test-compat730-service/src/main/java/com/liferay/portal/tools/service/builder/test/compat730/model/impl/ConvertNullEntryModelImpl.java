@@ -73,6 +73,8 @@ public class ConvertNullEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ConvertNullEntry";
 
+	public static final String ENTITY_ALIAS = "convertNullEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY convertNullEntry.convertNullEntryId ASC";
 
@@ -579,4 +581,4 @@ public class ConvertNullEntryModelImpl
 	private ConvertNullEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:757043724
+// LIFERAY-SERVICE-BUILDER-HASH:-973345785

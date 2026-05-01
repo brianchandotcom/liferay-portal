@@ -81,6 +81,8 @@ public class EagerBlobEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table EagerBlobEntry";
 
+	public static final String ENTITY_ALIAS = "eagerBlobEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY eagerBlobEntry.eagerBlobEntryId ASC";
 
@@ -662,4 +664,4 @@ public class EagerBlobEntryModelImpl
 	private EagerBlobEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2066690913
+// LIFERAY-SERVICE-BUILDER-HASH:1735829257

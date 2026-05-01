@@ -208,7 +208,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL);
@@ -443,7 +443,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -469,7 +469,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1620,7 +1620,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				sb.append(_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1692,7 +1692,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 				session = openSession();
 
 				Query query = session.createQuery(
-					_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION);
+					"SELECT COUNT(localizedEntryLocalization) FROM LocalizedEntryLocalization localizedEntryLocalization");
 
 				count = (Long)query.uniqueResult();
 
@@ -1805,6 +1805,9 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		LocalizedEntryLocalizationModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_LOCALIZEDENTRYLOCALIZATION =
 		"SELECT localizedEntryLocalization FROM LocalizedEntryLocalization localizedEntryLocalization";
 
@@ -1815,14 +1818,8 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	private static final String _SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE =
 		"SELECT localizedEntryLocalization FROM LocalizedEntryLocalization localizedEntryLocalization WHERE ";
 
-	private static final String _SQL_COUNT_LOCALIZEDENTRYLOCALIZATION =
-		"SELECT COUNT(localizedEntryLocalization) FROM LocalizedEntryLocalization localizedEntryLocalization";
-
 	private static final String _SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE =
 		"SELECT COUNT(localizedEntryLocalization) FROM LocalizedEntryLocalization localizedEntryLocalization WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"localizedEntryLocalization.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No LocalizedEntryLocalization exists with the primary key ";
@@ -1834,4 +1831,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		LocalizedEntryLocalizationPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1911099423
+// LIFERAY-SERVICE-BUILDER-HASH:945952909

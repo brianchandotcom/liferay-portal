@@ -211,7 +211,7 @@ public class LazyBlobEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(LazyBlobEntryModelImpl.ORDER_BY_JPQL);
@@ -447,7 +447,7 @@ public class LazyBlobEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -473,7 +473,7 @@ public class LazyBlobEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1573,7 +1573,7 @@ public class LazyBlobEntryPersistenceImpl
 				sb.append(_SQL_SELECT_LAZYBLOBENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1641,7 +1641,8 @@ public class LazyBlobEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_LAZYBLOBENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(lazyBlobEntry) FROM LazyBlobEntry lazyBlobEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1753,6 +1754,9 @@ public class LazyBlobEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		LazyBlobEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_LAZYBLOBENTRY =
 		"SELECT lazyBlobEntry FROM LazyBlobEntry lazyBlobEntry";
 
@@ -1762,13 +1766,8 @@ public class LazyBlobEntryPersistenceImpl
 	private static final String _SQL_SELECT_LAZYBLOBENTRY_WHERE =
 		"SELECT lazyBlobEntry FROM LazyBlobEntry lazyBlobEntry WHERE ";
 
-	private static final String _SQL_COUNT_LAZYBLOBENTRY =
-		"SELECT COUNT(lazyBlobEntry) FROM LazyBlobEntry lazyBlobEntry";
-
 	private static final String _SQL_COUNT_LAZYBLOBENTRY_WHERE =
 		"SELECT COUNT(lazyBlobEntry) FROM LazyBlobEntry lazyBlobEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "lazyBlobEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No LazyBlobEntry exists with the primary key ";
@@ -1783,4 +1782,4 @@ public class LazyBlobEntryPersistenceImpl
 		new String[] {"uuid"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:848840590
+// LIFERAY-SERVICE-BUILDER-HASH:-2102862296

@@ -461,7 +461,7 @@ public class MappingEntryPersistenceImpl
 				sb.append(_SQL_SELECT_MAPPINGENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -525,7 +525,8 @@ public class MappingEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_MAPPINGENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(mappingEntry) FROM MappingEntry mappingEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -976,13 +977,11 @@ public class MappingEntryPersistenceImpl
 		 com.liferay.portal.tools.service.builder.test.compat730.model.
 			 BasicEntry> mappingEntryToBasicEntryTableMapper;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		MappingEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_MAPPINGENTRY =
 		"SELECT mappingEntry FROM MappingEntry mappingEntry";
-
-	private static final String _SQL_COUNT_MAPPINGENTRY =
-		"SELECT COUNT(mappingEntry) FROM MappingEntry mappingEntry";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "mappingEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No MappingEntry exists with the primary key ";
@@ -1089,4 +1088,4 @@ public class MappingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-286300873
+// LIFERAY-SERVICE-BUILDER-HASH:-788964401

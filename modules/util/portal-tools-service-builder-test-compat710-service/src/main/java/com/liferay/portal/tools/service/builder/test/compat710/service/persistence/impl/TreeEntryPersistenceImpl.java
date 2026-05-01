@@ -696,7 +696,7 @@ public class TreeEntryPersistenceImpl
 				sb.append(_SQL_SELECT_TREEENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -764,7 +764,8 @@ public class TreeEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_TREEENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(treeEntry) FROM TreeEntry treeEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1128,16 +1129,14 @@ public class TreeEntryPersistenceImpl
 			"groupId", "leftTreeEntryId", "rightTreeEntryId");
 	protected boolean rebuildTreeEnabled = true;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		TreeEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_TREEENTRY =
 		"SELECT treeEntry FROM TreeEntry treeEntry";
 
 	private static final String _SQL_SELECT_TREEENTRY_WHERE_PKS_IN =
 		"SELECT treeEntry FROM TreeEntry treeEntry WHERE treeEntryId IN (";
-
-	private static final String _SQL_COUNT_TREEENTRY =
-		"SELECT COUNT(treeEntry) FROM TreeEntry treeEntry";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "treeEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No TreeEntry exists with the primary key ";
@@ -1146,4 +1145,4 @@ public class TreeEntryPersistenceImpl
 		TreeEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1596317844
+// LIFERAY-SERVICE-BUILDER-HASH:1730225056

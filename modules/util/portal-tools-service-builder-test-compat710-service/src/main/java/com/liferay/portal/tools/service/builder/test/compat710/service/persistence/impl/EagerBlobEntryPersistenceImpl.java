@@ -211,7 +211,7 @@ public class EagerBlobEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(EagerBlobEntryModelImpl.ORDER_BY_JPQL);
@@ -448,7 +448,7 @@ public class EagerBlobEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -474,7 +474,7 @@ public class EagerBlobEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1568,7 +1568,7 @@ public class EagerBlobEntryPersistenceImpl
 				sb.append(_SQL_SELECT_EAGERBLOBENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1636,7 +1636,8 @@ public class EagerBlobEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_EAGERBLOBENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(eagerBlobEntry) FROM EagerBlobEntry eagerBlobEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1745,6 +1746,9 @@ public class EagerBlobEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		EagerBlobEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_EAGERBLOBENTRY =
 		"SELECT eagerBlobEntry FROM EagerBlobEntry eagerBlobEntry";
 
@@ -1754,13 +1758,8 @@ public class EagerBlobEntryPersistenceImpl
 	private static final String _SQL_SELECT_EAGERBLOBENTRY_WHERE =
 		"SELECT eagerBlobEntry FROM EagerBlobEntry eagerBlobEntry WHERE ";
 
-	private static final String _SQL_COUNT_EAGERBLOBENTRY =
-		"SELECT COUNT(eagerBlobEntry) FROM EagerBlobEntry eagerBlobEntry";
-
 	private static final String _SQL_COUNT_EAGERBLOBENTRY_WHERE =
 		"SELECT COUNT(eagerBlobEntry) FROM EagerBlobEntry eagerBlobEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "eagerBlobEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No EagerBlobEntry exists with the primary key ";
@@ -1775,4 +1774,4 @@ public class EagerBlobEntryPersistenceImpl
 		new String[] {"uuid", "blob"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-73458327
+// LIFERAY-SERVICE-BUILDER-HASH:2105367485

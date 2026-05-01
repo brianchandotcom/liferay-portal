@@ -514,7 +514,7 @@ public class TrashEntryPersistenceImpl
 				sb.append(_SQL_SELECT_TRASHENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -582,7 +582,8 @@ public class TrashEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_TRASHENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(trashEntry) FROM TrashEntry trashEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -666,13 +667,11 @@ public class TrashEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		TrashEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_TRASHENTRY =
 		"SELECT trashEntry FROM TrashEntry trashEntry";
-
-	private static final String _SQL_COUNT_TRASHENTRY =
-		"SELECT COUNT(trashEntry) FROM TrashEntry trashEntry";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "trashEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No TrashEntry exists with the primary key ";
@@ -681,4 +680,4 @@ public class TrashEntryPersistenceImpl
 		TrashEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-113808997
+// LIFERAY-SERVICE-BUILDER-HASH:1352645223

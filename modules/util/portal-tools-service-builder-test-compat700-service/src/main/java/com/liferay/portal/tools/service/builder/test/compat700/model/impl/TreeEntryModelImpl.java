@@ -78,6 +78,8 @@ public class TreeEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TreeEntry";
 
+	public static final String ENTITY_ALIAS = "treeEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY treeEntry.treeEntryId ASC";
 
@@ -653,4 +655,4 @@ public class TreeEntryModelImpl
 	private TreeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-988762416
+// LIFERAY-SERVICE-BUILDER-HASH:-776145783

@@ -84,6 +84,8 @@ public class ArrayableEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ArrayableEntry";
 
+	public static final String ENTITY_ALIAS = "arrayableEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY arrayableEntry.integer ASC, arrayableEntry.type ASC";
 
@@ -789,4 +791,4 @@ public class ArrayableEntryModelImpl
 	private ArrayableEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1810259090
+// LIFERAY-SERVICE-BUILDER-HASH:710687490

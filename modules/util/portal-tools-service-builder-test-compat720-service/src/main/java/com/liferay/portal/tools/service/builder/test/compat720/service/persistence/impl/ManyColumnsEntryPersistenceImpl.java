@@ -471,7 +471,7 @@ public class ManyColumnsEntryPersistenceImpl
 				sb.append(_SQL_SELECT_MANYCOLUMNSENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -539,7 +539,8 @@ public class ManyColumnsEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_MANYCOLUMNSENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(manyColumnsEntry) FROM ManyColumnsEntry manyColumnsEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -625,13 +626,11 @@ public class ManyColumnsEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		ManyColumnsEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_MANYCOLUMNSENTRY =
 		"SELECT manyColumnsEntry FROM ManyColumnsEntry manyColumnsEntry";
-
-	private static final String _SQL_COUNT_MANYCOLUMNSENTRY =
-		"SELECT COUNT(manyColumnsEntry) FROM ManyColumnsEntry manyColumnsEntry";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "manyColumnsEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No ManyColumnsEntry exists with the primary key ";
@@ -640,4 +639,4 @@ public class ManyColumnsEntryPersistenceImpl
 		ManyColumnsEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1588702847
+// LIFERAY-SERVICE-BUILDER-HASH:2133030153

@@ -75,6 +75,8 @@ public class MappingEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MappingEntry";
 
+	public static final String ENTITY_ALIAS = "mappingEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mappingEntry.mappingEntryId ASC";
 
@@ -606,4 +608,4 @@ public class MappingEntryModelImpl
 	private MappingEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2051982405
+// LIFERAY-SERVICE-BUILDER-HASH:-784998612

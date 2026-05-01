@@ -474,7 +474,7 @@ public class LocalizedEntryPersistenceImpl
 				sb.append(_SQL_SELECT_LOCALIZEDENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -542,7 +542,8 @@ public class LocalizedEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_LOCALIZEDENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(localizedEntry) FROM LocalizedEntry localizedEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -631,13 +632,11 @@ public class LocalizedEntryPersistenceImpl
 	protected LocalizedEntryLocalizationPersistence
 		localizedEntryLocalizationPersistence;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		LocalizedEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_LOCALIZEDENTRY =
 		"SELECT localizedEntry FROM LocalizedEntry localizedEntry";
-
-	private static final String _SQL_COUNT_LOCALIZEDENTRY =
-		"SELECT COUNT(localizedEntry) FROM LocalizedEntry localizedEntry";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "localizedEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No LocalizedEntry exists with the primary key ";
@@ -646,4 +645,4 @@ public class LocalizedEntryPersistenceImpl
 		LocalizedEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:304425223
+// LIFERAY-SERVICE-BUILDER-HASH:-560525365

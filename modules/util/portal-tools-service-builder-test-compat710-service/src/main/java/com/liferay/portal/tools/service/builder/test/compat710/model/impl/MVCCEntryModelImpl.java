@@ -76,6 +76,8 @@ public class MVCCEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MVCCEntry";
 
+	public static final String ENTITY_ALIAS = "mvccEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mvccEntry.mvccEntryId ASC";
 
@@ -637,4 +639,4 @@ public class MVCCEntryModelImpl
 	private MVCCEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-837025899
+// LIFERAY-SERVICE-BUILDER-HASH:893624699

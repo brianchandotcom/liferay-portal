@@ -39,7 +39,6 @@ const TableHeader = ({
 				<div className="d-flex justify-content-between">
 					<div className="d-flex">
 						<SearchBar
-							clearSearchTerm={() => onSearchChange('')}
 							isBusinessEvent={true}
 							onSearchSubmit={(term: string) => {
 								onSearchChange(term);

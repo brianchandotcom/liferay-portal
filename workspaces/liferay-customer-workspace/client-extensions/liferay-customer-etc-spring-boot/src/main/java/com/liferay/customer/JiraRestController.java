@@ -50,7 +50,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class JiraRestController extends BaseRestController {
 
 	@DeleteMapping("/accounts/{externalReferenceCode}/business-events/{id}")
-	public ResponseEntity<String> deleteBusinessEvent(
+	public ResponseEntity<String> deleteAccountsBusinessEvents(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@PathVariable("id") String id)
@@ -95,34 +95,8 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/accounts/{externalReferenceCode}/business-events/{id}")
-	public ResponseEntity<String> getBusinessEvent(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@PathVariable("id") String id)
-		throws Exception {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("GET business-event: " + id);
-		}
-
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
-
-			return new ResponseEntity<>(
-				_jiraService.getBusinessEvent(id), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	@GetMapping("/accounts/{externalReferenceCode}/business-events")
-	public ResponseEntity<String> getBusinessEvents(
+	public ResponseEntity<String> getAccountsBusinessEvents(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -147,10 +121,36 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
+	@GetMapping("/accounts/{externalReferenceCode}/business-events/{id}")
+	public ResponseEntity<String> getAccountsBusinessEvents(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@PathVariable("id") String id)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("GET business-event: " + id);
+		}
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return new ResponseEntity<>(
+				_jiraService.getBusinessEvent(id), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@GetMapping(
 		"/accounts/{externalReferenceCode}/business-events/{id}/versions"
 	)
-	public ResponseEntity<String> getBusinessEventVersions(
+	public ResponseEntity<String> getAccountsBusinessEventsVersions(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@PathVariable("id") String id)
@@ -162,6 +162,30 @@ public class JiraRestController extends BaseRestController {
 
 			return new ResponseEntity<>(
 				_jiraService.getBusinessEventVersions(id), HttpStatus.OK);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			return new ResponseEntity(
+				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/accounts/{externalReferenceCode}/tickets")
+	public ResponseEntity<String> getAccountsTickets(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("externalReferenceCode") String externalReferenceCode,
+			@RequestParam(defaultValue = "", required = false) String[]
+				ticketIds)
+		throws Exception {
+
+		try {
+			_businessEventPermission.check(
+				jwt, externalReferenceCode, ActionKeys.VIEW);
+
+			return new ResponseEntity<>(
+				_jiraService.getJSMTickets(externalReferenceCode, ticketIds),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -291,32 +315,8 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/accounts/{externalReferenceCode}/tickets")
-	public ResponseEntity<String> getTickets(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@RequestParam(defaultValue = "", required = false) String[]
-				ticketIds)
-		throws Exception {
-
-		try {
-			_businessEventPermission.check(
-				jwt, externalReferenceCode, ActionKeys.VIEW);
-
-			return new ResponseEntity<>(
-				_jiraService.getJSMTickets(externalReferenceCode, ticketIds),
-				HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
 	@PostMapping("/accounts/{externalReferenceCode}/business-events")
-	public ResponseEntity<String> postBusinessEvent(
+	public ResponseEntity<String> postAccountsBusinessEvents(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@RequestBody String json)
@@ -343,7 +343,7 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	@PutMapping("/accounts/{externalReferenceCode}/business-events/{id}")
-	public ResponseEntity<String> putBusinessEvent(
+	public ResponseEntity<String> putAccountsBusinessEvents(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@PathVariable("id") String id, @RequestBody String json)

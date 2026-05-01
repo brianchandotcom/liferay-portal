@@ -293,6 +293,20 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		return group;
 	}
 
+	@Override
+	public Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Group group = groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.VIEW);
+
+		return group;
+	}
+
 	/**
 	 * Returns the group's display URL.
 	 *

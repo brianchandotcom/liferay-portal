@@ -131,7 +131,9 @@ Use a direct, to-the-point style. Avoid being verbose. Present the proposed titl
 
 When pr-check ran and passed, apply the `pr-check - success` label to the newly created PR. The color matches the team's existing CI success labels (for example, `ci:test:sf - success`).
 
-Ensure the label exists in the target repository (idempotent — the create call fails harmlessly when the label is already present):
+**Cross-fork tolerance.** When the target repository is not `<github-username>/liferay-portal` — the PR lands on a teammate's fork or upstream where the developer lacks write access — both the label create (HTTP 404) and the label apply (HTTP 403) calls will fail. Skip the label step entirely in that case and surface a one-line note in the summary: the pr-check status is still posted on `<github-username>/liferay-portal` at the head SHA, so reviewers who want to see it can navigate to the commit on the source fork. The PR check rollup on the target repo will not show pr-check, since GitHub statuses are scoped per-repository and only repo collaborators can post them — this is a known limitation of cross-fork PRs, not a skill bug.
+
+When the target repository **is** `<github-username>/liferay-portal`, ensure the label exists (idempotent — the create call fails harmlessly when the label is already present):
 
 ```bash
 gh label create "pr-check - success" \

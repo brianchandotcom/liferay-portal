@@ -72,10 +72,10 @@ definition {
 		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
 
 		AssertElementPresent(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
+			locator1 = "DigitalSignatureConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
 			siteSettingsStrategy = ${siteSettingsStrategy});
 
-		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+		AssertElementPresent(locator1 = "DigitalSignatureConfiguration#CHECK_INPUT_ENABLED");
 
 		AssertElementPresent(
 			digitalSignatureApiUsername = ${digitalSignatureApiUsername},
@@ -288,7 +288,7 @@ definition {
 	macro enableDigitalSignature(siteStrategy = null, environment = null) {
 		if (isSet(siteStrategy)) {
 			Select(
-				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+				locator1 = "DigitalSignatureConfiguration#SITE_SETTINGS_STRATEGY",
 				value1 = ${siteStrategy});
 		}
 
@@ -382,7 +382,7 @@ definition {
 	@summary = "Default summary"
 	macro selectSiteStrategy(siteStrategy = null) {
 		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			locator1 = "DigitalSignatureConfiguration#SITE_SETTINGS_STRATEGY",
 			value1 = ${siteStrategy});
 	}
 

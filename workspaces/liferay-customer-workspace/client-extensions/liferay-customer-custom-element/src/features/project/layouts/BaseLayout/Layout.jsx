@@ -25,8 +25,6 @@ const Layout = () => {
 		useAppContext();
 
 	const [hasSideMenu, setHasSideMenu] = useState(true);
-	const [setShowBanner] = useState(true);
-
 	const [dismissedBanners, setDismissedBanners] = useState(() => {
 		const stored = sessionStorage.getItem(
 			'@liferayCP:dismissedOverdueBanners'
@@ -66,14 +64,6 @@ const Layout = () => {
 		});
 	};
 
-	useEffect(() => {
-		const bannerState = !sessionStorage.getItem(
-			'@liferayCP:showSaaSProjectBanner'
-		);
-
-		setShowBanner(bannerState);
-	}, []);
-
 	if (userProjectAccess) {
 		if (
 			userProjectAccess.denyAccess ||
@@ -104,7 +94,7 @@ const Layout = () => {
 									[
 										getDateCustomFormat(
 											FORMAT_DATE_TYPES.day2DMonthSYearN,
-											businessEvent.targetGoLiveDateTime
+											businessEvent.plannedEventDate
 										),
 										`<a href="${Liferay.currentURL}#/${accountKey}/business-events/${businessEvent.id}?openModal=goLiveEvent">`,
 										'</a>',

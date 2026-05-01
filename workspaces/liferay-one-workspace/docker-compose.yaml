@@ -49,5 +49,33 @@ services:
             -   11311:11311
         volumes:
             -   liferay_data:/opt/liferay/data
+            -   routes_dxp:/opt/liferay/routes/default/dxp
+            -   routes_spring_boot:/opt/liferay/routes/default/liferay-one-etc-spring-boot
+    mail:
+        container_name: liferay-one-workspace-mail
+        image: maildev/maildev
+        ports:
+            -   1025:1025
+            -   1080:1080
+        profiles:
+            -   extensions
+        restart: always
+    spring_boot:
+        build: ../client-extensions/liferay-one-etc-spring-boot/build/liferay-client-extension-build
+        container_name: liferay-one-workspace-spring-boot
+        environment:
+            LIFERAY_ROUTES_CLIENT_EXTENSION: /etc/liferay/lxc/ext-init-metadata
+            LIFERAY_ROUTES_DXP: /etc/liferay/lxc/dxp-metadata
+            SERVER_PORT: 58081
+        ports:
+            -   58081:58081
+        profiles:
+            -   extensions
+        user: root
+        volumes:
+            -   routes_dxp:/etc/liferay/lxc/dxp-metadata
+            -   routes_spring_boot:/etc/liferay/lxc/ext-init-metadata
 volumes:
     liferay_data:
+    routes_dxp:
+    routes_spring_boot:

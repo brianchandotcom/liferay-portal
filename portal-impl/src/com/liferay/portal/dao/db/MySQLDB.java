@@ -158,22 +158,22 @@ public class MySQLDB extends BaseDB {
 		List<QueryInfo> lockedQueryInfos = new ArrayList<>();
 
 		String sql = StringBundler.concat(
-			"select information_schema.processlist.id as id, ",
+			"select information_schema.processlist.time as duration, ",
+			"information_schema.processlist.id as id, ",
+			"information_schema.processlist.info as query, ",
 			"information_schema.processlist.db as schema_, ",
-			"information_schema.processlist.time as duration, coalesce(",
-			"information_schema.innodb_trx.trx_state, ",
-			"information_schema.processlist.state) as state, ",
-			"information_schema.processlist.info as query from ",
+			"coalesce(information_schema.innodb_trx.trx_state, ",
+			"information_schema.processlist.state) as state from ",
 			"information_schema.processlist left join ",
 			"information_schema.innodb_trx on ",
 			"information_schema.processlist.id = ",
 			"information_schema.innodb_trx.trx_mysql_thread_id where ",
 			"information_schema.processlist.command != 'Sleep' and ",
+			"information_schema.processlist.id != connection_id() and ",
 			"information_schema.processlist.info is not null and ",
-			"information_schema.processlist.id != connection_id() and ((",
+			"information_schema.processlist.time >= ? and (",
 			"information_schema.innodb_trx.trx_state = 'LOCK WAIT' or ",
-			"information_schema.processlist.state like '%lock%') and ",
-			"information_schema.processlist.time >= ?)");
+			"information_schema.processlist.state like '%lock%')");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {

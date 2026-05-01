@@ -48,79 +48,6 @@ spec:
                         {{- $backupRegion := $backupSpec.region | default $baseRegion -}}
 
                         {{- if $backupSpec.enabled }}
-                        ---
-                        apiVersion: s3.aws.m.upbound.io/v1beta1
-                        kind: Bucket
-                        metadata:
-                            annotations:
-                                crossplane.io/external-name: {{ $baseName }}-argo-wf
-                                gotemplating.fn.crossplane.io/composition-resource-name: argo-wf
-                            labels:
-                                app: liferay
-                                component: argo-wf
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
-                            name: {{ $baseName }}-argo-wf
-                        spec:
-                            forProvider:
-                                forceDestroy: {{ $forceDestroy }}
-                                region: {{ $backupRegion }}
-                            managementPolicies: {{ $managementPolicies }}
-                        ---
-                        apiVersion: s3.aws.m.upbound.io/v1beta1
-                        kind: BucketLifecycleConfiguration
-                        metadata:
-                            annotations:
-                                crossplane.io/external-name: {{ $baseName }}-argo-wf-lifecycle
-                                gotemplating.fn.crossplane.io/composition-resource-name: argo-wf-lifecycle
-                            labels:
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
-                            name: {{ $baseName }}-argo-wf
-                        spec:
-                            forProvider:
-                                bucketSelector:
-                                    matchLabels:
-                                        app: liferay
-                                        component: argo-wf
-                                        environmentId: {{ $environmentId }}
-                                        projectId: {{ $projectId }}
-                                region: {{ $backupRegion }}
-                                rule:
-                                    -   abortIncompleteMultipartUpload:
-                                            -   daysAfterInitiation: 7
-                                        expiration:
-                                            -   expiredObjectDeleteMarker: true
-                                        id: bucket-scoped-rule
-                                        noncurrentVersionExpiration:
-                                            -   noncurrentDays: 7
-                                        status: Enabled
-                            managementPolicies: {{ $managementPolicies }}
-                        ---
-                        apiVersion: s3.aws.m.upbound.io/v1beta1
-                        kind: BucketVersioning
-                        metadata:
-                            annotations:
-                                crossplane.io/external-name: {{ $baseName }}-argo-wf-versioning
-                                gotemplating.fn.crossplane.io/composition-resource-name: argo-wf-versioning
-                            labels:
-                                app: liferay
-                                component: argo-wf
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
-                            name: {{ $baseName }}-argo-wf-versioning
-                        spec:
-                            forProvider:
-                                bucketSelector:
-                                    matchLabels:
-                                        app: liferay
-                                        component: argo-wf
-                                        environmentId: {{ $environmentId }}
-                                        projectId: {{ $projectId }}
-                                region: {{ $backupRegion }}
-                                versioningConfiguration:
-                                    status: Enabled
-                            managementPolicies: {{ $managementPolicies }}
                         {{- if $cmkEnabled }}
                         ---
                         apiVersion: kms.aws.m.upbound.io/v1beta1
@@ -193,40 +120,6 @@ spec:
                                 region: {{ $backupRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
-                        ---
-                        apiVersion: kubernetes.m.crossplane.io/v1alpha1
-                        kind: Object
-                        metadata:
-                            annotations:
-                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-artifact-repository
-                            labels:
-                                app: liferay
-                                component: argo-wf
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
-                            name: {{ $baseName }}-backup-restore-artifact-repository
-                            namespace: {{ $namespace }}
-                        spec:
-                            forProvider:
-                                manifest:
-                                    apiVersion: v1
-                                    kind: ConfigMap
-                                    metadata:
-                                        annotations:
-                                            workflows.argoproj.io/default-artifact-repository: artifact-repository
-                                        labels:
-                                            app: liferay
-                                            component: argo-wf
-                                            environmentId: {{ $environmentId }}
-                                            projectId: {{ $projectId }}
-                                        name: backup-restore-artifact-repository
-                                        namespace: {{ $namespace }}
-                                    data:
-                                        artifact-repository: |
-                                            s3:
-                                                bucket: {{ $baseName }}-argo-wf
-                                                endpoint: s3.amazonaws.com
-                            managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -359,19 +252,6 @@ spec:
                                 policy: |
                                     {
                                         "Statement": [
-                                            {
-                                                "Action": [
-                                                    "s3:DeleteObject",
-                                                    "s3:GetObject",
-                                                    "s3:ListBucket",
-                                                    "s3:PutObject"
-                                                ],
-                                                "Effect": "Allow",
-                                                "Resource": [
-                                                    "arn:aws:s3:::{{ $baseName }}-argo-wf",
-                                                    "arn:aws:s3:::{{ $baseName }}-argo-wf/*"
-                                                ]
-                                            },
                                             {
                                                 "Action": [
                                                     "s3:DeleteObject",

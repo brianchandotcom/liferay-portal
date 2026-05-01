@@ -538,6 +538,29 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		return queuedBuildURLs;
 	}
 
+	public QueueItem getQueueItem(long queueId) {
+		try {
+			JSONObject queueItemJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						getURL(), "/queue/item/", String.valueOf(queueId),
+						"/api/json?tree=actions[parameters[name,value]],",
+						"id,inQueueSince,task[name,url],url,why"),
+					false, 5000);
+
+			if ((queueItemJSONObject == null) ||
+				!queueItemJSONObject.has("id")) {
+
+				return null;
+			}
+
+			return new QueueItem(this, queueItemJSONObject);
+		}
+		catch (IOException ioException) {
+			return null;
+		}
+	}
+
 	public List<JSONObject> getQueueItemJSONObjects() {
 		List<JSONObject> queueItemJSONObjects = new ArrayList<>();
 

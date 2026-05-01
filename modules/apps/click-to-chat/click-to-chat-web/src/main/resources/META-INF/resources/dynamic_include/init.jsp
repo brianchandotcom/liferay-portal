@@ -8,7 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String clickToChatAIHubServiceURL = (String)request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_AIHUB_SERVICE_URL);
 String clickToChatChatProviderAccountId = (String)request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ACCOUNT_ID);
 String clickToChatChatProviderId = (String)request.getAttribute(ClickToChatWebKeys.CLICK_TO_CHAT_CHAT_PROVIDER_ID);
 %>

@@ -47,7 +47,7 @@ public class CETConfigurationUpgradeProcessTest {
 	public void tearDown() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("delete from Configuration_ where " + _pidsInClause());
+		db.runSQL("delete from Configuration_ where " + _PIDS_IN_CLAUSE);
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class CETConfigurationUpgradeProcessTest {
 
 			ResultSet resultSet = statement.executeQuery(
 				"select configurationId from Configuration_ where " +
-					_pidsInClause())) {
+					_PIDS_IN_CLAUSE)) {
 
 			Set<String> survivingPids = new HashSet<>();
 
@@ -96,14 +96,14 @@ public class CETConfigurationUpgradeProcessTest {
 		}
 	}
 
-	private String _pidsInClause() {
-		return StringBundler.concat(
-			"configurationId in ('", _STALE_CET_PID_1, "', '", _STALE_CET_PID_2,
-			"', '", _UNRELATED_PID, "')");
-	}
-
 	private static final String _CET_CONFIGURATION_PID_PREFIX =
 		"com.liferay.client.extension.type.configuration.CETConfiguration~";
+
+	private static final String _PIDS_IN_CLAUSE = StringBundler.concat(
+		"configurationId in ('",
+		CETConfigurationUpgradeProcessTest._STALE_CET_PID_1, "', '",
+		CETConfigurationUpgradeProcessTest._STALE_CET_PID_2, "', '",
+		CETConfigurationUpgradeProcessTest._UNRELATED_PID, "')");
 
 	private static final String _STALE_CET_PID_1 =
 		_CET_CONFIGURATION_PID_PREFIX + "upgrade-test-cet-1/liferay.com";

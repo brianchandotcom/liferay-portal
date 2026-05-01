@@ -299,85 +299,6 @@ public class OrgLaborUtil {
 		return getPersistence().fetchByPrimaryKey(orgLaborId);
 	}
 
-	/**
-	 * Returns all the org labors.
-	 *
-	 * @return the org labors
-	 */
-	public static List<OrgLabor> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the org labors.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrgLaborModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of org labors
-	 * @param end the upper bound of the range of org labors (not inclusive)
-	 * @return the range of org labors
-	 */
-	public static List<OrgLabor> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the org labors.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrgLaborModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of org labors
-	 * @param end the upper bound of the range of org labors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of org labors
-	 */
-	public static List<OrgLabor> findAll(
-		int start, int end, OrderByComparator<OrgLabor> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the org labors.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrgLaborModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of org labors
-	 * @param end the upper bound of the range of org labors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of org labors
-	 */
-	public static List<OrgLabor> findAll(
-		int start, int end, OrderByComparator<OrgLabor> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the org labors from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of org labors.
-	 *
-	 * @return the number of org labors
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static OrgLaborPersistence getPersistence() {
 		return _persistence;
 	}
@@ -389,4 +310,4 @@ public class OrgLaborUtil {
 	private static volatile OrgLaborPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1722982911
+// LIFERAY-SERVICE-BUILDER-HASH:1116329315

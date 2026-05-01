@@ -83,6 +83,8 @@ public class PluginSettingModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table PluginSetting";
 
+	public static final String ENTITY_ALIAS = "pluginSetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY pluginSetting.pluginSettingId ASC";
 
@@ -796,4 +798,4 @@ public class PluginSettingModelImpl
 	private PluginSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1451563216
+// LIFERAY-SERVICE-BUILDER-HASH:885284242

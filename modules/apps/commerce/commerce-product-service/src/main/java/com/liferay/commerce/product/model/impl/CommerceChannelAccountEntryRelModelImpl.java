@@ -103,6 +103,8 @@ public class CommerceChannelAccountEntryRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CChannelAccountEntryRel";
 
+	public static final String ENTITY_ALIAS = "commerceChannelAccountEntryRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceChannelAccountEntryRel.priority DESC";
 
@@ -1178,4 +1180,4 @@ public class CommerceChannelAccountEntryRelModelImpl
 	private CommerceChannelAccountEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1124437964
+// LIFERAY-SERVICE-BUILDER-HASH:158298565

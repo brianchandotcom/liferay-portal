@@ -106,6 +106,8 @@ public class DEDataListViewModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DEDataListView";
 
+	public static final String ENTITY_ALIAS = "deDataListView";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY deDataListView.deDataListViewId ASC";
 
@@ -1275,4 +1277,4 @@ public class DEDataListViewModelImpl
 	private DEDataListView _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1935361019
+// LIFERAY-SERVICE-BUILDER-HASH:-1291355222

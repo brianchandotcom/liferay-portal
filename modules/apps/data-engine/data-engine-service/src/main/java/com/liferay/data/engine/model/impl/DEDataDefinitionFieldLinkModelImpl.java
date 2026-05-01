@@ -95,6 +95,8 @@ public class DEDataDefinitionFieldLinkModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DEDataDefinitionFieldLink";
 
+	public static final String ENTITY_ALIAS = "deDataDefinitionFieldLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY deDataDefinitionFieldLink.deDataDefinitionFieldLinkId ASC";
 
@@ -1101,4 +1103,4 @@ public class DEDataDefinitionFieldLinkModelImpl
 	private DEDataDefinitionFieldLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-765758248
+// LIFERAY-SERVICE-BUILDER-HASH:-1813412565

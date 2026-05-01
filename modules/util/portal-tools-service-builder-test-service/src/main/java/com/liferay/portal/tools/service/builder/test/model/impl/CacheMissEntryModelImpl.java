@@ -75,6 +75,8 @@ public class CacheMissEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CacheMissEntry";
 
+	public static final String ENTITY_ALIAS = "cacheMissEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cacheMissEntry.cacheMissEntryId ASC";
 
@@ -576,4 +578,4 @@ public class CacheMissEntryModelImpl
 	private CacheMissEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1103149221
+// LIFERAY-SERVICE-BUILDER-HASH:1946652166

@@ -85,6 +85,8 @@ public class AssetVocabularyGroupRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetVocabularyGroupRel";
 
+	public static final String ENTITY_ALIAS = "assetVocabularyGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetVocabularyGroupRel.assetVocabularyGroupRelId ASC";
 
@@ -807,4 +809,4 @@ public class AssetVocabularyGroupRelModelImpl
 	private AssetVocabularyGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1572002339
+// LIFERAY-SERVICE-BUILDER-HASH:-1462775680

@@ -95,6 +95,8 @@ public class ObjectViewFilterColumnModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectViewFilterColumn";
 
+	public static final String ENTITY_ALIAS = "objectViewFilterColumn";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectViewFilterColumn.objectViewFilterColumnId ASC";
 
@@ -1037,4 +1039,4 @@ public class ObjectViewFilterColumnModelImpl
 	private ObjectViewFilterColumn _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2083471794
+// LIFERAY-SERVICE-BUILDER-HASH:-331388845

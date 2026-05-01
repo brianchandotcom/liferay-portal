@@ -97,6 +97,8 @@ public class CommerceDiscountRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountRel";
 
+	public static final String ENTITY_ALIAS = "commerceDiscountRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceDiscountRel.createDate DESC";
 
@@ -973,4 +975,4 @@ public class CommerceDiscountRelModelImpl
 	private CommerceDiscountRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:766470497
+// LIFERAY-SERVICE-BUILDER-HASH:842298437

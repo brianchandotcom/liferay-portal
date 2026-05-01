@@ -92,6 +92,8 @@ public class CPDefinitionLocalizationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionLocalization";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionLocalization.cpDefinitionLocalizationId ASC";
 
@@ -1002,4 +1004,4 @@ public class CPDefinitionLocalizationModelImpl
 	private CPDefinitionLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1264345319
+// LIFERAY-SERVICE-BUILDER-HASH:1937548001

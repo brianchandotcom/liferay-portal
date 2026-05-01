@@ -96,6 +96,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Team";
 
+	public static final String ENTITY_ALIAS = "team";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY team.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Team.name ASC";
@@ -1040,4 +1042,4 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private Team _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-796867474
+// LIFERAY-SERVICE-BUILDER-HASH:1427058532

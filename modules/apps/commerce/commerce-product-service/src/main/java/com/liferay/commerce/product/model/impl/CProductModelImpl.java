@@ -97,6 +97,8 @@ public class CProductModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CProduct";
 
+	public static final String ENTITY_ALIAS = "cProduct";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cProduct.createDate DESC";
 
@@ -1007,4 +1009,4 @@ public class CProductModelImpl
 	private CProduct _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:619431341
+// LIFERAY-SERVICE-BUILDER-HASH:636427558

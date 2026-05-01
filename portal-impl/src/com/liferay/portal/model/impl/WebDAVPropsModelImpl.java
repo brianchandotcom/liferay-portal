@@ -84,6 +84,8 @@ public class WebDAVPropsModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table WebDAVProps";
 
+	public static final String ENTITY_ALIAS = "webDAVProps";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY webDAVProps.webDavPropsId ASC";
 
@@ -801,4 +803,4 @@ public class WebDAVPropsModelImpl
 	private WebDAVProps _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1816401472
+// LIFERAY-SERVICE-BUILDER-HASH:1667525726

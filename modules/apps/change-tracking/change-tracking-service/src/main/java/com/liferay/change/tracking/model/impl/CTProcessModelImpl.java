@@ -88,6 +88,8 @@ public class CTProcessModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTProcess";
 
+	public static final String ENTITY_ALIAS = "ctProcess";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctProcess.createDate DESC";
 
@@ -799,4 +801,4 @@ public class CTProcessModelImpl
 	private CTProcess _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1312254725
+// LIFERAY-SERVICE-BUILDER-HASH:-1205316516

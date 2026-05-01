@@ -92,6 +92,8 @@ public class DLOpenerFileEntryReferenceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DLOpenerFileEntryReference";
 
+	public static final String ENTITY_ALIAS = "dlOpenerFileEntryReference";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlOpenerFileEntryReference.dlOpenerFileEntryReferenceId ASC";
 
@@ -956,4 +958,4 @@ public class DLOpenerFileEntryReferenceModelImpl
 	private DLOpenerFileEntryReference _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-10829936
+// LIFERAY-SERVICE-BUILDER-HASH:1503720111

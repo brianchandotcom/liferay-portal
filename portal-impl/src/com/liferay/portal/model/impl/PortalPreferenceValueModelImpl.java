@@ -86,6 +86,8 @@ public class PortalPreferenceValueModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table PortalPreferenceValue";
 
+	public static final String ENTITY_ALIAS = "portalPreferenceValue";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY portalPreferenceValue.index ASC";
 
@@ -908,4 +910,4 @@ public class PortalPreferenceValueModelImpl
 	private PortalPreferenceValue _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1944238967
+// LIFERAY-SERVICE-BUILDER-HASH:-56318302

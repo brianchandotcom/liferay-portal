@@ -95,6 +95,8 @@ public class SegmentsEntryRelModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntryRel";
 
+	public static final String ENTITY_ALIAS = "segmentsEntryRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY segmentsEntryRel.segmentsEntryRelId ASC";
 
@@ -993,4 +995,4 @@ public class SegmentsEntryRelModelImpl
 	private SegmentsEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1770561150
+// LIFERAY-SERVICE-BUILDER-HASH:2078084466

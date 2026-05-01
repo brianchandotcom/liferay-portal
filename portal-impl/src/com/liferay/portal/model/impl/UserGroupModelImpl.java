@@ -98,6 +98,8 @@ public class UserGroupModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 
+	public static final String ENTITY_ALIAS = "userGroup";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroup.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroup.name ASC";
@@ -1162,4 +1164,4 @@ public class UserGroupModelImpl
 	private UserGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1128774792
+// LIFERAY-SERVICE-BUILDER-HASH:-305291597

@@ -100,6 +100,8 @@ public class MBSuspiciousActivityModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table MBSuspiciousActivity";
 
+	public static final String ENTITY_ALIAS = "mbSuspiciousActivity";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbSuspiciousActivity.suspiciousActivityId ASC";
 
@@ -1149,4 +1151,4 @@ public class MBSuspiciousActivityModelImpl
 	private MBSuspiciousActivity _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1934836908
+// LIFERAY-SERVICE-BUILDER-HASH:69665790

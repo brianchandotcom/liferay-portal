@@ -114,6 +114,8 @@ public class WorkflowMetricsSLADefinitionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table WMSLADefinition";
 
+	public static final String ENTITY_ALIAS = "workflowMetricsSLADefinition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY workflowMetricsSLADefinition.modifiedDate DESC";
 
@@ -1690,4 +1692,4 @@ public class WorkflowMetricsSLADefinitionModelImpl
 	private WorkflowMetricsSLADefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:951332101
+// LIFERAY-SERVICE-BUILDER-HASH:-106784023

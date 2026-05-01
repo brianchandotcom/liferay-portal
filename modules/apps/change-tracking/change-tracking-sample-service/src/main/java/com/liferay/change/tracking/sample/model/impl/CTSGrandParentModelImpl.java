@@ -78,6 +78,8 @@ public class CTSGrandParentModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTSGrandParent";
 
+	public static final String ENTITY_ALIAS = "ctsGrandParent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctsGrandParent.ctsGrandParentId ASC";
 
@@ -655,4 +657,4 @@ public class CTSGrandParentModelImpl
 	private CTSGrandParent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1589771992
+// LIFERAY-SERVICE-BUILDER-HASH:-1867164089

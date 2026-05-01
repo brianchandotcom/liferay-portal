@@ -108,6 +108,8 @@ public class KBFolderModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KBFolder";
 
+	public static final String ENTITY_ALIAS = "kbFolder";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kbFolder.kbFolderId ASC";
 
@@ -1481,4 +1483,4 @@ public class KBFolderModelImpl
 	private KBFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1059063148
+// LIFERAY-SERVICE-BUILDER-HASH:-1797624922

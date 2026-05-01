@@ -92,6 +92,8 @@ public class CookiesConsentPreferenceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CookiesConsentPreference";
 
+	public static final String ENTITY_ALIAS = "cookiesConsentPreference";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cookiesConsentPreference.cookiesConsentPreferenceId ASC";
 
@@ -909,4 +911,4 @@ public class CookiesConsentPreferenceModelImpl
 	private CookiesConsentPreference _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-286211269
+// LIFERAY-SERVICE-BUILDER-HASH:79080686

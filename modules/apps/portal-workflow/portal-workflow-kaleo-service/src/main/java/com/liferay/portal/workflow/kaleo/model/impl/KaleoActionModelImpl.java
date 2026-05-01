@@ -108,6 +108,8 @@ public class KaleoActionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoAction";
 
+	public static final String ENTITY_ALIAS = "kaleoAction";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoAction.priority ASC";
 
@@ -1402,4 +1404,4 @@ public class KaleoActionModelImpl
 	private KaleoAction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1678320199
+// LIFERAY-SERVICE-BUILDER-HASH:-24695756

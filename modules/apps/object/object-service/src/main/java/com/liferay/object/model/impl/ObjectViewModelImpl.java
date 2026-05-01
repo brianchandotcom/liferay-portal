@@ -101,6 +101,8 @@ public class ObjectViewModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectView";
 
+	public static final String ENTITY_ALIAS = "objectView";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectView.objectViewId ASC";
 
@@ -1124,4 +1126,4 @@ public class ObjectViewModelImpl
 	private ObjectView _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1207101957
+// LIFERAY-SERVICE-BUILDER-HASH:-1663928980

@@ -107,6 +107,8 @@ public class DDLRecordModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDLRecord";
 
+	public static final String ENTITY_ALIAS = "ddlRecord";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddlRecord.recordId ASC";
 
@@ -1338,4 +1340,4 @@ public class DDLRecordModelImpl
 	private DDLRecord _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1241582632
+// LIFERAY-SERVICE-BUILDER-HASH:2139636992

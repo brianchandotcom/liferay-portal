@@ -92,9 +92,6 @@ public class DLFileVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1568,7 +1565,7 @@ public class DLFileVersionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
@@ -1830,7 +1827,7 @@ public class DLFileVersionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
@@ -2558,7 +2555,7 @@ public class DLFileVersionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
@@ -2855,7 +2852,7 @@ public class DLFileVersionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileVersionModelImpl.ORDER_BY_JPQL);
@@ -3604,196 +3601,6 @@ public class DLFileVersionPersistenceImpl
 		return fetchByPrimaryKey((Serializable)fileVersionId);
 	}
 
-	/**
-	 * Returns all the document library file versions.
-	 *
-	 * @return the document library file versions
-	 */
-	@Override
-	public List<DLFileVersion> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the document library file versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file versions
-	 * @param end the upper bound of the range of document library file versions (not inclusive)
-	 * @return the range of document library file versions
-	 */
-	@Override
-	public List<DLFileVersion> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file versions
-	 * @param end the upper bound of the range of document library file versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of document library file versions
-	 */
-	@Override
-	public List<DLFileVersion> findAll(
-		int start, int end,
-		OrderByComparator<DLFileVersion> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file versions
-	 * @param end the upper bound of the range of document library file versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of document library file versions
-	 */
-	@Override
-	public List<DLFileVersion> findAll(
-		int start, int end, OrderByComparator<DLFileVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<DLFileVersion> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileVersion>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_DLFILEVERSION);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_DLFILEVERSION;
-
-					sql = sql.concat(DLFileVersionModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DLFileVersion>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the document library file versions from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (DLFileVersion dlFileVersion : findAll()) {
-			remove(dlFileVersion);
-		}
-	}
-
-	/**
-	 * Returns the number of document library file versions.
-	 *
-	 * @return the number of document library file versions
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileVersion.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_DLFILEVERSION);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -3912,18 +3719,6 @@ public class DLFileVersionPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3946,7 +3741,7 @@ public class DLFileVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
-			DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileVersion::getUuid));
@@ -3990,7 +3785,7 @@ public class DLFileVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEVERSION_WHERE,
 				_SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, DLFileVersion::getUuid),
@@ -4022,7 +3817,7 @@ public class DLFileVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFILEVERSION_WHERE,
 				_SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileVersion::getCompanyId));
@@ -4051,7 +3846,7 @@ public class DLFileVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByFileEntryId,
 				_finderPathCountByFileEntryId, _SQL_SELECT_DLFILEVERSION_WHERE,
 				_SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "fileEntryId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileVersion::getFileEntryId));
@@ -4080,7 +3875,7 @@ public class DLFileVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByMimeType,
 				_finderPathCountByMimeType, _SQL_SELECT_DLFILEVERSION_WHERE,
 				_SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "mimeType", FinderColumn.Type.STRING, "=",
 					true, true, DLFileVersion::getMimeType));
@@ -4108,7 +3903,7 @@ public class DLFileVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_SU,
 			_finderPathWithoutPaginationFindByC_SU, _finderPathCountByC_SU,
 			_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
-			DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileVersion.", "companyId", FinderColumn.Type.LONG, "=",
 				true, false, DLFileVersion::getCompanyId),
@@ -4135,7 +3930,7 @@ public class DLFileVersionPersistenceImpl
 				this, _finderPathWithPaginationFindByC_NotS, null,
 				_finderPathWithPaginationCountByC_NotS,
 				_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, false, DLFileVersion::getCompanyId),
@@ -4199,7 +3994,7 @@ public class DLFileVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByLtD_S, null,
 			_finderPathWithPaginationCountByLtD_S,
 			_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
-			DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileVersion.", "displayDate", FinderColumn.Type.DATE, "<",
 				true, false, DLFileVersion::getDisplayDate),
@@ -4236,7 +4031,7 @@ public class DLFileVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByG_F_S,
 			_finderPathWithoutPaginationFindByG_F_S, _finderPathCountByG_F_S,
 			_SQL_SELECT_DLFILEVERSION_WHERE, _SQL_COUNT_DLFILEVERSION_WHERE,
-			DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileVersion.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, DLFileVersion::getGroupId),
@@ -4312,7 +4107,7 @@ public class DLFileVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByG_F_T_V,
 				_finderPathCountByG_F_T_V, _SQL_SELECT_DLFILEVERSION_WHERE,
 				_SQL_COUNT_DLFILEVERSION_WHERE,
-				DLFileVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, DLFileVersion::getGroupId),
@@ -4343,19 +4138,17 @@ public class DLFileVersionPersistenceImpl
 		return date.getTime();
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		DLFileVersionModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_DLFILEVERSION =
 		"SELECT dlFileVersion FROM DLFileVersion dlFileVersion";
 
 	private static final String _SQL_SELECT_DLFILEVERSION_WHERE =
 		"SELECT dlFileVersion FROM DLFileVersion dlFileVersion WHERE ";
 
-	private static final String _SQL_COUNT_DLFILEVERSION =
-		"SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion";
-
 	private static final String _SQL_COUNT_DLFILEVERSION_WHERE =
 		"SELECT COUNT(dlFileVersion) FROM DLFileVersion dlFileVersion WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileVersion.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DLFileVersion exists with the key {";
@@ -4372,4 +4165,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-887034872
+// LIFERAY-SERVICE-BUILDER-HASH:-2052780591

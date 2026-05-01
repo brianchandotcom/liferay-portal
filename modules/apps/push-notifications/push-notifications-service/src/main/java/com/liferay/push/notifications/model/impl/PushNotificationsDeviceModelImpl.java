@@ -87,6 +87,8 @@ public class PushNotificationsDeviceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table PushNotificationsDevice";
 
+	public static final String ENTITY_ALIAS = "pushNotificationsDevice";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY pushNotificationsDevice.pushNotificationsDeviceId ASC";
 
@@ -776,4 +778,4 @@ public class PushNotificationsDeviceModelImpl
 	private PushNotificationsDevice _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1198637777
+// LIFERAY-SERVICE-BUILDER-HASH:-2144049340

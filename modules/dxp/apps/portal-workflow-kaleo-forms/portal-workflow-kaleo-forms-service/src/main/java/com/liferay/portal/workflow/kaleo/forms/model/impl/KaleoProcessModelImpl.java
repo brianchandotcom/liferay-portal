@@ -96,6 +96,8 @@ public class KaleoProcessModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcess";
 
+	public static final String ENTITY_ALIAS = "kaleoProcess";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoProcess.kaleoProcessId ASC";
 
@@ -1011,4 +1013,4 @@ public class KaleoProcessModelImpl
 	private KaleoProcess _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-346357542
+// LIFERAY-SERVICE-BUILDER-HASH:-1648071146

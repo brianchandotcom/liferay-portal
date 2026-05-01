@@ -85,6 +85,8 @@ public class ERCVersionedEntryVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ERCVersionedEntryVersion";
 
+	public static final String ENTITY_ALIAS = "ercVersionedEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ercVersionedEntryVersion.version DESC";
 
@@ -869,4 +871,4 @@ public class ERCVersionedEntryVersionModelImpl
 	private ERCVersionedEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1479817601
+// LIFERAY-SERVICE-BUILDER-HASH:1189776467

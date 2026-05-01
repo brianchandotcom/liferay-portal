@@ -91,6 +91,8 @@ public class SamlSpSessionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpSession";
 
+	public static final String ENTITY_ALIAS = "samlSpSession";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY samlSpSession.samlSpSessionId ASC";
 
@@ -1027,4 +1029,4 @@ public class SamlSpSessionModelImpl
 	private SamlSpSession _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:520253732
+// LIFERAY-SERVICE-BUILDER-HASH:-2140883169

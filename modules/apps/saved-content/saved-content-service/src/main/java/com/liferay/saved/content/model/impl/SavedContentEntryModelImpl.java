@@ -96,6 +96,8 @@ public class SavedContentEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SavedContentEntry";
 
+	public static final String ENTITY_ALIAS = "savedContentEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY savedContentEntry.savedContentEntryId ASC";
 
@@ -1061,4 +1063,4 @@ public class SavedContentEntryModelImpl
 	private SavedContentEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1375338389
+// LIFERAY-SERVICE-BUILDER-HASH:1555247786

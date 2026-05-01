@@ -98,6 +98,8 @@ public class CommerceAddressRestrictionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAddressRestriction";
 
+	public static final String ENTITY_ALIAS = "commerceAddressRestriction";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceAddressRestriction.createDate DESC";
 
@@ -975,4 +977,4 @@ public class CommerceAddressRestrictionModelImpl
 	private CommerceAddressRestriction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-542131327
+// LIFERAY-SERVICE-BUILDER-HASH:1965735713

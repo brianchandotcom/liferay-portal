@@ -113,6 +113,8 @@ public class DDMStructureLayoutModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLayout";
 
+	public static final String ENTITY_ALIAS = "ddmStructureLayout";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmStructureLayout.structureLayoutId ASC";
 
@@ -1574,4 +1576,4 @@ public class DDMStructureLayoutModelImpl
 	private DDMStructureLayout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1682513470
+// LIFERAY-SERVICE-BUILDER-HASH:542283045

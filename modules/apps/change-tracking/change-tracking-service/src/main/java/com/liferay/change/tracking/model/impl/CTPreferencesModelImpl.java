@@ -87,6 +87,8 @@ public class CTPreferencesModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTPreferences";
 
+	public static final String ENTITY_ALIAS = "ctPreferences";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctPreferences.ctPreferencesId ASC";
 
@@ -787,4 +789,4 @@ public class CTPreferencesModelImpl
 	private CTPreferences _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:747875220
+// LIFERAY-SERVICE-BUILDER-HASH:455226730

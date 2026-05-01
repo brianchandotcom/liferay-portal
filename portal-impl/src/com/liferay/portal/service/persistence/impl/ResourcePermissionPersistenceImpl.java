@@ -83,9 +83,6 @@ public class ResourcePermissionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByName;
 	private FinderPath _finderPathWithoutPaginationFindByName;
 	private FinderPath _finderPathCountByName;
@@ -373,7 +370,7 @@ public class ResourcePermissionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -613,7 +610,7 @@ public class ResourcePermissionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -1676,7 +1673,7 @@ public class ResourcePermissionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -2001,7 +1998,7 @@ public class ResourcePermissionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -2792,7 +2789,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 		}
 		else {
 			sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -3539,7 +3536,7 @@ public class ResourcePermissionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -3925,7 +3922,7 @@ public class ResourcePermissionPersistenceImpl
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 		}
 		else {
 			sb.append(ResourcePermissionModelImpl.ORDER_BY_JPQL);
@@ -4502,198 +4499,6 @@ public class ResourcePermissionPersistenceImpl
 		return fetchByPrimaryKey((Serializable)resourcePermissionId);
 	}
 
-	/**
-	 * Returns all the resource permissions.
-	 *
-	 * @return the resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findAll(
-		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findAll(
-		int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<ResourcePermission> list = null;
-
-			if (useFinderCache) {
-				list = (List<ResourcePermission>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_RESOURCEPERMISSION);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_RESOURCEPERMISSION;
-
-					sql = sql.concat(ResourcePermissionModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<ResourcePermission>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the resource permissions from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (ResourcePermission resourcePermission : findAll()) {
-			remove(resourcePermission);
-		}
-	}
-
-	/**
-	 * Returns the number of resource permissions.
-	 *
-	 * @return the number of resource permissions
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					ResourcePermission.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_RESOURCEPERMISSION);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
@@ -4782,18 +4587,6 @@ public class ResourcePermissionPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
 			new String[] {
@@ -4816,7 +4609,7 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"resourcePermission.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getName));
@@ -4867,8 +4660,7 @@ public class ResourcePermissionPersistenceImpl
 				_finderPathWithoutPaginationFindByRoleId,
 				_finderPathCountByRoleId, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-				ResourcePermissionModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"resourcePermission.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getRoleId));
@@ -4893,8 +4685,7 @@ public class ResourcePermissionPersistenceImpl
 				_finderPathWithPaginationCountByC_LikeP,
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-				ResourcePermissionModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
 					"=", true, false, ResourcePermission::getCompanyId),
@@ -4932,7 +4723,7 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByC_N_S, _finderPathCountByC_N_S,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
 				true, false, ResourcePermission::getCompanyId),
@@ -4973,7 +4764,7 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByC_S_P, _finderPathCountByC_S_P,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
 				true, false, ResourcePermission::getCompanyId),
@@ -5050,8 +4841,7 @@ public class ResourcePermissionPersistenceImpl
 				_finderPathWithoutPaginationFindByC_N_S_R,
 				_finderPathCountByC_N_S_R, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-				ResourcePermissionModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
 					"=", true, false, ResourcePermission::getCompanyId),
@@ -5174,19 +4964,17 @@ public class ResourcePermissionPersistenceImpl
 		EntityCacheUtil.removeCache(ResourcePermissionImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		ResourcePermissionModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_RESOURCEPERMISSION =
 		"SELECT resourcePermission FROM ResourcePermission resourcePermission";
 
 	private static final String _SQL_SELECT_RESOURCEPERMISSION_WHERE =
 		"SELECT resourcePermission FROM ResourcePermission resourcePermission WHERE ";
 
-	private static final String _SQL_COUNT_RESOURCEPERMISSION =
-		"SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission";
-
 	private static final String _SQL_COUNT_RESOURCEPERMISSION_WHERE =
 		"SELECT COUNT(resourcePermission) FROM ResourcePermission resourcePermission WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "resourcePermission.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No ResourcePermission exists with the key {";
@@ -5200,4 +4988,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1151604313
+// LIFERAY-SERVICE-BUILDER-HASH:1296782562

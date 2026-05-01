@@ -99,6 +99,8 @@ public class CommerceQualifierEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceQualifierEntry";
 
+	public static final String ENTITY_ALIAS = "commerceQualifierEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceQualifierEntry.createDate DESC";
 
@@ -1090,4 +1092,4 @@ public class CommerceQualifierEntryModelImpl
 	private CommerceQualifierEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-127557911
+// LIFERAY-SERVICE-BUILDER-HASH:-1219384647

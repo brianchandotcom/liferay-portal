@@ -85,9 +85,6 @@ public class LVEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1081,7 +1078,7 @@ public class LVEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(LVEntryModelImpl.ORDER_BY_JPQL);
@@ -1359,7 +1356,7 @@ public class LVEntryPersistenceImpl
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 		}
 		else {
 			sb.append(LVEntryModelImpl.ORDER_BY_JPQL);
@@ -1688,7 +1685,7 @@ public class LVEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(LVEntryModelImpl.ORDER_BY_JPQL);
@@ -1992,7 +1989,7 @@ public class LVEntryPersistenceImpl
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 		}
 		else {
 			sb.append(LVEntryModelImpl.ORDER_BY_JPQL);
@@ -2798,185 +2795,6 @@ public class LVEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the lv entries.
-	 *
-	 * @return the lv entries
-	 */
-	@Override
-	public List<LVEntry> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entries
-	 * @param end the upper bound of the range of lv entries (not inclusive)
-	 * @return the range of lv entries
-	 */
-	@Override
-	public List<LVEntry> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entries
-	 * @param end the upper bound of the range of lv entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lv entries
-	 */
-	@Override
-	public List<LVEntry> findAll(
-		int start, int end, OrderByComparator<LVEntry> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entries
-	 * @param end the upper bound of the range of lv entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of lv entries
-	 */
-	@Override
-	public List<LVEntry> findAll(
-		int start, int end, OrderByComparator<LVEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<LVEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<LVEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_LVENTRY);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_LVENTRY;
-
-				sql = sql.concat(LVEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<LVEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the lv entries from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (LVEntry lvEntry : findAll()) {
-			remove(lvEntry);
-		}
-	}
-
-	/**
-	 * Returns the number of lv entries.
-	 *
-	 * @return the number of lv entries
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(_SQL_COUNT_LVENTRY);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
 	 * Returns the primaryKeys of big decimal entries associated with the lv entry.
 	 *
 	 * @param pk the primary key of the lv entry
@@ -3368,18 +3186,6 @@ public class LVEntryPersistenceImpl
 			"BigDecimalEntries_LVEntries", "companyId", "lvEntryId",
 			"bigDecimalEntryId", this, bigDecimalEntryPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3402,7 +3208,7 @@ public class LVEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
-			LVEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LVEntry::getUuid));
@@ -3432,7 +3238,7 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_Head,
 				_finderPathCountByUuid_Head, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, LVEntry::getUuid),
@@ -3465,7 +3271,7 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, LVEntry::getUuid),
@@ -3518,7 +3324,7 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, LVEntry::getUuid),
@@ -3557,7 +3363,7 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C_Head,
 				_finderPathCountByUuid_C_Head, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, LVEntry::getUuid),
@@ -3638,7 +3444,7 @@ public class LVEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_UGK,
 			_finderPathWithoutPaginationFindByG_UGK, _finderPathCountByG_UGK,
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
-			LVEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, false,
 				LVEntry::getGroupId),
@@ -3704,19 +3510,17 @@ public class LVEntryPersistenceImpl
 	@BeanReference(type = LVEntryLocalizationPersistence.class)
 	protected LVEntryLocalizationPersistence lvEntryLocalizationPersistence;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		LVEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_LVENTRY =
 		"SELECT lvEntry FROM LVEntry lvEntry";
 
 	private static final String _SQL_SELECT_LVENTRY_WHERE =
 		"SELECT lvEntry FROM LVEntry lvEntry WHERE ";
 
-	private static final String _SQL_COUNT_LVENTRY =
-		"SELECT COUNT(lvEntry) FROM LVEntry lvEntry";
-
 	private static final String _SQL_COUNT_LVENTRY_WHERE =
 		"SELECT COUNT(lvEntry) FROM LVEntry lvEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntry exists with the key {";
@@ -3733,4 +3537,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-716605546
+// LIFERAY-SERVICE-BUILDER-HASH:-486946643

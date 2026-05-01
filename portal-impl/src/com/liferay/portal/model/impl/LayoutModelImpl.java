@@ -155,6 +155,8 @@ public class LayoutModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
+	public static final String ENTITY_ALIAS = "layout";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 
@@ -3306,4 +3308,4 @@ public class LayoutModelImpl
 	private Layout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1654519110
+// LIFERAY-SERVICE-BUILDER-HASH:2102976643

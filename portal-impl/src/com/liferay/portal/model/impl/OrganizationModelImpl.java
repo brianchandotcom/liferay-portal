@@ -109,6 +109,8 @@ public class OrganizationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Organization_";
 
+	public static final String ENTITY_ALIAS = "organization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY organization.name ASC";
 
@@ -1418,4 +1420,4 @@ public class OrganizationModelImpl
 	private Organization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:90741373
+// LIFERAY-SERVICE-BUILDER-HASH:1791851869

@@ -86,6 +86,8 @@ public class ExpandoValueModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoValue";
 
+	public static final String ENTITY_ALIAS = "expandoValue";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY expandoValue.tableId ASC, expandoValue.rowId ASC, expandoValue.columnId ASC";
 
@@ -931,4 +933,4 @@ public class ExpandoValueModelImpl
 	private ExpandoValue _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:233186236
+// LIFERAY-SERVICE-BUILDER-HASH:2098160083

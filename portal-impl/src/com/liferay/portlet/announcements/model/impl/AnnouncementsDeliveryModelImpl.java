@@ -91,6 +91,8 @@ public class AnnouncementsDeliveryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AnnouncementsDelivery";
 
+	public static final String ENTITY_ALIAS = "announcementsDelivery";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY announcementsDelivery.deliveryId ASC";
 
@@ -885,4 +887,4 @@ public class AnnouncementsDeliveryModelImpl
 	private AnnouncementsDelivery _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:109306986
+// LIFERAY-SERVICE-BUILDER-HASH:-674324297

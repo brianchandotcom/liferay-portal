@@ -101,6 +101,8 @@ public class SiteNavigationMenuModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 
+	public static final String ENTITY_ALIAS = "siteNavigationMenu";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY siteNavigationMenu.siteNavigationMenuId ASC";
 
@@ -1196,4 +1198,4 @@ public class SiteNavigationMenuModelImpl
 	private SiteNavigationMenu _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1898261435
+// LIFERAY-SERVICE-BUILDER-HASH:-1171182146

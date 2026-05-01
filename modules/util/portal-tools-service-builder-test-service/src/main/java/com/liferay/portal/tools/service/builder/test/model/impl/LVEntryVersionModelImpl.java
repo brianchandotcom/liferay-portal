@@ -83,6 +83,8 @@ public class LVEntryVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LVEntryVersion";
 
+	public static final String ENTITY_ALIAS = "lvEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY lvEntryVersion.version DESC";
 
@@ -912,4 +914,4 @@ public class LVEntryVersionModelImpl
 	private LVEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-211012217
+// LIFERAY-SERVICE-BUILDER-HASH:-1452779510

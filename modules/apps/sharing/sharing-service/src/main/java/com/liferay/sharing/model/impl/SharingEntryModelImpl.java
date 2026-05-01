@@ -104,6 +104,8 @@ public class SharingEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SharingEntry";
 
+	public static final String ENTITY_ALIAS = "sharingEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sharingEntry.sharingEntryId ASC";
 
@@ -1312,4 +1314,4 @@ public class SharingEntryModelImpl
 	private SharingEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2052693912
+// LIFERAY-SERVICE-BUILDER-HASH:-538004523

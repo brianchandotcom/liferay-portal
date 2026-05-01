@@ -110,6 +110,8 @@ public class CPDefinitionLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CPDefinitionLink";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionLink.priority ASC";
 
@@ -1516,4 +1518,4 @@ public class CPDefinitionLinkModelImpl
 	private CPDefinitionLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-797277943
+// LIFERAY-SERVICE-BUILDER-HASH:1932968642

@@ -82,6 +82,8 @@ public class DDMDataProviderInstanceLinkModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstanceLink";
 
+	public static final String ENTITY_ALIAS = "ddmDataProviderInstanceLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmDataProviderInstanceLink.dataProviderInstanceLinkId ASC";
 
@@ -718,4 +720,4 @@ public class DDMDataProviderInstanceLinkModelImpl
 	private DDMDataProviderInstanceLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:533025508
+// LIFERAY-SERVICE-BUILDER-HASH:-1807269898

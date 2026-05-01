@@ -14,14 +14,12 @@ import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -94,9 +92,6 @@ public class DDLRecordPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1595,195 +1590,6 @@ public class DDLRecordPersistenceImpl
 		return fetchByPrimaryKey((Serializable)recordId);
 	}
 
-	/**
-	 * Returns all the ddl records.
-	 *
-	 * @return the ddl records
-	 */
-	@Override
-	public List<DDLRecord> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddl records.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @return the range of ddl records
-	 */
-	@Override
-	public List<DDLRecord> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ddl records
-	 */
-	@Override
-	public List<DDLRecord> findAll(
-		int start, int end, OrderByComparator<DDLRecord> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddl records.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDLRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddl records
-	 * @param end the upper bound of the range of ddl records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of ddl records
-	 */
-	@Override
-	public List<DDLRecord> findAll(
-		int start, int end, OrderByComparator<DDLRecord> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<DDLRecord> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDLRecord>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_DDLRECORD);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_DDLRECORD;
-
-					sql = sql.concat(DDLRecordModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DDLRecord>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the ddl records from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (DDLRecord ddlRecord : findAll()) {
-			remove(ddlRecord);
-		}
-	}
-
-	/**
-	 * Returns the number of ddl records.
-	 *
-	 * @return the number of ddl records
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DDLRecord.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_DDLRECORD);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -1887,18 +1693,6 @@ public class DDLRecordPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1921,7 +1715,7 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DDLRecord::getUuid));
@@ -1965,7 +1759,7 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, DDLRecord::getUuid),
@@ -1997,7 +1791,7 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
@@ -2026,7 +1820,7 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByRecordSetId,
 				_finderPathCountByRecordSetId, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getRecordSetId));
@@ -2054,7 +1848,7 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByR_U,
 			_finderPathWithoutPaginationFindByR_U, _finderPathCountByR_U,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
 				false, DDLRecord::getRecordSetId),
@@ -2085,7 +1879,7 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByR_R,
 			_finderPathWithoutPaginationFindByR_R, _finderPathCountByR_R,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
 				false, DDLRecord::getRecordSetId),
@@ -2116,7 +1910,7 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"ddlRecord.", "className", FinderColumn.Type.STRING, "=", true,
 				false, DDLRecord::getClassName),
@@ -2169,19 +1963,17 @@ public class DDLRecordPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		DDLRecordModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_DDLRECORD =
 		"SELECT ddlRecord FROM DDLRecord ddlRecord";
 
 	private static final String _SQL_SELECT_DDLRECORD_WHERE =
 		"SELECT ddlRecord FROM DDLRecord ddlRecord WHERE ";
 
-	private static final String _SQL_COUNT_DDLRECORD =
-		"SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord";
-
 	private static final String _SQL_COUNT_DDLRECORD_WHERE =
 		"SELECT COUNT(ddlRecord) FROM DDLRecord ddlRecord WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "ddlRecord.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DDLRecord exists with the key {";
@@ -2198,4 +1990,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:92579974
+// LIFERAY-SERVICE-BUILDER-HASH:1666943741

@@ -99,6 +99,8 @@ public class CommerceNotificationAttachmentModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CNotificationAttachment";
 
+	public static final String ENTITY_ALIAS = "commerceNotificationAttachment";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceNotificationAttachment.createDate DESC";
 
@@ -1047,4 +1049,4 @@ public class CommerceNotificationAttachmentModelImpl
 	private CommerceNotificationAttachment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1529693040
+// LIFERAY-SERVICE-BUILDER-HASH:1231417254

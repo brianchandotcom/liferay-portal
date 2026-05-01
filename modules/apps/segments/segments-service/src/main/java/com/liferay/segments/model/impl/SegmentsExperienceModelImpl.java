@@ -116,6 +116,8 @@ public class SegmentsExperienceModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
 
+	public static final String ENTITY_ALIAS = "segmentsExperience";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY segmentsExperience.priority DESC";
 
@@ -1619,4 +1621,4 @@ public class SegmentsExperienceModelImpl
 	private SegmentsExperience _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:96069545
+// LIFERAY-SERVICE-BUILDER-HASH:323121792

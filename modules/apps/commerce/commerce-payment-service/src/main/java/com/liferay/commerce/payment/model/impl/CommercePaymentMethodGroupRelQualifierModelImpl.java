@@ -96,6 +96,9 @@ public class CommercePaymentMethodGroupRelQualifierModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPMethodGroupRelQualifier";
 
+	public static final String ENTITY_ALIAS =
+		"commercePaymentMethodGroupRelQualifier";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentMethodGroupRelQualifier.createDate DESC";
 
@@ -1015,4 +1018,4 @@ public class CommercePaymentMethodGroupRelQualifierModelImpl
 	private CommercePaymentMethodGroupRelQualifier _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:82752054
+// LIFERAY-SERVICE-BUILDER-HASH:-1696146745

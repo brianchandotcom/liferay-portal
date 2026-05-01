@@ -87,6 +87,8 @@ public class DLFileEntryMetadataModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileEntryMetadata";
 
+	public static final String ENTITY_ALIAS = "dlFileEntryMetadata";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileEntryMetadata.fileEntryMetadataId ASC";
 
@@ -933,4 +935,4 @@ public class DLFileEntryMetadataModelImpl
 	private DLFileEntryMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-813203287
+// LIFERAY-SERVICE-BUILDER-HASH:174093387

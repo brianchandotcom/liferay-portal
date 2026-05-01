@@ -112,6 +112,8 @@ public class KaleoTimerInstanceTokenModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTimerInstanceToken";
 
+	public static final String ENTITY_ALIAS = "kaleoTimerInstanceToken";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoTimerInstanceToken.kaleoTimerInstanceTokenId ASC";
 
@@ -1428,4 +1430,4 @@ public class KaleoTimerInstanceTokenModelImpl
 	private KaleoTimerInstanceToken _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1746694483
+// LIFERAY-SERVICE-BUILDER-HASH:428554063

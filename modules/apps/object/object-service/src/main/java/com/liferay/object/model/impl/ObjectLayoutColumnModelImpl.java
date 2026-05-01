@@ -94,6 +94,8 @@ public class ObjectLayoutColumnModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutColumn";
 
+	public static final String ENTITY_ALIAS = "objectLayoutColumn";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectLayoutColumn.objectLayoutColumnId ASC";
 
@@ -997,4 +999,4 @@ public class ObjectLayoutColumnModelImpl
 	private ObjectLayoutColumn _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:293216946
+// LIFERAY-SERVICE-BUILDER-HASH:117623878

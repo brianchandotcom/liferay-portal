@@ -88,6 +88,8 @@ public class AkismetEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBCommunity_AkismetEntry";
 
+	public static final String ENTITY_ALIAS = "akismetEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY akismetEntry.akismetEntryId ASC";
 
@@ -927,4 +929,4 @@ public class AkismetEntryModelImpl
 	private AkismetEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:827752544
+// LIFERAY-SERVICE-BUILDER-HASH:-1637595191

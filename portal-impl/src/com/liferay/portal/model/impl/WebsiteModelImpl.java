@@ -102,6 +102,8 @@ public class WebsiteModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Website";
 
+	public static final String ENTITY_ALIAS = "website";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY website.createDate ASC";
 
@@ -1168,4 +1170,4 @@ public class WebsiteModelImpl
 	private Website _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1352320377
+// LIFERAY-SERVICE-BUILDER-HASH:571805485

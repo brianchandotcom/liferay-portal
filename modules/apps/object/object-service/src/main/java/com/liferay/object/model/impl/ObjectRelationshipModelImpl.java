@@ -118,6 +118,8 @@ public class ObjectRelationshipModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectRelationship";
 
+	public static final String ENTITY_ALIAS = "objectRelationship";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectRelationship.objectRelationshipId ASC";
 
@@ -1710,4 +1712,4 @@ public class ObjectRelationshipModelImpl
 	private ObjectRelationship _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:657104292
+// LIFERAY-SERVICE-BUILDER-HASH:-464539608

@@ -86,6 +86,8 @@ public class DDMFormInstanceReportModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMFormInstanceReport";
 
+	public static final String ENTITY_ALIAS = "ddmFormInstanceReport";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmFormInstanceReport.formInstanceReportId ASC";
 
@@ -828,4 +830,4 @@ public class DDMFormInstanceReportModelImpl
 	private DDMFormInstanceReport _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1291270749
+// LIFERAY-SERVICE-BUILDER-HASH:-1499783560

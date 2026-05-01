@@ -89,6 +89,8 @@ public class RatingsStatsModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 
+	public static final String ENTITY_ALIAS = "ratingsStats";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ratingsStats.statsId ASC";
 
@@ -884,4 +886,4 @@ public class RatingsStatsModelImpl
 	private RatingsStats _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1695950033
+// LIFERAY-SERVICE-BUILDER-HASH:-2139694151

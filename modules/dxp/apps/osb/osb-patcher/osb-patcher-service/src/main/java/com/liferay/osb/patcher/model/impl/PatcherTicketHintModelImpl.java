@@ -88,6 +88,8 @@ public class PatcherTicketHintModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherTicketHint";
 
+	public static final String ENTITY_ALIAS = "patcherTicketHint";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherTicketHint.patcherTicketHintId ASC";
 
@@ -841,4 +843,4 @@ public class PatcherTicketHintModelImpl
 	private PatcherTicketHint _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-106081795
+// LIFERAY-SERVICE-BUILDER-HASH:1130222184

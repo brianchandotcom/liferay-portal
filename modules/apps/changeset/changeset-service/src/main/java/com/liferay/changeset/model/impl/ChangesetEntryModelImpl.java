@@ -93,6 +93,8 @@ public class ChangesetEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ChangesetEntry";
 
+	public static final String ENTITY_ALIAS = "changesetEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY changesetEntry.changesetEntryId ASC";
 
@@ -996,4 +998,4 @@ public class ChangesetEntryModelImpl
 	private ChangesetEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:737891744
+// LIFERAY-SERVICE-BUILDER-HASH:-994093779

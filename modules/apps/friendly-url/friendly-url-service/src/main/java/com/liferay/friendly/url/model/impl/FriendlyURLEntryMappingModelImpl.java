@@ -85,6 +85,8 @@ public class FriendlyURLEntryMappingModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryMapping";
 
+	public static final String ENTITY_ALIAS = "friendlyURLEntryMapping";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY friendlyURLEntryMapping.friendlyURLEntryMappingId ASC";
 
@@ -761,4 +763,4 @@ public class FriendlyURLEntryMappingModelImpl
 	private FriendlyURLEntryMapping _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1004053780
+// LIFERAY-SERVICE-BUILDER-HASH:2105970337

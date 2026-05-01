@@ -121,6 +121,8 @@ public class CPDefinitionOptionValueRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionValueRel";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionOptionValueRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionOptionValueRel.priority ASC, cpDefinitionOptionValueRel.createDate ASC";
 
@@ -1576,4 +1578,4 @@ public class CPDefinitionOptionValueRelModelImpl
 	private CPDefinitionOptionValueRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1159937211
+// LIFERAY-SERVICE-BUILDER-HASH:592810661

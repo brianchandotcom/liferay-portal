@@ -93,6 +93,8 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutSEOEntryCustomMetaTag";
 
+	public static final String ENTITY_ALIAS = "layoutSEOEntryCustomMetaTag";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutSEOEntryCustomMetaTag.layoutSEOEntryCustomMetaTagId ASC";
 
@@ -969,4 +971,4 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 	private LayoutSEOEntryCustomMetaTag _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2068668125
+// LIFERAY-SERVICE-BUILDER-HASH:-247059459

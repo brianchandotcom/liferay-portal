@@ -97,6 +97,8 @@ public class SocialActivityCounterModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityCounter";
 
+	public static final String ENTITY_ALIAS = "socialActivityCounter";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialActivityCounter.activityCounterId ASC";
 
@@ -1113,4 +1115,4 @@ public class SocialActivityCounterModelImpl
 	private SocialActivityCounter _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-960109347
+// LIFERAY-SERVICE-BUILDER-HASH:1785477792

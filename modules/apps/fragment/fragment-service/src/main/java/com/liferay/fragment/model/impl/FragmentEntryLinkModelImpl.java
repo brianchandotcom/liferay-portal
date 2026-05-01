@@ -129,6 +129,8 @@ public class FragmentEntryLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
+	public static final String ENTITY_ALIAS = "fragmentEntryLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY fragmentEntryLink.classNameId ASC, fragmentEntryLink.classPK ASC, fragmentEntryLink.position ASC";
 
@@ -2088,4 +2090,4 @@ public class FragmentEntryLinkModelImpl
 	private FragmentEntryLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-176347062
+// LIFERAY-SERVICE-BUILDER-HASH:256861869

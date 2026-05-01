@@ -83,6 +83,8 @@ public class PasswordTrackerModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table PasswordTracker";
 
+	public static final String ENTITY_ALIAS = "passwordTracker";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY passwordTracker.userId DESC, passwordTracker.createDate DESC";
 
@@ -746,4 +748,4 @@ public class PasswordTrackerModelImpl
 	private PasswordTracker _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1728987609
+// LIFERAY-SERVICE-BUILDER-HASH:-624064001

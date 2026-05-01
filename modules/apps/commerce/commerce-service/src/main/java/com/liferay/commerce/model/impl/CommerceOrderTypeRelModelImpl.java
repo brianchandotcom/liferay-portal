@@ -100,6 +100,8 @@ public class CommerceOrderTypeRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderTypeRel";
 
+	public static final String ENTITY_ALIAS = "commerceOrderTypeRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrderTypeRel.createDate DESC";
 
@@ -1091,4 +1093,4 @@ public class CommerceOrderTypeRelModelImpl
 	private CommerceOrderTypeRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1789421448
+// LIFERAY-SERVICE-BUILDER-HASH:-1202805713

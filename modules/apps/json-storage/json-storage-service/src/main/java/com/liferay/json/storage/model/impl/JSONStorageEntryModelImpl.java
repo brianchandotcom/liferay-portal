@@ -90,6 +90,8 @@ public class JSONStorageEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table JSONStorageEntry";
 
+	public static final String ENTITY_ALIAS = "jsonStorageEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY jsonStorageEntry.index ASC";
 
@@ -1026,4 +1028,4 @@ public class JSONStorageEntryModelImpl
 	private JSONStorageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:371648155
+// LIFERAY-SERVICE-BUILDER-HASH:2034800879

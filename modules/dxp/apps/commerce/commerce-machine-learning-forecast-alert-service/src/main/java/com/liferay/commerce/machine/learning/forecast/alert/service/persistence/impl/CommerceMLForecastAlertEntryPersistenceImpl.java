@@ -90,9 +90,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -665,7 +662,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -952,7 +949,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -1329,7 +1326,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -1638,7 +1635,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -2037,7 +2034,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -2346,7 +2343,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
@@ -2876,191 +2873,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		return fetchByPrimaryKey((Serializable)commerceMLForecastAlertEntryId);
 	}
 
-	/**
-	 * Returns all the commerce ml forecast alert entries.
-	 *
-	 * @return the commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findAll(
-		int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findAll(
-		int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY;
-
-				sql = sql.concat(
-					CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the commerce ml forecast alert entries from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findAll()) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
-	}
-
-	/**
-	 * Returns the number of commerce ml forecast alert entries.
-	 *
-	 * @return the number of commerce ml forecast alert entries
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(
-					_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -3094,18 +2906,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3130,7 +2930,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -3163,7 +2963,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "uuid",
 					FinderColumn.Type.STRING, "=", true, false,
@@ -3328,20 +3128,17 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		return date.getTime();
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CommerceMLForecastAlertEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY =
 		"SELECT commerceMLForecastAlertEntry FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry";
 
 	private static final String _SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE =
 		"SELECT commerceMLForecastAlertEntry FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry WHERE ";
 
-	private static final String _SQL_COUNT_COMMERCEMLFORECASTALERTENTRY =
-		"SELECT COUNT(commerceMLForecastAlertEntry) FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry";
-
 	private static final String _SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE =
 		"SELECT COUNT(commerceMLForecastAlertEntry) FROM CommerceMLForecastAlertEntry commerceMLForecastAlertEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"commerceMLForecastAlertEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceMLForecastAlertEntry exists with the key {";
@@ -3358,4 +3155,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:752753741
+// LIFERAY-SERVICE-BUILDER-HASH:-1558055768

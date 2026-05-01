@@ -98,6 +98,8 @@ public class LayoutFriendlyURLModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutFriendlyURL";
 
+	public static final String ENTITY_ALIAS = "layoutFriendlyURL";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutFriendlyURL.layoutFriendlyURLId ASC";
 
@@ -1171,4 +1173,4 @@ public class LayoutFriendlyURLModelImpl
 	private LayoutFriendlyURL _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-795961808
+// LIFERAY-SERVICE-BUILDER-HASH:1908925369

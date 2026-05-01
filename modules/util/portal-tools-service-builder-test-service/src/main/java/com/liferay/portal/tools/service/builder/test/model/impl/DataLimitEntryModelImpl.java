@@ -82,6 +82,8 @@ public class DataLimitEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DataLimitEntry";
 
+	public static final String ENTITY_ALIAS = "dataLimitEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dataLimitEntry.dataLimitEntryId ASC";
 
@@ -717,4 +719,4 @@ public class DataLimitEntryModelImpl
 	private DataLimitEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1213190264
+// LIFERAY-SERVICE-BUILDER-HASH:383270298

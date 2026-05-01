@@ -83,6 +83,8 @@ public class DDMTemplateLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 
+	public static final String ENTITY_ALIAS = "ddmTemplateLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmTemplateLink.templateLinkId ASC";
 
@@ -757,4 +759,4 @@ public class DDMTemplateLinkModelImpl
 	private DDMTemplateLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1435860153
+// LIFERAY-SERVICE-BUILDER-HASH:1356155941

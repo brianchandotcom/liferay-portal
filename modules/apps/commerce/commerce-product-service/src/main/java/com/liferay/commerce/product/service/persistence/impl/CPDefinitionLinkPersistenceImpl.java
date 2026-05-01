@@ -14,14 +14,12 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersiste
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -95,9 +93,6 @@ public class CPDefinitionLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -2607,198 +2602,6 @@ public class CPDefinitionLinkPersistenceImpl
 		return fetchByPrimaryKey((Serializable)CPDefinitionLinkId);
 	}
 
-	/**
-	 * Returns all the cp definition links.
-	 *
-	 * @return the cp definition links
-	 */
-	@Override
-	public List<CPDefinitionLink> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp definition links.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp definition links
-	 * @param end the upper bound of the range of cp definition links (not inclusive)
-	 * @return the range of cp definition links
-	 */
-	@Override
-	public List<CPDefinitionLink> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition links.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp definition links
-	 * @param end the upper bound of the range of cp definition links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of cp definition links
-	 */
-	@Override
-	public List<CPDefinitionLink> findAll(
-		int start, int end,
-		OrderByComparator<CPDefinitionLink> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definition links.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp definition links
-	 * @param end the upper bound of the range of cp definition links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of cp definition links
-	 */
-	@Override
-	public List<CPDefinitionLink> findAll(
-		int start, int end,
-		OrderByComparator<CPDefinitionLink> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionLink.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<CPDefinitionLink> list = null;
-
-			if (useFinderCache) {
-				list = (List<CPDefinitionLink>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_CPDEFINITIONLINK);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_CPDEFINITIONLINK;
-
-					sql = sql.concat(CPDefinitionLinkModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<CPDefinitionLink>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the cp definition links from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (CPDefinitionLink cpDefinitionLink : findAll()) {
-			remove(cpDefinitionLink);
-		}
-	}
-
-	/**
-	 * Returns the number of cp definition links.
-	 *
-	 * @return the number of cp definition links
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinitionLink.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_CPDEFINITIONLINK);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -2907,18 +2710,6 @@ public class CPDefinitionLinkPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2942,7 +2733,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getUuid));
@@ -2986,7 +2777,7 @@ public class CPDefinitionLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, CPDefinitionLink::getUuid),
@@ -3019,7 +2810,7 @@ public class CPDefinitionLinkPersistenceImpl
 				_finderPathCountByCPDefinitionId,
 				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"cpDefinitionLink.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3050,7 +2841,7 @@ public class CPDefinitionLinkPersistenceImpl
 				_finderPathCountByCProductId,
 				_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CPDefinitionLink::getCProductId));
@@ -3079,7 +2870,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByCPD_T, _finderPathCountByCPD_T,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "CPDefinitionId", FinderColumn.Type.LONG,
 				"=", true, false, CPDefinitionLink::getCPDefinitionId),
@@ -3111,7 +2902,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByCPD_S, _finderPathCountByCPD_S,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "CPDefinitionId", FinderColumn.Type.LONG,
 				"=", true, false, CPDefinitionLink::getCPDefinitionId),
@@ -3143,7 +2934,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByCP_T, _finderPathCountByCP_T,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG, "=",
 				true, false, CPDefinitionLink::getCProductId),
@@ -3175,7 +2966,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByCP_S, _finderPathCountByCP_S,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG, "=",
 				true, false, CPDefinitionLink::getCProductId),
@@ -3202,7 +2993,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithPaginationCountByLtD_S,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "displayDate", FinderColumn.Type.DATE, "<",
 				true, false, CPDefinitionLink::getDisplayDate),
@@ -3229,7 +3020,7 @@ public class CPDefinitionLinkPersistenceImpl
 			_finderPathWithPaginationCountByLtE_S,
 			_SQL_SELECT_CPDEFINITIONLINK_WHERE,
 			_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"cpDefinitionLink.", "expirationDate", FinderColumn.Type.DATE,
 				"<", true, false, CPDefinitionLink::getExpirationDate),
@@ -3288,7 +3079,7 @@ public class CPDefinitionLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByCPD_T_S,
 				_finderPathCountByCPD_T_S, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"cpDefinitionLink.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, false,
@@ -3331,7 +3122,7 @@ public class CPDefinitionLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByCP_T_S,
 				_finderPathCountByCP_T_S, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
 				_SQL_COUNT_CPDEFINITIONLINK_WHERE,
-				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				CPDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"cpDefinitionLink.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, false, CPDefinitionLink::getCProductId),
@@ -3387,19 +3178,17 @@ public class CPDefinitionLinkPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CPDefinitionLinkModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_CPDEFINITIONLINK =
 		"SELECT cpDefinitionLink FROM CPDefinitionLink cpDefinitionLink";
 
 	private static final String _SQL_SELECT_CPDEFINITIONLINK_WHERE =
 		"SELECT cpDefinitionLink FROM CPDefinitionLink cpDefinitionLink WHERE ";
 
-	private static final String _SQL_COUNT_CPDEFINITIONLINK =
-		"SELECT COUNT(cpDefinitionLink) FROM CPDefinitionLink cpDefinitionLink";
-
 	private static final String _SQL_COUNT_CPDEFINITIONLINK_WHERE =
 		"SELECT COUNT(cpDefinitionLink) FROM CPDefinitionLink cpDefinitionLink WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "cpDefinitionLink.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CPDefinitionLink exists with the key {";
@@ -3416,4 +3205,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1093262064
+// LIFERAY-SERVICE-BUILDER-HASH:815439437

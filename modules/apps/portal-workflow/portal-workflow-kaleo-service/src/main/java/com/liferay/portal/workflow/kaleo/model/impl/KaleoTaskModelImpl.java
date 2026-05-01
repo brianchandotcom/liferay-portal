@@ -95,6 +95,8 @@ public class KaleoTaskModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTask";
 
+	public static final String ENTITY_ALIAS = "kaleoTask";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoTask.kaleoTaskId ASC";
 
@@ -1007,4 +1009,4 @@ public class KaleoTaskModelImpl
 	private KaleoTask _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1810531846
+// LIFERAY-SERVICE-BUILDER-HASH:1642716122

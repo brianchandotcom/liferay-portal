@@ -93,6 +93,8 @@ public class MBThreadFlagModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 
+	public static final String ENTITY_ALIAS = "mbThreadFlag";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbThreadFlag.threadFlagId ASC";
 
@@ -991,4 +993,4 @@ public class MBThreadFlagModelImpl
 	private MBThreadFlag _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1391485156
+// LIFERAY-SERVICE-BUILDER-HASH:-1100556636

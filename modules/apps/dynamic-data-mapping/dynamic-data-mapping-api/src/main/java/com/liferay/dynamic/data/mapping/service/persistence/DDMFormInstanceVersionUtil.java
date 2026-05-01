@@ -526,87 +526,6 @@ public class DDMFormInstanceVersionUtil {
 		return getPersistence().fetchByPrimaryKey(formInstanceVersionId);
 	}
 
-	/**
-	 * Returns all the ddm form instance versions.
-	 *
-	 * @return the ddm form instance versions
-	 */
-	public static List<DDMFormInstanceVersion> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @return the range of ddm form instance versions
-	 */
-	public static List<DDMFormInstanceVersion> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ddm form instance versions
-	 */
-	public static List<DDMFormInstanceVersion> findAll(
-		int start, int end,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of ddm form instance versions
-	 */
-	public static List<DDMFormInstanceVersion> findAll(
-		int start, int end,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the ddm form instance versions from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of ddm form instance versions.
-	 *
-	 * @return the number of ddm form instance versions
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static DDMFormInstanceVersionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -620,4 +539,4 @@ public class DDMFormInstanceVersionUtil {
 	private static volatile DDMFormInstanceVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-17872589
+// LIFERAY-SERVICE-BUILDER-HASH:101469938

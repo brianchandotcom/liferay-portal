@@ -101,6 +101,8 @@ public class BackgroundTaskModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table BackgroundTask";
 
+	public static final String ENTITY_ALIAS = "backgroundTask";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY backgroundTask.createDate ASC";
 
@@ -1184,4 +1186,4 @@ public class BackgroundTaskModelImpl
 	private BackgroundTask _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-683583982
+// LIFERAY-SERVICE-BUILDER-HASH:-710263086

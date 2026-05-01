@@ -106,6 +106,8 @@ public class CalendarNotificationTemplateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CalendarNotificationTemplate";
 
+	public static final String ENTITY_ALIAS = "calendarNotificationTemplate";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY calendarNotificationTemplate.calendarNotificationTemplateId ASC";
 
@@ -1309,4 +1311,4 @@ public class CalendarNotificationTemplateModelImpl
 	private CalendarNotificationTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-122405344
+// LIFERAY-SERVICE-BUILDER-HASH:-689688752

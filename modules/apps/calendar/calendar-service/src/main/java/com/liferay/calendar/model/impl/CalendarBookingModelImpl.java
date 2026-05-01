@@ -135,6 +135,8 @@ public class CalendarBookingModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CalendarBooking";
 
+	public static final String ENTITY_ALIAS = "calendarBooking";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY calendarBooking.startTime ASC, calendarBooking.title ASC";
 
@@ -2264,4 +2266,4 @@ public class CalendarBookingModelImpl
 	private CalendarBooking _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:911664148
+// LIFERAY-SERVICE-BUILDER-HASH:679031898

@@ -117,6 +117,8 @@ public class MBMailingListModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MBMailingList";
 
+	public static final String ENTITY_ALIAS = "mbMailingList";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbMailingList.mailingListId ASC";
 
@@ -1601,4 +1603,4 @@ public class MBMailingListModelImpl
 	private MBMailingList _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-226303395
+// LIFERAY-SERVICE-BUILDER-HASH:-898173500

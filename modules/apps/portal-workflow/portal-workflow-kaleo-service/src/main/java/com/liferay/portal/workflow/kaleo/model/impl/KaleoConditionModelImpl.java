@@ -97,6 +97,8 @@ public class KaleoConditionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoCondition";
 
+	public static final String ENTITY_ALIAS = "kaleoCondition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoCondition.kaleoConditionId ASC";
 
@@ -1078,4 +1080,4 @@ public class KaleoConditionModelImpl
 	private KaleoCondition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:529584154
+// LIFERAY-SERVICE-BUILDER-HASH:-504988750

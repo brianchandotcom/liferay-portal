@@ -97,6 +97,8 @@ public class CPConfigurationListRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPConfigurationListRel";
 
+	public static final String ENTITY_ALIAS = "cpConfigurationListRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpConfigurationListRel.createDate DESC";
 
@@ -968,4 +970,4 @@ public class CPConfigurationListRelModelImpl
 	private CPConfigurationListRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1334525878
+// LIFERAY-SERVICE-BUILDER-HASH:-1880216873

@@ -94,6 +94,8 @@ public class ObjectDefinitionSettingModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectDefinitionSetting";
 
+	public static final String ENTITY_ALIAS = "objectDefinitionSetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectDefinitionSetting.objectDefinitionSettingId ASC";
 
@@ -1014,4 +1016,4 @@ public class ObjectDefinitionSettingModelImpl
 	private ObjectDefinitionSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-437364477
+// LIFERAY-SERVICE-BUILDER-HASH:-1606432002

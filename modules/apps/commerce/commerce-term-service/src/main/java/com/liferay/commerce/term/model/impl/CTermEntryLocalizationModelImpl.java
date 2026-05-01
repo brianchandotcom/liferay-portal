@@ -83,6 +83,8 @@ public class CTermEntryLocalizationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CTermEntryLocalization";
 
+	public static final String ENTITY_ALIAS = "cTermEntryLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cTermEntryLocalization.cTermEntryLocalizationId ASC";
 
@@ -771,4 +773,4 @@ public class CTermEntryLocalizationModelImpl
 	private CTermEntryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:856495700
+// LIFERAY-SERVICE-BUILDER-HASH:-400492405

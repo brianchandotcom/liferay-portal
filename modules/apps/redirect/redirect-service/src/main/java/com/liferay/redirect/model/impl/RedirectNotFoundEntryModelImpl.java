@@ -91,6 +91,8 @@ public class RedirectNotFoundEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table RedirectNotFoundEntry";
 
+	public static final String ENTITY_ALIAS = "redirectNotFoundEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY redirectNotFoundEntry.redirectNotFoundEntryId ASC";
 
@@ -895,4 +897,4 @@ public class RedirectNotFoundEntryModelImpl
 	private RedirectNotFoundEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:731271101
+// LIFERAY-SERVICE-BUILDER-HASH:1345632357

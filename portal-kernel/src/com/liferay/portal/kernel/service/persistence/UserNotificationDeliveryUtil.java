@@ -417,87 +417,6 @@ public class UserNotificationDeliveryUtil {
 		return getPersistence().fetchByPrimaryKey(userNotificationDeliveryId);
 	}
 
-	/**
-	 * Returns all the user notification deliveries.
-	 *
-	 * @return the user notification deliveries
-	 */
-	public static List<UserNotificationDelivery> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the user notification deliveries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of user notification deliveries
-	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
-	 * @return the range of user notification deliveries
-	 */
-	public static List<UserNotificationDelivery> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification deliveries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of user notification deliveries
-	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of user notification deliveries
-	 */
-	public static List<UserNotificationDelivery> findAll(
-		int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification deliveries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of user notification deliveries
-	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of user notification deliveries
-	 */
-	public static List<UserNotificationDelivery> findAll(
-		int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the user notification deliveries from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of user notification deliveries.
-	 *
-	 * @return the number of user notification deliveries
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static UserNotificationDeliveryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -511,4 +430,4 @@ public class UserNotificationDeliveryUtil {
 	private static volatile UserNotificationDeliveryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1277934066
+// LIFERAY-SERVICE-BUILDER-HASH:-6534555

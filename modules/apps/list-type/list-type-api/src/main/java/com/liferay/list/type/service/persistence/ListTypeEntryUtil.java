@@ -1151,86 +1151,6 @@ public class ListTypeEntryUtil {
 		return getPersistence().fetchByPrimaryKey(listTypeEntryId);
 	}
 
-	/**
-	 * Returns all the list type entries.
-	 *
-	 * @return the list type entries
-	 */
-	public static List<ListTypeEntry> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the list type entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of list type entries
-	 */
-	public static List<ListTypeEntry> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of list type entries
-	 */
-	public static List<ListTypeEntry> findAll(
-		int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of list type entries
-	 */
-	public static List<ListTypeEntry> findAll(
-		int start, int end, OrderByComparator<ListTypeEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the list type entries from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of list type entries.
-	 *
-	 * @return the number of list type entries
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static ListTypeEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1242,4 +1162,4 @@ public class ListTypeEntryUtil {
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952736633
+// LIFERAY-SERVICE-BUILDER-HASH:254035806

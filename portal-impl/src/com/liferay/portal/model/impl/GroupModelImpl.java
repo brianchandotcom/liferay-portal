@@ -124,6 +124,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
+	public static final String ENTITY_ALIAS = "group_";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY group_.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Group_.name ASC";
@@ -1990,4 +1992,4 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private Group _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1919400488
+// LIFERAY-SERVICE-BUILDER-HASH:-949321253

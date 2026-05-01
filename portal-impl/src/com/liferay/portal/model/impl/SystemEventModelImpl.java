@@ -103,6 +103,8 @@ public class SystemEventModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 
+	public static final String ENTITY_ALIAS = "systemEvent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY systemEvent.createDate DESC";
 
@@ -1173,4 +1175,4 @@ public class SystemEventModelImpl
 	private SystemEvent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:532868305
+// LIFERAY-SERVICE-BUILDER-HASH:-477443337

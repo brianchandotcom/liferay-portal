@@ -104,6 +104,8 @@ public class LayoutPrototypeModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutPrototype";
 
+	public static final String ENTITY_ALIAS = "layoutPrototype";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPrototype.layoutPrototypeId ASC";
 
@@ -1339,4 +1341,4 @@ public class LayoutPrototypeModelImpl
 	private LayoutPrototype _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-449007028
+// LIFERAY-SERVICE-BUILDER-HASH:-2081539643

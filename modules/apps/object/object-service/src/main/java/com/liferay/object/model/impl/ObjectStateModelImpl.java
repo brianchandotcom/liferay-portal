@@ -90,6 +90,8 @@ public class ObjectStateModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectState";
 
+	public static final String ENTITY_ALIAS = "objectState";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectState.objectStateId ASC";
 
@@ -910,4 +912,4 @@ public class ObjectStateModelImpl
 	private ObjectState _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1275200021
+// LIFERAY-SERVICE-BUILDER-HASH:360411138

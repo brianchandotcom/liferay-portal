@@ -100,6 +100,8 @@ public class CPInstanceOptionValueRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPInstanceOptionValueRel";
 
+	public static final String ENTITY_ALIAS = "cpInstanceOptionValueRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpInstanceOptionValueRel.CPInstanceOptionValueRelId ASC";
 
@@ -1095,4 +1097,4 @@ public class CPInstanceOptionValueRelModelImpl
 	private CPInstanceOptionValueRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1616447704
+// LIFERAY-SERVICE-BUILDER-HASH:899001684

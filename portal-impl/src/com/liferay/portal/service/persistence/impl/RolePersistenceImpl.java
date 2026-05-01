@@ -106,9 +106,6 @@ public class RolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -330,7 +327,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -725,7 +722,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1105,7 +1102,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1462,7 +1459,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1825,7 +1822,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2183,7 +2180,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2678,7 +2675,7 @@ public class RolePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(RoleModelImpl.ORDER_BY_JPQL);
@@ -2869,7 +2866,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3025,7 +3022,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3231,7 +3228,7 @@ public class RolePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(RoleModelImpl.ORDER_BY_JPQL);
@@ -3816,7 +3813,7 @@ public class RolePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4167,7 +4164,7 @@ public class RolePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(RoleModelImpl.ORDER_BY_JPQL);
@@ -4902,7 +4899,7 @@ public class RolePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(RoleModelImpl.ORDER_BY_JPQL);
@@ -5965,195 +5962,6 @@ public class RolePersistenceImpl
 	}
 
 	/**
-	 * Returns all the roles.
-	 *
-	 * @return the roles
-	 */
-	@Override
-	public List<Role> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the roles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of roles
-	 * @param end the upper bound of the range of roles (not inclusive)
-	 * @return the range of roles
-	 */
-	@Override
-	public List<Role> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the roles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of roles
-	 * @param end the upper bound of the range of roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of roles
-	 */
-	@Override
-	public List<Role> findAll(
-		int start, int end, OrderByComparator<Role> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the roles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of roles
-	 * @param end the upper bound of the range of roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of roles
-	 */
-	@Override
-	public List<Role> findAll(
-		int start, int end, OrderByComparator<Role> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Role.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<Role> list = null;
-
-			if (useFinderCache) {
-				list = (List<Role>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_ROLE_);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_ROLE_;
-
-					sql = sql.concat(RoleModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<Role>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the roles from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (Role role : findAll()) {
-			remove(role);
-		}
-	}
-
-	/**
-	 * Returns the number of roles.
-	 *
-	 * @return the number of roles
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					Role.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_ROLE_);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
-	/**
 	 * Returns the primaryKeys of groups associated with the role.
 	 *
 	 * @param pk the primary key of the role
@@ -6915,18 +6723,6 @@ public class RolePersistenceImpl
 			"Users_Roles", "companyId", "roleId", "userId", this,
 			userPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6949,7 +6745,7 @@ public class RolePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-			RoleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Role::getUuid));
@@ -6979,7 +6775,7 @@ public class RolePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ROLE__WHERE,
 				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"role_.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, Role::getUuid),
@@ -7011,7 +6807,7 @@ public class RolePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ROLE__WHERE,
 				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
@@ -7037,7 +6833,7 @@ public class RolePersistenceImpl
 			this, _finderPathWithPaginationFindByName,
 			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
 			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-			RoleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"role_.", "name", FinderColumn.Type.STRING, "=", true, true,
 				Role::getName));
@@ -7064,7 +6860,7 @@ public class RolePersistenceImpl
 			this, _finderPathWithPaginationFindByType,
 			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
 			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-			RoleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"role_.", "type", FinderColumn.Type.INTEGER, "=", true, true,
 				Role::getType));
@@ -7093,7 +6889,7 @@ public class RolePersistenceImpl
 				_finderPathWithoutPaginationFindBySubtype,
 				_finderPathCountBySubtype, _SQL_SELECT_ROLE__WHERE,
 				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
@@ -7152,7 +6948,7 @@ public class RolePersistenceImpl
 			this, _finderPathWithPaginationFindByT_S,
 			_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
 			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-			RoleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"role_.", "type", FinderColumn.Type.INTEGER, "=", true, false,
 				Role::getType),
@@ -7282,14 +7078,14 @@ public class RolePersistenceImpl
 	protected TableMapper<Role, com.liferay.portal.kernel.model.User>
 		roleToUserTableMapper;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		RoleModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ROLE_ =
 		"SELECT role_ FROM Role role_";
 
 	private static final String _SQL_SELECT_ROLE__WHERE =
 		"SELECT role_ FROM Role role_ WHERE ";
-
-	private static final String _SQL_COUNT_ROLE_ =
-		"SELECT COUNT(role_) FROM Role role_";
 
 	private static final String _SQL_COUNT_ROLE__WHERE =
 		"SELECT COUNT(role_) FROM Role role_ WHERE ";
@@ -7315,8 +7111,6 @@ public class RolePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "Role_";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "role_.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE = "Role_.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
@@ -7334,4 +7128,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:727737080
+// LIFERAY-SERVICE-BUILDER-HASH:-804725386

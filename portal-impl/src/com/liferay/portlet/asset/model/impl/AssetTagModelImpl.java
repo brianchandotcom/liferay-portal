@@ -98,6 +98,8 @@ public class AssetTagModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
 
+	public static final String ENTITY_ALIAS = "assetTag";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTag.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTag.name ASC";
@@ -1089,4 +1091,4 @@ public class AssetTagModelImpl
 	private AssetTag _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2056847965
+// LIFERAY-SERVICE-BUILDER-HASH:-1604836844

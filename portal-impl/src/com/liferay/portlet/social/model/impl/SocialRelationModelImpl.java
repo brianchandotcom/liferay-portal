@@ -84,6 +84,8 @@ public class SocialRelationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 
+	public static final String ENTITY_ALIAS = "socialRelation";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialRelation.relationId ASC";
 
@@ -850,4 +852,4 @@ public class SocialRelationModelImpl
 	private SocialRelation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1166596276
+// LIFERAY-SERVICE-BUILDER-HASH:1926472706

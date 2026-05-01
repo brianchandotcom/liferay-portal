@@ -104,6 +104,8 @@ public class LayoutSetBranchModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 
+	public static final String ENTITY_ALIAS = "layoutSetBranch";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutSetBranch.name ASC";
 
@@ -1303,4 +1305,4 @@ public class LayoutSetBranchModelImpl
 	private LayoutSetBranch _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-797792497
+// LIFERAY-SERVICE-BUILDER-HASH:1178474350

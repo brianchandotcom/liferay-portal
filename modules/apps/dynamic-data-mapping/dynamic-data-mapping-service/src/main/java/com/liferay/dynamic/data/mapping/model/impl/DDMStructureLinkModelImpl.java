@@ -85,6 +85,8 @@ public class DDMStructureLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureLink";
 
+	public static final String ENTITY_ALIAS = "ddmStructureLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmStructureLink.structureLinkId ASC";
 
@@ -769,4 +771,4 @@ public class DDMStructureLinkModelImpl
 	private DDMStructureLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-117832188
+// LIFERAY-SERVICE-BUILDER-HASH:-570839215

@@ -94,6 +94,8 @@ public class SocialActivityLimitModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityLimit";
 
+	public static final String ENTITY_ALIAS = "socialActivityLimit";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialActivityLimit.activityLimitId ASC";
 
@@ -988,4 +990,4 @@ public class SocialActivityLimitModelImpl
 	private SocialActivityLimit _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1429465150
+// LIFERAY-SERVICE-BUILDER-HASH:-1055733120

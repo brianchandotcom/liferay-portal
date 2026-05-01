@@ -79,6 +79,8 @@ public class ClassNameModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ClassName_";
 
+	public static final String ENTITY_ALIAS = "className";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY className.classNameId ASC";
 
@@ -617,4 +619,4 @@ public class ClassNameModelImpl
 	private ClassName _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-438655885
+// LIFERAY-SERVICE-BUILDER-HASH:-417511627

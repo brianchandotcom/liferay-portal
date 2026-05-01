@@ -81,6 +81,8 @@ public class NestedSetsTreeEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table NestedSetsTreeEntry";
 
+	public static final String ENTITY_ALIAS = "nestedSetsTreeEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY nestedSetsTreeEntry.nestedSetsTreeEntryId ASC";
 
@@ -693,4 +695,4 @@ public class NestedSetsTreeEntryModelImpl
 	private NestedSetsTreeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1252497701
+// LIFERAY-SERVICE-BUILDER-HASH:1281146386

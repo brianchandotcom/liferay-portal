@@ -744,87 +744,6 @@ public class KaleoTaskAssignmentUtil {
 		return getPersistence().fetchByPrimaryKey(kaleoTaskAssignmentId);
 	}
 
-	/**
-	 * Returns all the kaleo task assignments.
-	 *
-	 * @return the kaleo task assignments
-	 */
-	public static List<KaleoTaskAssignment> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the kaleo task assignments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo task assignments
-	 * @param end the upper bound of the range of kaleo task assignments (not inclusive)
-	 * @return the range of kaleo task assignments
-	 */
-	public static List<KaleoTaskAssignment> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo task assignments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo task assignments
-	 * @param end the upper bound of the range of kaleo task assignments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of kaleo task assignments
-	 */
-	public static List<KaleoTaskAssignment> findAll(
-		int start, int end,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo task assignments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo task assignments
-	 * @param end the upper bound of the range of kaleo task assignments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of kaleo task assignments
-	 */
-	public static List<KaleoTaskAssignment> findAll(
-		int start, int end,
-		OrderByComparator<KaleoTaskAssignment> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the kaleo task assignments from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of kaleo task assignments.
-	 *
-	 * @return the number of kaleo task assignments
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static KaleoTaskAssignmentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -838,4 +757,4 @@ public class KaleoTaskAssignmentUtil {
 	private static volatile KaleoTaskAssignmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1755582310
+// LIFERAY-SERVICE-BUILDER-HASH:1706664901

@@ -89,6 +89,8 @@ public class AnalyticsDeleteMessageModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AnalyticsDeleteMessage";
 
+	public static final String ENTITY_ALIAS = "analyticsDeleteMessage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY analyticsDeleteMessage.analyticsDeleteMessageId ASC";
 
@@ -850,4 +852,4 @@ public class AnalyticsDeleteMessageModelImpl
 	private AnalyticsDeleteMessage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086530693
+// LIFERAY-SERVICE-BUILDER-HASH:-831961496

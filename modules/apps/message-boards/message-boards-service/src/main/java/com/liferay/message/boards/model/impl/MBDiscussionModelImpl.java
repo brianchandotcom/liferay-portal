@@ -97,6 +97,8 @@ public class MBDiscussionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 
+	public static final String ENTITY_ALIAS = "mbDiscussion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbDiscussion.discussionId ASC";
 
@@ -1087,4 +1089,4 @@ public class MBDiscussionModelImpl
 	private MBDiscussion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1469095725
+// LIFERAY-SERVICE-BUILDER-HASH:-390061129

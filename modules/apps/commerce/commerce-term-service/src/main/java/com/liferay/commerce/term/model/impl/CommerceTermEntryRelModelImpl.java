@@ -95,6 +95,8 @@ public class CommerceTermEntryRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTermEntryRel";
 
+	public static final String ENTITY_ALIAS = "commerceTermEntryRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceTermEntryRel.createDate DESC";
 
@@ -933,4 +935,4 @@ public class CommerceTermEntryRelModelImpl
 	private CommerceTermEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1104254420
+// LIFERAY-SERVICE-BUILDER-HASH:-422544391

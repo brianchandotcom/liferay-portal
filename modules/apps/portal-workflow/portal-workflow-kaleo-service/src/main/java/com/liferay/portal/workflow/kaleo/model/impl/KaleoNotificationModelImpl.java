@@ -104,6 +104,8 @@ public class KaleoNotificationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoNotification";
 
+	public static final String ENTITY_ALIAS = "kaleoNotification";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoNotification.kaleoNotificationId ASC";
 
@@ -1325,4 +1327,4 @@ public class KaleoNotificationModelImpl
 	private KaleoNotification _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1850823869
+// LIFERAY-SERVICE-BUILDER-HASH:1134800691

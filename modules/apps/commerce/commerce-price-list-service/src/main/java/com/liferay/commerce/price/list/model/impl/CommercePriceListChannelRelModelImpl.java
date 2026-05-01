@@ -100,6 +100,8 @@ public class CommercePriceListChannelRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePriceListChannelRel";
 
+	public static final String ENTITY_ALIAS = "commercePriceListChannelRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePriceListChannelRel.order ASC";
 
@@ -1088,4 +1090,4 @@ public class CommercePriceListChannelRelModelImpl
 	private CommercePriceListChannelRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2101697130
+// LIFERAY-SERVICE-BUILDER-HASH:-915207163

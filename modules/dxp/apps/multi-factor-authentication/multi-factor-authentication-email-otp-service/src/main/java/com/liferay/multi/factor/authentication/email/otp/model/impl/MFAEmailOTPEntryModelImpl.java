@@ -91,6 +91,8 @@ public class MFAEmailOTPEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MFAEmailOTPEntry";
 
+	public static final String ENTITY_ALIAS = "mfaEmailOTPEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mfaEmailOTPEntry.mfaEmailOTPEntryId ASC";
 
@@ -947,4 +949,4 @@ public class MFAEmailOTPEntryModelImpl
 	private MFAEmailOTPEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1174872168
+// LIFERAY-SERVICE-BUILDER-HASH:-1706875504

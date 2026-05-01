@@ -79,6 +79,8 @@ public class DLSyncEventModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DLSyncEvent";
 
+	public static final String ENTITY_ALIAS = "dlSyncEvent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlSyncEvent.modifiedTime ASC";
 
@@ -707,4 +709,4 @@ public class DLSyncEventModelImpl
 	private DLSyncEvent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-444719174
+// LIFERAY-SERVICE-BUILDER-HASH:84307986

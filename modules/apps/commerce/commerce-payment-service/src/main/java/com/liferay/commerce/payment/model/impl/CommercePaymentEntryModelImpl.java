@@ -129,6 +129,8 @@ public class CommercePaymentEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentEntry";
 
+	public static final String ENTITY_ALIAS = "commercePaymentEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentEntry.createDate DESC";
 
@@ -1857,4 +1859,4 @@ public class CommercePaymentEntryModelImpl
 	private CommercePaymentEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1252127725
+// LIFERAY-SERVICE-BUILDER-HASH:-535641119

@@ -481,85 +481,6 @@ public class ExpandoRowUtil {
 		return getPersistence().fetchByPrimaryKey(rowId);
 	}
 
-	/**
-	 * Returns all the expando rows.
-	 *
-	 * @return the expando rows
-	 */
-	public static List<ExpandoRow> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the expando rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @return the range of expando rows
-	 */
-	public static List<ExpandoRow> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of expando rows
-	 */
-	public static List<ExpandoRow> findAll(
-		int start, int end, OrderByComparator<ExpandoRow> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoRowModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando rows
-	 * @param end the upper bound of the range of expando rows (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of expando rows
-	 */
-	public static List<ExpandoRow> findAll(
-		int start, int end, OrderByComparator<ExpandoRow> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the expando rows from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of expando rows.
-	 *
-	 * @return the number of expando rows
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static ExpandoRowPersistence getPersistence() {
 		return _persistence;
 	}
@@ -571,4 +492,4 @@ public class ExpandoRowUtil {
 	private static volatile ExpandoRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:786962188
+// LIFERAY-SERVICE-BUILDER-HASH:1091044347

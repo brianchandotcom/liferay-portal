@@ -82,9 +82,6 @@ public class VirtualHostPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -646,7 +643,7 @@ public class VirtualHostPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(VirtualHostModelImpl.ORDER_BY_JPQL);
@@ -925,7 +922,7 @@ public class VirtualHostPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(VirtualHostModelImpl.ORDER_BY_JPQL);
@@ -1400,195 +1397,6 @@ public class VirtualHostPersistenceImpl
 		return fetchByPrimaryKey((Serializable)virtualHostId);
 	}
 
-	/**
-	 * Returns all the virtual hosts.
-	 *
-	 * @return the virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the virtual hosts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @return the range of virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findAll(
-		int start, int end, OrderByComparator<VirtualHost> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findAll(
-		int start, int end, OrderByComparator<VirtualHost> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<VirtualHost> list = null;
-
-			if (useFinderCache) {
-				list = (List<VirtualHost>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_VIRTUALHOST);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_VIRTUALHOST;
-
-					sql = sql.concat(VirtualHostModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<VirtualHost>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the virtual hosts from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (VirtualHost virtualHost : findAll()) {
-			remove(virtualHost);
-		}
-	}
-
-	/**
-	 * Returns the number of virtual hosts.
-	 *
-	 * @return the number of virtual hosts
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					VirtualHost.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_VIRTUALHOST);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
@@ -1671,18 +1479,6 @@ public class VirtualHostPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1707,7 +1503,7 @@ public class VirtualHostPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_VIRTUALHOST_WHERE,
 				_SQL_COUNT_VIRTUALHOST_WHERE,
-				VirtualHostModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"virtualHost.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, VirtualHost::getCompanyId));
@@ -1746,7 +1542,7 @@ public class VirtualHostPersistenceImpl
 			this, _finderPathWithPaginationFindByC_L,
 			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
 			_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
-			VirtualHostModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"virtualHost.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, VirtualHost::getCompanyId),
@@ -1777,19 +1573,17 @@ public class VirtualHostPersistenceImpl
 		EntityCacheUtil.removeCache(VirtualHostImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		VirtualHostModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_VIRTUALHOST =
 		"SELECT virtualHost FROM VirtualHost virtualHost";
 
 	private static final String _SQL_SELECT_VIRTUALHOST_WHERE =
 		"SELECT virtualHost FROM VirtualHost virtualHost WHERE ";
 
-	private static final String _SQL_COUNT_VIRTUALHOST =
-		"SELECT COUNT(virtualHost) FROM VirtualHost virtualHost";
-
 	private static final String _SQL_COUNT_VIRTUALHOST_WHERE =
 		"SELECT COUNT(virtualHost) FROM VirtualHost virtualHost WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "virtualHost.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No VirtualHost exists with the key {";
@@ -1803,4 +1597,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1414943563
+// LIFERAY-SERVICE-BUILDER-HASH:1379898058

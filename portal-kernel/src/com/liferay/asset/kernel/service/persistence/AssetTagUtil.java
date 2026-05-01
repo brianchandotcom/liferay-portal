@@ -1309,85 +1309,6 @@ public class AssetTagUtil {
 	}
 
 	/**
-	 * Returns all the asset tags.
-	 *
-	 * @return the asset tags
-	 */
-	public static List<AssetTag> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the asset tags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @return the range of asset tags
-	 */
-	public static List<AssetTag> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset tags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of asset tags
-	 */
-	public static List<AssetTag> findAll(
-		int start, int end, OrderByComparator<AssetTag> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset tags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset tags
-	 * @param end the upper bound of the range of asset tags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of asset tags
-	 */
-	public static List<AssetTag> findAll(
-		int start, int end, OrderByComparator<AssetTag> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the asset tags from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of asset tags.
-	 *
-	 * @return the number of asset tags
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
-	/**
 	 * Returns the primaryKeys of asset entries associated with the asset tag.
 	 *
 	 * @param pk the primary key of the asset tag
@@ -1615,4 +1536,4 @@ public class AssetTagUtil {
 	private static volatile AssetTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-507623423
+// LIFERAY-SERVICE-BUILDER-HASH:-941329671

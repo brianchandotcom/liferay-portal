@@ -96,6 +96,8 @@ public class DispatchLogModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DispatchLog";
 
+	public static final String ENTITY_ALIAS = "dispatchLog";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dispatchLog.modifiedDate DESC";
 
@@ -990,4 +992,4 @@ public class DispatchLogModelImpl
 	private DispatchLog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1148126434
+// LIFERAY-SERVICE-BUILDER-HASH:656826673

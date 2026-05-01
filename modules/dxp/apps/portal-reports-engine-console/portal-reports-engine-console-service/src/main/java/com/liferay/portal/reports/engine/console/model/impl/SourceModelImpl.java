@@ -105,6 +105,8 @@ public class SourceModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Reports_Source";
 
+	public static final String ENTITY_ALIAS = "source";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY source.sourceId ASC";
 
 	public static final String ORDER_BY_SQL =
@@ -1225,4 +1227,4 @@ public class SourceModelImpl
 	private Source _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1565584161
+// LIFERAY-SERVICE-BUILDER-HASH:-728200937

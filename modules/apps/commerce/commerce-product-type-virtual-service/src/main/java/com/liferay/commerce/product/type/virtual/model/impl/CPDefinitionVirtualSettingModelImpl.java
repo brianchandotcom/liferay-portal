@@ -121,6 +121,8 @@ public class CPDefinitionVirtualSettingModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionVirtualSetting";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionVirtualSetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionVirtualSetting.CPDefinitionVirtualSettingId ASC";
 
@@ -1637,4 +1639,4 @@ public class CPDefinitionVirtualSettingModelImpl
 	private CPDefinitionVirtualSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1480897158
+// LIFERAY-SERVICE-BUILDER-HASH:-1107533432

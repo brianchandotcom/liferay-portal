@@ -100,6 +100,8 @@ public class AuditEventModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Audit_AuditEvent";
 
+	public static final String ENTITY_ALIAS = "auditEvent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY auditEvent.createDate DESC";
 
@@ -1100,4 +1102,4 @@ public class AuditEventModelImpl
 	private AuditEvent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1487823909
+// LIFERAY-SERVICE-BUILDER-HASH:-297977017

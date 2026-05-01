@@ -78,6 +78,8 @@ public class CTScoreModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTScore";
 
+	public static final String ENTITY_ALIAS = "ctScore";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctScore.ctScoreId ASC";
 
@@ -626,4 +628,4 @@ public class CTScoreModelImpl
 	private CTScore _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:963769607
+// LIFERAY-SERVICE-BUILDER-HASH:-83396451

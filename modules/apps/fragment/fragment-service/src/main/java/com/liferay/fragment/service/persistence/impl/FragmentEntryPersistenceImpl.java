@@ -15,14 +15,12 @@ import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -102,9 +100,6 @@ public class FragmentEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -5430,196 +5425,6 @@ public class FragmentEntryPersistenceImpl
 		return fetchByPrimaryKey((Serializable)fragmentEntryId);
 	}
 
-	/**
-	 * Returns all the fragment entries.
-	 *
-	 * @return the fragment entries
-	 */
-	@Override
-	public List<FragmentEntry> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @return the range of fragment entries
-	 */
-	@Override
-	public List<FragmentEntry> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of fragment entries
-	 */
-	@Override
-	public List<FragmentEntry> findAll(
-		int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of fragment entries
-	 */
-	@Override
-	public List<FragmentEntry> findAll(
-		int start, int end, OrderByComparator<FragmentEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntry.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<FragmentEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<FragmentEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_FRAGMENTENTRY);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_FRAGMENTENTRY;
-
-					sql = sql.concat(FragmentEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<FragmentEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the fragment entries from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (FragmentEntry fragmentEntry : findAll()) {
-			remove(fragmentEntry);
-		}
-	}
-
-	/**
-	 * Returns the number of fragment entries.
-	 *
-	 * @return the number of fragment entries
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentEntry.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_FRAGMENTENTRY);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -5743,18 +5548,6 @@ public class FragmentEntryPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -5777,7 +5570,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, FragmentEntry::getUuid));
@@ -5807,7 +5600,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_Head,
 				_finderPathCountByUuid_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, FragmentEntry::getUuid),
@@ -5840,7 +5633,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, FragmentEntry::getUuid),
@@ -5894,7 +5687,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, FragmentEntry::getUuid),
@@ -5933,7 +5726,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C_Head,
 				_finderPathCountByUuid_C_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, FragmentEntry::getUuid),
@@ -5968,7 +5761,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getGroupId));
@@ -5998,7 +5791,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId_Head,
 				_finderPathCountByGroupId_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6031,7 +5824,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFragmentCollectionId,
 				_finderPathCountByFragmentCollectionId,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6067,7 +5860,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFragmentCollectionId_Head,
 				_finderPathCountByFragmentCollectionId_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
 					FinderColumn.Type.LONG, "=", true, false,
@@ -6098,7 +5891,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByType,
 			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, FragmentEntry::getType));
@@ -6128,7 +5921,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByType_Head,
 				_finderPathCountByType_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
 					true, false, FragmentEntry::getType),
@@ -6159,7 +5952,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_FCI,
 			_finderPathWithoutPaginationFindByG_FCI, _finderPathCountByG_FCI,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, FragmentEntry::getGroupId),
@@ -6199,7 +5992,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_Head,
 				_finderPathCountByG_FCI_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6234,7 +6027,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_FEK,
 			_finderPathWithoutPaginationFindByG_FEK, _finderPathCountByG_FEK,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, FragmentEntry::getGroupId),
@@ -6284,7 +6077,7 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6321,7 +6114,7 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_Head, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6367,7 +6160,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T,
 				_finderPathCountByG_FCI_T, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6414,7 +6207,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_Head,
 				_finderPathCountByG_FCI_T_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6460,7 +6253,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_S,
 				_finderPathCountByG_FCI_S, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6507,7 +6300,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_S_Head,
 				_finderPathCountByG_FCI_S_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6547,7 +6340,7 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_S, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_S,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6592,7 +6385,7 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_S_Head, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_S_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6645,7 +6438,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_S,
 				_finderPathCountByG_FCI_T_S, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6703,7 +6496,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_S_Head,
 				_finderPathCountByG_FCI_T_S_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, FragmentEntry::getGroupId),
@@ -6744,7 +6537,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByERC_G,
 			_finderPathWithoutPaginationFindByERC_G, _finderPathCountByERC_G,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentEntry.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, false,
@@ -6829,19 +6622,17 @@ public class FragmentEntryPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		FragmentEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_FRAGMENTENTRY =
 		"SELECT fragmentEntry FROM FragmentEntry fragmentEntry";
 
 	private static final String _SQL_SELECT_FRAGMENTENTRY_WHERE =
 		"SELECT fragmentEntry FROM FragmentEntry fragmentEntry WHERE ";
 
-	private static final String _SQL_COUNT_FRAGMENTENTRY =
-		"SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry";
-
 	private static final String _SQL_COUNT_FRAGMENTENTRY_WHERE =
 		"SELECT COUNT(fragmentEntry) FROM FragmentEntry fragmentEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentEntry exists with the key {";
@@ -6858,4 +6649,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:748958889
+// LIFERAY-SERVICE-BUILDER-HASH:1012972025

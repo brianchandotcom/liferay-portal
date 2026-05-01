@@ -116,6 +116,8 @@ public class FragmentCompositionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentComposition";
 
+	public static final String ENTITY_ALIAS = "fragmentComposition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY fragmentComposition.name ASC";
 
@@ -1616,4 +1618,4 @@ public class FragmentCompositionModelImpl
 	private FragmentComposition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:721750240
+// LIFERAY-SERVICE-BUILDER-HASH:-1118155945

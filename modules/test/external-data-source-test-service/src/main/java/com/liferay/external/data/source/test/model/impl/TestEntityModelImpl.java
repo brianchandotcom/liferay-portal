@@ -73,6 +73,8 @@ public class TestEntityModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TestEntity";
 
+	public static final String ENTITY_ALIAS = "testEntity";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY testEntity.id ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY TestEntity.id_ ASC";
@@ -553,4 +555,4 @@ public class TestEntityModelImpl
 	private TestEntity _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2124497931
+// LIFERAY-SERVICE-BUILDER-HASH:196127219

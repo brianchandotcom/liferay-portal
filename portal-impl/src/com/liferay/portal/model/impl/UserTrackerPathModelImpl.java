@@ -79,6 +79,8 @@ public class UserTrackerPathModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table UserTrackerPath";
 
+	public static final String ENTITY_ALIAS = "userTrackerPath";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY userTrackerPath.userTrackerPathId ASC";
 
@@ -710,4 +712,4 @@ public class UserTrackerPathModelImpl
 	private UserTrackerPath _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405129428
+// LIFERAY-SERVICE-BUILDER-HASH:1919066285

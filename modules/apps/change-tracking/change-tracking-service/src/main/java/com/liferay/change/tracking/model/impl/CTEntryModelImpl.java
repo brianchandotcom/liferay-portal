@@ -95,6 +95,8 @@ public class CTEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTEntry";
 
+	public static final String ENTITY_ALIAS = "ctEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctEntry.ctEntryId ASC";
 
@@ -1037,4 +1039,4 @@ public class CTEntryModelImpl
 	private CTEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-399262009
+// LIFERAY-SERVICE-BUILDER-HASH:-527584529

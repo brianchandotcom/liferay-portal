@@ -86,6 +86,8 @@ public class DDMStorageLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStorageLink";
 
+	public static final String ENTITY_ALIAS = "ddmStorageLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmStorageLink.storageLinkId ASC";
 
@@ -868,4 +870,4 @@ public class DDMStorageLinkModelImpl
 	private DDMStorageLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:575214678
+// LIFERAY-SERVICE-BUILDER-HASH:-2118440533

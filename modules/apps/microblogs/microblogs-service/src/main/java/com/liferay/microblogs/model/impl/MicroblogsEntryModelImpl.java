@@ -95,6 +95,8 @@ public class MicroblogsEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MicroblogsEntry";
 
+	public static final String ENTITY_ALIAS = "microblogsEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY microblogsEntry.createDate DESC";
 
@@ -1056,4 +1058,4 @@ public class MicroblogsEntryModelImpl
 	private MicroblogsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:934794938
+// LIFERAY-SERVICE-BUILDER-HASH:729433052

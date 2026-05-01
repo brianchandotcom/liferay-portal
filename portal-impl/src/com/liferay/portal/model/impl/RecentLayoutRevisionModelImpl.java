@@ -87,6 +87,8 @@ public class RecentLayoutRevisionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table RecentLayoutRevision";
 
+	public static final String ENTITY_ALIAS = "recentLayoutRevision";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY recentLayoutRevision.recentLayoutRevisionId ASC";
 
@@ -837,4 +839,4 @@ public class RecentLayoutRevisionModelImpl
 	private RecentLayoutRevision _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1776211389
+// LIFERAY-SERVICE-BUILDER-HASH:454504784

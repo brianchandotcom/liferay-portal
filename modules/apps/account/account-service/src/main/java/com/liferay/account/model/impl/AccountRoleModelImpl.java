@@ -81,6 +81,8 @@ public class AccountRoleModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AccountRole";
 
+	public static final String ENTITY_ALIAS = "accountRole";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountRole.accountRoleId ASC";
 
@@ -738,4 +740,4 @@ public class AccountRoleModelImpl
 	private AccountRole _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:535971067
+// LIFERAY-SERVICE-BUILDER-HASH:480481177

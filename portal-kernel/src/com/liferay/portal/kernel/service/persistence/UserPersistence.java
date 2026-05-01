@@ -1743,74 +1743,6 @@ public interface UserPersistence
 	public User fetchByPrimaryKey(long userId);
 
 	/**
-	 * Returns all the users.
-	 *
-	 * @return the users
-	 */
-	public java.util.List<User> findAll();
-
-	/**
-	 * Returns a range of all the users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @return the range of users
-	 */
-	public java.util.List<User> findAll(int start, int end);
-
-	/**
-	 * Returns an ordered range of all the users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of users
-	 */
-	public java.util.List<User> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<User>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the users.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of users
-	 * @param end the upper bound of the range of users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of users
-	 */
-	public java.util.List<User> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<User>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Removes all the users from the database.
-	 */
-	public void removeAll();
-
-	/**
-	 * Returns the number of users.
-	 *
-	 * @return the number of users
-	 */
-	public int countAll();
-
-	/**
 	 * Returns the primaryKeys of groups associated with the user.
 	 *
 	 * @param pk the primary key of the user
@@ -2674,4 +2606,4 @@ public interface UserPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2073641148
+// LIFERAY-SERVICE-BUILDER-HASH:-1056040945

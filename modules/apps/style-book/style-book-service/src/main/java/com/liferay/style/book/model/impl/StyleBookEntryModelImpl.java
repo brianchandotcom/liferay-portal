@@ -109,6 +109,8 @@ public class StyleBookEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table StyleBookEntry";
 
+	public static final String ENTITY_ALIAS = "styleBookEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY styleBookEntry.createDate DESC";
 
@@ -1408,4 +1410,4 @@ public class StyleBookEntryModelImpl
 	private StyleBookEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1599729980
+// LIFERAY-SERVICE-BUILDER-HASH:587466825

@@ -94,6 +94,8 @@ public class ReadingTimeEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ReadingTimeEntry";
 
+	public static final String ENTITY_ALIAS = "readingTimeEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY readingTimeEntry.createDate DESC";
 
@@ -1001,4 +1003,4 @@ public class ReadingTimeEntryModelImpl
 	private ReadingTimeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-627751089
+// LIFERAY-SERVICE-BUILDER-HASH:368653749

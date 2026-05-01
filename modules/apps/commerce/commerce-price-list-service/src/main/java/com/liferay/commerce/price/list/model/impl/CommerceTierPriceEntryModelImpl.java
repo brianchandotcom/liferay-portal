@@ -122,6 +122,8 @@ public class CommerceTierPriceEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTierPriceEntry";
 
+	public static final String ENTITY_ALIAS = "commerceTierPriceEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceTierPriceEntry.minQuantity ASC";
 
@@ -1686,4 +1688,4 @@ public class CommerceTierPriceEntryModelImpl
 	private CommerceTierPriceEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1648971915
+// LIFERAY-SERVICE-BUILDER-HASH:-510952034

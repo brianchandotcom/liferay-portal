@@ -113,6 +113,8 @@ public class CalendarModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 
+	public static final String ENTITY_ALIAS = "calendar";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY calendar.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Calendar.name ASC";
@@ -1527,4 +1529,4 @@ public class CalendarModelImpl
 	private Calendar _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1555742926
+// LIFERAY-SERVICE-BUILDER-HASH:-556663449

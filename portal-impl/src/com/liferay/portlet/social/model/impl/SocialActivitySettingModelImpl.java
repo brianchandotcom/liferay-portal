@@ -90,6 +90,8 @@ public class SocialActivitySettingModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivitySetting";
 
+	public static final String ENTITY_ALIAS = "socialActivitySetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialActivitySetting.activitySettingId ASC";
 
@@ -888,4 +890,4 @@ public class SocialActivitySettingModelImpl
 	private SocialActivitySetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:121701312
+// LIFERAY-SERVICE-BUILDER-HASH:-1751724415

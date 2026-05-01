@@ -129,6 +129,8 @@ public class CPAttachmentFileEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPAttachmentFileEntry";
 
+	public static final String ENTITY_ALIAS = "cpAttachmentFileEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpAttachmentFileEntry.priority ASC";
 
@@ -2039,4 +2041,4 @@ public class CPAttachmentFileEntryModelImpl
 	private CPAttachmentFileEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:590585357
+// LIFERAY-SERVICE-BUILDER-HASH:892698074

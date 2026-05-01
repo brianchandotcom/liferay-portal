@@ -107,6 +107,8 @@ public class CPOptionCategoryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CPOptionCategory";
 
+	public static final String ENTITY_ALIAS = "cpOptionCategory";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpOptionCategory.title ASC, cpOptionCategory.priority ASC";
 
@@ -1452,4 +1454,4 @@ public class CPOptionCategoryModelImpl
 	private CPOptionCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1686678175
+// LIFERAY-SERVICE-BUILDER-HASH:919174572

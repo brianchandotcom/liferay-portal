@@ -96,6 +96,8 @@ public class CommerceInventoryBookedQuantityModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CIBookedQuantity";
 
+	public static final String ENTITY_ALIAS = "commerceInventoryBookedQuantity";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceInventoryBookedQuantity.commerceInventoryBookedQuantityId ASC";
 
@@ -1073,4 +1075,4 @@ public class CommerceInventoryBookedQuantityModelImpl
 	private CommerceInventoryBookedQuantity _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-514258673
+// LIFERAY-SERVICE-BUILDER-HASH:1657396716

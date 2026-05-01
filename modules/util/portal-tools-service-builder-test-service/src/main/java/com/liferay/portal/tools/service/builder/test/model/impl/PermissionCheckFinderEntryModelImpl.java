@@ -86,6 +86,8 @@ public class PermissionCheckFinderEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table PermissionCheckFinderEntry";
 
+	public static final String ENTITY_ALIAS = "permissionCheckFinderEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY permissionCheckFinderEntry.integer ASC, permissionCheckFinderEntry.type ASC";
 
@@ -813,4 +815,4 @@ public class PermissionCheckFinderEntryModelImpl
 	private PermissionCheckFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1365198407
+// LIFERAY-SERVICE-BUILDER-HASH:-498131033

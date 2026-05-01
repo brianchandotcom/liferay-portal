@@ -94,6 +94,8 @@ public class SubscriptionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
 
+	public static final String ENTITY_ALIAS = "subscription";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY subscription.subscriptionId ASC";
 
@@ -968,4 +970,4 @@ public class SubscriptionModelImpl
 	private Subscription _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:658401740
+// LIFERAY-SERVICE-BUILDER-HASH:1564342146

@@ -90,6 +90,8 @@ public class AMImageEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AMImageEntry";
 
+	public static final String ENTITY_ALIAS = "amImageEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY amImageEntry.amImageEntryId ASC";
 
@@ -982,4 +984,4 @@ public class AMImageEntryModelImpl
 	private AMImageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2003605238
+// LIFERAY-SERVICE-BUILDER-HASH:-384861722

@@ -83,6 +83,8 @@ public class JournalArticleResourceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalArticleResource";
 
+	public static final String ENTITY_ALIAS = "journalArticleResource";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY journalArticleResource.resourcePrimKey ASC";
 
@@ -795,4 +797,4 @@ public class JournalArticleResourceModelImpl
 	private JournalArticleResource _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1968537
+// LIFERAY-SERVICE-BUILDER-HASH:-351722995

@@ -92,6 +92,8 @@ public class AccountGroupRelModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AccountGroupRel";
 
+	public static final String ENTITY_ALIAS = "accountGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountGroupRel.accountGroupRelId ASC";
 
@@ -911,4 +913,4 @@ public class AccountGroupRelModelImpl
 	private AccountGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1850456954
+// LIFERAY-SERVICE-BUILDER-HASH:-74726646

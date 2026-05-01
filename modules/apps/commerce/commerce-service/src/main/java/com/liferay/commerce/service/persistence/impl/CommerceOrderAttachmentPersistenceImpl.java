@@ -14,12 +14,10 @@ import com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderAttachmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderAttachmentUtil;
 import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -95,9 +93,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1266,189 +1261,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 		return fetchByPrimaryKey((Serializable)commerceOrderAttachmentId);
 	}
 
-	/**
-	 * Returns all the commerce order attachments.
-	 *
-	 * @return the commerce order attachments
-	 */
-	@Override
-	public List<CommerceOrderAttachment> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of commerce order attachments
-	 */
-	@Override
-	public List<CommerceOrderAttachment> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of commerce order attachments
-	 */
-	@Override
-	public List<CommerceOrderAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of commerce order attachments
-	 */
-	@Override
-	public List<CommerceOrderAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<CommerceOrderAttachment> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceOrderAttachment>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_COMMERCEORDERATTACHMENT);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_COMMERCEORDERATTACHMENT;
-
-				sql = sql.concat(
-					CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<CommerceOrderAttachment>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the commerce order attachments from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (CommerceOrderAttachment commerceOrderAttachment : findAll()) {
-			remove(commerceOrderAttachment);
-		}
-	}
-
-	/**
-	 * Returns the number of commerce order attachments.
-	 *
-	 * @return the number of commerce order attachments
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(
-					_SQL_COUNT_COMMERCEORDERATTACHMENT);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -1482,18 +1294,6 @@ public class CommerceOrderAttachmentPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1518,7 +1318,7 @@ public class CommerceOrderAttachmentPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 			CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceOrderAttachment.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceOrderAttachment::getUuid));
@@ -1565,7 +1365,7 @@ public class CommerceOrderAttachmentPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 				CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceOrderAttachment.", "uuid",
 					FinderColumn.Type.STRING, "=", true, false,
@@ -1601,7 +1401,7 @@ public class CommerceOrderAttachmentPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 				CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceOrderAttachment.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1632,7 +1432,7 @@ public class CommerceOrderAttachmentPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE,
 			CommerceOrderAttachmentModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceOrderAttachment.", "commerceOrderId",
 				FinderColumn.Type.LONG, "=", true, false,
@@ -1700,20 +1500,17 @@ public class CommerceOrderAttachmentPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CommerceOrderAttachmentModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_COMMERCEORDERATTACHMENT =
 		"SELECT commerceOrderAttachment FROM CommerceOrderAttachment commerceOrderAttachment";
 
 	private static final String _SQL_SELECT_COMMERCEORDERATTACHMENT_WHERE =
 		"SELECT commerceOrderAttachment FROM CommerceOrderAttachment commerceOrderAttachment WHERE ";
 
-	private static final String _SQL_COUNT_COMMERCEORDERATTACHMENT =
-		"SELECT COUNT(commerceOrderAttachment) FROM CommerceOrderAttachment commerceOrderAttachment";
-
 	private static final String _SQL_COUNT_COMMERCEORDERATTACHMENT_WHERE =
 		"SELECT COUNT(commerceOrderAttachment) FROM CommerceOrderAttachment commerceOrderAttachment WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"commerceOrderAttachment.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderAttachment exists with the key {";
@@ -1730,4 +1527,4 @@ public class CommerceOrderAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-422465335
+// LIFERAY-SERVICE-BUILDER-HASH:1072001063

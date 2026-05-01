@@ -115,6 +115,8 @@ public class DDMTemplateVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateVersion";
 
+	public static final String ENTITY_ALIAS = "ddmTemplateVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmTemplateVersion.templateVersionId ASC";
 
@@ -1663,4 +1665,4 @@ public class DDMTemplateVersionModelImpl
 	private DDMTemplateVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2008356463
+// LIFERAY-SERVICE-BUILDER-HASH:2055105453

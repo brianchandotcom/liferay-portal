@@ -97,6 +97,8 @@ public class RepositoryEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table RepositoryEntry";
 
+	public static final String ENTITY_ALIAS = "repositoryEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY repositoryEntry.repositoryEntryId ASC";
 
@@ -1094,4 +1096,4 @@ public class RepositoryEntryModelImpl
 	private RepositoryEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1512156646
+// LIFERAY-SERVICE-BUILDER-HASH:463780971

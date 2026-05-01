@@ -77,6 +77,8 @@ public class UndefinedDefaultOrderEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table UndefinedDefaultOrderEntry";
 
+	public static final String ENTITY_ALIAS = "undefinedDefaultOrderEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY undefinedDefaultOrderEntry.undefinedDefaultOrderEntryId ASC";
 
@@ -642,4 +644,4 @@ public class UndefinedDefaultOrderEntryModelImpl
 	private UndefinedDefaultOrderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1879008523
+// LIFERAY-SERVICE-BUILDER-HASH:848009129

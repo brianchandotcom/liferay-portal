@@ -147,6 +147,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public static final String TABLE_SQL_DROP = "drop table User_";
 
+	public static final String ENTITY_ALIAS = "user";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY user.userId ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY User_.userId ASC";
@@ -2470,4 +2472,4 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private User _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1890632020
+// LIFERAY-SERVICE-BUILDER-HASH:1353412876

@@ -126,6 +126,8 @@ public class FragmentEntryVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentEntryVersion";
 
+	public static final String ENTITY_ALIAS = "fragmentEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY fragmentEntryVersion.version DESC";
 
@@ -2000,4 +2002,4 @@ public class FragmentEntryVersionModelImpl
 	private FragmentEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1518332271
+// LIFERAY-SERVICE-BUILDER-HASH:1355308430

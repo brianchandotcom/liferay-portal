@@ -90,6 +90,8 @@ public class AssetLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 
+	public static final String ENTITY_ALIAS = "assetLink";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY assetLink.weight ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY AssetLink.weight ASC";
@@ -880,4 +882,4 @@ public class AssetLinkModelImpl
 	private AssetLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-398570963
+// LIFERAY-SERVICE-BUILDER-HASH:-1305432038

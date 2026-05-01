@@ -115,6 +115,8 @@ public class SXPElementModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SXPElement";
 
+	public static final String ENTITY_ALIAS = "sxpElement";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sxpElement.sxpElementId ASC";
 
@@ -1639,4 +1641,4 @@ public class SXPElementModelImpl
 	private SXPElement _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2146486718
+// LIFERAY-SERVICE-BUILDER-HASH:2125151616

@@ -732,85 +732,6 @@ public class JournalFeedUtil {
 		return getPersistence().fetchByPrimaryKey(id);
 	}
 
-	/**
-	 * Returns all the journal feeds.
-	 *
-	 * @return the journal feeds
-	 */
-	public static List<JournalFeed> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the journal feeds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalFeedModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of journal feeds
-	 * @param end the upper bound of the range of journal feeds (not inclusive)
-	 * @return the range of journal feeds
-	 */
-	public static List<JournalFeed> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the journal feeds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalFeedModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of journal feeds
-	 * @param end the upper bound of the range of journal feeds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of journal feeds
-	 */
-	public static List<JournalFeed> findAll(
-		int start, int end, OrderByComparator<JournalFeed> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the journal feeds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.journal.model.impl.JournalFeedModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of journal feeds
-	 * @param end the upper bound of the range of journal feeds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of journal feeds
-	 */
-	public static List<JournalFeed> findAll(
-		int start, int end, OrderByComparator<JournalFeed> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the journal feeds from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of journal feeds.
-	 *
-	 * @return the number of journal feeds
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static JournalFeedPersistence getPersistence() {
 		return _persistence;
 	}
@@ -822,4 +743,4 @@ public class JournalFeedUtil {
 	private static volatile JournalFeedPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1046691895
+// LIFERAY-SERVICE-BUILDER-HASH:-2046465618

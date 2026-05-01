@@ -100,6 +100,8 @@ public class CPDisplayLayoutModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
 
+	public static final String ENTITY_ALIAS = "cpDisplayLayout";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDisplayLayout.CPDisplayLayoutId ASC";
 
@@ -1157,4 +1159,4 @@ public class CPDisplayLayoutModelImpl
 	private CPDisplayLayout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-234786564
+// LIFERAY-SERVICE-BUILDER-HASH:-1888006034

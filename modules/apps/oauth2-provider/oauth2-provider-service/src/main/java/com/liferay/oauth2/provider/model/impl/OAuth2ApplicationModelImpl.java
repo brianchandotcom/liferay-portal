@@ -119,6 +119,8 @@ public class OAuth2ApplicationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2Application";
 
+	public static final String ENTITY_ALIAS = "oAuth2Application";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuth2Application.oAuth2ApplicationId ASC";
 
@@ -1674,4 +1676,4 @@ public class OAuth2ApplicationModelImpl
 	private OAuth2Application _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:376422472
+// LIFERAY-SERVICE-BUILDER-HASH:-1424857416

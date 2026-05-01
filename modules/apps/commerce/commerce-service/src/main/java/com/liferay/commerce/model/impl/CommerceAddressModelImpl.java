@@ -121,6 +121,8 @@ public class CommerceAddressModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
 
+	public static final String ENTITY_ALIAS = "commerceAddress";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceAddress.createDate DESC";
 
@@ -1692,4 +1694,4 @@ public class CommerceAddressModelImpl
 	private CommerceAddress _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1836082542
+// LIFERAY-SERVICE-BUILDER-HASH:-1460761342

@@ -88,6 +88,8 @@ public class ReleaseModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 
+	public static final String ENTITY_ALIAS = "release_";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY release_.releaseId ASC";
 
@@ -931,4 +933,4 @@ public class ReleaseModelImpl
 	private Release _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:78904618
+// LIFERAY-SERVICE-BUILDER-HASH:239418447

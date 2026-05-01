@@ -83,6 +83,8 @@ public class AssetTagGroupRelModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AssetTagGroupRel";
 
+	public static final String ENTITY_ALIAS = "assetTagGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetTagGroupRel.assetTagGroupRelId ASC";
 
@@ -789,4 +791,4 @@ public class AssetTagGroupRelModelImpl
 	private AssetTagGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-874452739
+// LIFERAY-SERVICE-BUILDER-HASH:-2038965266

@@ -97,6 +97,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
 
+	public static final String ENTITY_ALIAS = "app";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
 
 	public static final String ORDER_BY_SQL =
@@ -1059,4 +1061,4 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private App _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1044348596
+// LIFERAY-SERVICE-BUILDER-HASH:2051518490

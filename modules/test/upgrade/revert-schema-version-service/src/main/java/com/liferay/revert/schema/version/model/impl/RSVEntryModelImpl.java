@@ -74,6 +74,8 @@ public class RSVEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table RSVEntry";
 
+	public static final String ENTITY_ALIAS = "rsvEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY rsvEntry.rsvEntryId ASC";
 
@@ -556,4 +558,4 @@ public class RSVEntryModelImpl
 	private RSVEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:61057518
+// LIFERAY-SERVICE-BUILDER-HASH:-58306268

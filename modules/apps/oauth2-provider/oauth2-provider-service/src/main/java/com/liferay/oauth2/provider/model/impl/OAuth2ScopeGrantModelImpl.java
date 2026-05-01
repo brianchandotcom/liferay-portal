@@ -82,6 +82,8 @@ public class OAuth2ScopeGrantModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table OAuth2ScopeGrant";
 
+	public static final String ENTITY_ALIAS = "oAuth2ScopeGrant";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuth2ScopeGrant.oAuth2ScopeGrantId ASC";
 
@@ -849,4 +851,4 @@ public class OAuth2ScopeGrantModelImpl
 	private OAuth2ScopeGrant _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:258627629
+// LIFERAY-SERVICE-BUILDER-HASH:1396658653

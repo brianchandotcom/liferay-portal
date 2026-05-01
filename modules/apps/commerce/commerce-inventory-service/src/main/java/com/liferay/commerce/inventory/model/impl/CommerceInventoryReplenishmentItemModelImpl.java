@@ -103,6 +103,9 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CIReplenishmentItem";
 
+	public static final String ENTITY_ALIAS =
+		"commerceInventoryReplenishmentItem";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceInventoryReplenishmentItem.commerceInventoryReplenishmentItemId ASC";
 
@@ -1227,4 +1230,4 @@ public class CommerceInventoryReplenishmentItemModelImpl
 	private CommerceInventoryReplenishmentItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2047373509
+// LIFERAY-SERVICE-BUILDER-HASH:-1359913790

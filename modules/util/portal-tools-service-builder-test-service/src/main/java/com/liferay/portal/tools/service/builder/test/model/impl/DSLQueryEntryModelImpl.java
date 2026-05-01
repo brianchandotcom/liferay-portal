@@ -73,6 +73,8 @@ public class DSLQueryEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DSLQueryEntry";
 
+	public static final String ENTITY_ALIAS = "dslQueryEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dslQueryEntry.dslQueryEntryId ASC";
 
@@ -553,4 +555,4 @@ public class DSLQueryEntryModelImpl
 	private DSLQueryEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1244080385
+// LIFERAY-SERVICE-BUILDER-HASH:-1798309297

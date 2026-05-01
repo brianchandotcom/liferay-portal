@@ -118,6 +118,8 @@ public class CommerceCurrencyModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCurrency";
 
+	public static final String ENTITY_ALIAS = "commerceCurrency";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceCurrency.priority ASC";
 
@@ -1691,4 +1693,4 @@ public class CommerceCurrencyModelImpl
 	private CommerceCurrency _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:851162293
+// LIFERAY-SERVICE-BUILDER-HASH:1793553902

@@ -107,6 +107,8 @@ public class KaleoTaskFormInstanceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table KaleoTaskFormInstance";
 
+	public static final String ENTITY_ALIAS = "kaleoTaskFormInstance";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoTaskFormInstance.kaleoTaskFormInstanceId ASC";
 
@@ -1316,4 +1318,4 @@ public class KaleoTaskFormInstanceModelImpl
 	private KaleoTaskFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1544919969
+// LIFERAY-SERVICE-BUILDER-HASH:594052862

@@ -111,6 +111,8 @@ public class AssetVocabularyModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AssetVocabulary";
 
+	public static final String ENTITY_ALIAS = "assetVocabulary";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetVocabulary.name ASC";
 
@@ -1561,4 +1563,4 @@ public class AssetVocabularyModelImpl
 	private AssetVocabulary _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-867021273
+// LIFERAY-SERVICE-BUILDER-HASH:679614152

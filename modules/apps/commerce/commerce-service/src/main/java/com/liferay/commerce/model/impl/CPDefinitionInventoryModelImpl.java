@@ -117,6 +117,8 @@ public class CPDefinitionInventoryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionInventory";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionInventory";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionInventory.CPDefinitionInventoryId ASC";
 
@@ -1390,4 +1392,4 @@ public class CPDefinitionInventoryModelImpl
 	private CPDefinitionInventory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-440232191
+// LIFERAY-SERVICE-BUILDER-HASH:97499524

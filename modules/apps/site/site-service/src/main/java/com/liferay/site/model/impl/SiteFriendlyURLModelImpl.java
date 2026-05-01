@@ -93,6 +93,8 @@ public class SiteFriendlyURLModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SiteFriendlyURL";
 
+	public static final String ENTITY_ALIAS = "siteFriendlyURL";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY siteFriendlyURL.siteFriendlyURLId ASC";
 
@@ -1026,4 +1028,4 @@ public class SiteFriendlyURLModelImpl
 	private SiteFriendlyURL _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-286400688
+// LIFERAY-SERVICE-BUILDER-HASH:1656386866

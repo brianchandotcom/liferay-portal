@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchSystemEventException;
@@ -83,9 +81,6 @@ public class SystemEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
@@ -1026,195 +1021,6 @@ public class SystemEventPersistenceImpl
 		return fetchByPrimaryKey((Serializable)systemEventId);
 	}
 
-	/**
-	 * Returns all the system events.
-	 *
-	 * @return the system events
-	 */
-	@Override
-	public List<SystemEvent> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the system events.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SystemEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of system events
-	 * @param end the upper bound of the range of system events (not inclusive)
-	 * @return the range of system events
-	 */
-	@Override
-	public List<SystemEvent> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the system events.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SystemEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of system events
-	 * @param end the upper bound of the range of system events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of system events
-	 */
-	@Override
-	public List<SystemEvent> findAll(
-		int start, int end, OrderByComparator<SystemEvent> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the system events.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SystemEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of system events
-	 * @param end the upper bound of the range of system events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of system events
-	 */
-	@Override
-	public List<SystemEvent> findAll(
-		int start, int end, OrderByComparator<SystemEvent> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<SystemEvent> list = null;
-
-			if (useFinderCache) {
-				list = (List<SystemEvent>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_SYSTEMEVENT);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_SYSTEMEVENT;
-
-					sql = sql.concat(SystemEventModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<SystemEvent>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the system events from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (SystemEvent systemEvent : findAll()) {
-			remove(systemEvent);
-		}
-	}
-
-	/**
-	 * Returns the number of system events.
-	 *
-	 * @return the number of system events
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					SystemEvent.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_SYSTEMEVENT);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -1309,18 +1115,6 @@ public class SystemEventPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1345,7 +1139,7 @@ public class SystemEventPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_SYSTEMEVENT_WHERE,
 				_SQL_COUNT_SYSTEMEVENT_WHERE,
-				SystemEventModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SystemEvent::getGroupId));
@@ -1373,7 +1167,7 @@ public class SystemEventPersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
-			SystemEventModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, SystemEvent::getGroupId),
@@ -1408,7 +1202,7 @@ public class SystemEventPersistenceImpl
 			this, _finderPathWithPaginationFindByG_C_C,
 			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
-			SystemEventModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, SystemEvent::getGroupId),
@@ -1451,7 +1245,7 @@ public class SystemEventPersistenceImpl
 				_finderPathWithoutPaginationFindByG_C_C_T,
 				_finderPathCountByG_C_C_T, _SQL_SELECT_SYSTEMEVENT_WHERE,
 				_SQL_COUNT_SYSTEMEVENT_WHERE,
-				SystemEventModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, SystemEvent::getGroupId),
@@ -1474,19 +1268,17 @@ public class SystemEventPersistenceImpl
 		EntityCacheUtil.removeCache(SystemEventImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		SystemEventModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_SYSTEMEVENT =
 		"SELECT systemEvent FROM SystemEvent systemEvent";
 
 	private static final String _SQL_SELECT_SYSTEMEVENT_WHERE =
 		"SELECT systemEvent FROM SystemEvent systemEvent WHERE ";
 
-	private static final String _SQL_COUNT_SYSTEMEVENT =
-		"SELECT COUNT(systemEvent) FROM SystemEvent systemEvent";
-
 	private static final String _SQL_COUNT_SYSTEMEVENT_WHERE =
 		"SELECT COUNT(systemEvent) FROM SystemEvent systemEvent WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "systemEvent.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No SystemEvent exists with the key {";
@@ -1503,4 +1295,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397039967
+// LIFERAY-SERVICE-BUILDER-HASH:-620954622

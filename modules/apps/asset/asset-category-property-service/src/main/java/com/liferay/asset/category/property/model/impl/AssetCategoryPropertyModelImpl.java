@@ -96,6 +96,8 @@ public class AssetCategoryPropertyModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetCategoryProperty";
 
+	public static final String ENTITY_ALIAS = "assetCategoryProperty";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetCategoryProperty.key ASC";
 
@@ -1028,4 +1030,4 @@ public class AssetCategoryPropertyModelImpl
 	private AssetCategoryProperty _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-452109888
+// LIFERAY-SERVICE-BUILDER-HASH:1339898408

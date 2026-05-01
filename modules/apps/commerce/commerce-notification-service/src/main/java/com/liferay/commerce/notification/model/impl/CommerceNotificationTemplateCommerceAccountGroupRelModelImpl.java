@@ -97,6 +97,9 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CNTemplateCAccountGroupRel";
 
+	public static final String ENTITY_ALIAS =
+		"commerceNotificationTemplateCommerceAccountGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceNotificationTemplateCommerceAccountGroupRel.createDate DESC";
 
@@ -1063,4 +1066,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
 	private CommerceNotificationTemplateCommerceAccountGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2069221898
+// LIFERAY-SERVICE-BUILDER-HASH:-511615415

@@ -755,87 +755,6 @@ public class LayoutLocalizationUtil {
 		return getPersistence().fetchByPrimaryKey(layoutLocalizationId);
 	}
 
-	/**
-	 * Returns all the layout localizations.
-	 *
-	 * @return the layout localizations
-	 */
-	public static List<LayoutLocalization> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the layout localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.model.impl.LayoutLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout localizations
-	 * @param end the upper bound of the range of layout localizations (not inclusive)
-	 * @return the range of layout localizations
-	 */
-	public static List<LayoutLocalization> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.model.impl.LayoutLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout localizations
-	 * @param end the upper bound of the range of layout localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of layout localizations
-	 */
-	public static List<LayoutLocalization> findAll(
-		int start, int end,
-		OrderByComparator<LayoutLocalization> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout localizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.model.impl.LayoutLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout localizations
-	 * @param end the upper bound of the range of layout localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of layout localizations
-	 */
-	public static List<LayoutLocalization> findAll(
-		int start, int end,
-		OrderByComparator<LayoutLocalization> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the layout localizations from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of layout localizations.
-	 *
-	 * @return the number of layout localizations
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static LayoutLocalizationPersistence getPersistence() {
 		return _persistence;
 	}
@@ -849,4 +768,4 @@ public class LayoutLocalizationUtil {
 	private static volatile LayoutLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2000733127
+// LIFERAY-SERVICE-BUILDER-HASH:666404951

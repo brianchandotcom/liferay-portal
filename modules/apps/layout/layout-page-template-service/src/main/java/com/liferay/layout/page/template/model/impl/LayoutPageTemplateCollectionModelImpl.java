@@ -106,6 +106,8 @@ public class LayoutPageTemplateCollectionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateCollection";
 
+	public static final String ENTITY_ALIAS = "layoutPageTemplateCollection";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPageTemplateCollection.name ASC";
 
@@ -1341,4 +1343,4 @@ public class LayoutPageTemplateCollectionModelImpl
 	private LayoutPageTemplateCollection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-99990167
+// LIFERAY-SERVICE-BUILDER-HASH:1039215051

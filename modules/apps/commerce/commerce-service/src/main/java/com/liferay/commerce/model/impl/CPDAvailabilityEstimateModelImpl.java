@@ -97,6 +97,8 @@ public class CPDAvailabilityEstimateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDAvailabilityEstimate";
 
+	public static final String ENTITY_ALIAS = "cpdAvailabilityEstimate";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpdAvailabilityEstimate.CPDAvailabilityEstimateId ASC";
 
@@ -1005,4 +1007,4 @@ public class CPDAvailabilityEstimateModelImpl
 	private CPDAvailabilityEstimate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1361099214
+// LIFERAY-SERVICE-BUILDER-HASH:-238667607

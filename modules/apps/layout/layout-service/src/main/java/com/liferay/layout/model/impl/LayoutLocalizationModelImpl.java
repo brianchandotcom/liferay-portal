@@ -91,6 +91,8 @@ public class LayoutLocalizationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutLocalization";
 
+	public static final String ENTITY_ALIAS = "layoutLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutLocalization.layoutLocalizationId ASC";
 
@@ -1009,4 +1011,4 @@ public class LayoutLocalizationModelImpl
 	private LayoutLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:472639409
+// LIFERAY-SERVICE-BUILDER-HASH:-391307711

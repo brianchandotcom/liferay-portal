@@ -1342,85 +1342,6 @@ public class ExpandoValueUtil {
 		return getPersistence().fetchByPrimaryKey(valueId);
 	}
 
-	/**
-	 * Returns all the expando values.
-	 *
-	 * @return the expando values
-	 */
-	public static List<ExpandoValue> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the expando values.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of expando values
-	 */
-	public static List<ExpandoValue> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of expando values
-	 */
-	public static List<ExpandoValue> findAll(
-		int start, int end, OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of expando values
-	 */
-	public static List<ExpandoValue> findAll(
-		int start, int end, OrderByComparator<ExpandoValue> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the expando values from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of expando values.
-	 *
-	 * @return the number of expando values
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static ExpandoValuePersistence getPersistence() {
 		return _persistence;
 	}
@@ -1432,4 +1353,4 @@ public class ExpandoValueUtil {
 	private static volatile ExpandoValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:964985008
+// LIFERAY-SERVICE-BUILDER-HASH:1509280689

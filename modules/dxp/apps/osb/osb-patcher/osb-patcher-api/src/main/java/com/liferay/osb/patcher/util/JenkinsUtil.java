@@ -81,33 +81,31 @@ public class JenkinsUtil {
 		).put(
 			"osb.patcher.fixIds", patcherFixIds
 		).put(
-			"osb.patcher.type",
-			patcherConfiguration.patcherSharedRequestBuildPatchPatcherType()
-		).build();
+			"osb.patcher.siblingCommittish",
+			() -> {
+				if (patcherProjectVersion.isCombinedBranch()) {
+					return null;
+				}
 
-		if (!patcherProjectVersion.isCombinedBranch()) {
-			String siblingCommittish = StringPool.BLANK;
+				PatcherFix siblingMainPatcherFix =
+					PatcherFixUtil.fetchSiblingChildPatcherBuildMainFix(
+						patcherFix);
 
-			PatcherFix siblingMainPatcherFix =
-				PatcherFixUtil.fetchSiblingChildPatcherBuildMainFix(patcherFix);
-
-			if (siblingMainPatcherFix != null) {
-				siblingCommittish =
-					patcherConfiguration.patcherGitTagPrefix() +
+				if (siblingMainPatcherFix != null) {
+					return patcherConfiguration.patcherGitTagPrefix() +
 						siblingMainPatcherFix.getPatcherFixId();
-			}
-			else {
+				}
+
 				PatcherProjectVersion siblingPatcherProjectVersion =
 					PatcherProjectVersionUtil.getSiblingPatcherProjectVersion(
 						patcherProjectVersion.getCommittish());
 
-				siblingCommittish =
-					siblingPatcherProjectVersion.getCommittish();
+				return siblingPatcherProjectVersion.getCommittish();
 			}
-
-			jenkinsRequestParameters.put(
-				"osb.patcher.siblingCommittish", siblingCommittish);
-		}
+		).put(
+			"osb.patcher.type",
+			patcherConfiguration.patcherSharedRequestBuildPatchPatcherType()
+		).build();
 
 		return getAgentJenkinsRequestParameters(
 			patcherProjectVersion, patcherFix, jenkinsRequestParameters);
@@ -118,6 +116,10 @@ public class JenkinsUtil {
 				PatcherProjectVersion patcherProjectVersion,
 				PatcherFix patcherFix)
 		throws Exception {
+
+		PatcherConfiguration patcherConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				PatcherConfiguration.class, patcherFix.getCompanyId());
 
 		Map<String, String> jenkinsRequestParameters = HashMapBuilder.put(
 			"osb.patcher.autoFix",
@@ -130,38 +132,51 @@ public class JenkinsUtil {
 			}
 		).put(
 			"osb.patcher.committish", String.valueOf(patcherFix.getCommittish())
-		).build();
+		).put(
+			"osb.patcher.fixId",
+			() -> {
+				if (patcherFix.getStatus() !=
+						WorkflowConstants.STATUS_FIX_REBASING) {
 
-		if (patcherFix.getStatus() == WorkflowConstants.STATUS_FIX_REBASING) {
-			List<Long> parentPatcherFixIds =
-				PatcherFixRelUtil.getParentPatcherFixIds(
-					patcherFix.getPatcherFixId());
+					return null;
+				}
 
-			long rebaseFromPatcherFixId = parentPatcherFixIds.get(0);
+				List<Long> parentPatcherFixIds =
+					PatcherFixRelUtil.getParentPatcherFixIds(
+						patcherFix.getPatcherFixId());
 
-			jenkinsRequestParameters.put(
-				"osb.patcher.fixId", String.valueOf(rebaseFromPatcherFixId));
+				long rebaseFromPatcherFixId = parentPatcherFixIds.get(0);
 
-			jenkinsRequestParameters.put("osb.patcher.rebase", "true");
-		}
+				return String.valueOf(rebaseFromPatcherFixId);
+			}
+		).put(
+			"osb.patcher.fixIds", String.valueOf(patcherFix.getPatcherFixId())
+		).put(
+			"osb.patcher.gitRemoteURL", patcherFix.getGitRemoteURL()
+		).put(
+			"osb.patcher.rebase",
+			() -> {
+				if (patcherFix.getStatus() ==
+						WorkflowConstants.STATUS_FIX_REBASING) {
 
-		jenkinsRequestParameters.put(
-			"osb.patcher.fixIds", String.valueOf(patcherFix.getPatcherFixId()));
-		jenkinsRequestParameters.put(
-			"osb.patcher.gitRemoteURL", patcherFix.getGitRemoteURL());
+					return "true";
+				}
 
-		if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
-			jenkinsRequestParameters.put(
-				"osb.patcher.tickets", patcherFix.getName());
-		}
+				return null;
+			}
+		).put(
+			"osb.patcher.tickets",
+			() -> {
+				if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
+					return patcherFix.getName();
+				}
 
-		PatcherConfiguration patcherConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				PatcherConfiguration.class, patcherFix.getCompanyId());
-
-		jenkinsRequestParameters.put(
+				return null;
+			}
+		).put(
 			"osb.patcher.type",
-			patcherConfiguration.patcherSharedRequestAddFixPatcherType());
+			patcherConfiguration.patcherSharedRequestAddFixPatcherType()
+		).build();
 
 		return getAgentJenkinsRequestParameters(
 			patcherProjectVersion, patcherFix, jenkinsRequestParameters);

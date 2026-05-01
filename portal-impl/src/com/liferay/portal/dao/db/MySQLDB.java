@@ -178,10 +178,8 @@ public class MySQLDB extends BaseDB {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			long threshold = (long)Math.ceil(
-				PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD / 1000.0);
-
-			preparedStatement.setLong(1, threshold);
+			preparedStatement.setLong(
+				1, PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD / 1000);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

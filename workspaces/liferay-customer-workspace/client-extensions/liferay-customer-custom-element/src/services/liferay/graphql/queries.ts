@@ -59,26 +59,6 @@ export const addAnalyticsCloudWorkspace = gql`
 	}
 `;
 
-export const addBusinessEvent = gql`
-	mutation addBusinessEvent($businessEvent: InputC_BusinessEvent!) {
-		createBusinessEvent(input: $businessEvent)
-			@rest(
-				method: "POST"
-				type: "C_BusinessEvent"
-				path: "/c/businessevents/"
-			) {
-			associatedTickets
-			currentLiferayVersion
-			description
-			eventType
-			name
-			newLiferayVersione
-			targetGoLiveDateTime
-			timeZone
-		}
-	}
-`;
-
 export const addDXPCloudEnvironment = gql`
 	mutation addDXPCloudEnvironment(
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
@@ -466,20 +446,6 @@ export const getBannedEmailDomains = gql`
 	}
 `;
 
-export const getBusinessEvent = gql`
-	query getBusinessEvent($businessEventId: Long!) {
-		businessEvent(businessEventId: $businessEventId)
-			@rest(
-				method: "GET"
-				type: "C_BusinessEvent"
-				path: "/c/businessevents/{args.businessEventId}"
-			) {
-			id
-			r_accountEntryToBusinessEvents_accountEntryId
-		}
-	}
-`;
-
 export const getCommerceOrderItems = gql`
 	query getCommerceOrderItems(
 		$filter: String
@@ -749,34 +715,6 @@ export const notificationQueueEntry = gql`
 			id
 			recipients
 			subject
-		}
-	}
-`;
-
-export const patchBusinessEvent = gql`
-	mutation patchBusinessEvent(
-		$businessEvent: InputC_BusinessEvent!
-		$businessEventId: Long!
-	) {
-		patchBusinessEvent(
-			businessEventId: $businessEventId
-			input: $businessEvent
-		)
-			@rest(
-				method: "PATCH"
-				type: "C_BusinessEvent"
-				path: "/c/businessevents/{args.businessEventId}"
-			) {
-			actualGoLiveDateTime
-			associatedTickets
-			currentLiferayVersion
-			description
-			eventType
-			lastComment
-			name
-			newLiferayVersion
-			targetGoLiveDateTime
-			timeZone
 		}
 	}
 `;

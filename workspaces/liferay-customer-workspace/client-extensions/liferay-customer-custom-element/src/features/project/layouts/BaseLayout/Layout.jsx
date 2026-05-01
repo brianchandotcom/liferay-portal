@@ -21,11 +21,11 @@ import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import useHasAllEventsPermissions from '../../pages/Project/BusinessEvents/hooks/useHasAllEventsPermissions';
 
 const Layout = () => {
-	const [{businessEvents, subscriptions, userProjectAccess}] =
+	const [{businessEvents, userProjectAccess}] =
 		useAppContext();
 
 	const [hasSideMenu, setHasSideMenu] = useState(true);
-	const [showBanner, setShowBanner] = useState(true);
+	const [setShowBanner] = useState(true);
 
 	const [dismissedBanners, setDismissedBanners] = useState(() => {
 		const stored = sessionStorage.getItem(
@@ -53,14 +53,6 @@ const Layout = () => {
 		}
 	}, [accountKey]);
 
-	const hasBusinessEnterpriseOrProSubscription = subscriptions?.some(
-		(subscription) =>
-			subscription.accountSubscriptionGroupERC?.includes('saas') &&
-			(subscription.name?.includes('Business Plan') ||
-				subscription.name?.includes('Enterprise Plan') ||
-				subscription.name?.includes('Pro Plan'))
-	);
-
 	const handleOverdueBannerDismiss = (businessId) => {
 		setDismissedBanners((prev) => {
 			const updated = [...prev, businessId];
@@ -72,12 +64,6 @@ const Layout = () => {
 
 			return updated;
 		});
-	};
-
-	const handleBannerDismiss = () => {
-		sessionStorage.setItem('@liferayCP:showSaaSProjectBanner', 'false');
-
-		setShowBanner(false);
 	};
 
 	useEffect(() => {
@@ -98,7 +84,7 @@ const Layout = () => {
 	}
 
 	const overdueBusinessEvents = businessEvents?.filter(
-		(businessEvent) => businessEvent.eventStatus.key === 'overdue'
+		(businessEvent) => businessEvent.eventStatus.key === 'Overdue'
 	);
 
 	return (

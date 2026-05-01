@@ -12,9 +12,6 @@ import com.liferay.customer.service.JiraService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +35,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -112,29 +110,8 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			String jsmId = id;
-
-			if (Validator.isNumber(id)) {
-				try {
-					String mappedJSMId = _jiraService.getJSMIdByLiferayId(
-						GetterUtil.getLong(id));
-
-					if (Validator.isNotNull(mappedJSMId)) {
-						jsmId = mappedJSMId;
-					}
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Unable to map Liferay ID " + id +
-								" to JSM ID, using original ID",
-							exception);
-					}
-				}
-			}
-
 			return new ResponseEntity<>(
-				_jiraService.getBusinessEvent(jsmId), HttpStatus.OK);
+				_jiraService.getBusinessEvent(id), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -170,53 +147,21 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/accounts/{externalReferenceCode}/business-events/versions")
+	@GetMapping(
+		"/accounts/{externalReferenceCode}/business-events/{id}/versions"
+	)
 	public ResponseEntity<String> getBusinessEventVersions(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@RequestParam(defaultValue = "", required = false) String filter,
-			@RequestParam(defaultValue = "dateModified:desc", required = false)
-				String sort)
+			@PathVariable("id") String id)
 		throws Exception {
 
 		try {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.VIEW);
 
-			String businessEventVersionFilter = filter;
-
-			if (filter.contains(
-					"r_businessEventToBusinessEventVersions_" +
-						"c_businessEventId eq '")) {
-
-				String id = filter.substring(
-					filter.indexOf("'") + 1, filter.lastIndexOf("'"));
-
-				if (Validator.isNumber(id)) {
-					try {
-						String jsmId = _jiraService.getJSMIdByLiferayId(
-							GetterUtil.getLong(id));
-
-						if (Validator.isNotNull(jsmId)) {
-							businessEventVersionFilter = StringUtil.replace(
-								filter, "'" + id + "'", "'" + jsmId + "'");
-						}
-					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Unable to map Liferay ID " + id +
-									" to JSM ID for version filter",
-								exception);
-						}
-					}
-				}
-			}
-
 			return new ResponseEntity<>(
-				_jiraService.getBusinessEventVersions(
-					businessEventVersionFilter, sort),
-				HttpStatus.OK);
+				_jiraService.getBusinessEventVersions(id), HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -272,15 +217,14 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@GetMapping("/jsm-objects/{schema}/{name}")
-	public ResponseEntity<String> getJSMObjects(
-			@PathVariable("schema") String schema,
-			@PathVariable("name") String name)
-		throws Exception {
-
+	@GetMapping("/product-versions")
+	public ResponseEntity<String> getProductVersions() throws Exception {
 		try {
 			return new ResponseEntity<>(
-				_jiraService.getJSMObjects(schema, name), HttpStatus.OK);
+				_jiraService.getJSMObjects(
+					_jiraBusinessEventsAssetSchemaName,
+					_jiraProductVersionAssetObjectTypeName),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -382,8 +326,12 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.UPDATE);
 
+			JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
+
 			return new ResponseEntity<>(
-				_jiraService.createBusinessEvent(externalReferenceCode, json),
+				_jiraService.createBusinessEvent(
+					externalReferenceCode, json,
+					userJSONObject.getString("emailAddress")),
 				HttpStatus.OK);
 		}
 		catch (Exception exception) {
@@ -394,8 +342,8 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	@PostMapping("/accounts/{externalReferenceCode}/business-events/{id}")
-	public ResponseEntity<String> postBusinessEvent(
+	@PutMapping("/accounts/{externalReferenceCode}/business-events/{id}")
+	public ResponseEntity<String> putBusinessEvent(
 			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@PathVariable("id") String id, @RequestBody String json)
@@ -411,8 +359,12 @@ public class JiraRestController extends BaseRestController {
 			_businessEventPermission.check(
 				jwt, externalReferenceCode, ActionKeys.UPDATE);
 
+			JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
+
 			return new ResponseEntity<>(
-				_jiraService.updateBusinessEvent(id, json), HttpStatus.OK);
+				_jiraService.updateBusinessEvent(
+					id, json, userJSONObject.getString("emailAddress")),
+				HttpStatus.OK);
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -548,6 +500,12 @@ public class JiraRestController extends BaseRestController {
 
 	@Autowired
 	private BusinessEventPermission _businessEventPermission;
+
+	@Value("${liferay.customer.jira.business.events.asset.schema.name}")
+	private String _jiraBusinessEventsAssetSchemaName;
+
+	@Value("${liferay.customer.jira.product.version.asset.object.type.name}")
+	private String _jiraProductVersionAssetObjectTypeName;
 
 	@Value("${liferay.customer.jira.security.vulnerability.project}")
 	private String _jiraSecurityVulnerabilityProject;

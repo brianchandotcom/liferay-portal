@@ -13,7 +13,6 @@ import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
 import {useAppContext} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
-import {createBusinessEventLegacy} from '~/services/liferay/api';
 import {createBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
@@ -22,14 +21,12 @@ import {isValidDate} from '~/utils/validations.form';
 
 import Layout from '../../../../../../../components/FormLayout';
 import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
-import useAccountsSyncBusinessEvents from '../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../hooks/useAccountsTickets';
 import useCanViewTickets from '../../hooks/useCanViewTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
 import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
-import useIsJiraBackend from '../../hooks/useIsJiraBackend';
 import {containsOption} from '../../utils/containsOption';
 import {getFormattedEventDateTime} from '../../utils/getFormattedEventDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
@@ -56,16 +53,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	values,
 }) => {
 	const [{project, subscriptionGroups}] = useAppContext();
-	const isJiraBackend = useIsJiraBackend();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
-
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		false,
-		false
-	);
 
 	const {businessEventTypesList, loading: loadingBusinessEventTypesList} =
 		useGetBusinessEventTypesList();
@@ -183,6 +172,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		const updatedBusinessEvent = {
 			...businessEvent,
 			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			eventStatus: businessEvent.eventStatus?.key,
+			eventType: businessEvent.eventType?.name,
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			plannedEventDate: getFormattedEventDateTime(
 				businessEvent.plannedEventDate,
@@ -194,17 +185,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		try {
 			setIsLoadingSubmitButton(true);
 
-			if (isJiraBackend) {
-				await createBusinessEvent(
-					project?.accountKey || '',
-					updatedBusinessEvent
-				);
-			}
-			else {
-				await updateAccountBusinessEvents();
-
-				await createBusinessEventLegacy(updatedBusinessEvent);
-			}
+			await createBusinessEvent(
+				project?.accountKey || '',
+				updatedBusinessEvent
+			);
 
 			navigate(`/${project?.accountKey}/business-events`);
 
@@ -336,13 +320,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		newLiferayVersionOptions,
 		setFieldValue,
 	]);
-
-	useEffect(() => {
-		setFieldValue(
-			'businessEvent.r_accountEntryToBusinessEvents_accountEntryId',
-			project?.id
-		);
-	}, [project?.id, setFieldValue]);
 
 	useEffect(() => {
 		setTicketOptions([

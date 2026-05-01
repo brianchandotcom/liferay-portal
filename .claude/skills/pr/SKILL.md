@@ -1,8 +1,8 @@
 ---
 
-allowed-tools: [Bash, Glob, Grep, Read]
-argument-hint: "[optional target-org/repo or message hint]"
-description: Create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
+allowed-tools: [Bash, Glob, Grep, Read, Skill]
+argument-hint: "[optional target-org/repo, message hint, or --skip-pr-check]"
+description: Validate the branch via pr-check, then create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
 name: pr
 
 ---
@@ -18,6 +18,8 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 - The current branch is a development branch, not `master` or any other protected branch.
 
 - The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first (suggest `/commit`); do not stash or discard their work.
+
+- Unless `${ARGUMENTS}` contains `--skip-pr-check`, the `pr-check` skill must pass. See **Run pr-check** below.
 
 ## Input
 
@@ -64,11 +66,36 @@ The following short aliases resolve to a target repository:
 
 The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
 
+## Run pr-check
+
+When `${ARGUMENTS}` contains `--skip-pr-check`, skip this step. Note the skip in the plan summary so the developer is aware that **Pushed Branch** will not post a `pr-check` commit status and **Pull Request** will not apply the `pr-check - success` label.
+
+Otherwise, invoke the `pr-check` skill, passing the ticket resolved in **Jira Ticket** as its argument so pr-check does not have to re-resolve it. pr-check validates the branch, executes the validation script in the background, evaluates the outcome, and may auto-commit drift output (Service Builder, REST Builder, Instance Wrapper Build) and source-format changes — those commits land before the push, so the pushed branch already includes them.
+
+When pr-check reports failure, stop. Do not push or open a PR; the developer needs to address the failure before retrying `/pr`.
+
+When pr-check reports success, proceed to **Expected Output**.
+
 ## Expected Output
 
 ### Pushed Branch
 
-Push the current branch to the user's remote when it has not been pushed yet or when new local commits exist.
+Push the current branch to the user's remote when it has not been pushed yet or when new local commits exist (including any auto-commits from **Run pr-check**).
+
+When pr-check ran and passed, post a GitHub commit status to the head SHA so the PR opens with the local pr-check run reflected:
+
+```bash
+gh api \
+	--field "context=pr-check" \
+	--field "description=All pr-check validations passed locally" \
+	--field "state=success" \
+	--method POST \
+	"repos/<github-username>/liferay-portal/statuses/$(git rev-parse HEAD)"
+```
+
+The status posts to the fork that hosts the SHA — `<github-username>` from **Target Repository** — not the target repo where the PR lands. When the API call fails, surface the error and continue with PR creation; the developer can post the status manually afterward.
+
+When pr-check was skipped (via `--skip-pr-check`), do not post a status. The absence of the status is the honest signal — pr-check did not run, so there is nothing to report.
 
 ### Pull Request
 
@@ -101,6 +128,27 @@ tests. It should contain the rationale provided by the user.
 ```
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
+
+When pr-check ran and passed, apply the `pr-check - success` label to the newly created PR. The color matches the team's existing CI success labels (for example, `ci:test:sf - success`).
+
+Ensure the label exists in the target repository (idempotent — the create call fails harmlessly when the label is already present):
+
+```bash
+gh label create "pr-check - success" \
+	--color c7e8cb \
+	--description "pr-check passed locally" \
+	--repo <target-org>/liferay-portal 2>/dev/null || true
+```
+
+Apply it to the PR:
+
+```bash
+gh pr edit <PR-number> \
+	--add-label "pr-check - success" \
+	--repo <target-org>/liferay-portal
+```
+
+When pr-check was skipped, do not apply the label.
 
 ### Transitioned Jira Ticket
 

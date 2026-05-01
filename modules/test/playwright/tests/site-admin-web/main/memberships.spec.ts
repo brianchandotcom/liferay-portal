@@ -482,6 +482,8 @@ test(
 				.getByTitle('Go to Membership Requests')
 		).toBeVisible();
 
+		await page.waitForTimeout(300);
+
 		await page.keyboard.press('Tab');
 
 		await page.keyboard.press('Tab');
@@ -509,6 +511,8 @@ test(
 		).toBeVisible();
 
 		await page.reload();
+
+		await page.waitForTimeout(300);
 
 		await page.keyboard.press('Tab');
 

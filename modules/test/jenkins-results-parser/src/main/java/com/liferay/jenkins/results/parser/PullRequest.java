@@ -230,9 +230,10 @@ public class PullRequest {
 	}
 
 	public String forward(
-		String commentBody, String consoleURL, String forwardReceiverUsername,
-		String forwardBranchName, String forwardSenderUsername,
-		File gitRepositoryDir) {
+			String commentBody, String consoleURL,
+			String forwardReceiverUsername, String forwardBranchName,
+			String forwardSenderUsername, File gitRepositoryDir)
+		throws ForwardPullRequestException {
 
 		if (!isUpdateEnabled()) {
 			return null;
@@ -257,6 +258,25 @@ public class PullRequest {
 
 		if (forwardRemoteGitBranch == null) {
 			throw new RuntimeException("Unable to push branch to GitHub");
+		}
+
+		int commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
+			getUpstreamBranchSHA(), forwardLocalGitBranch.getSHA());
+
+		if (commitCount == 0) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("`ci:forward` could not forward this pull ");
+			sb.append("request because every commit on this pull request is ");
+			sb.append("already present on `");
+			sb.append(forwardReceiverUsername);
+			sb.append("/");
+			sb.append(getGitRepositoryName());
+			sb.append(":");
+			sb.append(getUpstreamRemoteGitBranchName());
+			sb.append("`.");
+
+			throw new ForwardPullRequestException(sb.toString(), false, null);
 		}
 
 		return gitWorkingDirectory.createPullRequest(
@@ -1178,6 +1198,24 @@ public class PullRequest {
 		}
 
 		private final JSONObject _commentJSONObject;
+
+	}
+
+	public static class ForwardPullRequestException extends Exception {
+
+		public ForwardPullRequestException(
+			String message, boolean retry, Throwable throwable) {
+
+			super(message, throwable);
+
+			_retry = retry;
+		}
+
+		public boolean isRetry() {
+			return _retry;
+		}
+
+		private final boolean _retry;
 
 	}
 

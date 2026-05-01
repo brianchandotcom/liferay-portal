@@ -140,7 +140,7 @@ public class CIForwardProcessor {
 								forwardPullRequestException.getMessage());
 						}
 						else {
-							breakOut();
+							breakLoop();
 						}
 
 						throw new RuntimeException(forwardPullRequestException);

@@ -75,10 +75,10 @@ public class DefaultOrderEntityTest {
 						DefinedDefaultOrderEntry entry1,
 						DefinedDefaultOrderEntry entry2) {
 
-						return entry2.getModifiedDate(
-						).compareTo(
-							entry1.getModifiedDate()
-						);
+						Date modifiedDate1 = entry1.getModifiedDate();
+						Date modifiedDate2 = entry2.getModifiedDate();
+
+						return modifiedDate2.compareTo(modifiedDate1);
 					}
 
 					@Override

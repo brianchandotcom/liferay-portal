@@ -647,9 +647,10 @@ public class RESTBuilder {
 				openAPIYAMLFileSizes::get
 			).reversed());
 
+		Runtime runtime = Runtime.getRuntime();
+
 		ExecutorService executorService = Executors.newFixedThreadPool(
-			Runtime.getRuntime(
-			).availableProcessors());
+			runtime.availableProcessors());
 
 		List<Future<?>> checkFutures = new ArrayList<>();
 

@@ -10,6 +10,8 @@ import com.liferay.portal.tools.db.upgrade.client.AppServer;
 
 import java.io.File;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -99,13 +101,9 @@ public class AppServerTest {
 		Assert.assertEquals(appServerDir, appServer.getDir());
 
 		File extraLibDir = new File(appServerDir, extraDirLibName);
+		List<File> extraLibDirs = appServer.getExtraLibDirs();
 
-		Assert.assertEquals(
-			extraLibDir,
-			appServer.getExtraLibDirs(
-			).get(
-				0
-			));
+		Assert.assertEquals(extraLibDir, extraLibDirs.get(0));
 
 		File globalLibDir = new File(appServerDir, globalDirLibName);
 

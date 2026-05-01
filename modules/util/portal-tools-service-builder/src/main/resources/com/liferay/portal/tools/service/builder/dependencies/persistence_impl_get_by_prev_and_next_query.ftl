@@ -19,7 +19,7 @@ if (orderByComparator != null) {
 	}
 
 	for (int i = 0; i < orderByConditionFields.length; i++) {
-		sb.append(_ORDER_BY_ENTITY_ALIAS);
+		sb.append(_ENTITY_ALIAS_PREFIX);
 		sb.append(orderByConditionFields[i]);
 
 		if ((i + 1) < orderByConditionFields.length) {
@@ -45,7 +45,7 @@ if (orderByComparator != null) {
 	String[] orderByFields = orderByComparator.getOrderByFields();
 
 	for (int i = 0; i < orderByFields.length; i++) {
-		sb.append(_ORDER_BY_ENTITY_ALIAS);
+		sb.append(_ENTITY_ALIAS_PREFIX);
 		sb.append(orderByFields[i]);
 
 		if ((i + 1) < orderByFields.length) {

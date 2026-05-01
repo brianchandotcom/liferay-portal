@@ -1729,7 +1729,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 				sb.append(_SQL_SELECT_${entity.alias?upper_case});
 
-				appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1805,7 +1805,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_${entity.alias?upper_case});
+				Query query = session.createQuery("SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}");
 
 				count = (Long)query.uniqueResult();
 
@@ -3016,7 +3016,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						_SQL_SELECT_${entity.alias?upper_case}_WHERE,
 						_SQL_COUNT_${entity.alias?upper_case}_WHERE,
 						${entity.name}ModelImpl.ORDER_BY_JPQL,
-						_ORDER_BY_ENTITY_ALIAS,
+						_ENTITY_ALIAS_PREFIX,
 						<#list entityColumns as entityColumn>
 							new FinderColumn<>(
 								"${entity.alias}.",
@@ -3253,6 +3253,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
+	private static final String _ENTITY_ALIAS_PREFIX = ${entity.name}ModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
 
 	<#if !entity.hasCompoundPK() && serviceBuilder.isVersionLTE_7_1_0()>
@@ -3262,8 +3264,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if entity.entityFinders?size != 0>
 		private static final String _SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias} WHERE ";
 	</#if>
-
-	private static final String _SQL_COUNT_${entity.alias?upper_case} = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}";
 
 	<#if entity.hasCollectionEntityFinder() || (serviceBuilder.isVersionLTE_7_3_0() && (entity.entityFinders?size != 0))>
 		private static final String _SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias} WHERE ";
@@ -3292,8 +3292,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
 		</#if>
 	</#if>
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "${entity.alias}.";
 
 	<#if entity.isPermissionCheckEnabled() && !entity.isPermissionedModel()>
 		private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";

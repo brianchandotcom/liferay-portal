@@ -115,10 +115,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		AssetLibrary assetLibrary = testGetAssetLibrariesPage_addAssetLibrary(
 			randomAssetLibrary);
 
-		Page<AssetLibrary> page =
-			assetLibraryResource.getAssetLibrariesPage(
-				null, null, "siteId eq " + assetLibrary.getSiteId(),
-				Pagination.of(1, 10), null);
+		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
+			null, null, "siteId eq " + assetLibrary.getSiteId(),
+			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 

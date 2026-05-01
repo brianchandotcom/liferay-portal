@@ -32,6 +32,15 @@ export {ManagementToolbarSearch} from './components/ManagementToolbar/Management
 export {ModalEditObjectDefinitionExternalReferenceCode} from './components/ManagementToolbar/ModalEditObjectDefinitionExternalReferenceCode';
 export {ManagementToolbar} from './components/ManagementToolbar/index';
 export {Panel} from './components/Panel/Panel';
+export {CountryCodePicker} from './components/PhoneNumber/CountryCodePicker';
+export {PhoneNumberInput} from './components/PhoneNumber/PhoneNumberInput';
+export {
+	DEFAULT_COUNTRIES,
+	getCombinedValue,
+	getFlagSymbol,
+	parsePhoneValue,
+} from './components/PhoneNumber/phoneNumberUtil';
+export type {CountryInfo} from './components/PhoneNumber/phoneNumberUtil';
 export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
 export {PanelHeader} from './components/Panel/PanelHeader';
 export {RadioField} from './components/RadioField/RadioField';

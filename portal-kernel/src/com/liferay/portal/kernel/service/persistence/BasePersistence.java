@@ -85,6 +85,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 
 	public void closeSession(Session session);
 
+	public int countAll();
+
 	/**
 	 * Returns the number of rows that match the dynamic query.
 	 *

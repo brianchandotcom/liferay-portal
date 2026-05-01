@@ -220,6 +220,22 @@ public class BasePersistenceImpl
 		_sessionFactory.closeSession(session);
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public int countAll() {
+		CTPersistenceHelper ctPersistenceHelper = getCTPersistenceHelper();
+
+		if (ctPersistenceHelper == null) {
+			return _countAll();
+		}
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					(Class)_modelClass)) {
+
+			return _countAll();
+		}
+	}
+
 	@Override
 	public long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return countWithDynamicQuery(
@@ -1130,6 +1146,36 @@ public class BasePersistenceImpl
 	 */
 	@Deprecated
 	protected boolean finderCacheEnabled = true;
+
+	private int _countAll() {
+		FinderCache finderCache = getFinderCache();
+
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+
+		if (count == null) {
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(_countSQL);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
 
 	@SuppressWarnings("unchecked")
 	private T _fetchByPrimaryKey(Serializable primaryKey) {

@@ -72,6 +72,10 @@ public abstract class Retryable<T> {
 		}
 	}
 
+	protected final void breakOut() {
+		maxRetries = 0;
+	}
+
 	protected String getRetryMessage(int retryCount) {
 		return JenkinsResultsParserUtil.combine(
 			"Retry attempt ", String.valueOf(retryCount), " of ",

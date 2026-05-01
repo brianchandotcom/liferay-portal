@@ -132,6 +132,19 @@ public class CIForwardProcessor {
 
 						return pullRequestURL;
 					}
+					catch (PullRequest.ForwardPullRequestException
+								forwardPullRequestException) {
+
+						if (forwardPullRequestException.isRetry()) {
+							System.out.println(
+								forwardPullRequestException.getMessage());
+						}
+						else {
+							maxRetries = 0;
+						}
+
+						throw new RuntimeException(forwardPullRequestException);
+					}
 					catch (Exception exception) {
 						if (exception instanceof RuntimeException) {
 							throw (RuntimeException)exception;
@@ -177,6 +190,16 @@ public class CIForwardProcessor {
 					sb.toString(), gitHubSecondaryRateLimitRuntimeException);
 			}
 			catch (Exception exception) {
+				Throwable throwable = exception.getCause();
+
+				if (throwable instanceof
+						PullRequest.ForwardPullRequestException) {
+
+					_pullRequest.addComment(throwable.getMessage());
+
+					return;
+				}
+
 				exception.printStackTrace();
 
 				StringBuilder sb = new StringBuilder();

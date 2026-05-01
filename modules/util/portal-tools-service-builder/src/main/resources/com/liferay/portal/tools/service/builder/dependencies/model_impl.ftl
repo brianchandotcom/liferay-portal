@@ -193,6 +193,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	</#list>
 
+	public static final String ENTITY_ALIAS = "${entity.alias}";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY ${orderByJPQL}";
 
 	<#assign orderBySQL = "" />

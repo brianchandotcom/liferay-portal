@@ -831,7 +831,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 				if (orderByComparator != null) {
 					if (getDB().isSupportsInlineDistinct()) {
-						appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+						appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 					}
 					else {
 						appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
@@ -1038,7 +1038,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						for (int i = 0; i < orderByConditionFields.length; i++) {
 							if (getDB().isSupportsInlineDistinct()) {
-								sb.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i], true));
+								sb.append(getColumnName(_ENTITY_ALIAS_PREFIX, orderByConditionFields[i], true));
 							}
 							else {
 								sb.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i], true));
@@ -1068,7 +1068,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 						for (int i = 0; i < orderByFields.length; i++) {
 							if (getDB().isSupportsInlineDistinct()) {
-								sb.append(getColumnName(_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+								sb.append(getColumnName(_ENTITY_ALIAS_PREFIX, orderByFields[i], true));
 							}
 							else {
 								sb.append(getColumnName(_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
@@ -1401,7 +1401,7 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					if (orderByComparator != null) {
 						if (getDB().isSupportsInlineDistinct()) {
-							appendOrderByComparator(sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+							appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 						}
 						else {
 							appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);

@@ -40,13 +40,6 @@ liferay-default:
                 value: "true"
             -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
                 value: "true"
-        x-liferay-aws-opensearch:
-            -   name: LIFERAY_NETWORK_HOST_ADDRESSES
-                value: https://$(OPENSEARCH_ENDPOINT):443
-            -   name: LIFERAY_OPENSEARCH_ENABLED
-                value: "true"
-            -   name: LIFERAY_OPENSEARCH_PASSWORD
-                value: $(OPENSEARCH_PASSWORD)
     customEnvFrom:
         x-liferay-aws-database:
             -   secretRef:

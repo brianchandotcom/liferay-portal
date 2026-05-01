@@ -16,7 +16,9 @@ test('LPD-42406 Info alert shows up when response for expired publications is no
 	page,
 }) => {
 	await page.route(
-		'*/**/o/change-tracking-rest/v1.0/ct-collections?status=3',
+		(url) =>
+			url.pathname.includes('/ct-collections') &&
+			url.searchParams.get('status') === '3',
 		async (route) => {
 			const json = {items: [getRandomString()]};
 

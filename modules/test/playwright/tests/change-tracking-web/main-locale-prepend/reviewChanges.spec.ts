@@ -43,7 +43,13 @@ test('LPD-79951 Can view correct layout preview', async ({
 
 	await changeTrackingPage.reviewChange('Home');
 
-	await page.locator('.btn-outline-secondary').click();
+	const versionDropdown = page
+		.locator('.publications-render-view-divider')
+		.getByRole('button')
+		.first();
+
+	await versionDropdown.waitFor();
+	await versionDropdown.click();
 
 	await page.getByRole('menuitem', {name: ctCollection.body.name}).click();
 
@@ -51,7 +57,13 @@ test('LPD-79951 Can view correct layout preview', async ({
 
 	await expect(previewContent.getByText('Edited')).toBeVisible();
 
-	await page.locator('.btn-outline-secondary').click();
+	const productionDropdown = page
+		.locator('.publications-render-view-divider')
+		.getByRole('button')
+		.first();
+
+	await productionDropdown.waitFor();
+	await productionDropdown.click();
 
 	await page.getByRole('menuitem', {name: 'Production'}).click();
 

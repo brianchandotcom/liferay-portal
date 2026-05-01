@@ -317,7 +317,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private FinderPath _finderPathWithoutPaginationFindAll;
 	</#if>
 
-	private FinderPath _finderPathCountAll;
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		private FinderPath _finderPathCountAll;
+	</#if>
 
 	<#if entity.isHierarchicalTree()>
 		private FinderPath _finderPathWithPaginationCountAncestors;
@@ -1791,49 +1793,51 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	}
 
-	/**
-	 * Returns the number of ${entity.pluralHumanName}.
-	 *
-	 * @return the number of ${entity.pluralHumanName}
-	 */
-	@Override
-	public int countAll() {
-		<#if entity.isChangeTrackingEnabled()>
-			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-		</#if>
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Returns the number of ${entity.pluralHumanName}.
+		 *
+		 * @return the number of ${entity.pluralHumanName}
+		 */
+		@Override
+		public int countAll() {
+			<#if entity.isChangeTrackingEnabled()>
+				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+			</#if>
 
-		Long count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+			Long count = (Long)${finderCache}.getResult(_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
-		if (count == null) {
-			Session session = null;
+			if (count == null) {
+				Session session = null;
 
-			try {
-				session = openSession();
+				try {
+					session = openSession();
 
-				Query query = session.createQuery("SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}");
+					Query query = session.createQuery("SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias}");
 
-				count = (Long)query.uniqueResult();
+					count = (Long)query.uniqueResult();
 
-				${finderCache}.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+					${finderCache}.putResult(_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
+				catch (Exception exception) {
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+					</#if>
+
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-				</#if>
 
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
+			return count.intValue();
+
+			<#if entity.isChangeTrackingEnabled()>
+				}
+			</#if>
 		}
-
-		return count.intValue();
-
-		<#if entity.isChangeTrackingEnabled()>
-			}
-		</#if>
-	}
+	</#if>
 
 	<#list entity.entityColumns as entityColumn>
 		<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>
@@ -2671,23 +2675,23 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				);
 		</#if>
 
-		_finderPathCountAll =
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				new FinderPath(
-			<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-				_createFinderPath(
-			<#else>
-				new FinderPath(
-					${entityCacheEnabled},
-					${finderCacheEnabled},
-					Long.class,
-			</#if>
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countAll", new String[0]
-			<#if serviceBuilder.isVersionGTE_7_3_0()>
-				, new String[0], false
-			</#if>
-			);
+		<#if !serviceBuilder.isVersionGTE_7_4_0()>
+			_finderPathCountAll =
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					_createFinderPath(
+				<#else>
+					new FinderPath(
+						${entityCacheEnabled},
+						${finderCacheEnabled},
+						Long.class,
+				</#if>
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"countAll", new String[0]
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					, new String[0], false
+				</#if>
+				);
+		</#if>
 
 		<#if entity.isHierarchicalTree()>
 			_finderPathWithPaginationCountAncestors =

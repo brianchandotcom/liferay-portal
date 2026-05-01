@@ -3890,91 +3890,6 @@ tell application "Safari" to quit
 		</sequential>
 	</macrodef>
 
-	<macrodef name="prepare-selenium-click-to-chat-properties">
-		<sequential>
-			<if>
-				<isset property="click.to.chat.chatwoot.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.chatwoot.password=${click.to.chat.chatwoot.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.hubspot.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.hubspot.password=${click.to.chat.hubspot.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.jivochat.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.jivochat.password=${click.to.chat.jivochat.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.liveperson.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.liveperson.password=${click.to.chat.liveperson.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.smartsupp.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.smartsupp.password=${click.to.chat.smartsupp.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.tawkto.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.tawkto.password=${click.to.chat.tawkto.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.tidio.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.tidio.password=${click.to.chat.tidio.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.tolvnow.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.tolvnow.password=${click.to.chat.tolvnow.password}
-					</echo>
-				</then>
-			</if>
-
-			<if>
-				<isset property="click.to.chat.zendesk.password" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						click.to.chat.zendesk.password=${click.to.chat.zendesk.password}
-					</echo>
-				</then>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="prepare-selenium-database-properties">
 		<sequential>
 			<for list="${database.types}" param="database.type">
@@ -13979,105 +13894,6 @@ analytics.cloud.domain.allowed=*</echo>
 		</if>
 
 		<if>
-			<isset property="click.to.chat.chatwoot.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.chatwoot.password=${click.to.chat.chatwoot.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.crisp.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.crisp.password=${click.to.chat.crisp.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.hubspot.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.hubspot.password=${click.to.chat.hubspot.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.jivochat.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.jivochat.password=${click.to.chat.jivochat.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.livechat.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.livechat.password=${click.to.chat.livechat.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.liveperson.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.liveperson.password=${click.to.chat.liveperson.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.smartsupp.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.smartsupp.password=${click.to.chat.smartsupp.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tawkto.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tawkto.password=${click.to.chat.tawkto.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tidio.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tidio.password=${click.to.chat.tidio.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.tolvnow.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.tolvnow.password=${click.to.chat.tolvnow.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="click.to.chat.zendesk.password" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					click.to.chat.zendesk.password=${click.to.chat.zendesk.password}
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<isset property="default.admin.password" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -14595,7 +14411,6 @@ analytics.cloud.domain.allowed=*</echo>
 		<prepare-selenium-aws-translation-properties />
 		<prepare-selenium-azure-translation-properties />
 		<prepare-selenium-browser />
-		<prepare-selenium-click-to-chat-properties />
 		<prepare-selenium-database-properties />
 		<prepare-selenium-digital-signature-properties />
 		<prepare-selenium-email-properties />

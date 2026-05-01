@@ -11,7 +11,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -19,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -82,9 +80,6 @@ public class AnnouncementsFlagPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByCompanyId;
 	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
 	private FinderPath _finderPathCountByCompanyId;
@@ -768,198 +763,6 @@ public class AnnouncementsFlagPersistenceImpl
 		return fetchByPrimaryKey((Serializable)flagId);
 	}
 
-	/**
-	 * Returns all the announcements flags.
-	 *
-	 * @return the announcements flags
-	 */
-	@Override
-	public List<AnnouncementsFlag> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the announcements flags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnnouncementsFlagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of announcements flags
-	 * @param end the upper bound of the range of announcements flags (not inclusive)
-	 * @return the range of announcements flags
-	 */
-	@Override
-	public List<AnnouncementsFlag> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the announcements flags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnnouncementsFlagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of announcements flags
-	 * @param end the upper bound of the range of announcements flags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of announcements flags
-	 */
-	@Override
-	public List<AnnouncementsFlag> findAll(
-		int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the announcements flags.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnnouncementsFlagModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of announcements flags
-	 * @param end the upper bound of the range of announcements flags (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of announcements flags
-	 */
-	@Override
-	public List<AnnouncementsFlag> findAll(
-		int start, int end,
-		OrderByComparator<AnnouncementsFlag> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<AnnouncementsFlag> list = null;
-
-			if (useFinderCache) {
-				list = (List<AnnouncementsFlag>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_ANNOUNCEMENTSFLAG);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_ANNOUNCEMENTSFLAG;
-
-					sql = sql.concat(AnnouncementsFlagModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<AnnouncementsFlag>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the announcements flags from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (AnnouncementsFlag announcementsFlag : findAll()) {
-			remove(announcementsFlag);
-		}
-	}
-
-	/**
-	 * Returns the number of announcements flags.
-	 *
-	 * @return the number of announcements flags
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					AnnouncementsFlag.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_ANNOUNCEMENTSFLAG);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
@@ -1040,18 +843,6 @@ public class AnnouncementsFlagPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1077,8 +868,7 @@ public class AnnouncementsFlagPersistenceImpl
 				_finderPathCountByCompanyId,
 				_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
-				AnnouncementsFlagModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"announcementsFlag.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getCompanyId));
@@ -1107,8 +897,7 @@ public class AnnouncementsFlagPersistenceImpl
 				_finderPathWithoutPaginationFindByEntryId,
 				_finderPathCountByEntryId, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
-				AnnouncementsFlagModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"announcementsFlag.", "entryId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getEntryId));
@@ -1142,19 +931,17 @@ public class AnnouncementsFlagPersistenceImpl
 		EntityCacheUtil.removeCache(AnnouncementsFlagImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		AnnouncementsFlagModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG =
 		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";
 
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE =
 		"SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE ";
 
-	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG =
-		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag";
-
 	private static final String _SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE =
 		"SELECT COUNT(announcementsFlag) FROM AnnouncementsFlag announcementsFlag WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "announcementsFlag.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AnnouncementsFlag exists with the key {";
@@ -1168,4 +955,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1156787921
+// LIFERAY-SERVICE-BUILDER-HASH:-1788557452

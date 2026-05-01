@@ -95,6 +95,8 @@ public class ObjectStateTransitionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectStateTransition";
 
+	public static final String ENTITY_ALIAS = "objectStateTransition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectStateTransition.objectStateTransitionId ASC";
 
@@ -999,4 +1001,4 @@ public class ObjectStateTransitionModelImpl
 	private ObjectStateTransition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1482669156
+// LIFERAY-SERVICE-BUILDER-HASH:-1535567246

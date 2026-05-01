@@ -86,6 +86,8 @@ public class PatcherFixComponentModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherFixComponent";
 
+	public static final String ENTITY_ALIAS = "patcherFixComponent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherFixComponent.patcherFixComponentId ASC";
 
@@ -808,4 +810,4 @@ public class PatcherFixComponentModelImpl
 	private PatcherFixComponent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-548814181
+// LIFERAY-SERVICE-BUILDER-HASH:-1534987057

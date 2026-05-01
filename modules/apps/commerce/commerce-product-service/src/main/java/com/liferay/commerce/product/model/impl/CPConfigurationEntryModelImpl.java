@@ -143,6 +143,8 @@ public class CPConfigurationEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPConfigurationEntry";
 
+	public static final String ENTITY_ALIAS = "cpConfigurationEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpConfigurationEntry.createDate DESC";
 
@@ -1988,4 +1990,4 @@ public class CPConfigurationEntryModelImpl
 	private CPConfigurationEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1429379552
+// LIFERAY-SERVICE-BUILDER-HASH:-1601145354

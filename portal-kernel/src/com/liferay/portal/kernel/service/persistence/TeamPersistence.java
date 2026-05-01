@@ -644,74 +644,6 @@ public interface TeamPersistence
 	public Team fetchByPrimaryKey(long teamId);
 
 	/**
-	 * Returns all the teams.
-	 *
-	 * @return the teams
-	 */
-	public java.util.List<Team> findAll();
-
-	/**
-	 * Returns a range of all the teams.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of teams
-	 * @param end the upper bound of the range of teams (not inclusive)
-	 * @return the range of teams
-	 */
-	public java.util.List<Team> findAll(int start, int end);
-
-	/**
-	 * Returns an ordered range of all the teams.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of teams
-	 * @param end the upper bound of the range of teams (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of teams
-	 */
-	public java.util.List<Team> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the teams.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.TeamModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of teams
-	 * @param end the upper bound of the range of teams (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of teams
-	 */
-	public java.util.List<Team> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Team>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Removes all the teams from the database.
-	 */
-	public void removeAll();
-
-	/**
-	 * Returns the number of teams.
-	 *
-	 * @return the number of teams
-	 */
-	public int countAll();
-
-	/**
 	 * Returns the primaryKeys of users associated with the team.
 	 *
 	 * @param pk the primary key of the team
@@ -1056,4 +988,4 @@ public interface TeamPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1370983721
+// LIFERAY-SERVICE-BUILDER-HASH:-116041592

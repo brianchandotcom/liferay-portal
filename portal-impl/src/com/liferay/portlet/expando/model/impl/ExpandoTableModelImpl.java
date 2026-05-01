@@ -80,6 +80,8 @@ public class ExpandoTableModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoTable";
 
+	public static final String ENTITY_ALIAS = "expandoTable";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY expandoTable.tableId ASC";
 
@@ -729,4 +731,4 @@ public class ExpandoTableModelImpl
 	private ExpandoTable _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1958739081
+// LIFERAY-SERVICE-BUILDER-HASH:1737088029

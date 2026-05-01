@@ -14,12 +14,10 @@ import com.liferay.commerce.model.impl.CommerceOrderTypeRelModelImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderTypeRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderTypeRelUtil;
 import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -95,9 +93,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1274,188 +1269,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 		return fetchByPrimaryKey((Serializable)commerceOrderTypeRelId);
 	}
 
-	/**
-	 * Returns all the commerce order type rels.
-	 *
-	 * @return the commerce order type rels
-	 */
-	@Override
-	public List<CommerceOrderTypeRel> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce order type rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order type rels
-	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
-	 * @return the range of commerce order type rels
-	 */
-	@Override
-	public List<CommerceOrderTypeRel> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order type rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order type rels
-	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of commerce order type rels
-	 */
-	@Override
-	public List<CommerceOrderTypeRel> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order type rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceOrderTypeRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order type rels
-	 * @param end the upper bound of the range of commerce order type rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of commerce order type rels
-	 */
-	@Override
-	public List<CommerceOrderTypeRel> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderTypeRel> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<CommerceOrderTypeRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceOrderTypeRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_COMMERCEORDERTYPEREL);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_COMMERCEORDERTYPEREL;
-
-				sql = sql.concat(CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<CommerceOrderTypeRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the commerce order type rels from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (CommerceOrderTypeRel commerceOrderTypeRel : findAll()) {
-			remove(commerceOrderTypeRel);
-		}
-	}
-
-	/**
-	 * Returns the number of commerce order type rels.
-	 *
-	 * @return the number of commerce order type rels
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(
-					_SQL_COUNT_COMMERCEORDERTYPEREL);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -1489,18 +1302,6 @@ public class CommerceOrderTypeRelPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1524,7 +1325,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
-			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceOrderTypeRel::getUuid));
@@ -1556,7 +1357,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 				CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceOrderTypeRel.", "uuid", FinderColumn.Type.STRING,
 					"=", true, false, CommerceOrderTypeRel::getUuid),
@@ -1591,7 +1392,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 				CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceOrderTypeRel.", "commerceOrderTypeId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1621,7 +1422,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
-			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, false, CommerceOrderTypeRel::getClassNameId),
@@ -1710,20 +1511,17 @@ public class CommerceOrderTypeRelPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CommerceOrderTypeRelModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_COMMERCEORDERTYPEREL =
 		"SELECT commerceOrderTypeRel FROM CommerceOrderTypeRel commerceOrderTypeRel";
 
 	private static final String _SQL_SELECT_COMMERCEORDERTYPEREL_WHERE =
 		"SELECT commerceOrderTypeRel FROM CommerceOrderTypeRel commerceOrderTypeRel WHERE ";
 
-	private static final String _SQL_COUNT_COMMERCEORDERTYPEREL =
-		"SELECT COUNT(commerceOrderTypeRel) FROM CommerceOrderTypeRel commerceOrderTypeRel";
-
 	private static final String _SQL_COUNT_COMMERCEORDERTYPEREL_WHERE =
 		"SELECT COUNT(commerceOrderTypeRel) FROM CommerceOrderTypeRel commerceOrderTypeRel WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"commerceOrderTypeRel.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceOrderTypeRel exists with the key {";
@@ -1740,4 +1538,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980635807
+// LIFERAY-SERVICE-BUILDER-HASH:20545505

@@ -98,6 +98,8 @@ public class LaunchSetModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LaunchSet";
 
+	public static final String ENTITY_ALIAS = "launchSet";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY launchSet.modifiedDate ASC";
 
@@ -1067,4 +1069,4 @@ public class LaunchSetModelImpl
 	private LaunchSet _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1459414778
+// LIFERAY-SERVICE-BUILDER-HASH:-1290090404

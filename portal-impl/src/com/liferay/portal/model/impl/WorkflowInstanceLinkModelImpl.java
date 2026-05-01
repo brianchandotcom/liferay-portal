@@ -96,6 +96,8 @@ public class WorkflowInstanceLinkModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowInstanceLink";
 
+	public static final String ENTITY_ALIAS = "workflowInstanceLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY workflowInstanceLink.createDate DESC";
 
@@ -1020,4 +1022,4 @@ public class WorkflowInstanceLinkModelImpl
 	private WorkflowInstanceLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:791093996
+// LIFERAY-SERVICE-BUILDER-HASH:1077478289

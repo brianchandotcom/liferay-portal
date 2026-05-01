@@ -106,6 +106,8 @@ public class LayoutUtilityPageEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutUtilityPageEntry";
 
+	public static final String ENTITY_ALIAS = "layoutUtilityPageEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutUtilityPageEntry.name ASC";
 
@@ -1296,4 +1298,4 @@ public class LayoutUtilityPageEntryModelImpl
 	private LayoutUtilityPageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1136310218
+// LIFERAY-SERVICE-BUILDER-HASH:1917935428

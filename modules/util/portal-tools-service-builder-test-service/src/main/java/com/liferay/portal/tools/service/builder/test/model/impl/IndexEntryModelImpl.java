@@ -84,6 +84,8 @@ public class IndexEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table IndexEntry";
 
+	public static final String ENTITY_ALIAS = "indexEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY indexEntry.indexEntryId ASC";
 
@@ -856,4 +858,4 @@ public class IndexEntryModelImpl
 	private IndexEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1651733026
+// LIFERAY-SERVICE-BUILDER-HASH:1897275979

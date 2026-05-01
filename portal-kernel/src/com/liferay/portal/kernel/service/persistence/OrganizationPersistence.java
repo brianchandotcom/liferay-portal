@@ -1824,74 +1824,6 @@ public interface OrganizationPersistence
 	public Organization fetchByPrimaryKey(long organizationId);
 
 	/**
-	 * Returns all the organizations.
-	 *
-	 * @return the organizations
-	 */
-	public java.util.List<Organization> findAll();
-
-	/**
-	 * Returns a range of all the organizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrganizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of organizations
-	 * @param end the upper bound of the range of organizations (not inclusive)
-	 * @return the range of organizations
-	 */
-	public java.util.List<Organization> findAll(int start, int end);
-
-	/**
-	 * Returns an ordered range of all the organizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrganizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of organizations
-	 * @param end the upper bound of the range of organizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of organizations
-	 */
-	public java.util.List<Organization> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Organization>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the organizations.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.OrganizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of organizations
-	 * @param end the upper bound of the range of organizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of organizations
-	 */
-	public java.util.List<Organization> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Organization>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Removes all the organizations from the database.
-	 */
-	public void removeAll();
-
-	/**
-	 * Returns the number of organizations.
-	 *
-	 * @return the number of organizations
-	 */
-	public int countAll();
-
-	/**
 	 * Returns the primaryKeys of groups associated with the organization.
 	 *
 	 * @param pk the primary key of the organization
@@ -2232,4 +2164,4 @@ public interface OrganizationPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:400524672
+// LIFERAY-SERVICE-BUILDER-HASH:1437914779

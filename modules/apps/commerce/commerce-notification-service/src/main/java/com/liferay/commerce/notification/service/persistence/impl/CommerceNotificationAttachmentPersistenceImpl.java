@@ -13,12 +13,10 @@ import com.liferay.commerce.notification.model.impl.CommerceNotificationAttachme
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentPersistence;
 import com.liferay.commerce.notification.service.persistence.CommerceNotificationAttachmentUtil;
 import com.liferay.commerce.notification.service.persistence.impl.constants.CommercePersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -89,9 +87,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -960,191 +955,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			(Serializable)commerceNotificationAttachmentId);
 	}
 
-	/**
-	 * Returns all the commerce notification attachments.
-	 *
-	 * @return the commerce notification attachments
-	 */
-	@Override
-	public List<CommerceNotificationAttachment> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce notification attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @return the range of commerce notification attachments
-	 */
-	@Override
-	public List<CommerceNotificationAttachment> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of commerce notification attachments
-	 */
-	@Override
-	public List<CommerceNotificationAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceNotificationAttachment> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce notification attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of commerce notification attachments
-	 */
-	@Override
-	public List<CommerceNotificationAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceNotificationAttachment> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<CommerceNotificationAttachment> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceNotificationAttachment>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT;
-
-				sql = sql.concat(
-					CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<CommerceNotificationAttachment>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the commerce notification attachments from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				findAll()) {
-
-			remove(commerceNotificationAttachment);
-		}
-	}
-
-	/**
-	 * Returns the number of commerce notification attachments.
-	 *
-	 * @return the number of commerce notification attachments
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(
-					_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -1178,18 +988,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1214,7 +1012,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 			CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"commerceNotificationAttachment.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1264,7 +1062,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceNotificationAttachment.", "uuid",
 					FinderColumn.Type.STRING, "=", true, false,
@@ -1306,7 +1104,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE,
 				CommerceNotificationAttachmentModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"commerceNotificationAttachment.",
 					"commerceNotificationQueueEntryId", FinderColumn.Type.LONG,
@@ -1357,6 +1155,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CommerceNotificationAttachmentModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT =
 		"SELECT commerceNotificationAttachment FROM CommerceNotificationAttachment commerceNotificationAttachment";
 
@@ -1364,15 +1165,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 		_SQL_SELECT_COMMERCENOTIFICATIONATTACHMENT_WHERE =
 			"SELECT commerceNotificationAttachment FROM CommerceNotificationAttachment commerceNotificationAttachment WHERE ";
 
-	private static final String _SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT =
-		"SELECT COUNT(commerceNotificationAttachment) FROM CommerceNotificationAttachment commerceNotificationAttachment";
-
 	private static final String
 		_SQL_COUNT_COMMERCENOTIFICATIONATTACHMENT_WHERE =
 			"SELECT COUNT(commerceNotificationAttachment) FROM CommerceNotificationAttachment commerceNotificationAttachment WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"commerceNotificationAttachment.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CommerceNotificationAttachment exists with the key {";
@@ -1392,4 +1187,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-752877320
+// LIFERAY-SERVICE-BUILDER-HASH:-1506068141

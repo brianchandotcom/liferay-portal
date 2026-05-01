@@ -84,6 +84,8 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuth2ApplicationScopeAliases";
 
+	public static final String ENTITY_ALIAS = "oAuth2ApplicationScopeAliases";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuth2ApplicationScopeAliases.oAuth2ApplicationScopeAliasesId ASC";
 
@@ -773,4 +775,4 @@ public class OAuth2ApplicationScopeAliasesModelImpl
 	private OAuth2ApplicationScopeAliases _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2045064648
+// LIFERAY-SERVICE-BUILDER-HASH:1838621506

@@ -2572,85 +2572,6 @@ public class CountryUtil {
 		return getPersistence().fetchByPrimaryKey(countryId);
 	}
 
-	/**
-	 * Returns all the countries.
-	 *
-	 * @return the countries
-	 */
-	public static List<Country> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the countries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.CountryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of countries
-	 * @param end the upper bound of the range of countries (not inclusive)
-	 * @return the range of countries
-	 */
-	public static List<Country> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the countries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.CountryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of countries
-	 * @param end the upper bound of the range of countries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of countries
-	 */
-	public static List<Country> findAll(
-		int start, int end, OrderByComparator<Country> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the countries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.CountryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of countries
-	 * @param end the upper bound of the range of countries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of countries
-	 */
-	public static List<Country> findAll(
-		int start, int end, OrderByComparator<Country> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the countries from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of countries.
-	 *
-	 * @return the number of countries
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static CountryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -2662,4 +2583,4 @@ public class CountryUtil {
 	private static volatile CountryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1197021507
+// LIFERAY-SERVICE-BUILDER-HASH:2064377086

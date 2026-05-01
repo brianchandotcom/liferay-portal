@@ -81,6 +81,8 @@ public class BrowserTrackerModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 
+	public static final String ENTITY_ALIAS = "browserTracker";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY browserTracker.browserTrackerId ASC";
 
@@ -667,4 +669,4 @@ public class BrowserTrackerModelImpl
 	private BrowserTracker _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1007192758
+// LIFERAY-SERVICE-BUILDER-HASH:-95431219

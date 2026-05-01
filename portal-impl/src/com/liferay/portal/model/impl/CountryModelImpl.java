@@ -116,6 +116,8 @@ public class CountryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Country";
 
+	public static final String ENTITY_ALIAS = "country";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY country.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Country.name ASC";
@@ -1592,4 +1594,4 @@ public class CountryModelImpl
 	private Country _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2070484933
+// LIFERAY-SERVICE-BUILDER-HASH:1793112948

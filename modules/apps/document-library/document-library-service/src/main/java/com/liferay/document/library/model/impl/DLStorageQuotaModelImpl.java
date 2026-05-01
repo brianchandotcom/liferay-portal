@@ -76,6 +76,8 @@ public class DLStorageQuotaModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DLStorageQuota";
 
+	public static final String ENTITY_ALIAS = "dlStorageQuota";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlStorageQuota.dlStorageQuotaId ASC";
 
@@ -612,4 +614,4 @@ public class DLStorageQuotaModelImpl
 	private DLStorageQuota _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1590728266
+// LIFERAY-SERVICE-BUILDER-HASH:1853432676

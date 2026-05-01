@@ -75,6 +75,8 @@ public class NullConvertibleEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table NullConvertibleEntry";
 
+	public static final String ENTITY_ALIAS = "nullConvertibleEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY nullConvertibleEntry.nullConvertibleEntryId ASC";
 
@@ -582,4 +584,4 @@ public class NullConvertibleEntryModelImpl
 	private NullConvertibleEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2133249368
+// LIFERAY-SERVICE-BUILDER-HASH:-2067136313

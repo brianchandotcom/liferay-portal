@@ -96,6 +96,9 @@ public class CommerceShippingOptionAccountEntryRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CSOptionAccountEntryRel";
 
+	public static final String ENTITY_ALIAS =
+		"commerceShippingOptionAccountEntryRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShippingOptionAccountEntryRel.CommerceShippingOptionAccountEntryRelId ASC";
 
@@ -1052,4 +1055,4 @@ public class CommerceShippingOptionAccountEntryRelModelImpl
 	private CommerceShippingOptionAccountEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1855889822
+// LIFERAY-SERVICE-BUILDER-HASH:618450623

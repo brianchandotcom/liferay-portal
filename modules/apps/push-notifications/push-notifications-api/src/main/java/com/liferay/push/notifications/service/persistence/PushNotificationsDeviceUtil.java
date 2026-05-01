@@ -478,87 +478,6 @@ public class PushNotificationsDeviceUtil {
 		return getPersistence().fetchByPrimaryKey(pushNotificationsDeviceId);
 	}
 
-	/**
-	 * Returns all the push notifications devices.
-	 *
-	 * @return the push notifications devices
-	 */
-	public static List<PushNotificationsDevice> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the push notifications devices.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of push notifications devices
-	 * @param end the upper bound of the range of push notifications devices (not inclusive)
-	 * @return the range of push notifications devices
-	 */
-	public static List<PushNotificationsDevice> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the push notifications devices.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of push notifications devices
-	 * @param end the upper bound of the range of push notifications devices (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of push notifications devices
-	 */
-	public static List<PushNotificationsDevice> findAll(
-		int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the push notifications devices.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.push.notifications.model.impl.PushNotificationsDeviceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of push notifications devices
-	 * @param end the upper bound of the range of push notifications devices (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of push notifications devices
-	 */
-	public static List<PushNotificationsDevice> findAll(
-		int start, int end,
-		OrderByComparator<PushNotificationsDevice> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the push notifications devices from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of push notifications devices.
-	 *
-	 * @return the number of push notifications devices
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static PushNotificationsDevicePersistence getPersistence() {
 		return _persistence;
 	}
@@ -572,4 +491,4 @@ public class PushNotificationsDeviceUtil {
 	private static volatile PushNotificationsDevicePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1801783723
+// LIFERAY-SERVICE-BUILDER-HASH:-1075822631

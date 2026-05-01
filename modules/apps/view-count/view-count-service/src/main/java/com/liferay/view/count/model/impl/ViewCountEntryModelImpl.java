@@ -76,6 +76,8 @@ public class ViewCountEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ViewCountEntry";
 
+	public static final String ENTITY_ALIAS = "viewCountEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY viewCountEntry.id.companyId ASC, viewCountEntry.id.classNameId ASC, viewCountEntry.id.classPK ASC";
 
@@ -628,4 +630,4 @@ public class ViewCountEntryModelImpl
 	private ViewCountEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1289413384
+// LIFERAY-SERVICE-BUILDER-HASH:2125261203

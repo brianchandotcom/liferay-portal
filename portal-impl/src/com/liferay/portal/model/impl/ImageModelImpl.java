@@ -85,6 +85,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Image";
 
+	public static final String ENTITY_ALIAS = "image";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
@@ -789,4 +791,4 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private Image _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:632084186
+// LIFERAY-SERVICE-BUILDER-HASH:1555301794

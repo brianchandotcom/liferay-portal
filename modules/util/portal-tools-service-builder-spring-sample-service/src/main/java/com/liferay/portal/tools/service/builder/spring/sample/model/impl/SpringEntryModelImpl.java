@@ -78,6 +78,8 @@ public class SpringEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SpringEntry";
 
+	public static final String ENTITY_ALIAS = "springEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY springEntry.springEntryId ASC";
 
@@ -688,4 +690,4 @@ public class SpringEntryModelImpl
 	private SpringEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1598670516
+// LIFERAY-SERVICE-BUILDER-HASH:-489859036

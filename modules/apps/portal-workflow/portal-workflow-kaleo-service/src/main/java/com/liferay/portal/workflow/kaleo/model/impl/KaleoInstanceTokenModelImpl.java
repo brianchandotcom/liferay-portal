@@ -105,6 +105,8 @@ public class KaleoInstanceTokenModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoInstanceToken";
 
+	public static final String ENTITY_ALIAS = "kaleoInstanceToken";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoInstanceToken.kaleoInstanceTokenId ASC";
 
@@ -1261,4 +1263,4 @@ public class KaleoInstanceTokenModelImpl
 	private KaleoInstanceToken _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1049474528
+// LIFERAY-SERVICE-BUILDER-HASH:-348908015

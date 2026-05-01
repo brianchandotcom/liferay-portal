@@ -116,6 +116,8 @@ public class ObjectActionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectAction";
 
+	public static final String ENTITY_ALIAS = "objectAction";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectAction.objectActionId ASC";
 
@@ -1731,4 +1733,4 @@ public class ObjectActionModelImpl
 	private ObjectAction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1740479671
+// LIFERAY-SERVICE-BUILDER-HASH:-259110987

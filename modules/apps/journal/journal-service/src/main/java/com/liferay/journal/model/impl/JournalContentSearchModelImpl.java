@@ -86,6 +86,8 @@ public class JournalContentSearchModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalContentSearch";
 
+	public static final String ENTITY_ALIAS = "journalContentSearch";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY journalContentSearch.contentSearchId ASC";
 
@@ -879,4 +881,4 @@ public class JournalContentSearchModelImpl
 	private JournalContentSearch _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:566003653
+// LIFERAY-SERVICE-BUILDER-HASH:1343826108

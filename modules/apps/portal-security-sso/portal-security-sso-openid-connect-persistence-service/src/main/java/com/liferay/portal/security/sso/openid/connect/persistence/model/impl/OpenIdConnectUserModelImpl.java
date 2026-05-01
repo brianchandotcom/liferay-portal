@@ -84,6 +84,8 @@ public class OpenIdConnectUserModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table OpenIdConnectUser";
 
+	public static final String ENTITY_ALIAS = "openIdConnectUser";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY openIdConnectUser.openIdConnectUserId ASC";
 
@@ -821,4 +823,4 @@ public class OpenIdConnectUserModelImpl
 	private OpenIdConnectUser _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-918796709
+// LIFERAY-SERVICE-BUILDER-HASH:-2015369178

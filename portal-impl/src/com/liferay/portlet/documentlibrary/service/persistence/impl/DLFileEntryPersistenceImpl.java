@@ -99,9 +99,6 @@ public class DLFileEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -739,7 +736,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2379,7 +2376,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2670,7 +2667,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -2868,7 +2865,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3027,7 +3024,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3236,7 +3233,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -4075,7 +4072,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -4289,7 +4286,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4459,7 +4456,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4680,7 +4677,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -5526,7 +5523,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -5742,7 +5739,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -5917,7 +5914,7 @@ public class DLFileEntryPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -6145,7 +6142,7 @@ public class DLFileEntryPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(DLFileEntryModelImpl.ORDER_BY_JPQL);
@@ -7439,195 +7436,6 @@ public class DLFileEntryPersistenceImpl
 		return fetchByPrimaryKey((Serializable)fileEntryId);
 	}
 
-	/**
-	 * Returns all the document library file entries.
-	 *
-	 * @return the document library file entries
-	 */
-	@Override
-	public List<DLFileEntry> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the document library file entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file entries
-	 * @param end the upper bound of the range of document library file entries (not inclusive)
-	 * @return the range of document library file entries
-	 */
-	@Override
-	public List<DLFileEntry> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file entries
-	 * @param end the upper bound of the range of document library file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of document library file entries
-	 */
-	@Override
-	public List<DLFileEntry> findAll(
-		int start, int end, OrderByComparator<DLFileEntry> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the document library file entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of document library file entries
-	 * @param end the upper bound of the range of document library file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of document library file entries
-	 */
-	@Override
-	public List<DLFileEntry> findAll(
-		int start, int end, OrderByComparator<DLFileEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntry.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<DLFileEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<DLFileEntry>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_DLFILEENTRY);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_DLFILEENTRY;
-
-					sql = sql.concat(DLFileEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DLFileEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the document library file entries from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (DLFileEntry dlFileEntry : findAll()) {
-			remove(dlFileEntry);
-		}
-	}
-
-	/**
-	 * Returns the number of document library file entries.
-	 *
-	 * @return the number of document library file entries
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					DLFileEntry.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_DLFILEENTRY);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -7757,18 +7565,6 @@ public class DLFileEntryPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -7791,7 +7587,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getUuid));
@@ -7835,7 +7631,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, DLFileEntry::getUuid),
@@ -7867,7 +7663,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId));
@@ -7896,7 +7692,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getCompanyId));
@@ -7925,7 +7721,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByRepositoryId,
 				_finderPathCountByRepositoryId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getRepositoryId));
@@ -7954,7 +7750,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByMimeType,
 				_finderPathCountByMimeType, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "mimeType", FinderColumn.Type.STRING, "=",
 					true, true, DLFileEntry::getMimeType));
@@ -7983,7 +7779,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFileEntryTypeId,
 				_finderPathCountByFileEntryTypeId,
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "fileEntryTypeId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getFileEntryTypeId));
@@ -8012,7 +7808,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindBySmallImageId,
 				_finderPathCountBySmallImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getSmallImageId));
@@ -8041,7 +7837,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByLargeImageId,
 				_finderPathCountByLargeImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "largeImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getLargeImageId));
@@ -8070,7 +7866,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCustom1ImageId,
 				_finderPathCountByCustom1ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "custom1ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom1ImageId));
@@ -8099,7 +7895,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCustom2ImageId,
 				_finderPathCountByCustom2ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "custom2ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom2ImageId));
@@ -8127,7 +7923,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_U,
 			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, DLFileEntry::getGroupId),
@@ -8182,7 +7978,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByR_F,
 			_finderPathWithoutPaginationFindByR_F, _finderPathCountByR_F,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
 				true, false, DLFileEntry::getRepositoryId),
@@ -8213,7 +8009,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByF_N,
 			_finderPathWithoutPaginationFindByF_N, _finderPathCountByF_N,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
 				false, DLFileEntry::getFolderId),
@@ -8368,7 +8164,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, DLFileEntry::getCompanyId),
@@ -8423,7 +8219,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByS_L_C1_C2,
 				_finderPathCountByS_L_C1_C2, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
 					true, false, DLFileEntry::getSmallImageId),
@@ -8461,14 +8257,14 @@ public class DLFileEntryPersistenceImpl
 		EntityCacheUtil.removeCache(DLFileEntryImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		DLFileEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_DLFILEENTRY =
 		"SELECT dlFileEntry FROM DLFileEntry dlFileEntry";
 
 	private static final String _SQL_SELECT_DLFILEENTRY_WHERE =
 		"SELECT dlFileEntry FROM DLFileEntry dlFileEntry WHERE ";
-
-	private static final String _SQL_COUNT_DLFILEENTRY =
-		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry";
 
 	private static final String _SQL_COUNT_DLFILEENTRY_WHERE =
 		"SELECT COUNT(dlFileEntry) FROM DLFileEntry dlFileEntry WHERE ";
@@ -8494,8 +8290,6 @@ public class DLFileEntryPersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "DLFileEntry";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "dlFileEntry.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE = "DLFileEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
@@ -8513,4 +8307,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-886158742
+// LIFERAY-SERVICE-BUILDER-HASH:-1730674712

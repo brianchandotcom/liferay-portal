@@ -89,6 +89,8 @@ public class LVEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LVEntry";
 
+	public static final String ENTITY_ALIAS = "lvEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY lvEntry.lvEntryId ASC";
 
@@ -1051,4 +1053,4 @@ public class LVEntryModelImpl
 	private LVEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1937795128
+// LIFERAY-SERVICE-BUILDER-HASH:218354781

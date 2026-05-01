@@ -132,6 +132,8 @@ public class DLFileEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 
+	public static final String ENTITY_ALIAS = "dlFileEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 
@@ -2097,4 +2099,4 @@ public class DLFileEntryModelImpl
 	private DLFileEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1934178160
+// LIFERAY-SERVICE-BUILDER-HASH:399266793

@@ -89,6 +89,8 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Contacts_Entry";
 
+	public static final String ENTITY_ALIAS = "entry";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY entry.fullName ASC";
 
 	public static final String ORDER_BY_SQL =
@@ -861,4 +863,4 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private Entry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1527492531
+// LIFERAY-SERVICE-BUILDER-HASH:1486077500

@@ -84,6 +84,8 @@ public class JournalArticleLocalizationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table JournalArticleLocalization";
 
+	public static final String ENTITY_ALIAS = "journalArticleLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY journalArticleLocalization.articleLocalizationId ASC";
 
@@ -822,4 +824,4 @@ public class JournalArticleLocalizationModelImpl
 	private JournalArticleLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1815103918
+// LIFERAY-SERVICE-BUILDER-HASH:1475631373

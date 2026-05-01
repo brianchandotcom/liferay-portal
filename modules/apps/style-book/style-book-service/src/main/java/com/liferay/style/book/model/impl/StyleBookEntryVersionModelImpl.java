@@ -106,6 +106,8 @@ public class StyleBookEntryVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table StyleBookEntryVersion";
 
+	public static final String ENTITY_ALIAS = "styleBookEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY styleBookEntryVersion.version DESC";
 
@@ -1415,4 +1417,4 @@ public class StyleBookEntryVersionModelImpl
 	private StyleBookEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1503704769
+// LIFERAY-SERVICE-BUILDER-HASH:1218324640

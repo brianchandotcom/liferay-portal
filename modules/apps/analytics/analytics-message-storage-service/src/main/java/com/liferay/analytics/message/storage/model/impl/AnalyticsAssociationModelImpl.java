@@ -92,6 +92,8 @@ public class AnalyticsAssociationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AnalyticsAssociation";
 
+	public static final String ENTITY_ALIAS = "analyticsAssociation";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY analyticsAssociation.analyticsAssociationId ASC";
 
@@ -960,4 +962,4 @@ public class AnalyticsAssociationModelImpl
 	private AnalyticsAssociation _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-775148284
+// LIFERAY-SERVICE-BUILDER-HASH:2030950540

@@ -103,6 +103,8 @@ public class DDLRecordVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordVersion";
 
+	public static final String ENTITY_ALIAS = "ddlRecordVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddlRecordVersion.recordVersionId ASC";
 
@@ -1311,4 +1313,4 @@ public class DDLRecordVersionModelImpl
 	private DDLRecordVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1430865106
+// LIFERAY-SERVICE-BUILDER-HASH:143642618

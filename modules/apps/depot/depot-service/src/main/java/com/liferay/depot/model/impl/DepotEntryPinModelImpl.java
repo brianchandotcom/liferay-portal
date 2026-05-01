@@ -87,6 +87,8 @@ public class DepotEntryPinModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryPin";
 
+	public static final String ENTITY_ALIAS = "depotEntryPin";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY depotEntryPin.depotEntryPinId ASC";
 
@@ -839,4 +841,4 @@ public class DepotEntryPinModelImpl
 	private DepotEntryPin _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1964688710
+// LIFERAY-SERVICE-BUILDER-HASH:-309643210

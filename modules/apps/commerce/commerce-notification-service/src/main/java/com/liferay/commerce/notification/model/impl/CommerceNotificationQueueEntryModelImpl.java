@@ -116,6 +116,8 @@ public class CommerceNotificationQueueEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationQueueEntry";
 
+	public static final String ENTITY_ALIAS = "commerceNotificationQueueEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceNotificationQueueEntry.priority DESC";
 
@@ -1511,4 +1513,4 @@ public class CommerceNotificationQueueEntryModelImpl
 	private CommerceNotificationQueueEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-808025800
+// LIFERAY-SERVICE-BUILDER-HASH:-1325060828

@@ -96,6 +96,8 @@ public class CommerceWishListItemModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceWishListItem";
 
+	public static final String ENTITY_ALIAS = "commerceWishListItem";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceWishListItem.createDate DESC";
 
@@ -994,4 +996,4 @@ public class CommerceWishListItemModelImpl
 	private CommerceWishListItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:904621045
+// LIFERAY-SERVICE-BUILDER-HASH:-111764235

@@ -109,6 +109,8 @@ public class DDMDataProviderInstanceModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMDataProviderInstance";
 
+	public static final String ENTITY_ALIAS = "ddmDataProviderInstance";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmDataProviderInstance.dataProviderInstanceId ASC";
 
@@ -1429,4 +1431,4 @@ public class DDMDataProviderInstanceModelImpl
 	private DDMDataProviderInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-610484492
+// LIFERAY-SERVICE-BUILDER-HASH:354085436

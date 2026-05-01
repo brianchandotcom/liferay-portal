@@ -99,6 +99,8 @@ public class TemplateEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TemplateEntry";
 
+	public static final String ENTITY_ALIAS = "templateEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY templateEntry.templateEntryId ASC";
 
@@ -1167,4 +1169,4 @@ public class TemplateEntryModelImpl
 	private TemplateEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1821483392
+// LIFERAY-SERVICE-BUILDER-HASH:-1428459087

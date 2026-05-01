@@ -82,6 +82,8 @@ public class VirtualHostModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table VirtualHost";
 
+	public static final String ENTITY_ALIAS = "virtualHost";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY virtualHost.virtualHostId DESC";
 
@@ -799,4 +801,4 @@ public class VirtualHostModelImpl
 	private VirtualHost _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-690301142
+// LIFERAY-SERVICE-BUILDER-HASH:-1077359386

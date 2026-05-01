@@ -127,6 +127,8 @@ public class MBMessageModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MBMessage";
 
+	public static final String ENTITY_ALIAS = "mbMessage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbMessage.createDate ASC, mbMessage.messageId ASC";
 
@@ -1943,4 +1945,4 @@ public class MBMessageModelImpl
 	private MBMessage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1623877456
+// LIFERAY-SERVICE-BUILDER-HASH:1097164535

@@ -101,6 +101,8 @@ public class OrgLaborModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 
+	public static final String ENTITY_ALIAS = "orgLabor";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY orgLabor.organizationId ASC, orgLabor.listTypeId ASC";
 
@@ -1072,4 +1074,4 @@ public class OrgLaborModelImpl
 	private OrgLabor _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2146743931
+// LIFERAY-SERVICE-BUILDER-HASH:-1022705186

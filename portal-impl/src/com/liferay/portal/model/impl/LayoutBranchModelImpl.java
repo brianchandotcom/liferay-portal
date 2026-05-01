@@ -92,6 +92,8 @@ public class LayoutBranchModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutBranch";
 
+	public static final String ENTITY_ALIAS = "layoutBranch";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutBranch.layoutBranchId ASC";
 
@@ -932,4 +934,4 @@ public class LayoutBranchModelImpl
 	private LayoutBranch _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1192508271
+// LIFERAY-SERVICE-BUILDER-HASH:370906376

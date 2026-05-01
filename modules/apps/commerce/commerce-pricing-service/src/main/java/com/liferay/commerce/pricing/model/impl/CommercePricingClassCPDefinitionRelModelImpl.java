@@ -95,6 +95,9 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPricingClassCPDefinitionRel";
 
+	public static final String ENTITY_ALIAS =
+		"commercePricingClassCPDefinitionRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePricingClassCPDefinitionRel.createDate DESC";
 
@@ -960,4 +963,4 @@ public class CommercePricingClassCPDefinitionRelModelImpl
 	private CommercePricingClassCPDefinitionRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1920419540
+// LIFERAY-SERVICE-BUILDER-HASH:-1548379463

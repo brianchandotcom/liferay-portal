@@ -77,6 +77,8 @@ public class RedundantIndexEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table RedundantIndexEntry";
 
+	public static final String ENTITY_ALIAS = "redundantIndexEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY redundantIndexEntry.redundantIndexEntryId ASC";
 
@@ -629,4 +631,4 @@ public class RedundantIndexEntryModelImpl
 	private RedundantIndexEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1985687776
+// LIFERAY-SERVICE-BUILDER-HASH:-50495902

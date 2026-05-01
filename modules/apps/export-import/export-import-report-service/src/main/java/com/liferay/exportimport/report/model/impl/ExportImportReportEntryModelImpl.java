@@ -100,6 +100,8 @@ public class ExportImportReportEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ExportImportReportEntry";
 
+	public static final String ENTITY_ALIAS = "exportImportReportEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY exportImportReportEntry.exportImportReportEntryId ASC";
 
@@ -1191,4 +1193,4 @@ public class ExportImportReportEntryModelImpl
 	private ExportImportReportEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1311623805
+// LIFERAY-SERVICE-BUILDER-HASH:1907395091

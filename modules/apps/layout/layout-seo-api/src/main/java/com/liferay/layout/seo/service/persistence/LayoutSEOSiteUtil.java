@@ -550,86 +550,6 @@ public class LayoutSEOSiteUtil {
 		return getPersistence().fetchByPrimaryKey(layoutSEOSiteId);
 	}
 
-	/**
-	 * Returns all the layout seo sites.
-	 *
-	 * @return the layout seo sites
-	 */
-	public static List<LayoutSEOSite> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the layout seo sites.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout seo sites
-	 * @param end the upper bound of the range of layout seo sites (not inclusive)
-	 * @return the range of layout seo sites
-	 */
-	public static List<LayoutSEOSite> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout seo sites.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout seo sites
-	 * @param end the upper bound of the range of layout seo sites (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of layout seo sites
-	 */
-	public static List<LayoutSEOSite> findAll(
-		int start, int end,
-		OrderByComparator<LayoutSEOSite> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout seo sites.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.layout.seo.model.impl.LayoutSEOSiteModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of layout seo sites
-	 * @param end the upper bound of the range of layout seo sites (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of layout seo sites
-	 */
-	public static List<LayoutSEOSite> findAll(
-		int start, int end, OrderByComparator<LayoutSEOSite> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the layout seo sites from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of layout seo sites.
-	 *
-	 * @return the number of layout seo sites
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static LayoutSEOSitePersistence getPersistence() {
 		return _persistence;
 	}
@@ -641,4 +561,4 @@ public class LayoutSEOSiteUtil {
 	private static volatile LayoutSEOSitePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:298462599
+// LIFERAY-SERVICE-BUILDER-HASH:1891709560

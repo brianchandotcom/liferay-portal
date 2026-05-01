@@ -1023,87 +1023,6 @@ public class SocialActivitySetUtil {
 		return getPersistence().fetchByPrimaryKey(activitySetId);
 	}
 
-	/**
-	 * Returns all the social activity sets.
-	 *
-	 * @return the social activity sets
-	 */
-	public static List<SocialActivitySet> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the social activity sets.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of social activity sets
-	 * @param end the upper bound of the range of social activity sets (not inclusive)
-	 * @return the range of social activity sets
-	 */
-	public static List<SocialActivitySet> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity sets.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of social activity sets
-	 * @param end the upper bound of the range of social activity sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of social activity sets
-	 */
-	public static List<SocialActivitySet> findAll(
-		int start, int end,
-		OrderByComparator<SocialActivitySet> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity sets.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.social.model.impl.SocialActivitySetModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of social activity sets
-	 * @param end the upper bound of the range of social activity sets (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of social activity sets
-	 */
-	public static List<SocialActivitySet> findAll(
-		int start, int end,
-		OrderByComparator<SocialActivitySet> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the social activity sets from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of social activity sets.
-	 *
-	 * @return the number of social activity sets
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static SocialActivitySetPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1117,4 +1036,4 @@ public class SocialActivitySetUtil {
 	private static volatile SocialActivitySetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:873121915
+// LIFERAY-SERVICE-BUILDER-HASH:-1663757554

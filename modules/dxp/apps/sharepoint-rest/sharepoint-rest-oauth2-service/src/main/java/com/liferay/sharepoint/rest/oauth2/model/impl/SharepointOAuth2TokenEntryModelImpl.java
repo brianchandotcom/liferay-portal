@@ -89,6 +89,8 @@ public class SharepointOAuth2TokenEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SharepointOAuth2TokenEntry";
 
+	public static final String ENTITY_ALIAS = "sharepointOAuth2TokenEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sharepointOAuth2TokenEntry.sharepointOAuth2TokenEntryId ASC";
 
@@ -889,4 +891,4 @@ public class SharepointOAuth2TokenEntryModelImpl
 	private SharepointOAuth2TokenEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:816001327
+// LIFERAY-SERVICE-BUILDER-HASH:-1385203199

@@ -114,6 +114,8 @@ public class KaleoTransitionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTransition";
 
+	public static final String ENTITY_ALIAS = "kaleoTransition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoTransition.kaleoTransitionId ASC";
 
@@ -1457,4 +1459,4 @@ public class KaleoTransitionModelImpl
 	private KaleoTransition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:857694251
+// LIFERAY-SERVICE-BUILDER-HASH:926828003

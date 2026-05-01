@@ -97,6 +97,8 @@ public class UserNotificationEventModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table UserNotificationEvent";
 
+	public static final String ENTITY_ALIAS = "userNotificationEvent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY userNotificationEvent.timestamp DESC";
 
@@ -1135,4 +1137,4 @@ public class UserNotificationEventModelImpl
 	private UserNotificationEvent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1766377671
+// LIFERAY-SERVICE-BUILDER-HASH:930508256

@@ -100,6 +100,8 @@ public class LayoutClassedModelUsageModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutClassedModelUsage";
 
+	public static final String ENTITY_ALIAS = "layoutClassedModelUsage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutClassedModelUsage.layoutClassedModelUsageId ASC";
 
@@ -1251,4 +1253,4 @@ public class LayoutClassedModelUsageModelImpl
 	private LayoutClassedModelUsage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1741390260
+// LIFERAY-SERVICE-BUILDER-HASH:-1238050926

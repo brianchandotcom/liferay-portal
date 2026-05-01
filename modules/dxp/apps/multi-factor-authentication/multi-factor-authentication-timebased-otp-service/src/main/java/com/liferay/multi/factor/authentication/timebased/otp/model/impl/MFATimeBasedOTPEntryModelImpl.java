@@ -96,6 +96,8 @@ public class MFATimeBasedOTPEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table MFATimeBasedOTPEntry";
 
+	public static final String ENTITY_ALIAS = "mfaTimeBasedOTPEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mfaTimeBasedOTPEntry.mfaTimeBasedOTPEntryId ASC";
 
@@ -1044,4 +1046,4 @@ public class MFATimeBasedOTPEntryModelImpl
 	private MFATimeBasedOTPEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1820911879
+// LIFERAY-SERVICE-BUILDER-HASH:740589035

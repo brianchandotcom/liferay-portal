@@ -91,6 +91,8 @@ public class ResourcePermissionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ResourcePermission";
 
+	public static final String ENTITY_ALIAS = "resourcePermission";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY resourcePermission.resourcePermissionId ASC";
 
@@ -992,4 +994,4 @@ public class ResourcePermissionModelImpl
 	private ResourcePermission _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1654876414
+// LIFERAY-SERVICE-BUILDER-HASH:915193560

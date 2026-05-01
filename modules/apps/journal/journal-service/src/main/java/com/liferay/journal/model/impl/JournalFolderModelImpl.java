@@ -110,6 +110,8 @@ public class JournalFolderModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 
+	public static final String ENTITY_ALIAS = "journalFolder";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 
@@ -1548,4 +1550,4 @@ public class JournalFolderModelImpl
 	private JournalFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1946614685
+// LIFERAY-SERVICE-BUILDER-HASH:-539034085

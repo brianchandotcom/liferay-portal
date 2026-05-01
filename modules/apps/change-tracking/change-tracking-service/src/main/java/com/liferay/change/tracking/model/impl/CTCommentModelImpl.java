@@ -87,6 +87,8 @@ public class CTCommentModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTComment";
 
+	public static final String ENTITY_ALIAS = "ctComment";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctComment.ctCommentId DESC";
 
@@ -821,4 +823,4 @@ public class CTCommentModelImpl
 	private CTComment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1770152176
+// LIFERAY-SERVICE-BUILDER-HASH:-45238095

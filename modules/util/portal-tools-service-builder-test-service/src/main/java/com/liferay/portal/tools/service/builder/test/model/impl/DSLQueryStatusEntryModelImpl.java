@@ -79,6 +79,8 @@ public class DSLQueryStatusEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DSLQueryStatusEntry";
 
+	public static final String ENTITY_ALIAS = "dslQueryStatusEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dslQueryStatusEntry.dslQueryStatusEntryId ASC";
 
@@ -636,4 +638,4 @@ public class DSLQueryStatusEntryModelImpl
 	private DSLQueryStatusEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1180304114
+// LIFERAY-SERVICE-BUILDER-HASH:-1519215796

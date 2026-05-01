@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferencesException;
@@ -80,9 +78,6 @@ public class PortletPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByOwnerId;
 	private FinderPath _finderPathWithoutPaginationFindByOwnerId;
 	private FinderPath _finderPathCountByOwnerId;
@@ -2012,198 +2007,6 @@ public class PortletPreferencesPersistenceImpl
 		return fetchByPrimaryKey((Serializable)portletPreferencesId);
 	}
 
-	/**
-	 * Returns all the portlet preferenceses.
-	 *
-	 * @return the portlet preferenceses
-	 */
-	@Override
-	public List<PortletPreferences> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @return the range of portlet preferenceses
-	 */
-	@Override
-	public List<PortletPreferences> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of portlet preferenceses
-	 */
-	@Override
-	public List<PortletPreferences> findAll(
-		int start, int end,
-		OrderByComparator<PortletPreferences> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portlet preferenceses
-	 * @param end the upper bound of the range of portlet preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of portlet preferenceses
-	 */
-	@Override
-	public List<PortletPreferences> findAll(
-		int start, int end,
-		OrderByComparator<PortletPreferences> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<PortletPreferences> list = null;
-
-			if (useFinderCache) {
-				list = (List<PortletPreferences>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_PORTLETPREFERENCES);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_PORTLETPREFERENCES;
-
-					sql = sql.concat(PortletPreferencesModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<PortletPreferences>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the portlet preferenceses from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (PortletPreferences portletPreferences : findAll()) {
-			remove(portletPreferences);
-		}
-	}
-
-	/**
-	 * Returns the number of portlet preferenceses.
-	 *
-	 * @return the number of portlet preferenceses
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					PortletPreferences.class)) {
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_PORTLETPREFERENCES);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	protected EntityCache getEntityCache() {
 		return EntityCacheUtil.getEntityCache();
@@ -2288,18 +2091,6 @@ public class PortletPreferencesPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByOwnerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerId",
 			new String[] {
@@ -2324,8 +2115,7 @@ public class PortletPreferencesPersistenceImpl
 				_finderPathWithoutPaginationFindByOwnerId,
 				_finderPathCountByOwnerId, _SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-				PortletPreferencesModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"portletPreferences.", "ownerId", FinderColumn.Type.LONG,
 					"=", true, true, PortletPreferences::getOwnerId));
@@ -2351,7 +2141,7 @@ public class PortletPreferencesPersistenceImpl
 			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"portletPreferences.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, PortletPreferences::getPlid));
@@ -2381,8 +2171,7 @@ public class PortletPreferencesPersistenceImpl
 				_finderPathCountByPortletId,
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-				PortletPreferencesModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"portletPreferences.", "portletId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2412,7 +2201,7 @@ public class PortletPreferencesPersistenceImpl
 			_finderPathWithoutPaginationFindByO_P, _finderPathCountByO_P,
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"portletPreferences.", "ownerType", FinderColumn.Type.INTEGER,
 				"=", true, false, PortletPreferences::getOwnerType),
@@ -2444,7 +2233,7 @@ public class PortletPreferencesPersistenceImpl
 			_finderPathWithoutPaginationFindByP_P, _finderPathCountByP_P,
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"portletPreferences.", "plid", FinderColumn.Type.LONG, "=",
 				true, false, PortletPreferences::getPlid),
@@ -2482,7 +2271,7 @@ public class PortletPreferencesPersistenceImpl
 			_finderPathWithoutPaginationFindByO_O_P, _finderPathCountByO_O_P,
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"portletPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, false, PortletPreferences::getOwnerId),
@@ -2524,8 +2313,7 @@ public class PortletPreferencesPersistenceImpl
 				_finderPathWithoutPaginationFindByO_O_PI,
 				_finderPathCountByO_O_PI, _SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-				PortletPreferencesModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"portletPreferences.", "ownerId", FinderColumn.Type.LONG,
 					"=", true, false, PortletPreferences::getOwnerId),
@@ -2568,7 +2356,7 @@ public class PortletPreferencesPersistenceImpl
 			_finderPathWithoutPaginationFindByO_P_P, _finderPathCountByO_P_P,
 			_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"portletPreferences.", "ownerType", FinderColumn.Type.INTEGER,
 				"=", true, false, PortletPreferences::getOwnerType),
@@ -2605,8 +2393,7 @@ public class PortletPreferencesPersistenceImpl
 				_finderPathWithPaginationCountByC_O_O_LikeP,
 				_SQL_SELECT_PORTLETPREFERENCES_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCES_WHERE,
-				PortletPreferencesModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				PortletPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"portletPreferences.", "companyId", FinderColumn.Type.LONG,
 					"=", true, false, PortletPreferences::getCompanyId),
@@ -2655,19 +2442,17 @@ public class PortletPreferencesPersistenceImpl
 		EntityCacheUtil.removeCache(PortletPreferencesImpl.class.getName());
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		PortletPreferencesModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_PORTLETPREFERENCES =
 		"SELECT portletPreferences FROM PortletPreferences portletPreferences";
 
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE =
 		"SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";
 
-	private static final String _SQL_COUNT_PORTLETPREFERENCES =
-		"SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences";
-
 	private static final String _SQL_COUNT_PORTLETPREFERENCES_WHERE =
 		"SELECT COUNT(portletPreferences) FROM PortletPreferences portletPreferences WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "portletPreferences.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PortletPreferences exists with the key {";
@@ -2681,4 +2466,4 @@ public class PortletPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1810721954
+// LIFERAY-SERVICE-BUILDER-HASH:1774997100

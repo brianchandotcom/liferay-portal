@@ -102,6 +102,8 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Phone";
 
+	public static final String ENTITY_ALIAS = "phone";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY phone.createDate ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Phone.createDate ASC";
@@ -1182,4 +1184,4 @@ public class PhoneModelImpl extends BaseModelImpl<Phone> implements PhoneModel {
 	private Phone _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1897643459
+// LIFERAY-SERVICE-BUILDER-HASH:991651320

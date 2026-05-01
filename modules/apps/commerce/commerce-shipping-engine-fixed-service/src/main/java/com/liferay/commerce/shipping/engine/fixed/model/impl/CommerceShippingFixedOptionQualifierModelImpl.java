@@ -96,6 +96,9 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CSFixedOptionQualifier";
 
+	public static final String ENTITY_ALIAS =
+		"commerceShippingFixedOptionQualifier";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShippingFixedOptionQualifier.createDate DESC";
 
@@ -1000,4 +1003,4 @@ public class CommerceShippingFixedOptionQualifierModelImpl
 	private CommerceShippingFixedOptionQualifier _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2097276019
+// LIFERAY-SERVICE-BUILDER-HASH:-12039338

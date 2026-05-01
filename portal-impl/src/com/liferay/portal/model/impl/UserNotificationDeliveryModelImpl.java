@@ -92,6 +92,8 @@ public class UserNotificationDeliveryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table UserNotificationDelivery";
 
+	public static final String ENTITY_ALIAS = "userNotificationDelivery";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";
 
@@ -912,4 +914,4 @@ public class UserNotificationDeliveryModelImpl
 	private UserNotificationDelivery _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:859697219
+// LIFERAY-SERVICE-BUILDER-HASH:91328396

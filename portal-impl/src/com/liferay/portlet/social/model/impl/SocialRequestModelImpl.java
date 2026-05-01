@@ -100,6 +100,8 @@ public class SocialRequestModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SocialRequest";
 
+	public static final String ENTITY_ALIAS = "socialRequest";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialRequest.requestId DESC";
 
@@ -1179,4 +1181,4 @@ public class SocialRequestModelImpl
 	private SocialRequest _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1628796476
+// LIFERAY-SERVICE-BUILDER-HASH:-250338073

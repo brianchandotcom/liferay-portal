@@ -101,6 +101,8 @@ public class AssetListEntryAssetEntryRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetListEntryAssetEntryRel";
 
+	public static final String ENTITY_ALIAS = "assetListEntryAssetEntryRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetListEntryAssetEntryRel.position ASC";
 
@@ -1173,4 +1175,4 @@ public class AssetListEntryAssetEntryRelModelImpl
 	private AssetListEntryAssetEntryRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155911689
+// LIFERAY-SERVICE-BUILDER-HASH:-2022466441

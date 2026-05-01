@@ -109,6 +109,8 @@ public class CommerceShippingMethodModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShippingMethod";
 
+	public static final String ENTITY_ALIAS = "commerceShippingMethod";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShippingMethod.priority ASC";
 
@@ -1452,4 +1454,4 @@ public class CommerceShippingMethodModelImpl
 	private CommerceShippingMethod _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-66219734
+// LIFERAY-SERVICE-BUILDER-HASH:1418600641

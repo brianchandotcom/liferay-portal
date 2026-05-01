@@ -86,6 +86,8 @@ public class DDMFieldAttributeModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFieldAttribute";
 
+	public static final String ENTITY_ALIAS = "ddmFieldAttribute";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmFieldAttribute.fieldAttributeId ASC";
 
@@ -915,4 +917,4 @@ public class DDMFieldAttributeModelImpl
 	private DDMFieldAttribute _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-606552077
+// LIFERAY-SERVICE-BUILDER-HASH:1148170127

@@ -130,6 +130,8 @@ public class DLFileVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 
+	public static final String ENTITY_ALIAS = "dlFileVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 
@@ -2075,4 +2077,4 @@ public class DLFileVersionModelImpl
 	private DLFileVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:259481915
+// LIFERAY-SERVICE-BUILDER-HASH:-1801070642

@@ -81,6 +81,8 @@ public class ModuleModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 
+	public static final String ENTITY_ALIAS = "module";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY module.moduleId ASC";
 
 	public static final String ORDER_BY_SQL =
@@ -808,4 +810,4 @@ public class ModuleModelImpl
 	private Module _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1350815419
+// LIFERAY-SERVICE-BUILDER-HASH:-2041092642

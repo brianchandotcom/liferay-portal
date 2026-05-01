@@ -76,6 +76,8 @@ public class AutoEscapeEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AutoEscapeEntry";
 
+	public static final String ENTITY_ALIAS = "autoEscapeEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY autoEscapeEntry.autoEscapeEntryId ASC";
 
@@ -613,4 +615,4 @@ public class AutoEscapeEntryModelImpl
 	private AutoEscapeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:972232033
+// LIFERAY-SERVICE-BUILDER-HASH:-1415543394

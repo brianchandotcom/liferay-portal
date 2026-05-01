@@ -84,6 +84,8 @@ public class DLFileVersionPreviewModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DLFileVersionPreview";
 
+	public static final String ENTITY_ALIAS = "dlFileVersionPreview";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileVersionPreview.dlFileVersionPreviewId DESC";
 
@@ -792,4 +794,4 @@ public class DLFileVersionPreviewModelImpl
 	private DLFileVersionPreview _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2103383229
+// LIFERAY-SERVICE-BUILDER-HASH:-1767176508

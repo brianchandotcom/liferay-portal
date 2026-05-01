@@ -88,6 +88,8 @@ public class CTAutoResolutionInfoModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CTAutoResolutionInfo";
 
+	public static final String ENTITY_ALIAS = "ctAutoResolutionInfo";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctAutoResolutionInfo.createDate ASC";
 
@@ -839,4 +841,4 @@ public class CTAutoResolutionInfoModelImpl
 	private CTAutoResolutionInfo _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:195499783
+// LIFERAY-SERVICE-BUILDER-HASH:-1013417056

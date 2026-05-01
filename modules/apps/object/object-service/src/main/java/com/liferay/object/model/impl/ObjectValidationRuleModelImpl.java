@@ -112,6 +112,8 @@ public class ObjectValidationRuleModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectValidationRule";
 
+	public static final String ENTITY_ALIAS = "objectValidationRule";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectValidationRule.objectValidationRuleId ASC";
 
@@ -1581,4 +1583,4 @@ public class ObjectValidationRuleModelImpl
 	private ObjectValidationRule _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1187088458
+// LIFERAY-SERVICE-BUILDER-HASH:1012127467

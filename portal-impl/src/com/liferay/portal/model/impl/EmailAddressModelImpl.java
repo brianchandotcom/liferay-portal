@@ -102,6 +102,8 @@ public class EmailAddressModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 
+	public static final String ENTITY_ALIAS = "emailAddress";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY emailAddress.createDate ASC";
 
@@ -1186,4 +1188,4 @@ public class EmailAddressModelImpl
 	private EmailAddress _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:376166758
+// LIFERAY-SERVICE-BUILDER-HASH:-57613429

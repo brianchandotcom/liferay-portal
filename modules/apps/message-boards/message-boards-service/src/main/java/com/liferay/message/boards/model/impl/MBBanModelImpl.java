@@ -94,6 +94,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
 
+	public static final String ENTITY_ALIAS = "mbBan";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY mbBan.banId ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY MBBan.banId ASC";
@@ -989,4 +991,4 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private MBBan _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:905952407
+// LIFERAY-SERVICE-BUILDER-HASH:548984188

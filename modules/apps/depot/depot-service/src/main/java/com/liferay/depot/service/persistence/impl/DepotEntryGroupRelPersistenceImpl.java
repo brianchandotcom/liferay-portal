@@ -14,14 +14,12 @@ import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -95,9 +93,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1753,198 +1748,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		return fetchByPrimaryKey((Serializable)depotEntryGroupRelId);
 	}
 
-	/**
-	 * Returns all the depot entry group rels.
-	 *
-	 * @return the depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot entry group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @return the range of depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findAll(
-		int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotEntryGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry group rels
-	 * @param end the upper bound of the range of depot entry group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of depot entry group rels
-	 */
-	@Override
-	public List<DepotEntryGroupRel> findAll(
-		int start, int end,
-		OrderByComparator<DepotEntryGroupRel> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<DepotEntryGroupRel> list = null;
-
-			if (useFinderCache) {
-				list = (List<DepotEntryGroupRel>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_DEPOTENTRYGROUPREL);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_DEPOTENTRYGROUPREL;
-
-					sql = sql.concat(DepotEntryGroupRelModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DepotEntryGroupRel>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the depot entry group rels from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (DepotEntryGroupRel depotEntryGroupRel : findAll()) {
-			remove(depotEntryGroupRel);
-		}
-	}
-
-	/**
-	 * Returns the number of depot entry group rels.
-	 *
-	 * @return the number of depot entry group rels
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					DepotEntryGroupRel.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_DEPOTENTRYGROUPREL);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -2047,18 +1850,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2082,7 +1873,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, DepotEntryGroupRel::getUuid));
@@ -2127,8 +1918,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING,
 					"=", true, false, DepotEntryGroupRel::getUuid),
@@ -2161,8 +1951,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_finderPathCountByDepotEntryId,
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "depotEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2193,8 +1982,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_finderPathCountByToGroupId,
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getToGroupId));
@@ -2225,8 +2013,7 @@ public class DepotEntryGroupRelPersistenceImpl
 				_finderPathCountByDDMSA_TGI,
 				_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 				_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"depotEntryGroupRel.", "ddmStructuresAvailable",
 					FinderColumn.Type.BOOLEAN, "=", true, false,
@@ -2273,7 +2060,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_finderPathWithoutPaginationFindByS_TGI, _finderPathCountByS_TGI,
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "searchable", FinderColumn.Type.BOOLEAN,
 				"=", true, false, DepotEntryGroupRel::isSearchable),
@@ -2305,7 +2092,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			_finderPathWithoutPaginationFindByTGI_T, _finderPathCountByTGI_T,
 			_SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
 			_SQL_COUNT_DEPOTENTRYGROUPREL_WHERE,
-			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			DepotEntryGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG, "=",
 				true, false, DepotEntryGroupRel::getToGroupId),
@@ -2358,19 +2145,17 @@ public class DepotEntryGroupRelPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		DepotEntryGroupRelModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_DEPOTENTRYGROUPREL =
 		"SELECT depotEntryGroupRel FROM DepotEntryGroupRel depotEntryGroupRel";
 
 	private static final String _SQL_SELECT_DEPOTENTRYGROUPREL_WHERE =
 		"SELECT depotEntryGroupRel FROM DepotEntryGroupRel depotEntryGroupRel WHERE ";
 
-	private static final String _SQL_COUNT_DEPOTENTRYGROUPREL =
-		"SELECT COUNT(depotEntryGroupRel) FROM DepotEntryGroupRel depotEntryGroupRel";
-
 	private static final String _SQL_COUNT_DEPOTENTRYGROUPREL_WHERE =
 		"SELECT COUNT(depotEntryGroupRel) FROM DepotEntryGroupRel depotEntryGroupRel WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "depotEntryGroupRel.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No DepotEntryGroupRel exists with the key {";
@@ -2387,4 +2172,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-474842027
+// LIFERAY-SERVICE-BUILDER-HASH:-425354658

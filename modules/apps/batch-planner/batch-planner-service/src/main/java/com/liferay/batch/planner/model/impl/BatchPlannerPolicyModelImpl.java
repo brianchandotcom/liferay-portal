@@ -92,6 +92,8 @@ public class BatchPlannerPolicyModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPolicy";
 
+	public static final String ENTITY_ALIAS = "batchPlannerPolicy";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY batchPlannerPolicy.modifiedDate DESC";
 
@@ -910,4 +912,4 @@ public class BatchPlannerPolicyModelImpl
 	private BatchPlannerPolicy _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1035369872
+// LIFERAY-SERVICE-BUILDER-HASH:-1274568199

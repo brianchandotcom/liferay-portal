@@ -102,6 +102,8 @@ public class CommerceInventoryWarehouseItemModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CIWarehouseItem";
 
+	public static final String ENTITY_ALIAS = "commerceInventoryWarehouseItem";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceInventoryWarehouseItem.commerceInventoryWarehouseItemId ASC";
 
@@ -1189,4 +1191,4 @@ public class CommerceInventoryWarehouseItemModelImpl
 	private CommerceInventoryWarehouseItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1543718016
+// LIFERAY-SERVICE-BUILDER-HASH:402168414

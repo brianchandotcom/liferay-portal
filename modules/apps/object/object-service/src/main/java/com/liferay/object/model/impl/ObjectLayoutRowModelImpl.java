@@ -90,6 +90,8 @@ public class ObjectLayoutRowModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutRow";
 
+	public static final String ENTITY_ALIAS = "objectLayoutRow";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectLayoutRow.objectLayoutRowId ASC";
 
@@ -907,4 +909,4 @@ public class ObjectLayoutRowModelImpl
 	private ObjectLayoutRow _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-63616044
+// LIFERAY-SERVICE-BUILDER-HASH:-1667186848

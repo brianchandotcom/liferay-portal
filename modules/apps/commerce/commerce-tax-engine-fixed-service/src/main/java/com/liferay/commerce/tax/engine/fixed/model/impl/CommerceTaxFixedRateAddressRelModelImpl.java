@@ -101,6 +101,8 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceTaxFixedRateAddressRel";
 
+	public static final String ENTITY_ALIAS = "commerceTaxFixedRateAddressRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceTaxFixedRateAddressRel.createDate DESC";
 
@@ -1086,4 +1088,4 @@ public class CommerceTaxFixedRateAddressRelModelImpl
 	private CommerceTaxFixedRateAddressRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-650695092
+// LIFERAY-SERVICE-BUILDER-HASH:-1881757258

@@ -79,6 +79,8 @@ public class VersionedEntryVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table VersionedEntryVersion";
 
+	public static final String ENTITY_ALIAS = "versionedEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY versionedEntryVersion.version DESC";
 
@@ -697,4 +699,4 @@ public class VersionedEntryVersionModelImpl
 	private VersionedEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1666272730
+// LIFERAY-SERVICE-BUILDER-HASH:303127354

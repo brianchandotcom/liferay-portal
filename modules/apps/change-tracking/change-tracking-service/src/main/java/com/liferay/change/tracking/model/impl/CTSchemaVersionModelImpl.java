@@ -76,6 +76,8 @@ public class CTSchemaVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTSchemaVersion";
 
+	public static final String ENTITY_ALIAS = "ctSchemaVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctSchemaVersion.schemaVersionId DESC";
 
@@ -621,4 +623,4 @@ public class CTSchemaVersionModelImpl
 	private CTSchemaVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2042093269
+// LIFERAY-SERVICE-BUILDER-HASH:-872079264

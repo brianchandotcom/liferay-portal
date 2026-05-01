@@ -108,6 +108,8 @@ public class TranslationEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TranslationEntry";
 
+	public static final String ENTITY_ALIAS = "translationEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY translationEntry.translationEntryId ASC";
 
@@ -1421,4 +1423,4 @@ public class TranslationEntryModelImpl
 	private TranslationEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1445487449
+// LIFERAY-SERVICE-BUILDER-HASH:-1524980679

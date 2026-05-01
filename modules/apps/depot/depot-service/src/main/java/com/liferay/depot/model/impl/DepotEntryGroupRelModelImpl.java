@@ -103,6 +103,8 @@ public class DepotEntryGroupRelModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntryGroupRel";
 
+	public static final String ENTITY_ALIAS = "depotEntryGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY depotEntryGroupRel.depotEntryGroupRelId ASC";
 
@@ -1225,4 +1227,4 @@ public class DepotEntryGroupRelModelImpl
 	private DepotEntryGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1208711313
+// LIFERAY-SERVICE-BUILDER-HASH:656128244

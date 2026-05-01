@@ -103,6 +103,8 @@ public class AssetDisplayPageEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetDisplayPageEntry";
 
+	public static final String ENTITY_ALIAS = "assetDisplayPageEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetDisplayPageEntry.assetDisplayPageEntryId ASC";
 
@@ -1170,4 +1172,4 @@ public class AssetDisplayPageEntryModelImpl
 	private AssetDisplayPageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:542658626
+// LIFERAY-SERVICE-BUILDER-HASH:1897505328

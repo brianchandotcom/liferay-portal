@@ -103,6 +103,8 @@ public class CommerceAvailabilityEstimateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceAvailabilityEstimate";
 
+	public static final String ENTITY_ALIAS = "commerceAvailabilityEstimate";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceAvailabilityEstimate.title ASC";
 
@@ -1155,4 +1157,4 @@ public class CommerceAvailabilityEstimateModelImpl
 	private CommerceAvailabilityEstimate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886647419
+// LIFERAY-SERVICE-BUILDER-HASH:942388890

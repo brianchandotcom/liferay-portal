@@ -84,6 +84,8 @@ public class RememberMeTokenModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table RememberMeToken";
 
+	public static final String ENTITY_ALIAS = "rememberMeToken";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY rememberMeToken.rememberMeTokenId ASC";
 
@@ -767,4 +769,4 @@ public class RememberMeTokenModelImpl
 	private RememberMeToken _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1367970988
+// LIFERAY-SERVICE-BUILDER-HASH:84845445

@@ -108,6 +108,8 @@ public class ObjectEntryVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntryVersion";
 
+	public static final String ENTITY_ALIAS = "objectEntryVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectEntryVersion.objectEntryVersionId ASC";
 
@@ -1429,4 +1431,4 @@ public class ObjectEntryVersionModelImpl
 	private ObjectEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1997852816
+// LIFERAY-SERVICE-BUILDER-HASH:793450526

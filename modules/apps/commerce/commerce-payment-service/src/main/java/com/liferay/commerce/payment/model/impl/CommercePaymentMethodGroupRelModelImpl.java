@@ -107,6 +107,8 @@ public class CommercePaymentMethodGroupRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommercePaymentMethodGroupRel";
 
+	public static final String ENTITY_ALIAS = "commercePaymentMethodGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentMethodGroupRel.priority ASC";
 
@@ -1440,4 +1442,4 @@ public class CommercePaymentMethodGroupRelModelImpl
 	private CommercePaymentMethodGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1031627515
+// LIFERAY-SERVICE-BUILDER-HASH:1927528870

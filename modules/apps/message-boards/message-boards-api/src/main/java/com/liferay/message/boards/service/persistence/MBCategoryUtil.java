@@ -3255,85 +3255,6 @@ public class MBCategoryUtil {
 		return getPersistence().fetchByPrimaryKey(categoryId);
 	}
 
-	/**
-	 * Returns all the message boards categories.
-	 *
-	 * @return the message boards categories
-	 */
-	public static List<MBCategory> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the message boards categories.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @return the range of message boards categories
-	 */
-	public static List<MBCategory> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of message boards categories
-	 */
-	public static List<MBCategory> findAll(
-		int start, int end, OrderByComparator<MBCategory> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards categories.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBCategoryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of message boards categories
-	 * @param end the upper bound of the range of message boards categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of message boards categories
-	 */
-	public static List<MBCategory> findAll(
-		int start, int end, OrderByComparator<MBCategory> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the message boards categories from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of message boards categories.
-	 *
-	 * @return the number of message boards categories
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static MBCategoryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -3345,4 +3266,4 @@ public class MBCategoryUtil {
 	private static volatile MBCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2038020815
+// LIFERAY-SERVICE-BUILDER-HASH:-198089533

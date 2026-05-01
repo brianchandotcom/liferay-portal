@@ -81,6 +81,8 @@ public class PortletModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Portlet";
 
+	public static final String ENTITY_ALIAS = "portlet";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY portlet.id ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Portlet.id_ ASC";
@@ -721,4 +723,4 @@ public class PortletModelImpl
 	private Portlet _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:387343075
+// LIFERAY-SERVICE-BUILDER-HASH:-567170282

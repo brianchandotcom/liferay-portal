@@ -89,6 +89,8 @@ public class ObjectStateFlowModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectStateFlow";
 
+	public static final String ENTITY_ALIAS = "objectStateFlow";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectStateFlow.objectStateFlowId ASC";
 
@@ -877,4 +879,4 @@ public class ObjectStateFlowModelImpl
 	private ObjectStateFlow _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-540337205
+// LIFERAY-SERVICE-BUILDER-HASH:1225249206

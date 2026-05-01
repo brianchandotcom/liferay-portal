@@ -79,6 +79,8 @@ public class UADPartialEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table UADPartialEntry";
 
+	public static final String ENTITY_ALIAS = "uadPartialEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY uadPartialEntry.uadPartialEntryId ASC";
 
@@ -645,4 +647,4 @@ public class UADPartialEntryModelImpl
 	private UADPartialEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1750102894
+// LIFERAY-SERVICE-BUILDER-HASH:-253639482

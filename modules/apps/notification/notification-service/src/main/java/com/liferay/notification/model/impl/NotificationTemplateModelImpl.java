@@ -114,6 +114,8 @@ public class NotificationTemplateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table NotificationTemplate";
 
+	public static final String ENTITY_ALIAS = "notificationTemplate";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY notificationTemplate.notificationTemplateId ASC";
 
@@ -1675,4 +1677,4 @@ public class NotificationTemplateModelImpl
 	private NotificationTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:407777000
+// LIFERAY-SERVICE-BUILDER-HASH:637793370

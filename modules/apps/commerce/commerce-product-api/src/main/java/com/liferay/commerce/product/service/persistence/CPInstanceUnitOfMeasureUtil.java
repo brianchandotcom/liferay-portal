@@ -1192,87 +1192,6 @@ public class CPInstanceUnitOfMeasureUtil {
 		return getPersistence().fetchByPrimaryKey(CPInstanceUnitOfMeasureId);
 	}
 
-	/**
-	 * Returns all the cp instance unit of measures.
-	 *
-	 * @return the cp instance unit of measures
-	 */
-	public static List<CPInstanceUnitOfMeasure> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the cp instance unit of measures.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPInstanceUnitOfMeasureModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp instance unit of measures
-	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
-	 * @return the range of cp instance unit of measures
-	 */
-	public static List<CPInstanceUnitOfMeasure> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instance unit of measures.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPInstanceUnitOfMeasureModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp instance unit of measures
-	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of cp instance unit of measures
-	 */
-	public static List<CPInstanceUnitOfMeasure> findAll(
-		int start, int end,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp instance unit of measures.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPInstanceUnitOfMeasureModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of cp instance unit of measures
-	 * @param end the upper bound of the range of cp instance unit of measures (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of cp instance unit of measures
-	 */
-	public static List<CPInstanceUnitOfMeasure> findAll(
-		int start, int end,
-		OrderByComparator<CPInstanceUnitOfMeasure> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the cp instance unit of measures from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of cp instance unit of measures.
-	 *
-	 * @return the number of cp instance unit of measures
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static CPInstanceUnitOfMeasurePersistence getPersistence() {
 		return _persistence;
 	}
@@ -1286,4 +1205,4 @@ public class CPInstanceUnitOfMeasureUtil {
 	private static volatile CPInstanceUnitOfMeasurePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1054952525
+// LIFERAY-SERVICE-BUILDER-HASH:-1855403299

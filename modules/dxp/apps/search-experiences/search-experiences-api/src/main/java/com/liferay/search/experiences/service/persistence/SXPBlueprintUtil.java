@@ -808,85 +808,6 @@ public class SXPBlueprintUtil {
 		return getPersistence().fetchByPrimaryKey(sxpBlueprintId);
 	}
 
-	/**
-	 * Returns all the sxp blueprints.
-	 *
-	 * @return the sxp blueprints
-	 */
-	public static List<SXPBlueprint> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the sxp blueprints.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.search.experiences.model.impl.SXPBlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of sxp blueprints
-	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
-	 * @return the range of sxp blueprints
-	 */
-	public static List<SXPBlueprint> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the sxp blueprints.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.search.experiences.model.impl.SXPBlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of sxp blueprints
-	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of sxp blueprints
-	 */
-	public static List<SXPBlueprint> findAll(
-		int start, int end, OrderByComparator<SXPBlueprint> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the sxp blueprints.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.search.experiences.model.impl.SXPBlueprintModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of sxp blueprints
-	 * @param end the upper bound of the range of sxp blueprints (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of sxp blueprints
-	 */
-	public static List<SXPBlueprint> findAll(
-		int start, int end, OrderByComparator<SXPBlueprint> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the sxp blueprints from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of sxp blueprints.
-	 *
-	 * @return the number of sxp blueprints
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static SXPBlueprintPersistence getPersistence() {
 		return _persistence;
 	}
@@ -898,4 +819,4 @@ public class SXPBlueprintUtil {
 	private static volatile SXPBlueprintPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1029336976
+// LIFERAY-SERVICE-BUILDER-HASH:-1704981767

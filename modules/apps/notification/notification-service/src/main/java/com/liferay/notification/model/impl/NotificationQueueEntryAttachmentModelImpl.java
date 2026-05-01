@@ -81,6 +81,9 @@ public class NotificationQueueEntryAttachmentModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table NQueueEntryAttachment";
 
+	public static final String ENTITY_ALIAS =
+		"notificationQueueEntryAttachment";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY notificationQueueEntryAttachment.notificationQueueEntryAttachmentId ASC";
 
@@ -703,4 +706,4 @@ public class NotificationQueueEntryAttachmentModelImpl
 	private NotificationQueueEntryAttachment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-726107697
+// LIFERAY-SERVICE-BUILDER-HASH:1242560115

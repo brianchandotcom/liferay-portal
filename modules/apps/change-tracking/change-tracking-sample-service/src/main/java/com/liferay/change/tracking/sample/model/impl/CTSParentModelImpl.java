@@ -79,6 +79,8 @@ public class CTSParentModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CTSParent";
 
+	public static final String ENTITY_ALIAS = "ctsParent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctsParent.ctsParentId ASC";
 
@@ -686,4 +688,4 @@ public class CTSParentModelImpl
 	private CTSParent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1633375782
+// LIFERAY-SERVICE-BUILDER-HASH:65298533

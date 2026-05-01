@@ -105,6 +105,8 @@ public class WorkflowDefinitionLinkModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table WorkflowDefinitionLink";
 
+	public static final String ENTITY_ALIAS = "workflowDefinitionLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY workflowDefinitionLink.workflowDefinitionName ASC";
 
@@ -1282,4 +1284,4 @@ public class WorkflowDefinitionLinkModelImpl
 	private WorkflowDefinitionLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549009066
+// LIFERAY-SERVICE-BUILDER-HASH:444835729

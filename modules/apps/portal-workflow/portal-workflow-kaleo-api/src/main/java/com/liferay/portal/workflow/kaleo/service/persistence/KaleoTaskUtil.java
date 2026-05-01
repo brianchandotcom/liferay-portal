@@ -491,85 +491,6 @@ public class KaleoTaskUtil {
 		return getPersistence().fetchByPrimaryKey(kaleoTaskId);
 	}
 
-	/**
-	 * Returns all the kaleo tasks.
-	 *
-	 * @return the kaleo tasks
-	 */
-	public static List<KaleoTask> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the kaleo tasks.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo tasks
-	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
-	 * @return the range of kaleo tasks
-	 */
-	public static List<KaleoTask> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo tasks.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo tasks
-	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of kaleo tasks
-	 */
-	public static List<KaleoTask> findAll(
-		int start, int end, OrderByComparator<KaleoTask> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo tasks.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kaleo tasks
-	 * @param end the upper bound of the range of kaleo tasks (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of kaleo tasks
-	 */
-	public static List<KaleoTask> findAll(
-		int start, int end, OrderByComparator<KaleoTask> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the kaleo tasks from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of kaleo tasks.
-	 *
-	 * @return the number of kaleo tasks
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static KaleoTaskPersistence getPersistence() {
 		return _persistence;
 	}
@@ -581,4 +502,4 @@ public class KaleoTaskUtil {
 	private static volatile KaleoTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-310212172
+// LIFERAY-SERVICE-BUILDER-HASH:-1591754385

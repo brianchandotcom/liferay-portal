@@ -93,6 +93,8 @@ public class MembershipRequestModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";
 
+	public static final String ENTITY_ALIAS = "membershipRequest";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY membershipRequest.createDate DESC";
 
@@ -957,4 +959,4 @@ public class MembershipRequestModelImpl
 	private MembershipRequest _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1829827303
+// LIFERAY-SERVICE-BUILDER-HASH:1588589421

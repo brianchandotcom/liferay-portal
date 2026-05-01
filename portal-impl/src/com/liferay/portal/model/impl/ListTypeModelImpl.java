@@ -92,6 +92,8 @@ public class ListTypeModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ListType";
 
+	public static final String ENTITY_ALIAS = "listType";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY listType.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY ListType.name ASC";
@@ -926,4 +928,4 @@ public class ListTypeModelImpl
 	private ListType _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1398335883
+// LIFERAY-SERVICE-BUILDER-HASH:1361590854

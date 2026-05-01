@@ -110,6 +110,8 @@ public class CommerceShippingFixedOptionRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CShippingFixedOptionRel";
 
+	public static final String ENTITY_ALIAS = "commerceShippingFixedOptionRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShippingFixedOptionRel.countryId ASC";
 
@@ -1257,4 +1259,4 @@ public class CommerceShippingFixedOptionRelModelImpl
 	private CommerceShippingFixedOptionRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1502442802
+// LIFERAY-SERVICE-BUILDER-HASH:-418483528

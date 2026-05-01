@@ -93,6 +93,8 @@ public class SamlPeerBindingModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SamlPeerBinding";
 
+	public static final String ENTITY_ALIAS = "samlPeerBinding";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY samlPeerBinding.samlPeerBindingId ASC";
 
@@ -1047,4 +1049,4 @@ public class SamlPeerBindingModelImpl
 	private SamlPeerBinding _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-802370313
+// LIFERAY-SERVICE-BUILDER-HASH:-1383030176

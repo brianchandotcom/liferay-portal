@@ -127,6 +127,8 @@ public class ObjectFieldModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
+	public static final String ENTITY_ALIAS = "objectField";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY objectField.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY ObjectField.name ASC";
@@ -1918,4 +1920,4 @@ public class ObjectFieldModelImpl
 	private ObjectField _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1592041253
+// LIFERAY-SERVICE-BUILDER-HASH:1075142547

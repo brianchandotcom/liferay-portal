@@ -104,6 +104,8 @@ public class CommerceTaxMethodModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceTaxMethod";
 
+	public static final String ENTITY_ALIAS = "commerceTaxMethod";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceTaxMethod.createDate DESC";
 
@@ -1368,4 +1370,4 @@ public class CommerceTaxMethodModelImpl
 	private CommerceTaxMethod _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:280836933
+// LIFERAY-SERVICE-BUILDER-HASH:293832189

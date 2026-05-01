@@ -93,6 +93,8 @@ public class ObjectFolderItemModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectFolderItem";
 
+	public static final String ENTITY_ALIAS = "objectFolderItem";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectFolderItem.objectFolderItemId ASC";
 
@@ -988,4 +990,4 @@ public class ObjectFolderItemModelImpl
 	private ObjectFolderItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:795248460
+// LIFERAY-SERVICE-BUILDER-HASH:-129828103

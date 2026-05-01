@@ -98,6 +98,8 @@ public class CommerceOrderNoteModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderNote";
 
+	public static final String ENTITY_ALIAS = "commerceOrderNote";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrderNote.createDate DESC";
 
@@ -1106,4 +1108,4 @@ public class CommerceOrderNoteModelImpl
 	private CommerceOrderNote _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-503420695
+// LIFERAY-SERVICE-BUILDER-HASH:-1732175171

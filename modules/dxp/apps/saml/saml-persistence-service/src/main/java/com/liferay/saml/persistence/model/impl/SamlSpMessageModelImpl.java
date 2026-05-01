@@ -79,6 +79,8 @@ public class SamlSpMessageModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpMessage";
 
+	public static final String ENTITY_ALIAS = "samlSpMessage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY samlSpMessage.samlSpMessageId ASC";
 
@@ -739,4 +741,4 @@ public class SamlSpMessageModelImpl
 	private SamlSpMessage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1624572970
+// LIFERAY-SERVICE-BUILDER-HASH:113639584

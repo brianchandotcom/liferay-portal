@@ -98,9 +98,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -1110,7 +1107,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(
@@ -1387,7 +1384,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(
@@ -1935,202 +1932,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			(Serializable)assetListEntrySegmentsEntryRelId);
 	}
 
-	/**
-	 * Returns all the asset list entry segments entry rels.
-	 *
-	 * @return the asset list entry segments entry rels
-	 */
-	@Override
-	public List<AssetListEntrySegmentsEntryRel> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry segments entry rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntrySegmentsEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset list entry segments entry rels
-	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
-	 * @return the range of asset list entry segments entry rels
-	 */
-	@Override
-	public List<AssetListEntrySegmentsEntryRel> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry segments entry rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntrySegmentsEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset list entry segments entry rels
-	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of asset list entry segments entry rels
-	 */
-	@Override
-	public List<AssetListEntrySegmentsEntryRel> findAll(
-		int start, int end,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry segments entry rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntrySegmentsEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of asset list entry segments entry rels
-	 * @param end the upper bound of the range of asset list entry segments entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of asset list entry segments entry rels
-	 */
-	@Override
-	public List<AssetListEntrySegmentsEntryRel> findAll(
-		int start, int end,
-		OrderByComparator<AssetListEntrySegmentsEntryRel> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetListEntrySegmentsEntryRel.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<AssetListEntrySegmentsEntryRel> list = null;
-
-			if (useFinderCache) {
-				list =
-					(List<AssetListEntrySegmentsEntryRel>)finderCache.getResult(
-						finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL;
-
-					sql = sql.concat(
-						AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<AssetListEntrySegmentsEntryRel>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the asset list entry segments entry rels from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-				findAll()) {
-
-			remove(assetListEntrySegmentsEntryRel);
-		}
-	}
-
-	/**
-	 * Returns the number of asset list entry segments entry rels.
-	 *
-	 * @return the number of asset list entry segments entry rels
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					AssetListEntrySegmentsEntryRel.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -2233,18 +2034,6 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2269,7 +2058,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2319,7 +2108,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "uuid",
 					FinderColumn.Type.STRING, "=", true, false,
@@ -2355,7 +2144,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "assetListEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2387,7 +2176,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2480,6 +2269,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		AssetListEntrySegmentsEntryRelModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL =
 		"SELECT assetListEntrySegmentsEntryRel FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel";
 
@@ -2487,15 +2279,9 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 		_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE =
 			"SELECT assetListEntrySegmentsEntryRel FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
 
-	private static final String _SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL =
-		"SELECT COUNT(assetListEntrySegmentsEntryRel) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel";
-
 	private static final String
 		_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE =
 			"SELECT COUNT(assetListEntrySegmentsEntryRel) FROM AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"assetListEntrySegmentsEntryRel.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetListEntrySegmentsEntryRel exists with the key {";
@@ -2512,4 +2298,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:802536134
+// LIFERAY-SERVICE-BUILDER-HASH:-1647101337

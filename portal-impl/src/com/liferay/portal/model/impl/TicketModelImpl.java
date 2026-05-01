@@ -87,6 +87,8 @@ public class TicketModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Ticket";
 
+	public static final String ENTITY_ALIAS = "ticket";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY ticket.ticketId ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Ticket.ticketId ASC";
@@ -901,4 +903,4 @@ public class TicketModelImpl
 	private Ticket _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1072897083
+// LIFERAY-SERVICE-BUILDER-HASH:-1316747714

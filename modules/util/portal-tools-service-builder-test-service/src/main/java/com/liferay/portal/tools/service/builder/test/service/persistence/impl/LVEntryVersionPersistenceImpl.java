@@ -5,12 +5,10 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -79,9 +77,6 @@ public class LVEntryVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByLvEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByLvEntryId;
 	private FinderPath _finderPathCountByLvEntryId;
@@ -2043,186 +2038,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the lv entry versions.
-	 *
-	 * @return the lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the lv entry versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @return the range of lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findAll(
-		int start, int end,
-		OrderByComparator<LVEntryVersion> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the lv entry versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LVEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lv entry versions
-	 * @param end the upper bound of the range of lv entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of lv entry versions
-	 */
-	@Override
-	public List<LVEntryVersion> findAll(
-		int start, int end, OrderByComparator<LVEntryVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<LVEntryVersion> list = null;
-
-		if (useFinderCache) {
-			list = (List<LVEntryVersion>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_LVENTRYVERSION);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_LVENTRYVERSION;
-
-				sql = sql.concat(LVEntryVersionModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<LVEntryVersion>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the lv entry versions from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (LVEntryVersion lvEntryVersion : findAll()) {
-			remove(lvEntryVersion);
-		}
-	}
-
-	/**
-	 * Returns the number of lv entry versions.
-	 *
-	 * @return the number of lv entry versions
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(_SQL_COUNT_LVENTRYVERSION);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	/**
 	 * Returns the primaryKeys of big decimal entries associated with the lv entry version.
 	 *
 	 * @param pk the primary key of the lv entry version
@@ -2617,18 +2432,6 @@ public class LVEntryVersionPersistenceImpl
 				"BigDecimalEntries_LVEntries", "companyId", "lvEntryVersionId",
 				"bigDecimalEntryId", this, bigDecimalEntryPersistence);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
 			new String[] {
@@ -2653,7 +2456,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByLvEntryId,
 				_finderPathCountByLvEntryId, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "lvEntryId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getLvEntryId));
@@ -2696,7 +2499,7 @@ public class LVEntryVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LVENTRYVERSION_WHERE, _SQL_COUNT_LVENTRYVERSION_WHERE,
-			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LVEntryVersion::getUuid));
@@ -2727,7 +2530,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByUuid_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, LVEntryVersion::getUuid),
@@ -2760,7 +2563,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, LVEntryVersion::getUuid),
@@ -2815,7 +2618,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, LVEntryVersion::getUuid),
@@ -2855,7 +2658,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByUuid_C_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 					true, false, LVEntryVersion::getUuid),
@@ -2890,7 +2693,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getGroupId));
@@ -2921,7 +2724,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByGroupId_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, false, LVEntryVersion::getGroupId),
@@ -2952,7 +2755,7 @@ public class LVEntryVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByG_UGK,
 			_finderPathWithoutPaginationFindByG_UGK, _finderPathCountByG_UGK,
 			_SQL_SELECT_LVENTRYVERSION_WHERE, _SQL_COUNT_LVENTRYVERSION_WHERE,
-			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, LVEntryVersion::getGroupId),
@@ -3010,19 +2813,17 @@ public class LVEntryVersionPersistenceImpl
 	protected LVEntryLocalizationVersionPersistence
 		lvEntryLocalizationVersionPersistence;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		LVEntryVersionModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_LVENTRYVERSION =
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion";
 
 	private static final String _SQL_SELECT_LVENTRYVERSION_WHERE =
 		"SELECT lvEntryVersion FROM LVEntryVersion lvEntryVersion WHERE ";
 
-	private static final String _SQL_COUNT_LVENTRYVERSION =
-		"SELECT COUNT(lvEntryVersion) FROM LVEntryVersion lvEntryVersion";
-
 	private static final String _SQL_COUNT_LVENTRYVERSION_WHERE =
 		"SELECT COUNT(lvEntryVersion) FROM LVEntryVersion lvEntryVersion WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "lvEntryVersion.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LVEntryVersion exists with the key {";
@@ -3039,4 +2840,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:5212171
+// LIFERAY-SERVICE-BUILDER-HASH:-836511223

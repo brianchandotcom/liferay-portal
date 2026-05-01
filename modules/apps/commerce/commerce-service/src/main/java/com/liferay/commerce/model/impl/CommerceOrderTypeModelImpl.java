@@ -117,6 +117,8 @@ public class CommerceOrderTypeModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderType";
 
+	public static final String ENTITY_ALIAS = "commerceOrderType";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrderType.createDate DESC";
 
@@ -1770,4 +1772,4 @@ public class CommerceOrderTypeModelImpl
 	private CommerceOrderType _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-98035226
+// LIFERAY-SERVICE-BUILDER-HASH:-381337476

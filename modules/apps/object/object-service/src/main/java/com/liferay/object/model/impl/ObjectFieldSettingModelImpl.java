@@ -93,6 +93,8 @@ public class ObjectFieldSettingModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectFieldSetting";
 
+	public static final String ENTITY_ALIAS = "objectFieldSetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectFieldSetting.objectFieldSettingId ASC";
 
@@ -986,4 +988,4 @@ public class ObjectFieldSettingModelImpl
 	private ObjectFieldSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-468536117
+// LIFERAY-SERVICE-BUILDER-HASH:806628233

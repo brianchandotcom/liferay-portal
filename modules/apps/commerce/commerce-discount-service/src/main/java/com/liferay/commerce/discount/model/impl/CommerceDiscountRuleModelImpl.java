@@ -95,6 +95,8 @@ public class CommerceDiscountRuleModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountRule";
 
+	public static final String ENTITY_ALIAS = "commerceDiscountRule";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceDiscountRule.createDate DESC";
 
@@ -954,4 +956,4 @@ public class CommerceDiscountRuleModelImpl
 	private CommerceDiscountRule _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1451543795
+// LIFERAY-SERVICE-BUILDER-HASH:-1866494254

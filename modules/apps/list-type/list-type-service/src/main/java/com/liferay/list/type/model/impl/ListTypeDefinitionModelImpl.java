@@ -104,6 +104,8 @@ public class ListTypeDefinitionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ListTypeDefinition";
 
+	public static final String ENTITY_ALIAS = "listTypeDefinition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY listTypeDefinition.listTypeDefinitionId ASC";
 
@@ -1209,4 +1211,4 @@ public class ListTypeDefinitionModelImpl
 	private ListTypeDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:39925037
+// LIFERAY-SERVICE-BUILDER-HASH:1602430341

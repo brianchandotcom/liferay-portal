@@ -110,6 +110,8 @@ public class MBCategoryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
 
+	public static final String ENTITY_ALIAS = "mbCategory";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
 
@@ -1545,4 +1547,4 @@ public class MBCategoryModelImpl
 	private MBCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:353220438
+// LIFERAY-SERVICE-BUILDER-HASH:330017462

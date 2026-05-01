@@ -78,6 +78,8 @@ public class DefinedDefaultOrderEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DefinedDefaultOrderEntry";
 
+	public static final String ENTITY_ALIAS = "definedDefaultOrderEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY definedDefaultOrderEntry.modifiedDate ASC";
 
@@ -634,4 +636,4 @@ public class DefinedDefaultOrderEntryModelImpl
 	private DefinedDefaultOrderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1857227796
+// LIFERAY-SERVICE-BUILDER-HASH:-2075742667

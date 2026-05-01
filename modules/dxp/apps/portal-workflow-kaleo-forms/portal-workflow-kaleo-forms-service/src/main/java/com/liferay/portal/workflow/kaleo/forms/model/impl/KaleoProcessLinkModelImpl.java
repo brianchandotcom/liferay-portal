@@ -78,6 +78,8 @@ public class KaleoProcessLinkModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoProcessLink";
 
+	public static final String ENTITY_ALIAS = "kaleoProcessLink";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoProcessLink.kaleoProcessLinkId ASC";
 
@@ -672,4 +674,4 @@ public class KaleoProcessLinkModelImpl
 	private KaleoProcessLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1650813332
+// LIFERAY-SERVICE-BUILDER-HASH:-709937046

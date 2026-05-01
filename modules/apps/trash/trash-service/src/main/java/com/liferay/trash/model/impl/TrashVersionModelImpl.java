@@ -86,6 +86,8 @@ public class TrashVersionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TrashVersion";
 
+	public static final String ENTITY_ALIAS = "trashVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY trashVersion.versionId ASC";
 
@@ -818,4 +820,4 @@ public class TrashVersionModelImpl
 	private TrashVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258753815
+// LIFERAY-SERVICE-BUILDER-HASH:-1888287076

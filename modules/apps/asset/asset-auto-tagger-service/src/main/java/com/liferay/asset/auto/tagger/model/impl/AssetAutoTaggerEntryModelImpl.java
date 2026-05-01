@@ -87,6 +87,8 @@ public class AssetAutoTaggerEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AssetAutoTaggerEntry";
 
+	public static final String ENTITY_ALIAS = "assetAutoTaggerEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetAutoTaggerEntry.createDate DESC";
 
@@ -821,4 +823,4 @@ public class AssetAutoTaggerEntryModelImpl
 	private AssetAutoTaggerEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2145614207
+// LIFERAY-SERVICE-BUILDER-HASH:-301700283

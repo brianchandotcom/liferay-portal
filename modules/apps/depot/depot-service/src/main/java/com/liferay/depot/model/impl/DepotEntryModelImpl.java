@@ -94,6 +94,8 @@ public class DepotEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DepotEntry";
 
+	public static final String ENTITY_ALIAS = "depotEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY depotEntry.depotEntryId ASC";
 
@@ -942,4 +944,4 @@ public class DepotEntryModelImpl
 	private DepotEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1152247172
+// LIFERAY-SERVICE-BUILDER-HASH:1226381593

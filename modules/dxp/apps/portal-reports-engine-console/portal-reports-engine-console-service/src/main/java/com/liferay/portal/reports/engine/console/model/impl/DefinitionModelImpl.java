@@ -106,6 +106,8 @@ public class DefinitionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Reports_Definition";
 
+	public static final String ENTITY_ALIAS = "definition";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY definition.modifiedDate ASC";
 
@@ -1346,4 +1348,4 @@ public class DefinitionModelImpl
 	private Definition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:605988836
+// LIFERAY-SERVICE-BUILDER-HASH:445044708

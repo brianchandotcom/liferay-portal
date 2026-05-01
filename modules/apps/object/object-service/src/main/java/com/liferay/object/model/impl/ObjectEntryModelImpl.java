@@ -118,6 +118,8 @@ public class ObjectEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntry";
 
+	public static final String ENTITY_ALIAS = "objectEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectEntry.objectEntryId ASC";
 
@@ -1694,4 +1696,4 @@ public class ObjectEntryModelImpl
 	private ObjectEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2035548214
+// LIFERAY-SERVICE-BUILDER-HASH:1957114546

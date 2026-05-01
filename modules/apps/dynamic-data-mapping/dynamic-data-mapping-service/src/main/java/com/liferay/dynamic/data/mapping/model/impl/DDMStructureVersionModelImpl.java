@@ -119,6 +119,8 @@ public class DDMStructureVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DDMStructureVersion";
 
+	public static final String ENTITY_ALIAS = "ddmStructureVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmStructureVersion.structureVersionId ASC";
 
@@ -1720,4 +1722,4 @@ public class DDMStructureVersionModelImpl
 	private DDMStructureVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1158972010
+// LIFERAY-SERVICE-BUILDER-HASH:-471415719

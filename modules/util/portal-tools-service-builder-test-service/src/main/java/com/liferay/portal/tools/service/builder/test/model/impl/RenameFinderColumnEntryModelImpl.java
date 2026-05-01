@@ -77,6 +77,8 @@ public class RenameFinderColumnEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table RenameFinderColumnEntry";
 
+	public static final String ENTITY_ALIAS = "renameFinderColumnEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY renameFinderColumnEntry.renameFinderColumnEntryId ASC";
 
@@ -618,4 +620,4 @@ public class RenameFinderColumnEntryModelImpl
 	private RenameFinderColumnEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1079298082
+// LIFERAY-SERVICE-BUILDER-HASH:-438974463

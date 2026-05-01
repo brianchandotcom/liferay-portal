@@ -79,6 +79,8 @@ public class SamlSpAuthRequestModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table SamlSpAuthRequest";
 
+	public static final String ENTITY_ALIAS = "samlSpAuthRequest";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY samlSpAuthRequest.samlSpAuthnRequestId ASC";
 
@@ -758,4 +760,4 @@ public class SamlSpAuthRequestModelImpl
 	private SamlSpAuthRequest _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:80620117
+// LIFERAY-SERVICE-BUILDER-HASH:-235488437

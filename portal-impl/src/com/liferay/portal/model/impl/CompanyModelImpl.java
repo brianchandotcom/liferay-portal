@@ -114,6 +114,8 @@ public class CompanyModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Company";
 
+	public static final String ENTITY_ALIAS = "company";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY company.companyId ASC";
 
@@ -1479,4 +1481,4 @@ public class CompanyModelImpl
 	private Company _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:988125139
+// LIFERAY-SERVICE-BUILDER-HASH:1805343833

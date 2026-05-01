@@ -119,6 +119,8 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceNotificationTemplate";
 
+	public static final String ENTITY_ALIAS = "commerceNotificationTemplate";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceNotificationTemplate.modifiedDate DESC, commerceNotificationTemplate.name DESC";
 
@@ -1827,4 +1829,4 @@ public class CommerceNotificationTemplateModelImpl
 	private CommerceNotificationTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:221404855
+// LIFERAY-SERVICE-BUILDER-HASH:1285273770

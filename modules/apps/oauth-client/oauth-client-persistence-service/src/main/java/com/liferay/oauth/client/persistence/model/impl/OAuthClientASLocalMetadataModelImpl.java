@@ -104,6 +104,8 @@ public class OAuthClientASLocalMetadataModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OAuthClientASLocalMetadata";
 
+	public static final String ENTITY_ALIAS = "oAuthClientASLocalMetadata";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId ASC";
 
@@ -1289,4 +1291,4 @@ public class OAuthClientASLocalMetadataModelImpl
 	private OAuthClientASLocalMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1157404049
+// LIFERAY-SERVICE-BUILDER-HASH:-1197075458

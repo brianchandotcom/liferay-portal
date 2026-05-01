@@ -845,87 +845,6 @@ public class CommerceOrderAttachmentUtil {
 		return getPersistence().fetchByPrimaryKey(commerceOrderAttachmentId);
 	}
 
-	/**
-	 * Returns all the commerce order attachments.
-	 *
-	 * @return the commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findAll(
-		int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the commerce order attachments from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of commerce order attachments.
-	 *
-	 * @return the number of commerce order attachments
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static CommerceOrderAttachmentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -939,4 +858,4 @@ public class CommerceOrderAttachmentUtil {
 	private static volatile CommerceOrderAttachmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1933561397
+// LIFERAY-SERVICE-BUILDER-HASH:-1283671544

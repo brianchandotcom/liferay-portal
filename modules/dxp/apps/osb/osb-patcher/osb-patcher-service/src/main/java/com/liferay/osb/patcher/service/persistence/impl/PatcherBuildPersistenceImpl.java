@@ -98,9 +98,6 @@ public class PatcherBuildPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByPatcherFixId;
 	private FinderPath _finderPathWithoutPaginationFindByPatcherFixId;
 	private FinderPath _finderPathCountByPatcherFixId;
@@ -317,7 +314,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -680,7 +677,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1035,7 +1032,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1430,7 +1427,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1816,7 +1813,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2291,7 +2288,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2693,7 +2690,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3097,7 +3094,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3513,7 +3510,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3935,7 +3932,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4353,7 +4350,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4669,7 +4666,7 @@ public class PatcherBuildPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(PatcherBuildModelImpl.ORDER_BY_JPQL);
@@ -4893,7 +4890,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -5078,7 +5075,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -5312,7 +5309,7 @@ public class PatcherBuildPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(PatcherBuildModelImpl.ORDER_BY_JPQL);
@@ -6011,7 +6008,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -6503,7 +6500,7 @@ public class PatcherBuildPersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -6969,185 +6966,6 @@ public class PatcherBuildPersistenceImpl
 	@Override
 	public PatcherBuild fetchByPrimaryKey(long patcherBuildId) {
 		return fetchByPrimaryKey((Serializable)patcherBuildId);
-	}
-
-	/**
-	 * Returns all the patcher builds.
-	 *
-	 * @return the patcher builds
-	 */
-	@Override
-	public List<PatcherBuild> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of patcher builds
-	 */
-	@Override
-	public List<PatcherBuild> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of patcher builds
-	 */
-	@Override
-	public List<PatcherBuild> findAll(
-		int start, int end, OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of patcher builds
-	 */
-	@Override
-	public List<PatcherBuild> findAll(
-		int start, int end, OrderByComparator<PatcherBuild> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<PatcherBuild> list = null;
-
-		if (useFinderCache) {
-			list = (List<PatcherBuild>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_PATCHERBUILD);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_PATCHERBUILD;
-
-				sql = sql.concat(PatcherBuildModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<PatcherBuild>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the patcher builds from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (PatcherBuild patcherBuild : findAll()) {
-			remove(patcherBuild);
-		}
-	}
-
-	/**
-	 * Returns the number of patcher builds.
-	 *
-	 * @return the number of patcher builds
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(_SQL_COUNT_PATCHERBUILD);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
 	}
 
 	/**
@@ -7843,18 +7661,6 @@ public class PatcherBuildPersistenceImpl
 			"OSBPatcher_PBuilds_PFixes", "companyId", "patcherBuildId",
 			"patcherFixId", this, PatcherFix.class);
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByPatcherFixId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPatcherFixId",
 			new String[] {
@@ -7879,7 +7685,7 @@ public class PatcherBuildPersistenceImpl
 				_finderPathWithoutPaginationFindByPatcherFixId,
 				_finderPathCountByPatcherFixId, _SQL_SELECT_PATCHERBUILD_WHERE,
 				_SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "patcherFixId", FinderColumn.Type.LONG,
 					"=", true, true, PatcherBuild::getPatcherFixId));
@@ -7912,7 +7718,7 @@ public class PatcherBuildPersistenceImpl
 				_finderPathWithoutPaginationFindByPatcherProjectVersionId,
 				_finderPathCountByPatcherProjectVersionId,
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -7939,7 +7745,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByKey,
 			_finderPathWithoutPaginationFindByKey, _finderPathCountByKey,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
 				true, PatcherBuild::getKey));
@@ -7968,7 +7774,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByP_P,
 			_finderPathWithoutPaginationFindByP_P, _finderPathCountByP_P,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "patcherAccountId", FinderColumn.Type.LONG,
 				"=", true, false, PatcherBuild::getPatcherAccountId),
@@ -8000,7 +7806,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByP_C,
 			_finderPathWithoutPaginationFindByP_C, _finderPathCountByP_C,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "patcherFixId", FinderColumn.Type.LONG, "=",
 				true, false, PatcherBuild::getPatcherFixId),
@@ -8041,7 +7847,7 @@ public class PatcherBuildPersistenceImpl
 				this, _finderPathWithPaginationFindByK_GtKV, null,
 				_finderPathWithPaginationCountByK_GtKV,
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
 					false, PatcherBuild::getKey),
@@ -8068,7 +7874,7 @@ public class PatcherBuildPersistenceImpl
 				this, _finderPathWithPaginationFindByK_LtKV, null,
 				_finderPathWithPaginationCountByK_LtKV,
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
 					false, PatcherBuild::getKey),
@@ -8099,7 +7905,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByK_L,
 			_finderPathWithoutPaginationFindByK_L, _finderPathCountByK_L,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "key", FinderColumn.Type.STRING, "=", true,
 				false, PatcherBuild::getKey),
@@ -8130,7 +7936,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByL_S,
 			_finderPathWithoutPaginationFindByL_S, _finderPathCountByL_S,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "latestSupportTicketBuild",
 				FinderColumn.Type.BOOLEAN, "=", true, false,
@@ -8157,7 +7963,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByS_GtS, null,
 			_finderPathWithPaginationCountByS_GtS,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "supportTicket", FinderColumn.Type.STRING, "=",
 				true, false, PatcherBuild::getSupportTicket),
@@ -8184,7 +7990,7 @@ public class PatcherBuildPersistenceImpl
 			this, _finderPathWithPaginationFindByS_LtS, null,
 			_finderPathWithPaginationCountByS_LtS,
 			_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-			PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"patcherBuild.", "supportTicket", FinderColumn.Type.STRING, "=",
 				true, false, PatcherBuild::getSupportTicket),
@@ -8239,7 +8045,7 @@ public class PatcherBuildPersistenceImpl
 				this, _finderPathWithPaginationFindByP_NotP_C_NotT, null,
 				_finderPathWithPaginationCountByP_NotP_C_NotT,
 				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "patcherFixId", FinderColumn.Type.LONG,
 					"=", true, false, PatcherBuild::getPatcherFixId),
@@ -8298,7 +8104,7 @@ public class PatcherBuildPersistenceImpl
 				_finderPathWithoutPaginationFindByP_N_L_A,
 				_finderPathCountByP_N_L_A, _SQL_SELECT_PATCHERBUILD_WHERE,
 				_SQL_COUNT_PATCHERBUILD_WHERE,
-				PatcherBuildModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"patcherBuild.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, false,
@@ -8375,14 +8181,14 @@ public class PatcherBuildPersistenceImpl
 		return date.getTime();
 	}
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		PatcherBuildModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_PATCHERBUILD =
 		"SELECT patcherBuild FROM PatcherBuild patcherBuild";
 
 	private static final String _SQL_SELECT_PATCHERBUILD_WHERE =
 		"SELECT patcherBuild FROM PatcherBuild patcherBuild WHERE ";
-
-	private static final String _SQL_COUNT_PATCHERBUILD =
-		"SELECT COUNT(patcherBuild) FROM PatcherBuild patcherBuild";
 
 	private static final String _SQL_COUNT_PATCHERBUILD_WHERE =
 		"SELECT COUNT(patcherBuild) FROM PatcherBuild patcherBuild WHERE ";
@@ -8409,8 +8215,6 @@ public class PatcherBuildPersistenceImpl
 	private static final String _FILTER_ENTITY_TABLE =
 		"OSBPatcher_PatcherBuild";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "patcherBuild.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE =
 		"OSBPatcher_PatcherBuild.";
 
@@ -8429,4 +8233,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:15568617
+// LIFERAY-SERVICE-BUILDER-HASH:-76113475

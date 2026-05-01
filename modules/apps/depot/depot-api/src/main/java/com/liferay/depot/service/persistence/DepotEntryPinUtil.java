@@ -797,86 +797,6 @@ public class DepotEntryPinUtil {
 		return getPersistence().fetchByPrimaryKey(depotEntryPinId);
 	}
 
-	/**
-	 * Returns all the depot entry pins.
-	 *
-	 * @return the depot entry pins
-	 */
-	public static List<DepotEntryPin> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the depot entry pins.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.depot.model.impl.DepotEntryPinModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry pins
-	 * @param end the upper bound of the range of depot entry pins (not inclusive)
-	 * @return the range of depot entry pins
-	 */
-	public static List<DepotEntryPin> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry pins.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.depot.model.impl.DepotEntryPinModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry pins
-	 * @param end the upper bound of the range of depot entry pins (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of depot entry pins
-	 */
-	public static List<DepotEntryPin> findAll(
-		int start, int end,
-		OrderByComparator<DepotEntryPin> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot entry pins.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.depot.model.impl.DepotEntryPinModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of depot entry pins
-	 * @param end the upper bound of the range of depot entry pins (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of depot entry pins
-	 */
-	public static List<DepotEntryPin> findAll(
-		int start, int end, OrderByComparator<DepotEntryPin> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the depot entry pins from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of depot entry pins.
-	 *
-	 * @return the number of depot entry pins
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static DepotEntryPinPersistence getPersistence() {
 		return _persistence;
 	}
@@ -888,4 +808,4 @@ public class DepotEntryPinUtil {
 	private static volatile DepotEntryPinPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-461390297
+// LIFERAY-SERVICE-BUILDER-HASH:689731817

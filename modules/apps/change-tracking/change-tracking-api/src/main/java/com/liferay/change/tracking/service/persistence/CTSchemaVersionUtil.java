@@ -303,87 +303,6 @@ public class CTSchemaVersionUtil {
 		return getPersistence().fetchByPrimaryKey(schemaVersionId);
 	}
 
-	/**
-	 * Returns all the ct schema versions.
-	 *
-	 * @return the ct schema versions
-	 */
-	public static List<CTSchemaVersion> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the ct schema versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct schema versions
-	 * @param end the upper bound of the range of ct schema versions (not inclusive)
-	 * @return the range of ct schema versions
-	 */
-	public static List<CTSchemaVersion> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct schema versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct schema versions
-	 * @param end the upper bound of the range of ct schema versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ct schema versions
-	 */
-	public static List<CTSchemaVersion> findAll(
-		int start, int end,
-		OrderByComparator<CTSchemaVersion> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct schema versions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.change.tracking.model.impl.CTSchemaVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ct schema versions
-	 * @param end the upper bound of the range of ct schema versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of ct schema versions
-	 */
-	public static List<CTSchemaVersion> findAll(
-		int start, int end,
-		OrderByComparator<CTSchemaVersion> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the ct schema versions from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of ct schema versions.
-	 *
-	 * @return the number of ct schema versions
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static CTSchemaVersionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -395,4 +314,4 @@ public class CTSchemaVersionUtil {
 	private static volatile CTSchemaVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-529559699
+// LIFERAY-SERVICE-BUILDER-HASH:-297947772

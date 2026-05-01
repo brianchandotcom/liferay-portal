@@ -105,9 +105,6 @@ public class FragmentCollectionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -659,7 +656,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -901,7 +898,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -1333,7 +1330,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -1614,7 +1611,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -2001,7 +1998,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -2268,7 +2265,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -2632,7 +2629,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -2929,7 +2926,7 @@ public class FragmentCollectionPersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(FragmentCollectionModelImpl.ORDER_BY_JPQL);
@@ -3682,198 +3679,6 @@ public class FragmentCollectionPersistenceImpl
 		return fetchByPrimaryKey((Serializable)fragmentCollectionId);
 	}
 
-	/**
-	 * Returns all the fragment collections.
-	 *
-	 * @return the fragment collections
-	 */
-	@Override
-	public List<FragmentCollection> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment collections.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment collections
-	 * @param end the upper bound of the range of fragment collections (not inclusive)
-	 * @return the range of fragment collections
-	 */
-	@Override
-	public List<FragmentCollection> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment collections.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment collections
-	 * @param end the upper bound of the range of fragment collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of fragment collections
-	 */
-	@Override
-	public List<FragmentCollection> findAll(
-		int start, int end,
-		OrderByComparator<FragmentCollection> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment collections.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentCollectionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of fragment collections
-	 * @param end the upper bound of the range of fragment collections (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of fragment collections
-	 */
-	@Override
-	public List<FragmentCollection> findAll(
-		int start, int end,
-		OrderByComparator<FragmentCollection> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<FragmentCollection> list = null;
-
-			if (useFinderCache) {
-				list = (List<FragmentCollection>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_FRAGMENTCOLLECTION);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_FRAGMENTCOLLECTION;
-
-					sql = sql.concat(FragmentCollectionModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<FragmentCollection>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the fragment collections from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (FragmentCollection fragmentCollection : findAll()) {
-			remove(fragmentCollection);
-		}
-	}
-
-	/**
-	 * Returns the number of fragment collections.
-	 *
-	 * @return the number of fragment collections
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					FragmentCollection.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(
-						_SQL_COUNT_FRAGMENTCOLLECTION);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -3980,18 +3785,6 @@ public class FragmentCollectionPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4015,7 +3808,7 @@ public class FragmentCollectionPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
-			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentCollection::getUuid));
@@ -4060,8 +3853,7 @@ public class FragmentCollectionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
-				FragmentCollectionModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"fragmentCollection.", "uuid", FinderColumn.Type.STRING,
 					"=", true, false, FragmentCollection::getUuid),
@@ -4222,19 +4014,17 @@ public class FragmentCollectionPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		FragmentCollectionModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_FRAGMENTCOLLECTION =
 		"SELECT fragmentCollection FROM FragmentCollection fragmentCollection";
 
 	private static final String _SQL_SELECT_FRAGMENTCOLLECTION_WHERE =
 		"SELECT fragmentCollection FROM FragmentCollection fragmentCollection WHERE ";
 
-	private static final String _SQL_COUNT_FRAGMENTCOLLECTION =
-		"SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection";
-
 	private static final String _SQL_COUNT_FRAGMENTCOLLECTION_WHERE =
 		"SELECT COUNT(fragmentCollection) FROM FragmentCollection fragmentCollection WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "fragmentCollection.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No FragmentCollection exists with the key {";
@@ -4251,4 +4041,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709900311
+// LIFERAY-SERVICE-BUILDER-HASH:1840452878

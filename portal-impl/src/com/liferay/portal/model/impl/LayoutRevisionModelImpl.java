@@ -128,6 +128,8 @@ public class LayoutRevisionModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LayoutRevision";
 
+	public static final String ENTITY_ALIAS = "layoutRevision";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutRevision.modifiedDate DESC";
 
@@ -2370,4 +2372,4 @@ public class LayoutRevisionModelImpl
 	private LayoutRevision _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2079841336
+// LIFERAY-SERVICE-BUILDER-HASH:851674202

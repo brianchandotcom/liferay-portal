@@ -77,6 +77,8 @@ public class FinderWhereClauseEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table FinderWhereClauseEntry";
 
+	public static final String ENTITY_ALIAS = "finderWhereClauseEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY finderWhereClauseEntry.finderWhereClauseEntryId ASC";
 
@@ -627,4 +629,4 @@ public class FinderWhereClauseEntryModelImpl
 	private FinderWhereClauseEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1468441204
+// LIFERAY-SERVICE-BUILDER-HASH:-1001276517

@@ -133,6 +133,8 @@ public class CommercePriceEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommercePriceEntry";
 
+	public static final String ENTITY_ALIAS = "commercePriceEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePriceEntry.createDate DESC";
 
@@ -1973,4 +1975,4 @@ public class CommercePriceEntryModelImpl
 	private CommercePriceEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1881078055
+// LIFERAY-SERVICE-BUILDER-HASH:895054314

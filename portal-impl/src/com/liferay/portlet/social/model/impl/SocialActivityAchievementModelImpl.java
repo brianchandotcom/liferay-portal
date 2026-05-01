@@ -89,6 +89,8 @@ public class SocialActivityAchievementModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivityAchievement";
 
+	public static final String ENTITY_ALIAS = "socialActivityAchievement";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY socialActivityAchievement.activityAchievementId ASC";
 
@@ -872,4 +874,4 @@ public class SocialActivityAchievementModelImpl
 	private SocialActivityAchievement _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-925403540
+// LIFERAY-SERVICE-BUILDER-HASH:452410712

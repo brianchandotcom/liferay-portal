@@ -86,6 +86,8 @@ public class AnalyticsMessageModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AnalyticsMessage";
 
+	public static final String ENTITY_ALIAS = "analyticsMessage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY analyticsMessage.analyticsMessageId ASC";
 
@@ -785,4 +787,4 @@ public class AnalyticsMessageModelImpl
 	private AnalyticsMessage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-239252066
+// LIFERAY-SERVICE-BUILDER-HASH:-1318853076

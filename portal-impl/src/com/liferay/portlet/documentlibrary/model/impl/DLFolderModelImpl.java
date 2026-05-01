@@ -118,6 +118,8 @@ public class DLFolderModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 
+	public static final String ENTITY_ALIAS = "dlFolder";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 
@@ -1778,4 +1780,4 @@ public class DLFolderModelImpl
 	private DLFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505423399
+// LIFERAY-SERVICE-BUILDER-HASH:1083677276

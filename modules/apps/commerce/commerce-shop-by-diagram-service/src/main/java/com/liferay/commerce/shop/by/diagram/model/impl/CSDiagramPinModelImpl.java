@@ -93,6 +93,8 @@ public class CSDiagramPinModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CSDiagramPin";
 
+	public static final String ENTITY_ALIAS = "csDiagramPin";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY csDiagramPin.sequence ASC";
 
@@ -919,4 +921,4 @@ public class CSDiagramPinModelImpl
 	private CSDiagramPin _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-839941598
+// LIFERAY-SERVICE-BUILDER-HASH:-1477710111

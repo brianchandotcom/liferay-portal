@@ -120,6 +120,8 @@ public class AccountEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
+	public static final String ENTITY_ALIAS = "accountEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountEntry.name ASC";
 
@@ -1689,4 +1691,4 @@ public class AccountEntryModelImpl
 	private AccountEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-9875560
+// LIFERAY-SERVICE-BUILDER-HASH:-684300854

@@ -70,6 +70,8 @@ public class CounterModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Counter";
 
+	public static final String ENTITY_ALIAS = "counter";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY counter.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Counter.name ASC";
@@ -517,4 +519,4 @@ public class CounterModelImpl
 	private Counter _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2030922575
+// LIFERAY-SERVICE-BUILDER-HASH:-2007112428

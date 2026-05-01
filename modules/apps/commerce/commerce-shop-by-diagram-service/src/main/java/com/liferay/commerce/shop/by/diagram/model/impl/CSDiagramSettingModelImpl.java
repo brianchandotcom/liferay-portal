@@ -99,6 +99,8 @@ public class CSDiagramSettingModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CSDiagramSetting";
 
+	public static final String ENTITY_ALIAS = "csDiagramSetting";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY csDiagramSetting.CSDiagramSettingId ASC";
 
@@ -1074,4 +1076,4 @@ public class CSDiagramSettingModelImpl
 	private CSDiagramSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-40226137
+// LIFERAY-SERVICE-BUILDER-HASH:-28135059

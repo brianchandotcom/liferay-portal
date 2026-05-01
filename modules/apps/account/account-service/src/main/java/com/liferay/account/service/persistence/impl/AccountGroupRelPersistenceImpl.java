@@ -13,12 +13,10 @@ import com.liferay.account.model.impl.AccountGroupRelModelImpl;
 import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.account.service.persistence.AccountGroupRelUtil;
 import com.liferay.account.service.persistence.impl.constants.AccountPersistenceConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -81,9 +79,6 @@ public class AccountGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByAccountGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByAccountGroupId;
 	private FinderPath _finderPathCountByAccountGroupId;
@@ -899,187 +894,6 @@ public class AccountGroupRelPersistenceImpl
 		return fetchByPrimaryKey((Serializable)accountGroupRelId);
 	}
 
-	/**
-	 * Returns all the account group rels.
-	 *
-	 * @return the account group rels
-	 */
-	@Override
-	public List<AccountGroupRel> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @return the range of account group rels
-	 */
-	@Override
-	public List<AccountGroupRel> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the account group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of account group rels
-	 */
-	@Override
-	public List<AccountGroupRel> findAll(
-		int start, int end,
-		OrderByComparator<AccountGroupRel> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the account group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of account group rels
-	 */
-	@Override
-	public List<AccountGroupRel> findAll(
-		int start, int end,
-		OrderByComparator<AccountGroupRel> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindAll;
-				finderArgs = FINDER_ARGS_EMPTY;
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindAll;
-			finderArgs = new Object[] {start, end, orderByComparator};
-		}
-
-		List<AccountGroupRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<AccountGroupRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-			String sql = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					2 + (orderByComparator.getOrderByFields().length * 2));
-
-				sb.append(_SQL_SELECT_ACCOUNTGROUPREL);
-
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-				sql = sb.toString();
-			}
-			else {
-				sql = _SQL_SELECT_ACCOUNTGROUPREL;
-
-				sql = sql.concat(AccountGroupRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<AccountGroupRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Removes all the account group rels from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (AccountGroupRel accountGroupRel : findAll()) {
-			remove(accountGroupRel);
-		}
-	}
-
-	/**
-	 * Returns the number of account group rels.
-	 *
-	 * @return the number of account group rels
-	 */
-	@Override
-	public int countAll() {
-		Long count = (Long)finderCache.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(_SQL_COUNT_ACCOUNTGROUPREL);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
 	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
@@ -1108,18 +922,6 @@ public class AccountGroupRelPersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByAccountGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountGroupId",
 			new String[] {
@@ -1145,7 +947,7 @@ public class AccountGroupRelPersistenceImpl
 				_finderPathCountByAccountGroupId,
 				_SQL_SELECT_ACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_ACCOUNTGROUPREL_WHERE,
-				AccountGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"accountGroupRel.", "accountGroupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1174,7 +976,7 @@ public class AccountGroupRelPersistenceImpl
 			this, _finderPathWithPaginationFindByA_C,
 			_finderPathWithoutPaginationFindByA_C, _finderPathCountByA_C,
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
-			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"accountGroupRel.", "accountGroupId", FinderColumn.Type.LONG,
 				"=", true, false, AccountGroupRel::getAccountGroupId),
@@ -1205,7 +1007,7 @@ public class AccountGroupRelPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
-			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, false, AccountGroupRel::getClassNameId),
@@ -1274,19 +1076,17 @@ public class AccountGroupRelPersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		AccountGroupRelModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ACCOUNTGROUPREL =
 		"SELECT accountGroupRel FROM AccountGroupRel accountGroupRel";
 
 	private static final String _SQL_SELECT_ACCOUNTGROUPREL_WHERE =
 		"SELECT accountGroupRel FROM AccountGroupRel accountGroupRel WHERE ";
 
-	private static final String _SQL_COUNT_ACCOUNTGROUPREL =
-		"SELECT COUNT(accountGroupRel) FROM AccountGroupRel accountGroupRel";
-
 	private static final String _SQL_COUNT_ACCOUNTGROUPREL_WHERE =
 		"SELECT COUNT(accountGroupRel) FROM AccountGroupRel accountGroupRel WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "accountGroupRel.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AccountGroupRel exists with the key {";
@@ -1300,4 +1100,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:191223767
+// LIFERAY-SERVICE-BUILDER-HASH:1301682727

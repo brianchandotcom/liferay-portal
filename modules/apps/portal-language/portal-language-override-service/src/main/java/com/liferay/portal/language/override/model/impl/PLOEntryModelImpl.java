@@ -89,6 +89,8 @@ public class PLOEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table PLOEntry";
 
+	public static final String ENTITY_ALIAS = "ploEntry";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY ploEntry.key ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY PLOEntry.key_ ASC";
@@ -856,4 +858,4 @@ public class PLOEntryModelImpl
 	private PLOEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1775316241
+// LIFERAY-SERVICE-BUILDER-HASH:-1162462013

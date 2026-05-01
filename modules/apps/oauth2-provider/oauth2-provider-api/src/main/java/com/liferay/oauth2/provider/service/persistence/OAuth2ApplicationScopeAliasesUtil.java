@@ -455,89 +455,6 @@ public class OAuth2ApplicationScopeAliasesUtil {
 			oAuth2ApplicationScopeAliasesId);
 	}
 
-	/**
-	 * Returns all the o auth2 application scope aliaseses.
-	 *
-	 * @return the o auth2 application scope aliaseses
-	 */
-	public static List<OAuth2ApplicationScopeAliases> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the o auth2 application scope aliaseses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of o auth2 application scope aliaseses
-	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
-	 * @return the range of o auth2 application scope aliaseses
-	 */
-	public static List<OAuth2ApplicationScopeAliases> findAll(
-		int start, int end) {
-
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 application scope aliaseses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of o auth2 application scope aliaseses
-	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of o auth2 application scope aliaseses
-	 */
-	public static List<OAuth2ApplicationScopeAliases> findAll(
-		int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 application scope aliaseses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationScopeAliasesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of o auth2 application scope aliaseses
-	 * @param end the upper bound of the range of o auth2 application scope aliaseses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of o auth2 application scope aliaseses
-	 */
-	public static List<OAuth2ApplicationScopeAliases> findAll(
-		int start, int end,
-		OrderByComparator<OAuth2ApplicationScopeAliases> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the o auth2 application scope aliaseses from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of o auth2 application scope aliaseses.
-	 *
-	 * @return the number of o auth2 application scope aliaseses
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static OAuth2ApplicationScopeAliasesPersistence getPersistence() {
 		return _persistence;
 	}
@@ -552,4 +469,4 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-146376847
+// LIFERAY-SERVICE-BUILDER-HASH:378337712

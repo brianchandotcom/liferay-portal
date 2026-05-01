@@ -99,6 +99,8 @@ public class CPDefinitionGroupedEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionGroupedEntry";
 
+	public static final String ENTITY_ALIAS = "cpDefinitionGroupedEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpDefinitionGroupedEntry.priority ASC";
 
@@ -1076,4 +1078,4 @@ public class CPDefinitionGroupedEntryModelImpl
 	private CPDefinitionGroupedEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:228484864
+// LIFERAY-SERVICE-BUILDER-HASH:-1831794015

@@ -98,6 +98,8 @@ public class TrashEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 
+	public static final String ENTITY_ALIAS = "trashEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY trashEntry.createDate DESC";
 
@@ -998,4 +1000,4 @@ public class TrashEntryModelImpl
 	private TrashEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-929356598
+// LIFERAY-SERVICE-BUILDER-HASH:1550166033

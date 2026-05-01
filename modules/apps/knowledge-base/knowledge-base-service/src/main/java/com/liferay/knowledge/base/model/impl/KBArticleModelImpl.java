@@ -132,6 +132,8 @@ public class KBArticleModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
+	public static final String ENTITY_ALIAS = "kbArticle";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kbArticle.modifiedDate DESC";
 
@@ -2053,4 +2055,4 @@ public class KBArticleModelImpl
 	private KBArticle _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:489329894
+// LIFERAY-SERVICE-BUILDER-HASH:-1247161722

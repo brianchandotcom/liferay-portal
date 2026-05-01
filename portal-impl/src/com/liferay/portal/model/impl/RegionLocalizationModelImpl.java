@@ -82,6 +82,8 @@ public class RegionLocalizationModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table RegionLocalization";
 
+	public static final String ENTITY_ALIAS = "regionLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY regionLocalization.regionLocalizationId ASC";
 
@@ -759,4 +761,4 @@ public class RegionLocalizationModelImpl
 	private RegionLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001443875
+// LIFERAY-SERVICE-BUILDER-HASH:-1878218883

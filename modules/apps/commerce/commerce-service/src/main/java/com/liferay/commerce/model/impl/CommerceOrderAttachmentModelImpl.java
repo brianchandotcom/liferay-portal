@@ -104,6 +104,8 @@ public class CommerceOrderAttachmentModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceOrderAttachment";
 
+	public static final String ENTITY_ALIAS = "commerceOrderAttachment";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrderAttachment.priority ASC";
 
@@ -1230,4 +1232,4 @@ public class CommerceOrderAttachmentModelImpl
 	private CommerceOrderAttachment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1051789979
+// LIFERAY-SERVICE-BUILDER-HASH:1720065066

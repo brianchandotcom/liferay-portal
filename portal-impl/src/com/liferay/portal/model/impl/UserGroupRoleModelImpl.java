@@ -86,6 +86,8 @@ public class UserGroupRoleModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroupRole";
 
+	public static final String ENTITY_ALIAS = "userGroupRole";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY userGroupRole.userGroupRoleId ASC";
 
@@ -762,4 +764,4 @@ public class UserGroupRoleModelImpl
 	private UserGroupRole _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1107748590
+// LIFERAY-SERVICE-BUILDER-HASH:1377568745

@@ -103,6 +103,8 @@ public class AssetListEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table AssetListEntry";
 
+	public static final String ENTITY_ALIAS = "assetListEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetListEntry.assetListEntryId ASC";
 
@@ -1296,4 +1298,4 @@ public class AssetListEntryModelImpl
 	private AssetListEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:578385816
+// LIFERAY-SERVICE-BUILDER-HASH:1196291241

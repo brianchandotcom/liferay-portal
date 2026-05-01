@@ -115,6 +115,8 @@ public class DDMFormInstanceModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table DDMFormInstance";
 
+	public static final String ENTITY_ALIAS = "ddmFormInstance";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ddmFormInstance.formInstanceId ASC";
 
@@ -1605,4 +1607,4 @@ public class DDMFormInstanceModelImpl
 	private DDMFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:752298360
+// LIFERAY-SERVICE-BUILDER-HASH:-994715769

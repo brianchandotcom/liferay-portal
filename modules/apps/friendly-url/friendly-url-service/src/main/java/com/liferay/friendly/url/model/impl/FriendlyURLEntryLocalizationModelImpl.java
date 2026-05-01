@@ -90,6 +90,8 @@ public class FriendlyURLEntryLocalizationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table FriendlyURLEntryLocalization";
 
+	public static final String ENTITY_ALIAS = "friendlyURLEntryLocalization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY friendlyURLEntryLocalization.friendlyURLEntryLocalizationId ASC";
 
@@ -981,4 +983,4 @@ public class FriendlyURLEntryLocalizationModelImpl
 	private FriendlyURLEntryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1941422155
+// LIFERAY-SERVICE-BUILDER-HASH:319389033

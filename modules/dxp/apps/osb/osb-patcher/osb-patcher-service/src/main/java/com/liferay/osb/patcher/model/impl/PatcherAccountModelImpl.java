@@ -88,6 +88,8 @@ public class PatcherAccountModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherAccount";
 
+	public static final String ENTITY_ALIAS = "patcherAccount";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherAccount.patcherAccountId ASC";
 
@@ -859,4 +861,4 @@ public class PatcherAccountModelImpl
 	private PatcherAccount _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-84472833
+// LIFERAY-SERVICE-BUILDER-HASH:105206906

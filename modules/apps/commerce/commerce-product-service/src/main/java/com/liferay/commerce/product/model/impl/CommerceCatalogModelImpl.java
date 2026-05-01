@@ -101,6 +101,8 @@ public class CommerceCatalogModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceCatalog";
 
+	public static final String ENTITY_ALIAS = "commerceCatalog";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceCatalog.createDate DESC";
 
@@ -1181,4 +1183,4 @@ public class CommerceCatalogModelImpl
 	private CommerceCatalog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1989451551
+// LIFERAY-SERVICE-BUILDER-HASH:1202647120

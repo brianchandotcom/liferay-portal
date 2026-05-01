@@ -85,6 +85,8 @@ public class AccountEntryUserRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table AccountEntryUserRel";
 
+	public static final String ENTITY_ALIAS = "accountEntryUserRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountEntryUserRel.accountEntryUserRelId ASC";
 
@@ -698,4 +700,4 @@ public class AccountEntryUserRelModelImpl
 	private AccountEntryUserRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1142992209
+// LIFERAY-SERVICE-BUILDER-HASH:-104709095

@@ -96,6 +96,8 @@ public class MFAFIDO2CredentialEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table MFAFIDO2CredentialEntry";
 
+	public static final String ENTITY_ALIAS = "mfafido2CredentialEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY mfafido2CredentialEntry.mfaFIDO2CredentialEntryId ASC";
 
@@ -999,4 +1001,4 @@ public class MFAFIDO2CredentialEntryModelImpl
 	private MFAFIDO2CredentialEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1145467777
+// LIFERAY-SERVICE-BUILDER-HASH:250739875

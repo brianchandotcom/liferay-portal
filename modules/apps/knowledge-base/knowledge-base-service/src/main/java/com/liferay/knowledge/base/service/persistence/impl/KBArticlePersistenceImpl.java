@@ -106,9 +106,6 @@ public class KBArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathCountByResourcePrimKey;
@@ -916,7 +913,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1304,7 +1301,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -1570,7 +1567,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -1923,7 +1920,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -2188,7 +2185,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -2542,7 +2539,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -2828,7 +2825,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -3303,7 +3300,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -3700,7 +3697,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4078,7 +4075,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4456,7 +4453,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -5250,7 +5247,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -5521,7 +5518,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -5876,7 +5873,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -6145,7 +6142,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -6500,7 +6497,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -6771,7 +6768,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -7412,7 +7409,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -7627,7 +7624,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -7800,7 +7797,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -8027,7 +8024,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -8573,7 +8570,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -8786,7 +8783,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -8958,7 +8955,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -9185,7 +9182,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -9729,7 +9726,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -9943,7 +9940,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -10115,7 +10112,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -10341,7 +10338,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -10980,7 +10977,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -11288,7 +11285,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -11574,7 +11571,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -11950,7 +11947,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -12234,7 +12231,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -12847,7 +12844,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -13192,7 +13189,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -13407,7 +13404,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -13581,7 +13578,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -13811,7 +13808,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -14363,7 +14360,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -14578,7 +14575,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -14752,7 +14749,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -14981,7 +14978,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -15533,7 +15530,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -15748,7 +15745,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -15922,7 +15919,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -16152,7 +16149,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -16808,7 +16805,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -17245,7 +17242,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -17662,7 +17659,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -17978,7 +17975,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -18204,7 +18201,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -18390,7 +18387,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -18632,7 +18629,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -19248,7 +19245,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -19473,7 +19470,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -19659,7 +19656,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -19901,7 +19898,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -20515,7 +20512,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -20741,7 +20738,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -20927,7 +20924,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -21169,7 +21166,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -21878,7 +21875,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -22287,7 +22284,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -22950,7 +22947,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -23237,7 +23234,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -23620,7 +23617,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -23907,7 +23904,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -24297,7 +24294,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -24524,7 +24521,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -24704,7 +24701,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -24943,7 +24940,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -25513,7 +25510,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -25740,7 +25737,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -25920,7 +25917,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -26159,7 +26156,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -26743,7 +26740,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -26971,7 +26968,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -27153,7 +27150,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -27393,7 +27390,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -27970,7 +27967,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -28198,7 +28195,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -28380,7 +28377,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -28622,7 +28619,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -29217,7 +29214,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -29445,7 +29442,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -29626,7 +29623,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -29865,7 +29862,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -30438,7 +30435,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -30666,7 +30663,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -30847,7 +30844,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -31088,7 +31085,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -31689,7 +31686,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -31929,7 +31926,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -32120,7 +32117,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -32369,7 +32366,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -33119,7 +33116,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -33584,7 +33581,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -33927,7 +33924,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -34167,7 +34164,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -34362,7 +34359,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -34618,7 +34615,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -35277,7 +35274,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -35516,7 +35513,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -35711,7 +35708,7 @@ public class KBArticlePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -35967,7 +35964,7 @@ public class KBArticlePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(KBArticleModelImpl.ORDER_BY_JPQL);
@@ -36842,195 +36839,6 @@ public class KBArticlePersistenceImpl
 		return fetchByPrimaryKey((Serializable)kbArticleId);
 	}
 
-	/**
-	 * Returns all the kb articles.
-	 *
-	 * @return the kb articles
-	 */
-	@Override
-	public List<KBArticle> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of kb articles
-	 */
-	@Override
-	public List<KBArticle> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of kb articles
-	 */
-	@Override
-	public List<KBArticle> findAll(
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of kb articles
-	 */
-	@Override
-	public List<KBArticle> findAll(
-		int start, int end, OrderByComparator<KBArticle> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBArticle.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<KBArticle> list = null;
-
-			if (useFinderCache) {
-				list = (List<KBArticle>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_KBARTICLE);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_KBARTICLE;
-
-					sql = sql.concat(KBArticleModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<KBArticle>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the kb articles from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (KBArticle kbArticle : findAll()) {
-			remove(kbArticle);
-		}
-	}
-
-	/**
-	 * Returns the number of kb articles.
-	 *
-	 * @return the number of kb articles
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					KBArticle.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_KBARTICLE);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -37157,18 +36965,6 @@ public class KBArticlePersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
 			new String[] {
@@ -37193,7 +36989,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByResourcePrimKey,
 				_finderPathCountByResourcePrimKey, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey));
@@ -37220,7 +37016,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid));
@@ -37264,7 +37060,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, KBArticle::getUuid),
@@ -37295,7 +37091,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByR_G,
 			_finderPathWithoutPaginationFindByR_G, _finderPathCountByR_G,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, false, KBArticle::getResourcePrimKey),
@@ -37412,7 +37208,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_ERC,
 			_finderPathWithoutPaginationFindByG_ERC, _finderPathCountByG_ERC,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getGroupId),
@@ -37443,7 +37239,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_L,
 			_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getGroupId),
@@ -37474,7 +37270,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_M,
 			_finderPathWithoutPaginationFindByG_M, _finderPathCountByG_M,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getGroupId),
@@ -37505,7 +37301,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getGroupId),
@@ -37536,7 +37332,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_L,
 			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getCompanyId),
@@ -37567,7 +37363,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_M,
 			_finderPathWithoutPaginationFindByC_M, _finderPathCountByC_M,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getCompanyId),
@@ -37598,7 +37394,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, KBArticle::getCompanyId),
@@ -37696,7 +37492,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByLtD_S, null,
 			_finderPathWithPaginationCountByLtD_S, _SQL_SELECT_KBARTICLE_WHERE,
 			_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-			_ORDER_BY_ENTITY_ALIAS,
+			_ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"kbArticle.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				false, KBArticle::getDisplayDate),
@@ -37845,7 +37641,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByR_G_NotS, null,
 				_finderPathWithPaginationCountByR_G_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, false, KBArticle::getResourcePrimKey),
@@ -37941,7 +37737,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_ERC_S,
 				_finderPathCountByG_ERC_S, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38083,7 +37879,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_UT,
 				_finderPathCountByG_KBFI_UT, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38125,7 +37921,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_L,
 				_finderPathCountByG_KBFI_L, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38167,7 +37963,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_S,
 				_finderPathCountByG_KBFI_S, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38251,7 +38047,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_L_NotS, null,
 				_finderPathWithPaginationCountByG_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38284,7 +38080,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_M_NotS, null,
 				_finderPathWithPaginationCountByG_M_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38317,7 +38113,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByC_L_NotS, null,
 				_finderPathWithPaginationCountByC_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, false, KBArticle::getCompanyId),
@@ -38350,7 +38146,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByC_M_NotS, null,
 				_finderPathWithPaginationCountByC_M_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, false, KBArticle::getCompanyId),
@@ -38623,7 +38419,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_KBFI_UT_NotS, null,
 				_finderPathWithPaginationCountByG_KBFI_UT_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38660,7 +38456,7 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_KBFI_L_NotS, null,
 				_finderPathWithPaginationCountByG_KBFI_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, KBArticle::getGroupId),
@@ -38755,14 +38551,14 @@ public class KBArticlePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		KBArticleModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_KBARTICLE =
 		"SELECT kbArticle FROM KBArticle kbArticle";
 
 	private static final String _SQL_SELECT_KBARTICLE_WHERE =
 		"SELECT kbArticle FROM KBArticle kbArticle WHERE ";
-
-	private static final String _SQL_COUNT_KBARTICLE =
-		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle";
 
 	private static final String _SQL_COUNT_KBARTICLE_WHERE =
 		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
@@ -38788,8 +38584,6 @@ public class KBArticlePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "KBArticle";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "kbArticle.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE = "KBArticle.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
@@ -38807,4 +38601,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-822318469
+// LIFERAY-SERVICE-BUILDER-HASH:319633783

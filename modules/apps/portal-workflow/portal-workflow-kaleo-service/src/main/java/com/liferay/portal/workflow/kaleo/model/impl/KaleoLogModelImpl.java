@@ -128,6 +128,8 @@ public class KaleoLogModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoLog";
 
+	public static final String ENTITY_ALIAS = "kaleoLog";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoLog.kaleoLogId ASC";
 
@@ -1793,4 +1795,4 @@ public class KaleoLogModelImpl
 	private KaleoLog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1247109426
+// LIFERAY-SERVICE-BUILDER-HASH:1464560543

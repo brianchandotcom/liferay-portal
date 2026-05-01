@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -105,9 +104,6 @@ public class WikiNodePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByUuid;
 	private FinderPath _finderPathWithoutPaginationFindByUuid;
 	private FinderPath _finderPathCountByUuid;
@@ -732,7 +728,7 @@ public class WikiNodePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -1344,7 +1340,7 @@ public class WikiNodePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2104,195 +2100,6 @@ public class WikiNodePersistenceImpl
 		return fetchByPrimaryKey((Serializable)nodeId);
 	}
 
-	/**
-	 * Returns all the wiki nodes.
-	 *
-	 * @return the wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the wiki nodes.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @return the range of wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki nodes.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findAll(
-		int start, int end, OrderByComparator<WikiNode> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki nodes.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiNodeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki nodes
-	 * @param end the upper bound of the range of wiki nodes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of wiki nodes
-	 */
-	@Override
-	public List<WikiNode> findAll(
-		int start, int end, OrderByComparator<WikiNode> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiNode.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<WikiNode> list = null;
-
-			if (useFinderCache) {
-				list = (List<WikiNode>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_WIKINODE);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_WIKINODE;
-
-					sql = sql.concat(WikiNodeModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<WikiNode>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the wiki nodes from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (WikiNode wikiNode : findAll()) {
-			remove(wikiNode);
-		}
-	}
-
-	/**
-	 * Returns the number of wiki nodes.
-	 *
-	 * @return the number of wiki nodes
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiNode.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_WIKINODE);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -2402,18 +2209,6 @@ public class WikiNodePersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2436,7 +2231,7 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid));
@@ -2480,7 +2275,7 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, WikiNode::getUuid),
@@ -2512,7 +2307,7 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getGroupId));
@@ -2541,7 +2336,7 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
@@ -2583,7 +2378,7 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, WikiNode::getGroupId),
@@ -2614,7 +2409,7 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 				false, WikiNode::getCompanyId),
@@ -2681,14 +2476,14 @@ public class WikiNodePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		WikiNodeModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_WIKINODE =
 		"SELECT wikiNode FROM WikiNode wikiNode";
 
 	private static final String _SQL_SELECT_WIKINODE_WHERE =
 		"SELECT wikiNode FROM WikiNode wikiNode WHERE ";
-
-	private static final String _SQL_COUNT_WIKINODE =
-		"SELECT COUNT(wikiNode) FROM WikiNode wikiNode";
 
 	private static final String _SQL_COUNT_WIKINODE_WHERE =
 		"SELECT COUNT(wikiNode) FROM WikiNode wikiNode WHERE ";
@@ -2714,8 +2509,6 @@ public class WikiNodePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "WikiNode";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiNode.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiNode.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
@@ -2733,4 +2526,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-759432878
+// LIFERAY-SERVICE-BUILDER-HASH:1572051131

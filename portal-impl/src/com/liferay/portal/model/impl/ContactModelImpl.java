@@ -119,6 +119,8 @@ public class ContactModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 
+	public static final String ENTITY_ALIAS = "contact";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY contact.contactId ASC";
 
@@ -1607,4 +1609,4 @@ public class ContactModelImpl
 	private Contact _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1598462593
+// LIFERAY-SERVICE-BUILDER-HASH:-931567644

@@ -111,6 +111,8 @@ public class CPMeasurementUnitModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CPMeasurementUnit";
 
+	public static final String ENTITY_ALIAS = "cpMeasurementUnit";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpMeasurementUnit.priority ASC";
 
@@ -1461,4 +1463,4 @@ public class CPMeasurementUnitModelImpl
 	private CPMeasurementUnit _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-596301444
+// LIFERAY-SERVICE-BUILDER-HASH:-1884734050

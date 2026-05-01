@@ -103,6 +103,8 @@ public class ObjectLayoutTabModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectLayoutTab";
 
+	public static final String ENTITY_ALIAS = "objectLayoutTab";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectLayoutTab.objectLayoutTabId ASC";
 
@@ -1172,4 +1174,4 @@ public class ObjectLayoutTabModelImpl
 	private ObjectLayoutTab _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2096805406
+// LIFERAY-SERVICE-BUILDER-HASH:-1434912129

@@ -106,6 +106,8 @@ public class CommerceShipmentItemModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceShipmentItem";
 
+	public static final String ENTITY_ALIAS = "commerceShipmentItem";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceShipmentItem.createDate DESC";
 
@@ -1217,4 +1219,4 @@ public class CommerceShipmentItemModelImpl
 	private CommerceShipmentItem _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1250939281
+// LIFERAY-SERVICE-BUILDER-HASH:1870344774

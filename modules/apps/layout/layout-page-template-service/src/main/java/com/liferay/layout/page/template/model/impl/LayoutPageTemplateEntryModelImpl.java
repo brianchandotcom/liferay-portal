@@ -123,6 +123,8 @@ public class LayoutPageTemplateEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutPageTemplateEntry";
 
+	public static final String ENTITY_ALIAS = "layoutPageTemplateEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPageTemplateEntry.name ASC";
 
@@ -1871,4 +1873,4 @@ public class LayoutPageTemplateEntryModelImpl
 	private LayoutPageTemplateEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-640137686
+// LIFERAY-SERVICE-BUILDER-HASH:323832278

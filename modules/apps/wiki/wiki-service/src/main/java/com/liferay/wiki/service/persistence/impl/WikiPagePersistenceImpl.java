@@ -105,9 +105,6 @@ public class WikiPagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
 	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
 	private FinderPath _finderPathCountByResourcePrimKey;
@@ -1720,7 +1717,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -2037,7 +2034,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -2553,7 +2550,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -2908,7 +2905,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -4098,7 +4095,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -4506,7 +4503,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -5219,7 +5216,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -5596,7 +5593,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -5976,7 +5973,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -6357,7 +6354,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -7192,7 +7189,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -7541,7 +7538,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -7780,7 +7777,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -8309,7 +8306,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -8663,7 +8660,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -9065,7 +9062,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -9482,7 +9479,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -9886,7 +9883,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -10310,7 +10307,7 @@ public class WikiPagePersistenceImpl
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 				}
 				else {
 					sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
@@ -10564,7 +10561,7 @@ public class WikiPagePersistenceImpl
 		if (orderByComparator != null) {
 			if (getDB().isSupportsInlineDistinct()) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
 			}
 			else {
 				appendOrderByComparator(
@@ -11225,195 +11222,6 @@ public class WikiPagePersistenceImpl
 		return fetchByPrimaryKey((Serializable)pageId);
 	}
 
-	/**
-	 * Returns all the wiki pages.
-	 *
-	 * @return the wiki pages
-	 */
-	@Override
-	public List<WikiPage> findAll() {
-		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the wiki pages.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki pages
-	 * @param end the upper bound of the range of wiki pages (not inclusive)
-	 * @return the range of wiki pages
-	 */
-	@Override
-	public List<WikiPage> findAll(int start, int end) {
-		return findAll(start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki pages.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki pages
-	 * @param end the upper bound of the range of wiki pages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of wiki pages
-	 */
-	@Override
-	public List<WikiPage> findAll(
-		int start, int end, OrderByComparator<WikiPage> orderByComparator) {
-
-		return findAll(start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the wiki pages.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of wiki pages
-	 * @param end the upper bound of the range of wiki pages (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of wiki pages
-	 */
-	@Override
-	public List<WikiPage> findAll(
-		int start, int end, OrderByComparator<WikiPage> orderByComparator,
-		boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindAll;
-					finderArgs = FINDER_ARGS_EMPTY;
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindAll;
-				finderArgs = new Object[] {start, end, orderByComparator};
-			}
-
-			List<WikiPage> list = null;
-
-			if (useFinderCache) {
-				list = (List<WikiPage>)finderCache.getResult(
-					finderPath, finderArgs, this);
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						2 + (orderByComparator.getOrderByFields().length * 2));
-
-					sb.append(_SQL_SELECT_WIKIPAGE);
-
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-
-					sql = sb.toString();
-				}
-				else {
-					sql = _SQL_SELECT_WIKIPAGE;
-
-					sql = sql.concat(WikiPageModelImpl.ORDER_BY_JPQL);
-				}
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<WikiPage>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
-		}
-	}
-
-	/**
-	 * Removes all the wiki pages from the database.
-	 *
-	 */
-	@Override
-	public void removeAll() {
-		for (WikiPage wikiPage : findAll()) {
-			remove(wikiPage);
-		}
-	}
-
-	/**
-	 * Returns the number of wiki pages.
-	 *
-	 * @return the number of wiki pages
-	 */
-	@Override
-	public int countAll() {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					WikiPage.class)) {
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
-
-			if (count == null) {
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(_SQL_COUNT_WIKIPAGE);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
-		}
-	}
-
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -11533,18 +11341,6 @@ public class WikiPagePersistenceImpl
 		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
-		_finderPathWithPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathWithoutPaginationFindAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0],
-			new String[0], true);
-
-		_finderPathCountAll = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
-			new String[0], new String[0], false);
-
 		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
 			new String[] {
@@ -11569,7 +11365,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByResourcePrimKey,
 				_finderPathCountByResourcePrimKey, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 					true, true, WikiPage::getResourcePrimKey));
@@ -11596,7 +11392,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiPage::getUuid));
@@ -11640,7 +11436,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "uuid", FinderColumn.Type.STRING, "=", true,
 					false, WikiPage::getUuid),
@@ -11672,7 +11468,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getCompanyId));
@@ -11700,7 +11496,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByNodeId,
 				_finderPathCountByNodeId, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "nodeId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getNodeId));
@@ -11729,7 +11525,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByFormat,
 				_finderPathCountByFormat, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "format", FinderColumn.Type.STRING, "=", true,
 					true, WikiPage::getFormat));
@@ -11757,7 +11553,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByR_N,
 			_finderPathWithoutPaginationFindByR_N, _finderPathCountByR_N,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, false, WikiPage::getResourcePrimKey),
@@ -11788,7 +11584,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByR_S,
 			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, false, WikiPage::getResourcePrimKey),
@@ -11819,7 +11615,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByG_ERC,
 			_finderPathWithoutPaginationFindByG_ERC, _finderPathCountByG_ERC,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, WikiPage::getGroupId),
@@ -11869,7 +11665,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByN_H,
 			_finderPathWithoutPaginationFindByN_H, _finderPathCountByN_H,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "nodeId", FinderColumn.Type.LONG, "=", true, false,
 				WikiPage::getNodeId),
@@ -11938,7 +11734,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByN_S,
 			_finderPathWithoutPaginationFindByN_S, _finderPathCountByN_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "nodeId", FinderColumn.Type.LONG, "=", true, false,
 				WikiPage::getNodeId),
@@ -11995,7 +11791,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByR_N_H,
 			_finderPathWithoutPaginationFindByR_N_H, _finderPathCountByR_N_H,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, false, WikiPage::getResourcePrimKey),
@@ -12035,7 +11831,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByR_N_S,
 			_finderPathWithoutPaginationFindByR_N_S, _finderPathCountByR_N_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, false, WikiPage::getResourcePrimKey),
@@ -12095,7 +11891,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByG_N_H,
 			_finderPathWithoutPaginationFindByG_N_H, _finderPathCountByG_N_H,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, WikiPage::getGroupId),
@@ -12135,7 +11931,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByG_N_S,
 			_finderPathWithoutPaginationFindByG_N_S, _finderPathCountByG_N_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 				false, WikiPage::getGroupId),
@@ -12175,7 +11971,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByU_N_S,
 			_finderPathWithoutPaginationFindByU_N_S, _finderPathCountByU_N_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "userId", FinderColumn.Type.LONG, "=", true, false,
 				WikiPage::getUserId),
@@ -12323,7 +12119,7 @@ public class WikiPagePersistenceImpl
 			this, _finderPathWithPaginationFindByN_H_S,
 			_finderPathWithoutPaginationFindByN_H_S, _finderPathCountByN_H_S,
 			_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-			WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+			WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			new FinderColumn<>(
 				"wikiPage.", "nodeId", FinderColumn.Type.LONG, "=", true, false,
 				WikiPage::getNodeId),
@@ -12356,7 +12152,7 @@ public class WikiPagePersistenceImpl
 				this, _finderPathWithPaginationFindByN_H_NotS, null,
 				_finderPathWithPaginationCountByN_H_NotS,
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
-				WikiPageModelImpl.ORDER_BY_JPQL, _ORDER_BY_ENTITY_ALIAS,
+				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "nodeId", FinderColumn.Type.LONG, "=", true,
 					false, WikiPage::getNodeId),
@@ -12399,7 +12195,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByG_U_N_S,
 				_finderPathCountByG_U_N_S, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, WikiPage::getGroupId),
@@ -12471,7 +12267,7 @@ public class WikiPagePersistenceImpl
 				_finderPathWithoutPaginationFindByG_N_H_S,
 				_finderPathCountByG_N_H_S, _SQL_SELECT_WIKIPAGE_WHERE,
 				_SQL_COUNT_WIKIPAGE_WHERE, WikiPageModelImpl.ORDER_BY_JPQL,
-				_ORDER_BY_ENTITY_ALIAS,
+				_ENTITY_ALIAS_PREFIX,
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					false, WikiPage::getGroupId),
@@ -12649,14 +12445,14 @@ public class WikiPagePersistenceImpl
 	@Reference
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		WikiPageModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_WIKIPAGE =
 		"SELECT wikiPage FROM WikiPage wikiPage";
 
 	private static final String _SQL_SELECT_WIKIPAGE_WHERE =
 		"SELECT wikiPage FROM WikiPage wikiPage WHERE ";
-
-	private static final String _SQL_COUNT_WIKIPAGE =
-		"SELECT COUNT(wikiPage) FROM WikiPage wikiPage";
 
 	private static final String _SQL_COUNT_WIKIPAGE_WHERE =
 		"SELECT COUNT(wikiPage) FROM WikiPage wikiPage WHERE ";
@@ -12682,8 +12478,6 @@ public class WikiPagePersistenceImpl
 
 	private static final String _FILTER_ENTITY_TABLE = "WikiPage";
 
-	private static final String _ORDER_BY_ENTITY_ALIAS = "wikiPage.";
-
 	private static final String _ORDER_BY_ENTITY_TABLE = "WikiPage.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
@@ -12701,4 +12495,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1554307143
+// LIFERAY-SERVICE-BUILDER-HASH:1517117022

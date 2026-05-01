@@ -90,6 +90,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 	public static final String TABLE_SQL_DROP = "drop table Lock_";
 
+	public static final String ENTITY_ALIAS = "lock_";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY lock_.lockId ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY Lock_.lockId ASC";
@@ -982,4 +984,4 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private Lock _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1759206369
+// LIFERAY-SERVICE-BUILDER-HASH:305727706

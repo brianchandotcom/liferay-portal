@@ -113,6 +113,8 @@ public class BatchEngineExportTaskModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchEngineExportTask";
 
+	public static final String ENTITY_ALIAS = "batchEngineExportTask";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY batchEngineExportTask.batchEngineExportTaskId ASC";
 
@@ -1467,4 +1469,4 @@ public class BatchEngineExportTaskModelImpl
 	private BatchEngineExportTask _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:233072518
+// LIFERAY-SERVICE-BUILDER-HASH:136632386

@@ -119,6 +119,8 @@ public class WikiPageModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table WikiPage";
 
+	public static final String ENTITY_ALIAS = "wikiPage";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY wikiPage.nodeId ASC, wikiPage.title ASC, wikiPage.version DESC";
 
@@ -1837,4 +1839,4 @@ public class WikiPageModelImpl
 	private WikiPage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:533526926
+// LIFERAY-SERVICE-BUILDER-HASH:670913114

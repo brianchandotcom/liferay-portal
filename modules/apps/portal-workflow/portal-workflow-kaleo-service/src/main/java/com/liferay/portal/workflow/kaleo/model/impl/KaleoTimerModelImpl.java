@@ -103,6 +103,8 @@ public class KaleoTimerModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoTimer";
 
+	public static final String ENTITY_ALIAS = "kaleoTimer";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kaleoTimer.kaleoTimerId ASC";
 
@@ -1217,4 +1219,4 @@ public class KaleoTimerModelImpl
 	private KaleoTimer _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-500006285
+// LIFERAY-SERVICE-BUILDER-HASH:-383658719

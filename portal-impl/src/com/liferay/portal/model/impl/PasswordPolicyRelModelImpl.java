@@ -81,6 +81,8 @@ public class PasswordPolicyRelModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicyRel";
 
+	public static final String ENTITY_ALIAS = "passwordPolicyRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY passwordPolicyRel.passwordPolicyRelId ASC";
 
@@ -741,4 +743,4 @@ public class PasswordPolicyRelModelImpl
 	private PasswordPolicyRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1157520423
+// LIFERAY-SERVICE-BUILDER-HASH:580327460

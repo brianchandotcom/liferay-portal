@@ -101,6 +101,8 @@ public class PatcherProjectVersionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PProjectVersion";
 
+	public static final String ENTITY_ALIAS = "patcherProjectVersion";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherProjectVersion.patcherProjectVersionId ASC";
 
@@ -1178,4 +1180,4 @@ public class PatcherProjectVersionModelImpl
 	private PatcherProjectVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-213019167
+// LIFERAY-SERVICE-BUILDER-HASH:1455240916

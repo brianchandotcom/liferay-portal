@@ -105,6 +105,8 @@ public class SamlIdpSpConnectionModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table SamlIdpSpConnection";
 
+	public static final String ENTITY_ALIAS = "samlIdpSpConnection";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY samlIdpSpConnection.samlIdpSpConnectionId ASC";
 
@@ -1265,4 +1267,4 @@ public class SamlIdpSpConnectionModelImpl
 	private SamlIdpSpConnection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:620060476
+// LIFERAY-SERVICE-BUILDER-HASH:-2146702646

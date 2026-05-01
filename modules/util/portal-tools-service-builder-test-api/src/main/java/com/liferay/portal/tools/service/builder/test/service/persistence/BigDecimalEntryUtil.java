@@ -564,87 +564,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Returns all the big decimal entries.
-	 *
-	 * @return the big decimal entries
-	 */
-	public static List<BigDecimalEntry> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the big decimal entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of big decimal entries
-	 * @param end the upper bound of the range of big decimal entries (not inclusive)
-	 * @return the range of big decimal entries
-	 */
-	public static List<BigDecimalEntry> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the big decimal entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of big decimal entries
-	 * @param end the upper bound of the range of big decimal entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of big decimal entries
-	 */
-	public static List<BigDecimalEntry> findAll(
-		int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the big decimal entries.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of big decimal entries
-	 * @param end the upper bound of the range of big decimal entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of big decimal entries
-	 */
-	public static List<BigDecimalEntry> findAll(
-		int start, int end,
-		OrderByComparator<BigDecimalEntry> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the big decimal entries from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of big decimal entries.
-	 *
-	 * @return the number of big decimal entries
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
-	/**
 	 * Returns the primaryKeys of lv entries associated with the big decimal entry.
 	 *
 	 * @param pk the primary key of the big decimal entry
@@ -883,4 +802,4 @@ public class BigDecimalEntryUtil {
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1792322659
+// LIFERAY-SERVICE-BUILDER-HASH:-1226752121

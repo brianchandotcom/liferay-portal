@@ -117,6 +117,8 @@ public class CPInstanceUnitOfMeasureModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CPInstanceUOM";
 
+	public static final String ENTITY_ALIAS = "cpInstanceUnitOfMeasure";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpInstanceUnitOfMeasure.CPInstanceUnitOfMeasureId ASC";
 
@@ -1537,4 +1539,4 @@ public class CPInstanceUnitOfMeasureModelImpl
 	private CPInstanceUnitOfMeasure _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-330207521
+// LIFERAY-SERVICE-BUILDER-HASH:997903117

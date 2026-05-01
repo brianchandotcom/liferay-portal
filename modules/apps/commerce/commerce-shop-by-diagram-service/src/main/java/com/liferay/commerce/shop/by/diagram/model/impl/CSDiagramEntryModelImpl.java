@@ -100,6 +100,8 @@ public class CSDiagramEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CSDiagramEntry";
 
+	public static final String ENTITY_ALIAS = "csDiagramEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY csDiagramEntry.sequence ASC";
 
@@ -1158,4 +1160,4 @@ public class CSDiagramEntryModelImpl
 	private CSDiagramEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1271186320
+// LIFERAY-SERVICE-BUILDER-HASH:-855608276

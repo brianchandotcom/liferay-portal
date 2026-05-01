@@ -103,6 +103,8 @@ public class KBCommentModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table KBComment";
 
+	public static final String ENTITY_ALIAS = "kbComment";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kbComment.modifiedDate DESC";
 
@@ -1176,4 +1178,4 @@ public class KBCommentModelImpl
 	private KBComment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1060388115
+// LIFERAY-SERVICE-BUILDER-HASH:742112328

@@ -1868,86 +1868,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Returns all the patcher fix packs.
-	 *
-	 * @return the patcher fix packs
-	 */
-	public static List<PatcherFixPack> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of patcher fix packs
-	 */
-	public static List<PatcherFixPack> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of patcher fix packs
-	 */
-	public static List<PatcherFixPack> findAll(
-		int start, int end,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of patcher fix packs
-	 */
-	public static List<PatcherFixPack> findAll(
-		int start, int end, OrderByComparator<PatcherFixPack> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the patcher fix packs from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of patcher fix packs.
-	 *
-	 * @return the number of patcher fix packs
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
-	/**
 	 * Returns the primaryKeys of patcher fixes associated with the patcher fix pack.
 	 *
 	 * @param pk the primary key of the patcher fix pack
@@ -2171,4 +2091,4 @@ public class PatcherFixPackUtil {
 	private static volatile PatcherFixPackPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1631581426
+// LIFERAY-SERVICE-BUILDER-HASH:1302726111

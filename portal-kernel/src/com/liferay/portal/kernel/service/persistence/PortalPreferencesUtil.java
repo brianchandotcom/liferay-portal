@@ -371,87 +371,6 @@ public class PortalPreferencesUtil {
 		return getPersistence().fetchByPrimaryKey(portalPreferencesId);
 	}
 
-	/**
-	 * Returns all the portal preferenceses.
-	 *
-	 * @return the portal preferenceses
-	 */
-	public static List<PortalPreferences> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the portal preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portal preferenceses
-	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
-	 * @return the range of portal preferenceses
-	 */
-	public static List<PortalPreferences> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portal preferenceses
-	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of portal preferenceses
-	 */
-	public static List<PortalPreferences> findAll(
-		int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preferenceses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PortalPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of portal preferenceses
-	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of portal preferenceses
-	 */
-	public static List<PortalPreferences> findAll(
-		int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the portal preferenceses from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of portal preferenceses.
-	 *
-	 * @return the number of portal preferenceses
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static PortalPreferencesPersistence getPersistence() {
 		return _persistence;
 	}
@@ -465,4 +384,4 @@ public class PortalPreferencesUtil {
 	private static volatile PortalPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-411967703
+// LIFERAY-SERVICE-BUILDER-HASH:94154500

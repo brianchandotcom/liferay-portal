@@ -101,6 +101,9 @@ public class CommercePriceListCommerceAccountGroupRelModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CPLCommerceGroupAccountRel";
 
+	public static final String ENTITY_ALIAS =
+		"commercePriceListCommerceAccountGroupRel";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePriceListCommerceAccountGroupRel.order ASC";
 
@@ -1149,4 +1152,4 @@ public class CommercePriceListCommerceAccountGroupRelModelImpl
 	private CommercePriceListCommerceAccountGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-416243519
+// LIFERAY-SERVICE-BUILDER-HASH:-1120835340

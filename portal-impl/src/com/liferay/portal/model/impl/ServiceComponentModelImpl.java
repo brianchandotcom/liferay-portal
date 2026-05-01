@@ -79,6 +79,8 @@ public class ServiceComponentModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 
+	public static final String ENTITY_ALIAS = "serviceComponent";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
 
@@ -742,4 +744,4 @@ public class ServiceComponentModelImpl
 	private ServiceComponent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1532267190
+// LIFERAY-SERVICE-BUILDER-HASH:-616966657

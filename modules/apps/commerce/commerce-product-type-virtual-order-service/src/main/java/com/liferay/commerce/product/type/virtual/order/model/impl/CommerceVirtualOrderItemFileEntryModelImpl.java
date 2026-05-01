@@ -102,6 +102,9 @@ public class CommerceVirtualOrderItemFileEntryModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table CVirtualOrderItemFileEntry";
 
+	public static final String ENTITY_ALIAS =
+		"commerceVirtualOrderItemFileEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceVirtualOrderItemFileEntry.createDate DESC";
 
@@ -1162,4 +1165,4 @@ public class CommerceVirtualOrderItemFileEntryModelImpl
 	private CommerceVirtualOrderItemFileEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1182068914
+// LIFERAY-SERVICE-BUILDER-HASH:1673923640

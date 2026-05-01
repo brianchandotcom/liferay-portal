@@ -87,6 +87,8 @@ public class UserTrackerModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table UserTracker";
 
+	public static final String ENTITY_ALIAS = "userTracker";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY userTracker.userTrackerId ASC";
 
@@ -870,4 +872,4 @@ public class UserTrackerModelImpl
 	private UserTracker _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:151166152
+// LIFERAY-SERVICE-BUILDER-HASH:-95338236

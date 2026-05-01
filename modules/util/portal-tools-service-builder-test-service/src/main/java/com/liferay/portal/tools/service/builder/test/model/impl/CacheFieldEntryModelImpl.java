@@ -79,6 +79,8 @@ public class CacheFieldEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CacheFieldEntry";
 
+	public static final String ENTITY_ALIAS = "cacheFieldEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cacheFieldEntry.cacheFieldEntryId ASC";
 
@@ -650,4 +652,4 @@ public class CacheFieldEntryModelImpl
 	private CacheFieldEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1367683824
+// LIFERAY-SERVICE-BUILDER-HASH:-1830554645

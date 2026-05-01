@@ -737,85 +737,6 @@ public class DDMContentUtil {
 		return getPersistence().fetchByPrimaryKey(contentId);
 	}
 
-	/**
-	 * Returns all the ddm contents.
-	 *
-	 * @return the ddm contents
-	 */
-	public static List<DDMContent> findAll() {
-		return getPersistence().findAll();
-	}
-
-	/**
-	 * Returns a range of all the ddm contents.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm contents
-	 * @param end the upper bound of the range of ddm contents (not inclusive)
-	 * @return the range of ddm contents
-	 */
-	public static List<DDMContent> findAll(int start, int end) {
-		return getPersistence().findAll(start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm contents.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm contents
-	 * @param end the upper bound of the range of ddm contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of ddm contents
-	 */
-	public static List<DDMContent> findAll(
-		int start, int end, OrderByComparator<DDMContent> orderByComparator) {
-
-		return getPersistence().findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm contents.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of ddm contents
-	 * @param end the upper bound of the range of ddm contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of ddm contents
-	 */
-	public static List<DDMContent> findAll(
-		int start, int end, OrderByComparator<DDMContent> orderByComparator,
-		boolean useFinderCache) {
-
-		return getPersistence().findAll(
-			start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Removes all the ddm contents from the database.
-	 */
-	public static void removeAll() {
-		getPersistence().removeAll();
-	}
-
-	/**
-	 * Returns the number of ddm contents.
-	 *
-	 * @return the number of ddm contents
-	 */
-	public static int countAll() {
-		return getPersistence().countAll();
-	}
-
 	public static DDMContentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -827,4 +748,4 @@ public class DDMContentUtil {
 	private static volatile DDMContentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-395025312
+// LIFERAY-SERVICE-BUILDER-HASH:-1826888541

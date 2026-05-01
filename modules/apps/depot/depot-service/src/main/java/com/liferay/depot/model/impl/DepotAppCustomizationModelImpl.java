@@ -83,6 +83,8 @@ public class DepotAppCustomizationModelImpl
 	public static final String TABLE_SQL_DROP =
 		"drop table DepotAppCustomization";
 
+	public static final String ENTITY_ALIAS = "depotAppCustomization";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY depotAppCustomization.depotAppCustomizationId ASC";
 
@@ -767,4 +769,4 @@ public class DepotAppCustomizationModelImpl
 	private DepotAppCustomization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:235710062
+// LIFERAY-SERVICE-BUILDER-HASH:-1938384623

@@ -9,6 +9,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -292,10 +293,15 @@ public abstract class BaseSectionDisplayContext {
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				"#", "trash", "delete",
-				LanguageUtil.get(httpServletRequest, "delete"), null, null,
-				null));
+			FDSActionDropdownItemBuilder.setHref(
+				"#"
+			).setIcon(
+				"trash"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "delete")
+			).build(
+				"delete"
+			));
 	}
 
 	public CreationMenu getCreationMenu() {

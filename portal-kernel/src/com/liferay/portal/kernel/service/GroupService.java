@@ -143,6 +143,11 @@ public interface GroupService extends BaseService {
 	public Group getGroup(long companyId, String groupKey)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the group's display URL.
 	 *
@@ -564,4 +569,4 @@ public interface GroupService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1957156031
+// LIFERAY-SERVICE-BUILDER-HASH:-215775897

@@ -68,7 +68,9 @@ test(
 		await test.step('Select one article in page 1', async () => {
 			await journalPage.selectItem(0);
 
-			await expect(page.getByText('1 of 6 Items Selected')).toBeVisible();
+			await expect(
+				page.getByText('1 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 
 		await test.step('Select another article in page 2', async () => {
@@ -79,7 +81,9 @@ test(
 			).toBeVisible();
 			await journalPage.selectItem(0);
 
-			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+			await expect(
+				page.getByText('2 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 
 		await test.step('Clear the filters', async () => {
@@ -87,7 +91,9 @@ test(
 		});
 
 		await test.step('Check that selections are kept', async () => {
-			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+			await expect(
+				page.getByText('2 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 	}
 );
@@ -101,13 +107,30 @@ test(
 
 		await test.step('Filter by recent', async () => {
 			await journalPage.setFilterBy(FilterBy.RECENT);
+
+			await expect(
+				page.getByText('Results Found With Filters')
+			).toBeVisible();
 		});
 
 		await test.step('Select one article per page', async () => {
 			await journalPage.selectItem(0);
+
+			await expect(
+				page.getByText('1 of 6 Items Selected', {exact: true})
+			).toBeVisible();
+
 			await journalPage.selectPage(1);
+
+			await expect(
+				page.getByText('Showing 5 to 6 of 6 entries.')
+			).toBeVisible();
+
 			await journalPage.selectItem(0);
-			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+
+			await expect(
+				page.getByText('2 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 
 		await test.step('Exit page and get back', async () => {
@@ -132,9 +155,22 @@ test(
 
 		await test.step('Select one article per page', async () => {
 			await journalPage.selectItem(0);
+
+			await expect(
+				page.getByText('1 of 6 Items Selected', {exact: true})
+			).toBeVisible();
+
 			await journalPage.selectPage(1);
+
+			await expect(
+				page.getByText('Showing 5 to 6 of 6 entries.')
+			).toBeVisible();
+
 			await journalPage.selectItem(0);
-			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+
+			await expect(
+				page.getByText('2 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 
 		await journalPage.deleteSelection();
@@ -155,15 +191,32 @@ test(
 
 		await test.step('Select one article per page', async () => {
 			await journalPage.selectItem(0);
+
+			await expect(
+				page.getByText('1 of 6 Items Selected', {exact: true})
+			).toBeVisible();
+
 			await journalPage.selectPage(1);
+
+			await expect(
+				page.getByText('Showing 5 to 6 of 6 entries.')
+			).toBeVisible();
+
 			await journalPage.selectItem(0);
-			await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+
+			await expect(
+				page.getByText('2 of 6 Items Selected', {exact: true})
+			).toBeVisible();
 		});
 
 		await journalPage.selectPage(0);
-		await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+		await expect(
+			page.getByText('2 of 6 Items Selected', {exact: true})
+		).toBeVisible();
 
 		await journalPage.selectPage(1);
-		await expect(page.getByText('2 of 6 Items Selected')).toBeVisible();
+		await expect(
+			page.getByText('2 of 6 Items Selected', {exact: true})
+		).toBeVisible();
 	}
 );

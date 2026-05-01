@@ -134,6 +134,17 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	public Map<Serializable, T> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys);
 
+	public List<T> findAll();
+
+	public List<T> findAll(int start, int end);
+
+	public List<T> findAll(
+		int start, int end, OrderByComparator<T> orderByComparator);
+
+	public List<T> findAll(
+		int start, int end, OrderByComparator<T> orderByComparator,
+		boolean useFinderCache);
+
 	/**
 	 * Returns the model instance with the primary key or throws a {@link
 	 * NoSuchModelException} if it could not be found.

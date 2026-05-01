@@ -448,6 +448,39 @@ public class BasePersistenceImpl
 		return _fetchByPrimaryKeys(primaryKeys, ctPersistenceHelper);
 	}
 
+	public List<T> findAll() {
+		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	public List<T> findAll(int start, int end) {
+		return findAll(start, end, null);
+	}
+
+	public List<T> findAll(
+		int start, int end, OrderByComparator<T> orderByComparator) {
+
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	public List<T> findAll(
+		int start, int end, OrderByComparator<T> orderByComparator,
+		boolean useFinderCache) {
+
+		CTPersistenceHelper ctPersistenceHelper = getCTPersistenceHelper();
+
+		if (ctPersistenceHelper == null) {
+			return _findAll(start, end, orderByComparator, useFinderCache);
+		}
+
+		try (SafeCloseable safeCloseable =
+				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+					(Class)_modelClass)) {
+
+			return _findAll(start, end, orderByComparator, useFinderCache);
+		}
+	}
+
 	@Override
 	public T findByPrimaryKey(Serializable primaryKey) throws E {
 		T model = fetchByPrimaryKey(primaryKey);
@@ -1301,6 +1334,79 @@ public class BasePersistenceImpl
 		}
 
 		return map;
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<T> _findAll(
+		int start, int end, OrderByComparator<T> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
+		}
+
+		FinderCache finderCache = getFinderCache();
+
+		List<T> list = null;
+
+		if (useFinderCache) {
+			list = (List<T>)finderCache.getResult(finderPath, finderArgs, this);
+		}
+
+		if (list == null) {
+			String sql = null;
+
+			if (orderByComparator == null) {
+				sql = getSelectSQL().concat(_defaultOrderByJPQL);
+			}
+			else {
+				StringBundler sb = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
+
+				sb.append(getSelectSQL());
+
+				appendOrderByComparator(
+					sb, _entityAliasPrefix, orderByComparator);
+
+				sql = sb.toString();
+			}
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				list = (List<T>)QueryUtil.list(query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
 	}
 
 	private String[] _getAliasTypes(

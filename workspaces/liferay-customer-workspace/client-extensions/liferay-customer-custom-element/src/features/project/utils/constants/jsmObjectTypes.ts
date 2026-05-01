@@ -7,11 +7,3 @@ export const JSM_FIELDS = {
 	eventType: 'Event Type',
 	timeZone: 'Time Zone',
 };
-
-export const JSM_OBJECT_TYPES = {
-	productVersion: 'Product Version',
-};
-
-export const JSM_SCHEMAS = {
-	businessEvents: 'Business Events',
-};

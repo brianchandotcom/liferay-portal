@@ -140,7 +140,7 @@ public class CIForwardProcessor {
 								forwardPullRequestException.getMessage());
 						}
 						else {
-							maxRetries = 0;
+							breakOut();
 						}
 
 						throw new RuntimeException(forwardPullRequestException);

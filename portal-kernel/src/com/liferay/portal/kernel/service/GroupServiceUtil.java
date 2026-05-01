@@ -158,6 +158,14 @@ public class GroupServiceUtil {
 		return getService().getGroup(companyId, groupKey);
 	}
 
+	public static Group getGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the group's display URL.
 	 *
@@ -677,4 +685,4 @@ public class GroupServiceUtil {
 	private static volatile GroupService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1448082115
+// LIFERAY-SERVICE-BUILDER-HASH:545048214

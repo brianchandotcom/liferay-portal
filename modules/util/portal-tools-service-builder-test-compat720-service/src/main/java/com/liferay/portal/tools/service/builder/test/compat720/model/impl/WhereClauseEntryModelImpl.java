@@ -74,6 +74,8 @@ public class WhereClauseEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table WhereClauseEntry";
 
+	public static final String ENTITY_ALIAS = "whereClauseEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY whereClauseEntry.whereClauseEntryId ASC";
 
@@ -520,4 +522,4 @@ public class WhereClauseEntryModelImpl
 	private WhereClauseEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1904824854
+// LIFERAY-SERVICE-BUILDER-HASH:1466218079

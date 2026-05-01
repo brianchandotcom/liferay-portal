@@ -1004,7 +1004,7 @@ public class CacheDisabledEntryPersistenceImpl
 				sb.append(_SQL_SELECT_CACHEDISABLEDENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1073,7 +1073,7 @@ public class CacheDisabledEntryPersistenceImpl
 				session = openSession();
 
 				Query query = session.createQuery(
-					_SQL_COUNT_CACHEDISABLEDENTRY);
+					"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1168,6 +1168,9 @@ public class CacheDisabledEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		CacheDisabledEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY =
 		"SELECT cacheDisabledEntry FROM CacheDisabledEntry cacheDisabledEntry";
 
@@ -1177,13 +1180,8 @@ public class CacheDisabledEntryPersistenceImpl
 	private static final String _SQL_SELECT_CACHEDISABLEDENTRY_WHERE =
 		"SELECT cacheDisabledEntry FROM CacheDisabledEntry cacheDisabledEntry WHERE ";
 
-	private static final String _SQL_COUNT_CACHEDISABLEDENTRY =
-		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry";
-
 	private static final String _SQL_COUNT_CACHEDISABLEDENTRY_WHERE =
 		"SELECT COUNT(cacheDisabledEntry) FROM CacheDisabledEntry cacheDisabledEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "cacheDisabledEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No CacheDisabledEntry exists with the primary key ";
@@ -1195,4 +1193,4 @@ public class CacheDisabledEntryPersistenceImpl
 		CacheDisabledEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2117514517
+// LIFERAY-SERVICE-BUILDER-HASH:843458183

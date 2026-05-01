@@ -83,6 +83,8 @@ public class LazyBlobEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LazyBlobEntry";
 
+	public static final String ENTITY_ALIAS = "lazyBlobEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY lazyBlobEntry.lazyBlobEntryId ASC";
 
@@ -747,4 +749,4 @@ public class LazyBlobEntryModelImpl
 	private LazyBlobEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-749581614
+// LIFERAY-SERVICE-BUILDER-HASH:-1109282540

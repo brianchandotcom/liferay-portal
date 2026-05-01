@@ -948,7 +948,7 @@ public class ConvertNullEntryPersistenceImpl
 				sb.append(_SQL_SELECT_CONVERTNULLENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1016,7 +1016,8 @@ public class ConvertNullEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_CONVERTNULLENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(convertNullEntry) FROM ConvertNullEntry convertNullEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1100,6 +1101,9 @@ public class ConvertNullEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		ConvertNullEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_CONVERTNULLENTRY =
 		"SELECT convertNullEntry FROM ConvertNullEntry convertNullEntry";
 
@@ -1109,13 +1113,8 @@ public class ConvertNullEntryPersistenceImpl
 	private static final String _SQL_SELECT_CONVERTNULLENTRY_WHERE =
 		"SELECT convertNullEntry FROM ConvertNullEntry convertNullEntry WHERE ";
 
-	private static final String _SQL_COUNT_CONVERTNULLENTRY =
-		"SELECT COUNT(convertNullEntry) FROM ConvertNullEntry convertNullEntry";
-
 	private static final String _SQL_COUNT_CONVERTNULLENTRY_WHERE =
 		"SELECT COUNT(convertNullEntry) FROM ConvertNullEntry convertNullEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "convertNullEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No ConvertNullEntry exists with the primary key ";
@@ -1127,4 +1126,4 @@ public class ConvertNullEntryPersistenceImpl
 		ConvertNullEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1569271248
+// LIFERAY-SERVICE-BUILDER-HASH:1453799586

@@ -199,7 +199,7 @@ public class MVCCEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(MVCCEntryModelImpl.ORDER_BY_JPQL);
@@ -424,7 +424,7 @@ public class MVCCEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -450,7 +450,7 @@ public class MVCCEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1487,7 +1487,7 @@ public class MVCCEntryPersistenceImpl
 				sb.append(_SQL_SELECT_MVCCENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1555,7 +1555,8 @@ public class MVCCEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_MVCCENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(mvccEntry) FROM MVCCEntry mvccEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1660,6 +1661,9 @@ public class MVCCEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		MVCCEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_MVCCENTRY =
 		"SELECT mvccEntry FROM MVCCEntry mvccEntry";
 
@@ -1669,13 +1673,8 @@ public class MVCCEntryPersistenceImpl
 	private static final String _SQL_SELECT_MVCCENTRY_WHERE =
 		"SELECT mvccEntry FROM MVCCEntry mvccEntry WHERE ";
 
-	private static final String _SQL_COUNT_MVCCENTRY =
-		"SELECT COUNT(mvccEntry) FROM MVCCEntry mvccEntry";
-
 	private static final String _SQL_COUNT_MVCCENTRY_WHERE =
 		"SELECT COUNT(mvccEntry) FROM MVCCEntry mvccEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "mvccEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No MVCCEntry exists with the primary key ";
@@ -1687,4 +1686,4 @@ public class MVCCEntryPersistenceImpl
 		MVCCEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:663274323
+// LIFERAY-SERVICE-BUILDER-HASH:-1640765443

@@ -78,6 +78,8 @@ public class LikeFinderEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LikeFinderEntry";
 
+	public static final String ENTITY_ALIAS = "likeFinderEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY likeFinderEntry.likeFinderEntryId ASC";
 
@@ -708,4 +710,4 @@ public class LikeFinderEntryModelImpl
 	private LikeFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1847916048
+// LIFERAY-SERVICE-BUILDER-HASH:333651912

@@ -202,7 +202,7 @@ public class ArrayableEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(ArrayableEntryModelImpl.ORDER_BY_JPQL);
@@ -427,7 +427,7 @@ public class ArrayableEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -453,7 +453,7 @@ public class ArrayableEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -704,7 +704,7 @@ public class ArrayableEntryPersistenceImpl
 
 		if (orderByComparator != null) {
 			appendOrderByComparator(
-				sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 		}
 		else {
 			sb.append(ArrayableEntryModelImpl.ORDER_BY_JPQL);
@@ -1361,7 +1361,7 @@ public class ArrayableEntryPersistenceImpl
 				sb.append(_SQL_SELECT_ARRAYABLEENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1429,7 +1429,8 @@ public class ArrayableEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_ARRAYABLEENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(arrayableEntry) FROM ArrayableEntry arrayableEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -1550,19 +1551,17 @@ public class ArrayableEntryPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		ArrayableEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_ARRAYABLEENTRY =
 		"SELECT arrayableEntry FROM ArrayableEntry arrayableEntry";
 
 	private static final String _SQL_SELECT_ARRAYABLEENTRY_WHERE =
 		"SELECT arrayableEntry FROM ArrayableEntry arrayableEntry WHERE ";
 
-	private static final String _SQL_COUNT_ARRAYABLEENTRY =
-		"SELECT COUNT(arrayableEntry) FROM ArrayableEntry arrayableEntry";
-
 	private static final String _SQL_COUNT_ARRAYABLEENTRY_WHERE =
 		"SELECT COUNT(arrayableEntry) FROM ArrayableEntry arrayableEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "arrayableEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No ArrayableEntry exists with the primary key ";
@@ -1577,4 +1576,4 @@ public class ArrayableEntryPersistenceImpl
 		new String[] {"integer", "type"});
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1027608715
+// LIFERAY-SERVICE-BUILDER-HASH:1002087675

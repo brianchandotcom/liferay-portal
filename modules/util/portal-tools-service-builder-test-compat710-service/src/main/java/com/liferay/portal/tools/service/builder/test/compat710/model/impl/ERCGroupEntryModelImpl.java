@@ -78,6 +78,8 @@ public class ERCGroupEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ERCGroupEntry";
 
+	public static final String ENTITY_ALIAS = "ercGroupEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ercGroupEntry.ercGroupEntryId ASC";
 
@@ -732,4 +734,4 @@ public class ERCGroupEntryModelImpl
 	private ERCGroupEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1306106560
+// LIFERAY-SERVICE-BUILDER-HASH:615250452

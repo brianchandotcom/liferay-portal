@@ -77,6 +77,8 @@ public class LocalizedEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table LocalizedEntry";
 
+	public static final String ENTITY_ALIAS = "localizedEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY localizedEntry.localizedEntryId ASC";
 
@@ -679,4 +681,4 @@ public class LocalizedEntryModelImpl
 	private LocalizedEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:573070887
+// LIFERAY-SERVICE-BUILDER-HASH:885555723

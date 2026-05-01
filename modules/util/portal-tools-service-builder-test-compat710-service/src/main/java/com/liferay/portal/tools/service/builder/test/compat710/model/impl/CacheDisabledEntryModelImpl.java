@@ -74,6 +74,8 @@ public class CacheDisabledEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table CacheDisabledEntry";
 
+	public static final String ENTITY_ALIAS = "cacheDisabledEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cacheDisabledEntry.cacheDisabledEntryId ASC";
 
@@ -556,4 +558,4 @@ public class CacheDisabledEntryModelImpl
 	private CacheDisabledEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1977000713
+// LIFERAY-SERVICE-BUILDER-HASH:2131319832

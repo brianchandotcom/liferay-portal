@@ -205,7 +205,7 @@ public class VersionedEntryVersionPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(VersionedEntryVersionModelImpl.ORDER_BY_JPQL);
@@ -439,7 +439,7 @@ public class VersionedEntryVersionPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -465,7 +465,7 @@ public class VersionedEntryVersionPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -958,7 +958,7 @@ public class VersionedEntryVersionPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(VersionedEntryVersionModelImpl.ORDER_BY_JPQL);
@@ -1192,7 +1192,7 @@ public class VersionedEntryVersionPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -1218,7 +1218,7 @@ public class VersionedEntryVersionPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1481,7 +1481,7 @@ public class VersionedEntryVersionPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(VersionedEntryVersionModelImpl.ORDER_BY_JPQL);
@@ -1730,7 +1730,7 @@ public class VersionedEntryVersionPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -1756,7 +1756,7 @@ public class VersionedEntryVersionPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -2671,7 +2671,7 @@ public class VersionedEntryVersionPersistenceImpl
 				sb.append(_SQL_SELECT_VERSIONEDENTRYVERSION);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -2740,7 +2740,7 @@ public class VersionedEntryVersionPersistenceImpl
 				session = openSession();
 
 				Query query = session.createQuery(
-					_SQL_COUNT_VERSIONEDENTRYVERSION);
+					"SELECT COUNT(versionedEntryVersion) FROM VersionedEntryVersion versionedEntryVersion");
 
 				count = (Long)query.uniqueResult();
 
@@ -2903,6 +2903,9 @@ public class VersionedEntryVersionPersistenceImpl
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		VersionedEntryVersionModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_VERSIONEDENTRYVERSION =
 		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion";
 
@@ -2912,14 +2915,8 @@ public class VersionedEntryVersionPersistenceImpl
 	private static final String _SQL_SELECT_VERSIONEDENTRYVERSION_WHERE =
 		"SELECT versionedEntryVersion FROM VersionedEntryVersion versionedEntryVersion WHERE ";
 
-	private static final String _SQL_COUNT_VERSIONEDENTRYVERSION =
-		"SELECT COUNT(versionedEntryVersion) FROM VersionedEntryVersion versionedEntryVersion";
-
 	private static final String _SQL_COUNT_VERSIONEDENTRYVERSION_WHERE =
 		"SELECT COUNT(versionedEntryVersion) FROM VersionedEntryVersion versionedEntryVersion WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS =
-		"versionedEntryVersion.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No VersionedEntryVersion exists with the primary key ";
@@ -2931,4 +2928,4 @@ public class VersionedEntryVersionPersistenceImpl
 		VersionedEntryVersionPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:724897083
+// LIFERAY-SERVICE-BUILDER-HASH:-106637281

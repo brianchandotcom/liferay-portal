@@ -166,6 +166,8 @@ public class ManyColumnsEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table ManyColumnsEntry";
 
+	public static final String ENTITY_ALIAS = "manyColumnsEntry";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY manyColumnsEntry.manyColumnsEntryId ASC";
 
@@ -2281,4 +2283,4 @@ public class ManyColumnsEntryModelImpl
 	private ManyColumnsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-259516538
+// LIFERAY-SERVICE-BUILDER-HASH:2006959589

@@ -207,7 +207,7 @@ public class BasicEntryPersistenceImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 			}
 			else {
 				sb.append(BasicEntryModelImpl.ORDER_BY_JPQL);
@@ -430,7 +430,7 @@ public class BasicEntryPersistenceImpl
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
@@ -456,7 +456,7 @@ public class BasicEntryPersistenceImpl
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(_ENTITY_ALIAS_PREFIX);
 				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
@@ -1524,7 +1524,7 @@ public class BasicEntryPersistenceImpl
 				sb.append(_SQL_SELECT_BASICENTRY);
 
 				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
 
 				sql = sb.toString();
 			}
@@ -1592,7 +1592,8 @@ public class BasicEntryPersistenceImpl
 			try {
 				session = openSession();
 
-				Query query = session.createQuery(_SQL_COUNT_BASICENTRY);
+				Query query = session.createQuery(
+					"SELECT COUNT(basicEntry) FROM BasicEntry basicEntry");
 
 				count = (Long)query.uniqueResult();
 
@@ -2057,6 +2058,9 @@ public class BasicEntryPersistenceImpl
 		 com.liferay.portal.tools.service.builder.test.compat710.model.
 			 MappingEntry> basicEntryToMappingEntryTableMapper;
 
+	private static final String _ENTITY_ALIAS_PREFIX =
+		BasicEntryModelImpl.ENTITY_ALIAS + ".";
+
 	private static final String _SQL_SELECT_BASICENTRY =
 		"SELECT basicEntry FROM BasicEntry basicEntry";
 
@@ -2066,13 +2070,8 @@ public class BasicEntryPersistenceImpl
 	private static final String _SQL_SELECT_BASICENTRY_WHERE =
 		"SELECT basicEntry FROM BasicEntry basicEntry WHERE ";
 
-	private static final String _SQL_COUNT_BASICENTRY =
-		"SELECT COUNT(basicEntry) FROM BasicEntry basicEntry";
-
 	private static final String _SQL_COUNT_BASICENTRY_WHERE =
 		"SELECT COUNT(basicEntry) FROM BasicEntry basicEntry WHERE ";
-
-	private static final String _ORDER_BY_ENTITY_ALIAS = "basicEntry.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No BasicEntry exists with the primary key ";
@@ -2084,4 +2083,4 @@ public class BasicEntryPersistenceImpl
 		BasicEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1037078947
+// LIFERAY-SERVICE-BUILDER-HASH:-1106033411

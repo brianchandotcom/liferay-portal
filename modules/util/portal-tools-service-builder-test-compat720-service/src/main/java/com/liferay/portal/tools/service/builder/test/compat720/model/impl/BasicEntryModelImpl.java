@@ -86,6 +86,8 @@ public class BasicEntryModelImpl
 
 	public static final String TABLE_SQL_DROP = "drop table BasicEntry";
 
+	public static final String ENTITY_ALIAS = "basicEntry";
+
 	public static final String ORDER_BY_JPQL = " ORDER BY basicEntry.name ASC";
 
 	public static final String ORDER_BY_SQL = " ORDER BY BasicEntry.name ASC";
@@ -735,4 +737,4 @@ public class BasicEntryModelImpl
 	private BasicEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1858869571
+// LIFERAY-SERVICE-BUILDER-HASH:-1648936500

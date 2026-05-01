@@ -692,6 +692,12 @@ public class BasePersistenceImpl
 		return removeByFunction(model, this::removeImpl);
 	}
 
+	public void removeAll() {
+		for (T model : findAll()) {
+			remove(model);
+		}
+	}
+
 	@Override
 	public T removeByFunction(T model, Function<T, T> function) {
 		if (ReadOnlyTransactionThreadLocal.isReadOnly()) {

@@ -277,6 +277,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public T remove(T model);
 
+	public void removeAll();
+
 	public T removeByFunction(T model, Function<T, T> function);
 
 	/**
